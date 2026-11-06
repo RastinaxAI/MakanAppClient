@@ -357,11 +357,14 @@ case "$COMMAND" in
       say 'Building production images sequentially to limit memory usage'
       for service in app testapp management testmanagement landing-db landing-api landing-web edge; do
         BUILDING_SERVICE="$service"
+        build_args=()
         if [[ "$service" == landing-api && "${MAKAN_PYPI_MIRROR_URL+x}" == x ]]; then
-          dc build --build-arg "PYPI_MIRROR_URL=$MAKAN_PYPI_MIRROR_URL" "$service"
-        else
-          dc build "$service"
+          build_args+=(--build-arg "PYPI_MIRROR_URL=$MAKAN_PYPI_MIRROR_URL")
         fi
+        if [[ ( "$service" == landing-api || "$service" == landing-web ) && "${MAKAN_DEBIAN_MIRROR_URL+x}" == x ]]; then
+          build_args+=(--build-arg "DEBIAN_MIRROR_URL=$MAKAN_DEBIAN_MIRROR_URL")
+        fi
+        dc build "${build_args[@]}" "$service"
         BUILDING_SERVICE=''
       done
     fi

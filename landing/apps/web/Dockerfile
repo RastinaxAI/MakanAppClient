@@ -12,10 +12,18 @@ ENV NODE_OPTIONS=--max-old-space-size=1536 RAYON_NUM_THREADS=2
 RUN npm run build --workspace @makan/web
 
 FROM node:24.21.0-trixie-slim@sha256:173f125896c3b47ddf056734c7ea789d04595a6a08769a8f78e0df642781fb66 AS runtime
+ARG DEBIAN_MIRROR_URL=https://mirrors.aliyun.com
 ENV NODE_ENV=production NEXT_TELEMETRY_DISABLED=1 PORT=3000 HOSTNAME=0.0.0.0
 WORKDIR /srv/makan
-RUN apt-get -o Acquire::Retries=2 -o Acquire::http::Timeout=20 -o Acquire::https::Timeout=20 update --error-on=any \
-    && apt-get -o Acquire::Retries=2 -o Acquire::http::Timeout=20 -o Acquire::https::Timeout=20 upgrade -y \
+COPY apps/api/configure_apt.sh /usr/local/bin/makan-configure-apt.sh
+# The slim Node image has no OS CA bundle. Bootstrap HTTPS using Node's bundled
+# public roots, then install Debian's CA package with signed APT metadata.
+RUN sh /usr/local/bin/makan-configure-apt.sh "$DEBIAN_MIRROR_URL" \
+    && mkdir -p /etc/ssl/certs \
+    && node -e 'require("node:fs").writeFileSync("/etc/ssl/certs/ca-certificates.crt", require("node:tls").rootCertificates.join("\n") + "\n")' \
+    && apt-get -o Acquire::Retries=2 -o Acquire::https::Timeout=45 -o Acquire::https::CaInfo=/etc/ssl/certs/ca-certificates.crt update --error-on=any \
+    && DEBIAN_FRONTEND=noninteractive apt-get -o Acquire::Retries=2 -o Acquire::https::Timeout=45 -o Acquire::https::CaInfo=/etc/ssl/certs/ca-certificates.crt install -y --no-install-recommends ca-certificates \
+    && DEBIAN_FRONTEND=noninteractive apt-get -o Acquire::Retries=2 -o Acquire::https::Timeout=45 -o Acquire::https::CaInfo=/etc/ssl/certs/ca-certificates.crt upgrade -y \
     && rm -rf /var/lib/apt/lists/* \
     && rm -rf /usr/local/lib/node_modules/npm /usr/local/bin/npm /usr/local/bin/npx \
         /opt/yarn* /usr/local/bin/yarn /usr/local/bin/yarnpkg

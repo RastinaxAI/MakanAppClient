@@ -14,10 +14,13 @@ RUN --mount=type=cache,id=makan-landing-uv,target=/root/.cache/uv,sharing=locked
     python /usr/local/bin/makan-install-locked.py --mirror "$PYPI_MIRROR_URL"
 
 FROM python:3.13.16-slim-trixie@sha256:70729b46c69b4f1e97c4822c1af3df53a1476cf5ddc6c087c0c10bc3a5678c2f AS runtime
+ARG DEBIAN_MIRROR_URL=https://mirrors.aliyun.com
 ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 PATH="/srv/api/.venv/bin:$PATH"
 WORKDIR /srv/api
-RUN apt-get -o Acquire::Retries=2 -o Acquire::http::Timeout=20 -o Acquire::https::Timeout=20 update --error-on=any \
-    && apt-get -o Acquire::Retries=2 -o Acquire::http::Timeout=20 -o Acquire::https::Timeout=20 upgrade -y \
+COPY configure_apt.sh /usr/local/bin/makan-configure-apt.sh
+RUN sh /usr/local/bin/makan-configure-apt.sh "$DEBIAN_MIRROR_URL" \
+    && apt-get -o Acquire::Retries=2 -o Acquire::https::Timeout=45 update --error-on=any \
+    && DEBIAN_FRONTEND=noninteractive apt-get -o Acquire::Retries=2 -o Acquire::https::Timeout=45 upgrade -y \
     && rm -rf /var/lib/apt/lists/* \
     && python -m pip uninstall -y pip
 RUN groupadd --gid 10001 api && useradd --uid 10001 --gid api --no-create-home api

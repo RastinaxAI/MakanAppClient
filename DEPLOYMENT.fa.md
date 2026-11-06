@@ -248,23 +248,39 @@ sudo bash ./deploy.sh down
 - **ورود مدیر پنل رد می‌شود:** کلید نقش مالک در فایل محیط باید با همان بک‌اند منطبق باشد. مجوز مالک را برای عبور از این خطا غیرفعال نکنید.
 - **Build به registry نمی‌رسد:** دسترسی سرور به Docker Hub، GHCR، npm و منابع Python را اصلاح کنید. lockfileها و digestهای Dockerfile را بدون بررسی تغییر ندهید.
 
+### خطای `apt-get update`، timeout یا `404` روی `deb.debian.org`
+
+اگر مرحلهٔ Python کامل شد ولی `runtime` با کد ۱۰۰ متوقف شد، دریافت فهرست یا بسته‌های Debian شکست خورده است. Dockerfileهای **هر دو سرویس API و وب لندینگ** اکنون از `https://mirrors.aliyun.com` برای `debian` و `debian-security` استفاده می‌کنند. اسکریپت `configure_apt.sh` فقط میزبان دریافت را تغییر می‌دهد؛ suiteهای `trixie`، `trixie-updates` و `trixie-security`، مؤلفه‌ها و `Signed-By` اصلی حفظ می‌شوند. APT همچنان امضا و اعتبار metadata و TLS را بررسی می‌کند و در خطای دانلود متوقف می‌شود. [احراز اصالت مخازن در APT](https://manpages.debian.org/trixie/apt/apt-secure.8.en.html)، [mirror عمومی Aliyun](https://developer.aliyun.com/mirror/debian)
+
+image پایهٔ Node slim، CA سیستم‌عامل ندارد. پیش از اولین اتصال HTTPS، [ریشه‌های عمومی تعبیه‌شده در Node](https://nodejs.org/api/tls.html#tlsrootcertificates) از همان image قفل‌شده به یک PEM نوشته و مسیر آن با `Acquire::https::CaInfo` صریحاً به APT داده می‌شود؛ سپس بستهٔ رسمی `ca-certificates` نصب می‌شود. مرحلهٔ به‌روزرسانی بسته‌های سیستم‌عامل در هر دو image اجرا می‌شود.
+
+بستهٔ `makan-apt-fix.tar.gz` که در ادامه معرفی شده، اصلاح APT و PyPI را با هم دارد. آن را روی سورس موجود باز کنید و `up` بزنید؛ به اجرای دوبارهٔ `init` یا حذف cache نیاز نیست. فایل `.env.production` و داده‌ها در این بسته نیستند.
+
+برای انتخاب منبع دیگر در زمان build، از یکی از میزبان‌های HTTPS پشتیبانی‌شده استفاده کنید: `https://deb.debian.org`، `https://mirrors.aliyun.com`، `https://mirrors.tuna.tsinghua.edu.cn` یا `https://mirrors.ustc.edu.cn`. نمونهٔ بازگشت به منبع رسمی روی HTTPS:
+
+```bash
+MAKAN_DEBIAN_MIRROR_URL=https://deb.debian.org bash ./deploy.sh up
+```
+
+این متغیر فقط هنگام build به هر دو سرویس لندینگ داده می‌شود؛ آن را به `.env.production` اضافه نکنید. در صورت نیاز می‌توان آن را همراه با `MAKAN_PYPI_MIRROR_URL` در همان فرمان تعیین کرد.
+
 ### خطای `Failed to download nh3` یا timeout روی `files.pythonhosted.org`
 
 این خطا در مرحلهٔ دانلود وابستگی‌های Python است. خط `CANCELED` در مرحلهٔ موازی OS، به‌تنهایی خطای apt را نشان نمی‌دهد؛ Docker با شکست مرحلهٔ دانلود، کارهای موازی را لغو می‌کند.
 
 Dockerfile API اکنون از mirror HTTPS عمومی `https://mirrors.aliyun.com/pypi` استفاده می‌کند. فایل `install_locked.py` فقط URL دریافت توزیع‌ها را در نسخهٔ داخل build تغییر می‌دهد؛ `uv sync --frozen` همان نسخه‌ها و hashهای `uv.lock` را بررسی می‌کند و در پایان، بایت‌های lockfile اصلی بازگردانده می‌شوند. TLS و بررسی hash فعال می‌مانند. نام، نسخه و گراف وابستگی‌ها تغییر نکرده‌اند.
 
-برای سروری که سورس نسخهٔ قبلی را دارد، بستهٔ کوچک `output/deployment/makan-build-fix.tar.gz` را از کامپیوتر توسعه بفرستید:
+برای سروری که سورس نسخهٔ قبلی را دارد، بستهٔ اصلاح دانلودهای APT و PyPI را از کامپیوتر توسعه بفرستید:
 
 ```bash
-scp /home/omidreza-bagheriyan/Desktop/MakanApp/output/deployment/makan-build-fix.tar.gz root@89.46.217.168:/root/
+scp /home/omidreza-bagheriyan/Desktop/MakanApp/output/deployment/makan-apt-fix.tar.gz root@89.46.217.168:/root/
 ```
 
 سپس در ترمینال root سرور:
 
 ```bash
 cd /opt/makanapp
-tar -xzf /root/makan-build-fix.tar.gz -C /opt/makanapp
+tar -xzf /root/makan-apt-fix.tar.gz -C /opt/makanapp
 bash ./deploy.sh up
 ```
 
@@ -278,15 +294,17 @@ MAKAN_PYPI_MIRROR_URL=https://pypi.tuna.tsinghua.edu.cn bash ./deploy.sh up
 
 برای بازگشت صریح به PyPI اصلی، مقدار این متغیر را خالی قرار دهید. روی سرور تازه، `bash ./deploy.sh up` به‌صورت پیش‌فرض از mirror تنظیم‌شده در Dockerfile استفاده می‌کند. [تنظیم indexهای uv](https://docs.astral.sh/uv/concepts/indexes/)
 
-## ۹. اعتبارسنجی این بسته — ۶ نوامبر ۲۰۲۶
+## ۹. اعتبارسنجی این بسته — ۷ نوامبر ۲۰۲۶
 
-بررسی نحو Bash، ShellCheck، مدل نهایی Compose و ۱۷ آزمون حفظ کلیدها، جلوگیری از حذف volume، واردکردن تنظیمات قدیمی، جداسازی محیط‌ها و دانلود قفل‌شده موفق بودند. سه آزمون بازیابی پس از import اشتباه اضافه شده‌اند؛ نبودن فایل قدیمی کلید جدید نمی‌سازد و کلید فعلی را تغییر نمی‌دهد. پنج آزمون mirror نیز حفظ همهٔ نسخه‌ها/hashها و بازگرداندن lockfile پس از شکست را بررسی می‌کنند. بررسی زندهٔ DNS هر شش نام و GET مستندات هر دو API نیز موفق بود. چهار image پنل‌ها، image دیتابیس و پراکسی Caddy ساخته شدند. خطای CSS Modules موجود در `shell.module.css` هر دو کلاینت که build production را متوقف می‌کرد اصلاح شد.
+بررسی نحو Bash و sh، مدل نهایی Compose و ۲۱ آزمون تنظیمات و دانلودها موفق بودند. این آزمون‌ها حفظ کلیدها، جلوگیری از حذف volume، واردکردن تنظیمات قدیمی، جداسازی محیط‌ها، نسخه‌ها و hashهای قفل‌شدهٔ Python، حفظ تنظیمات امضای Debian و نپذیرفتن mirror نامعتبر را بررسی می‌کنند. نبودن فایل قدیمی کلید جدید نمی‌سازد و کلید فعلی را تغییر نمی‌دهد. خطای CSS Modules موجود در `shell.module.css` هر دو کلاینت که build production را متوقف می‌کرد نیز اصلاح شده است.
 
 پس از اصلاح mirror، مرحلهٔ واقعی Docker builder API، نصب ۳۵ وابستگی و ساخت پروژهٔ `makan-landing-api==0.10.0` موفق شد. `nh3==0.3.7` در محیط ساخته‌شده موجود است و SHA-256 فایل `uv.lock` داخل image با فایل اصلی برابر است. آزمون واقعی با uv نیز دریافت wheel معتبر را پذیرفت و همان دریافت را با hash قفل‌شدهٔ نادرست رد کرد.
 
-آزمون یکپارچه با ۹ سرویس در شبکه‌ها و volumeهای موقت، فقط روی پورت‌های loopback اجرا شد. HTTPS با CA خصوصی آزمایشی، مسیریابی هر پنج سایت، ریدایرکت HTTP و `www`، اتصال هر چهار پنل به API درست، ورود دوبارهٔ بدون تکرار ۲۶ رکورد محتوا، dump/restore دیتابیس، آرشیو رسانه و گواهی‌ها با کاربر غیرریشه و حفظ داده پس از حذف و ساخت مجدد کانتینرها موفق بودند. منابع موقت آزمون پاک شدند و سرویس‌های قبلی کامپیوتر تغییر نکردند.
+پس از اصلاح APT، ساخت کامل imageهای اصلی `makan-platform-landing-api:local` و `makan-platform-landing-web:local` از Dockerfileهای تولید موفق شد. فهرست‌های امضاشدهٔ Debian روی HTTPS دریافت شدند، بستهٔ CA در وب نصب شد و ارتقای OS در API و وب کامل شد؛ هر دو image نسخهٔ `apt 3.0.4`، `liblzma5 5.8.1-1+deb13u2` و `ca-certificates 20250419+deb13u1` دارند و با کاربر `10001:10001` اجرا می‌شوند.
 
-**محدودیت بررسی:** در آزمون یکپارچهٔ اولیه، دسترسی این محیط به PyPI و مخازن به‌روزرسانی Debian timeout داشت. آن آزمون runtime از وابستگی‌های کش‌شده با ۳۶ نسخهٔ منطبق بر `uv.lock` و سورس فعلی API استفاده کرد؛ image آزمایشی وب نیز کامپایل فعلی را بدون مرحلهٔ آنلاین به‌روزرسانی OS اجرا کرد. اصلاح mirror اکنون دانلود و ساخت واقعی مرحلهٔ builder API را تأیید کرده است؛ تکمیل مرحلهٔ runtime با به‌روزرسانی OS، استقرار روی سرور مقصد و صدور گواهی عمومی هنوز تأیید نشده‌اند. imageهای دارای تگ `:smoke` مخصوص آزمون‌اند؛ اسکریپت تولید از آن‌ها استفاده نمی‌کند. مرحلهٔ به‌روزرسانی OS در Dockerfileهای تولید حفظ شده و در خطای مخزن متوقف می‌شود؛ cache و مهلت دانلود Python نیز تنظیم شده‌اند.
+آزمون یکپارچهٔ جدید از imageهای اصلی تولید، بدون override یا حذف مرحلهٔ APT، استفاده کرد. هر ۹ سرویس در شبکه‌ها و volumeهای موقت و فقط روی پورت‌های loopback اجرا شدند. HTTPS با CA خصوصی آزمایشی، مسیریابی هر پنج سایت، ریدایرکت HTTP و `www`، اتصال هر چهار پنل به API درست، ورود دوبارهٔ بدون تکرار ۲۶ رکورد محتوا، dump/restore دیتابیس، آرشیو رسانه و گواهی‌ها با کاربر غیرریشه و حفظ داده پس از حذف و ساخت مجدد کانتینرها موفق بودند. منابع موقت آزمون پاک شدند و سرویس‌های قبلی کامپیوتر تغییر نکردند.
+
+**محدودیت بررسی:** این اعتبارسنجی در محیط محلی انجام شد. استقرار روی `89.46.217.168` و صدور گواهی عمومی نیازمند اجرای `deploy.sh up` روی همان سرور است؛ آزمون محلی از CA خصوصی استفاده کرد. راه‌انداز تولید پس از ساخت و اجرا، اتصال بک‌اندها و HTTPS عمومی هر دامنه را بررسی می‌کند.
 
 اجرای دوبارهٔ آزمون‌های تنظیمات:
 
