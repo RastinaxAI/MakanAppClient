@@ -188,13 +188,13 @@ sudo bash ./deploy.sh verify
 
 پس از انتقال سورس جدید، دوباره `sudo bash ./deploy.sh up` را اجرا کنید. پیش از migration، از داده‌های موجود لندینگ نسخهٔ پشتیبان گرفته می‌شود. هنگام backup و migration، وب/API و نگهداری لندینگ موقتاً متوقف می‌شوند. چهار پنل تا مرحلهٔ جایگزینی کانتینرهای خودشان کار می‌کنند. این روش استقرار، زمان کوتاه توقف دارد.
 
-اگر imageها همین حالا از **همین سورس** ساخته شده‌اند و فقط ادامهٔ مرحلهٔ ناموفق نصب لازم است:
+اگر imageها همین حالا از **همین نسخهٔ برنامه و Dockerfileها** ساخته شده‌اند و فقط ادامهٔ مرحلهٔ ناموفق نصب لازم است:
 
 ```bash
 sudo env MAKAN_SKIP_BUILD=1 bash ./deploy.sh up
 ```
 
-بعد از تغییر سورس از این گزینه استفاده نکنید. اسکریپت قفل اجرای هم‌زمان دارد؛ migration و ورود محتوا هرکدام مهلت ۳۰۰ ثانیه دارند و خروجی زنده چاپ می‌شود. اگر خطای migration رخ دهد، ادامهٔ انتشار متوقف می‌شود و لازم است قبل از فعال‌کردن دوبارهٔ لندینگ، خطا بررسی شود.
+بعد از تغییر سورس برنامه یا Dockerfileها از این گزینه استفاده نکنید. تغییر راه‌انداز میزبان به‌تنهایی نیازمند ساخت دوبارهٔ imageها نیست. اسکریپت قفل اجرای هم‌زمان دارد؛ migration و ورود محتوا هرکدام مهلت ۳۰۰ ثانیه دارند، ورودی تعاملی ندارند و پس از موفقیت، پیام `completed` و مدت اجرا چاپ می‌شود. اگر خطای migration رخ دهد، ادامهٔ انتشار متوقف می‌شود و لازم است قبل از فعال‌کردن دوبارهٔ لندینگ، خطا بررسی شود.
 
 شروع کانتینر به‌تنهایی به معنای آماده‌بودن برنامه نیست. Compose این استقرار منتظر healthcheckهای وابستگی‌ها می‌ماند؛ پس از آن، اسکریپت اتصال API را از داخل هر چهار پنل، گواهی معتبر HTTPS، ریدایرکت HTTP و هویت سرویس هر دامنه را بررسی می‌کند. [ترتیب راه‌اندازی و سلامت سرویس‌ها در Docker Compose](https://docs.docker.com/compose/how-tos/startup-order/)
 
@@ -248,13 +248,35 @@ sudo bash ./deploy.sh down
 - **ورود مدیر پنل رد می‌شود:** کلید نقش مالک در فایل محیط باید با همان بک‌اند منطبق باشد. مجوز مالک را برای عبور از این خطا غیرفعال نکنید.
 - **Build به registry نمی‌رسد:** دسترسی سرور به Docker Hub، GHCR، npm و منابع Python را اصلاح کنید. lockfileها و digestهای Dockerfile را بدون بررسی تغییر ندهید.
 
+### توقف روی `Running migration` و پیام `Container ... Created`
+
+در لاگ گزارش‌شده، ساخت هر هشت image، اعتبارسنجی Caddy و backup موفق بودند. توقف در اجرای migration رخ داد. رفتار نسخهٔ قبلی در یک ترمینال واقعی شبیه SSH بازتولید شد: `docker compose run -T` همچنان stdin باز دارد و اجرای آن زیر `timeout` بدون `--foreground` می‌تواند کلاینت را هنگام خواندن ترمینال با `SIGTTIN` معلق کند. حتی تمام‌شدن برنامهٔ داخل کانتینر الزاماً کلاینت متوقف‌شده را آزاد نمی‌کند. [گزینهٔ interactive در Compose](https://docs.docker.com/reference/cli/docker/compose/run/)، [رفتار foreground در timeout](https://manpages.debian.org/trixie/coreutils/timeout.1.en.html)
+
+نسخهٔ اصلاح‌شده، migration و ورود محتوا را با `timeout --foreground`، `--interactive=false` و stdin متصل به `/dev/null` اجرا می‌کند. تابع مشترک `deployment/jobs.sh` همان کدی است که در آزمون ترمینال هم اجرا می‌شود؛ خطا و timeout همچنان استقرار را متوقف و کانتینر همان کار را پاک می‌کنند.
+
+اگر اجرای قبلی هنوز معلق است، اتصال SSH گیرکرده را ببندید و از اتصال تازه ادامه دهید. فایل قفل را حذف نکنید؛ نسخهٔ پشتیبان، کلیدها و دیتابیس باید حفظ شوند. روی **کامپیوتر توسعه** بستهٔ جدید را بفرستید:
+
+```bash
+scp /home/omidreza-bagheriyan/Desktop/MakanApp/output/deployment/makan-migration-fix.tar.gz root@89.46.217.168:/root/
+```
+
+سپس در اتصال SSH تازهٔ سرور:
+
+```bash
+cd /opt/makanapp &&
+tar -xzf /root/makan-migration-fix.tar.gz -C /opt/makanapp &&
+MAKAN_SKIP_BUILD=1 bash ./deploy.sh up
+```
+
+گزینهٔ بالا برای همین لاگ است که ساخت **همهٔ imageها** در آن موفق بوده است. اگر دانلود یا build کامل نشده، `bash ./deploy.sh up` را بدون `MAKAN_SKIP_BUILD` اجرا کنید. این بسته، اصلاحات قبلی APT و PyPI را هم دارد و فایل محیط یا داده در آن نیست.
+
 ### خطای `apt-get update`، timeout یا `404` روی `deb.debian.org`
 
 اگر مرحلهٔ Python کامل شد ولی `runtime` با کد ۱۰۰ متوقف شد، دریافت فهرست یا بسته‌های Debian شکست خورده است. Dockerfileهای **هر دو سرویس API و وب لندینگ** اکنون از `https://mirrors.aliyun.com` برای `debian` و `debian-security` استفاده می‌کنند. اسکریپت `configure_apt.sh` فقط میزبان دریافت را تغییر می‌دهد؛ suiteهای `trixie`، `trixie-updates` و `trixie-security`، مؤلفه‌ها و `Signed-By` اصلی حفظ می‌شوند. APT همچنان امضا و اعتبار metadata و TLS را بررسی می‌کند و در خطای دانلود متوقف می‌شود. [احراز اصالت مخازن در APT](https://manpages.debian.org/trixie/apt/apt-secure.8.en.html)، [mirror عمومی Aliyun](https://developer.aliyun.com/mirror/debian)
 
 image پایهٔ Node slim، CA سیستم‌عامل ندارد. پیش از اولین اتصال HTTPS، [ریشه‌های عمومی تعبیه‌شده در Node](https://nodejs.org/api/tls.html#tlsrootcertificates) از همان image قفل‌شده به یک PEM نوشته و مسیر آن با `Acquire::https::CaInfo` صریحاً به APT داده می‌شود؛ سپس بستهٔ رسمی `ca-certificates` نصب می‌شود. مرحلهٔ به‌روزرسانی بسته‌های سیستم‌عامل در هر دو image اجرا می‌شود.
 
-بستهٔ `makan-apt-fix.tar.gz` که در ادامه معرفی شده، اصلاح APT و PyPI را با هم دارد. آن را روی سورس موجود باز کنید و `up` بزنید؛ به اجرای دوبارهٔ `init` یا حذف cache نیاز نیست. فایل `.env.production` و داده‌ها در این بسته نیستند.
+بستهٔ `makan-migration-fix.tar.gz` که در این راهنما معرفی شده، اصلاح APT، PyPI و اجرای migration را با هم دارد. آن را روی سورس موجود باز کنید و `up` بزنید؛ به اجرای دوبارهٔ `init` یا حذف cache نیاز نیست. فایل `.env.production` و داده‌ها در این بسته نیستند.
 
 برای انتخاب منبع دیگر در زمان build، از یکی از میزبان‌های HTTPS پشتیبانی‌شده استفاده کنید: `https://deb.debian.org`، `https://mirrors.aliyun.com`، `https://mirrors.tuna.tsinghua.edu.cn` یا `https://mirrors.ustc.edu.cn`. نمونهٔ بازگشت به منبع رسمی روی HTTPS:
 
@@ -273,14 +295,14 @@ Dockerfile API اکنون از mirror HTTPS عمومی `https://mirrors.aliyun.c
 برای سروری که سورس نسخهٔ قبلی را دارد، بستهٔ اصلاح دانلودهای APT و PyPI را از کامپیوتر توسعه بفرستید:
 
 ```bash
-scp /home/omidreza-bagheriyan/Desktop/MakanApp/output/deployment/makan-apt-fix.tar.gz root@89.46.217.168:/root/
+scp /home/omidreza-bagheriyan/Desktop/MakanApp/output/deployment/makan-migration-fix.tar.gz root@89.46.217.168:/root/
 ```
 
 سپس در ترمینال root سرور:
 
 ```bash
 cd /opt/makanapp
-tar -xzf /root/makan-apt-fix.tar.gz -C /opt/makanapp
+tar -xzf /root/makan-migration-fix.tar.gz -C /opt/makanapp
 bash ./deploy.sh up
 ```
 
@@ -296,13 +318,15 @@ MAKAN_PYPI_MIRROR_URL=https://pypi.tuna.tsinghua.edu.cn bash ./deploy.sh up
 
 ## ۹. اعتبارسنجی این بسته — ۷ نوامبر ۲۰۲۶
 
-بررسی نحو Bash و sh، مدل نهایی Compose و ۲۱ آزمون تنظیمات و دانلودها موفق بودند. این آزمون‌ها حفظ کلیدها، جلوگیری از حذف volume، واردکردن تنظیمات قدیمی، جداسازی محیط‌ها، نسخه‌ها و hashهای قفل‌شدهٔ Python، حفظ تنظیمات امضای Debian و نپذیرفتن mirror نامعتبر را بررسی می‌کنند. نبودن فایل قدیمی کلید جدید نمی‌سازد و کلید فعلی را تغییر نمی‌دهد. خطای CSS Modules موجود در `shell.module.css` هر دو کلاینت که build production را متوقف می‌کرد نیز اصلاح شده است.
+بررسی نحو Bash و sh، مدل نهایی Compose و ۲۴ آزمون تنظیمات، دانلودها و اجرای کارها موفق بودند. این آزمون‌ها حفظ کلیدها، جلوگیری از حذف volume، واردکردن تنظیمات قدیمی، جداسازی محیط‌ها، نسخه‌ها و hashهای قفل‌شدهٔ Python، حفظ تنظیمات امضای Debian و نپذیرفتن mirror نامعتبر را بررسی می‌کنند. سه آزمون جدید، پایان عادی، خروج ناموفق و timeout را در ترمینال دارای controlling TTY و با همان تابع تولید بررسی می‌کنند؛ stdin بسته است و کانتینر متعلق به هر کار پاک می‌شود. نبودن فایل قدیمی کلید جدید نمی‌سازد و کلید فعلی را تغییر نمی‌دهد. خطای CSS Modules موجود در `shell.module.css` هر دو کلاینت که build production را متوقف می‌کرد نیز اصلاح شده است.
 
 پس از اصلاح mirror، مرحلهٔ واقعی Docker builder API، نصب ۳۵ وابستگی و ساخت پروژهٔ `makan-landing-api==0.10.0` موفق شد. `nh3==0.3.7` در محیط ساخته‌شده موجود است و SHA-256 فایل `uv.lock` داخل image با فایل اصلی برابر است. آزمون واقعی با uv نیز دریافت wheel معتبر را پذیرفت و همان دریافت را با hash قفل‌شدهٔ نادرست رد کرد.
 
 پس از اصلاح APT، ساخت کامل imageهای اصلی `makan-platform-landing-api:local` و `makan-platform-landing-web:local` از Dockerfileهای تولید موفق شد. فهرست‌های امضاشدهٔ Debian روی HTTPS دریافت شدند، بستهٔ CA در وب نصب شد و ارتقای OS در API و وب کامل شد؛ هر دو image نسخهٔ `apt 3.0.4`، `liblzma5 5.8.1-1+deb13u2` و `ca-certificates 20250419+deb13u1` دارند و با کاربر `10001:10001` اجرا می‌شوند.
 
 آزمون یکپارچهٔ جدید از imageهای اصلی تولید، بدون override یا حذف مرحلهٔ APT، استفاده کرد. هر ۹ سرویس در شبکه‌ها و volumeهای موقت و فقط روی پورت‌های loopback اجرا شدند. HTTPS با CA خصوصی آزمایشی، مسیریابی هر پنج سایت، ریدایرکت HTTP و `www`، اتصال هر چهار پنل به API درست، ورود دوبارهٔ بدون تکرار ۲۶ رکورد محتوا، dump/restore دیتابیس، آرشیو رسانه و گواهی‌ها با کاربر غیرریشه و حفظ داده پس از حذف و ساخت مجدد کانتینرها موفق بودند. منابع موقت آزمون پاک شدند و سرویس‌های قبلی کامپیوتر تغییر نکردند.
+
+در آزمون یکپارچهٔ ترمینال، migration واقعی از همان تابع `run_job` راه‌انداز در ۳ ثانیه تمام شد؛ ورود ۲۶ رکورد در ۳ ثانیه و اجرای دوبارهٔ بدون ایجاد رکورد تکراری در ۲ ثانیه کامل شدند. کنترل‌کنندهٔ ترمینال در این آزمون حفظ شد تا حالت معلق‌ماندن نسخهٔ قبلی پوشش داده شود.
 
 **محدودیت بررسی:** این اعتبارسنجی در محیط محلی انجام شد. استقرار روی `89.46.217.168` و صدور گواهی عمومی نیازمند اجرای `deploy.sh up` روی همان سرور است؛ آزمون محلی از CA خصوصی استفاده کرد. راه‌انداز تولید پس از ساخت و اجرا، اتصال بک‌اندها و HTTPS عمومی هر دامنه را بررسی می‌کند.
 

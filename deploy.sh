@@ -19,6 +19,8 @@ say() { printf '\n[MakanApp] %s\n' "$*"; }
 die() { printf '\nERROR: %s\n' "$*" >&2; exit 1; }
 cfg() { python3 "$ROOT/deployment/config.py" "$@" --env-file "$ENV_FILE"; }
 dc() { "${COMPOSE[@]}" "$@"; }
+# shellcheck source=deployment/jobs.sh
+. "$ROOT/deployment/jobs.sh"
 
 usage() {
   cat <<'HELP'
@@ -43,6 +45,7 @@ Optional environment variables:
   MAKAN_DOCKER_HOST           Default: unix:///var/run/docker.sock
   MAKAN_SKIP_BUILD=1          Reuse images already built from these exact sources
   MAKAN_PYPI_MIRROR_URL       Optional public HTTPS PyPI mirror base for the landing API build
+  MAKAN_DEBIAN_MIRROR_URL     Optional supported HTTPS Debian mirror for both landing images
 See DEPLOYMENT.fa.md before migrating an existing production landing site.
 HELP
 }
@@ -182,18 +185,6 @@ preflight() {
   check_ports
   cfg dns
   cfg backend
-}
-
-run_job() {
-  local name="$1" limit="$2" service="$3" result=0
-  shift 3
-  JOB_NAME="makan-platform-${name}-$$"
-  say "Running $name (timeout ${limit}s; live output follows)"
-  timeout --signal=TERM --kill-after=20s "${limit}s" \
-    "${COMPOSE[@]}" run --rm --no-deps -T --name "$JOB_NAME" "$service" "$@" || result=$?
-  "${DOCKER[@]}" rm -f "$JOB_NAME" >/dev/null 2>&1 || true
-  JOB_NAME=''
-  (( result == 0 )) || die "$name failed (exit $result). Deployment stopped; review the output before retrying."
 }
 
 quiesce_landing() {

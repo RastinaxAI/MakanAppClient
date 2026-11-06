@@ -19,6 +19,7 @@ import uuid
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 from deployment import config
+from deployment.tests.terminal import job_command, run_terminal
 
 DOCKER = ["docker", "--host", os.environ.get("MAKAN_DOCKER_HOST", "unix:///var/run/docker.sock")]
 ENV = {key: value for key, value in os.environ.items() if key not in config.dotenv(config.TEMPLATE)}
@@ -83,9 +84,16 @@ def main():
         compose = DOCKER + ["compose", "--env-file", "/dev/null", "-p", project, "-f", str(compose_file)]
         try:
             run(compose + ["up", "-d", "--no-build", "--wait", "--wait-timeout", "180", "landing-db"])
-            run(compose + ["run", "--rm", "--no-deps", "-T", "landing-migrate", "alembic", "upgrade", "head"])
-            for _ in range(2):
-                run(compose + ["run", "--rm", "--no-deps", "-T", "landing-api", "python", "-u", "-m", "app.commands.import_content"])
+            jobs = [("migration", "landing-migrate", ["alembic", "upgrade", "head"]),
+                    ("content-import", "landing-api", ["python", "-u", "-m", "app.commands.import_content"]),
+                    ("content-import-repeat", "landing-api", ["python", "-u", "-m", "app.commands.import_content"])]
+            for name, service, command in jobs:
+                job = job_command(ROOT / "deployment/jobs.sh", name, 120, service, DOCKER, compose, command)
+                status, output = run_terminal(job, env=ENV, timeout=150, live=True)
+                if status != 0:
+                    raise RuntimeError(f"Terminal job {name} failed (exit {status}):\n{output}")
+                assert name + " completed" in output
+            print("PASS real migration + content imports via production runner in a controlling terminal", flush=True)
             run(compose + ["up", "-d", "--no-build", "--wait", "--wait-timeout", "240"])
             edge_id = run(compose + ["ps", "-q", "edge"], capture_output=True, text=True).stdout.strip()
             certificate = directory / "root.crt"
