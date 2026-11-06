@@ -1,0 +1,261 @@
+name: makan-platform
+
+x-service: &service
+  restart: unless-stopped
+  init: true
+  cap_drop: [ALL]
+  security_opt: [no-new-privileges:true]
+  stop_grace_period: 30s
+  logging:
+    driver: json-file
+    options: {max-size: 10m, max-file: '3'}
+
+x-panel: &panel
+  <<: *service
+  read_only: true
+  user: '1000:1000'
+  tmpfs:
+    - /tmp:mode=1777,size=128m
+    - /app/.next/cache:uid=1000,gid=1000,mode=0700,size=128m
+  mem_limit: 768m
+  pids_limit: 256
+
+x-panel-environment: &panel-environment
+  NODE_ENV: production
+  NEXT_TELEMETRY_DISABLED: '1'
+  HOSTNAME: 0.0.0.0
+  PORT: '3000'
+  SESSION_DIRECTORY: /app/.makan-sessions
+  COOKIE_SECURE: 'true'
+
+x-client-health: &client-health
+  test: [CMD, node, -e, "fetch('http://127.0.0.1:3000/enter', {signal: AbortSignal.timeout(4000)}).then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+  interval: 15s
+  timeout: 5s
+  start_period: 30s
+  retries: 5
+
+x-management-health: &management-health
+  test: [CMD, node, -e, "fetch('http://127.0.0.1:3000/api/health', {signal: AbortSignal.timeout(4000)}).then(async r=>{const b=await r.json();process.exit(r.ok&&b.application==='makan-management-panel'&&b.status==='ok'?0:1)}).catch(()=>process.exit(1))"]
+  interval: 15s
+  timeout: 5s
+  start_period: 30s
+  retries: 5
+
+x-landing-environment: &landing-environment
+  APP_ENV: production
+  AUTH_OTP_DEBUG: 'false'
+  AUTH_LEGACY_PASSWORD_LOGIN: 'false'
+  AUTH_SECRET: ${MAKAN_LANDING_AUTH_SECRET:?Run ./deploy.sh init}
+  AUTH_MFA_KEY: ${MAKAN_LANDING_AUTH_MFA_KEY:?Run ./deploy.sh init}
+  PROXY_SHARED_SECRET: ${MAKAN_LANDING_PROXY_SHARED_SECRET:?Run ./deploy.sh init}
+  AUTH_ALLOWED_ORIGINS: '["https://makanapp.org"]'
+  DATABASE_URL: postgresql+psycopg://makan_api:${MAKAN_LANDING_API_DB_PASSWORD:?Run ./deploy.sh init}@landing-db:5432/${MAKAN_LANDING_DB_NAME:-makan_landing}
+  MEDIA_ROOT: /srv/media
+  SEO_INDEXING_ENABLED: ${MAKAN_LANDING_SEO_INDEXING_ENABLED:-true}
+  ANALYTICS_ENABLED: ${MAKAN_LANDING_ANALYTICS_ENABLED:-false}
+
+services:
+  app:
+    <<: *panel
+    image: makan-platform-app:local
+    build: {context: ./app/web, target: runtime}
+    environment:
+      <<: *panel-environment
+      BACKEND_BASE_URL: http://94.184.32.84
+      APP_ORIGIN: https://app.makanapp.org
+      SESSION_SECRET: ${MAKAN_APP_SESSION_SECRET:?Run ./deploy.sh init}
+      CLIENT_COOKIE_NAME: makan_app_session
+    networks: [app]
+    volumes: [app_sessions:/app/.makan-sessions]
+    healthcheck: *client-health
+
+  testapp:
+    <<: *panel
+    image: makan-platform-testapp:local
+    build: {context: ./testapp/web, target: runtime}
+    environment:
+      <<: *panel-environment
+      BACKEND_BASE_URL: http://94.184.32.84:8090
+      APP_ORIGIN: https://testapp.makanapp.org
+      SESSION_SECRET: ${MAKAN_TESTAPP_SESSION_SECRET:?Run ./deploy.sh init}
+      CLIENT_COOKIE_NAME: makan_testapp_session
+    networks: [testapp]
+    volumes: [testapp_sessions:/app/.makan-sessions]
+    healthcheck: *client-health
+
+  management:
+    <<: *panel
+    image: makan-platform-management:local
+    build: {context: ./management, target: runtime}
+    environment:
+      <<: *panel-environment
+      BACKEND_BASE_URL: http://94.184.32.84
+      APP_ORIGIN: https://management.makanapp.org
+      SESSION_SECRET: ${MAKAN_MANAGEMENT_SESSION_SECRET:?Run ./deploy.sh init}
+      PLATFORM_OWNER_ROLE_KEYS: ${MAKAN_MANAGEMENT_OWNER_ROLE_KEYS:-["PlatformOwner"]}
+      ALLOW_UNCONFIGURED_OWNER_OTP_TESTING: 'false'
+      PERMISSION_BINDINGS: '{}'
+    networks: [management]
+    volumes: [management_sessions:/app/.makan-sessions]
+    healthcheck: *management-health
+
+  testmanagement:
+    <<: *panel
+    image: makan-platform-testmanagement:local
+    build: {context: ./testmanagement, target: runtime}
+    environment:
+      <<: *panel-environment
+      BACKEND_BASE_URL: http://94.184.32.84:8090
+      APP_ORIGIN: https://testmanagement.makanapp.org
+      SESSION_SECRET: ${MAKAN_TESTMANAGEMENT_SESSION_SECRET:?Run ./deploy.sh init}
+      PLATFORM_OWNER_ROLE_KEYS: ${MAKAN_TESTMANAGEMENT_OWNER_ROLE_KEYS:-["PlatformOwner"]}
+      ALLOW_UNCONFIGURED_OWNER_OTP_TESTING: 'false'
+      PERMISSION_BINDINGS: '{}'
+    networks: [testmanagement]
+    volumes: [testmanagement_sessions:/app/.makan-sessions]
+    healthcheck: *management-health
+
+  landing-db:
+    <<: *service
+    image: makan-platform-landing-db:local
+    build: {context: ./landing/infrastructure/postgres, dockerfile: Dockerfile.production}
+    environment:
+      POSTGRES_DB: ${MAKAN_LANDING_DB_NAME:-makan_landing}
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${MAKAN_LANDING_POSTGRES_PASSWORD:?Run ./deploy.sh init}
+      MIGRATION_DB_PASSWORD: ${MAKAN_LANDING_MIGRATION_DB_PASSWORD:?Run ./deploy.sh init}
+      API_DB_PASSWORD: ${MAKAN_LANDING_API_DB_PASSWORD:?Run ./deploy.sh init}
+    volumes:
+      - landing_postgres:/var/lib/postgresql/data
+      - ./landing/infrastructure/postgres/init-roles.sh:/docker-entrypoint-initdb.d/10-roles.sh:ro
+    networks: [landing_database]
+    mem_limit: 768m
+    shm_size: 256m
+    pids_limit: 128
+    healthcheck:
+      test: [CMD-SHELL, 'pg_isready -U postgres -d "$$POSTGRES_DB"']
+      interval: 5s
+      timeout: 3s
+      start_period: 20s
+      retries: 30
+
+  landing-migrate:
+    <<: *service
+    profiles: [tools]
+    restart: 'no'
+    image: makan-platform-landing-api:local
+    build: {context: ./landing/apps/api}
+    command: [alembic, upgrade, head]
+    environment:
+      <<: *landing-environment
+      DATABASE_URL: postgresql+psycopg://makan_migrator:${MAKAN_LANDING_MIGRATION_DB_PASSWORD:?Run ./deploy.sh init}@landing-db:5432/${MAKAN_LANDING_DB_NAME:-makan_landing}
+      DB_STATEMENT_TIMEOUT_MS: '30000'
+    networks: [landing_database]
+    read_only: true
+    tmpfs: [/tmp:size=128m]
+    depends_on: {landing-db: {condition: service_healthy}}
+
+  landing-api:
+    <<: *service
+    image: makan-platform-landing-api:local
+    build: {context: ./landing/apps/api}
+    environment: *landing-environment
+    networks: [landing_application, landing_database, landing_egress]
+    volumes: [landing_media:/srv/media]
+    read_only: true
+    tmpfs: [/tmp:size=128m]
+    mem_limit: 512m
+    pids_limit: 128
+    depends_on: {landing-db: {condition: service_healthy}}
+    healthcheck:
+      test: [CMD, python, -c, "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/v1/health/ready', timeout=5)"]
+      interval: 10s
+      timeout: 6s
+      start_period: 30s
+      retries: 10
+
+  landing-web:
+    <<: *service
+    image: makan-platform-landing-web:local
+    build: {context: ./landing, dockerfile: apps/web/Dockerfile}
+    environment:
+      NODE_ENV: production
+      NEXT_TELEMETRY_DISABLED: '1'
+      API_INTERNAL_URL: http://landing-api:8000
+    networks: [landing_application]
+    volumes: [landing_web_cache:/srv/makan/apps/web/.next/cache]
+    read_only: true
+    tmpfs: [/tmp:size=128m]
+    mem_limit: 768m
+    pids_limit: 256
+    depends_on: {landing-api: {condition: service_healthy}}
+
+  landing-maintenance:
+    <<: *service
+    image: makan-platform-landing-api:local
+    command: [python, -m, app.commands.maintenance, --state-file, /srv/operations/maintenance.json]
+    environment: *landing-environment
+    networks: [landing_database]
+    volumes: [landing_operations:/srv/operations]
+    read_only: true
+    tmpfs: [/tmp:size=64m]
+    mem_limit: 192m
+    pids_limit: 64
+    depends_on: {landing-api: {condition: service_healthy}}
+    healthcheck:
+      test: [CMD, python, -m, app.commands.maintenance, --check, --state-file, /srv/operations/maintenance.json]
+      interval: 60s
+      timeout: 5s
+      start_period: 45s
+      retries: 3
+
+  edge:
+    <<: *service
+    image: makan-platform-edge:local
+    build: {context: ./deployment, dockerfile: Dockerfile.caddy}
+    environment:
+      ACME_EMAIL: ${MAKAN_ACME_EMAIL:-rastinaxoffice@gmail.com}
+      ACME_CA: ${MAKAN_ACME_CA:-https://acme-v02.api.letsencrypt.org/directory}
+      PROXY_SHARED_SECRET: ${MAKAN_LANDING_PROXY_SHARED_SECRET:?Run ./deploy.sh init}
+    ports: ['80:8080', '443:8443']
+    networks: [edge, app, testapp, management, testmanagement, landing_application]
+    volumes: [caddy_data:/data, caddy_config:/config]
+    read_only: true
+    tmpfs: [/tmp:size=64m]
+    mem_limit: 256m
+    pids_limit: 128
+    depends_on:
+      app: {condition: service_healthy}
+      testapp: {condition: service_healthy}
+      management: {condition: service_healthy}
+      testmanagement: {condition: service_healthy}
+      landing-web: {condition: service_healthy}
+
+networks:
+  edge:
+  app:
+  testapp:
+  management:
+  testmanagement:
+  landing_application: {internal: true}
+  landing_database: {internal: true}
+  landing_egress:
+
+volumes:
+  app_sessions:
+  testapp_sessions:
+  management_sessions:
+  testmanagement_sessions:
+  landing_postgres:
+    name: ${MAKAN_LANDING_DB_VOLUME:-makan-platform_landing_postgres}
+    external: ${MAKAN_LANDING_EXTERNAL_VOLUMES:-false}
+  landing_media:
+    name: ${MAKAN_LANDING_MEDIA_VOLUME:-makan-platform_landing_media}
+    external: ${MAKAN_LANDING_EXTERNAL_VOLUMES:-false}
+  landing_web_cache:
+  landing_operations:
+    name: ${MAKAN_LANDING_OPERATIONS_VOLUME:-makan-platform_landing_operations}
+    external: ${MAKAN_LANDING_EXTERNAL_VOLUMES:-false}
+  caddy_data:
+  caddy_config:

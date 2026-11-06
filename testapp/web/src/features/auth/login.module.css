@@ -1,0 +1,206 @@
+/* The V5 authentication scene has one reading column in every device. */
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  margin: 0;
+}
+.brandHeading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.brandHeading :global(.brand-mark) {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  flex: none;
+}
+.brandHeading h1 {
+  font-size: 24px;
+  line-height: 1.7;
+  margin: 0;
+  font-weight: 750;
+}
+.header {
+  text-align: center;
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  min-width: 0;
+}
+.field label {
+  font-size: 14px;
+  font-weight: 600;
+}
+.field input {
+  width: 100%;
+  min-height: 48px;
+  padding: 11px 13px;
+  border: 1px solid var(--control-border);
+  border-radius: 12px;
+  font-size: 16px;
+  background: var(--surface);
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+.field input[aria-invalid='true'] {
+  border-color: var(--danger);
+}
+.hint,
+.error {
+  font-size: 12px;
+  line-height: 1.8;
+  margin: 0;
+}
+.hint {
+  color: var(--muted);
+}
+.error {
+  color: var(--danger);
+}
+.actions {
+  display: flex;
+  gap: 12px;
+}
+.actions :global(.button) {
+  width: 100%;
+  min-height: 48px;
+}
+.policy {
+  font-size: 13px;
+  line-height: 1.95;
+  color: var(--muted);
+  text-align: center;
+  margin: 0;
+}
+.codeActions {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.edit {
+  border: 0;
+  background: none;
+  color: var(--primary);
+  min-height: 44px;
+  padding: 8px;
+  font: inherit;
+  font-size: 13px;
+}
+.security {
+  display: flex;
+  gap: 8px;
+  padding: 13px 15px;
+  border-radius: 12px;
+  background: var(--soft);
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.9;
+}
+.security svg {
+  flex: none;
+}
+.otp {
+  position: relative;
+  direction: ltr;
+  max-width: 100%;
+  width: 100%;
+}
+.otp input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  z-index: 1;
+}
+.digits {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 8px;
+}
+.digits span {
+  display: grid;
+  place-items: center;
+  min-height: 48px;
+  background: var(--surface);
+  border: 1px solid var(--control-border);
+  border-radius: 12px;
+  font-size: 21px;
+}
+.otp:focus-within .digits span[data-active='true'] {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+}
+.digits span[data-invalid='true'] {
+  border-color: var(--danger);
+}
+.spinner {
+  animation: spin 900ms linear infinite;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@media (max-width: 767px) {
+  .identity h1 {
+    font-size: 21px;
+  }
+  .form {
+    width: 100%;
+  }
+  .header {
+    margin-bottom: 8px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .spinner {
+    animation: none;
+  }
+}
+
+.header {
+  text-align: center;
+}
+.form > .actions {
+  flex: none;
+}
+.policy button {
+  font: inherit;
+  background: none;
+  border: 0;
+  color: inherit;
+  padding: 0;
+  cursor: pointer;
+}
+.form :global(.rx-content) {
+  min-height: 0;
+  overflow: auto;
+}
+.form :global(.rx-body-grid) {
+  text-align: start;
+}
+@media (max-width: 767px) {
+  .brandHeading h1 {
+    font-size: 21px;
+  }
+  .form > .actions {
+    padding-bottom: calc(20px + env(safe-area-inset-bottom));
+  }
+  .brandHeading :global(.brand-mark) {
+    width: 28px;
+    height: 28px;
+  }
+}
+@media (max-width: 359px) {
+  .brandHeading h1 {
+    font-size: 19px;
+  }
+}

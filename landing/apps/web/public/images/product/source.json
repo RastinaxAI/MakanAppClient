@@ -1,0 +1,96 @@
+{
+  "source": "DocumentMakanApp.pdf",
+  "sha256": "27f42e76ad44c192e4b2075c0c513f733e0f76a0babd39cebad71ed700e7f373",
+  "screens": [
+    {
+      "name": "school-today",
+      "page": 6,
+      "frame": "right",
+      "design": "MK-04",
+      "width": 600,
+      "height": 1283,
+      "bytes": 44924
+    },
+    {
+      "name": "school-lesson",
+      "page": 6,
+      "frame": "middle",
+      "design": "MK-05",
+      "width": 600,
+      "height": 1283,
+      "bytes": 46454
+    },
+    {
+      "name": "activities-classes",
+      "page": 8,
+      "frame": "middle",
+      "design": "MK-11",
+      "width": 600,
+      "height": 1283,
+      "bytes": 46676
+    },
+    {
+      "name": "activities-requests",
+      "page": 8,
+      "frame": "left",
+      "design": "MK-12",
+      "width": 600,
+      "height": 1283,
+      "bytes": 39380
+    },
+    {
+      "name": "assistant-start",
+      "page": 18,
+      "frame": "right",
+      "design": "MK-38",
+      "width": 600,
+      "height": 1283,
+      "bytes": 47638
+    },
+    {
+      "name": "assistant-answer",
+      "page": 18,
+      "frame": "left",
+      "design": "MK-40",
+      "width": 600,
+      "height": 1283,
+      "bytes": 47710
+    },
+    {
+      "name": "messages-inbox",
+      "page": 17,
+      "frame": "right",
+      "design": "MK-35",
+      "width": 600,
+      "height": 1283,
+      "bytes": 43014
+    },
+    {
+      "name": "messages-chat",
+      "page": 17,
+      "frame": "middle",
+      "design": "MK-36",
+      "width": 600,
+      "height": 1283,
+      "bytes": 27478
+    },
+    {
+      "name": "profile-account",
+      "page": 30,
+      "frame": "right",
+      "design": "MK-47",
+      "width": 600,
+      "height": 1283,
+      "bytes": 40672
+    },
+    {
+      "name": "profile-security",
+      "page": 30,
+      "frame": "middle",
+      "design": "MK-48",
+      "width": 600,
+      "height": 1283,
+      "bytes": 39480
+    }
+  ]
+}

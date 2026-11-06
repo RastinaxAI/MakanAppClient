@@ -1,0 +1,12 @@
+{
+  "scope": "isolated native author-review only",
+  "checks": [
+    "radio group updates one selected choice",
+    "Escape closes dialog and restores background",
+    "checkbox toggles",
+    "switch toggles",
+    "authored dark view preserves its theme",
+    "owner scenario excluded"
+  ],
+  "passed": 6
+}

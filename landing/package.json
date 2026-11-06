@@ -1,0 +1,24 @@
+{
+  "name": "makan-landing",
+  "version": "0.2.0",
+  "private": true,
+  "workspaces": [
+    "apps/web"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace @makan/web -- --port 3200",
+    "build": "npm run build --workspace @makan/web",
+    "clean": "node scripts/clean-generated.mjs",
+    "preview": "npm run build && npm run start -- --port 3200",
+    "perf:public": "node scripts/measure-public-performance.mjs",
+    "start": "npm run start --workspace @makan/web --",
+    "lint": "npm run lint --workspace @makan/web",
+    "typecheck": "npm run typecheck --workspace @makan/web",
+    "test:e2e": "npm run test:e2e --workspace @makan/web --"
+  },
+  "devDependencies": {
+    "chrome-launcher": "1.2.2",
+    "lighthouse": "13.5.0",
+    "prettier": "3.9.10"
+  }
+}

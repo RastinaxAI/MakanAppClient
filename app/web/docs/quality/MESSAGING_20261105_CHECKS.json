@@ -1,0 +1,132 @@
+{
+  "checkedAtUtc": "2026-11-05T17:28:22.474520+00:00",
+  "status": "Complete: current production build, full unit/browser suites and bounded live read/UI review passed; backend and workspace UX work explicitly remains",
+  "unit": {
+    "passed": 462,
+    "failed": 0,
+    "files": 65,
+    "newCases": 7
+  },
+  "browser": {
+    "latestPassed": 229,
+    "latestFailed": 0,
+    "latestSkipped": 0,
+    "newCases": 10,
+    "fullStatus": "passed",
+    "full": {
+      "startTime": "2026-11-05T17:13:23.847Z",
+      "duration": 740981.9469999999,
+      "expected": 229,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "focused": {
+      "startTime": "2026-11-05T17:12:07.261Z",
+      "duration": 39258.716,
+      "expected": 10,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "initialFocused": {
+      "startTime": "2026-11-05T17:06:26.921Z",
+      "duration": 56007.035,
+      "expected": 9,
+      "skipped": 0,
+      "unexpected": 1,
+      "flaky": 0
+    },
+    "automaticRetries": 0,
+    "interpretation": "The complete 229-case run passed without skips, retries or manual follow-up; initial focused 9/10 failure is retained separately.",
+    "rawFullReport": "tmp/messaging-20261105/browser-full.json"
+  },
+  "checks": {
+    "standaloneProductionBuild": "passed",
+    "typecheck": "passed",
+    "lint": "353 modules, no cycles",
+    "generated": "289 operations / 508 schemas, no platform-admin paths",
+    "format": "passed",
+    "gitDiffCheck": "passed"
+  },
+  "liveAfterSummaryFa": "دعوت‌های Teacher از BFF با ۲۰۰ و دو دعوت قابل مشاهده؛ فرم Manager با پیش‌نویس «همه» و هشدار ثبت‌نشدن. ۱۶ تصویر در چهار عرض و دو تم، صفر خطای محصول/سرریز. privacy و دعوت‌ها تغییر نکردند.",
+  "live": {
+    "directReadEvidence": "MESSAGING_20261105_LIVE.json",
+    "directExplicitRequests": 51,
+    "contextEvidence": "MESSAGING_20261105_CONTEXT.json",
+    "contextRequests": 18,
+    "beforeEvidence": "MESSAGING_20261105_BFF_BEFORE.json",
+    "afterEvidence": "MESSAGING_20261105_BFF_AFTER.json",
+    "afterExplicitRequests": 18,
+    "domainMutations": false,
+    "liveInvitationsAcceptedOrDeclined": false,
+    "privacyServerDefaultChanged": false,
+    "screenshots": 16,
+    "fixtureScreenshots": 8
+  },
+  "remaining": [
+    "BE-01: effective Everyone defaults require backend change",
+    "BE-02: safe invitation display metadata missing in published DTO",
+    "BE-03: consent and historical pending policy needs documentation",
+    "BE-04: actual backend accept/member/inbox/replay acceptance still required",
+    "FE-03: explicit workspace guidance for organization conversation while in Personal context"
+  ],
+  "attemptNotes": [
+    "Initial focused browser run: 9 passed / 1 failed because a test label omitted the Persian ezafe in شمارهٔ; exact accessible label corrected.",
+    "Intermediate build caught a union-summary participants type error; current code reads managed metadata participants, and production build passed.",
+    "Connected UI audit initially counted the Next route-announcer shadow-root as a product alert. It now checks main product alerts and separately records NEXT-ROUTE-ANNOUNCER; both initial reports retained."
+  ],
+  "contract": {
+    "url": "http://94.184.32.84:8090/openapi/v1.json",
+    "sha256": "cfc7fed74bad6ea8a16419bc3b3a79bb60238227de07321a35a769341353fadc",
+    "operations": 442,
+    "connectedRecipientOperations": 3,
+    "newClientOperationCount": 289,
+    "newClientSchemaCount": 508,
+    "recipientOperationsExactlyMatchSnapshot": true
+  },
+  "visual": {
+    "gallery": "output/review/messaging-20261105/index.html",
+    "liveScreenshots": 16,
+    "fixtureScreenshots": 8,
+    "widths": [
+      320,
+      390,
+      834,
+      1440
+    ],
+    "themes": [
+      "light",
+      "dark"
+    ],
+    "actualLiveThemeChecks": 16,
+    "horizontalOverflow": 0,
+    "mainProductAlerts": 0,
+    "pageErrors": 0,
+    "manualReviewed": [
+      "Live Teacher mobile invitation panel",
+      "Live Manager desktop dark privacy draft",
+      "PDF pages 1-7 rendered and visually inspected; final statistics page re-rendered after full run"
+    ],
+    "globalAlertClassification": "NEXT-ROUTE-ANNOUNCER is recorded separately; it is not a product error"
+  },
+  "deployment": {
+    "localApp": "http://127.0.0.1:3145/enter",
+    "remoteDeployed": false,
+    "secretsSessionVolumesOwnerAppPreserved": true,
+    "sourceBundle": "output/delivery/makan-client-source.zip",
+    "bundleReceipt": "output/delivery/PACKAGE_CHECKS.json"
+  },
+  "pdf": {
+    "file": "output/pdf/MakanApp_Messaging_Diagnostic_FA_20261105.pdf",
+    "pages": 7,
+    "sha256": "cc7dad95a23a0065d776bbbf7afa238824939a08680a0116f7fb0a942d0bf295",
+    "bytes": 110681,
+    "allPagesRenderedAndReviewed": true,
+    "logicalIdentifiersAndCounts": "passed",
+    "textWithinPageBounds": true,
+    "credentialAndPhoneScan": "passed",
+    "apiColumns": "LTR monospace; split only at path boundaries",
+    "finalPages1To5PixelMatchPreviouslyReviewed": true
+  }
+}

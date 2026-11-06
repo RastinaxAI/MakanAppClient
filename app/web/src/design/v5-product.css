@@ -1,0 +1,676 @@
+@font-face {
+  font-family: Vazirmatn;
+  src: url('/fonts/makan-reference/Vazirmatn.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+}
+/* Runtime composition around the author's V5 components. No V4 screen chrome. */
+.v5-product-viewport {
+  height: 100dvh;
+  width: 100%;
+  container-type: inline-size;
+  container-name: device;
+  overflow: hidden;
+}
+.rx-root {
+  --border: var(--line);
+  --primary: var(--accent);
+  --primary-button: var(--action);
+  --on-primary: var(--on-action);
+  --reference-secondary: var(--surface2);
+  --primary-soft: var(--soft);
+}
+.v5-scene {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  margin: 0;
+}
+.v5-scene .rx-head h1 {
+  font-size: 24px;
+  font-weight: 750;
+  line-height: 1.7;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.v5-scene .rx-head .head-action {
+  display: flex;
+  gap: 8px;
+}
+.v5-scene .rx-content {
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+.v5-scene .rx-workspace {
+  width: 100%;
+  min-width: 0;
+}
+.v5-scene .v5-without-context {
+  display: block;
+}
+.v5-scene .rx-body-grid > * {
+  min-width: 0;
+  grid-column: 1/-1;
+}
+.v5-scene .rx-body-grid > form,
+.v5-scene.kind-form .app-body {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  align-content: start;
+}
+.v5-scene .rx-body-grid > form > * {
+  min-width: 0;
+  grid-column: 1/-1;
+}
+.v5-scene .rx-body-grid > form > .field,
+.v5-scene .rx-body-grid > form > :has(> .field) {
+  grid-column: auto;
+}
+.v5-scene .rx-body-grid > form > :has(textarea) {
+  grid-column: 1/-1;
+}
+.v5-scene .rx-head .button,
+.v5-scene .rx-bottom-actions .button {
+  min-height: 48px;
+  border-radius: 12px;
+  font-size: 15px;
+  padding: 10px 18px;
+}
+.v5-scene .rx-bottom-actions {
+  border-top: 1px solid var(--line);
+  background: var(--surface);
+  flex: none;
+}
+.v5-scene .rx-bottom-actions > .button {
+  flex: 1;
+}
+.v5-list {
+  min-width: 0;
+}
+.v5-row {
+  width: 100%;
+  background: var(--surface);
+  text-align: start;
+  font: inherit;
+  color: var(--text);
+  border: 0;
+  display: flex;
+}
+.v5-row + .v5-row {
+  border-top: 1px solid var(--line);
+}
+.v5-row-copy strong {
+  display: block;
+  font-size: 16px;
+  line-height: 1.7;
+}
+.v5-row-copy small {
+  display: block;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--muted);
+  margin-top: 0;
+}
+.v5-row-main {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
+  min-height: 44px;
+  background: none;
+  border: 0;
+  font: inherit;
+  color: inherit;
+  text-align: start;
+  padding: 0;
+}
+.v5-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--muted);
+}
+.v5-note p {
+  margin: 0;
+}
+.v5-note svg {
+  flex: none;
+  color: var(--primary);
+}
+.v5-hero h2 {
+  font-size: 21px;
+  margin: 0;
+  line-height: 1.7;
+}
+.v5-hero p {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.9;
+}
+.v5-field > label {
+  font-size: 14px;
+  font-weight: 600;
+}
+.v5-field :is(input:not([type='checkbox']):not([type='radio']), select, textarea) {
+  width: 100%;
+  min-height: 48px;
+  padding: 11px 13px;
+  border: 1px solid var(--control-border);
+  border-radius: 12px;
+  background: var(--surface);
+  color: var(--text);
+  font-size: 16px;
+  line-height: 1.7;
+}
+.v5-field small {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.8;
+}
+.v5-field textarea {
+  min-height: 116px;
+}
+.v5-field input:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+}
+.rx-root :is(.app-body, .mk-source-surface) {
+  min-width: 0;
+}
+.rx-root .mk-source-surface {
+  display: grid;
+  gap: 18px;
+}
+.rx-root .app-body {
+  padding: 0;
+  overflow: visible;
+  height: auto;
+  max-width: none;
+}
+.rx-root .section-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.rx-root .button {
+  border-radius: 12px;
+  min-height: 48px;
+}
+.rx-root .state {
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--surface);
+  padding: 24px 18px;
+}
+.rx-root .state p {
+  font-size: 14px;
+  line-height: 2;
+}
+.rx-root [data-v5-workflow-fields] {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+.rx-root [data-v5-workflow-fields] > :has(textarea),
+.rx-root [data-v5-workflow-fields] > p {
+  grid-column: 1/-1;
+}
+.v4-inline-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.v4-check {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  gap: 12px;
+  min-height: 68px;
+  padding: 14px;
+  font-size: 14px;
+}
+.v4-check + .v4-check {
+  border-top: 1px solid var(--line);
+}
+.v4-check input[type='checkbox'] {
+  appearance: none;
+  position: relative;
+  min-width: 44px;
+  width: 44px;
+  height: 26px;
+  min-height: 26px;
+  margin-inline-start: auto;
+  border: 0;
+  border-radius: 15px;
+  background: var(--line);
+  padding: 3px;
+}
+.v4-check input[type='checkbox']::after {
+  content: '';
+  position: absolute;
+  right: 3px;
+  top: 3px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--surface);
+  box-shadow: 0 1px 3px #0002;
+}
+.v4-check input:checked {
+  background: var(--primary);
+}
+.v4-check input:checked::after {
+  right: 21px;
+  background: white;
+}
+.v4-form-error {
+  background: var(--badbg);
+  color: var(--danger);
+  padding: 13px 15px;
+  border-radius: 12px;
+}
+.v4-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+.v4-metrics > div {
+  padding: 15px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--surface);
+  text-align: center;
+}
+.v4-metrics b {
+  display: block;
+  font-size: 28px;
+}
+.v4-metrics small {
+  font-size: 13px;
+  color: var(--muted);
+}
+@media (min-width: 1200px) {
+  .v5-scene .rx-bottom-actions {
+    display: none;
+  }
+}
+@media (min-width: 768px) and (max-width: 1199px) {
+  .v5-scene .rx-head .head-action {
+    display: none;
+  }
+  .v5-scene .rx-head h1 {
+    font-size: 23px;
+  }
+}
+@media (max-width: 767px) {
+  .v5-scene .rx-head h1 {
+    font-size: 21px;
+  }
+  .v5-scene .rx-head .head-action {
+    display: none;
+  }
+  .v5-scene .rx-head {
+    padding-top: calc(14px + env(safe-area-inset-top));
+  }
+  .v5-scene .rx-bottom-actions {
+    padding-bottom: calc(20px + env(safe-area-inset-bottom));
+  }
+  .v5-scene .rx-body-grid > form,
+  .v5-scene.kind-form .app-body,
+  .rx-root [data-v5-workflow-fields] {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .v5-scene .rx-body-grid {
+    width: 100%;
+  }
+}
+@media (max-height: 640px) {
+  .v5-scene .rx-head {
+    min-height: 64px;
+    padding-block: 8px;
+  }
+  .v5-scene .rx-bottom-actions {
+    padding-block: 8px 12px;
+  }
+  .v5-scene .rx-content {
+    scroll-padding-block: 24px;
+  }
+}
+:root[data-motion='reduce'] * {
+  animation: none !important;
+  transition: none !important;
+}
+:root[data-reading='large'] .rx-root {
+  --text-scale: 1.4;
+}
+.v5-user-summary {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+.v5-user-summary > .avatar {
+  width: 56px;
+  height: 56px;
+  flex: none;
+  background: var(--soft);
+  color: var(--primary);
+  border-radius: 50%;
+  overflow: hidden;
+  font-size: 24px;
+  display: grid;
+  place-items: center;
+}
+.v5-user-summary h2 {
+  font-size: 21px;
+}
+.v5-user-summary p {
+  font-size: 13px;
+  color: var(--muted);
+  text-align: start;
+  margin: 3px 0 8px;
+}
+.v5-space-choices {
+  display: grid;
+  gap: 8px;
+}
+.v5-space-choices button {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+  color: var(--text);
+  text-align: start;
+  min-height: 68px;
+}
+.v5-space-choices button[aria-pressed='true'] {
+  border-color: var(--primary);
+  background: var(--soft);
+}
+.v5-space-choices small {
+  display: block;
+  color: var(--muted);
+  font-size: 12px;
+}
+.v5-space-choices svg {
+  width: 22px;
+  height: 22px;
+}
+.rx-root .rx-head h1 {
+  font-size: 24px;
+  line-height: 1.7;
+}
+.rx-root .fixed-actions {
+  position: static;
+  display: flex;
+  gap: 9px;
+  flex: 1;
+  background: none;
+  border: 0;
+  padding: 0;
+}
+.rx-root .fixed-actions > .btn {
+  flex: 1;
+}
+.rx-root .grow {
+  flex: 1;
+}
+.rx-root .tile-icon {
+  flex: none;
+  display: grid;
+  place-items: center;
+  background: var(--soft);
+  color: var(--primary);
+  border-radius: 12px;
+  width: 40px;
+  height: 40px;
+}
+.rx-root .v5-assistant {
+  height: 100%;
+  width: 100%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+.rx-root .v5-assistant > .app-body {
+  height: 100%;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  max-width: 1536px;
+  width: 100%;
+  padding: 24px 26px;
+  margin: 0 auto;
+}
+.rx-root .v5-assistant .compose-input {
+  font-size: 16px;
+}
+.rx-root .v5-school {
+  width: 100%;
+  min-width: 0;
+  display: grid;
+  gap: 18px;
+}
+@container device (max-width:767px) {
+  .rx-root .v5-assistant > .app-body {
+    padding: 18px 16px;
+  }
+  .rx-root .rx-head h1 {
+    font-size: 21px;
+  }
+  .rx-root .v5-scene .rx-head h1 {
+    font-size: 21px;
+  }
+}
+@container device (min-width:768px) and (max-width:1199px) {
+  .rx-root .v5-assistant > .app-body {
+    padding: 24px;
+  }
+}
+.v5-review-notice {
+  position: fixed;
+  inset: auto 16px 24px;
+  z-index: 100;
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 8px 32px #0002;
+  max-width: 560px;
+  margin: auto;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+.v5-assistant-body {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  min-height: 0;
+}
+.v5-assistant-body .row {
+  width: 100%;
+  text-align: start;
+  border: 0;
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+}
+.v5-assistant-body .row + .row {
+  border-top: 1px solid var(--line);
+}
+.v5-assistant-body .composer {
+  display: flex;
+  border: 1px solid var(--control-border);
+  border-radius: 12px;
+  padding: 8px;
+  background: var(--surface);
+  gap: 8px;
+}
+.v5-assistant-body .compose-input {
+  flex: 1;
+  min-width: 0;
+  background: var(--surface);
+  border: 0;
+  min-height: 44px;
+  font: inherit;
+  color: var(--text);
+}
+.v5-assistant-body .ibtn {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  flex: none;
+  border: 0;
+  border-radius: 10px;
+  background: var(--action);
+  color: var(--on-action);
+}
+.v5-school-inline nav {
+  display: flex !important;
+  flex-wrap: nowrap;
+  overflow: auto;
+  background: var(--surface2);
+  border: 0;
+  border-radius: 12px;
+  padding: 4px;
+  gap: 4px;
+}
+.v5-school-inline nav a {
+  flex: 1;
+  white-space: nowrap;
+  min-height: 40px;
+  border: 0;
+  border-radius: 9px;
+  padding: 8px 12px;
+  font-size: 14px;
+  justify-content: center;
+}
+.v5-school-inline nav a[aria-current='page'] {
+  background: var(--surface);
+  color: var(--text);
+}
+.v5-school-inline nav svg {
+  display: none;
+}
+.v5-appearance-choices {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 0;
+  overflow: hidden;
+}
+.v5-appearance-choices label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  min-height: 76px;
+  cursor: pointer;
+}
+.v5-appearance-choices label + label {
+  border-top: 1px solid var(--border);
+}
+.v5-appearance-choices small {
+  display: block;
+  color: var(--muted);
+  font-size: 13px;
+  margin-top: 3px;
+}
+.v5-appearance-choices input {
+  width: 22px;
+  height: 22px;
+  accent-color: var(--primary-button);
+  margin: 0;
+}
+.v5-appearance-dialog .policy {
+  font-size: 13px;
+  line-height: 1.9;
+  color: var(--muted);
+}
+.v5-school-inline nav[data-manager] a:nth-child(n + 4) {
+  display: none;
+}
+.v5-scene .rx-workspace:has(.rx-body-grid aside) {
+  display: block;
+}
+.v5-scene .rx-workspace:has(.rx-body-grid aside) > .rx-context-panel {
+  display: none;
+}
+.rx-crumb button,
+.rx-crumb a {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  text-decoration: none;
+}
+.rx-crumb :is(button, a):hover {
+  text-decoration: underline;
+}
+.rx-crumb :is(button, a):focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+.v5-crumb-static {
+  display: none;
+}
+@media (max-width: 1199px) {
+  .rx-crumb :is(a, button) {
+    display: none;
+  }
+  .v5-crumb-static {
+    display: inline;
+  }
+}
+
+:where(.rx-root) h3 {
+  font-weight: 700;
+}
+
+.rx-root.auth .rx-head h1 {
+  font-size: 24px;
+  line-height: 1.7;
+  font-weight: 750;
+  text-align: center;
+  margin: 0;
+}
+@container device (max-width:1199px) {
+  .rx-root.auth .rx-head h1 {
+    font-size: 23px;
+  }
+}
+@container device (max-width:767px) {
+  .rx-root.auth .rx-head h1 {
+    font-size: 21px;
+  }
+  .rx-root.auth .rx-bottom-actions {
+    padding-bottom: calc(20px + env(safe-area-inset-bottom));
+  }
+}
+@container device (max-width:359px) {
+  .rx-root.auth .rx-head h1 {
+    font-size: 19px;
+  }
+}

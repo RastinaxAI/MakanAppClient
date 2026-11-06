@@ -1,0 +1,8 @@
+{
+  "version": "4.0-blue",
+  "directory": "design/reference-v4",
+  "sourcePdf": "MakanApp_Frontend_Complete_UI_UX_FA_v4_Blue.pdf",
+  "sourcePdfSha256": "20fa00d3abf35889d302ec237f5eded1e8f86e5c0b1e9abe771f5de0fbae001c",
+  "responsiveReference": "design/responsive-reference.json",
+  "responsiveVersion": "5.0-blue"
+}

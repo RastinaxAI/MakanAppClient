@@ -1,0 +1,154 @@
+# استقرار لندینگ ماکان روی Ubuntu
+
+این مخزن یک برنامهٔ Next.js با API و PostgreSQL است. فایل `index.html` با عنوان `MakanApp - Landing` فقط صفحهٔ آزمایشی نصب قبلی است. برای نمایش سایت واقعی، اسکریپت جدید برنامه را با Docker اجرا می‌کند و Nginx درخواست‌ها را به آن می‌فرستد.
+
+## اجرای محلی برای ارائه
+
+با API فعال روی `http://127.0.0.1:8000`، از پوشهٔ اصلی پروژه اجرا کنید:
+
+```bash
+npm run preview
+```
+
+این دستور خروجی بهینهٔ سایت را می‌سازد و روی [پورت ۳۲۰۰](http://127.0.0.1:3200) اجرا می‌کند. هنگام ارائه، فرایند را فعال نگه دارید؛ `Ctrl+C` سرور را متوقف می‌کند. پیش از اجرا، سرور توسعه‌ای را که همین پورت را استفاده می‌کند متوقف کنید.
+
+برای ویرایش زنده، `npm run dev` نیز به‌صورت پیش‌فرض همین پورت را استفاده می‌کند. برای اندازه‌گیری دوبارهٔ زمان پاسخ صفحات و حجم فایل‌های CSS و JavaScript، در ترمینال دیگری `npm run perf:public` را اجرا کنید؛ گزارش در `.preview/public-performance.json` ذخیره می‌شود. این اعداد مربوط به اجرای محلی هستند.
+
+پیش‌نمایش فعلی با سرویس محلی کاربر `makan-landing-preview` اجرا می‌شود تا به بازبودن ترمینال وابسته نباشد. برای بررسی و کنترل آن:
+
+```bash
+systemctl --user status makan-landing-preview
+systemctl --user stop makan-landing-preview
+systemctl --user start makan-landing-preview
+```
+
+پیش از ساخت دوباره در همان پوشهٔ خروجی یا اجرای سرور توسعه روی پورت ۳۲۰۰، سرویس را متوقف کنید. سرویس فعلی از `.next` استفاده می‌کند؛ خروجی آن را با `npm run build` بسازید و سپس سرویس را دوباره اجرا کنید.
+
+برای پاک‌سازی خروجی‌های توسعه، کش ابزار ساخت و گزارش‌های آزمون، `npm run clean` را اجرا کنید. این فرمان فایل‌های اجرایی نسخهٔ ساخته‌شده و کش تصاویر سایت را نگه می‌دارد.
+
+## ۱. تنظیمات DNS
+
+| نوع | نام | مقدار |
+| --- | --- | --- |
+| A | `@` | `89.46.217.168` |
+| A | `www` | `89.46.217.168` |
+
+پیش از اجرا، هر دو نام باید به IP بالا اشاره کنند و پورت‌های ۸۰ و ۴۴۳ از اینترنت در دسترس باشند. رکورد AAAA ناسازگار را اصلاح کنید. برای صدور گواهی، پراکسی DNS را موقتاً روی DNS only قرار دهید.
+
+## ۲. محل فایل‌ها و اجرای اسکریپت
+
+کل سورس فعلی پروژه در مسیر زیر می‌ماند:
+
+```text
+/var/www/makanapp/landing
+```
+
+باید فایل‌های `package.json`، `compose.production.yaml`، `.env.production.example` و پوشه‌های `apps` و `infrastructure` در این مسیر موجود باشند. این نسخه نیاز به کپی‌کردن `dist` یا `build` ندارد؛ خروجی Next.js داخل image ساخته می‌شود.
+
+فایل **جدید و کامل** `setup.sh` را جایگزین نسخهٔ قبلی روی سرور کنید. برای واردکردن متن از ترمینال:
+
+```bash
+cat > /root/setup.sh
+```
+
+محتوای کامل اسکریپت جدید را بچسبانید، Enter بزنید و سپس با `Ctrl+D` ذخیره کنید. فایل یک‌بایتی قبلی کافی نیست. سپس:
+
+```bash
+chmod +x /root/setup.sh
+sudo bash /root/setup.sh
+```
+
+اگر فایل جدید را در پوشهٔ پروژه بارگذاری کرده‌اید، همین دستورها را اجرا کنید:
+
+```bash
+cd /var/www/makanapp/landing
+chmod +x setup.sh
+sudo bash ./setup.sh
+```
+
+در ابتدای اجرا باید پیام `MakanApp: Next.js + Docker deployment v3` را ببینید. اگر این پیام ظاهر نشد و فقط خروجی apt، Nginx و Certbot دیده شد، فایل قدیمی اجرا شده است. تغییر فایل در کامپیوتر شما، نسخهٔ روی سرور را خودکار تغییر نمی‌دهد؛ فایل جدید را در مسیر دقیق `/var/www/makanapp/landing/setup.sh` جایگزین کنید. دستور رفتن به پوشه `cd` است، نه `git cd`.
+
+اسکریپت بسته‌های لازم و Docker Compose را نصب می‌کند؛ برای نصب خودکار Compose، بستهٔ `docker-compose-v2` باید در مخازن Ubuntu موجود باشد. سپس imageهای وب، API و دیتابیس را می‌سازد، migrationها را اجرا می‌کند و محتوای اولیهٔ نوشته‌شدهٔ همین لندینگ را وارد می‌کند. واردکننده، محتوای موجود و ویرایش‌های قبلی را حفظ می‌کند.
+
+پس از آماده‌شدن برنامه، تنظیمات Nginx با reverse proxy جایگزین می‌شود. Nginx و Certbot مسئول پورت‌های عمومی ۸۰ و ۴۴۳ هستند؛ Caddy این Compose اجرا نمی‌شود. وب روی `127.0.0.1:3000` و API روی `127.0.0.1:8000` منتشر می‌شوند. دیتابیس پورت عمومی ندارد. روش reverse proxy و اتصال پورت‌ها به loopback در [مستندات Nginx](https://nginx.org/en/docs/http/ngx_http_proxy_module.html) و [Docker](https://docs.docker.com/engine/network/port-publishing/) شرح داده شده است.
+
+فایل‌های سورس، `.git` و فایل صفحهٔ آزمایشی از طریق تنظیمات جدید Nginx به‌عنوان فایل استاتیک سرو نمی‌شوند. اجرای مجدد اسکریپت نصب استاتیک قبلی، تنظیمات را به صفحهٔ آزمایشی برمی‌گرداند؛ از نسخهٔ جدید استفاده کنید.
+
+## ۳. تنظیمات و داده‌های ماندگار
+
+| مسیر | کاربرد |
+| --- | --- |
+| `/var/www/makanapp/landing` | سورس پروژه و فایل‌های ساخت |
+| `/etc/makanapp/production.env` | رمزها و کلیدهای ماندگار با دسترسی ۶۰۰ |
+| `/etc/makanapp/compose.nginx.json` | تنظیمات اجرایی Compose؛ حاوی رمزها و فقط قابل خواندن توسط ریشه |
+| `/etc/nginx/sites-available/makanapp.conf` | اتصال دامنه به برنامه و تنظیمات HTTPS |
+| `/etc/makanapp/nginx-backup-*` | نسخهٔ تنظیمات Nginx پیش از تغییر |
+
+رمزها در اولین نصب تولید می‌شوند و در اجراهای بعدی تغییر نمی‌کنند. اگر قبلاً دیتابیس production ساخته‌اید، از همان فایل محیط قبلی استفاده کنید؛ نمونه:
+
+```bash
+sudo env ENV_FILE=/etc/makan-landing/production.env bash /root/setup.sh
+```
+
+بدون فایل محیط اصلی، برای دیتابیس موجود رمز تازه تولید نکنید. داده‌ها در volumeهای Docker می‌مانند؛ از دستور `docker compose down -v` استفاده نکنید.
+
+## ۴. بررسی نتیجه و به‌روزرسانی
+
+پس از پیام موفقیت، `https://makanapp.org` باید خود لندینگ را نمایش دهد. دامنهٔ `www.makanapp.org` به دامنهٔ اصلی هدایت می‌شود. اسکریپت پاسخ صفحهٔ اصلی را پیش از تغییر Nginx و پس از فعال‌شدن HTTPS بررسی می‌کند. دریافت گواهی با ایمیل `rastinaxoffice@gmail.com` انجام می‌شود.
+
+وضعیت سرویس‌ها و لاگ‌ها:
+
+```bash
+sudo docker --host unix:///var/run/docker.sock compose -f /etc/makanapp/compose.nginx.json ps
+sudo docker --host unix:///var/run/docker.sock compose -f /etc/makanapp/compose.nginx.json logs --tail 100 web api
+```
+
+برای انتشار نسخهٔ بعدی، سورس را در همان مسیر به‌روز کنید و اسکریپت جدید را دوباره اجرا کنید. از اجرای هم‌زمان نسخهٔ Caddy در `compose.production.yaml` روی پورت‌های ۸۰ و ۴۴۳ خودداری کنید.
+
+
+## ۵. طول‌کشیدن مرحلهٔ Running و ادامهٔ نصب
+
+خط `db ... Running` نشان‌دهندهٔ اجرای دیتابیس است؛ این خط به‌تنهایی علت انتظار را مشخص نمی‌کند. در نسخهٔ قبلی، فرمان migration بعد از آن بدون پیام مرحله اجرا می‌شد. نسخهٔ ۳ نام ۹ مرحله را نشان می‌دهد، لاگ migration را زنده چاپ می‌کند و برای وظایف دیتابیس هر ۱۵ ثانیه پیام وضعیت می‌دهد.
+
+انتظار سلامت دیتابیس تا ۱۸۰ ثانیه، migration و ورود محتوا هرکدام تا ۳۰۰ ثانیه، و آماده‌شدن سرویس‌ها تا ۳۰۰ ثانیه محدود است. با پایان مهلتِ وظیفهٔ موقت، همان کانتینر متوقف می‌شود تا پشت‌صحنه ادامه ندهد. هنگام خطا، وضعیت سرویس‌ها، لاگ‌ها و علت انتظار اتصال‌های PostgreSQL چاپ می‌شود. اسکریپت جدید اجازهٔ اجرای هم‌زمان دو نسخه از خودش را نمی‌دهد.
+
+اگر ساخت imageها تمام شده و سورس را تغییر نداده‌اید، پس از پایان یا توقف اجرای قبلی و جایگزین‌کردن فایل جدید، ادامه دهید:
+
+```bash
+cd /var/www/makanapp/landing
+set -o pipefail
+sudo env SKIP_SYSTEM_UPDATE=1 SKIP_BUILD=1 bash ./setup.sh 2>&1 | tee /root/makan-deploy.log
+```
+
+این گزینه‌ها نصب بسته‌ها و ساخت مجدد imageها را رد می‌کنند؛ migration، ورود محتوا، راه‌اندازی سرویس‌ها و اتصال Nginx انجام می‌شوند. پس از تغییر سورس، `SKIP_BUILD=1` را حذف کنید تا نسخهٔ تازه ساخته شود. اگر نسخهٔ قدیمی هنوز در ترمینال اول منتظر است، پیش از اجرای دوباره، در ترمینال دوم وضعیت وظیفه‌ها را ببینید:
+
+```bash
+docker --host unix:///var/run/docker.sock ps -a --filter label=com.docker.compose.project=makan-landing-prod --format 'table {{.Names}}\t{{.Status}}'
+docker --host unix:///var/run/docker.sock compose -f /etc/makanapp/compose.nginx.json --profile tools logs --tail 100 migrate db
+```
+
+کانتینر migration را هم‌زمان با نسخهٔ دیگری اجرا نکنید. قفل PostgreSQL ممکن است باعث انتظار اجرای دوم شود؛ خروجی `blocked_by` و `wait_event` برای تشخیص این وضعیت است، نه اثبات آن بدون بررسی خروجی سرور.
+
+اگر مرحلهٔ migration بلافاصله با `unknown flag: --no-build` متوقف شد، فایل اسکریپت به اصلاح زیر نیاز دارد. این گزینه برای `compose up` معتبر است و از فرمان `compose run` باید حذف شود. برای اصلاح همان نسخهٔ روی سرور و ادامه با imageهای موجود:
+
+```bash
+cd /var/www/makanapp/landing
+sed -i 's/run -d --no-deps --no-build/run -d --no-deps/' setup.sh
+set -o pipefail
+sudo env SKIP_SYSTEM_UPDATE=1 SKIP_BUILD=1 bash ./setup.sh 2>&1 | tee /root/makan-deploy.log
+```
+
+## ۶. خطای اتصال به سوکت Podman
+
+اگر خطا به `/run/podman/podman.sock` اشاره کرد، اتصال انتخاب‌شدهٔ Docker CLI به Podman است. اسکریپت جدید متغیر `DOCKER_CONTEXT` را در محیط خودش حذف و `DOCKER_HOST` را روی `unix:///var/run/docker.sock` تنظیم می‌کند. این انتخاب مخصوص Docker Engine محلی است و تنظیمات context ذخیره‌شدهٔ کاربر را تغییر نمی‌دهد.
+
+برای اعمال تغییر فرانت‌اند پس از انتقال سورس جدید، در ترمینال ریشهٔ سرور اجرا کنید:
+
+```bash
+unset DOCKER_HOST DOCKER_CONTEXT
+systemctl start docker
+docker --host unix:///var/run/docker.sock info
+docker --host unix:///var/run/docker.sock compose -f /etc/makanapp/compose.nginx.json up -d --build --no-deps web
+```
+
+اگر سرویس Docker شروع نشد، خروجی `systemctl status docker --no-pager` و `journalctl -u docker -n 50 --no-pager` را بررسی کنید. این مراحل داده‌های Docker یا Podman را حذف نمی‌کنند. جزئیات انتخاب daemon در [مستندات Docker contexts](https://docs.docker.com/engine/manage-resources/contexts/) آمده است.

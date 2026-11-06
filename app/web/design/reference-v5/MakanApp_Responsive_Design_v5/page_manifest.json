@@ -1,0 +1,3416 @@
+[
+  {
+    "page": 1,
+    "title": "ماکان، در هر اندازه",
+    "kind": "cover",
+    "id": null
+  },
+  {
+    "page": 2,
+    "title": "نقشه مرور نسخه پاسخ‌گو",
+    "kind": "toc",
+    "id": null
+  },
+  {
+    "page": 3,
+    "title": "پوشش و مرز این تحویل",
+    "kind": "guide",
+    "id": null
+  },
+  {
+    "page": 4,
+    "title": "اندازه‌های مرجع و قواعد تغییر چیدمان",
+    "kind": "guide",
+    "id": null
+  },
+  {
+    "page": 5,
+    "title": "چیدمان، فاصله و اندازه‌های اجزا",
+    "kind": "guide",
+    "id": null
+  },
+  {
+    "page": 6,
+    "title": "ناوبری و حفظ زمینه",
+    "kind": "guide",
+    "id": null
+  },
+  {
+    "page": 7,
+    "title": "پنجره‌ها، منوها و تمرکز",
+    "kind": "guide",
+    "id": null
+  },
+  {
+    "page": 8,
+    "title": "فرم‌ها و ریزحالت‌های ورودی",
+    "kind": "guide",
+    "id": null
+  },
+  {
+    "page": 9,
+    "title": "جدول، فهرست و جزئیات",
+    "kind": "guide",
+    "id": null
+  },
+  {
+    "page": 10,
+    "title": "پیام‌رسان؛ یک رفتار، سه فضای کار",
+    "kind": "guide",
+    "id": null
+  },
+  {
+    "page": 11,
+    "title": "فوق‌برنامه؛ مرز مستقل و چرخه کامل",
+    "kind": "guide",
+    "id": null
+  },
+  {
+    "page": 12,
+    "title": "دسترس‌پذیری، متن بزرگ و ورودی‌های مختلف",
+    "kind": "guide",
+    "id": null
+  },
+  {
+    "page": 13,
+    "title": "راهنمای خواندن و اتصال به توسعه",
+    "kind": "guide",
+    "id": null
+  },
+  {
+    "page": 14,
+    "title": "شروع آشنا",
+    "kind": "scenario",
+    "id": "MK-01"
+  },
+  {
+    "page": 15,
+    "title": "شماره همراه شما",
+    "kind": "scenario",
+    "id": "MK-02"
+  },
+  {
+    "page": 16,
+    "title": "کد تأیید را وارد کنید",
+    "kind": "scenario",
+    "id": "MK-03"
+  },
+  {
+    "page": 17,
+    "title": "آموزشگاه",
+    "kind": "scenario",
+    "id": "MK-04"
+  },
+  {
+    "page": 18,
+    "title": "معادله درجه دوم",
+    "kind": "scenario",
+    "id": "MK-05"
+  },
+  {
+    "page": 19,
+    "title": "تمرین فصل دوم",
+    "kind": "scenario",
+    "id": "MK-06"
+  },
+  {
+    "page": 20,
+    "title": "آموزشگاه",
+    "kind": "scenario",
+    "id": "MK-07"
+  },
+  {
+    "page": 21,
+    "title": "آموزشگاه",
+    "kind": "scenario",
+    "id": "MK-08"
+  },
+  {
+    "page": 22,
+    "title": "آموزشگاه",
+    "kind": "scenario",
+    "id": "MK-09"
+  },
+  {
+    "page": 23,
+    "title": "آموزشگاه",
+    "kind": "scenario",
+    "id": "MK-59"
+  },
+  {
+    "page": 24,
+    "title": "آموزشگاه‌های من",
+    "kind": "scenario",
+    "id": "MK-83"
+  },
+  {
+    "page": 25,
+    "title": "تغییر فضای فعال",
+    "kind": "scenario",
+    "id": "MK-84"
+  },
+  {
+    "page": 26,
+    "title": "دعوت آموزشگاه",
+    "kind": "scenario",
+    "id": "MK-85"
+  },
+  {
+    "page": 27,
+    "title": "کلاس‌های من",
+    "kind": "scenario",
+    "id": "MK-86"
+  },
+  {
+    "page": 28,
+    "title": "کلاس‌های تدریس",
+    "kind": "scenario",
+    "id": "MK-87"
+  },
+  {
+    "page": 29,
+    "title": "ریاضی دهم",
+    "kind": "scenario",
+    "id": "MK-88"
+  },
+  {
+    "page": 30,
+    "title": "دوره‌های آموزشی",
+    "kind": "scenario",
+    "id": "MK-89"
+  },
+  {
+    "page": 31,
+    "title": "دوره تازه",
+    "kind": "scenario",
+    "id": "MK-90"
+  },
+  {
+    "page": 32,
+    "title": "کاتالوگ درس‌ها",
+    "kind": "scenario",
+    "id": "MK-91"
+  },
+  {
+    "page": 33,
+    "title": "کلاس تازه",
+    "kind": "scenario",
+    "id": "MK-92"
+  },
+  {
+    "page": 34,
+    "title": "انتخاب درس",
+    "kind": "scenario",
+    "id": "MK-93"
+  },
+  {
+    "page": 35,
+    "title": "بازبینی کلاس",
+    "kind": "scenario",
+    "id": "MK-94"
+  },
+  {
+    "page": 36,
+    "title": "تنظیمات کلاس",
+    "kind": "scenario",
+    "id": "MK-95"
+  },
+  {
+    "page": 37,
+    "title": "ثبت تغییر ظرفیت",
+    "kind": "scenario",
+    "id": "MK-96"
+  },
+  {
+    "page": 38,
+    "title": "تنظیمات تازه‌تر است",
+    "kind": "scenario",
+    "id": "MK-97"
+  },
+  {
+    "page": 39,
+    "title": "دانش‌آموزان کلاس",
+    "kind": "scenario",
+    "id": "MK-98"
+  },
+  {
+    "page": 40,
+    "title": "انتخاب دانش‌آموز",
+    "kind": "scenario",
+    "id": "MK-99"
+  },
+  {
+    "page": 41,
+    "title": "پایان ثبت‌نام؟",
+    "kind": "scenario",
+    "id": "MK-100"
+  },
+  {
+    "page": 42,
+    "title": "مدرسان ریاضی دهم",
+    "kind": "scenario",
+    "id": "MK-101"
+  },
+  {
+    "page": 43,
+    "title": "انتساب مدرس",
+    "kind": "scenario",
+    "id": "MK-102"
+  },
+  {
+    "page": 44,
+    "title": "پایان انتساب مدرس؟",
+    "kind": "scenario",
+    "id": "MK-103"
+  },
+  {
+    "page": 45,
+    "title": "افراد آموزشگاه",
+    "kind": "scenario",
+    "id": "MK-104"
+  },
+  {
+    "page": 46,
+    "title": "پرونده تازه",
+    "kind": "scenario",
+    "id": "MK-105"
+  },
+  {
+    "page": 47,
+    "title": "پرونده نازنین",
+    "kind": "scenario",
+    "id": "MK-106"
+  },
+  {
+    "page": 48,
+    "title": "اعضا و نقش‌ها",
+    "kind": "scenario",
+    "id": "MK-107"
+  },
+  {
+    "page": 49,
+    "title": "افزودن نقش",
+    "kind": "scenario",
+    "id": "MK-108"
+  },
+  {
+    "page": 50,
+    "title": "پایان نقش مدرس؟",
+    "kind": "scenario",
+    "id": "MK-109"
+  },
+  {
+    "page": 51,
+    "title": "دعوت‌های آموزشگاه",
+    "kind": "scenario",
+    "id": "MK-110"
+  },
+  {
+    "page": 52,
+    "title": "جزئیات دعوت",
+    "kind": "scenario",
+    "id": "MK-111"
+  },
+  {
+    "page": 53,
+    "title": "لغو دعوت؟",
+    "kind": "scenario",
+    "id": "MK-112"
+  },
+  {
+    "page": 54,
+    "title": "والدهای مرتبط",
+    "kind": "scenario",
+    "id": "MK-113"
+  },
+  {
+    "page": 55,
+    "title": "دعوت والد",
+    "kind": "scenario",
+    "id": "MK-114"
+  },
+  {
+    "page": 56,
+    "title": "پایان رابطه والد؟",
+    "kind": "scenario",
+    "id": "MK-115"
+  },
+  {
+    "page": 57,
+    "title": "فرزندان من",
+    "kind": "scenario",
+    "id": "MK-116"
+  },
+  {
+    "page": 58,
+    "title": "برنامه نازنین",
+    "kind": "scenario",
+    "id": "MK-117"
+  },
+  {
+    "page": 59,
+    "title": "نتایج نازنین",
+    "kind": "scenario",
+    "id": "MK-118"
+  },
+  {
+    "page": 60,
+    "title": "برنامه هفتگی",
+    "kind": "scenario",
+    "id": "MK-119"
+  },
+  {
+    "page": 61,
+    "title": "فیلتر برنامه",
+    "kind": "scenario",
+    "id": "MK-120"
+  },
+  {
+    "page": 62,
+    "title": "انتخاب تاریخ",
+    "kind": "scenario",
+    "id": "MK-121"
+  },
+  {
+    "page": 63,
+    "title": "جلسه تازه",
+    "kind": "scenario",
+    "id": "MK-122"
+  },
+  {
+    "page": 64,
+    "title": "بازبینی جلسه",
+    "kind": "scenario",
+    "id": "MK-123"
+  },
+  {
+    "page": 65,
+    "title": "جزئیات جلسه",
+    "kind": "scenario",
+    "id": "MK-124"
+  },
+  {
+    "page": 66,
+    "title": "ویرایش جلسه",
+    "kind": "scenario",
+    "id": "MK-125"
+  },
+  {
+    "page": 67,
+    "title": "لغو این جلسه؟",
+    "kind": "scenario",
+    "id": "MK-126"
+  },
+  {
+    "page": 68,
+    "title": "پایان جلسه",
+    "kind": "scenario",
+    "id": "MK-127"
+  },
+  {
+    "page": 69,
+    "title": "حضور جلسه",
+    "kind": "scenario",
+    "id": "MK-128"
+  },
+  {
+    "page": 70,
+    "title": "اصلاح حضور نازنین",
+    "kind": "scenario",
+    "id": "MK-129"
+  },
+  {
+    "page": 71,
+    "title": "حضور من",
+    "kind": "scenario",
+    "id": "MK-130"
+  },
+  {
+    "page": 72,
+    "title": "قاعده برنامه",
+    "kind": "scenario",
+    "id": "MK-131"
+  },
+  {
+    "page": 73,
+    "title": "بازه اجرای برنامه",
+    "kind": "scenario",
+    "id": "MK-132"
+  },
+  {
+    "page": 74,
+    "title": "اعمال تغییر از چه روزی؟",
+    "kind": "scenario",
+    "id": "MK-133"
+  },
+  {
+    "page": 75,
+    "title": "درس تازه",
+    "kind": "scenario",
+    "id": "MK-134"
+  },
+  {
+    "page": 76,
+    "title": "ویرایش پیش‌نویس",
+    "kind": "scenario",
+    "id": "MK-135"
+  },
+  {
+    "page": 77,
+    "title": "انتشار درس؟",
+    "kind": "scenario",
+    "id": "MK-136"
+  },
+  {
+    "page": 78,
+    "title": "درس‌های ریاضی",
+    "kind": "scenario",
+    "id": "MK-137"
+  },
+  {
+    "page": 79,
+    "title": "معادله درجه دوم",
+    "kind": "scenario",
+    "id": "MK-138"
+  },
+  {
+    "page": 80,
+    "title": "فایل دریافت نشد",
+    "kind": "scenario",
+    "id": "MK-139"
+  },
+  {
+    "page": 81,
+    "title": "تکلیف‌های ریاضی",
+    "kind": "scenario",
+    "id": "MK-140"
+  },
+  {
+    "page": 82,
+    "title": "صورت تکلیف",
+    "kind": "scenario",
+    "id": "MK-141"
+  },
+  {
+    "page": 83,
+    "title": "قواعد تکلیف",
+    "kind": "scenario",
+    "id": "MK-142"
+  },
+  {
+    "page": 84,
+    "title": "پاسخ تمرین",
+    "kind": "scenario",
+    "id": "MK-143"
+  },
+  {
+    "page": 85,
+    "title": "تلاش‌های من",
+    "kind": "scenario",
+    "id": "MK-144"
+  },
+  {
+    "page": 86,
+    "title": "رسید تحویل",
+    "kind": "scenario",
+    "id": "MK-145"
+  },
+  {
+    "page": 87,
+    "title": "صف ارزیابی",
+    "kind": "scenario",
+    "id": "MK-146"
+  },
+  {
+    "page": 88,
+    "title": "ارزیابی نازنین",
+    "kind": "scenario",
+    "id": "MK-147"
+  },
+  {
+    "page": 89,
+    "title": "انتشار نتیجه تکلیف",
+    "kind": "scenario",
+    "id": "MK-148"
+  },
+  {
+    "page": 90,
+    "title": "آزمون‌های من",
+    "kind": "scenario",
+    "id": "MK-149"
+  },
+  {
+    "page": 91,
+    "title": "آزمون تازه",
+    "kind": "scenario",
+    "id": "MK-150"
+  },
+  {
+    "page": 92,
+    "title": "قواعد آزمون",
+    "kind": "scenario",
+    "id": "MK-151"
+  },
+  {
+    "page": 93,
+    "title": "پرسش تشریحی",
+    "kind": "scenario",
+    "id": "MK-152"
+  },
+  {
+    "page": 94,
+    "title": "حذف پرسش؟",
+    "kind": "scenario",
+    "id": "MK-153"
+  },
+  {
+    "page": 95,
+    "title": "پیش‌نمایش مدرس",
+    "kind": "scenario",
+    "id": "MK-154"
+  },
+  {
+    "page": 96,
+    "title": "آزمون ناتمام",
+    "kind": "scenario",
+    "id": "MK-155"
+  },
+  {
+    "page": 97,
+    "title": "ادامه روی این دستگاه؟",
+    "kind": "scenario",
+    "id": "MK-156"
+  },
+  {
+    "page": 98,
+    "title": "زمان پاسخ تمام شد",
+    "kind": "scenario",
+    "id": "MK-157"
+  },
+  {
+    "page": 99,
+    "title": "صف تصحیح آزمون",
+    "kind": "scenario",
+    "id": "MK-158"
+  },
+  {
+    "page": 100,
+    "title": "تکمیل ارزیابی آزمون",
+    "kind": "scenario",
+    "id": "MK-159"
+  },
+  {
+    "page": 101,
+    "title": "اصلاح نتیجه آزمون",
+    "kind": "scenario",
+    "id": "MK-160"
+  },
+  {
+    "page": 102,
+    "title": "پیشرفت من",
+    "kind": "scenario",
+    "id": "MK-161"
+  },
+  {
+    "page": 103,
+    "title": "گزارش ریاضی دهم",
+    "kind": "scenario",
+    "id": "MK-162"
+  },
+  {
+    "page": 104,
+    "title": "گزارش آموزشگاه",
+    "kind": "scenario",
+    "id": "MK-163"
+  },
+  {
+    "page": 105,
+    "title": "تنظیم خروجی",
+    "kind": "scenario",
+    "id": "MK-164"
+  },
+  {
+    "page": 106,
+    "title": "خروجی در حال ساخت",
+    "kind": "scenario",
+    "id": "MK-165"
+  },
+  {
+    "page": 107,
+    "title": "خروجی آماده است",
+    "kind": "scenario",
+    "id": "MK-166"
+  },
+  {
+    "page": 108,
+    "title": "فضاهای رسمی",
+    "kind": "scenario",
+    "id": "MK-167"
+  },
+  {
+    "page": 109,
+    "title": "فعالیت در گفتگو",
+    "kind": "scenario",
+    "id": "MK-168"
+  },
+  {
+    "page": 110,
+    "title": "کارهای محتوایی مدرس",
+    "kind": "scenario",
+    "id": "MK-169"
+  },
+  {
+    "page": 111,
+    "title": "کلاس‌های تدریس",
+    "kind": "scenario",
+    "id": "MK-443"
+  },
+  {
+    "page": 112,
+    "title": "مدیریت کلاس‌های آموزشگاه",
+    "kind": "scenario",
+    "id": "MK-455"
+  },
+  {
+    "page": 113,
+    "title": "جلسه و حضور؛ برنامه کنار فهرست",
+    "kind": "scenario",
+    "id": "MK-456"
+  },
+  {
+    "page": 114,
+    "title": "مطالعه درس و منابع همان کلاس",
+    "kind": "scenario",
+    "id": "MK-457"
+  },
+  {
+    "page": 115,
+    "title": "ارزیابی تکلیف؛ پاسخ و بازخورد کنار هم",
+    "kind": "scenario",
+    "id": "MK-458"
+  },
+  {
+    "page": 116,
+    "title": "تصحیح آزمون؛ سؤال، پاسخ و بارم",
+    "kind": "scenario",
+    "id": "MK-459"
+  },
+  {
+    "page": 117,
+    "title": "گزارش آموزشگاه؛ فیلتر تا خروجی",
+    "kind": "scenario",
+    "id": "MK-467"
+  },
+  {
+    "page": 118,
+    "title": "حضور؛ تغییر ذخیره‌نشده یک ردیف",
+    "kind": "scenario",
+    "id": "RX-009"
+  },
+  {
+    "page": 119,
+    "title": "تعارض حضور یک نفر",
+    "kind": "scenario",
+    "id": "RX-010"
+  },
+  {
+    "page": 120,
+    "title": "جلسه لغوشده در تقویم",
+    "kind": "scenario",
+    "id": "RX-011"
+  },
+  {
+    "page": 121,
+    "title": "تکلیف؛ تحویل پس از مهلت",
+    "kind": "scenario",
+    "id": "RX-012"
+  },
+  {
+    "page": 122,
+    "title": "جایگزینی پیوست پاسخ پیش از تحویل",
+    "kind": "scenario",
+    "id": "RX-013"
+  },
+  {
+    "page": 123,
+    "title": "ارزیابی؛ ذخیره پیش‌نویس و انتشار جدا",
+    "kind": "scenario",
+    "id": "RX-014"
+  },
+  {
+    "page": 124,
+    "title": "آزمون؛ زمان کم و ذخیره پاسخ",
+    "kind": "scenario",
+    "id": "RX-015"
+  },
+  {
+    "page": 125,
+    "title": "آزمون؛ انتظار برای روشن‌شدن ثبت نهایی",
+    "kind": "scenario",
+    "id": "RX-016"
+  },
+  {
+    "page": 126,
+    "title": "گزارش؛ بازه بدون داده",
+    "kind": "scenario",
+    "id": "RX-017"
+  },
+  {
+    "page": 127,
+    "title": "گزارش فرزند؛ رابطه والد پایان یافته",
+    "kind": "scenario",
+    "id": "RX-018"
+  },
+  {
+    "page": 128,
+    "title": "پیام‌ها",
+    "kind": "scenario",
+    "id": "MK-35"
+  },
+  {
+    "page": 129,
+    "title": "مریم رضایی",
+    "kind": "scenario",
+    "id": "MK-36"
+  },
+  {
+    "page": 130,
+    "title": "گزینه‌های پیام",
+    "kind": "scenario",
+    "id": "MK-37"
+  },
+  {
+    "page": 131,
+    "title": "پیام‌ها",
+    "kind": "scenario",
+    "id": "MK-51"
+  },
+  {
+    "page": 132,
+    "title": "پیام‌ها",
+    "kind": "scenario",
+    "id": "MK-170"
+  },
+  {
+    "page": 133,
+    "title": "خوانده‌نشده‌ها",
+    "kind": "scenario",
+    "id": "MK-171"
+  },
+  {
+    "page": 134,
+    "title": "بایگانی گفتگوها",
+    "kind": "scenario",
+    "id": "MK-172"
+  },
+  {
+    "page": 135,
+    "title": "پوشه‌های من",
+    "kind": "scenario",
+    "id": "MK-173"
+  },
+  {
+    "page": 136,
+    "title": "ویرایش پوشه",
+    "kind": "scenario",
+    "id": "MK-174"
+  },
+  {
+    "page": 137,
+    "title": "حذف پوشه؟",
+    "kind": "scenario",
+    "id": "MK-175"
+  },
+  {
+    "page": 138,
+    "title": "مخاطبین",
+    "kind": "scenario",
+    "id": "MK-176"
+  },
+  {
+    "page": 139,
+    "title": "مخاطب تازه",
+    "kind": "scenario",
+    "id": "MK-177"
+  },
+  {
+    "page": 140,
+    "title": "ویرایش مخاطب",
+    "kind": "scenario",
+    "id": "MK-178"
+  },
+  {
+    "page": 141,
+    "title": "مریم رضایی",
+    "kind": "scenario",
+    "id": "MK-179"
+  },
+  {
+    "page": 142,
+    "title": "اطلاعات مریم",
+    "kind": "scenario",
+    "id": "MK-180"
+  },
+  {
+    "page": 143,
+    "title": "گفتگوی تازه",
+    "kind": "scenario",
+    "id": "MK-181"
+  },
+  {
+    "page": 144,
+    "title": "ذخیره‌شده‌ها",
+    "kind": "scenario",
+    "id": "MK-182"
+  },
+  {
+    "page": 145,
+    "title": "برچسب‌های پیام",
+    "kind": "scenario",
+    "id": "MK-183"
+  },
+  {
+    "page": 146,
+    "title": "یادداشت شخصی",
+    "kind": "scenario",
+    "id": "MK-184"
+  },
+  {
+    "page": 147,
+    "title": "جستجوی پیام‌ها",
+    "kind": "scenario",
+    "id": "MK-185"
+  },
+  {
+    "page": 148,
+    "title": "فیلتر جستجو",
+    "kind": "scenario",
+    "id": "MK-186"
+  },
+  {
+    "page": 149,
+    "title": "نتیجه در گفتگو",
+    "kind": "scenario",
+    "id": "MK-187"
+  },
+  {
+    "page": 150,
+    "title": "ساخت گروه",
+    "kind": "scenario",
+    "id": "MK-188"
+  },
+  {
+    "page": 151,
+    "title": "افراد اولیه",
+    "kind": "scenario",
+    "id": "MK-189"
+  },
+  {
+    "page": 152,
+    "title": "گروه ساخته شد",
+    "kind": "scenario",
+    "id": "MK-190"
+  },
+  {
+    "page": 153,
+    "title": "ساخت کانال",
+    "kind": "scenario",
+    "id": "MK-191"
+  },
+  {
+    "page": 154,
+    "title": "بازبینی کانال",
+    "kind": "scenario",
+    "id": "MK-192"
+  },
+  {
+    "page": 155,
+    "title": "یادداشت‌های مطالعه",
+    "kind": "scenario",
+    "id": "MK-193"
+  },
+  {
+    "page": 156,
+    "title": "اطلاعات گروه",
+    "kind": "scenario",
+    "id": "MK-194"
+  },
+  {
+    "page": 157,
+    "title": "ویرایش گروه",
+    "kind": "scenario",
+    "id": "MK-195"
+  },
+  {
+    "page": 158,
+    "title": "عکس گروه",
+    "kind": "scenario",
+    "id": "MK-196"
+  },
+  {
+    "page": 159,
+    "title": "اطلاعات کانال",
+    "kind": "scenario",
+    "id": "MK-197"
+  },
+  {
+    "page": 160,
+    "title": "ویرایش کانال",
+    "kind": "scenario",
+    "id": "MK-198"
+  },
+  {
+    "page": 161,
+    "title": "مدیران کانال",
+    "kind": "scenario",
+    "id": "MK-199"
+  },
+  {
+    "page": 162,
+    "title": "تنظیمات گروه",
+    "kind": "scenario",
+    "id": "MK-200"
+  },
+  {
+    "page": 163,
+    "title": "تاریخچه عضو تازه",
+    "kind": "scenario",
+    "id": "MK-201"
+  },
+  {
+    "page": 164,
+    "title": "قابلیت اعضای گروه",
+    "kind": "scenario",
+    "id": "MK-202"
+  },
+  {
+    "page": 165,
+    "title": "اختیارهای مریم",
+    "kind": "scenario",
+    "id": "MK-203"
+  },
+  {
+    "page": 166,
+    "title": "محدودیت عضو",
+    "kind": "scenario",
+    "id": "MK-204"
+  },
+  {
+    "page": 167,
+    "title": "وضعیت ارتباط من",
+    "kind": "scenario",
+    "id": "MK-205"
+  },
+  {
+    "page": 168,
+    "title": "اعضای گروه",
+    "kind": "scenario",
+    "id": "MK-206"
+  },
+  {
+    "page": 169,
+    "title": "نقش امیر",
+    "kind": "scenario",
+    "id": "MK-207"
+  },
+  {
+    "page": 170,
+    "title": "حذف امیر از گروه؟",
+    "kind": "scenario",
+    "id": "MK-208"
+  },
+  {
+    "page": 171,
+    "title": "انتقال مالکیت",
+    "kind": "scenario",
+    "id": "MK-209"
+  },
+  {
+    "page": 172,
+    "title": "پذیرش مالکیت",
+    "kind": "scenario",
+    "id": "MK-210"
+  },
+  {
+    "page": 173,
+    "title": "خروج آخرین مالک",
+    "kind": "scenario",
+    "id": "MK-211"
+  },
+  {
+    "page": 174,
+    "title": "دعوت به گفتگو",
+    "kind": "scenario",
+    "id": "MK-212"
+  },
+  {
+    "page": 175,
+    "title": "دعوت‌های گفتگو",
+    "kind": "scenario",
+    "id": "MK-213"
+  },
+  {
+    "page": 176,
+    "title": "پذیرش دعوت گروه",
+    "kind": "scenario",
+    "id": "MK-214"
+  },
+  {
+    "page": 177,
+    "title": "لینک دعوت تازه",
+    "kind": "scenario",
+    "id": "MK-215"
+  },
+  {
+    "page": 178,
+    "title": "لینک‌های دعوت",
+    "kind": "scenario",
+    "id": "MK-216"
+  },
+  {
+    "page": 179,
+    "title": "باطل‌کردن لینک؟",
+    "kind": "scenario",
+    "id": "MK-217"
+  },
+  {
+    "page": 180,
+    "title": "ورود با کد دعوت",
+    "kind": "scenario",
+    "id": "MK-218"
+  },
+  {
+    "page": 181,
+    "title": "درخواست‌های گروه",
+    "kind": "scenario",
+    "id": "MK-219"
+  },
+  {
+    "page": 182,
+    "title": "انصراف از درخواست؟",
+    "kind": "scenario",
+    "id": "MK-220"
+  },
+  {
+    "page": 183,
+    "title": "یافتن گفتگو",
+    "kind": "scenario",
+    "id": "MK-221"
+  },
+  {
+    "page": 184,
+    "title": "پیش‌نمایش گروه",
+    "kind": "scenario",
+    "id": "MK-222"
+  },
+  {
+    "page": 185,
+    "title": "وضعیت پیام‌رسان",
+    "kind": "scenario",
+    "id": "MK-223"
+  },
+  {
+    "page": 186,
+    "title": "موضوع‌های گروه",
+    "kind": "scenario",
+    "id": "MK-224"
+  },
+  {
+    "page": 187,
+    "title": "موضوع تازه",
+    "kind": "scenario",
+    "id": "MK-225"
+  },
+  {
+    "page": 188,
+    "title": "بستن موضوع؟",
+    "kind": "scenario",
+    "id": "MK-226"
+  },
+  {
+    "page": 189,
+    "title": "پاسخ در گفتگو",
+    "kind": "scenario",
+    "id": "MK-227"
+  },
+  {
+    "page": 190,
+    "title": "ویرایش پیام من",
+    "kind": "scenario",
+    "id": "MK-228"
+  },
+  {
+    "page": 191,
+    "title": "پیش‌نویس حفظ شود؟",
+    "kind": "scenario",
+    "id": "MK-229"
+  },
+  {
+    "page": 192,
+    "title": "حذف این پیام",
+    "kind": "scenario",
+    "id": "MK-230"
+  },
+  {
+    "page": 193,
+    "title": "حذف برای همه؟",
+    "kind": "scenario",
+    "id": "MK-231"
+  },
+  {
+    "page": 194,
+    "title": "عمل مجاز نیست",
+    "kind": "scenario",
+    "id": "MK-232"
+  },
+  {
+    "page": 195,
+    "title": "بازفرستادن پیام",
+    "kind": "scenario",
+    "id": "MK-233"
+  },
+  {
+    "page": 196,
+    "title": "سنجاق پیام",
+    "kind": "scenario",
+    "id": "MK-234"
+  },
+  {
+    "page": 197,
+    "title": "واکنش به پیام",
+    "kind": "scenario",
+    "id": "MK-235"
+  },
+  {
+    "page": 198,
+    "title": "انتخاب پیوست",
+    "kind": "scenario",
+    "id": "MK-236"
+  },
+  {
+    "page": 199,
+    "title": "پیش‌نمایش پیوست",
+    "kind": "scenario",
+    "id": "MK-237"
+  },
+  {
+    "page": 200,
+    "title": "بارگذاری پیوست",
+    "kind": "scenario",
+    "id": "MK-238"
+  },
+  {
+    "page": 201,
+    "title": "رسانه‌های گروه",
+    "kind": "scenario",
+    "id": "MK-239"
+  },
+  {
+    "page": 202,
+    "title": "مشاهده فایل",
+    "kind": "scenario",
+    "id": "MK-240"
+  },
+  {
+    "page": 203,
+    "title": "گزینه‌های فایل",
+    "kind": "scenario",
+    "id": "MK-241"
+  },
+  {
+    "page": 204,
+    "title": "نظرسنجی تازه",
+    "kind": "scenario",
+    "id": "MK-242"
+  },
+  {
+    "page": 205,
+    "title": "رأی من",
+    "kind": "scenario",
+    "id": "MK-243"
+  },
+  {
+    "page": 206,
+    "title": "نتیجه نظرسنجی",
+    "kind": "scenario",
+    "id": "MK-244"
+  },
+  {
+    "page": 207,
+    "title": "پرسش کوتاه",
+    "kind": "scenario",
+    "id": "MK-245"
+  },
+  {
+    "page": 208,
+    "title": "پاسخ پرسش کوتاه",
+    "kind": "scenario",
+    "id": "MK-246"
+  },
+  {
+    "page": 209,
+    "title": "بستن نظرسنجی؟",
+    "kind": "scenario",
+    "id": "MK-247"
+  },
+  {
+    "page": 210,
+    "title": "چک‌لیست تازه",
+    "kind": "scenario",
+    "id": "MK-248"
+  },
+  {
+    "page": 211,
+    "title": "آماده‌سازی جلسه",
+    "kind": "scenario",
+    "id": "MK-249"
+  },
+  {
+    "page": 212,
+    "title": "ویرایش چک‌لیست",
+    "kind": "scenario",
+    "id": "MK-250"
+  },
+  {
+    "page": 213,
+    "title": "زمان‌بندی پیام",
+    "kind": "scenario",
+    "id": "MK-251"
+  },
+  {
+    "page": 214,
+    "title": "پیام‌های زمان‌بندی",
+    "kind": "scenario",
+    "id": "MK-252"
+  },
+  {
+    "page": 215,
+    "title": "لغو ارسال زمان‌بندی؟",
+    "kind": "scenario",
+    "id": "MK-253"
+  },
+  {
+    "page": 216,
+    "title": "گزینه‌های گفتگو",
+    "kind": "scenario",
+    "id": "MK-254"
+  },
+  {
+    "page": 217,
+    "title": "پاک‌کردن تاریخچه من؟",
+    "kind": "scenario",
+    "id": "MK-255"
+  },
+  {
+    "page": 218,
+    "title": "ترک این گروه؟",
+    "kind": "scenario",
+    "id": "MK-256"
+  },
+  {
+    "page": 219,
+    "title": "بی‌صداکردن گفتگو",
+    "kind": "scenario",
+    "id": "MK-257"
+  },
+  {
+    "page": 220,
+    "title": "تنظیمات این گفتگو",
+    "kind": "scenario",
+    "id": "MK-258"
+  },
+  {
+    "page": 221,
+    "title": "حریم ارتباط",
+    "kind": "scenario",
+    "id": "MK-259"
+  },
+  {
+    "page": 222,
+    "title": "گزارش این پیام",
+    "kind": "scenario",
+    "id": "MK-260"
+  },
+  {
+    "page": 223,
+    "title": "پیگیری گزارش",
+    "kind": "scenario",
+    "id": "MK-261"
+  },
+  {
+    "page": 224,
+    "title": "مسدودکردن مریم؟",
+    "kind": "scenario",
+    "id": "MK-262"
+  },
+  {
+    "page": 225,
+    "title": "گزارش‌های گروه",
+    "kind": "scenario",
+    "id": "MK-263"
+  },
+  {
+    "page": 226,
+    "title": "بررسی گزارش",
+    "kind": "scenario",
+    "id": "MK-264"
+  },
+  {
+    "page": 227,
+    "title": "پایان بررسی گزارش",
+    "kind": "scenario",
+    "id": "MK-265"
+  },
+  {
+    "page": 228,
+    "title": "پیام در انتظار",
+    "kind": "scenario",
+    "id": "MK-266"
+  },
+  {
+    "page": 229,
+    "title": "ارسال انجام نشد",
+    "kind": "scenario",
+    "id": "MK-267"
+  },
+  {
+    "page": 230,
+    "title": "گفتگو به‌روز شد",
+    "kind": "scenario",
+    "id": "MK-268"
+  },
+  {
+    "page": 231,
+    "title": "هنوز پیامی نیست",
+    "kind": "scenario",
+    "id": "MK-269"
+  },
+  {
+    "page": 232,
+    "title": "کانال فقط خواندنی",
+    "kind": "scenario",
+    "id": "MK-270"
+  },
+  {
+    "page": 233,
+    "title": "دسترسی تغییر کرد",
+    "kind": "scenario",
+    "id": "MK-271"
+  },
+  {
+    "page": 234,
+    "title": "پیام‌رسان؛ صندوق، گفتگو و زمینه",
+    "kind": "scenario",
+    "id": "MK-460"
+  },
+  {
+    "page": 235,
+    "title": "تنظیمات و اعضای گفتگو",
+    "kind": "scenario",
+    "id": "MK-461"
+  },
+  {
+    "page": 236,
+    "title": "نوشتن پیام چندخطی و پیوست آماده",
+    "kind": "scenario",
+    "id": "RX-019"
+  },
+  {
+    "page": 237,
+    "title": "منوی پیام با ماوس و نگه‌داشتن لمس",
+    "kind": "scenario",
+    "id": "RX-020"
+  },
+  {
+    "page": 238,
+    "title": "انتخاب پیام و شمارش روشن",
+    "kind": "scenario",
+    "id": "RX-021"
+  },
+  {
+    "page": 239,
+    "title": "پیام ناموفق و تلاش دوباره همان پیام",
+    "kind": "scenario",
+    "id": "RX-022"
+  },
+  {
+    "page": 240,
+    "title": "پیوست؛ بارگذاری مرحله‌ای با لغو",
+    "kind": "scenario",
+    "id": "RX-023"
+  },
+  {
+    "page": 241,
+    "title": "نمایش رسانه و اطلاعات فایل",
+    "kind": "scenario",
+    "id": "RX-024"
+  },
+  {
+    "page": 242,
+    "title": "مقصد بازفرستادن دیگر در دسترس نیست",
+    "kind": "scenario",
+    "id": "RX-025"
+  },
+  {
+    "page": 243,
+    "title": "جستجو؛ رفتن به پیام و بازگشت نتایج",
+    "kind": "scenario",
+    "id": "RX-026"
+  },
+  {
+    "page": 244,
+    "title": "ویرایش پیام پس از تغییر هم‌زمان",
+    "kind": "scenario",
+    "id": "RX-027"
+  },
+  {
+    "page": 245,
+    "title": "نظرسنجی بسته و نتیجه بدون امکان رأی",
+    "kind": "scenario",
+    "id": "RX-028"
+  },
+  {
+    "page": 246,
+    "title": "اتصال دوباره و رسیدن پیام‌های تازه",
+    "kind": "scenario",
+    "id": "RX-029"
+  },
+  {
+    "page": 247,
+    "title": "نوشتن بسته؛ کانال قابل خواندن",
+    "kind": "scenario",
+    "id": "RX-030"
+  },
+  {
+    "page": 248,
+    "title": "فوق‌برنامه",
+    "kind": "scenario",
+    "id": "MK-10"
+  },
+  {
+    "page": 249,
+    "title": "فوق‌برنامه",
+    "kind": "scenario",
+    "id": "MK-11"
+  },
+  {
+    "page": 250,
+    "title": "درخواست‌های من",
+    "kind": "scenario",
+    "id": "MK-12"
+  },
+  {
+    "page": 251,
+    "title": "درخواست تشکیل کلاس",
+    "kind": "scenario",
+    "id": "MK-13"
+  },
+  {
+    "page": 252,
+    "title": "مخاطبان و پذیرش",
+    "kind": "scenario",
+    "id": "MK-14"
+  },
+  {
+    "page": 253,
+    "title": "مدیریت و مدرس",
+    "kind": "scenario",
+    "id": "MK-15"
+  },
+  {
+    "page": 254,
+    "title": "بازبینی درخواست",
+    "kind": "scenario",
+    "id": "MK-16"
+  },
+  {
+    "page": 255,
+    "title": "درخواست شما ثبت شد",
+    "kind": "scenario",
+    "id": "MK-17"
+  },
+  {
+    "page": 256,
+    "title": "نیاز به اصلاح",
+    "kind": "scenario",
+    "id": "MK-18"
+  },
+  {
+    "page": 257,
+    "title": "آماده‌سازی کلاس",
+    "kind": "scenario",
+    "id": "MK-20"
+  },
+  {
+    "page": 258,
+    "title": "آماده‌سازی کامل نشد",
+    "kind": "scenario",
+    "id": "MK-21"
+  },
+  {
+    "page": 259,
+    "title": "کلاس آماده است",
+    "kind": "scenario",
+    "id": "MK-22"
+  },
+  {
+    "page": 260,
+    "title": "کارگاه داستان‌نویسی",
+    "kind": "scenario",
+    "id": "MK-23"
+  },
+  {
+    "page": 261,
+    "title": "کارگاه داستان‌نویسی",
+    "kind": "scenario",
+    "id": "MK-24"
+  },
+  {
+    "page": 262,
+    "title": "کارگاه داستان‌نویسی",
+    "kind": "scenario",
+    "id": "MK-25"
+  },
+  {
+    "page": 263,
+    "title": "دعوت به کلاس",
+    "kind": "scenario",
+    "id": "MK-26"
+  },
+  {
+    "page": 264,
+    "title": "دعوت به یک کلاس",
+    "kind": "scenario",
+    "id": "MK-27"
+  },
+  {
+    "page": 265,
+    "title": "پیوستن به کلاس",
+    "kind": "scenario",
+    "id": "MK-28"
+  },
+  {
+    "page": 266,
+    "title": "درخواست‌های عضویت",
+    "kind": "scenario",
+    "id": "MK-29"
+  },
+  {
+    "page": 267,
+    "title": "اعضای کلاس",
+    "kind": "scenario",
+    "id": "MK-30"
+  },
+  {
+    "page": 268,
+    "title": "پایان عضویت نازنین؟",
+    "kind": "scenario",
+    "id": "MK-31"
+  },
+  {
+    "page": 269,
+    "title": "گروه داستان‌نویسی",
+    "kind": "scenario",
+    "id": "MK-32"
+  },
+  {
+    "page": 270,
+    "title": "کانال داستان‌نویسی",
+    "kind": "scenario",
+    "id": "MK-33"
+  },
+  {
+    "page": 271,
+    "title": "اطلاعات گفتگو",
+    "kind": "scenario",
+    "id": "MK-34"
+  },
+  {
+    "page": 272,
+    "title": "یادگیری در کارگاه",
+    "kind": "scenario",
+    "id": "MK-44"
+  },
+  {
+    "page": 273,
+    "title": "روایت یک اتفاق کوچک",
+    "kind": "scenario",
+    "id": "MK-45"
+  },
+  {
+    "page": 274,
+    "title": "پاسخ من",
+    "kind": "scenario",
+    "id": "MK-46"
+  },
+  {
+    "page": 275,
+    "title": "تکلیف تازه",
+    "kind": "scenario",
+    "id": "MK-60"
+  },
+  {
+    "page": 276,
+    "title": "انتشار تکلیف",
+    "kind": "scenario",
+    "id": "MK-61"
+  },
+  {
+    "page": 277,
+    "title": "پاسخ‌های تکلیف",
+    "kind": "scenario",
+    "id": "MK-62"
+  },
+  {
+    "page": 278,
+    "title": "پاسخ شما تحویل شد",
+    "kind": "scenario",
+    "id": "MK-63"
+  },
+  {
+    "page": 279,
+    "title": "ارزیابی پاسخ نازنین",
+    "kind": "scenario",
+    "id": "MK-64"
+  },
+  {
+    "page": 280,
+    "title": "نتیجه تکلیف من",
+    "kind": "scenario",
+    "id": "MK-65"
+  },
+  {
+    "page": 281,
+    "title": "آزمون‌های کارگاه",
+    "kind": "scenario",
+    "id": "MK-66"
+  },
+  {
+    "page": 282,
+    "title": "شرایط آزمون",
+    "kind": "scenario",
+    "id": "MK-67"
+  },
+  {
+    "page": 283,
+    "title": "مرور زاویه دید",
+    "kind": "scenario",
+    "id": "MK-68"
+  },
+  {
+    "page": 284,
+    "title": "آزمون تازه",
+    "kind": "scenario",
+    "id": "MK-69"
+  },
+  {
+    "page": 285,
+    "title": "ویرایش سؤال ۳",
+    "kind": "scenario",
+    "id": "MK-70"
+  },
+  {
+    "page": 286,
+    "title": "بازبینی انتشار آزمون",
+    "kind": "scenario",
+    "id": "MK-71"
+  },
+  {
+    "page": 287,
+    "title": "مرور پیش از ثبت",
+    "kind": "scenario",
+    "id": "MK-72"
+  },
+  {
+    "page": 288,
+    "title": "آزمون ثبت نهایی شد",
+    "kind": "scenario",
+    "id": "MK-73"
+  },
+  {
+    "page": 289,
+    "title": "نتیجه آزمون من",
+    "kind": "scenario",
+    "id": "MK-74"
+  },
+  {
+    "page": 290,
+    "title": "تصحیح آزمون نازنین",
+    "kind": "scenario",
+    "id": "MK-75"
+  },
+  {
+    "page": 291,
+    "title": "اصلاح نتیجه منتشرشده",
+    "kind": "scenario",
+    "id": "MK-76"
+  },
+  {
+    "page": 292,
+    "title": "نتیجه آزمون من",
+    "kind": "scenario",
+    "id": "MK-77"
+  },
+  {
+    "page": 293,
+    "title": "مرور زاویه دید",
+    "kind": "scenario",
+    "id": "MK-78"
+  },
+  {
+    "page": 294,
+    "title": "دسترسی کلاس تغییر کرد",
+    "kind": "scenario",
+    "id": "MK-79"
+  },
+  {
+    "page": 295,
+    "title": "تکلیف‌های کلاس",
+    "kind": "scenario",
+    "id": "MK-80"
+  },
+  {
+    "page": 296,
+    "title": "کارگاه داستان‌نویسی",
+    "kind": "scenario",
+    "id": "MK-81"
+  },
+  {
+    "page": 297,
+    "title": "مرور زاویه دید",
+    "kind": "scenario",
+    "id": "MK-82"
+  },
+  {
+    "page": 298,
+    "title": "فوق‌برنامه",
+    "kind": "scenario",
+    "id": "MK-50"
+  },
+  {
+    "page": 299,
+    "title": "فوق‌برنامه",
+    "kind": "scenario",
+    "id": "MK-53"
+  },
+  {
+    "page": 300,
+    "title": "اعضای کلاس",
+    "kind": "scenario",
+    "id": "MK-54"
+  },
+  {
+    "page": 301,
+    "title": "اطلاعات تازه‌تری وجود دارد",
+    "kind": "scenario",
+    "id": "MK-55"
+  },
+  {
+    "page": 302,
+    "title": "کارگاه داستان‌نویسی",
+    "kind": "scenario",
+    "id": "MK-56"
+  },
+  {
+    "page": 303,
+    "title": "اعضای کلاس",
+    "kind": "scenario",
+    "id": "MK-57"
+  },
+  {
+    "page": 304,
+    "title": "درخواست تشکیل کلاس",
+    "kind": "scenario",
+    "id": "MK-58"
+  },
+  {
+    "page": 305,
+    "title": "درخواست‌های من",
+    "kind": "scenario",
+    "id": "MK-272"
+  },
+  {
+    "page": 306,
+    "title": "جزئیات درخواست",
+    "kind": "scenario",
+    "id": "MK-273"
+  },
+  {
+    "page": 307,
+    "title": "انصراف از درخواست؟",
+    "kind": "scenario",
+    "id": "MK-274"
+  },
+  {
+    "page": 308,
+    "title": "مشخصات کلاس",
+    "kind": "scenario",
+    "id": "MK-275"
+  },
+  {
+    "page": 309,
+    "title": "توضیحات درخواست",
+    "kind": "scenario",
+    "id": "MK-276"
+  },
+  {
+    "page": 310,
+    "title": "خطای اطلاعات درخواست",
+    "kind": "scenario",
+    "id": "MK-277"
+  },
+  {
+    "page": 311,
+    "title": "مدیریت پیشنهادی",
+    "kind": "scenario",
+    "id": "MK-278"
+  },
+  {
+    "page": 312,
+    "title": "پیشنهاد مدیر دیگر",
+    "kind": "scenario",
+    "id": "MK-279"
+  },
+  {
+    "page": 313,
+    "title": "مدرس پیشنهادی",
+    "kind": "scenario",
+    "id": "MK-280"
+  },
+  {
+    "page": 314,
+    "title": "بازبینی درخواست",
+    "kind": "scenario",
+    "id": "MK-281"
+  },
+  {
+    "page": 315,
+    "title": "اصلاح لازم است",
+    "kind": "scenario",
+    "id": "MK-282"
+  },
+  {
+    "page": 316,
+    "title": "رسید ارسال مجدد",
+    "kind": "scenario",
+    "id": "MK-283"
+  },
+  {
+    "page": 317,
+    "title": "درخواست‌های تشکیل",
+    "kind": "scenario",
+    "id": "MK-284"
+  },
+  {
+    "page": 318,
+    "title": "بازبینی درخواست",
+    "kind": "scenario",
+    "id": "MK-285"
+  },
+  {
+    "page": 319,
+    "title": "نتیجه بررسی",
+    "kind": "scenario",
+    "id": "MK-286"
+  },
+  {
+    "page": 320,
+    "title": "تأیید درخواست",
+    "kind": "scenario",
+    "id": "MK-287"
+  },
+  {
+    "page": 321,
+    "title": "تغییر مدیر نهایی",
+    "kind": "scenario",
+    "id": "MK-288"
+  },
+  {
+    "page": 322,
+    "title": "درخواست تأیید شد",
+    "kind": "scenario",
+    "id": "MK-289"
+  },
+  {
+    "page": 323,
+    "title": "آماده‌سازی کلاس",
+    "kind": "scenario",
+    "id": "MK-290"
+  },
+  {
+    "page": 324,
+    "title": "فضا کامل نشد",
+    "kind": "scenario",
+    "id": "MK-291"
+  },
+  {
+    "page": 325,
+    "title": "فضاهای کلاس",
+    "kind": "scenario",
+    "id": "MK-292"
+  },
+  {
+    "page": 326,
+    "title": "تنظیمات کلاس",
+    "kind": "scenario",
+    "id": "MK-293"
+  },
+  {
+    "page": 327,
+    "title": "کاهش ظرفیت",
+    "kind": "scenario",
+    "id": "MK-294"
+  },
+  {
+    "page": 328,
+    "title": "بستن درخواست پیوستن",
+    "kind": "scenario",
+    "id": "MK-295"
+  },
+  {
+    "page": 329,
+    "title": "دعوت به کلاس",
+    "kind": "scenario",
+    "id": "MK-296"
+  },
+  {
+    "page": 330,
+    "title": "دعوت‌های من",
+    "kind": "scenario",
+    "id": "MK-297"
+  },
+  {
+    "page": 331,
+    "title": "پذیرش دعوت کلاس",
+    "kind": "scenario",
+    "id": "MK-298"
+  },
+  {
+    "page": 332,
+    "title": "نپذیرفتن دعوت",
+    "kind": "scenario",
+    "id": "MK-299"
+  },
+  {
+    "page": 333,
+    "title": "لغو دعوت ارسال‌شده",
+    "kind": "scenario",
+    "id": "MK-300"
+  },
+  {
+    "page": 334,
+    "title": "عضویت قبلاً ثبت شد",
+    "kind": "scenario",
+    "id": "MK-301"
+  },
+  {
+    "page": 335,
+    "title": "درخواست پیوستن",
+    "kind": "scenario",
+    "id": "MK-302"
+  },
+  {
+    "page": 336,
+    "title": "درخواست‌های عضویت",
+    "kind": "scenario",
+    "id": "MK-303"
+  },
+  {
+    "page": 337,
+    "title": "تصمیم عضویت ریحانه",
+    "kind": "scenario",
+    "id": "MK-304"
+  },
+  {
+    "page": 338,
+    "title": "اعضا و نقش‌ها",
+    "kind": "scenario",
+    "id": "MK-305"
+  },
+  {
+    "page": 339,
+    "title": "نقش مریم در کلاس",
+    "kind": "scenario",
+    "id": "MK-306"
+  },
+  {
+    "page": 340,
+    "title": "پایان عضویت ریحانه؟",
+    "kind": "scenario",
+    "id": "MK-307"
+  },
+  {
+    "page": 341,
+    "title": "اختیارهای آموزشی",
+    "kind": "scenario",
+    "id": "MK-308"
+  },
+  {
+    "page": 342,
+    "title": "اختیار آموزش مریم",
+    "kind": "scenario",
+    "id": "MK-309"
+  },
+  {
+    "page": 343,
+    "title": "لغو اختیار ارزیابی",
+    "kind": "scenario",
+    "id": "MK-310"
+  },
+  {
+    "page": 344,
+    "title": "انتقال مدیریت",
+    "kind": "scenario",
+    "id": "MK-311"
+  },
+  {
+    "page": 345,
+    "title": "پیشنهاد مدیریت",
+    "kind": "scenario",
+    "id": "MK-312"
+  },
+  {
+    "page": 346,
+    "title": "وضعیت انتقال",
+    "kind": "scenario",
+    "id": "MK-313"
+  },
+  {
+    "page": 347,
+    "title": "تطبیق فضاهای کلاس",
+    "kind": "scenario",
+    "id": "MK-314"
+  },
+  {
+    "page": 348,
+    "title": "اجرای طرح ترمیم",
+    "kind": "scenario",
+    "id": "MK-315"
+  },
+  {
+    "page": 349,
+    "title": "نتیجه تطبیق",
+    "kind": "scenario",
+    "id": "MK-316"
+  },
+  {
+    "page": 350,
+    "title": "سابقه درخواست",
+    "kind": "scenario",
+    "id": "MK-317"
+  },
+  {
+    "page": 351,
+    "title": "سابقه کلاس",
+    "kind": "scenario",
+    "id": "MK-318"
+  },
+  {
+    "page": 352,
+    "title": "جزئیات رویداد",
+    "kind": "scenario",
+    "id": "MK-319"
+  },
+  {
+    "page": 353,
+    "title": "تعلیق فعالیت کلاس",
+    "kind": "scenario",
+    "id": "MK-320"
+  },
+  {
+    "page": 354,
+    "title": "بازبینی فعال‌سازی",
+    "kind": "scenario",
+    "id": "MK-321"
+  },
+  {
+    "page": 355,
+    "title": "بایگانی کلاس؟",
+    "kind": "scenario",
+    "id": "MK-322"
+  },
+  {
+    "page": 356,
+    "title": "کارهای آموزشی من",
+    "kind": "scenario",
+    "id": "MK-323"
+  },
+  {
+    "page": 357,
+    "title": "مدیریت آموزش",
+    "kind": "scenario",
+    "id": "MK-324"
+  },
+  {
+    "page": 358,
+    "title": "ابزار مدرس",
+    "kind": "scenario",
+    "id": "MK-325"
+  },
+  {
+    "page": 359,
+    "title": "صورت تکلیف کلاس",
+    "kind": "scenario",
+    "id": "MK-326"
+  },
+  {
+    "page": 360,
+    "title": "پاسخ من",
+    "kind": "scenario",
+    "id": "MK-327"
+  },
+  {
+    "page": 361,
+    "title": "ارزیابی پاسخ",
+    "kind": "scenario",
+    "id": "MK-328"
+  },
+  {
+    "page": 362,
+    "title": "پاسخ تشریحی",
+    "kind": "scenario",
+    "id": "MK-329"
+  },
+  {
+    "page": 363,
+    "title": "رسید آزمون مستقل",
+    "kind": "scenario",
+    "id": "MK-330"
+  },
+  {
+    "page": 364,
+    "title": "نتیجه من",
+    "kind": "scenario",
+    "id": "MK-331"
+  },
+  {
+    "page": 365,
+    "title": "کلاس مستقل؛ عضویت، فضا و اختیار",
+    "kind": "scenario",
+    "id": "MK-462"
+  },
+  {
+    "page": 366,
+    "title": "پذیرش دعوت با ظرفیت تکمیل‌شده",
+    "kind": "scenario",
+    "id": "RX-031"
+  },
+  {
+    "page": 367,
+    "title": "یک حساب با دو نقش محلی",
+    "kind": "scenario",
+    "id": "RX-032"
+  },
+  {
+    "page": 368,
+    "title": "مدرس اختیاری و پایان مسئولیت تدریس",
+    "kind": "scenario",
+    "id": "RX-033"
+  },
+  {
+    "page": 369,
+    "title": "انتقال مدیریت؛ مقصد درخواست را نپذیرفت",
+    "kind": "scenario",
+    "id": "RX-034"
+  },
+  {
+    "page": 370,
+    "title": "پیوند فضاها؛ یکی آماده و دیگری در انتظار",
+    "kind": "scenario",
+    "id": "RX-035"
+  },
+  {
+    "page": 371,
+    "title": "ترمیم فضا؛ طرح قبلی دیگر معتبر نیست",
+    "kind": "scenario",
+    "id": "RX-036"
+  },
+  {
+    "page": 372,
+    "title": "بایگانی؛ خواندن سوابق مجاز",
+    "kind": "scenario",
+    "id": "RX-037"
+  },
+  {
+    "page": 373,
+    "title": "پاسخ آموزشی؛ اختیار ارزیاب لغو شد",
+    "kind": "scenario",
+    "id": "RX-038"
+  },
+  {
+    "page": 374,
+    "title": "دستیار",
+    "kind": "scenario",
+    "id": "MK-38"
+  },
+  {
+    "page": 375,
+    "title": "انتخاب منابع دستیار",
+    "kind": "scenario",
+    "id": "MK-39"
+  },
+  {
+    "page": 376,
+    "title": "گفتگو با دستیار",
+    "kind": "scenario",
+    "id": "MK-40"
+  },
+  {
+    "page": 377,
+    "title": "منابع من",
+    "kind": "scenario",
+    "id": "MK-41"
+  },
+  {
+    "page": 378,
+    "title": "افزودن منبع",
+    "kind": "scenario",
+    "id": "MK-42"
+  },
+  {
+    "page": 379,
+    "title": "یادداشت‌های هفته دوم",
+    "kind": "scenario",
+    "id": "MK-43"
+  },
+  {
+    "page": 380,
+    "title": "پروفایل",
+    "kind": "scenario",
+    "id": "MK-47"
+  },
+  {
+    "page": 381,
+    "title": "امنیت حساب",
+    "kind": "scenario",
+    "id": "MK-48"
+  },
+  {
+    "page": 382,
+    "title": "حریم خصوصی",
+    "kind": "scenario",
+    "id": "MK-49"
+  },
+  {
+    "page": 383,
+    "title": "دستیار",
+    "kind": "scenario",
+    "id": "MK-52"
+  },
+  {
+    "page": 384,
+    "title": "ورود با شماره",
+    "kind": "scenario",
+    "id": "MK-332"
+  },
+  {
+    "page": 385,
+    "title": "کد تأیید",
+    "kind": "scenario",
+    "id": "MK-333"
+  },
+  {
+    "page": 386,
+    "title": "محدودیت ارسال کد",
+    "kind": "scenario",
+    "id": "MK-334"
+  },
+  {
+    "page": 387,
+    "title": "ویرایش پروفایل",
+    "kind": "scenario",
+    "id": "MK-335"
+  },
+  {
+    "page": 388,
+    "title": "انتخاب تاریخ تولد",
+    "kind": "scenario",
+    "id": "MK-336"
+  },
+  {
+    "page": 389,
+    "title": "عکس پروفایل",
+    "kind": "scenario",
+    "id": "MK-337"
+  },
+  {
+    "page": 390,
+    "title": "تنظیمات",
+    "kind": "scenario",
+    "id": "MK-338"
+  },
+  {
+    "page": 391,
+    "title": "ظاهر برنامه",
+    "kind": "scenario",
+    "id": "MK-339"
+  },
+  {
+    "page": 392,
+    "title": "خوانایی و نمایش",
+    "kind": "scenario",
+    "id": "MK-340"
+  },
+  {
+    "page": 393,
+    "title": "حریم خصوصی",
+    "kind": "scenario",
+    "id": "MK-341"
+  },
+  {
+    "page": 394,
+    "title": "چه کسی پیام بدهد؟",
+    "kind": "scenario",
+    "id": "MK-342"
+  },
+  {
+    "page": 395,
+    "title": "افراد مسدودشده",
+    "kind": "scenario",
+    "id": "MK-343"
+  },
+  {
+    "page": 396,
+    "title": "اعلان‌ها",
+    "kind": "scenario",
+    "id": "MK-344"
+  },
+  {
+    "page": 397,
+    "title": "دسته‌های اعلان",
+    "kind": "scenario",
+    "id": "MK-345"
+  },
+  {
+    "page": 398,
+    "title": "اعلان تکلیف‌ها",
+    "kind": "scenario",
+    "id": "MK-346"
+  },
+  {
+    "page": 399,
+    "title": "اعلان این دستگاه",
+    "kind": "scenario",
+    "id": "MK-347"
+  },
+  {
+    "page": 400,
+    "title": "دستگاه‌های اعلان",
+    "kind": "scenario",
+    "id": "MK-348"
+  },
+  {
+    "page": 401,
+    "title": "حذف مقصد اعلان؟",
+    "kind": "scenario",
+    "id": "MK-349"
+  },
+  {
+    "page": 402,
+    "title": "نشست‌های فعال",
+    "kind": "scenario",
+    "id": "MK-350"
+  },
+  {
+    "page": 403,
+    "title": "پایان نشست دستگاه؟",
+    "kind": "scenario",
+    "id": "MK-351"
+  },
+  {
+    "page": 404,
+    "title": "خروج از حساب؟",
+    "kind": "scenario",
+    "id": "MK-352"
+  },
+  {
+    "page": 405,
+    "title": "وضعیت ارتباط",
+    "kind": "scenario",
+    "id": "MK-353"
+  },
+  {
+    "page": 406,
+    "title": "نصب روی دستگاه",
+    "kind": "scenario",
+    "id": "MK-354"
+  },
+  {
+    "page": 407,
+    "title": "راهنما و پشتیبانی",
+    "kind": "scenario",
+    "id": "MK-355"
+  },
+  {
+    "page": 408,
+    "title": "منابع مجاز من",
+    "kind": "scenario",
+    "id": "MK-356"
+  },
+  {
+    "page": 409,
+    "title": "جزئیات منبع",
+    "kind": "scenario",
+    "id": "MK-357"
+  },
+  {
+    "page": 410,
+    "title": "منبع کتابخانه",
+    "kind": "scenario",
+    "id": "MK-358"
+  },
+  {
+    "page": 411,
+    "title": "منبع تازه",
+    "kind": "scenario",
+    "id": "MK-359"
+  },
+  {
+    "page": 412,
+    "title": "آماده‌سازی منبع",
+    "kind": "scenario",
+    "id": "MK-360"
+  },
+  {
+    "page": 413,
+    "title": "نسخه تازه منبع",
+    "kind": "scenario",
+    "id": "MK-361"
+  },
+  {
+    "page": 414,
+    "title": "انتشار این منبع؟",
+    "kind": "scenario",
+    "id": "MK-362"
+  },
+  {
+    "page": 415,
+    "title": "تغییر نمایش منبع",
+    "kind": "scenario",
+    "id": "MK-363"
+  },
+  {
+    "page": 416,
+    "title": "بایگانی منبع؟",
+    "kind": "scenario",
+    "id": "MK-364"
+  },
+  {
+    "page": 417,
+    "title": "انتخاب زمینه دستیار",
+    "kind": "scenario",
+    "id": "MK-365"
+  },
+  {
+    "page": 418,
+    "title": "منابع گفتگو",
+    "kind": "scenario",
+    "id": "MK-366"
+  },
+  {
+    "page": 419,
+    "title": "آمادگی دستیار",
+    "kind": "scenario",
+    "id": "MK-367"
+  },
+  {
+    "page": 420,
+    "title": "توضیح تکلیف",
+    "kind": "scenario",
+    "id": "MK-368"
+  },
+  {
+    "page": 421,
+    "title": "آمادگی آزمون",
+    "kind": "scenario",
+    "id": "MK-369"
+  },
+  {
+    "page": 422,
+    "title": "برنامه مطالعه",
+    "kind": "scenario",
+    "id": "MK-370"
+  },
+  {
+    "page": 423,
+    "title": "خلاصه کلاس",
+    "kind": "scenario",
+    "id": "MK-371"
+  },
+  {
+    "page": 424,
+    "title": "همراهی با فرزند",
+    "kind": "scenario",
+    "id": "MK-372"
+  },
+  {
+    "page": 425,
+    "title": "نگاه به آموزشگاه",
+    "kind": "scenario",
+    "id": "MK-373"
+  },
+  {
+    "page": 426,
+    "title": "پاسخ دستیار",
+    "kind": "scenario",
+    "id": "MK-374"
+  },
+  {
+    "page": 427,
+    "title": "اعتبار کافی نیست",
+    "kind": "scenario",
+    "id": "MK-375"
+  },
+  {
+    "page": 428,
+    "title": "دستیار در دسترس نیست",
+    "kind": "scenario",
+    "id": "MK-376"
+  },
+  {
+    "page": 429,
+    "title": "خلاصه منبع",
+    "kind": "scenario",
+    "id": "MK-377"
+  },
+  {
+    "page": 430,
+    "title": "فلش‌کارت مطالعه",
+    "kind": "scenario",
+    "id": "MK-378"
+  },
+  {
+    "page": 431,
+    "title": "مرور شنیداری",
+    "kind": "scenario",
+    "id": "MK-379"
+  },
+  {
+    "page": 432,
+    "title": "اشتراک شخصی",
+    "kind": "scenario",
+    "id": "MK-380"
+  },
+  {
+    "page": 433,
+    "title": "اشتراک آموزشگاه",
+    "kind": "scenario",
+    "id": "MK-381"
+  },
+  {
+    "page": 434,
+    "title": "انتخاب بسته",
+    "kind": "scenario",
+    "id": "MK-382"
+  },
+  {
+    "page": 435,
+    "title": "بازبینی پیش‌فاکتور",
+    "kind": "scenario",
+    "id": "MK-383"
+  },
+  {
+    "page": 436,
+    "title": "سفارش در انتظار",
+    "kind": "scenario",
+    "id": "MK-384"
+  },
+  {
+    "page": 437,
+    "title": "بررسی پرداخت",
+    "kind": "scenario",
+    "id": "MK-385"
+  },
+  {
+    "page": 438,
+    "title": "سفارش‌های من",
+    "kind": "scenario",
+    "id": "MK-386"
+  },
+  {
+    "page": 439,
+    "title": "جزئیات سفارش",
+    "kind": "scenario",
+    "id": "MK-387"
+  },
+  {
+    "page": 440,
+    "title": "کاهش بسته اشتراک",
+    "kind": "scenario",
+    "id": "MK-388"
+  },
+  {
+    "page": 441,
+    "title": "حضور جلسه",
+    "kind": "scenario",
+    "id": "MK-444"
+  },
+  {
+    "page": 442,
+    "title": "درس منتشرشده",
+    "kind": "scenario",
+    "id": "MK-445"
+  },
+  {
+    "page": 443,
+    "title": "باشگاه کتاب‌خوانی",
+    "kind": "scenario",
+    "id": "MK-446"
+  },
+  {
+    "page": 444,
+    "title": "تنظیمات گروه",
+    "kind": "scenario",
+    "id": "MK-447"
+  },
+  {
+    "page": 445,
+    "title": "ترک گروه؟",
+    "kind": "scenario",
+    "id": "MK-448"
+  },
+  {
+    "page": 446,
+    "title": "اعضای کارگاه",
+    "kind": "scenario",
+    "id": "MK-449"
+  },
+  {
+    "page": 447,
+    "title": "اختیار آموزشی",
+    "kind": "scenario",
+    "id": "MK-450"
+  },
+  {
+    "page": 448,
+    "title": "پذیرش مدیریت",
+    "kind": "scenario",
+    "id": "MK-451"
+  },
+  {
+    "page": 449,
+    "title": "منابع من",
+    "kind": "scenario",
+    "id": "MK-452"
+  },
+  {
+    "page": 450,
+    "title": "آمادگی دستیار",
+    "kind": "scenario",
+    "id": "MK-453"
+  },
+  {
+    "page": 451,
+    "title": "بازبینی پیش‌فاکتور",
+    "kind": "scenario",
+    "id": "MK-454"
+  },
+  {
+    "page": 452,
+    "title": "منبع؛ محتوا، نسخه و دسترسی",
+    "kind": "scenario",
+    "id": "MK-465"
+  },
+  {
+    "page": 453,
+    "title": "دستیار؛ گفتگو، منابع و قصد مصرف",
+    "kind": "scenario",
+    "id": "MK-466"
+  },
+  {
+    "page": 454,
+    "title": "پایان نشست از دستگاه دیگر",
+    "kind": "scenario",
+    "id": "RX-039"
+  },
+  {
+    "page": 455,
+    "title": "اعلان؛ تفاوت ترجیح حساب و مجوز دستگاه",
+    "kind": "scenario",
+    "id": "RX-040"
+  },
+  {
+    "page": 456,
+    "title": "حالت تاریک و کنترل کنتراست",
+    "kind": "scenario",
+    "id": "RX-041"
+  },
+  {
+    "page": 457,
+    "title": "تغییر تم با فرم ناتمام",
+    "kind": "scenario",
+    "id": "RX-042"
+  },
+  {
+    "page": 458,
+    "title": "فایل منبع؛ پردازش ناموفق و مسیر اصلاح",
+    "kind": "scenario",
+    "id": "RX-043"
+  },
+  {
+    "page": 459,
+    "title": "دستیار؛ مرجع محدود و پاسخ قابل پیگیری",
+    "kind": "scenario",
+    "id": "RX-044"
+  },
+  {
+    "page": 460,
+    "title": "بررسی درخواست‌های تشکیل",
+    "kind": "scenario",
+    "id": "MK-19"
+  },
+  {
+    "page": 461,
+    "title": "مدیریت ماکان",
+    "kind": "scenario",
+    "id": "MK-389"
+  },
+  {
+    "page": 462,
+    "title": "نقش‌های پلتفرم",
+    "kind": "scenario",
+    "id": "MK-390"
+  },
+  {
+    "page": 463,
+    "title": "پایان نقش پلتفرم؟",
+    "kind": "scenario",
+    "id": "MK-391"
+  },
+  {
+    "page": 464,
+    "title": "کاربران پلتفرم",
+    "kind": "scenario",
+    "id": "MK-392"
+  },
+  {
+    "page": 465,
+    "title": "جزئیات حساب",
+    "kind": "scenario",
+    "id": "MK-393"
+  },
+  {
+    "page": 466,
+    "title": "تعلیق حساب؟",
+    "kind": "scenario",
+    "id": "MK-394"
+  },
+  {
+    "page": 467,
+    "title": "آموزشگاه‌ها",
+    "kind": "scenario",
+    "id": "MK-395"
+  },
+  {
+    "page": 468,
+    "title": "آموزشگاه تازه",
+    "kind": "scenario",
+    "id": "MK-396"
+  },
+  {
+    "page": 469,
+    "title": "اثر تعلیق آموزشگاه",
+    "kind": "scenario",
+    "id": "MK-397"
+  },
+  {
+    "page": 470,
+    "title": "عضویت‌های آفتاب",
+    "kind": "scenario",
+    "id": "MK-398"
+  },
+  {
+    "page": 471,
+    "title": "دعوت مدیر آموزشگاه",
+    "kind": "scenario",
+    "id": "MK-399"
+  },
+  {
+    "page": 472,
+    "title": "پایان عضویت سازمان؟",
+    "kind": "scenario",
+    "id": "MK-400"
+  },
+  {
+    "page": 473,
+    "title": "راه‌اندازی‌ها",
+    "kind": "scenario",
+    "id": "MK-401"
+  },
+  {
+    "page": 474,
+    "title": "راه‌اندازی تازه",
+    "kind": "scenario",
+    "id": "MK-402"
+  },
+  {
+    "page": 475,
+    "title": "سفارش پلتفرم",
+    "kind": "scenario",
+    "id": "MK-403"
+  },
+  {
+    "page": 476,
+    "title": "پلن‌های ماکان",
+    "kind": "scenario",
+    "id": "MK-404"
+  },
+  {
+    "page": 477,
+    "title": "نسخه پیش‌نویس پلن",
+    "kind": "scenario",
+    "id": "MK-405"
+  },
+  {
+    "page": 478,
+    "title": "بازبینی انتشار پلن",
+    "kind": "scenario",
+    "id": "MK-406"
+  },
+  {
+    "page": 479,
+    "title": "قرارداد تجاری",
+    "kind": "scenario",
+    "id": "MK-407"
+  },
+  {
+    "page": 480,
+    "title": "دسترس‌پذیری پلن",
+    "kind": "scenario",
+    "id": "MK-408"
+  },
+  {
+    "page": 481,
+    "title": "سابقه تجاری",
+    "kind": "scenario",
+    "id": "MK-409"
+  },
+  {
+    "page": 482,
+    "title": "منابع کتابخانه",
+    "kind": "scenario",
+    "id": "MK-410"
+  },
+  {
+    "page": 483,
+    "title": "ثبت منبع مرکزی",
+    "kind": "scenario",
+    "id": "MK-411"
+  },
+  {
+    "page": 484,
+    "title": "نمای آموزش پلتفرم",
+    "kind": "scenario",
+    "id": "MK-412"
+  },
+  {
+    "page": 485,
+    "title": "پرونده‌های گزارش",
+    "kind": "scenario",
+    "id": "MK-413"
+  },
+  {
+    "page": 486,
+    "title": "شواهد پرونده",
+    "kind": "scenario",
+    "id": "MK-414"
+  },
+  {
+    "page": 487,
+    "title": "ثبت نتیجه پرونده",
+    "kind": "scenario",
+    "id": "MK-415"
+  },
+  {
+    "page": 488,
+    "title": "سلامت عملیات",
+    "kind": "scenario",
+    "id": "MK-416"
+  },
+  {
+    "page": 489,
+    "title": "کارهای پس‌زمینه",
+    "kind": "scenario",
+    "id": "MK-417"
+  },
+  {
+    "page": 490,
+    "title": "سابقه ممیزی",
+    "kind": "scenario",
+    "id": "MK-418"
+  },
+  {
+    "page": 491,
+    "title": "بررسی تشکیل فوق‌برنامه در پنل",
+    "kind": "scenario",
+    "id": "MK-463"
+  },
+  {
+    "page": 492,
+    "title": "پلن و قرارداد؛ نسخه و اثر تجاری",
+    "kind": "scenario",
+    "id": "MK-464"
+  },
+  {
+    "page": 493,
+    "title": "صف بررسی؛ فیلتر و انتخاب پایدار",
+    "kind": "scenario",
+    "id": "RX-045"
+  },
+  {
+    "page": 494,
+    "title": "ثبت تصمیم هم‌زمان دو ناظر",
+    "kind": "scenario",
+    "id": "RX-046"
+  },
+  {
+    "page": 495,
+    "title": "قرارداد تجاری؛ نسخه منتشرشده فقط‌خواندنی",
+    "kind": "scenario",
+    "id": "RX-047"
+  },
+  {
+    "page": 496,
+    "title": "کار پس‌زمینه؛ پایان با خطای جزئی",
+    "kind": "scenario",
+    "id": "RX-048"
+  },
+  {
+    "page": 497,
+    "title": "ممیزی؛ داده مجاز و دلیل قابل نمایش",
+    "kind": "scenario",
+    "id": "RX-049"
+  },
+  {
+    "page": 498,
+    "title": "دریافت کلاس‌ها",
+    "kind": "scenario",
+    "id": "MK-419"
+  },
+  {
+    "page": 499,
+    "title": "پیام‌های تازه",
+    "kind": "scenario",
+    "id": "MK-420"
+  },
+  {
+    "page": 500,
+    "title": "ادامه اعضا",
+    "kind": "scenario",
+    "id": "MK-421"
+  },
+  {
+    "page": 501,
+    "title": "هنوز کلاسی ندارید",
+    "kind": "scenario",
+    "id": "MK-422"
+  },
+  {
+    "page": 502,
+    "title": "هنوز گفتگویی نیست",
+    "kind": "scenario",
+    "id": "MK-423"
+  },
+  {
+    "page": 503,
+    "title": "نتیجه‌ای پیدا نشد",
+    "kind": "scenario",
+    "id": "MK-424"
+  },
+  {
+    "page": 504,
+    "title": "دسترسی مجاز نیست",
+    "kind": "scenario",
+    "id": "MK-425"
+  },
+  {
+    "page": 505,
+    "title": "دریافت انجام نشد",
+    "kind": "scenario",
+    "id": "MK-426"
+  },
+  {
+    "page": 506,
+    "title": "عضویت پایان یافته",
+    "kind": "scenario",
+    "id": "MK-427"
+  },
+  {
+    "page": 507,
+    "title": "نسخه تازه‌تری وجود دارد",
+    "kind": "scenario",
+    "id": "MK-428"
+  },
+  {
+    "page": 508,
+    "title": "نتیجه ثبت روشن نیست",
+    "kind": "scenario",
+    "id": "MK-429"
+  },
+  {
+    "page": 509,
+    "title": "تغییرات ذخیره نشده",
+    "kind": "scenario",
+    "id": "MK-430"
+  },
+  {
+    "page": 510,
+    "title": "اصلاح زمان جلسه",
+    "kind": "scenario",
+    "id": "MK-431"
+  },
+  {
+    "page": 511,
+    "title": "پیوست پذیرفته نشد",
+    "kind": "scenario",
+    "id": "MK-432"
+  },
+  {
+    "page": 512,
+    "title": "نام بلند عضو",
+    "kind": "scenario",
+    "id": "MK-433"
+  },
+  {
+    "page": 513,
+    "title": "مجوز انتخاب فایل",
+    "kind": "scenario",
+    "id": "MK-434"
+  },
+  {
+    "page": 514,
+    "title": "اعلان این دستگاه",
+    "kind": "scenario",
+    "id": "MK-435"
+  },
+  {
+    "page": 515,
+    "title": "اتصال برقرار نیست",
+    "kind": "scenario",
+    "id": "MK-436"
+  },
+  {
+    "page": 516,
+    "title": "برای ادامه وارد شوید",
+    "kind": "scenario",
+    "id": "MK-437"
+  },
+  {
+    "page": 517,
+    "title": "بررسی پیوند دعوت",
+    "kind": "scenario",
+    "id": "MK-438"
+  },
+  {
+    "page": 518,
+    "title": "دعوت دیگر معتبر نیست",
+    "kind": "scenario",
+    "id": "MK-439"
+  },
+  {
+    "page": 519,
+    "title": "تغییر شماره همراه",
+    "kind": "scenario",
+    "id": "MK-440"
+  },
+  {
+    "page": 520,
+    "title": "حذف حساب",
+    "kind": "scenario",
+    "id": "MK-441"
+  },
+  {
+    "page": 521,
+    "title": "تیکت پشتیبانی",
+    "kind": "scenario",
+    "id": "MK-442"
+  },
+  {
+    "page": 522,
+    "title": "ناوبری جمع‌شده و دسترسی با صفحه‌کلید",
+    "kind": "scenario",
+    "id": "RX-001"
+  },
+  {
+    "page": 523,
+    "title": "جستجوی سریع در زمینه مجاز",
+    "kind": "scenario",
+    "id": "RX-002"
+  },
+  {
+    "page": 524,
+    "title": "فرم هنگام نمایش صفحه‌کلید",
+    "kind": "scenario",
+    "id": "RX-003"
+  },
+  {
+    "page": 525,
+    "title": "متن بزرگ و نام چندخطی",
+    "kind": "scenario",
+    "id": "RX-004"
+  },
+  {
+    "page": 526,
+    "title": "محتوای فارسی، شناسه لاتین و عدد",
+    "kind": "scenario",
+    "id": "RX-005"
+  },
+  {
+    "page": 527,
+    "title": "تغییر فضای کاری با پیش‌نویس باز",
+    "kind": "scenario",
+    "id": "RX-006"
+  },
+  {
+    "page": 528,
+    "title": "دو وظیفه هم‌زمان و بازگشت به انتخاب",
+    "kind": "scenario",
+    "id": "RX-007"
+  },
+  {
+    "page": 529,
+    "title": "ارتفاع کم و اقدام اصلی پایدار",
+    "kind": "scenario",
+    "id": "RX-008"
+  },
+  {
+    "page": 530,
+    "title": "دکمه؛ عادی، تمرکز، انتظار و غیرفعال",
+    "kind": "scenario",
+    "id": "RX-050"
+  },
+  {
+    "page": 531,
+    "title": "ورودی؛ راهنما، خطا و شمارش متن",
+    "kind": "scenario",
+    "id": "RX-051"
+  },
+  {
+    "page": 532,
+    "title": "جستجو؛ متن، پاک‌کردن و بدون نتیجه",
+    "kind": "scenario",
+    "id": "RX-052"
+  },
+  {
+    "page": 533,
+    "title": "فیلتر؛ اعمال، بازنشانی و شمارش",
+    "kind": "scenario",
+    "id": "RX-053"
+  },
+  {
+    "page": 534,
+    "title": "فهرست؛ انتخاب، نشانه تمرکز و عنوان بلند",
+    "kind": "scenario",
+    "id": "RX-054"
+  },
+  {
+    "page": 535,
+    "title": "صفحه‌بندی؛ ادامه نتایج با حفظ جای فهرست",
+    "kind": "scenario",
+    "id": "RX-055"
+  },
+  {
+    "page": 536,
+    "title": "انتخاب تاریخ؛ بدون نوشتن شناسه فنی",
+    "kind": "scenario",
+    "id": "RX-056"
+  },
+  {
+    "page": 537,
+    "title": "ترک فرم؛ ادامه و دورریختن صریح",
+    "kind": "scenario",
+    "id": "RX-057"
+  },
+  {
+    "page": 538,
+    "title": "اسکلت بارگذاری با اندازه نهایی",
+    "kind": "scenario",
+    "id": "RX-058"
+  },
+  {
+    "page": 539,
+    "title": "پیام موفقیت و بازگرداندن مجاز",
+    "kind": "scenario",
+    "id": "RX-059"
+  },
+  {
+    "page": 540,
+    "title": "کنترل چندانتخابی با همه، بعضی و هیچ",
+    "kind": "scenario",
+    "id": "RX-060"
+  },
+  {
+    "page": 541,
+    "title": "خطای ارتباط؛ حفظ کار و راه ادامه",
+    "kind": "scenario",
+    "id": "RX-061"
+  },
+  {
+    "page": 542,
+    "title": "موبایل؛ ۳۲۰ تا ۴۳۰ پیکسل",
+    "kind": "lab",
+    "id": null
+  },
+  {
+    "page": 543,
+    "title": "تبلت؛ عمودی، افقی و پنجره میانی",
+    "kind": "lab",
+    "id": null
+  },
+  {
+    "page": 544,
+    "title": "دسکتاپ؛ ۱۲۸۰، ۱۴۴۰ و ۱۹۲۰",
+    "kind": "lab",
+    "id": null
+  },
+  {
+    "page": 545,
+    "title": "صفحه‌کلید باز و اقدام قابل دسترس",
+    "kind": "lab",
+    "id": null
+  },
+  {
+    "page": 546,
+    "title": "متن ۲۰۰٪ و نام بلند",
+    "kind": "lab",
+    "id": null
+  },
+  {
+    "page": 547,
+    "title": "ارتفاع کم؛ نوار عمل و پیمایش جدا",
+    "kind": "lab",
+    "id": null
+  },
+  {
+    "page": 548,
+    "title": "پنجره فیلتر؛ پایین، میانی و کناری",
+    "kind": "lab",
+    "id": null
+  },
+  {
+    "page": 549,
+    "title": "تاریک؛ همان معنا و ترتیب تمرکز",
+    "kind": "lab",
+    "id": null
+  },
+  {
+    "page": 550,
+    "title": "فهرست موقعیت‌ها · ۱",
+    "kind": "index",
+    "id": null
+  },
+  {
+    "page": 551,
+    "title": "فهرست موقعیت‌ها · ۲",
+    "kind": "index",
+    "id": null
+  },
+  {
+    "page": 552,
+    "title": "فهرست موقعیت‌ها · ۳",
+    "kind": "index",
+    "id": null
+  },
+  {
+    "page": 553,
+    "title": "فهرست موقعیت‌ها · ۴",
+    "kind": "index",
+    "id": null
+  },
+  {
+    "page": 554,
+    "title": "فهرست موقعیت‌ها · ۵",
+    "kind": "index",
+    "id": null
+  },
+  {
+    "page": 555,
+    "title": "فهرست موقعیت‌ها · ۶",
+    "kind": "index",
+    "id": null
+  },
+  {
+    "page": 556,
+    "title": "فهرست موقعیت‌ها · ۷",
+    "kind": "index",
+    "id": null
+  },
+  {
+    "page": 557,
+    "title": "فهرست موقعیت‌ها · ۸",
+    "kind": "index",
+    "id": null
+  },
+  {
+    "page": 558,
+    "title": "فهرست موقعیت‌ها · ۹",
+    "kind": "index",
+    "id": null
+  },
+  {
+    "page": 559,
+    "title": "فهرست موقعیت‌ها · ۱۰",
+    "kind": "index",
+    "id": null
+  },
+  {
+    "page": 560,
+    "title": "فهرست موقعیت‌ها · ۱۱",
+    "kind": "index",
+    "id": null
+  },
+  {
+    "page": 561,
+    "title": "فهرست موقعیت‌ها · ۱۲",
+    "kind": "index",
+    "id": null
+  },
+  {
+    "page": 562,
+    "title": "فهرست موقعیت‌ها · ۱۳",
+    "kind": "index",
+    "id": null
+  },
+  {
+    "page": 563,
+    "title": "فهرست موقعیت‌ها · ۱۴",
+    "kind": "index",
+    "id": null
+  },
+  {
+    "page": 564,
+    "title": "فهرست موقعیت‌ها · ۱۵",
+    "kind": "index",
+    "id": null
+  },
+  {
+    "page": 565,
+    "title": "فهرست موقعیت‌ها · ۱۶",
+    "kind": "index",
+    "id": null
+  },
+  {
+    "page": 566,
+    "title": "فهرست موقعیت‌ها · ۱۷",
+    "kind": "index",
+    "id": null
+  },
+  {
+    "page": 567,
+    "title": "فهرست موقعیت‌ها · ۱۸",
+    "kind": "index",
+    "id": null
+  },
+  {
+    "page": 568,
+    "title": "معیار پذیرش طراحی در سه دستگاه",
+    "kind": "acceptance",
+    "id": null
+  },
+  {
+    "page": 569,
+    "title": "تحویل به تیم فرانت و تصمیم‌های باقی‌مانده",
+    "kind": "acceptance",
+    "id": null
+  }
+]

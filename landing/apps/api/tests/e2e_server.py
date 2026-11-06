@@ -1,0 +1,121 @@
+"""Dedicated real PostgreSQL fixture and API process for browser acceptance."""
+
+import os
+from pathlib import Path
+from uuid import uuid4
+
+import psycopg
+import uvicorn
+from alembic.config import Config
+from psycopg import sql
+from sqlalchemy.engine import make_url
+from sqlalchemy.orm import Session
+
+from alembic import command
+from app.core.config import Settings
+from app.core.security import Security
+from app.db.session import build_engine
+from app.main import create_app
+from app.models import Admin
+from app.services.content_import import import_initial
+
+control = make_url(os.environ["TEST_DATABASE_ADMIN_URL"])
+if control.host != "127.0.0.1" or control.port != 15432 or control.database != "makan_test_control":
+    raise RuntimeError("Only the dedicated loopback test database may be used")
+name = "makan_test_e2e_" + uuid4().hex
+base_url = os.environ.get("E2E_BASE_URL", "http://127.0.0.1:3100")
+if base_url not in ("http://127.0.0.1:3100", "http://127.0.0.1:3200"):
+    raise RuntimeError("Only dedicated loopback browser fixtures are allowed")
+admin_url = control.set(drivername="postgresql")
+owner = control.set(
+    database=name, username="makan_migrator", password=os.environ["TEST_MIGRATION_DB_PASSWORD"]
+)
+runtime = owner.set(username="makan_api", password=os.environ["TEST_API_DB_PASSWORD"])
+with psycopg.connect(
+    admin_url.render_as_string(hide_password=False), autocommit=True
+) as connection:
+    connection.execute(
+        sql.SQL("CREATE DATABASE {} OWNER makan_migrator").format(sql.Identifier(name))
+    )
+# Private cleanup marker contains no credential; force-stop teardown can remove this exact fixture.
+Path("../../.preview/e2e-db-name.txt").write_text(name, encoding="utf-8")
+engine = build_engine(
+    Settings(
+        database_url=owner.render_as_string(hide_password=False), db_statement_timeout_ms=30000
+    )
+)
+try:
+    with engine.begin() as connection:
+        connection.exec_driver_sql(
+            sql.SQL("GRANT CONNECT ON DATABASE {} TO makan_api")
+            .format(sql.Identifier(name))
+            .as_string()
+        )
+        connection.exec_driver_sql("REVOKE ALL ON SCHEMA public FROM PUBLIC")
+        connection.exec_driver_sql("ALTER SCHEMA public OWNER TO makan_migrator")
+        connection.exec_driver_sql("GRANT USAGE ON SCHEMA public TO makan_api")
+        config = Config("alembic.ini")
+        config.attributes["connection"] = connection
+        command.upgrade(config, "head")
+    settings = Settings(
+        database_url=runtime.render_as_string(hide_password=False),
+        app_env="test",
+        auth_otp_debug=True,
+        auth_otp_resend_seconds=1,
+        auth_legacy_password_login=os.environ.get("E2E_OTP_ONLY") != "1",
+        auth_allowed_origins=[base_url],
+        auth_login_ip_limit=1000,
+        auth_login_account_limit=200,
+        auth_challenge_limit=1000,
+        forms_token_limit=1000,
+        forms_submit_limit=1000,
+        forms_contact_limit=100,
+        seo_indexing_enabled=os.environ.get("E2E_SEO_FIXTURES") == "1",
+        analytics_enabled=os.environ.get("E2E_SEO_FIXTURES") == "1",
+        analytics_event_limit=1000,
+        db_pool_timeout=10,
+        db_statement_timeout_ms=10000,
+        media_root=Path("../../.preview/e2e-media") / name,
+    )
+    security = Security(settings)
+    with Session(engine) as session, session.begin():
+        import_initial(session)
+        for role_index, role in enumerate(("owner", "editor", "sales")):
+            for suffix in (
+                "",
+                *(
+                    f"-{kind}-{browser}"
+                    for kind in ("password",)
+                    for browser in ("chromium", "firefox", "webkit")
+                ),
+            ):
+                session.add(
+                    Admin(
+                        email=f"{role}{suffix}@example.com",
+                        phone=f"0912000000{role_index + 1}"
+                        if not suffix and os.environ.get("E2E_OTP_ONLY") == "1"
+                        else None,
+                        role=role,
+                        password_hash=security.hasher.hash(os.environ["E2E_ADMIN_PASSWORD"]),
+                    )
+                )
+        session.flush()
+        if os.environ.get("E2E_SEO_FIXTURES") == "1":
+            from sqlalchemy import select
+
+            from tests.seo_fixtures import seed
+
+            owner_id = session.scalar(select(Admin.id).where(Admin.email == "owner@example.com"))
+            seed(session, settings, owner_id)
+    # Bulk fixture loading needs current planner statistics just like a restore.
+    with engine.connect().execution_options(isolation_level="AUTOCOMMIT") as connection:
+        connection.exec_driver_sql("ANALYZE")
+    uvicorn.run(
+        create_app(settings), host="127.0.0.1", port=8100, log_config=None, access_log=False
+    )
+finally:
+    engine.dispose()
+    with psycopg.connect(
+        admin_url.render_as_string(hide_password=False), autocommit=True
+    ) as connection:
+        connection.execute(sql.SQL("DROP DATABASE {} WITH (FORCE)").format(sql.Identifier(name)))

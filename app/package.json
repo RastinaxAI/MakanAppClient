@@ -1,0 +1,13 @@
+{
+  "name": "makan-client-workspace",
+  "private": true,
+  "scripts": {
+    "dev": "npm --prefix web run dev:design-review",
+    "build": "npm --prefix web run build",
+    "test": "npm --prefix web test",
+    "quality": "npm --prefix web run quality",
+    "docker:up": "docker compose up -d --build --wait --wait-timeout 180",
+    "docker:down": "docker compose down",
+    "docker:logs": "docker compose logs -f --tail 100 web"
+  }
+}

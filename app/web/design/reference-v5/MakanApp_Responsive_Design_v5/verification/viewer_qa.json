@@ -1,0 +1,27 @@
+{
+  "initialFrames": 3,
+  "jump": "تنظیمات کلاس",
+  "draftAfterTheme": "عنوان آزمایشی نسخه پنج",
+  "draftAfterResize": "عنوان آزمایشی نسخه پنج",
+  "tablet": {
+    "width": 834,
+    "navWidth": 75,
+    "actionBar": "flex"
+  },
+  "desktop": {
+    "width": 1440,
+    "navWidth": 207,
+    "actionBar": "none"
+  },
+  "mobile": {
+    "width": 320,
+    "navDisplay": "none",
+    "overflow": 0
+  },
+  "modalClosed": true,
+  "backgroundRestored": true,
+  "searchCount": 23,
+  "suffixJump": true,
+  "errors": [],
+  "externalRequests": []
+}

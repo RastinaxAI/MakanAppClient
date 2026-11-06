@@ -1,0 +1,77 @@
+{
+  "checkedAtUtc": "2026-11-05T17:13:04.601Z",
+  "origin": "http://127.0.0.1:3145",
+  "backend": "http://94.184.32.84:8090",
+  "domainWrites": false,
+  "roles": [
+    {
+      "role": "Teacher",
+      "requests": [
+        {
+          "path": "/api/client/auth/challenge",
+          "status": 202
+        },
+        {
+          "path": "/api/client/auth/verify",
+          "status": 200
+        },
+        {
+          "path": "/api/client/session",
+          "status": 200
+        },
+        {
+          "path": "/api/client/backend/api/v1/messaging/privacy",
+          "status": 200
+        },
+        {
+          "path": "/api/client/backend/api/v1/messaging/invitations",
+          "status": 200
+        },
+        {
+          "path": "/api/client/auth/logout",
+          "status": 204
+        }
+      ],
+      "pageErrors": 0,
+      "blockedDomainWrites": 0,
+      "incomingPending": 2,
+      "error": "Connected read or UI validation failed",
+      "logoutConfirmed": true
+    },
+    {
+      "role": "Manager",
+      "requests": [
+        {
+          "path": "/api/client/auth/challenge",
+          "status": 202
+        },
+        {
+          "path": "/api/client/auth/verify",
+          "status": 200
+        },
+        {
+          "path": "/api/client/session",
+          "status": 200
+        },
+        {
+          "path": "/api/client/backend/api/v1/messaging/privacy",
+          "status": 200
+        },
+        {
+          "path": "/api/client/backend/api/v1/messaging/invitations",
+          "status": 200
+        },
+        {
+          "path": "/api/client/auth/logout",
+          "status": 204
+        }
+      ],
+      "pageErrors": 0,
+      "blockedDomainWrites": 0,
+      "incomingPending": 0,
+      "error": "Connected read or UI validation failed",
+      "logoutConfirmed": true
+    }
+  ],
+  "screenshots": []
+}

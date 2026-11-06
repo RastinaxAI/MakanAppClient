@@ -1,0 +1,16 @@
+{
+  "name": "makanapp-responsive-design-v5",
+  "version": "5.0.0",
+  "private": true,
+  "description": "Editable responsive design atlas and local viewer; not the production frontend",
+  "scripts": {
+    "build": "node build.cjs",
+    "prepare:scenes": "node prepare.cjs"
+  },
+  "dependencies": {
+    "lucide": "1.8.0"
+  },
+  "devDependencies": {
+    "playwright": "1.62.1"
+  }
+}

@@ -1,0 +1,309 @@
+{
+  "checkedAt": "2026-11-06T01:30:12.810990+03:30",
+  "reference": {
+    "version": "4.0-blue",
+    "directory": "design/reference-v4",
+    "sourcePdf": "MakanApp_Frontend_Complete_UI_UX_FA_v4_Blue.pdf",
+    "sourcePdfSha256": "20fa00d3abf35889d302ec237f5eded1e8f86e5c0b1e9abe771f5de0fbae001c"
+  },
+  "scope": {
+    "documentViews": 467,
+    "clientViews": 426,
+    "separateOwnerViews": 41,
+    "mappedStates": {
+      "retained-connected-flow": 81,
+      "separate-owner-application": 41,
+      "connected-flow-mapped": 300,
+      "new-connected-flow": 18,
+      "proposal-backend-pending": 6,
+      "shared-loading-state": 3,
+      "shared-state-mapped": 18
+    },
+    "meaning": "Mapping and reference rendering do not certify that every distinct state is integrated or pixel-identical."
+  },
+  "build": {
+    "id": "XtdHI_tsFC5MKIofge2lV",
+    "process": {
+      "command": [
+        "npm",
+        "run",
+        "build",
+        "--",
+        "--webpack"
+      ],
+      "returncode": 0,
+      "elapsedSeconds": 51.46
+    }
+  },
+  "unit": {
+    "tests": 496,
+    "files": 69,
+    "process": {
+      "command": [
+        "npm",
+        "test"
+      ],
+      "returncode": 0,
+      "elapsedSeconds": 10.09
+    }
+  },
+  "fullBrowser": {
+    "stats": {
+      "startTime": "2026-11-05T21:39:37.690Z",
+      "duration": 861738.135,
+      "expected": 244,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "process": {
+      "command": [
+        "node",
+        "node_modules/@playwright/test/cli.js",
+        "test"
+      ],
+      "returncode": 0,
+      "elapsedSeconds": 863.72
+    },
+    "buildId": "x4bMKhuOTgkG3yoikQt3-",
+    "note": "Clean full suite before the final presentation-only changes to V4 form spacing, option widths, checkbox appearance and profile subtitle."
+  },
+  "finalPresentationRegression": {
+    "stats": {
+      "startTime": "2026-11-05T21:55:58.790Z",
+      "duration": 117199.29,
+      "expected": 22,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "process": {
+      "command": [
+        "node",
+        "node_modules/@playwright/test/cli.js",
+        "test",
+        "--grep",
+        "V4|header arrow|members and records|profile exposes|Parent sees|education sections|source version conflict|account replay|Telegram-reference messenger"
+      ],
+      "returncode": 0,
+      "elapsedSeconds": 118.74
+    },
+    "buildId": "XtdHI_tsFC5MKIofge2lV",
+    "checksAdded": "Full option width, checkbox pointer/keyboard state, 20px footer gap. Existing security, draft, version, navigation and workflow assertions retained."
+  },
+  "staticChecks": [
+    {
+      "check": "lint",
+      "command": [
+        "npm",
+        "run",
+        "lint"
+      ],
+      "returncode": 0,
+      "elapsedSeconds": 65.9
+    },
+    {
+      "check": "format",
+      "command": [
+        "npm",
+        "run",
+        "format:check"
+      ],
+      "returncode": 0,
+      "elapsedSeconds": 40.14
+    },
+    {
+      "check": "generated",
+      "command": [
+        "npm",
+        "run",
+        "generated:check"
+      ],
+      "returncode": 0,
+      "elapsedSeconds": 2.66
+    },
+    {
+      "check": "typecheck",
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "returncode": 0,
+      "elapsedSeconds": 9.91
+    },
+    {
+      "check": "diff",
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "returncode": 0,
+      "elapsedSeconds": 0.31
+    }
+  ],
+  "contract": {
+    "clientOperations": 304,
+    "openapiSha256": "fc812c0bfdddfaf6f9d5b28787cd072c8409070a29d6ecad1e572fee060da71b",
+    "newPublishedOperations": 15,
+    "ownerOperationsAdded": 0
+  },
+  "visual": {
+    "nativeReferenceViews": 426,
+    "referenceScriptErrors": 0,
+    "referenceUnlabelledControls": 0,
+    "referenceOverflows": 0,
+    "pdfDeviceChromeInProduct": false,
+    "comparison": {
+      "metric": "Mean absolute RGB channel error, 0..255; not a UX score or implementation percentage. Includes explicit preview label, real controls and preserved accessibility/safe-area adjustments.",
+      "meanMae255": 3.7363,
+      "maxMae255": 9.1923,
+      "report": "output/review/mk-v4/reference/comparison.json"
+    },
+    "connectedScreenshots": 100,
+    "connectedRoutes": 19,
+    "viewports": [
+      {
+        "width": 390,
+        "height": 844,
+        "themes": [
+          "light",
+          "dark"
+        ]
+      },
+      {
+        "width": 820,
+        "height": 1180,
+        "themes": [
+          "light"
+        ]
+      },
+      {
+        "width": 1440,
+        "height": 1000,
+        "themes": [
+          "light",
+          "dark"
+        ]
+      }
+    ],
+    "connectedScriptErrors": 0,
+    "connectedOverflows": 0,
+    "connectedErrorAlerts": 0,
+    "unexpectedServiceFailures": 0,
+    "captureProcess": {
+      "command": [
+        "node",
+        "scripts/capture-v4-connected.mjs"
+      ],
+      "returncode": 0,
+      "elapsedSeconds": 150.51
+    },
+    "fixtureHubNegotiations": 100,
+    "fixtureHubNote": "The isolated fixture has no SignalR hub; 503 negotiate with periodic fallback is expected and is not evidence of a live backend defect.",
+    "manualReview": {
+      "pdfPagesInContactSheets": 189,
+      "sourceFramesAtDetail": "34 representative mobile frames and desktop MK-455/MK-460/MK-466",
+      "referencePairSheets": [
+        11,
+        17,
+        21,
+        29,
+        22,
+        37,
+        42,
+        51
+      ],
+      "connectedOverviewSheets": 5,
+      "finalDetailedExamples": [
+        "profile-edit-390-light.png",
+        "poll-390-light.png",
+        "classes-1440-light.png",
+        "messages-390-light.png",
+        "assistant-1440-dark.png",
+        "members-820-light.png"
+      ],
+      "limits": "All reference renders compared automatically; representative reference pairs and all product contact sheets reviewed manually. This is not a claim of pixel parity for every connected state."
+    }
+  },
+  "previewBoundary": [
+    {
+      "url": "http://127.0.0.1:3145/enter",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:3145/preview/reference/MK-170",
+      "status": 404
+    },
+    {
+      "url": "http://127.0.0.1:3158/preview/reference/MK-170",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:3158/preview/reference/MK-19",
+      "status": 404
+    }
+  ],
+  "offlineGalleryCheck": {
+    "refs": 426,
+    "filtered": 1,
+    "product": 100,
+    "darkMobile": 20,
+    "overflow": false,
+    "errors": []
+  },
+  "backendDependencies": [
+    {
+      "views": [
+        "MK-173",
+        "MK-174",
+        "MK-175"
+      ],
+      "issue": "Publish FolderConversationTypes values/flags encoding and initial PUT expectedVersion semantics; existing folder strings/overrides are retained. New folder/type creation remains unavailable."
+    },
+    {
+      "views": [
+        "MK-131",
+        "MK-132",
+        "MK-133"
+      ],
+      "issue": "Publish a read/list model for existing schedule rules, including rowVersion; create and edit of the current server receipt work."
+    },
+    {
+      "views": [
+        "MK-377",
+        "MK-378",
+        "MK-379"
+      ],
+      "issue": "Persistent assistant studio generation jobs/status/output contract is not published. Local preview only."
+    },
+    {
+      "views": [
+        "MK-440",
+        "MK-441",
+        "MK-442"
+      ],
+      "issue": "Phone change, account deletion and support ticket contracts are not published. No production mutations are fabricated."
+    }
+  ],
+  "liveBackendMutationsInThisStage": false,
+  "liveVerification": "New operations verified with isolated fixtures, not asserted as live server acceptance. Earlier dated live evidence is preserved separately.",
+  "deployment": "Local production build is running at 127.0.0.1:3145; not deployed to the remote server.",
+  "limits": [
+    "426 reference frames are separate from connected product route samples.",
+    "41 owner frames belong to MakanManagement.",
+    "No fake success, endpoint or sensitive data is shipped in the reference preview."
+  ],
+  "initialFullRegression": {
+    "stats": {
+      "startTime": "2026-11-05T21:18:14.694Z",
+      "duration": 1084007.121,
+      "expected": 229,
+      "skipped": 0,
+      "unexpected": 15,
+      "flaky": 0
+    },
+    "resolution": "Old-layout selectors and a nondeterministic source conflict setup were corrected; a clean 244-test full run and 22 final focused regressions then passed."
+  }
+}

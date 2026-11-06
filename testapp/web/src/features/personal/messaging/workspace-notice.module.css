@@ -1,0 +1,58 @@
+.page {
+  min-width: 0;
+  min-height: 0;
+  overflow: auto;
+  padding: 20px;
+  background: var(--chat-bg, var(--bg));
+}
+.card {
+  max-width: 640px;
+  margin: 24px auto;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--surface);
+  color: var(--text);
+  padding: 24px;
+  overflow-wrap: anywhere;
+}
+.card > svg {
+  color: var(--primary);
+}
+.card h2 {
+  font-size: 20px;
+  margin-block: 14px;
+}
+.card h3 {
+  font-size: 16px;
+  margin-block: 10px;
+}
+.card p {
+  line-height: 1.9;
+  color: var(--muted);
+}
+.choices {
+  display: grid;
+  gap: 12px;
+  margin-block: 20px;
+}
+.choices > :global(.button) {
+  min-width: 0;
+  max-width: 100%;
+  height: auto;
+  min-height: 56px;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  white-space: normal;
+  text-align: start;
+  padding: 12px;
+  line-height: 1.8;
+}
+@media (max-width: 480px) {
+  .page {
+    padding: 16px;
+  }
+  .card {
+    padding: 18px;
+    margin-block: 16px;
+  }
+}

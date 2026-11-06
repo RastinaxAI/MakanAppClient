@@ -1,0 +1,7 @@
+# Document and image bytes must survive checkout without line-ending conversion.
+*.pdf binary
+*.png binary
+*.woff2 binary
+
+# Shell scripts must remain executable by Bash on Linux after checkout.
+*.sh text eol=lf

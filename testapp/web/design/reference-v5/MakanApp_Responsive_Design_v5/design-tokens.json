@@ -1,0 +1,81 @@
+{
+  "brand": "#156FEE",
+  "light": {
+    "background": "#F5F8FE",
+    "surface": "#FFFFFF",
+    "surfaceSecondary": "#EDF3FC",
+    "text": "#182A45",
+    "muted": "#5C6D85",
+    "accentText": "#0D5ECC",
+    "accentSurface": "#EAF2FF",
+    "action": "#156FEE",
+    "onAction": "#FFFFFF",
+    "line": "#DCE5F1",
+    "controlBorder": "#8194B0"
+  },
+  "dark": {
+    "background": "#101A2B",
+    "surface": "#16243A",
+    "surfaceSecondary": "#1E304B",
+    "text": "#ECF3FF",
+    "muted": "#A2B4CE",
+    "accentText": "#8CB7FF",
+    "accentSurface": "#1B3156",
+    "action": "#8CB7FF",
+    "onAction": "#0D2345",
+    "line": "#344A68"
+  },
+  "font": "Vazirmatn",
+  "spacing": [
+    4,
+    8,
+    12,
+    16,
+    24,
+    32
+  ],
+  "radii": {
+    "input": 12,
+    "button": 12,
+    "card": 16,
+    "sheet": 26
+  },
+  "minimumTouchTarget": 44,
+  "mobileReference": [
+    390,
+    844
+  ],
+  "responsiveReference": {
+    "mobile": "360–767",
+    "tablet": "768–1199",
+    "desktop": "1200+"
+  },
+  "responsiveV5": {
+    "mobile": "320–767",
+    "tablet": "768–1199",
+    "desktop": "1200+",
+    "mobileReference": [
+      390,
+      844
+    ],
+    "tabletReference": [
+      834,
+      1112
+    ],
+    "desktopReference": [
+      1440,
+      1000
+    ],
+    "desktopNav": 208,
+    "tabletRail": 76,
+    "mobilePadding": 16,
+    "narrowMobilePadding": 12,
+    "tabletPadding": 24,
+    "desktopPadding": 26,
+    "panelGap": 24,
+    "contextPanel": 280,
+    "workspaceMaxWidth": 1536,
+    "minimumInputHeight": 48,
+    "minimumTouchTarget": 44
+  }
+}

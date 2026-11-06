@@ -1,0 +1,22 @@
+node_modules/
+.next/
+.env*
+!.env.example
+!.env.docker.example
+.makan-sessions/
+.makan-test-sessions/
+test-results/
+playwright-report/
+*.tsbuildinfo
+
+tmp/
+__pycache__/
+*.pyc
+
+.makan-qa-sessions/
+output/review/
+output/delivery/
+.venv-guide/
+
+# Ad-hoc visual checks are temporary; canonical evidence stays in docs/quality.
+*.log

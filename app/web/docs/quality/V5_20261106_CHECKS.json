@@ -1,0 +1,130 @@
+{
+  "date": "2026-11-06",
+  "referenceSha256": "17d6c09071c04745eea0d6efc4f2cf636eb973fc68fe1c96808620dac7c36cb4",
+  "scenarios": 528,
+  "referenceFrames": 1584,
+  "referenceMeaning": "Full inventory imported; not a certification of every individual frame or state.",
+  "ownerExcluded": 46,
+  "build": {
+    "compiled": true,
+    "typescript": true,
+    "productionServer": "http://127.0.0.1:3145",
+    "log": "tmp/v5/build.log",
+    "buildId": "rlyCtUtd9H5aQwKleNFPb",
+    "note": "Build subprocess exit was not recorded; complete successful build output and running built routes verified."
+  },
+  "unit": {
+    "tests": 496,
+    "files": 69,
+    "process": {
+      "command": [
+        "npm",
+        "test"
+      ],
+      "returncode": 0,
+      "elapsedSeconds": 13.53
+    }
+  },
+  "browser": {
+    "tests": 22,
+    "process": {
+      "command": [
+        "node",
+        "node_modules/@playwright/test/cli.js",
+        "test",
+        "v5-responsive.spec.ts",
+        "v4-design.spec.ts",
+        "header-back.spec.ts",
+        "responsive.spec.ts",
+        "chat-education-layout.spec.ts"
+      ],
+      "returncode": 0,
+      "elapsedSeconds": 57.58
+    },
+    "includes": "12 viewport/height combinations, exact rail/sidebar widths, draft retention, chat, back, permissions and workflow regressions"
+  },
+  "checks": [
+    {
+      "check": "lint",
+      "command": [
+        "npm",
+        "run",
+        "lint"
+      ],
+      "returncode": 0,
+      "elapsedSeconds": 59.45
+    },
+    {
+      "check": "format",
+      "command": [
+        "npm",
+        "run",
+        "format:check"
+      ],
+      "returncode": 0,
+      "elapsedSeconds": 39.0
+    },
+    {
+      "check": "generated",
+      "command": [
+        "npm",
+        "run",
+        "generated:check"
+      ],
+      "returncode": 0,
+      "elapsedSeconds": 2.56
+    },
+    {
+      "check": "typecheck",
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "returncode": 0,
+      "elapsedSeconds": 9.3
+    },
+    {
+      "check": "diff",
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "returncode": 0,
+      "elapsedSeconds": 0.23
+    }
+  ],
+  "capture": {
+    "screens": 100,
+    "routes": 20,
+    "javascriptErrors": 0,
+    "horizontalOverflow": 0,
+    "errorAlerts": 0,
+    "unexpectedBackendFailures": [],
+    "process": {
+      "command": [
+        "node",
+        "scripts/capture-v5-connected.mjs"
+      ],
+      "returncode": 0,
+      "elapsedSeconds": 144.41
+    },
+    "data": "Isolated fixture; hub negotiate 503 expected, not proof of live backend defect."
+  },
+  "liveMutations": false,
+  "deployedRemotely": false,
+  "manualReview": [
+    "PDF pp4,5,128",
+    "profile320x640",
+    "profile834x1112",
+    "profile1440light",
+    "messages834light",
+    "classes1440dark"
+  ],
+  "limits": [
+    "Responsive common components and routes updated; all 1584 frames have not been individually compared.",
+    "RX microstates mapped to existing shared flows; no new server capabilities inferred from the design.",
+    "V4 API dependency list remains valid."
+  ]
+}

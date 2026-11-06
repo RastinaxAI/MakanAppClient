@@ -1,0 +1,97 @@
+{
+	admin off
+	email {$ACME_EMAIL}
+	acme_ca {$ACME_CA:https://acme-v02.api.letsencrypt.org/directory}
+	auto_https disable_redirects
+	http_port 8080
+	https_port 8443
+	servers {
+		protocols h1 h2
+	}
+}
+
+(common) {
+	encode zstd gzip
+	header {
+		-Server
+		Strict-Transport-Security "max-age=31536000"
+		X-Content-Type-Options nosniff
+		Referrer-Policy same-origin
+		X-Frame-Options DENY
+	}
+}
+
+(panel) {
+	import common
+	header X-Robots-Tag "noindex, nofollow, noarchive"
+	@robots path /robots.txt
+	respond @robots "User-agent: *\nDisallow: /\n" 200
+}
+
+app.makanapp.org {
+	import panel
+	header X-Makan-Service app
+	reverse_proxy app:3000
+}
+
+testapp.makanapp.org {
+	import panel
+	header X-Makan-Service testapp
+	reverse_proxy testapp:3000
+}
+
+management.makanapp.org {
+	import panel
+	header X-Makan-Service management
+	reverse_proxy management:3000
+}
+
+testmanagement.makanapp.org {
+	import panel
+	header X-Makan-Service testmanagement
+	reverse_proxy testmanagement:3000
+}
+
+makanapp.org {
+	import common
+	header {
+		X-Makan-Service landing
+		Permissions-Policy "camera=(), microphone=(), geolocation=(), autoplay=(), fullscreen=(self \"https://www.aparat.com\")"
+	}
+	request_body {
+		max_size 6MB
+	}
+	handle /api/v1/* {
+		reverse_proxy landing-api:8000 {
+			header_up X-Makan-Proxy-Key {env.PROXY_SHARED_SECRET}
+			header_up X-Makan-Client-IP {http.request.remote.host}
+			transport http {
+				dial_timeout 3s
+				response_header_timeout 30s
+			}
+		}
+	}
+	handle {
+		reverse_proxy landing-web:3000 {
+			transport http {
+				dial_timeout 3s
+				response_header_timeout 30s
+			}
+		}
+	}
+}
+
+www.makanapp.org {
+	redir https://makanapp.org{uri} 308
+}
+
+# Use the public HTTPS port in redirects, never the internal container port 8443.
+http://makanapp.org, http://www.makanapp.org, http://app.makanapp.org, http://testapp.makanapp.org, http://management.makanapp.org, http://testmanagement.makanapp.org {
+	redir https://{host}{uri} 308
+}
+
+# Only used inside the container; port 8081 is not published.
+http://:8081 {
+	respond /health/ready "ok" 200
+	respond 404
+}

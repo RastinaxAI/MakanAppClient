@@ -1,0 +1,32 @@
+{
+  "checkedAtUtc": "2026-11-05T16:54:04.461Z",
+  "role": "Teacher",
+  "domainWrites": false,
+  "checks": [
+    {
+      "path": "/api/client/auth/challenge",
+      "status": 202
+    },
+    {
+      "path": "/api/client/auth/verify",
+      "status": 200
+    },
+    {
+      "path": "/api/client/session",
+      "status": 200
+    },
+    {
+      "path": "/api/client/backend/api/v1/messaging/privacy",
+      "status": 200
+    },
+    {
+      "path": "/api/client/backend/api/v1/messaging/invitations",
+      "status": 404
+    },
+    {
+      "path": "/api/client/auth/logout",
+      "status": 204
+    }
+  ],
+  "invitationControlVisible": false
+}

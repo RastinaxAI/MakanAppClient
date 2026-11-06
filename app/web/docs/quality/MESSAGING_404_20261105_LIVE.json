@@ -1,0 +1,168 @@
+{
+  "checkedAtUtc": "2026-11-05T17:49:38.737Z",
+  "backend": "http://94.184.32.84:8090",
+  "role": "Teacher",
+  "domainWrites": false,
+  "requests": [
+    {
+      "path": "/api/v1/auth/otp/challenges",
+      "method": "POST",
+      "status": 202
+    },
+    {
+      "path": "/api/v1/auth/otp/verify",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/workspaces/current",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/workspaces/snapshot",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/conversations/account",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/workspaces/select",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/conversations/{id}",
+      "method": "GET",
+      "status": 404,
+      "contentType": "application/problem+json",
+      "bodyBytes": 279,
+      "problemKeys": [
+        "type",
+        "title",
+        "status",
+        "detail",
+        "code",
+        "traceId",
+        "correlationId"
+      ],
+      "code": "CONVERSATION_NOT_FOUND",
+      "traceId": "00-1492120aa1733221e8aa06d309617aa1-f69a0fa90fb8a254-00",
+      "correlationId": "1492120aa1733221e8aa06d309617aa1"
+    },
+    {
+      "path": "/api/v1/conversations/{id}/summary",
+      "method": "GET",
+      "status": 404,
+      "contentType": "application/problem+json",
+      "bodyBytes": 290,
+      "problemKeys": [
+        "type",
+        "title",
+        "status",
+        "detail",
+        "code",
+        "traceId",
+        "correlationId"
+      ],
+      "code": "CONVERSATION_NOT_FOUND",
+      "traceId": "00-7f1da6794d8aa2d1657a5b2200cdc220-b9b76c2d812edd3e-00",
+      "correlationId": "7f1da6794d8aa2d1657a5b2200cdc220"
+    },
+    {
+      "path": "/api/v1/workspaces/select",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/conversations/{id}",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/conversations/{id}/summary",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/workspaces/select",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/workspaces/current",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/auth/logout",
+      "method": "POST",
+      "status": 204
+    }
+  ],
+  "sample": {
+    "conversationHash": "aee1cd4cbfb7",
+    "scope": "Organization",
+    "type": "Group",
+    "includedInOwnAccountInbox": true
+  },
+  "comparison": {
+    "personalDetail": {
+      "path": "/api/v1/conversations/{id}",
+      "method": "GET",
+      "status": 404,
+      "contentType": "application/problem+json",
+      "bodyBytes": 279,
+      "problemKeys": [
+        "type",
+        "title",
+        "status",
+        "detail",
+        "code",
+        "traceId",
+        "correlationId"
+      ],
+      "code": "CONVERSATION_NOT_FOUND",
+      "traceId": "00-1492120aa1733221e8aa06d309617aa1-f69a0fa90fb8a254-00",
+      "correlationId": "1492120aa1733221e8aa06d309617aa1"
+    },
+    "personalSummary": {
+      "path": "/api/v1/conversations/{id}/summary",
+      "method": "GET",
+      "status": 404,
+      "contentType": "application/problem+json",
+      "bodyBytes": 290,
+      "problemKeys": [
+        "type",
+        "title",
+        "status",
+        "detail",
+        "code",
+        "traceId",
+        "correlationId"
+      ],
+      "code": "CONVERSATION_NOT_FOUND",
+      "traceId": "00-7f1da6794d8aa2d1657a5b2200cdc220-b9b76c2d812edd3e-00",
+      "correlationId": "7f1da6794d8aa2d1657a5b2200cdc220"
+    },
+    "organizationDetail": {
+      "path": "/api/v1/conversations/{id}",
+      "method": "GET",
+      "status": 200
+    },
+    "organizationSummary": {
+      "path": "/api/v1/conversations/{id}/summary",
+      "method": "GET",
+      "status": 200
+    },
+    "returnedSameConversation": true,
+    "activeParticipantAfterSelection": true
+  },
+  "reproduced": true,
+  "passed": true,
+  "contextRestored": true,
+  "logoutConfirmed": true
+}

@@ -1,0 +1,1298 @@
+{
+  "checkedAtUtc": "2026-11-05T12:33:43.197Z",
+  "backend": "http://94.184.32.84:8090",
+  "origin": "http://127.0.0.1:3145",
+  "domainMutations": false,
+  "roles": [
+    {
+      "role": "Student",
+      "checks": [
+        {
+          "path": "/api/client/auth/challenge",
+          "method": "POST",
+          "status": 202,
+          "expected": [
+            202
+          ]
+        },
+        {
+          "path": "/api/client/auth/verify",
+          "method": "POST",
+          "status": 200,
+          "expected": [
+            200
+          ]
+        },
+        {
+          "path": "/api/client/session",
+          "method": "GET",
+          "status": 200,
+          "expected": [
+            200
+          ]
+        },
+        {
+          "path": "/api/client/backend/api/v1/workspaces/snapshot",
+          "method": "GET",
+          "status": 200,
+          "expected": [
+            200
+          ]
+        },
+        {
+          "path": "/api/client/backend/api/v1/workspaces/select",
+          "method": "POST",
+          "status": 200,
+          "expected": [
+            200
+          ]
+        },
+        {
+          "path": "/api/client/session",
+          "method": "GET",
+          "status": 200,
+          "expected": [
+            200
+          ]
+        },
+        {
+          "path": "/api/client/backend/api/v1/organization/invitations",
+          "method": "GET",
+          "status": 403,
+          "expected": [
+            403
+          ],
+          "code": "WORKSPACE_NOT_ALLOWED"
+        },
+        {
+          "path": "/api/client/backend/api/v1/organization/teacher-content-activities",
+          "method": "GET",
+          "status": 403,
+          "expected": [
+            403
+          ],
+          "code": "WORKSPACE_NOT_ALLOWED"
+        },
+        {
+          "path": "/api/client/backend/api/v1/academic/exams/discovery",
+          "method": "GET",
+          "status": 403,
+          "expected": [
+            403
+          ],
+          "code": "ACADEMIC_READ_NOT_ALLOWED"
+        },
+        {
+          "path": "/api/client/backend/api/v1/notifications/devices/web-push/configuration",
+          "method": "GET",
+          "status": 200,
+          "expected": [
+            200
+          ]
+        },
+        {
+          "path": "/api/client/backend/api/v1/personal-classes/invitations/page",
+          "method": "GET",
+          "status": 200,
+          "expected": [
+            200
+          ]
+        },
+        {
+          "path": "/api/client/backend/api/v1/academic/classes",
+          "method": "GET",
+          "status": 200,
+          "expected": [
+            200
+          ]
+        },
+        {
+          "path": "/api/client/session",
+          "method": "GET",
+          "status": 200,
+          "expected": [
+            200
+          ]
+        },
+        {
+          "path": "/api/client/auth/logout",
+          "method": "POST",
+          "status": 204,
+          "expected": [
+            204
+          ]
+        }
+      ],
+      "passed": true,
+      "webPushConfigured": false,
+      "invitationIdentity": {
+        "sampleCount": 0,
+        "withTitle": 0,
+        "withInviter": 0
+      },
+      "contextPreserved": true
+    },
+    {
+      "role": "Teacher",
+      "checks": [
+        {
+          "path": "/api/client/auth/challenge",
+          "method": "POST",
+          "status": 202,
+          "expected": [
+            202
+          ]
+        },
+        {
+          "path": "/api/client/auth/verify",
+          "method": "POST",
+          "status": 200,
+          "expected": [
+            200
+          ]
+        },
+        {
+          "path": "/api/client/session",
+          "method": "GET",
+          "status": 200,
+          "expected": [
+            200
+          ]
+        },
+        {
+          "path": "/api/client/backend/api/v1/workspaces/snapshot",
+          "method": "GET",
+          "status": 200,
+          "expected": [
+            200
+          ]
+        },
+        {
+          "path": "/api/client/backend/api/v1/workspaces/select",
+          "method": "POST",
+          "status": 200,
+          "expected": [
+            200
+          ]
+        },
+        {
+          "path": "/api/client/session",
+          "method": "GET",
+          "status": 200,
+          "expected": [
+            200
+          ]
+        },
+        {
+          "path": "/api/client/backend/api/v1/organization/invitations",
+          "method": "GET",
+          "status": 403,
+          "expected": [
+            403
+          ],
+          "code": "WORKSPACE_NOT_ALLOWED"
+        },
+        {
+          "path": "/api/client/backend/api/v1/organization/teacher-content-activities",
+          "method": "GET",
+          "status": 403,
+          "expected": [
+            403
+          ],
+          "code": "WORKSPACE_NOT_ALLOWED"
+        },
+        {
+          "path": "/api/client/backend/api/v1/academic/exams/discovery",
+          "method": "GET",
+          "status": 200,
+          "expected": [
+            200
+          ]
+        },
+        {
+          "path": "/api/client/backend/api/v1/notifications/devices/web-push/configuration",
+          "method": "GET",
+          "status": 200,
+          "expected": [
+            200
+          ]
+        },
+        {
+          "path": "/api/client/backend/api/v1/personal-classes/invitations/page",
+          "method": "GET",
+          "status": 200,
+          "expected": [
+            200
+          ]
+        },
+        {
+          "path": "/api/client/backend/api/v1/academic/classes",
+          "method": "GET",
+          "status": 200,
+          "expected": [
+            200
+          ]
+        },
+        {
+          "path": "/api/client/session",
+          "method": "GET",
+          "status": 200,
+          "expected": [
+            200
+          ]
+        },
+        {
+          "path": "/api/client/auth/logout",
+          "method": "POST",
+          "status": 204,
+          "expected": [
+            204
+          ]
+        }
+      ],
+      "passed": true,
+      "webPushConfigured": false,
+      "invitationIdentity": {
+        "sampleCount": 0,
+        "withTitle": 0,
+        "withInviter": 0
+      },
+      "pageErrors": 0,
+      "blockedDomainWrites": 0,
+      "contextPreserved": true
+    },
+    {
+      "role": "Parent",
+      "checks": [
+        {
+          "path": "/api/client/auth/challenge",
+          "method": "POST",
+          "status": 202,
+          "expected": [
+            202
+          ]
+        },
+        {
+          "path": "/api/client/auth/verify",
+          "method": "POST",
+          "status": 200,
+          "expected": [
+            200
+          ]
+        },
+        {
+          "path": "/api/client/session",
+          "method": "GET",
+          "status": 200,
+          "expected": [
+            200
+          ]
+        },
+        {
+          "path": "/api/client/backend/api/v1/workspaces/snapshot",
+          "method": "GET",
+          "status": 200,
+          "expected": [
+            200
+          ]
+        },
+        {
+          "path": "/api/client/backend/api/v1/workspaces/select",
+          "method": "POST",
+          "status": 200,
+          "expected": [
+            200
+          ]
+        },
+        {
+          "path": "/api/client/session",
+          "method": "GET",
+          "status": 200,
+          "expected": [
+            200
+          ]
+        },
+        {
+          "path": "/api/client/backend/api/v1/organization/invitations",
+          "method": "GET",
+          "status": 403,
+          "expected": [
+            403
+          ],
+          "code": "WORKSPACE_NOT_ALLOWED"
+        },
+        {
+          "path": "/api/client/backend/api/v1/organization/teacher-content-activities",
+          "method": "GET",
+          "status": 403,
+          "expected": [
+            403
+          ],
+          "code": "WORKSPACE_NOT_ALLOWED"
+        },
+        {
+          "path": "/api/client/backend/api/v1/academic/exams/discovery",
+          "method": "GET",
+          "status": 403,
+          "expected": [
+            403
+          ],
+          "code": "ACADEMIC_READ_NOT_ALLOWED"
+        },
+        {
+          "path": "/api/client/backend/api/v1/notifications/devices/web-push/configuration",
+          "method": "GET",
+          "status": 200,
+          "expected": [
+            200
+          ]
+        },
+        {
+          "path": "/api/client/backend/api/v1/personal-classes/invitations/page",
+          "method": "GET",
+          "status": 200,
+          "expected": [
+            200
+          ]
+        },
+        {
+          "path": "/api/client/session",
+          "method": "GET",
+          "status": 200,
+          "expected": [
+            200
+          ]
+        },
+        {
+          "path": "/api/client/auth/logout",
+          "method": "POST",
+          "status": 204,
+          "expected": [
+            204
+          ]
+        }
+      ],
+      "passed": true,
+      "webPushConfigured": false,
+      "invitationIdentity": {
+        "sampleCount": 0,
+        "withTitle": 0,
+        "withInviter": 0
+      },
+      "contextPreserved": true
+    },
+    {
+      "role": "Manager",
+      "checks": [
+        {
+          "path": "/api/client/auth/challenge",
+          "method": "POST",
+          "status": 202,
+          "expected": [
+            202
+          ]
+        },
+        {
+          "path": "/api/client/auth/verify",
+          "method": "POST",
+          "status": 200,
+          "expected": [
+            200
+          ]
+        },
+        {
+          "path": "/api/client/session",
+          "method": "GET",
+          "status": 200,
+          "expected": [
+            200
+          ]
+        },
+        {
+          "path": "/api/client/backend/api/v1/workspaces/snapshot",
+          "method": "GET",
+          "status": 200,
+          "expected": [
+            200
+          ]
+        },
+        {
+          "path": "/api/client/backend/api/v1/workspaces/select",
+          "method": "POST",
+          "status": 200,
+          "expected": [
+            200
+          ]
+        },
+        {
+          "path": "/api/client/session",
+          "method": "GET",
+          "status": 200,
+          "expected": [
+            200
+          ]
+        },
+        {
+          "path": "/api/client/backend/api/v1/organization/invitations",
+          "method": "GET",
+          "status": 200,
+          "expected": [
+            200
+          ]
+        },
+        {
+          "path": "/api/client/backend/api/v1/organization/teacher-content-activities",
+          "method": "GET",
+          "status": 200,
+          "expected": [
+            200
+          ]
+        },
+        {
+          "path": "/api/client/backend/api/v1/academic/exams/discovery",
+          "method": "GET",
+          "status": 200,
+          "expected": [
+            200
+          ]
+        },
+        {
+          "path": "/api/client/backend/api/v1/notifications/devices/web-push/configuration",
+          "method": "GET",
+          "status": 200,
+          "expected": [
+            200
+          ]
+        },
+        {
+          "path": "/api/client/backend/api/v1/personal-classes/invitations/page",
+          "method": "GET",
+          "status": 200,
+          "expected": [
+            200
+          ]
+        },
+        {
+          "path": "/api/client/backend/api/v1/academic/classes",
+          "method": "GET",
+          "status": 200,
+          "expected": [
+            200
+          ]
+        },
+        {
+          "path": "/api/client/backend/api/v1/organization/invitations",
+          "method": "GET",
+          "status": 400,
+          "expected": [
+            400
+          ],
+          "code": "INVALID_QUERY_PARAMETER"
+        },
+        {
+          "path": "/api/client/backend/api/v1/organization/members",
+          "method": "GET",
+          "status": 200,
+          "expected": [
+            200
+          ]
+        },
+        {
+          "path": "/api/client/backend/api/v1/organization/guardian-relations",
+          "method": "GET",
+          "status": 200,
+          "expected": [
+            200
+          ]
+        },
+        {
+          "path": "/api/client/session",
+          "method": "GET",
+          "status": 200,
+          "expected": [
+            200
+          ]
+        },
+        {
+          "path": "/api/client/auth/logout",
+          "method": "POST",
+          "status": 204,
+          "expected": [
+            204
+          ]
+        }
+      ],
+      "passed": true,
+      "webPushConfigured": false,
+      "invitationIdentity": {
+        "sampleCount": 0,
+        "withTitle": 0,
+        "withInviter": 0
+      },
+      "classVersions": {
+        "sampleCount": 4,
+        "withVersion": 4
+      },
+      "memberVersions": {
+        "sampleCount": 4,
+        "withVersion": 4
+      },
+      "guardianNames": {
+        "sampleCount": 2,
+        "withName": 2
+      },
+      "pageErrors": 0,
+      "blockedDomainWrites": 0,
+      "contextPreserved": true
+    },
+    {
+      "role": "Personal",
+      "checks": [
+        {
+          "path": "/api/client/auth/challenge",
+          "method": "POST",
+          "status": 202,
+          "expected": [
+            202
+          ]
+        },
+        {
+          "path": "/api/client/auth/verify",
+          "method": "POST",
+          "status": 200,
+          "expected": [
+            200
+          ]
+        },
+        {
+          "path": "/api/client/session",
+          "method": "GET",
+          "status": 200,
+          "expected": [
+            200
+          ]
+        },
+        {
+          "path": "/api/client/backend/api/v1/workspaces/snapshot",
+          "method": "GET",
+          "status": 200,
+          "expected": [
+            200
+          ]
+        },
+        {
+          "path": "/api/client/backend/api/v1/workspaces/select",
+          "method": "POST",
+          "status": 200,
+          "expected": [
+            200
+          ]
+        },
+        {
+          "path": "/api/client/session",
+          "method": "GET",
+          "status": 200,
+          "expected": [
+            200
+          ]
+        },
+        {
+          "path": "/api/client/backend/api/v1/organization/invitations",
+          "method": "GET",
+          "status": 403,
+          "expected": [
+            403
+          ],
+          "code": "ORGANIZATION_WORKSPACE_REQUIRED"
+        },
+        {
+          "path": "/api/client/backend/api/v1/organization/teacher-content-activities",
+          "method": "GET",
+          "status": 403,
+          "expected": [
+            403
+          ],
+          "code": "ORGANIZATION_WORKSPACE_REQUIRED"
+        },
+        {
+          "path": "/api/client/backend/api/v1/academic/exams/discovery",
+          "method": "GET",
+          "status": 403,
+          "expected": [
+            403
+          ],
+          "code": "ORGANIZATION_WORKSPACE_REQUIRED"
+        },
+        {
+          "path": "/api/client/backend/api/v1/notifications/devices/web-push/configuration",
+          "method": "GET",
+          "status": 200,
+          "expected": [
+            200
+          ]
+        },
+        {
+          "path": "/api/client/backend/api/v1/personal-classes/invitations/page",
+          "method": "GET",
+          "status": 200,
+          "expected": [
+            200
+          ]
+        },
+        {
+          "path": "/api/client/backend/api/v1/commerce/catalog",
+          "method": "GET",
+          "status": 200,
+          "expected": [
+            200
+          ]
+        },
+        {
+          "path": "/api/client/session",
+          "method": "GET",
+          "status": 200,
+          "expected": [
+            200
+          ]
+        },
+        {
+          "path": "/api/client/auth/logout",
+          "method": "POST",
+          "status": 204,
+          "expected": [
+            204
+          ]
+        }
+      ],
+      "passed": true,
+      "webPushConfigured": false,
+      "invitationIdentity": {
+        "sampleCount": 0,
+        "withTitle": 0,
+        "withInviter": 0
+      },
+      "quote": {
+        "sampleCount": 0
+      },
+      "contextPreserved": true
+    }
+  ],
+  "screenshots": [
+    {
+      "role": "Teacher",
+      "page": "exams",
+      "width": 320,
+      "theme": "light",
+      "actualTheme": "light",
+      "status": 200,
+      "overflow": false,
+      "alerts": 0,
+      "file": "teacher-exams-320-light.png"
+    },
+    {
+      "role": "Teacher",
+      "page": "exams",
+      "width": 390,
+      "theme": "light",
+      "actualTheme": "light",
+      "status": 200,
+      "overflow": false,
+      "alerts": 0,
+      "file": "teacher-exams-390-light.png"
+    },
+    {
+      "role": "Teacher",
+      "page": "exams",
+      "width": 834,
+      "theme": "light",
+      "actualTheme": "light",
+      "status": 200,
+      "overflow": false,
+      "alerts": 0,
+      "file": "teacher-exams-834-light.png"
+    },
+    {
+      "role": "Teacher",
+      "page": "exams",
+      "width": 1440,
+      "theme": "light",
+      "actualTheme": "light",
+      "status": 200,
+      "overflow": false,
+      "alerts": 0,
+      "file": "teacher-exams-1440-light.png"
+    },
+    {
+      "role": "Teacher",
+      "page": "exams",
+      "width": 320,
+      "theme": "dark",
+      "actualTheme": "dark",
+      "status": 200,
+      "overflow": false,
+      "alerts": 0,
+      "file": "teacher-exams-320-dark.png"
+    },
+    {
+      "role": "Teacher",
+      "page": "exams",
+      "width": 390,
+      "theme": "dark",
+      "actualTheme": "dark",
+      "status": 200,
+      "overflow": false,
+      "alerts": 0,
+      "file": "teacher-exams-390-dark.png"
+    },
+    {
+      "role": "Teacher",
+      "page": "exams",
+      "width": 834,
+      "theme": "dark",
+      "actualTheme": "dark",
+      "status": 200,
+      "overflow": false,
+      "alerts": 0,
+      "file": "teacher-exams-834-dark.png"
+    },
+    {
+      "role": "Teacher",
+      "page": "exams",
+      "width": 1440,
+      "theme": "dark",
+      "actualTheme": "dark",
+      "status": 200,
+      "overflow": false,
+      "alerts": 0,
+      "file": "teacher-exams-1440-dark.png"
+    },
+    {
+      "role": "Manager",
+      "page": "invitations",
+      "width": 320,
+      "theme": "light",
+      "actualTheme": "light",
+      "status": 200,
+      "overflow": false,
+      "alerts": 0,
+      "file": "manager-invitations-320-light.png"
+    },
+    {
+      "role": "Manager",
+      "page": "invitations",
+      "width": 390,
+      "theme": "light",
+      "actualTheme": "light",
+      "status": 200,
+      "overflow": false,
+      "alerts": 0,
+      "file": "manager-invitations-390-light.png"
+    },
+    {
+      "role": "Manager",
+      "page": "invitations",
+      "width": 834,
+      "theme": "light",
+      "actualTheme": "light",
+      "status": 200,
+      "overflow": false,
+      "alerts": 0,
+      "file": "manager-invitations-834-light.png"
+    },
+    {
+      "role": "Manager",
+      "page": "invitations",
+      "width": 1440,
+      "theme": "light",
+      "actualTheme": "light",
+      "status": 200,
+      "overflow": false,
+      "alerts": 0,
+      "file": "manager-invitations-1440-light.png"
+    },
+    {
+      "role": "Manager",
+      "page": "invitations",
+      "width": 320,
+      "theme": "dark",
+      "actualTheme": "dark",
+      "status": 200,
+      "overflow": false,
+      "alerts": 0,
+      "file": "manager-invitations-320-dark.png"
+    },
+    {
+      "role": "Manager",
+      "page": "invitations",
+      "width": 390,
+      "theme": "dark",
+      "actualTheme": "dark",
+      "status": 200,
+      "overflow": false,
+      "alerts": 0,
+      "file": "manager-invitations-390-dark.png"
+    },
+    {
+      "role": "Manager",
+      "page": "invitations",
+      "width": 834,
+      "theme": "dark",
+      "actualTheme": "dark",
+      "status": 200,
+      "overflow": false,
+      "alerts": 0,
+      "file": "manager-invitations-834-dark.png"
+    },
+    {
+      "role": "Manager",
+      "page": "invitations",
+      "width": 1440,
+      "theme": "dark",
+      "actualTheme": "dark",
+      "status": 200,
+      "overflow": false,
+      "alerts": 0,
+      "file": "manager-invitations-1440-dark.png"
+    },
+    {
+      "role": "Manager",
+      "page": "members",
+      "width": 320,
+      "theme": "light",
+      "actualTheme": "light",
+      "status": 200,
+      "overflow": false,
+      "alerts": 0,
+      "file": "manager-members-320-light.png"
+    },
+    {
+      "role": "Manager",
+      "page": "members",
+      "width": 390,
+      "theme": "light",
+      "actualTheme": "light",
+      "status": 200,
+      "overflow": false,
+      "alerts": 0,
+      "file": "manager-members-390-light.png"
+    },
+    {
+      "role": "Manager",
+      "page": "members",
+      "width": 834,
+      "theme": "light",
+      "actualTheme": "light",
+      "status": 200,
+      "overflow": false,
+      "alerts": 0,
+      "file": "manager-members-834-light.png"
+    },
+    {
+      "role": "Manager",
+      "page": "members",
+      "width": 1440,
+      "theme": "light",
+      "actualTheme": "light",
+      "status": 200,
+      "overflow": false,
+      "alerts": 0,
+      "file": "manager-members-1440-light.png"
+    },
+    {
+      "role": "Manager",
+      "page": "members",
+      "width": 320,
+      "theme": "dark",
+      "actualTheme": "dark",
+      "status": 200,
+      "overflow": false,
+      "alerts": 0,
+      "file": "manager-members-320-dark.png"
+    },
+    {
+      "role": "Manager",
+      "page": "members",
+      "width": 390,
+      "theme": "dark",
+      "actualTheme": "dark",
+      "status": 200,
+      "overflow": false,
+      "alerts": 0,
+      "file": "manager-members-390-dark.png"
+    },
+    {
+      "role": "Manager",
+      "page": "members",
+      "width": 834,
+      "theme": "dark",
+      "actualTheme": "dark",
+      "status": 200,
+      "overflow": false,
+      "alerts": 0,
+      "file": "manager-members-834-dark.png"
+    },
+    {
+      "role": "Manager",
+      "page": "members",
+      "width": 1440,
+      "theme": "dark",
+      "actualTheme": "dark",
+      "status": 200,
+      "overflow": false,
+      "alerts": 0,
+      "file": "manager-members-1440-dark.png"
+    },
+    {
+      "role": "Manager",
+      "page": "content",
+      "width": 320,
+      "theme": "light",
+      "actualTheme": "light",
+      "status": 200,
+      "overflow": false,
+      "alerts": 0,
+      "file": "manager-content-320-light.png"
+    },
+    {
+      "role": "Manager",
+      "page": "content",
+      "width": 390,
+      "theme": "light",
+      "actualTheme": "light",
+      "status": 200,
+      "overflow": false,
+      "alerts": 0,
+      "file": "manager-content-390-light.png"
+    },
+    {
+      "role": "Manager",
+      "page": "content",
+      "width": 834,
+      "theme": "light",
+      "actualTheme": "light",
+      "status": 200,
+      "overflow": false,
+      "alerts": 0,
+      "file": "manager-content-834-light.png"
+    },
+    {
+      "role": "Manager",
+      "page": "content",
+      "width": 1440,
+      "theme": "light",
+      "actualTheme": "light",
+      "status": 200,
+      "overflow": false,
+      "alerts": 0,
+      "file": "manager-content-1440-light.png"
+    },
+    {
+      "role": "Manager",
+      "page": "content",
+      "width": 320,
+      "theme": "dark",
+      "actualTheme": "dark",
+      "status": 200,
+      "overflow": false,
+      "alerts": 0,
+      "file": "manager-content-320-dark.png"
+    },
+    {
+      "role": "Manager",
+      "page": "content",
+      "width": 390,
+      "theme": "dark",
+      "actualTheme": "dark",
+      "status": 200,
+      "overflow": false,
+      "alerts": 0,
+      "file": "manager-content-390-dark.png"
+    },
+    {
+      "role": "Manager",
+      "page": "content",
+      "width": 834,
+      "theme": "dark",
+      "actualTheme": "dark",
+      "status": 200,
+      "overflow": false,
+      "alerts": 0,
+      "file": "manager-content-834-dark.png"
+    },
+    {
+      "role": "Manager",
+      "page": "content",
+      "width": 1440,
+      "theme": "dark",
+      "actualTheme": "dark",
+      "status": 200,
+      "overflow": false,
+      "alerts": 0,
+      "file": "manager-content-1440-dark.png"
+    },
+    {
+      "role": "Manager",
+      "page": "exams",
+      "width": 320,
+      "theme": "light",
+      "actualTheme": "light",
+      "status": 200,
+      "overflow": false,
+      "alerts": 0,
+      "file": "manager-exams-320-light.png"
+    },
+    {
+      "role": "Manager",
+      "page": "exams",
+      "width": 390,
+      "theme": "light",
+      "actualTheme": "light",
+      "status": 200,
+      "overflow": false,
+      "alerts": 0,
+      "file": "manager-exams-390-light.png"
+    },
+    {
+      "role": "Manager",
+      "page": "exams",
+      "width": 834,
+      "theme": "light",
+      "actualTheme": "light",
+      "status": 200,
+      "overflow": false,
+      "alerts": 0,
+      "file": "manager-exams-834-light.png"
+    },
+    {
+      "role": "Manager",
+      "page": "exams",
+      "width": 1440,
+      "theme": "light",
+      "actualTheme": "light",
+      "status": 200,
+      "overflow": false,
+      "alerts": 0,
+      "file": "manager-exams-1440-light.png"
+    },
+    {
+      "role": "Manager",
+      "page": "exams",
+      "width": 320,
+      "theme": "dark",
+      "actualTheme": "dark",
+      "status": 200,
+      "overflow": false,
+      "alerts": 0,
+      "file": "manager-exams-320-dark.png"
+    },
+    {
+      "role": "Manager",
+      "page": "exams",
+      "width": 390,
+      "theme": "dark",
+      "actualTheme": "dark",
+      "status": 200,
+      "overflow": false,
+      "alerts": 0,
+      "file": "manager-exams-390-dark.png"
+    },
+    {
+      "role": "Manager",
+      "page": "exams",
+      "width": 834,
+      "theme": "dark",
+      "actualTheme": "dark",
+      "status": 200,
+      "overflow": false,
+      "alerts": 0,
+      "file": "manager-exams-834-dark.png"
+    },
+    {
+      "role": "Manager",
+      "page": "exams",
+      "width": 1440,
+      "theme": "dark",
+      "actualTheme": "dark",
+      "status": 200,
+      "overflow": false,
+      "alerts": 0,
+      "file": "manager-exams-1440-dark.png"
+    },
+    {
+      "role": "Manager",
+      "page": "guardians",
+      "width": 320,
+      "theme": "light",
+      "actualTheme": "light",
+      "status": 200,
+      "overflow": false,
+      "alerts": 0,
+      "file": "manager-guardians-320-light.png"
+    },
+    {
+      "role": "Manager",
+      "page": "guardians",
+      "width": 390,
+      "theme": "light",
+      "actualTheme": "light",
+      "status": 200,
+      "overflow": false,
+      "alerts": 0,
+      "file": "manager-guardians-390-light.png"
+    },
+    {
+      "role": "Manager",
+      "page": "guardians",
+      "width": 834,
+      "theme": "light",
+      "actualTheme": "light",
+      "status": 200,
+      "overflow": false,
+      "alerts": 0,
+      "file": "manager-guardians-834-light.png"
+    },
+    {
+      "role": "Manager",
+      "page": "guardians",
+      "width": 1440,
+      "theme": "light",
+      "actualTheme": "light",
+      "status": 200,
+      "overflow": false,
+      "alerts": 0,
+      "file": "manager-guardians-1440-light.png"
+    },
+    {
+      "role": "Manager",
+      "page": "guardians",
+      "width": 320,
+      "theme": "dark",
+      "actualTheme": "dark",
+      "status": 200,
+      "overflow": false,
+      "alerts": 0,
+      "file": "manager-guardians-320-dark.png"
+    },
+    {
+      "role": "Manager",
+      "page": "guardians",
+      "width": 390,
+      "theme": "dark",
+      "actualTheme": "dark",
+      "status": 200,
+      "overflow": false,
+      "alerts": 0,
+      "file": "manager-guardians-390-dark.png"
+    },
+    {
+      "role": "Manager",
+      "page": "guardians",
+      "width": 834,
+      "theme": "dark",
+      "actualTheme": "dark",
+      "status": 200,
+      "overflow": false,
+      "alerts": 0,
+      "file": "manager-guardians-834-dark.png"
+    },
+    {
+      "role": "Manager",
+      "page": "guardians",
+      "width": 1440,
+      "theme": "dark",
+      "actualTheme": "dark",
+      "status": 200,
+      "overflow": false,
+      "alerts": 0,
+      "file": "manager-guardians-1440-dark.png"
+    },
+    {
+      "role": "Manager",
+      "page": "class",
+      "width": 320,
+      "theme": "light",
+      "actualTheme": "light",
+      "status": 200,
+      "overflow": false,
+      "alerts": 0,
+      "file": "manager-class-320-light.png"
+    },
+    {
+      "role": "Manager",
+      "page": "class",
+      "width": 390,
+      "theme": "light",
+      "actualTheme": "light",
+      "status": 200,
+      "overflow": false,
+      "alerts": 0,
+      "file": "manager-class-390-light.png"
+    },
+    {
+      "role": "Manager",
+      "page": "class",
+      "width": 834,
+      "theme": "light",
+      "actualTheme": "light",
+      "status": 200,
+      "overflow": false,
+      "alerts": 0,
+      "file": "manager-class-834-light.png"
+    },
+    {
+      "role": "Manager",
+      "page": "class",
+      "width": 1440,
+      "theme": "light",
+      "actualTheme": "light",
+      "status": 200,
+      "overflow": false,
+      "alerts": 0,
+      "file": "manager-class-1440-light.png"
+    },
+    {
+      "role": "Manager",
+      "page": "class",
+      "width": 320,
+      "theme": "dark",
+      "actualTheme": "dark",
+      "status": 200,
+      "overflow": false,
+      "alerts": 0,
+      "file": "manager-class-320-dark.png"
+    },
+    {
+      "role": "Manager",
+      "page": "class",
+      "width": 390,
+      "theme": "dark",
+      "actualTheme": "dark",
+      "status": 200,
+      "overflow": false,
+      "alerts": 0,
+      "file": "manager-class-390-dark.png"
+    },
+    {
+      "role": "Manager",
+      "page": "class",
+      "width": 834,
+      "theme": "dark",
+      "actualTheme": "dark",
+      "status": 200,
+      "overflow": false,
+      "alerts": 0,
+      "file": "manager-class-834-dark.png"
+    },
+    {
+      "role": "Manager",
+      "page": "class",
+      "width": 1440,
+      "theme": "dark",
+      "actualTheme": "dark",
+      "status": 200,
+      "overflow": false,
+      "alerts": 0,
+      "file": "manager-class-1440-dark.png"
+    }
+  ]
+}

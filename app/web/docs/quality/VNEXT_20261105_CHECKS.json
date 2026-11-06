@@ -1,0 +1,251 @@
+{
+  "checkedAtUtc": "2026-11-05T13:14:27.186432+00:00",
+  "scope": "Active web/ client; vNext implementation; Test environment; no platform owner application changes",
+  "sourcePdf": {
+    "file": "MakanApp_Frontend_Backend_Integration_Guide_vNext_FA.pdf",
+    "pages": 25,
+    "sha256": "61bf826d859af2331376f21fbb67a6776322eb6cafee981c1c8e294bcf66f7c1"
+  },
+  "contract": {
+    "evidence": "VNEXT_20261105_CONTRACT.json",
+    "liveOperations": 442,
+    "newPublicOperationsConnected": 8,
+    "newOwnerOperationsExcluded": 1,
+    "clientOperations": 286,
+    "clientSchemas": 506,
+    "generatedCheck": "passed"
+  },
+  "unit": {
+    "passed": 455,
+    "failed": 0,
+    "skipped": 0,
+    "files": 64,
+    "newVnextCases": 8,
+    "rawReport": "tmp/vnext-20261105/unit-final.json"
+  },
+  "browser": {
+    "latestUniqueCases": 219,
+    "latestPassed": 219,
+    "latestFailed": 0,
+    "latestSkipped": 0,
+    "newVnextCases": 10,
+    "automaticRetries": 0,
+    "latestResultFingerprintSha256": "82b91e604c66b421bd48a43d5ff812541e2d72f747494870e8748ac2c1311e7d",
+    "latestCasesByFile": {
+      "assessment-evaluation.spec.ts": 7,
+      "assessment-settings.spec.ts": 4,
+      "assistant-theme.spec.ts": 1,
+      "brand-security.spec.ts": 13,
+      "chat-education-layout.spec.ts": 7,
+      "chat-school-polish.spec.ts": 9,
+      "client-scope.spec.ts": 1,
+      "conversation-pages.spec.ts": 5,
+      "design-reference.spec.ts": 1,
+      "header-back.spec.ts": 2,
+      "instagram-experience.spec.ts": 13,
+      "instagram-motion.spec.ts": 2,
+      "invitations-design.spec.ts": 1,
+      "learning.spec.ts": 2,
+      "manager-navigation.spec.ts": 2,
+      "manager-workspace.spec.ts": 4,
+      "member-directory.spec.ts": 3,
+      "message-actions.spec.ts": 2,
+      "messaging.spec.ts": 3,
+      "messenger-management.spec.ts": 10,
+      "mk-boundaries.spec.ts": 3,
+      "navigation-consistency.spec.ts": 3,
+      "navigation-experience.spec.ts": 7,
+      "performance.spec.ts": 1,
+      "preferences-weekly.spec.ts": 2,
+      "profile-school-files.spec.ts": 4,
+      "profile.spec.ts": 1,
+      "project-expansion-visual.spec.ts": 1,
+      "project-expansion.spec.ts": 7,
+      "reference-fidelity.spec.ts": 6,
+      "reference-v2-layout.spec.ts": 5,
+      "release-154c437.spec.ts": 12,
+      "release-42c.spec.ts": 11,
+      "release-80c.spec.ts": 12,
+      "release-e11.spec.ts": 5,
+      "responsive.spec.ts": 4,
+      "school-redesign.spec.ts": 5,
+      "sign-in-layout.spec.ts": 3,
+      "submission.spec.ts": 3,
+      "telegram-details.spec.ts": 5,
+      "telegram-messenger.spec.ts": 10,
+      "telegram-reference.spec.ts": 4,
+      "vnext.spec.ts": 10,
+      "workspace-child-attachments.spec.ts": 3
+    },
+    "attempts": [
+      {
+        "file": "tmp/vnext-20261105/browser-new.json",
+        "scope": "initial new scenarios",
+        "stats": {
+          "startTime": "2026-11-05T12:22:40.304Z",
+          "duration": 35851.827000000005,
+          "expected": 7,
+          "skipped": 0,
+          "unexpected": 1,
+          "flaky": 0
+        },
+        "automaticRetryAttempts": 0
+      },
+      {
+        "file": "tmp/vnext-20261105/browser-full-initial.json",
+        "scope": "interrupted diagnostic run",
+        "stats": {
+          "startTime": "2026-11-05T12:33:40.965Z",
+          "duration": 420191.358,
+          "expected": 85,
+          "skipped": 124,
+          "unexpected": 8,
+          "flaky": 0
+        },
+        "automaticRetryAttempts": 0
+      },
+      {
+        "file": "tmp/vnext-20261105/browser-full-final.json",
+        "scope": "complete regression run",
+        "stats": {
+          "startTime": "2026-11-05T12:46:51.116Z",
+          "duration": 753741.566,
+          "expected": 217,
+          "skipped": 0,
+          "unexpected": 2,
+          "flaky": 0
+        },
+        "automaticRetryAttempts": 0
+      },
+      {
+        "file": "tmp/vnext-20261105/browser-followup.json",
+        "scope": "two complete affected files",
+        "stats": {
+          "startTime": "2026-11-05T13:01:08.767Z",
+          "duration": 51554.382000000005,
+          "expected": 16,
+          "skipped": 0,
+          "unexpected": 0,
+          "flaky": 0
+        },
+        "automaticRetryAttempts": 0
+      },
+      {
+        "file": "tmp/vnext-20261105/browser-policy.json",
+        "scope": "strengthened negative permission assertions",
+        "stats": {
+          "startTime": "2026-11-05T13:02:55.495Z",
+          "duration": 5056.66,
+          "expected": 1,
+          "skipped": 0,
+          "unexpected": 0,
+          "flaky": 0
+        },
+        "automaticRetryAttempts": 0
+      }
+    ],
+    "interpretation": "219 latest results across the complete run and explicit follow-up runs. The complete run itself was 217 passed / 2 failed; it is not reported as a clean single run.",
+    "resolvedFailures": [
+      "A generic byte validator broke legacy opaque version fixtures. It was removed; versions remain opaque, and actual concurrency fields remain required.",
+      "Old report-count and sent-list-unavailable assertions were updated for the newly connected content report and sent invitations.",
+      "A form assertion ran while a modal made the underlying form inert; the test now closes the modal first.",
+      "One full-run authentication request had a socket hang-up. Its whole affected file passed on follow-up without weakening assertions.",
+      "An older grant visual case seeded an ineligible Manager recipient. It now seeds an eligible Teacher. Negative cases also prove Manager recipients and capabilities beyond the caller scope are rejected."
+    ]
+  },
+  "checks": {
+    "standaloneProductionBuild": "passed",
+    "typecheck": "passed",
+    "lint": {
+      "status": "passed",
+      "sourceModules": 350,
+      "cycles": 0
+    },
+    "generated": "passed",
+    "format": "passed",
+    "deploymentRuntime": {
+      "latestPassed": 25,
+      "setupCases": 16,
+      "runtimeCases": 9,
+      "runner": "bubblewrap isolation; mocked Docker; no host provisioning",
+      "rawReport": "tmp/vnext-20261105/deployment-bwrap.log",
+      "initialDockerRunner": "9 runtime passed; setup could not start without the Docker test image/daemon. Initial log retained in deployment-final.log."
+    },
+    "gitDiffCheck": "passed",
+    "rootSetupShellSyntax": "passed",
+    "rootReadmesMatch": true
+  },
+  "live": {
+    "evidence": "VNEXT_20261105_LIVE.json",
+    "rolesPassed": [
+      "Student",
+      "Teacher",
+      "Parent",
+      "Manager",
+      "Personal"
+    ],
+    "explicitHttpChecks": 75,
+    "ownContextPreserved": true,
+    "ownLogoutsConfirmed": true,
+    "domainMutations": false,
+    "writeTesting": "Local fixture only; no live database mutation/ACL acceptance claim"
+  },
+  "visual": {
+    "gallery": "output/review/vnext-20261105/index.html",
+    "liveScreenshots": 56,
+    "fixtureFormScreenshots": 24,
+    "totalScreenshots": 80,
+    "themes": [
+      "light",
+      "dark"
+    ],
+    "viewportWidths": [
+      320,
+      390,
+      834,
+      1440
+    ],
+    "liveThemeAssertions": 56,
+    "horizontalOverflow": 0,
+    "liveAlertCount": 0,
+    "manualReview": [
+      "Representative live contact sheets",
+      "forms-contact.png: three form types at 320/light and 1440/dark",
+      "member-320-light.png full size",
+      "class-1440-dark.png full size"
+    ],
+    "limits": "Browser viewport QA; not physical-device or exhaustive accessibility certification"
+  },
+  "observedBackendLimits": {
+    "officialSchoolSpaces": {
+      "group": "Missing",
+      "channel": "Missing"
+    },
+    "activityPublicationLookup": {
+      "status": 404,
+      "code": "ACADEMIC_ACTIVITY_PUBLICATION_MISSING"
+    },
+    "webPushConfigured": false,
+    "sampledClassVersions": "4 of 4 present",
+    "sampledMemberVersions": "4 of 4 present",
+    "sampledGuardianSafeNames": "2 of 2 present",
+    "personalInvitationIdentityLiveSamples": 0,
+    "individualCatalogLiveSamples": 0,
+    "liveQuotePaymentAiPushSuccessClaimed": false,
+    "aiRuntime": "Disabled per release guide; no generation/retrieval success claimed"
+  },
+  "deployment": {
+    "dockerDaemonAvailable": false,
+    "containerImageBuildRun": false,
+    "remoteDeploymentRun": false,
+    "tlsOrMigrationsChanged": false,
+    "secretsAndSessionVolumesPreserved": true,
+    "sourceBundle": "output/delivery/makan-client-source.zip",
+    "bundleVerification": "output/delivery/PACKAGE_CHECKS.json (separate receipt to avoid a circular archive checksum)",
+    "localPreviewHttp": {
+      "/enter": 200,
+      "/preview/reference": 404,
+      "/preview/reference/MK-19": 404
+    }
+  }
+}

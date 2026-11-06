@@ -1,0 +1,111 @@
+name: makan-landing-dev
+services:
+  db:
+    image: postgres:17.11-alpine
+    environment:
+      POSTGRES_DB: makan_landing
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?See README environment setup}
+      MIGRATION_DB_PASSWORD: ${MIGRATION_DB_PASSWORD:?Set migration credential}
+      API_DB_PASSWORD: ${API_DB_PASSWORD:?Set runtime credential}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./infrastructure/postgres/init-roles.sh:/docker-entrypoint-initdb.d/10-roles.sh:ro
+    networks: [database]
+    healthcheck:
+      test: [CMD-SHELL, 'pg_isready -U postgres -d makan_landing']
+      interval: 5s
+      timeout: 3s
+      retries: 15
+    restart: unless-stopped
+  migrate:
+    profiles: [tools]
+    build: {context: ./apps/api}
+    command: [alembic, upgrade, head]
+    environment:
+      APP_ENV: development
+      AUTH_OTP_DEBUG: ${AUTH_OTP_DEBUG:-true}
+      AUTH_SECRET: ${AUTH_SECRET:?See README environment setup}
+      AUTH_MFA_KEY: ${AUTH_MFA_KEY:?See README environment setup}
+      DATABASE_URL: postgresql+psycopg://makan_migrator:${MIGRATION_DB_PASSWORD:?Set migration credential}@db:5432/makan_landing
+    networks: [database]
+    depends_on:
+      db: {condition: service_healthy}
+    restart: 'no'
+  api:
+    build: {context: ./apps/api}
+    environment: &api_environment
+      APP_ENV: development
+      AUTH_OTP_DEBUG: ${AUTH_OTP_DEBUG:-true}
+      AUTH_SECRET: ${AUTH_SECRET:?See README environment setup}
+      AUTH_MFA_KEY: ${AUTH_MFA_KEY:?See README environment setup}
+      AUTH_ALLOWED_ORIGINS: '${AUTH_ALLOWED_ORIGINS:-["http://127.0.0.1:3000","http://127.0.0.1:3100"]}'
+      MEDIA_ROOT: /srv/media
+      FORMS_TOKEN_LIMIT: ${FORMS_TOKEN_LIMIT:-40}
+      FORMS_SUBMIT_LIMIT: ${FORMS_SUBMIT_LIMIT:-20}
+      FORMS_CONTACT_LIMIT: ${FORMS_CONTACT_LIMIT:-5}
+      SEO_INDEXING_ENABLED: ${SEO_INDEXING_ENABLED:-false}
+      ANALYTICS_ENABLED: ${ANALYTICS_ENABLED:-false}
+      ANALYTICS_EVENT_LIMIT: ${ANALYTICS_EVENT_LIMIT:-240}
+      DATABASE_URL: postgresql+psycopg://makan_api:${API_DB_PASSWORD:?Set runtime credential}@db:5432/makan_landing
+    ports: ['127.0.0.1:8000:8000']
+    networks: [application, database]
+    depends_on:
+      db: {condition: service_healthy}
+    healthcheck:
+      test: [CMD, python, -c, "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/v1/health/ready', timeout=5)"]
+      interval: 10s
+      timeout: 6s
+      retries: 6
+      start_period: 180s
+    restart: unless-stopped
+    read_only: true
+    tmpfs: [/tmp]
+    volumes: [media_data:/srv/media]
+    security_opt: [no-new-privileges:true]
+    cap_drop: [ALL]
+  web:
+    profiles: [website]
+    build: {context: ., dockerfile: apps/web/Dockerfile}
+    image: makan-landing-dev-web:0.10.0
+    environment:
+      API_INTERNAL_URL: http://api:8000
+      NODE_ENV: production
+      NEXT_TELEMETRY_DISABLED: '1'
+    ports: ['127.0.0.1:3100:3000']
+    networks: [application]
+    depends_on: {api: {condition: service_healthy}}
+    read_only: true
+    tmpfs: [/tmp]
+    volumes: [web_cache:/srv/makan/apps/web/.next/cache]
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    restart: unless-stopped
+  maintenance:
+    profiles: [website]
+    build: {context: ./apps/api}
+    environment: *api_environment
+    command: [python, -m, app.commands.maintenance, --state-file, /srv/operations/maintenance.json]
+    networks: [database]
+    depends_on: {db: {condition: service_healthy}}
+    volumes: [operations_data:/srv/operations]
+    read_only: true
+    tmpfs: [/tmp]
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    restart: unless-stopped
+    healthcheck:
+      test: [CMD, python, -m, app.commands.maintenance, --check, --state-file, /srv/operations/maintenance.json]
+      interval: 30s
+      timeout: 8s
+      retries: 4
+      start_period: 180s
+volumes:
+  postgres_data:
+  media_data:
+  web_cache:
+  operations_data:
+networks:
+  application:
+  database:
+    internal: true

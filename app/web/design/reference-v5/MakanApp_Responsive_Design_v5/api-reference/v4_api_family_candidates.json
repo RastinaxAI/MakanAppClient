@@ -1,0 +1,1818 @@
+[
+  {
+    "tag": "AcademicPeriods",
+    "operations": 2,
+    "ids": [
+      "MK-89",
+      "MK-90",
+      "MK-91",
+      "MK-92",
+      "MK-93",
+      "MK-94",
+      "MK-455"
+    ],
+    "pages": [
+      42,
+      43,
+      164
+    ],
+    "groups": [
+      "school",
+      "desktop"
+    ]
+  },
+  {
+    "tag": "AdminAuditLogs",
+    "operations": 1,
+    "ids": [
+      "MK-416",
+      "MK-417",
+      "MK-418"
+    ],
+    "pages": [
+      151
+    ],
+    "groups": [
+      "platform"
+    ]
+  },
+  {
+    "tag": "Ai",
+    "operations": 13,
+    "ids": [
+      "MK-365",
+      "MK-366",
+      "MK-367",
+      "MK-368",
+      "MK-369",
+      "MK-370",
+      "MK-371",
+      "MK-372",
+      "MK-373",
+      "MK-374",
+      "MK-375",
+      "MK-376",
+      "MK-452",
+      "MK-453",
+      "MK-454",
+      "MK-466"
+    ],
+    "pages": [
+      134,
+      135,
+      136,
+      137,
+      163,
+      175
+    ],
+    "groups": [
+      "account",
+      "dark",
+      "desktop"
+    ]
+  },
+  {
+    "tag": "Assignments",
+    "operations": 6,
+    "ids": [
+      "MK-140",
+      "MK-141",
+      "MK-142"
+    ],
+    "pages": [
+      59
+    ],
+    "groups": [
+      "school"
+    ]
+  },
+  {
+    "tag": "Auth",
+    "operations": 7,
+    "ids": [
+      "MK-332",
+      "MK-333",
+      "MK-334",
+      "MK-350",
+      "MK-351",
+      "MK-352",
+      "MK-437",
+      "MK-438",
+      "MK-439"
+    ],
+    "pages": [
+      123,
+      129,
+      158
+    ],
+    "groups": [
+      "account",
+      "states"
+    ]
+  },
+  {
+    "tag": "ClassLessons",
+    "operations": 5,
+    "ids": [
+      "MK-134",
+      "MK-135",
+      "MK-136",
+      "MK-137",
+      "MK-138",
+      "MK-139",
+      "MK-443",
+      "MK-444",
+      "MK-445",
+      "MK-457"
+    ],
+    "pages": [
+      57,
+      58,
+      160,
+      166
+    ],
+    "groups": [
+      "school",
+      "dark",
+      "desktop"
+    ]
+  },
+  {
+    "tag": "Classes",
+    "operations": 9,
+    "ids": [
+      "MK-86",
+      "MK-87",
+      "MK-88",
+      "MK-92",
+      "MK-93",
+      "MK-94",
+      "MK-95",
+      "MK-96",
+      "MK-97",
+      "MK-98",
+      "MK-99",
+      "MK-100",
+      "MK-101",
+      "MK-102",
+      "MK-103",
+      "MK-419",
+      "MK-420",
+      "MK-421",
+      "MK-443",
+      "MK-444",
+      "MK-445",
+      "MK-455"
+    ],
+    "pages": [
+      41,
+      43,
+      44,
+      45,
+      46,
+      152,
+      160,
+      164
+    ],
+    "groups": [
+      "school",
+      "states",
+      "dark",
+      "desktop"
+    ]
+  },
+  {
+    "tag": "Commerce",
+    "operations": 5,
+    "ids": [
+      "MK-380",
+      "MK-381",
+      "MK-382",
+      "MK-383",
+      "MK-384",
+      "MK-385",
+      "MK-386",
+      "MK-387",
+      "MK-388"
+    ],
+    "pages": [
+      139,
+      140,
+      141
+    ],
+    "groups": [
+      "account"
+    ]
+  },
+  {
+    "tag": "CommercialSubscriptions",
+    "operations": 12,
+    "ids": [
+      "MK-365",
+      "MK-366",
+      "MK-367",
+      "MK-374",
+      "MK-375",
+      "MK-376",
+      "MK-380",
+      "MK-381",
+      "MK-382",
+      "MK-383",
+      "MK-384",
+      "MK-385",
+      "MK-386",
+      "MK-387",
+      "MK-388",
+      "MK-452",
+      "MK-453",
+      "MK-454",
+      "MK-466"
+    ],
+    "pages": [
+      134,
+      137,
+      139,
+      140,
+      141,
+      163,
+      175
+    ],
+    "groups": [
+      "account",
+      "dark",
+      "desktop"
+    ]
+  },
+  {
+    "tag": "CommunicationAge",
+    "operations": 6,
+    "ids": [
+      "MK-221",
+      "MK-222",
+      "MK-223",
+      "MK-353",
+      "MK-354",
+      "MK-355",
+      "MK-392",
+      "MK-393",
+      "MK-394"
+    ],
+    "pages": [
+      86,
+      130,
+      143
+    ],
+    "groups": [
+      "messaging",
+      "account",
+      "platform"
+    ]
+  },
+  {
+    "tag": "Contacts",
+    "operations": 5,
+    "ids": [
+      "MK-176",
+      "MK-177",
+      "MK-178"
+    ],
+    "pages": [
+      71
+    ],
+    "groups": [
+      "messaging"
+    ]
+  },
+  {
+    "tag": "Conversation Management",
+    "operations": 1,
+    "ids": [
+      "MK-194",
+      "MK-195",
+      "MK-196"
+    ],
+    "pages": [
+      77
+    ],
+    "groups": [
+      "messaging"
+    ]
+  },
+  {
+    "tag": "ConversationAdvancedManagement",
+    "operations": 4,
+    "ids": [
+      "MK-194",
+      "MK-195",
+      "MK-196",
+      "MK-197",
+      "MK-198",
+      "MK-199",
+      "MK-200",
+      "MK-201",
+      "MK-202",
+      "MK-203",
+      "MK-204",
+      "MK-205",
+      "MK-461"
+    ],
+    "pages": [
+      77,
+      78,
+      79,
+      80,
+      170
+    ],
+    "groups": [
+      "messaging",
+      "desktop"
+    ]
+  },
+  {
+    "tag": "ConversationChecklists",
+    "operations": 4,
+    "ids": [
+      "MK-248",
+      "MK-249",
+      "MK-250"
+    ],
+    "pages": [
+      95
+    ],
+    "groups": [
+      "messaging"
+    ]
+  },
+  {
+    "tag": "ConversationInvitations",
+    "operations": 5,
+    "ids": [
+      "MK-188",
+      "MK-189",
+      "MK-190",
+      "MK-212",
+      "MK-213",
+      "MK-214",
+      "MK-437",
+      "MK-438",
+      "MK-439"
+    ],
+    "pages": [
+      75,
+      83,
+      158
+    ],
+    "groups": [
+      "messaging",
+      "states"
+    ]
+  },
+  {
+    "tag": "ConversationInviteLinks",
+    "operations": 9,
+    "ids": [
+      "MK-215",
+      "MK-216",
+      "MK-217",
+      "MK-218",
+      "MK-219",
+      "MK-220",
+      "MK-461"
+    ],
+    "pages": [
+      84,
+      85,
+      170
+    ],
+    "groups": [
+      "messaging",
+      "desktop"
+    ]
+  },
+  {
+    "tag": "ConversationModeration",
+    "operations": 6,
+    "ids": [
+      "MK-263",
+      "MK-264",
+      "MK-265"
+    ],
+    "pages": [
+      100
+    ],
+    "groups": [
+      "messaging"
+    ]
+  },
+  {
+    "tag": "ConversationPhotos",
+    "operations": 2,
+    "ids": [
+      "MK-194",
+      "MK-195",
+      "MK-196",
+      "MK-197",
+      "MK-198",
+      "MK-199"
+    ],
+    "pages": [
+      77,
+      78
+    ],
+    "groups": [
+      "messaging"
+    ]
+  },
+  {
+    "tag": "ConversationPolls",
+    "operations": 5,
+    "ids": [
+      "MK-242",
+      "MK-243",
+      "MK-244",
+      "MK-245",
+      "MK-246",
+      "MK-247"
+    ],
+    "pages": [
+      93,
+      94
+    ],
+    "groups": [
+      "messaging"
+    ]
+  },
+  {
+    "tag": "ConversationTopics",
+    "operations": 3,
+    "ids": [
+      "MK-224",
+      "MK-225",
+      "MK-226"
+    ],
+    "pages": [
+      87
+    ],
+    "groups": [
+      "messaging"
+    ]
+  },
+  {
+    "tag": "Conversations",
+    "operations": 44,
+    "ids": [
+      "MK-170",
+      "MK-171",
+      "MK-172",
+      "MK-179",
+      "MK-180",
+      "MK-181",
+      "MK-182",
+      "MK-183",
+      "MK-184",
+      "MK-185",
+      "MK-186",
+      "MK-187",
+      "MK-188",
+      "MK-189",
+      "MK-190",
+      "MK-191",
+      "MK-192",
+      "MK-193",
+      "MK-197",
+      "MK-198",
+      "MK-199",
+      "MK-200",
+      "MK-201",
+      "MK-202",
+      "MK-203",
+      "MK-204",
+      "MK-205",
+      "MK-206",
+      "MK-207",
+      "MK-208",
+      "MK-209",
+      "MK-210",
+      "MK-211",
+      "MK-221",
+      "MK-222",
+      "MK-223",
+      "MK-227",
+      "MK-228",
+      "MK-229",
+      "MK-230",
+      "MK-231",
+      "MK-232",
+      "MK-233",
+      "MK-234",
+      "MK-235",
+      "MK-236",
+      "MK-237",
+      "MK-238",
+      "MK-239",
+      "MK-240",
+      "MK-241",
+      "MK-254",
+      "MK-255",
+      "MK-256",
+      "MK-257",
+      "MK-258",
+      "MK-259",
+      "MK-266",
+      "MK-267",
+      "MK-268",
+      "MK-269",
+      "MK-270",
+      "MK-271",
+      "MK-419",
+      "MK-420",
+      "MK-421",
+      "MK-446",
+      "MK-447",
+      "MK-448",
+      "MK-460",
+      "MK-461"
+    ],
+    "pages": [
+      69,
+      72,
+      73,
+      74,
+      75,
+      76,
+      78,
+      79,
+      80,
+      81,
+      82,
+      86,
+      88,
+      89,
+      90,
+      91,
+      92,
+      97,
+      98,
+      101,
+      102,
+      152,
+      161,
+      169,
+      170
+    ],
+    "groups": [
+      "messaging",
+      "states",
+      "dark",
+      "desktop"
+    ]
+  },
+  {
+    "tag": "Courses",
+    "operations": 2,
+    "ids": [
+      "MK-89",
+      "MK-90",
+      "MK-91",
+      "MK-92",
+      "MK-93",
+      "MK-94",
+      "MK-455"
+    ],
+    "pages": [
+      42,
+      43,
+      164
+    ],
+    "groups": [
+      "school",
+      "desktop"
+    ]
+  },
+  {
+    "tag": "Dashboards",
+    "operations": 4,
+    "ids": [
+      "MK-86",
+      "MK-87",
+      "MK-88"
+    ],
+    "pages": [
+      41
+    ],
+    "groups": [
+      "school"
+    ]
+  },
+  {
+    "tag": "EducationalSources",
+    "operations": 10,
+    "ids": [
+      "MK-356",
+      "MK-357",
+      "MK-358",
+      "MK-359",
+      "MK-360",
+      "MK-361",
+      "MK-362",
+      "MK-363",
+      "MK-364",
+      "MK-365",
+      "MK-366",
+      "MK-367",
+      "MK-452",
+      "MK-453",
+      "MK-454",
+      "MK-465",
+      "MK-466"
+    ],
+    "pages": [
+      131,
+      132,
+      133,
+      134,
+      163,
+      174,
+      175
+    ],
+    "groups": [
+      "account",
+      "dark",
+      "desktop"
+    ]
+  },
+  {
+    "tag": "Evaluations",
+    "operations": 9,
+    "ids": [
+      "MK-116",
+      "MK-117",
+      "MK-118",
+      "MK-146",
+      "MK-147",
+      "MK-148",
+      "MK-158",
+      "MK-159",
+      "MK-160",
+      "MK-326",
+      "MK-327",
+      "MK-328",
+      "MK-458"
+    ],
+    "pages": [
+      51,
+      61,
+      65,
+      121,
+      167
+    ],
+    "groups": [
+      "school",
+      "personal",
+      "desktop"
+    ]
+  },
+  {
+    "tag": "ExamGradings",
+    "operations": 10,
+    "ids": [
+      "MK-116",
+      "MK-117",
+      "MK-118",
+      "MK-158",
+      "MK-159",
+      "MK-160",
+      "MK-329",
+      "MK-330",
+      "MK-331",
+      "MK-459"
+    ],
+    "pages": [
+      51,
+      65,
+      122,
+      168
+    ],
+    "groups": [
+      "school",
+      "personal",
+      "desktop"
+    ]
+  },
+  {
+    "tag": "Exams",
+    "operations": 24,
+    "ids": [
+      "MK-149",
+      "MK-150",
+      "MK-151",
+      "MK-152",
+      "MK-153",
+      "MK-154",
+      "MK-155",
+      "MK-156",
+      "MK-157",
+      "MK-329",
+      "MK-330",
+      "MK-331",
+      "MK-459"
+    ],
+    "pages": [
+      62,
+      63,
+      64,
+      122,
+      168
+    ],
+    "groups": [
+      "school",
+      "personal",
+      "desktop"
+    ]
+  },
+  {
+    "tag": "Files",
+    "operations": 4,
+    "ids": [
+      "MK-134",
+      "MK-135",
+      "MK-136",
+      "MK-137",
+      "MK-138",
+      "MK-139",
+      "MK-236",
+      "MK-237",
+      "MK-238",
+      "MK-239",
+      "MK-240",
+      "MK-241",
+      "MK-335",
+      "MK-336",
+      "MK-337",
+      "MK-356",
+      "MK-357",
+      "MK-358",
+      "MK-359",
+      "MK-360",
+      "MK-361",
+      "MK-457",
+      "MK-465"
+    ],
+    "pages": [
+      57,
+      58,
+      91,
+      92,
+      124,
+      131,
+      132,
+      166,
+      174
+    ],
+    "groups": [
+      "school",
+      "messaging",
+      "account",
+      "desktop"
+    ]
+  },
+  {
+    "tag": "Guardian",
+    "operations": 3,
+    "ids": [
+      "MK-116",
+      "MK-117",
+      "MK-118"
+    ],
+    "pages": [
+      51
+    ],
+    "groups": [
+      "school"
+    ]
+  },
+  {
+    "tag": "Invitations",
+    "operations": 3,
+    "ids": [
+      "MK-83",
+      "MK-84",
+      "MK-85",
+      "MK-437",
+      "MK-438",
+      "MK-439"
+    ],
+    "pages": [
+      40,
+      158
+    ],
+    "groups": [
+      "school",
+      "states"
+    ]
+  },
+  {
+    "tag": "MessageReports",
+    "operations": 1,
+    "ids": [
+      "MK-260",
+      "MK-261",
+      "MK-262"
+    ],
+    "pages": [
+      99
+    ],
+    "groups": [
+      "messaging"
+    ]
+  },
+  {
+    "tag": "Messages",
+    "operations": 1,
+    "ids": [
+      "MK-185",
+      "MK-186",
+      "MK-187",
+      "MK-460"
+    ],
+    "pages": [
+      74,
+      169
+    ],
+    "groups": [
+      "messaging",
+      "desktop"
+    ]
+  },
+  {
+    "tag": "MessagingFolders",
+    "operations": 3,
+    "ids": [
+      "MK-173",
+      "MK-174",
+      "MK-175"
+    ],
+    "pages": [
+      70
+    ],
+    "groups": [
+      "messaging"
+    ]
+  },
+  {
+    "tag": "MessagingPrivacy",
+    "operations": 2,
+    "ids": [
+      "MK-179",
+      "MK-180",
+      "MK-181",
+      "MK-257",
+      "MK-258",
+      "MK-259",
+      "MK-341",
+      "MK-342",
+      "MK-343"
+    ],
+    "pages": [
+      72,
+      98,
+      126
+    ],
+    "groups": [
+      "messaging",
+      "account"
+    ]
+  },
+  {
+    "tag": "MessagingSafety",
+    "operations": 4,
+    "ids": [
+      "MK-260",
+      "MK-261",
+      "MK-262",
+      "MK-341",
+      "MK-342",
+      "MK-343"
+    ],
+    "pages": [
+      99,
+      126
+    ],
+    "groups": [
+      "messaging",
+      "account"
+    ]
+  },
+  {
+    "tag": "NotificationDevices",
+    "operations": 5,
+    "ids": [
+      "MK-347",
+      "MK-348",
+      "MK-349",
+      "MK-434",
+      "MK-435",
+      "MK-436"
+    ],
+    "pages": [
+      128,
+      157
+    ],
+    "groups": [
+      "account",
+      "states"
+    ]
+  },
+  {
+    "tag": "NotificationPreferences",
+    "operations": 2,
+    "ids": [
+      "MK-344",
+      "MK-345",
+      "MK-346"
+    ],
+    "pages": [
+      127
+    ],
+    "groups": [
+      "account"
+    ]
+  },
+  {
+    "tag": "Notifications",
+    "operations": 3,
+    "ids": [
+      "MK-344",
+      "MK-345",
+      "MK-346"
+    ],
+    "pages": [
+      127
+    ],
+    "groups": [
+      "account"
+    ]
+  },
+  {
+    "tag": "OfficialClassConversations",
+    "operations": 1,
+    "ids": [
+      "MK-167",
+      "MK-168",
+      "MK-169"
+    ],
+    "pages": [
+      68
+    ],
+    "groups": [
+      "school"
+    ]
+  },
+  {
+    "tag": "OfficialSpaces",
+    "operations": 4,
+    "ids": [
+      "MK-167",
+      "MK-168",
+      "MK-169",
+      "MK-457",
+      "MK-460"
+    ],
+    "pages": [
+      68,
+      166,
+      169
+    ],
+    "groups": [
+      "school",
+      "desktop"
+    ]
+  },
+  {
+    "tag": "OrganizationMembers",
+    "operations": 1,
+    "ids": [
+      "MK-107",
+      "MK-108",
+      "MK-109"
+    ],
+    "pages": [
+      48
+    ],
+    "groups": [
+      "school"
+    ]
+  },
+  {
+    "tag": "OrganizationMembershipManagement",
+    "operations": 4,
+    "ids": [
+      "MK-107",
+      "MK-108",
+      "MK-109"
+    ],
+    "pages": [
+      48
+    ],
+    "groups": [
+      "school"
+    ]
+  },
+  {
+    "tag": "OrganizationPeople",
+    "operations": 7,
+    "ids": [
+      "MK-98",
+      "MK-99",
+      "MK-100",
+      "MK-104",
+      "MK-105",
+      "MK-106",
+      "MK-110",
+      "MK-111",
+      "MK-112"
+    ],
+    "pages": [
+      45,
+      47,
+      49
+    ],
+    "groups": [
+      "school"
+    ]
+  },
+  {
+    "tag": "People",
+    "operations": 3,
+    "ids": [
+      "MK-176",
+      "MK-177",
+      "MK-178",
+      "MK-179",
+      "MK-180",
+      "MK-181",
+      "MK-278",
+      "MK-279",
+      "MK-280"
+    ],
+    "pages": [
+      71,
+      72,
+      105
+    ],
+    "groups": [
+      "messaging",
+      "personal"
+    ]
+  },
+  {
+    "tag": "PeoplePresence",
+    "operations": 1,
+    "ids": [
+      "MK-179",
+      "MK-180",
+      "MK-181"
+    ],
+    "pages": [
+      72
+    ],
+    "groups": [
+      "messaging"
+    ]
+  },
+  {
+    "tag": "PersonalClassAcademicPermissions",
+    "operations": 2,
+    "ids": [
+      "MK-308",
+      "MK-309",
+      "MK-310",
+      "MK-323",
+      "MK-324",
+      "MK-325",
+      "MK-449",
+      "MK-450",
+      "MK-451",
+      "MK-462"
+    ],
+    "pages": [
+      115,
+      120,
+      162,
+      171
+    ],
+    "groups": [
+      "personal",
+      "dark",
+      "desktop"
+    ]
+  },
+  {
+    "tag": "PersonalClassAcademics",
+    "operations": 4,
+    "ids": [
+      "MK-323",
+      "MK-324",
+      "MK-325",
+      "MK-326",
+      "MK-327",
+      "MK-328",
+      "MK-329",
+      "MK-330",
+      "MK-331"
+    ],
+    "pages": [
+      120,
+      121,
+      122
+    ],
+    "groups": [
+      "personal"
+    ]
+  },
+  {
+    "tag": "PersonalClassHistory",
+    "operations": 1,
+    "ids": [
+      "MK-317",
+      "MK-318",
+      "MK-319",
+      "MK-462"
+    ],
+    "pages": [
+      118,
+      171
+    ],
+    "groups": [
+      "personal",
+      "desktop"
+    ]
+  },
+  {
+    "tag": "PersonalClassLifecycle",
+    "operations": 19,
+    "ids": [
+      "MK-290",
+      "MK-291",
+      "MK-292",
+      "MK-293",
+      "MK-294",
+      "MK-295",
+      "MK-296",
+      "MK-297",
+      "MK-298",
+      "MK-299",
+      "MK-300",
+      "MK-301",
+      "MK-302",
+      "MK-303",
+      "MK-304",
+      "MK-305",
+      "MK-306",
+      "MK-307",
+      "MK-311",
+      "MK-312",
+      "MK-313",
+      "MK-314",
+      "MK-315",
+      "MK-316",
+      "MK-320",
+      "MK-321",
+      "MK-322",
+      "MK-419",
+      "MK-420",
+      "MK-421",
+      "MK-437",
+      "MK-438",
+      "MK-439",
+      "MK-449",
+      "MK-450",
+      "MK-451",
+      "MK-462"
+    ],
+    "pages": [
+      109,
+      110,
+      111,
+      112,
+      113,
+      114,
+      116,
+      117,
+      119,
+      152,
+      158,
+      162,
+      171
+    ],
+    "groups": [
+      "personal",
+      "states",
+      "dark",
+      "desktop"
+    ]
+  },
+  {
+    "tag": "PersonalClassRequests",
+    "operations": 7,
+    "ids": [
+      "MK-272",
+      "MK-273",
+      "MK-274",
+      "MK-275",
+      "MK-276",
+      "MK-277",
+      "MK-278",
+      "MK-279",
+      "MK-280",
+      "MK-281",
+      "MK-282",
+      "MK-283",
+      "MK-287",
+      "MK-288",
+      "MK-289",
+      "MK-317",
+      "MK-318",
+      "MK-319"
+    ],
+    "pages": [
+      103,
+      104,
+      105,
+      106,
+      108,
+      118
+    ],
+    "groups": [
+      "personal"
+    ]
+  },
+  {
+    "tag": "PersonalClasses",
+    "operations": 9,
+    "ids": [
+      "MK-296",
+      "MK-297",
+      "MK-298",
+      "MK-299",
+      "MK-300",
+      "MK-301",
+      "MK-320",
+      "MK-321",
+      "MK-322"
+    ],
+    "pages": [
+      111,
+      112,
+      119
+    ],
+    "groups": [
+      "personal"
+    ]
+  },
+  {
+    "tag": "PlatformCommerce",
+    "operations": 7,
+    "ids": [
+      "MK-404",
+      "MK-405",
+      "MK-406",
+      "MK-407",
+      "MK-408",
+      "MK-409",
+      "MK-464"
+    ],
+    "pages": [
+      147,
+      148,
+      173
+    ],
+    "groups": [
+      "platform",
+      "desktop"
+    ]
+  },
+  {
+    "tag": "PlatformCommercialContracts",
+    "operations": 8,
+    "ids": [
+      "MK-404",
+      "MK-405",
+      "MK-406",
+      "MK-407",
+      "MK-408",
+      "MK-409",
+      "MK-464"
+    ],
+    "pages": [
+      147,
+      148,
+      173
+    ],
+    "groups": [
+      "platform",
+      "desktop"
+    ]
+  },
+  {
+    "tag": "PlatformEducation",
+    "operations": 6,
+    "ids": [
+      "MK-410",
+      "MK-411",
+      "MK-412"
+    ],
+    "pages": [
+      149
+    ],
+    "groups": [
+      "platform"
+    ]
+  },
+  {
+    "tag": "PlatformFinance",
+    "operations": 2,
+    "ids": [
+      "MK-401",
+      "MK-402",
+      "MK-403"
+    ],
+    "pages": [
+      146
+    ],
+    "groups": [
+      "platform"
+    ]
+  },
+  {
+    "tag": "PlatformIam",
+    "operations": 5,
+    "ids": [
+      "MK-389",
+      "MK-390",
+      "MK-391"
+    ],
+    "pages": [
+      142
+    ],
+    "groups": [
+      "platform"
+    ]
+  },
+  {
+    "tag": "PlatformLibrarySources",
+    "operations": 2,
+    "ids": [
+      "MK-410",
+      "MK-411",
+      "MK-412"
+    ],
+    "pages": [
+      149
+    ],
+    "groups": [
+      "platform"
+    ]
+  },
+  {
+    "tag": "PlatformMessagingMetadata",
+    "operations": 1,
+    "ids": [
+      "MK-413",
+      "MK-414",
+      "MK-415"
+    ],
+    "pages": [
+      150
+    ],
+    "groups": [
+      "platform"
+    ]
+  },
+  {
+    "tag": "PlatformModeration",
+    "operations": 9,
+    "ids": [
+      "MK-413",
+      "MK-414",
+      "MK-415"
+    ],
+    "pages": [
+      150
+    ],
+    "groups": [
+      "platform"
+    ]
+  },
+  {
+    "tag": "PlatformOrganizations",
+    "operations": 10,
+    "ids": [
+      "MK-395",
+      "MK-396",
+      "MK-397",
+      "MK-398",
+      "MK-399",
+      "MK-400"
+    ],
+    "pages": [
+      144,
+      145
+    ],
+    "groups": [
+      "platform"
+    ]
+  },
+  {
+    "tag": "PlatformPersonalClassAcademicPermissions",
+    "operations": 2,
+    "ids": [
+      "MK-308",
+      "MK-309",
+      "MK-310"
+    ],
+    "pages": [
+      115
+    ],
+    "groups": [
+      "personal"
+    ]
+  },
+  {
+    "tag": "PlatformPersonalClassHistory",
+    "operations": 1,
+    "ids": [
+      "MK-314",
+      "MK-315",
+      "MK-316",
+      "MK-317",
+      "MK-318",
+      "MK-319",
+      "MK-463"
+    ],
+    "pages": [
+      117,
+      118,
+      172
+    ],
+    "groups": [
+      "personal",
+      "desktop"
+    ]
+  },
+  {
+    "tag": "PlatformPersonalClassMemberships",
+    "operations": 1,
+    "ids": [
+      "MK-398",
+      "MK-399",
+      "MK-400"
+    ],
+    "pages": [
+      145
+    ],
+    "groups": [
+      "platform"
+    ]
+  },
+  {
+    "tag": "PlatformPersonalClassRequests",
+    "operations": 4,
+    "ids": [
+      "MK-284",
+      "MK-285",
+      "MK-286",
+      "MK-287",
+      "MK-288",
+      "MK-289",
+      "MK-463"
+    ],
+    "pages": [
+      107,
+      108,
+      172
+    ],
+    "groups": [
+      "personal",
+      "desktop"
+    ]
+  },
+  {
+    "tag": "PlatformProvisioning",
+    "operations": 2,
+    "ids": [
+      "MK-401",
+      "MK-402",
+      "MK-403"
+    ],
+    "pages": [
+      146
+    ],
+    "groups": [
+      "platform"
+    ]
+  },
+  {
+    "tag": "PlatformSystemOperations",
+    "operations": 3,
+    "ids": [
+      "MK-416",
+      "MK-417",
+      "MK-418"
+    ],
+    "pages": [
+      151
+    ],
+    "groups": [
+      "platform"
+    ]
+  },
+  {
+    "tag": "PlatformUsers",
+    "operations": 6,
+    "ids": [
+      "MK-392",
+      "MK-393",
+      "MK-394"
+    ],
+    "pages": [
+      143
+    ],
+    "groups": [
+      "platform"
+    ]
+  },
+  {
+    "tag": "Profile",
+    "operations": 4,
+    "ids": [
+      "MK-335",
+      "MK-336",
+      "MK-337",
+      "MK-338",
+      "MK-339",
+      "MK-340",
+      "MK-353",
+      "MK-354",
+      "MK-355"
+    ],
+    "pages": [
+      124,
+      125,
+      130
+    ],
+    "groups": [
+      "account"
+    ]
+  },
+  {
+    "tag": "Realtime",
+    "operations": 2,
+    "ids": [
+      "MK-170",
+      "MK-171",
+      "MK-172",
+      "MK-266",
+      "MK-267",
+      "MK-268",
+      "MK-269",
+      "MK-270",
+      "MK-271",
+      "MK-460"
+    ],
+    "pages": [
+      69,
+      101,
+      102,
+      169
+    ],
+    "groups": [
+      "messaging",
+      "desktop"
+    ]
+  },
+  {
+    "tag": "Reports",
+    "operations": 19,
+    "ids": [
+      "MK-116",
+      "MK-117",
+      "MK-118",
+      "MK-128",
+      "MK-129",
+      "MK-130",
+      "MK-161",
+      "MK-162",
+      "MK-163",
+      "MK-164",
+      "MK-165",
+      "MK-166",
+      "MK-371",
+      "MK-372",
+      "MK-373",
+      "MK-467"
+    ],
+    "pages": [
+      51,
+      55,
+      66,
+      67,
+      136,
+      176
+    ],
+    "groups": [
+      "school",
+      "account",
+      "desktop"
+    ]
+  },
+  {
+    "tag": "SavedMessageLabels",
+    "operations": 2,
+    "ids": [
+      "MK-182",
+      "MK-183",
+      "MK-184"
+    ],
+    "pages": [
+      73
+    ],
+    "groups": [
+      "messaging"
+    ]
+  },
+  {
+    "tag": "Schedule",
+    "operations": 3,
+    "ids": [
+      "MK-119",
+      "MK-120",
+      "MK-121",
+      "MK-131",
+      "MK-132",
+      "MK-133",
+      "MK-456"
+    ],
+    "pages": [
+      52,
+      56,
+      165
+    ],
+    "groups": [
+      "school",
+      "desktop"
+    ]
+  },
+  {
+    "tag": "ScheduledMessages",
+    "operations": 3,
+    "ids": [
+      "MK-251",
+      "MK-252",
+      "MK-253"
+    ],
+    "pages": [
+      96
+    ],
+    "groups": [
+      "messaging"
+    ]
+  },
+  {
+    "tag": "SchoolAcademicDiscovery",
+    "operations": 2,
+    "ids": [
+      "MK-149",
+      "MK-150",
+      "MK-151",
+      "MK-167",
+      "MK-168",
+      "MK-169"
+    ],
+    "pages": [
+      62,
+      68
+    ],
+    "groups": [
+      "school"
+    ]
+  },
+  {
+    "tag": "SchoolGuardianInvitations",
+    "operations": 2,
+    "ids": [
+      "MK-110",
+      "MK-111",
+      "MK-112",
+      "MK-113",
+      "MK-114",
+      "MK-115"
+    ],
+    "pages": [
+      49,
+      50
+    ],
+    "groups": [
+      "school"
+    ]
+  },
+  {
+    "tag": "SchoolGuardianRelations",
+    "operations": 6,
+    "ids": [
+      "MK-113",
+      "MK-114",
+      "MK-115"
+    ],
+    "pages": [
+      50
+    ],
+    "groups": [
+      "school"
+    ]
+  },
+  {
+    "tag": "SchoolSentInvitations",
+    "operations": 1,
+    "ids": [
+      "MK-110",
+      "MK-111",
+      "MK-112"
+    ],
+    "pages": [
+      49
+    ],
+    "groups": [
+      "school"
+    ]
+  },
+  {
+    "tag": "Sessions",
+    "operations": 8,
+    "ids": [
+      "MK-122",
+      "MK-123",
+      "MK-124",
+      "MK-125",
+      "MK-126",
+      "MK-127",
+      "MK-128",
+      "MK-129",
+      "MK-130",
+      "MK-443",
+      "MK-444",
+      "MK-445",
+      "MK-456"
+    ],
+    "pages": [
+      53,
+      54,
+      55,
+      160,
+      165
+    ],
+    "groups": [
+      "school",
+      "dark",
+      "desktop"
+    ]
+  },
+  {
+    "tag": "Submissions",
+    "operations": 10,
+    "ids": [
+      "MK-143",
+      "MK-144",
+      "MK-145",
+      "MK-326",
+      "MK-327",
+      "MK-328",
+      "MK-458"
+    ],
+    "pages": [
+      60,
+      121,
+      167
+    ],
+    "groups": [
+      "school",
+      "personal",
+      "desktop"
+    ]
+  },
+  {
+    "tag": "Workspaces",
+    "operations": 4,
+    "ids": [
+      "MK-83",
+      "MK-84",
+      "MK-85"
+    ],
+    "pages": [
+      40
+    ],
+    "groups": [
+      "school"
+    ]
+  }
+]

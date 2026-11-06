@@ -1,0 +1,134 @@
+"use client";
+
+import { useState } from "react";
+import { SourceLink as Link } from "@/features/leads/source-link";
+import { usePathname } from "next/navigation";
+import { ArrowLeft, Menu } from "lucide-react";
+import { Brand } from "@/components/layout/brand";
+import { Button } from "@/components/ui/button";
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import { publicNavigation } from "@/lib/site-navigation";
+import type { CmsImageRef } from "@/features/cms/types";
+
+export function SiteHeader({
+  appUrl = "https://app.makanapp.org",
+  brandName,
+  logo,
+}: {
+  appUrl?: string;
+  brandName?: string;
+  logo?: CmsImageRef;
+}) {
+  const [open, setOpen] = useState(false);
+  const pathname = usePathname();
+  const active = (href: string) =>
+    pathname === href || (href !== "/" && pathname.startsWith(`${href}/`));
+
+  return (
+    <header className="site-header sticky top-0 z-[var(--z-sticky)] border-b border-border bg-card/95 backdrop-blur-md">
+      <div className="site-container flex min-h-22 items-center justify-between gap-4">
+        <Brand name={brandName} logo={logo} />
+        <nav
+          aria-label="ناوبری اصلی"
+          className="hidden items-center gap-1 desktop:flex"
+        >
+          {publicNavigation.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className="navigation-link"
+              aria-current={active(item.href) ? "page" : undefined}
+            >
+              {item.label}
+            </Link>
+          ))}
+        </nav>
+        <div className="flex items-center gap-2">
+          <Button
+            asChild
+            variant="outline"
+            className="hidden min-h-11 rounded-full desktop:inline-flex"
+          >
+            {pathname === "/" ? (
+              <Link href="/demo">درخواست دمو</Link>
+            ) : (
+              <a href={appUrl}>باز کردن اپلیکیشن</a>
+            )}
+          </Button>
+          <Button asChild className="public-header-cta min-h-11">
+            {pathname === "/" ? (
+              <a href={appUrl}>
+                ورود به ماکان <ArrowLeft aria-hidden="true" />
+              </a>
+            ) : (
+              <Link href="/demo">
+                درخواست دمو <ArrowLeft aria-hidden="true" />
+              </Link>
+            )}
+          </Button>
+          <Sheet open={open} onOpenChange={setOpen}>
+            <SheetTrigger asChild>
+              <Button
+                variant="outline"
+                size="icon"
+                className="min-h-11 min-w-11 desktop:hidden"
+                aria-label="باز کردن منو"
+              >
+                <Menu aria-hidden="true" />
+              </Button>
+            </SheetTrigger>
+            <SheetContent
+              side="right"
+              className="public-mobile-menu w-[min(88vw,360px)]"
+              dir="rtl"
+            >
+              <SheetHeader className="border-b border-border pb-6 text-start">
+                <SheetTitle>منوی ماکان</SheetTitle>
+                <SheetDescription>
+                  آشنایی با امکانات، راهکارها و آموزش ماکان
+                </SheetDescription>
+              </SheetHeader>
+              <nav
+                aria-label="ناوبری موبایل"
+                className="flex flex-col gap-2 px-4"
+              >
+                {publicNavigation.map((item) => (
+                  <SheetClose key={item.href} asChild>
+                    <Link
+                      href={item.href}
+                      className="navigation-link text-base"
+                      aria-current={active(item.href) ? "page" : undefined}
+                    >
+                      {item.label}
+                    </Link>
+                  </SheetClose>
+                ))}
+                <SheetClose asChild>
+                  <Button asChild className="mt-4 min-h-11">
+                    <Link href="/demo">درخواست دموی ماکان</Link>
+                  </Button>
+                </SheetClose>
+                <SheetClose asChild>
+                  <Button asChild variant="outline" className="min-h-11">
+                    <a href={appUrl}>باز کردن اپلیکیشن</a>
+                  </Button>
+                </SheetClose>
+              </nav>
+              <p className="mt-auto px-6 pb-6 text-sm text-muted-foreground">
+                ارتباط و مدیریت آموزش، در یک فضای یکپارچه.
+              </p>
+            </SheetContent>
+          </Sheet>
+        </div>
+      </div>
+    </header>
+  );
+}

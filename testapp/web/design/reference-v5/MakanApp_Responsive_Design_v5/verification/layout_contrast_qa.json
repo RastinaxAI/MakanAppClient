@@ -1,0 +1,11 @@
+{
+  "counts": {
+    "pages": 569,
+    "frames": 1611,
+    "texts": 46842,
+    "scrolling_views": 70
+  },
+  "issues": [],
+  "contrast": [],
+  "limits": "Vertical scrolling intentional; text contrast on flat backgrounds only, disabled controls and dimmed modal background excluded; no native or backend testing"
+}

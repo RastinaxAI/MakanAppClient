@@ -1,0 +1,181 @@
+{
+  "checkedAtUtc": "2026-11-05T18:17:23.777697+00:00",
+  "scope": "User-confirmed organization-conversation 404; FE-03 implementation and backend handoff",
+  "status": "Implementation and all scenario outcomes passed; full-run process exit 143 retained as an unexplained harness limitation; clean 11-case follow-up exit 0",
+  "unit": {
+    "passed": 467,
+    "failed": 0,
+    "files": 66,
+    "newCases": 5
+  },
+  "browser": {
+    "newCases": 8,
+    "focused": {
+      "startTime": "2026-11-05T17:55:49.370Z",
+      "duration": 17607.836,
+      "expected": 8,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "initialFocused": {
+      "startTime": "2026-11-05T17:54:11.435Z",
+      "duration": 21431.509000000002,
+      "expected": 6,
+      "skipped": 0,
+      "unexpected": 2,
+      "flaky": 0
+    },
+    "fullStatus": "237 scenario outcomes passed; command exit 143",
+    "automaticRetries": 0,
+    "full": {
+      "startTime": "2026-11-05T17:57:54.357Z",
+      "duration": 796402.227,
+      "expected": 237,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "latestPassed": 237,
+    "latestFailed": 0,
+    "latestSkipped": 0,
+    "rawFullReport": "tmp/messaging-context-20261105/browser-full.json",
+    "interpretation": "All 237 complete-run scenario outcomes passed. The enclosing command returned 143 after the complete JSON report; its cause was not established and is not relabeled exit 0. All 11 cases in the new messaging-workspace and existing workspace/child/attachments files then passed with a separately captured clean command exit 0. No automatic retries.",
+    "fullCommandExit": 143,
+    "fullTopLevelErrors": [],
+    "fullStderrEmpty": true,
+    "followup": {
+      "startTime": "2026-11-05T18:14:50.599Z",
+      "duration": 26753.243000000002,
+      "expected": 11,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "followupCommandExit": 0,
+    "followupReceipt": "tmp/messaging-context-20261105/browser-followup-exit.json"
+  },
+  "checks": {
+    "productionStandaloneBuild": "passed",
+    "typecheck": "passed",
+    "lint": {
+      "status": "passed",
+      "sourceModules": 355,
+      "cycles": 0
+    },
+    "generated": {
+      "status": "passed",
+      "operations": 289,
+      "schemas": 508,
+      "ownerOperations": 0
+    },
+    "format": "passed",
+    "gitDiffCheck": "passed",
+    "rootReadmesMatch": true
+  },
+  "live": {
+    "primaryEvidence": "MESSAGING_404_20261105_LIVE.json",
+    "primaryRequests": 14,
+    "bffEvidence": "MESSAGING_404_20261105_BFF.json",
+    "bffExplicitRequests": 12,
+    "knownContextMetadataBeforeSelection": 0,
+    "metadataAfterCorrectSelection": 200,
+    "activeParticipantAfterCorrectSelection": true,
+    "domainMutations": false,
+    "sessionOperations": "authenticate, explicit own-workspace select, restore, logout",
+    "messageHistoryRead": false,
+    "historyCallsBlockedInUiAudit": 0,
+    "allOwnContextsRestoredAndLogoutsConfirmed": true,
+    "strictReadGuardLatestRunPassed": true
+  },
+  "visual": {
+    "liveScreenshots": 8,
+    "fixtureScreenshots": 8,
+    "widths": [
+      320,
+      390,
+      834,
+      1440
+    ],
+    "themes": [
+      "light",
+      "dark"
+    ],
+    "horizontalOverflow": 0,
+    "mainErrorsInKnownContextPrompt": 0,
+    "gallery": "output/review/messaging-context-20261105/index.html",
+    "reviewedExamples": [
+      "live/light-320.png",
+      "fixture/dark-1440.png"
+    ]
+  },
+  "error": {
+    "path": "/api/v1/conversations/{id}",
+    "method": "GET",
+    "status": 404,
+    "contentType": "application/problem+json",
+    "bodyBytes": 279,
+    "problemKeys": [
+      "type",
+      "title",
+      "status",
+      "detail",
+      "code",
+      "traceId",
+      "correlationId"
+    ],
+    "code": "CONVERSATION_NOT_FOUND",
+    "traceId": "00-1492120aa1733221e8aa06d309617aa1-f69a0fa90fb8a254-00",
+    "correlationId": "1492120aa1733221e8aa06d309617aa1"
+  },
+  "interpretation": "The wrong-context backend 404 is reproduced; the same authorized Teacher/conversation returns 200 after a correct context select. Global summary / explicit context-required error are proposals, not deployed server changes. Genuine unauthorized resources remain denied.",
+  "attemptNotes": [
+    "Initial typecheck/lint caught an overly wide string literal in the new unit fixture; narrowed to the existing role enum.",
+    "Initial focused browser run: 6 passed / 2 failed because the title existed both in the room header and empty-conversation state; assertions were scoped to the actual conversation-header link. Permission assertions were retained.",
+    "A search-preservation assertion was made semantic via URLSearchParams instead of a fragile escaped regular expression."
+  ],
+  "backendChangesApplied": false,
+  "remoteDeployed": false,
+  "preserved": [
+    "private environment files",
+    "Docker session volumes",
+    "separate MakanManagement",
+    "retired Vite archive"
+  ],
+  "sourcePdf": {
+    "file": "MakanApp_Messaging_Diagnostic_FA_20261105.pdf",
+    "sha256": "cc7dad95a23a0065d776bbbf7afa238824939a08680a0116f7fb0a942d0bf295",
+    "unchanged": true
+  },
+  "deployment": {
+    "localApp": "http://127.0.0.1:3145/personal/messages",
+    "remoteDeployed": false,
+    "sourceBundle": "output/delivery/makan-client-source.zip",
+    "bundleReceipt": "output/delivery/PACKAGE_CHECKS.json",
+    "httpChecks": {
+      "/enter": 200,
+      "/preview/reference": 404,
+      "/preview/reference/MK-19": 404
+    }
+  },
+  "pdf": {
+    "file": "output/pdf/MakanApp_Messaging_404_Backend_Handoff_FA_20261105.pdf",
+    "pages": 5,
+    "bytes": 100247,
+    "sha256": "b2091d438bf059f1dc398bb8612f8302b437f29d34fc613549b7d9abbeafa8fb",
+    "allFinalPagesRenderedAndVisuallyReviewed": true,
+    "unchangedReviewedPagePixels": [
+      1,
+      2,
+      5
+    ],
+    "finalReviewedModifiedPages": [
+      3,
+      4
+    ],
+    "logicalCodesTraceIdsAndCounts": "passed",
+    "boundsAndNoOrphanPages": "passed",
+    "secretScan": "passed",
+    "originalPdfUnchanged": true
+  }
+}

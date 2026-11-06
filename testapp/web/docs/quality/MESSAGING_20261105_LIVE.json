@@ -1,0 +1,550 @@
+{
+  "checkedAtUtc": "2026-11-05T16:53:09.468Z",
+  "backend": "http://94.184.32.84:8090",
+  "domainWrites": false,
+  "roles": [
+    {
+      "role": "Student",
+      "requests": [
+        {
+          "path": "/api/v1/auth/otp/challenges",
+          "method": "POST",
+          "status": 202
+        },
+        {
+          "path": "/api/v1/auth/otp/verify",
+          "method": "POST",
+          "status": 200
+        },
+        {
+          "path": "/api/v1/workspaces/current",
+          "method": "GET",
+          "status": 200
+        },
+        {
+          "path": "/api/v1/messaging/privacy",
+          "method": "GET",
+          "status": 200
+        },
+        {
+          "path": "/api/v1/me/messaging-status",
+          "method": "GET",
+          "status": 200
+        },
+        {
+          "path": "/api/v1/messaging/invitations",
+          "method": "GET",
+          "status": 200
+        },
+        {
+          "path": "/api/v1/conversations/account",
+          "method": "GET",
+          "status": 200
+        },
+        {
+          "path": "/api/v1/conversations/{id}",
+          "method": "GET",
+          "status": 200
+        },
+        {
+          "path": "/api/v1/conversations/{id}",
+          "method": "GET",
+          "status": 200
+        },
+        {
+          "path": "/api/v1/conversations/{id}",
+          "method": "GET",
+          "status": 200
+        },
+        {
+          "path": "/api/v1/workspaces/current",
+          "method": "GET",
+          "status": 200
+        },
+        {
+          "path": "/api/v1/auth/logout",
+          "method": "POST",
+          "status": 204
+        }
+      ],
+      "managed": [
+        {
+          "conversation": "23fc89903004",
+          "type": "Channel",
+          "scope": "Personal",
+          "titleMatchesUserScreenshot": true,
+          "activeMembers": 1,
+          "ownerOnly": true,
+          "initialTargets": [
+            {
+              "target": "d7db72f35321",
+              "outcome": "InvitationPending",
+              "hasInvitation": true,
+              "expired": false
+            }
+          ]
+        },
+        {
+          "conversation": "40bab8c1ba94",
+          "type": "Group",
+          "scope": "Personal",
+          "titleMatchesUserScreenshot": false,
+          "activeMembers": 1,
+          "ownerOnly": true,
+          "initialTargets": [
+            {
+              "target": "d7db72f35321",
+              "outcome": "InvitationPending",
+              "hasInvitation": true,
+              "expired": false
+            }
+          ]
+        },
+        {
+          "conversation": "ed7df7a7be72",
+          "type": "Group",
+          "scope": "Personal",
+          "titleMatchesUserScreenshot": false,
+          "activeMembers": 1,
+          "ownerOnly": true,
+          "initialTargets": []
+        }
+      ],
+      "privacy": {
+        "directMessagesAudience": "Everyone",
+        "phoneNumberVisibilityAudience": "Everyone",
+        "phoneNumberDiscoveryAudience": "Everyone",
+        "groupInvitesAudience": "Everyone",
+        "onlineAudience": "Everyone",
+        "lastSeenAudience": "Everyone",
+        "isExplicit": true
+      },
+      "allowedActions": [
+        "ReadExistingConversations",
+        "DiscoverUsers",
+        "CreatePersonalGroup",
+        "CreatePersonalChannel",
+        "CreateDirect"
+      ],
+      "invitations": {
+        "status": 200,
+        "count": 0,
+        "pending": 0,
+        "incomingPending": 0
+      },
+      "inboxComplete": true,
+      "inbox": {
+        "loaded": 4,
+        "types": {
+          "Direct": 1,
+          "Group": 2,
+          "Channel": 1,
+          "Saved": 0
+        }
+      },
+      "contextPreserved": true,
+      "logoutConfirmed": true
+    },
+    {
+      "role": "Teacher",
+      "requests": [
+        {
+          "path": "/api/v1/auth/otp/challenges",
+          "method": "POST",
+          "status": 202
+        },
+        {
+          "path": "/api/v1/auth/otp/verify",
+          "method": "POST",
+          "status": 200
+        },
+        {
+          "path": "/api/v1/workspaces/current",
+          "method": "GET",
+          "status": 200
+        },
+        {
+          "path": "/api/v1/messaging/privacy",
+          "method": "GET",
+          "status": 200
+        },
+        {
+          "path": "/api/v1/me/messaging-status",
+          "method": "GET",
+          "status": 200
+        },
+        {
+          "path": "/api/v1/messaging/invitations",
+          "method": "GET",
+          "status": 200
+        },
+        {
+          "path": "/api/v1/conversations/account",
+          "method": "GET",
+          "status": 200
+        },
+        {
+          "path": "/api/v1/conversations/{id}",
+          "method": "GET",
+          "status": 200
+        },
+        {
+          "path": "/api/v1/conversations/{id}",
+          "method": "GET",
+          "status": 404,
+          "code": "CONVERSATION_NOT_FOUND"
+        },
+        {
+          "path": "/api/v1/workspaces/current",
+          "method": "GET",
+          "status": 200
+        },
+        {
+          "path": "/api/v1/auth/logout",
+          "method": "POST",
+          "status": 204
+        }
+      ],
+      "managed": [
+        {
+          "conversation": "c737ba508347",
+          "type": "Group",
+          "scope": "Personal",
+          "titleMatchesUserScreenshot": false,
+          "activeMembers": 1,
+          "ownerOnly": true,
+          "initialTargets": []
+        },
+        {
+          "conversation": "aee1cd4cbfb7",
+          "type": "Group",
+          "detailStatus": 404
+        }
+      ],
+      "privacy": {
+        "directMessagesAudience": "Everyone",
+        "phoneNumberVisibilityAudience": "Everyone",
+        "phoneNumberDiscoveryAudience": "Everyone",
+        "groupInvitesAudience": "Everyone",
+        "onlineAudience": "Everyone",
+        "lastSeenAudience": "Everyone",
+        "isExplicit": true
+      },
+      "allowedActions": [
+        "ReadExistingConversations",
+        "DiscoverUsers",
+        "CreatePersonalGroup",
+        "CreatePersonalChannel",
+        "CreateDirect"
+      ],
+      "invitations": {
+        "status": 200,
+        "count": 2,
+        "pending": 2,
+        "incomingPending": 2
+      },
+      "inboxComplete": true,
+      "inbox": {
+        "loaded": 3,
+        "types": {
+          "Direct": 1,
+          "Group": 2,
+          "Channel": 0,
+          "Saved": 0
+        }
+      },
+      "contextPreserved": true,
+      "logoutConfirmed": true
+    },
+    {
+      "role": "Parent",
+      "requests": [
+        {
+          "path": "/api/v1/auth/otp/challenges",
+          "method": "POST",
+          "status": 202
+        },
+        {
+          "path": "/api/v1/auth/otp/verify",
+          "method": "POST",
+          "status": 200
+        },
+        {
+          "path": "/api/v1/workspaces/current",
+          "method": "GET",
+          "status": 200
+        },
+        {
+          "path": "/api/v1/messaging/privacy",
+          "method": "GET",
+          "status": 200
+        },
+        {
+          "path": "/api/v1/me/messaging-status",
+          "method": "GET",
+          "status": 200
+        },
+        {
+          "path": "/api/v1/messaging/invitations",
+          "method": "GET",
+          "status": 200
+        },
+        {
+          "path": "/api/v1/conversations/account",
+          "method": "GET",
+          "status": 200
+        },
+        {
+          "path": "/api/v1/workspaces/current",
+          "method": "GET",
+          "status": 200
+        },
+        {
+          "path": "/api/v1/auth/logout",
+          "method": "POST",
+          "status": 204
+        }
+      ],
+      "managed": [],
+      "privacy": {
+        "directMessagesAudience": "Everyone",
+        "phoneNumberVisibilityAudience": "Everyone",
+        "phoneNumberDiscoveryAudience": "Everyone",
+        "groupInvitesAudience": "Everyone",
+        "onlineAudience": "Everyone",
+        "lastSeenAudience": "Everyone",
+        "isExplicit": true
+      },
+      "allowedActions": [
+        "ReadExistingConversations",
+        "DiscoverUsers",
+        "CreatePersonalGroup",
+        "CreatePersonalChannel",
+        "CreateDirect"
+      ],
+      "invitations": {
+        "status": 200,
+        "count": 0,
+        "pending": 0,
+        "incomingPending": 0
+      },
+      "inboxComplete": true,
+      "inbox": {
+        "loaded": 0,
+        "types": {
+          "Direct": 0,
+          "Group": 0,
+          "Channel": 0,
+          "Saved": 0
+        }
+      },
+      "contextPreserved": true,
+      "logoutConfirmed": true
+    },
+    {
+      "role": "Manager",
+      "requests": [
+        {
+          "path": "/api/v1/auth/otp/challenges",
+          "method": "POST",
+          "status": 202
+        },
+        {
+          "path": "/api/v1/auth/otp/verify",
+          "method": "POST",
+          "status": 200
+        },
+        {
+          "path": "/api/v1/workspaces/current",
+          "method": "GET",
+          "status": 200
+        },
+        {
+          "path": "/api/v1/messaging/privacy",
+          "method": "GET",
+          "status": 200
+        },
+        {
+          "path": "/api/v1/me/messaging-status",
+          "method": "GET",
+          "status": 200
+        },
+        {
+          "path": "/api/v1/messaging/invitations",
+          "method": "GET",
+          "status": 200
+        },
+        {
+          "path": "/api/v1/conversations/account",
+          "method": "GET",
+          "status": 200
+        },
+        {
+          "path": "/api/v1/conversations/{id}",
+          "method": "GET",
+          "status": 200
+        },
+        {
+          "path": "/api/v1/workspaces/current",
+          "method": "GET",
+          "status": 200
+        },
+        {
+          "path": "/api/v1/auth/logout",
+          "method": "POST",
+          "status": 204
+        }
+      ],
+      "managed": [
+        {
+          "conversation": "393be87efac3",
+          "type": "Group",
+          "scope": "Personal",
+          "titleMatchesUserScreenshot": false,
+          "activeMembers": 1,
+          "ownerOnly": true,
+          "initialTargets": []
+        }
+      ],
+      "privacy": {
+        "directMessagesAudience": "Everyone",
+        "phoneNumberVisibilityAudience": "Nobody",
+        "phoneNumberDiscoveryAudience": "Nobody",
+        "groupInvitesAudience": "Contacts",
+        "onlineAudience": "Contacts",
+        "lastSeenAudience": "Contacts",
+        "isExplicit": false
+      },
+      "allowedActions": [
+        "ReadExistingConversations",
+        "DiscoverUsers",
+        "CreatePersonalGroup",
+        "CreatePersonalChannel",
+        "CreateDirect"
+      ],
+      "invitations": {
+        "status": 200,
+        "count": 0,
+        "pending": 0,
+        "incomingPending": 0
+      },
+      "inboxComplete": true,
+      "inbox": {
+        "loaded": 1,
+        "types": {
+          "Direct": 0,
+          "Group": 1,
+          "Channel": 0,
+          "Saved": 0
+        }
+      },
+      "contextPreserved": true,
+      "logoutConfirmed": true
+    },
+    {
+      "role": "Personal",
+      "requests": [
+        {
+          "path": "/api/v1/auth/otp/challenges",
+          "method": "POST",
+          "status": 202
+        },
+        {
+          "path": "/api/v1/auth/otp/verify",
+          "method": "POST",
+          "status": 200
+        },
+        {
+          "path": "/api/v1/workspaces/current",
+          "method": "GET",
+          "status": 200
+        },
+        {
+          "path": "/api/v1/messaging/privacy",
+          "method": "GET",
+          "status": 200
+        },
+        {
+          "path": "/api/v1/me/messaging-status",
+          "method": "GET",
+          "status": 200
+        },
+        {
+          "path": "/api/v1/messaging/invitations",
+          "method": "GET",
+          "status": 200
+        },
+        {
+          "path": "/api/v1/conversations/account",
+          "method": "GET",
+          "status": 200
+        },
+        {
+          "path": "/api/v1/workspaces/current",
+          "method": "GET",
+          "status": 200
+        },
+        {
+          "path": "/api/v1/auth/logout",
+          "method": "POST",
+          "status": 204
+        }
+      ],
+      "managed": [],
+      "privacy": {
+        "directMessagesAudience": "Everyone",
+        "phoneNumberVisibilityAudience": "Nobody",
+        "phoneNumberDiscoveryAudience": "Nobody",
+        "groupInvitesAudience": "Contacts",
+        "onlineAudience": "Contacts",
+        "lastSeenAudience": "Contacts",
+        "isExplicit": false
+      },
+      "allowedActions": [
+        "ReadExistingConversations"
+      ],
+      "invitations": {
+        "status": 200,
+        "count": 0,
+        "pending": 0,
+        "incomingPending": 0
+      },
+      "inboxComplete": true,
+      "inbox": {
+        "loaded": 0,
+        "types": {
+          "Direct": 0,
+          "Group": 0,
+          "Channel": 0,
+          "Saved": 0
+        }
+      },
+      "contextPreserved": true,
+      "logoutConfirmed": true
+    }
+  ],
+  "comparisons": [
+    {
+      "source": "Student",
+      "target": "Teacher",
+      "conversation": "23fc89903004",
+      "type": "Channel",
+      "participantStatus": null,
+      "receipt": "InvitationPending",
+      "recipientInvitation": "Pending",
+      "recipientInboxContains": false,
+      "recipientInboxComplete": true
+    },
+    {
+      "source": "Student",
+      "target": "Teacher",
+      "conversation": "40bab8c1ba94",
+      "type": "Group",
+      "participantStatus": null,
+      "receipt": "InvitationPending",
+      "recipientInvitation": "Pending",
+      "recipientInboxContains": false,
+      "recipientInboxComplete": true
+    }
+  ]
+}

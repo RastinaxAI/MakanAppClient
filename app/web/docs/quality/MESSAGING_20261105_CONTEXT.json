@@ -1,0 +1,128 @@
+{
+  "checkedAtUtc": "2026-11-05T17:15:54.893Z",
+  "role": "Teacher",
+  "domainWrites": false,
+  "requests": [
+    {
+      "path": "/api/client/auth/challenge",
+      "status": 202
+    },
+    {
+      "path": "/api/client/auth/verify",
+      "status": 200
+    },
+    {
+      "path": "/api/client/session",
+      "status": 200
+    },
+    {
+      "path": "/api/client/backend/api/v1/workspaces/snapshot",
+      "status": 200
+    },
+    {
+      "path": "/api/client/backend/api/v1/conversations/account",
+      "status": 200
+    },
+    {
+      "path": "/api/client/backend/api/v1/conversations/{id}",
+      "status": 200
+    },
+    {
+      "path": "/api/client/backend/api/v1/conversations/{id}/summary",
+      "status": 200
+    },
+    {
+      "path": "/api/client/backend/api/v1/conversations/{id}",
+      "status": 404,
+      "code": "CONVERSATION_NOT_FOUND"
+    },
+    {
+      "path": "/api/client/backend/api/v1/conversations/{id}/summary",
+      "status": 404,
+      "code": "CONVERSATION_NOT_FOUND"
+    },
+    {
+      "path": "/api/client/backend/api/v1/workspaces/select",
+      "status": 200
+    },
+    {
+      "path": "/api/client/session",
+      "status": 200
+    },
+    {
+      "path": "/api/client/backend/api/v1/conversations/{id}",
+      "status": 200
+    },
+    {
+      "path": "/api/client/backend/api/v1/conversations/{id}/summary",
+      "status": 200
+    },
+    {
+      "path": "/api/client/backend/api/v1/conversations/{id}",
+      "status": 200
+    },
+    {
+      "path": "/api/client/backend/api/v1/conversations/{id}/summary",
+      "status": 200
+    },
+    {
+      "path": "/api/client/backend/api/v1/workspaces/select",
+      "status": 200
+    },
+    {
+      "path": "/api/client/session",
+      "status": 200
+    },
+    {
+      "path": "/api/client/auth/logout",
+      "status": 204
+    }
+  ],
+  "comparisons": [
+    {
+      "stage": "initial",
+      "workspaceType": "Personal",
+      "conversation": "c737ba508347",
+      "scope": "Personal",
+      "type": "Group",
+      "isOfficial": false,
+      "officialType": null,
+      "detailStatus": 200,
+      "summaryStatus": 200
+    },
+    {
+      "stage": "initial",
+      "workspaceType": "Personal",
+      "conversation": "aee1cd4cbfb7",
+      "scope": "Organization",
+      "type": "Group",
+      "isOfficial": false,
+      "officialType": null,
+      "detailStatus": 404,
+      "summaryStatus": 404
+    },
+    {
+      "stage": "organization",
+      "workspaceType": "Organization",
+      "conversation": "c737ba508347",
+      "scope": "Personal",
+      "type": "Group",
+      "isOfficial": false,
+      "officialType": null,
+      "detailStatus": 200,
+      "summaryStatus": 200
+    },
+    {
+      "stage": "organization",
+      "workspaceType": "Organization",
+      "conversation": "aee1cd4cbfb7",
+      "scope": "Organization",
+      "type": "Group",
+      "isOfficial": false,
+      "officialType": null,
+      "detailStatus": 200,
+      "summaryStatus": 200
+    }
+  ],
+  "contextRestored": true
+}

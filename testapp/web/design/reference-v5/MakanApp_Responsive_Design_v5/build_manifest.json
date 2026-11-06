@@ -1,0 +1,229 @@
+{
+  "pages": 569,
+  "scenarios": 528,
+  "source_scenarios": 467,
+  "new_scenarios": 61,
+  "main_device_frames": 1584,
+  "lab_frames": 24,
+  "intro_pages": 13,
+  "groups": [
+    {
+      "group": "school",
+      "title": "آموزشگاه",
+      "first": 14,
+      "last": 127,
+      "count": 114
+    },
+    {
+      "group": "messaging",
+      "title": "پیام‌رسان",
+      "first": 128,
+      "last": 247,
+      "count": 120
+    },
+    {
+      "group": "personal",
+      "title": "فوق‌برنامه مستقل",
+      "first": 248,
+      "last": 373,
+      "count": 126
+    },
+    {
+      "group": "account",
+      "title": "حساب، دستیار و خدمات",
+      "first": 374,
+      "last": 459,
+      "count": 86
+    },
+    {
+      "group": "platform",
+      "title": "مدیریت پلتفرم",
+      "first": 460,
+      "last": 497,
+      "count": 38
+    },
+    {
+      "group": "states",
+      "title": "حالت‌های مشترک",
+      "first": 498,
+      "last": 521,
+      "count": 24
+    },
+    {
+      "group": "responsive",
+      "title": "رفتار بین اندازه‌ها",
+      "first": 522,
+      "last": 529,
+      "count": 8
+    },
+    {
+      "group": "components",
+      "title": "جزئیات اجزا",
+      "first": 530,
+      "last": 541,
+      "count": 12
+    }
+  ],
+  "batches": [
+    {
+      "filename": "batch-001.html",
+      "first": 1,
+      "last": 18
+    },
+    {
+      "filename": "batch-002.html",
+      "first": 19,
+      "last": 36
+    },
+    {
+      "filename": "batch-003.html",
+      "first": 37,
+      "last": 54
+    },
+    {
+      "filename": "batch-004.html",
+      "first": 55,
+      "last": 72
+    },
+    {
+      "filename": "batch-005.html",
+      "first": 73,
+      "last": 90
+    },
+    {
+      "filename": "batch-006.html",
+      "first": 91,
+      "last": 108
+    },
+    {
+      "filename": "batch-007.html",
+      "first": 109,
+      "last": 126
+    },
+    {
+      "filename": "batch-008.html",
+      "first": 127,
+      "last": 144
+    },
+    {
+      "filename": "batch-009.html",
+      "first": 145,
+      "last": 162
+    },
+    {
+      "filename": "batch-010.html",
+      "first": 163,
+      "last": 180
+    },
+    {
+      "filename": "batch-011.html",
+      "first": 181,
+      "last": 198
+    },
+    {
+      "filename": "batch-012.html",
+      "first": 199,
+      "last": 216
+    },
+    {
+      "filename": "batch-013.html",
+      "first": 217,
+      "last": 234
+    },
+    {
+      "filename": "batch-014.html",
+      "first": 235,
+      "last": 252
+    },
+    {
+      "filename": "batch-015.html",
+      "first": 253,
+      "last": 270
+    },
+    {
+      "filename": "batch-016.html",
+      "first": 271,
+      "last": 288
+    },
+    {
+      "filename": "batch-017.html",
+      "first": 289,
+      "last": 306
+    },
+    {
+      "filename": "batch-018.html",
+      "first": 307,
+      "last": 324
+    },
+    {
+      "filename": "batch-019.html",
+      "first": 325,
+      "last": 342
+    },
+    {
+      "filename": "batch-020.html",
+      "first": 343,
+      "last": 360
+    },
+    {
+      "filename": "batch-021.html",
+      "first": 361,
+      "last": 378
+    },
+    {
+      "filename": "batch-022.html",
+      "first": 379,
+      "last": 396
+    },
+    {
+      "filename": "batch-023.html",
+      "first": 397,
+      "last": 414
+    },
+    {
+      "filename": "batch-024.html",
+      "first": 415,
+      "last": 432
+    },
+    {
+      "filename": "batch-025.html",
+      "first": 433,
+      "last": 450
+    },
+    {
+      "filename": "batch-026.html",
+      "first": 451,
+      "last": 468
+    },
+    {
+      "filename": "batch-027.html",
+      "first": 469,
+      "last": 486
+    },
+    {
+      "filename": "batch-028.html",
+      "first": 487,
+      "last": 504
+    },
+    {
+      "filename": "batch-029.html",
+      "first": 505,
+      "last": 522
+    },
+    {
+      "filename": "batch-030.html",
+      "first": 523,
+      "last": 540
+    },
+    {
+      "filename": "batch-031.html",
+      "first": 541,
+      "last": 558
+    },
+    {
+      "filename": "batch-032.html",
+      "first": 559,
+      "last": 569
+    }
+  ]
+}

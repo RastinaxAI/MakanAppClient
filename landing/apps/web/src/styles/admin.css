@@ -1,0 +1,10 @@
+@import "./crm.css";
+@import "./builder-studio.css";
+@import "./builder-library.css";
+@import "./content-manager.css";
+@import "./admin-pages.css";
+@import "./admin-unified.css";
+@import "./admin-login.css";
+
+/* Reuse Tailwind utilities and site tokens without emitting the public styles. */
+@reference "./globals.css";

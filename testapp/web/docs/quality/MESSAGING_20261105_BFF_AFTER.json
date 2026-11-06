@@ -1,0 +1,272 @@
+{
+  "checkedAtUtc": "2026-11-05T17:17:12.756Z",
+  "origin": "http://127.0.0.1:3145",
+  "backend": "http://94.184.32.84:8090",
+  "domainWrites": false,
+  "roles": [
+    {
+      "role": "Teacher",
+      "requests": [
+        {
+          "path": "/api/client/auth/challenge",
+          "status": 202
+        },
+        {
+          "path": "/api/client/auth/verify",
+          "status": 200
+        },
+        {
+          "path": "/api/client/session",
+          "status": 200
+        },
+        {
+          "path": "/api/client/backend/api/v1/messaging/privacy",
+          "status": 200
+        },
+        {
+          "path": "/api/client/backend/api/v1/messaging/invitations",
+          "status": 200
+        },
+        {
+          "path": "/api/client/backend/api/v1/messaging/privacy",
+          "status": 200
+        },
+        {
+          "path": "/api/client/backend/api/v1/messaging/invitations",
+          "status": 200
+        },
+        {
+          "path": "/api/client/session",
+          "status": 200
+        },
+        {
+          "path": "/api/client/auth/logout",
+          "status": 204
+        }
+      ],
+      "pageErrors": 0,
+      "blockedDomainWrites": 0,
+      "incomingPending": 2,
+      "phase": "Teacher/dark/1440/invitations",
+      "globalAlertHosts": [
+        "NEXT-ROUTE-ANNOUNCER"
+      ],
+      "visual": {
+        "theme": "dark",
+        "actualTheme": "dark",
+        "overflow": false,
+        "alerts": 0
+      },
+      "privacyUnchanged": true,
+      "invitationsUnchanged": true,
+      "contextPreserved": true,
+      "passed": true,
+      "logoutConfirmed": true
+    },
+    {
+      "role": "Manager",
+      "requests": [
+        {
+          "path": "/api/client/auth/challenge",
+          "status": 202
+        },
+        {
+          "path": "/api/client/auth/verify",
+          "status": 200
+        },
+        {
+          "path": "/api/client/session",
+          "status": 200
+        },
+        {
+          "path": "/api/client/backend/api/v1/messaging/privacy",
+          "status": 200
+        },
+        {
+          "path": "/api/client/backend/api/v1/messaging/invitations",
+          "status": 200
+        },
+        {
+          "path": "/api/client/backend/api/v1/messaging/privacy",
+          "status": 200
+        },
+        {
+          "path": "/api/client/backend/api/v1/messaging/invitations",
+          "status": 200
+        },
+        {
+          "path": "/api/client/session",
+          "status": 200
+        },
+        {
+          "path": "/api/client/auth/logout",
+          "status": 204
+        }
+      ],
+      "pageErrors": 0,
+      "blockedDomainWrites": 0,
+      "incomingPending": 0,
+      "phase": "Manager/dark/1440/privacy",
+      "globalAlertHosts": [
+        "NEXT-ROUTE-ANNOUNCER"
+      ],
+      "visual": {
+        "theme": "dark",
+        "actualTheme": "dark",
+        "overflow": false,
+        "alerts": 0
+      },
+      "privacyUnchanged": true,
+      "invitationsUnchanged": true,
+      "contextPreserved": true,
+      "passed": true,
+      "logoutConfirmed": true
+    }
+  ],
+  "screenshots": [
+    {
+      "role": "Teacher",
+      "theme": "light",
+      "actualTheme": "light",
+      "width": 320,
+      "overflow": false,
+      "alerts": 0,
+      "file": "teacher-320-light.png"
+    },
+    {
+      "role": "Teacher",
+      "theme": "light",
+      "actualTheme": "light",
+      "width": 390,
+      "overflow": false,
+      "alerts": 0,
+      "file": "teacher-390-light.png"
+    },
+    {
+      "role": "Teacher",
+      "theme": "light",
+      "actualTheme": "light",
+      "width": 834,
+      "overflow": false,
+      "alerts": 0,
+      "file": "teacher-834-light.png"
+    },
+    {
+      "role": "Teacher",
+      "theme": "light",
+      "actualTheme": "light",
+      "width": 1440,
+      "overflow": false,
+      "alerts": 0,
+      "file": "teacher-1440-light.png"
+    },
+    {
+      "role": "Teacher",
+      "theme": "dark",
+      "actualTheme": "dark",
+      "width": 320,
+      "overflow": false,
+      "alerts": 0,
+      "file": "teacher-320-dark.png"
+    },
+    {
+      "role": "Teacher",
+      "theme": "dark",
+      "actualTheme": "dark",
+      "width": 390,
+      "overflow": false,
+      "alerts": 0,
+      "file": "teacher-390-dark.png"
+    },
+    {
+      "role": "Teacher",
+      "theme": "dark",
+      "actualTheme": "dark",
+      "width": 834,
+      "overflow": false,
+      "alerts": 0,
+      "file": "teacher-834-dark.png"
+    },
+    {
+      "role": "Teacher",
+      "theme": "dark",
+      "actualTheme": "dark",
+      "width": 1440,
+      "overflow": false,
+      "alerts": 0,
+      "file": "teacher-1440-dark.png"
+    },
+    {
+      "role": "Manager",
+      "theme": "light",
+      "actualTheme": "light",
+      "width": 320,
+      "overflow": false,
+      "alerts": 0,
+      "file": "manager-320-light.png"
+    },
+    {
+      "role": "Manager",
+      "theme": "light",
+      "actualTheme": "light",
+      "width": 390,
+      "overflow": false,
+      "alerts": 0,
+      "file": "manager-390-light.png"
+    },
+    {
+      "role": "Manager",
+      "theme": "light",
+      "actualTheme": "light",
+      "width": 834,
+      "overflow": false,
+      "alerts": 0,
+      "file": "manager-834-light.png"
+    },
+    {
+      "role": "Manager",
+      "theme": "light",
+      "actualTheme": "light",
+      "width": 1440,
+      "overflow": false,
+      "alerts": 0,
+      "file": "manager-1440-light.png"
+    },
+    {
+      "role": "Manager",
+      "theme": "dark",
+      "actualTheme": "dark",
+      "width": 320,
+      "overflow": false,
+      "alerts": 0,
+      "file": "manager-320-dark.png"
+    },
+    {
+      "role": "Manager",
+      "theme": "dark",
+      "actualTheme": "dark",
+      "width": 390,
+      "overflow": false,
+      "alerts": 0,
+      "file": "manager-390-dark.png"
+    },
+    {
+      "role": "Manager",
+      "theme": "dark",
+      "actualTheme": "dark",
+      "width": 834,
+      "overflow": false,
+      "alerts": 0,
+      "file": "manager-834-dark.png"
+    },
+    {
+      "role": "Manager",
+      "theme": "dark",
+      "actualTheme": "dark",
+      "width": 1440,
+      "overflow": false,
+      "alerts": 0,
+      "file": "manager-1440-dark.png"
+    }
+  ]
+}

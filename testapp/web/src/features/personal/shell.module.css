@@ -1,0 +1,389 @@
+/* Product shell replaced by the V5 composition. Business state lives in shell.tsx. */
+.shell {
+  height: 100dvh;
+  min-height: 0;
+  overflow: hidden;
+  --personal-nav: 208px;
+  --personal-header: 94px;
+  --personal-bottom: 0px;
+  background: var(--bg);
+  color: var(--text);
+}
+.sidebar {
+  position: fixed;
+  inset-block: 0;
+  inset-inline-start: 0;
+  width: var(--personal-nav);
+  padding: 22px 14px;
+  background: var(--surface);
+  border-inline-end: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  z-index: 20;
+  overflow-y: auto;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 14px 15px;
+  min-height: 56px;
+  border: 0;
+  background: none;
+  color: var(--text);
+  font-size: 27px;
+  font-weight: 800;
+  text-align: start;
+}
+.workspaceSwitch {
+  margin: 0 2px 15px;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 11px;
+  font: inherit;
+  background: var(--surface);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-align: start;
+  min-height: 64px;
+}
+.workspaceSwitch > span {
+  flex: 1;
+  min-width: 0;
+}
+.workspaceSwitch strong {
+  display: block;
+  font-size: 13px;
+}
+.workspaceSwitch small {
+  display: block;
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 4px;
+}
+.sidebarBottom {
+  margin-top: auto;
+}
+.sidebarSetting {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  min-height: 48px;
+  padding: 10px 12px;
+  font-size: 14px;
+  border-radius: 12px;
+}
+.sidebarSetting:hover {
+  background: var(--soft);
+}
+.account {
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  border-top: 1px solid var(--border);
+  margin-top: 12px;
+}
+.account > span {
+  min-width: 0;
+}
+.account strong {
+  display: block;
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+.account small {
+  display: block;
+  font-size: 11px;
+  color: var(--muted);
+}
+.avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--soft);
+  color: var(--primary);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  flex: none;
+}
+.workspace {
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  margin-inline-start: var(--personal-nav);
+  min-width: 0;
+}
+.header {
+  min-height: var(--personal-header);
+  flex: none;
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  padding: 16px 26px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  z-index: 15;
+}
+.context,
+.headerEnd :global(.button) {
+  display: grid;
+  place-items: center;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--text);
+}
+.context svg {
+  width: 23px;
+  height: 23px;
+}
+.headerTitle {
+  flex: 1;
+  min-width: 0;
+}
+.pageTitle {
+  font-size: 24px;
+  line-height: 1.7;
+  font-weight: 750;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.headerSubtitle {
+  font-size: 12px;
+  color: var(--muted);
+  margin: 0;
+  line-height: 1.7;
+}
+.titleSwitch {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: start;
+}
+.headerEnd {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex: none;
+}
+.headerEnd .pageAction :global(.button) {
+  display: inline-flex;
+  padding: 10px 18px;
+  min-height: 48px;
+  background: var(--primary-button);
+  color: var(--on-primary);
+  border-radius: 12px;
+}
+.pageAction svg {
+  width: 18px;
+  height: 18px;
+}
+.main {
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
+  width: 100%;
+  padding: 24px 26px;
+  max-width: 1588px;
+  margin-inline: auto;
+  overflow: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+}
+.mobileNav {
+  display: none;
+}
+.messageMain,
+.assistantMain {
+  display: flex;
+  padding: 0;
+  max-width: none;
+  overflow: hidden;
+}
+.messagingPageMain {
+  padding: 0;
+  max-width: none;
+}
+.shell[data-page-heading-active] [data-page-heading] {
+  display: none;
+}
+.shell:has([data-v5-scene]) .header,
+.shell[data-messaging] .header,
+.shell:has([data-exam-room]) .header {
+  display: none;
+}
+.shell:has([data-v5-scene]) .main {
+  padding: 0;
+  max-width: none;
+  display: flex;
+  overflow: hidden;
+}
+.main > div:has(> [data-v5-scene]) {
+  display: contents;
+}
+.shell:has([data-v5-deep]) .mobileNav,
+.shell:has([data-exam-room]) .mobileNav {
+  display: none;
+}
+.spaceList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.spaceList > button {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 16px;
+  min-height: 64px;
+  text-align: start;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+}
+.spaceList > button > span {
+  flex: 1;
+}
+.spaceList small {
+  display: block;
+  font-size: 12px;
+  color: var(--muted);
+}
+@media (min-width: 768px) and (max-width: 1199px) {
+  .shell {
+    --personal-nav: 76px;
+    --personal-header: 88px;
+  }
+  .sidebar {
+    padding: 20px 8px;
+    gap: 13px;
+  }
+  .brand {
+    padding: 5px 12px 15px;
+    justify-content: center;
+  }
+  .brand :global(span),
+  .workspaceSwitch,
+  .account,
+  .sidebarSetting span {
+    display: none;
+  }
+  .sidebarSetting {
+    justify-content: center;
+    padding: 12px;
+  }
+  .header {
+    padding: 16px 22px;
+  }
+  .pageTitle {
+    font-size: 23px;
+  }
+  .main {
+    padding: 24px;
+  }
+  .headerEnd .pageAction {
+    display: none;
+  }
+}
+@media (max-width: 767px) {
+  .shell {
+    --personal-nav: 0px;
+    --personal-header: 90px;
+    --personal-bottom: calc(74px + env(safe-area-inset-bottom));
+  }
+  .sidebar {
+    display: none;
+  }
+  .workspace {
+    margin: 0;
+  }
+  .header {
+    padding: calc(14px + env(safe-area-inset-top)) 16px 14px;
+    gap: 8px;
+  }
+  .pageTitle {
+    font-size: 21px;
+  }
+  .headerTitle :global(.rx-crumb) {
+    display: none;
+  }
+  .headerSubtitle {
+    font-size: 11px;
+  }
+  .headerEnd {
+    gap: 4px;
+  }
+  .pageAction {
+    display: none;
+  }
+  .main {
+    padding: 18px 16px calc(var(--personal-bottom) + 18px);
+  }
+  .messageMain,
+  .assistantMain {
+    padding: 0 0 var(--personal-bottom);
+  }
+  .mobileNav {
+    display: block;
+    position: fixed;
+    bottom: 0;
+    inset-inline: 0;
+    z-index: 25;
+    height: var(--personal-bottom);
+  }
+  .shell[data-focused],
+  .shell:has([data-v5-deep]) {
+    --personal-bottom: 0px;
+  }
+  .shell[data-focused] .mobileNav {
+    display: none;
+  }
+  .shell:has([data-v5-scene]) .main {
+    padding-bottom: var(--personal-bottom);
+  }
+  .messagingPageMain {
+    padding: 0 0 var(--personal-bottom);
+  }
+}
+@media (max-width: 359px) {
+  .header {
+    padding-inline: 12px;
+  }
+  .main {
+    padding-inline: 12px;
+  }
+  .pageTitle {
+    font-size: 19px;
+  }
+}
+.shell :global(.v5-shell-actions) {
+  display: none;
+  flex: none;
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+  gap: 9px;
+  padding: 16px 22px;
+}
+.shell:has([data-v5-scene]) :global(.v5-shell-actions) {
+  display: none;
+}
+@media (max-width: 1199px) {
+  .shell :global(.v5-shell-actions) {
+    display: flex;
+    margin-bottom: var(--personal-bottom);
+  }
+  .shell :global(.v5-shell-actions) :global(.button) {
+    flex: 1;
+  }
+  .shell:has(> .workspace > :global(.v5-shell-actions)) .main {
+    padding-bottom: 24px;
+  }
+}

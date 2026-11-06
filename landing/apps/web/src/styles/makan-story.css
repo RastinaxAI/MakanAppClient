@@ -1,0 +1,1130 @@
+/* The product story and remembrance share the existing Makan blue identity. */
+.public-site .makan-editorial-kicker {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: #0d5ecc;
+  font-size: 0.8rem;
+  font-weight: 650;
+}
+.public-site .makan-editorial-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.25rem;
+  min-height: 44px;
+  padding-block: 0.5rem;
+  color: #0d5ecc;
+  font-size: 0.9rem;
+  font-weight: 650;
+  text-decoration: underline;
+  text-decoration-color: #a8c9f5;
+  text-underline-offset: 0.45rem;
+  transition: color 160ms;
+}
+.public-site .makan-editorial-link:hover {
+  color: #073f8e;
+}
+.public-site .makan-editorial-link svg {
+  flex-shrink: 0;
+}
+.public-site .site-header .navigation-link {
+  padding-inline: 0.65rem;
+}
+.public-site .makan-origin-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  min-height: 48px;
+  margin-top: 1.65rem;
+  color: #50617a;
+  font-size: 0.75rem;
+}
+.public-site .makan-origin-link strong {
+  margin-inline-start: 0.65rem;
+  color: #215848;
+  font-weight: 650;
+}
+.public-site .makan-origin-symbol {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid #d3e3da;
+  background: #edf5f0;
+  border-radius: 50%;
+  color: #215848;
+}
+.public-site .makan-origin-link:hover strong {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* A five-destination map rather than an invented screenshot of the application. */
+.public-site .makan-destination-map {
+  min-height: 0;
+  height: auto;
+  gap: 0;
+  padding: 1.6rem;
+  border: 1px solid #dce6f6;
+  background: #fff;
+  color: #182a45;
+  box-shadow: 0 22px 60px #183e7b0d;
+  border-radius: 1.75rem;
+  overflow: hidden;
+}
+.destination-map-label {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: #536986;
+  font-size: 0.7rem;
+}
+.destination-map-label > span:first-child {
+  width: 7px;
+  height: 7px;
+  background: #1266df;
+  border-radius: 50%;
+}
+.destination-map-label > span:last-child {
+  margin-inline-start: auto;
+  color: #6680a2;
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+}
+.destination-map-center {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding-block: 1.45rem;
+}
+.destination-map-center > img {
+  width: 60px;
+  height: 60px;
+}
+.destination-map-center strong {
+  display: block;
+  font-size: 1.8rem;
+  font-weight: 850;
+}
+.destination-map-center div > span {
+  font-size: 0.72rem;
+  color: #536986;
+}
+.destination-map-modules {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.65rem;
+}
+.destination-map-module {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 1rem 0.85rem;
+  min-width: 0;
+  border: 1px solid #dce6f6;
+  border-radius: 1rem;
+  background: #f6f9ff;
+}
+.destination-map-module strong {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 750;
+}
+.destination-map-module small {
+  display: block;
+  margin-top: 0.2rem;
+  color: #536986;
+  font-size: 0.62rem;
+}
+.destination-map-icon {
+  color: #0d5ecc;
+  flex-shrink: 0;
+}
+.destination-map-icon svg {
+  width: 23px;
+  height: 23px;
+}
+.destination-map-number {
+  color: #5b7599;
+  font-size: 0.6rem;
+  margin-inline-start: auto;
+}
+.destination-map-school,
+.destination-map-activities {
+  background: #eaf2ff;
+  border-color: #c4d9f8;
+}
+.destination-map-profile {
+  grid-column: 1 / -1;
+  padding-block: 0.8rem;
+  background: #fff;
+}
+.destination-map-assistant .destination-map-icon {
+  color: #70529d;
+}
+.public-site .makan-destination-map figcaption {
+  position: static;
+  padding: 1rem 0 0;
+  color: #536986;
+  font-size: 0.62rem;
+  text-align: center;
+}
+
+/* The origin story sits directly beneath the landing page introduction. */
+.makan-remembrance {
+  padding-block: 4rem;
+  background: #f0f4ee;
+  border-block: 1px solid #dfe7dc;
+}
+.makan-remembrance-layout {
+  display: grid;
+  align-items: center;
+  gap: 2.5rem;
+  max-width: 1000px;
+  margin-inline: auto;
+}
+.makan-remembrance-copy {
+  max-width: 36rem;
+}
+.makan-remembrance .makan-editorial-kicker {
+  color: #315c4a;
+}
+.makan-remembrance h2 {
+  margin-block: 1.1rem;
+  font-size: clamp(2rem, 3.5vw, 3.3rem);
+  line-height: 1.5;
+  font-weight: 850;
+  letter-spacing: -0.035em;
+  color: #1c3f33;
+}
+.makan-remembrance-copy > p:not(.makan-editorial-kicker) {
+  color: #526257;
+  font-size: 0.93rem;
+  line-height: 2.1;
+}
+.makan-remembrance-copy .makan-remembrance-lead {
+  color: #2c4c3c;
+  font-weight: 650;
+  margin-bottom: 0.75rem;
+}
+.makan-remembrance-copy .makan-editorial-link {
+  margin-top: 1rem;
+  color: #265840;
+  text-decoration-color: #9fb8a8;
+}
+.makan-remembrance-portrait {
+  justify-self: center;
+  position: relative;
+  width: min(100%, 320px);
+}
+.makan-remembrance-portrait img {
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 12px 18px #183e341a);
+}
+.makan-remembrance-portrait figcaption {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 1rem;
+  font-size: 0.64rem;
+  color: #516754;
+}
+
+/* One visual walkthrough replaces the two repeated product introductions. */
+.makan-journey {
+  padding-block: 3rem;
+  background: #fff;
+}
+.makan-journey-heading {
+  display: grid;
+  align-items: end;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+.makan-journey-heading h2 {
+  margin-top: 0.65rem;
+  font-size: clamp(1.65rem, 2.7vw, 2.5rem);
+  font-weight: 800;
+  line-height: 1.6;
+  letter-spacing: -0.03em;
+}
+.makan-journey-heading > p {
+  max-width: 28rem;
+  color: #53647d;
+  font-size: 0.85rem;
+  line-height: 2;
+}
+.public-site .makan-journey-tabs {
+  gap: 1rem;
+}
+.public-site .makan-journey-navigation {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  width: 100%;
+  height: auto;
+  padding: 0.35rem;
+  gap: 0.25rem;
+  border: 1px solid #e0e8f3;
+  border-radius: 1rem;
+  background: #f2f6fc;
+}
+.public-site .makan-journey-tab {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  min-width: 0;
+  min-height: 64px;
+  padding: 0.55rem 0.1rem;
+  border: 1px solid transparent;
+  border-radius: 0.7rem;
+  color: #53647d;
+  font-size: 0.7rem;
+  font-weight: 650;
+  white-space: normal;
+}
+.public-site .makan-journey-tab > svg {
+  width: 20px;
+  height: 20px;
+}
+.public-site .makan-journey-tab[data-state="active"] {
+  color: #0d5ecc;
+  background: #fff;
+  border-color: #c7d9f3;
+  box-shadow: 0 3px 10px #162f5807;
+}
+.makan-journey-panel {
+  display: grid;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.25rem;
+  border: 1px solid #dfe7f2;
+  border-radius: 1.25rem;
+  background: #f5f8ff;
+}
+.makan-journey-panel[hidden] {
+  display: none;
+}
+.makan-journey-panel-copy {
+  min-width: 0;
+}
+.makan-journey-active {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.2rem 0.65rem;
+  border-radius: 2rem;
+  color: #21624b;
+  background: #e8f4ed;
+  font-size: 0.7rem;
+  font-weight: 650;
+}
+.makan-journey-panel-copy h3 {
+  margin-block: 0.8rem;
+  font-size: clamp(1.3rem, 2.1vw, 1.9rem);
+  line-height: 1.65;
+  font-weight: 750;
+}
+.makan-journey-panel-copy > p {
+  color: #53647d;
+  font-size: 0.85rem;
+  line-height: 2.05;
+}
+.makan-journey-steps {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.8rem;
+  margin-block: 1.2rem;
+}
+.makan-journey-steps li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.73rem;
+  line-height: 1.8;
+}
+.makan-journey-steps li > span {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  border: 1px solid #d3e1f6;
+  border-radius: 50%;
+  color: #0d5ecc;
+  background: #fff;
+  font-size: 0.7rem;
+}
+.makan-journey-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding-top: 0.9rem;
+  border-top: 1px solid #dfe7f2;
+  color: #53647d;
+  font-size: 0.72rem;
+  line-height: 1.95;
+}
+.makan-journey-note svg {
+  flex-shrink: 0;
+  margin-top: 0.2rem;
+  color: #0d5ecc;
+}
+.makan-journey-panel-copy .makan-editorial-link {
+  margin-top: 0.4rem;
+  font-size: 0.8rem;
+}
+.makan-journey-screens {
+  min-width: 0;
+}
+.makan-journey-screen-pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 205px));
+  align-items: start;
+  justify-content: center;
+  gap: 0.8rem;
+}
+.makan-journey-screen-pair figure {
+  min-width: 0;
+}
+.public-site .makan-journey-screen-pair .image-viewer-button {
+  border: 0;
+  border-radius: 0.5rem;
+  background: transparent;
+  overflow: visible;
+}
+.makan-journey-screen-pair .image-viewer-button > img {
+  border-radius: 1.25rem;
+  box-shadow: 0 8px 20px #183e7b0d;
+}
+.makan-journey-screen-pair .image-viewer-expand {
+  position: static;
+  display: flex;
+  justify-content: center;
+  margin-top: 0.45rem;
+  padding: 0;
+  border: 0;
+  box-shadow: none;
+  background: transparent;
+  color: #0d5ecc;
+  font-size: 0.65rem;
+}
+.makan-journey-screen-pair figcaption {
+  margin-top: 0.5rem;
+  color: #53647d;
+  font-size: 0.68rem;
+  line-height: 1.8;
+  text-align: center;
+}
+.makan-journey-screen-pair figcaption > span {
+  margin-inline-end: 0.3rem;
+  color: #0d5ecc;
+}
+.makan-journey-image-source {
+  margin-top: 0.8rem;
+  color: #53647d;
+  font-size: 0.62rem;
+  line-height: 1.8;
+  text-align: center;
+}
+
+/* Keep the origin story visible while giving the home page a shorter rhythm. */
+.makan-remembrance-compact {
+  padding-block: 1.5rem;
+}
+.makan-remembrance-compact .makan-remembrance-layout {
+  grid-template-columns: minmax(0, 1fr) 110px;
+  gap: 1rem;
+  max-width: none;
+}
+.makan-remembrance-compact h2 {
+  margin-block: 0.5rem;
+  font-size: clamp(1.3rem, 2.3vw, 2rem);
+}
+.makan-remembrance-compact
+  .makan-remembrance-copy
+  > p:not(.makan-editorial-kicker) {
+  max-width: 40rem;
+  font-size: 0.78rem;
+  line-height: 1.9;
+}
+.makan-remembrance-compact .makan-editorial-kicker {
+  font-size: 0.7rem;
+}
+.makan-remembrance-compact .makan-editorial-link {
+  margin-top: 0.35rem;
+  font-size: 0.75rem;
+}
+.makan-remembrance-compact .makan-remembrance-portrait {
+  width: 100%;
+}
+.public-site .makan-home .premium-hero-layout {
+  padding-block: 2.5rem;
+  gap: 2.5rem;
+}
+.public-site .makan-home .premium-hero-copy h1 {
+  font-size: clamp(2.2rem, 4vw, 3.75rem);
+}
+.public-site .makan-home .makan-origin-link {
+  margin-top: 0.75rem;
+}
+.public-site .makan-home .premium-hero-bottom {
+  display: none;
+}
+.public-site .makan-home .premium-audience-section {
+  padding-block: 2.5rem;
+}
+.public-site .makan-home .premium-role-tabs {
+  margin-top: 1.5rem;
+}
+.public-site .makan-home .premium-role-panel {
+  padding: 1.5rem;
+}
+.public-site .makan-home .section-space {
+  padding-block: 2.5rem;
+}
+.public-site .makan-home .premium-invitation {
+  padding-block: 2rem;
+}
+.public-site .makan-home .premium-invitation-inner {
+  padding: 1.75rem;
+}
+.makan-home-audiences {
+  padding-block: 2.5rem;
+  border-block: 1px solid #e1e8f3;
+  background: #f7f9fc;
+}
+.makan-home-audience-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.8rem;
+}
+.makan-home-audience-grid .brand-card {
+  padding: 1.1rem;
+  box-shadow: none;
+}
+.makan-home-audience-grid .brand-card > svg {
+  width: 24px;
+  height: 24px;
+  margin-bottom: 1rem;
+}
+.makan-home-audience-grid h3 {
+  font-size: 0.9rem;
+  line-height: 1.8;
+}
+.makan-home-audience-grid p {
+  font-size: 0.75rem;
+  line-height: 1.9;
+}
+.makan-home-audience-grid a {
+  font-size: 0.72rem;
+  gap: 0.4rem;
+  padding-top: 0.75rem;
+}
+.makan-home-audience-grid a svg {
+  flex-shrink: 0;
+}
+
+@media (min-width: 768px) {
+  .makan-journey {
+    padding-block: 3.5rem;
+  }
+  .makan-journey-heading {
+    grid-template-columns: 1.2fr 1fr;
+    gap: 2rem;
+  }
+  .public-site .makan-journey-tab {
+    flex-direction: row;
+    min-height: 56px;
+    gap: 0.6rem;
+    font-size: 0.82rem;
+  }
+  .makan-journey-panel {
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    padding: 1.75rem;
+  }
+  .makan-remembrance-compact .makan-remembrance-layout {
+    grid-template-columns: minmax(0, 1fr) 170px;
+  }
+  .makan-remembrance-compact.makan-remembrance {
+    padding-block: 1.25rem;
+  }
+}
+@media (min-width: 1024px) {
+  .makan-home-audience-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1rem;
+  }
+}
+
+/* A quiet memorial page with the supplied transparent portrait kept intact. */
+.makan-memorial-page {
+  background: #fafbf8;
+  color: #182a45;
+}
+.makan-story-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  min-height: 76px;
+  font-size: 0.75rem;
+  color: #596b64;
+}
+.makan-story-breadcrumb a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+.makan-story-breadcrumb a:hover {
+  color: #0d5ecc;
+}
+.makan-memorial-hero {
+  display: grid;
+  gap: 3rem;
+  align-items: center;
+  padding-block: 1.75rem 4.5rem;
+}
+.makan-memorial-intro {
+  max-width: 36rem;
+}
+.makan-memorial-intro h1 {
+  font-size: clamp(2.5rem, 5vw, 4.75rem);
+  line-height: 1.5;
+  font-weight: 850;
+  letter-spacing: -0.04em;
+  margin-block: 1.5rem;
+}
+.makan-memorial-intro h1 > span {
+  color: #1266df;
+}
+.makan-memorial-linebreak {
+  display: none;
+}
+.makan-memorial-intro > p:not(.makan-editorial-kicker) {
+  font-size: 0.96rem;
+  color: #53647d;
+  line-height: 2.15;
+}
+.makan-memorial-intro .makan-memorial-deck {
+  margin-bottom: 0.8rem;
+  color: #293d57;
+  font-weight: 650;
+}
+.makan-memorial-intro > .makan-editorial-link {
+  margin-top: 1.25rem;
+}
+.makan-memorial-dedication {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  border-top: 1px solid #dfe5db;
+  margin-top: 2rem;
+  padding-top: 1.4rem;
+  color: #315c4a;
+  font-size: 0.8rem;
+}
+.makan-memorial-dedication > svg {
+  margin-top: 0.25rem;
+  flex-shrink: 0;
+}
+.makan-memorial-dedication small {
+  display: block;
+  margin-top: 0.35rem;
+  color: #617466;
+  font-size: 0.72rem;
+}
+.makan-memorial-image {
+  max-width: 540px;
+  width: 100%;
+  justify-self: center;
+}
+.makan-memorial-image img {
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 16px 24px #203b301a);
+}
+.makan-memorial-image figcaption {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 0.5rem;
+  margin-top: 0.75rem;
+  border-top: 1px solid #dce4d9;
+  color: #2b4d3d;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+.makan-memorial-image figcaption span {
+  font-size: 0.68rem;
+  font-weight: 400;
+  color: #617466;
+}
+.makan-memorial-biography {
+  background: #edf2e9;
+  border-block: 1px solid #dfe6d9;
+  padding-block: 3.5rem;
+}
+.makan-memorial-reading-layout {
+  display: grid;
+  gap: 1.5rem;
+  max-width: 1080px !important;
+}
+.makan-memorial-reading-layout h2 {
+  font-size: clamp(1.9rem, 3vw, 2.7rem);
+  font-weight: 800;
+  line-height: 1.6;
+  margin-top: 0.8rem;
+  letter-spacing: -0.025em;
+}
+.makan-memorial-biography .makan-editorial-kicker,
+.makan-memorial-biography h2 {
+  color: #315c4a;
+}
+.makan-memorial-prose {
+  color: #53647d;
+  font-size: 0.96rem;
+  line-height: 2.3;
+}
+.makan-memorial-prose > p + p {
+  margin-top: 1rem;
+}
+.makan-memorial-biography .makan-memorial-prose {
+  color: #4e6252;
+}
+.makan-memorial-source {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-height: 44px;
+  color: #315c4a;
+  font-size: 0.74rem;
+  text-decoration: underline;
+  text-underline-offset: 0.35rem;
+  margin-top: 0.7rem;
+}
+.makan-memorial-beginning {
+  padding-block: 4.5rem;
+}
+.makan-memorial-prose .makan-memorial-pullquote {
+  border-inline-start: 3px solid #1266df;
+  padding-inline-start: 1.5rem;
+  margin-block: 2rem 0.5rem;
+  color: #0d5ecc;
+  font-size: clamp(1.3rem, 2vw, 1.7rem);
+  font-weight: 650;
+  line-height: 2;
+}
+.makan-memorial-prose .makan-memorial-quote-credit {
+  font-size: 0.75rem;
+  margin-top: 0.4rem;
+  padding-inline-start: 1.6rem;
+}
+.makan-memorial-commitments {
+  padding-block: 3.5rem 0;
+  background: white;
+  border-top: 1px solid #e1e8ef;
+}
+.makan-memorial-commitments h2 {
+  font-size: clamp(1.8rem, 3vw, 2.7rem);
+  font-weight: 800;
+  line-height: 1.6;
+  margin-top: 1rem;
+}
+.makan-commitments-grid {
+  display: grid;
+  gap: 2rem;
+  margin-block: 2.5rem 3.5rem;
+}
+.makan-commitments-grid > div {
+  border-top: 1px solid #cfdef2;
+  padding-top: 1.5rem;
+}
+.makan-commitment-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #0d5ecc;
+}
+.makan-commitment-top > span {
+  font-size: 0.8rem;
+  color: #687c98;
+}
+.makan-commitments-grid h3 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-block: 1rem 0.75rem;
+}
+.makan-commitments-grid p {
+  font-size: 0.86rem;
+  color: #53647d;
+  line-height: 2.1;
+}
+.makan-memorial-return {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid #e1e8ef;
+  padding-block: 1.5rem;
+}
+.makan-memorial-return > span {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: #315c4a;
+  font-size: 0.85rem;
+}
+
+@media (min-width: 768px) {
+  .makan-remembrance {
+    padding-block: 3.5rem;
+  }
+  .makan-remembrance-layout {
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+    gap: 3rem;
+  }
+  .makan-remembrance-portrait {
+    width: 100%;
+  }
+  .makan-memorial-hero {
+    grid-template-columns: 1.05fr 1fr;
+    gap: 3rem;
+  }
+  .makan-memorial-reading-layout {
+    grid-template-columns: 0.8fr 1.6fr;
+    gap: 3rem;
+  }
+  .makan-commitments-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 3rem;
+  }
+}
+@media (min-width: 1024px) {
+  .makan-memorial-linebreak {
+    display: initial;
+  }
+  .makan-memorial-hero {
+    gap: 5rem;
+    padding-block: 1.25rem 5rem;
+  }
+  .makan-memorial-biography {
+    padding-block: 4rem;
+  }
+  .makan-memorial-beginning {
+    padding-block: 5.5rem;
+  }
+  .makan-memorial-commitments {
+    padding-top: 4.5rem;
+  }
+}
+@media (max-width: 479px) {
+  .public-site .makan-destination-map {
+    padding: 1.2rem;
+    border-radius: 1.25rem;
+  }
+  .destination-map-module {
+    gap: 0.5rem;
+    padding: 0.8rem 0.65rem;
+  }
+  .destination-map-module strong {
+    font-size: 0.8rem;
+  }
+  .destination-map-module small {
+    font-size: 0.59rem;
+  }
+  .destination-map-number {
+    display: none;
+  }
+  .destination-map-icon svg {
+    width: 20px;
+    height: 20px;
+  }
+  .destination-map-center div > span {
+    font-size: 0.65rem;
+  }
+  .destination-map-label {
+    font-size: 0.65rem;
+  }
+  .public-site .makan-origin-link {
+    gap: 0.6rem;
+    font-size: 0.67rem;
+  }
+  .public-site .makan-origin-link strong {
+    margin-inline-start: 0.35rem;
+  }
+  .makan-remembrance {
+    padding-block: 2.75rem;
+  }
+  .makan-remembrance-copy h2 br {
+    display: none;
+  }
+  .public-site .makan-journey-navigation {
+    gap: 0;
+    padding: 0.25rem;
+    border-radius: 1rem;
+  }
+  .public-site .makan-journey-tab {
+    font-size: 0.65rem;
+    min-height: 86px;
+    padding-inline: 0;
+    gap: 0.65rem;
+  }
+  .makan-journey-path {
+    padding: 1rem;
+  }
+  .makan-journey-footnote {
+    align-items: flex-start;
+    line-height: 1.9;
+  }
+  .makan-journey-footnote svg {
+    margin-top: 0.2rem;
+  }
+  .makan-memorial-hero {
+    padding-top: 0.5rem;
+    gap: 2.5rem;
+  }
+  .makan-memorial-intro h1 {
+    font-size: 2.45rem;
+  }
+  .makan-memorial-prose {
+    font-size: 0.9rem;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .public-site .makan-editorial-link {
+    transition: none;
+  }
+}
+
+/* A quick, complete introduction before the optional illustrated walkthrough. */
+.makan-journey-overview {
+  display: grid;
+  gap: 1rem;
+  margin-block: 1.5rem;
+}
+.makan-journey-overview > li {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 1.2rem;
+  border: 1px solid #dfe7f2;
+  border-radius: 1rem;
+  background: #f7f9fd;
+}
+.makan-journey-overview > li > svg {
+  color: #0d5ecc;
+  margin-bottom: 0.8rem;
+}
+.makan-journey-overview h3 {
+  font-size: 1rem;
+  font-weight: 750;
+}
+.makan-journey-overview p {
+  margin-block: 0.65rem;
+  color: #53647d;
+  font-size: 0.8rem;
+  line-height: 2;
+}
+.makan-journey-overview a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  margin-top: auto;
+  color: #0d5ecc;
+  font-size: 0.78rem;
+  font-weight: 650;
+}
+.makan-journey-more-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 1.25rem;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  color: #53647d;
+  font-size: 0.78rem;
+}
+.makan-journey-more-links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: #0d5ecc;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.makan-journey-preview-label {
+  margin-block: 1.5rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 650;
+}
+.makan-home-start {
+  padding-block: 3rem;
+  background: #edf4ff;
+  border-top: 1px solid #d5e2f6;
+}
+.makan-home-start h2 {
+  margin-block: 0.75rem;
+  font-size: clamp(1.7rem, 3vw, 2.6rem);
+  font-weight: 800;
+  line-height: 1.6;
+}
+.makan-home-start-summary {
+  color: #53647d;
+  font-size: 0.9rem;
+  line-height: 2;
+}
+.makan-home-start-steps {
+  display: grid;
+  gap: 1.25rem;
+  margin-block: 2rem;
+}
+.makan-home-start-steps li {
+  padding-top: 1rem;
+  border-top: 1px solid #cbdcf5;
+}
+.makan-home-start-steps li > span {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: #0d5ecc;
+  font-size: 0.8rem;
+}
+.makan-home-start-steps h3 {
+  margin-block: 0.75rem 0.5rem;
+  font-size: 1rem;
+  font-weight: 700;
+}
+.makan-home-start-steps p {
+  color: #53647d;
+  font-size: 0.8rem;
+  line-height: 2;
+}
+.makan-home-start-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 2rem;
+}
+@media (min-width: 480px) {
+  .makan-journey-overview {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (min-width: 768px) {
+  .makan-home-start-steps {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 2rem;
+  }
+}
+@media (min-width: 1100px) {
+  .makan-journey-overview {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+}
+
+/* The contact page and footer share the same official contact details. */
+.contact-information {
+  display: grid;
+  gap: 1.1rem;
+  margin-top: 1.25rem;
+  font-size: 0.875rem;
+  font-style: normal;
+}
+.contact-information dt {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  color: #53647d;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+.contact-information dt svg {
+  flex-shrink: 0;
+  color: #0d5ecc;
+}
+.contact-information dd {
+  margin-top: 0.4rem;
+  padding-inline-start: 1.7rem;
+  line-height: 2;
+  overflow-wrap: anywhere;
+}
+.contact-information dd a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: #0d5ecc;
+}
+.contact-information dd a:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.contact-information address {
+  font-style: normal;
+  line-height: 2.1;
+}
+.contact-information .contact-phone-list {
+  display: grid;
+  justify-items: start;
+}
+.contact-information-compact {
+  gap: 0.85rem;
+  font-size: 0.78rem;
+}
+.contact-information-compact dt {
+  font-size: 0.72rem;
+}
+.contact-information-compact dd {
+  padding-inline-start: 0;
+}
+.public-site .public-contact-channels .contact-information dt {
+  color: #c6d6ee;
+}
+.public-site .public-contact-channels .contact-information dt svg {
+  color: #d1e6ff;
+}
+.public-site .public-contact-channels .contact-information dd a {
+  color: #f4f8ff;
+}
+/* Contact uses the same centered introduction and light cards as About. */
+.public-site .public-contact-page .public-contact-channels {
+  position: static;
+  background: #fff;
+  color: var(--public-ink);
+  border: 1px solid var(--public-line);
+  padding: clamp(1.25rem, 3vw, 2.5rem);
+  border-radius: 1.5rem;
+}
+.public-site .public-contact-page .public-request-form {
+  box-shadow: none;
+  border-radius: 1.5rem;
+}
+.public-site
+  .public-contact-page
+  .public-contact-channels
+  .contact-information
+  dt {
+  color: #53647d;
+}
+.public-site
+  .public-contact-page
+  .public-contact-channels
+  .contact-information
+  dt
+  svg,
+.public-site
+  .public-contact-page
+  .public-contact-channels
+  .contact-information
+  dd
+  a {
+  color: #0d5ecc;
+}
+.public-site .public-contact-page .public-contact-channels h2 {
+  color: var(--public-ink);
+  font-size: 1.4rem;
+}

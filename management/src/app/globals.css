@@ -1,0 +1,14 @@
+@import 'tailwindcss' source('..');
+@import './design/foundation.css';
+@import './design/shell.css';
+@import './design/components.css';
+@import './design/login.css';
+@import './design/responsive.css';
+@source not '../generated';
+@theme inline {
+  --font-sans: 'Vazirmatn Variable', sans-serif;
+  --color-background: var(--bg);
+  --color-foreground: var(--text);
+  --color-primary: var(--primary);
+  --color-border: var(--border);
+}

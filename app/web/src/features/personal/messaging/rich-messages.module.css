@@ -1,0 +1,111 @@
+.option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.option > :global(.v5-field) {
+  flex: 1;
+  min-width: 0;
+}
+.poll {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 240px;
+  max-width: 100%;
+  color: var(--text);
+}
+.poll > strong {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  font-size: 14px;
+}
+.poll > strong > svg {
+  flex-shrink: 0;
+  color: var(--primary);
+}
+.poll > small {
+  color: var(--muted);
+  font-size: 11px;
+}
+.pollOption {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+  padding: 8px 0;
+  font-size: 13px;
+  min-height: 44px;
+  cursor: pointer;
+}
+.pollOption > span {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.pollOption input {
+  min-height: 20px;
+  width: 20px;
+  height: 20px;
+  accent-color: var(--primary-button);
+}
+.pollOption b {
+  font-size: 12px;
+  font-weight: 600;
+}
+.progress {
+  display: block;
+  height: 4px;
+  border-radius: 6px;
+  background: var(--border);
+  width: 100%;
+}
+.progress::after {
+  content: '';
+  display: block;
+  height: 100%;
+  width: var(--poll-progress, 0%);
+  border-radius: inherit;
+  background: var(--primary);
+}
+.poll .editChecklist {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.toolLinks {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  padding: 4px 12px;
+  border-top: 1px solid var(--border);
+}
+.toolLinks a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  font-size: 11px;
+  color: var(--primary);
+  min-height: 44px;
+  padding-inline: 8px;
+}
+.poll .state {
+  min-width: 0;
+  padding: 12px;
+}
+@media (max-width: 400px) {
+  .poll {
+    min-width: 200px;
+  }
+  .toolLinks a {
+    font-size: 10px;
+    padding-inline: 5px;
+  }
+  .toolLinks svg {
+    width: 16px;
+  }
+}
