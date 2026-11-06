@@ -11,6 +11,7 @@ if (( $# )); then shift; fi
 DOCKER=(docker --host "${MAKAN_DOCKER_HOST:-unix:///var/run/docker.sock}")
 COMPOSE=()
 JOB_NAME=''
+BUILDING_SERVICE=''
 QUIESCED=()
 AUTO_RESUME=0
 
@@ -24,8 +25,9 @@ usage() {
 Usage: bash deploy.sh [command]
   up           Install missing prerequisites, check DNS/API, build and deploy (default)
   install      Install Docker Engine and Compose on Ubuntu/Debian
-  init         Generate independent persistent keys; never replace an existing env file
-               Optional: --import-landing-env PATH --landing-project makan-landing-prod
+  init         Generate or validate persistent keys; never replace an existing env file
+               Then run: bash ./deploy.sh check, followed by bash ./deploy.sh up
+               Legacy installations only: --import-landing-env EXISTING_FILE --landing-project makan-landing-prod
   check        Validate credentials, Compose, DNS and both backend servers
   verify       Verify running backend configuration and public HTTPS for every hostname
   status       Show this deployment's containers
@@ -40,6 +42,7 @@ Optional environment variables:
   MAKAN_BACKUP_DIR            Private backup destination
   MAKAN_DOCKER_HOST           Default: unix:///var/run/docker.sock
   MAKAN_SKIP_BUILD=1          Reuse images already built from these exact sources
+  MAKAN_PYPI_MIRROR_URL       Optional public HTTPS PyPI mirror base for the landing API build
 See DEPLOYMENT.fa.md before migrating an existing production landing site.
 HELP
 }
@@ -278,7 +281,15 @@ cleanup() {
     dc start "${QUIESCED[@]}" || true
   fi
   if (( result != 0 )); then
-    printf '\nDeployment command failed. Use: bash deploy.sh status / bash deploy.sh logs\n' >&2
+    if [[ -n "$BUILDING_SERVICE" ]]; then
+      printf '\nImage build failed for %s. Review the build output above; no new application containers were started.\n' "$BUILDING_SERVICE" >&2
+      printf 'After fixing the download/build issue, resume with: bash ./deploy.sh up\n' >&2
+    else
+      case "$COMMAND" in
+        init|install) printf '\nSetup stopped. Review the message above for the next step.\n' >&2 ;;
+        *) printf '\nDeployment command failed. Use: bash deploy.sh status / bash deploy.sh logs\n' >&2 ;;
+      esac
+    fi
     printf 'Credentials and data volumes have been retained.\n' >&2
   fi
   exit "$result"
@@ -306,7 +317,14 @@ ensure_engine
 
 case "$COMMAND" in
   install) say 'Docker Engine and Compose are ready.' ;;
-  init) init_environment "$@" ;;
+  init)
+    init_environment "$@"
+    if [[ "$(cfg get --key MAKAN_LANDING_EXTERNAL_VOLUMES)" == true ]]; then
+      say 'Legacy data imported. Stop the previous stack as described in DEPLOYMENT.fa.md before continuing.'
+    else
+      say 'Initialization complete. Existing credentials will be reused; no legacy import is needed for a fresh installation.'
+    fi
+    printf 'Next commands (keep the same MAKAN_ENV_FILE if customized):\n  bash ./deploy.sh check\n  bash ./deploy.sh up\n' ;;
   check) preflight ;;
   status) dc ps --all ;;
   logs) dc logs --follow --tail 100 "$@" ;;
@@ -338,7 +356,13 @@ case "$COMMAND" in
     if [[ "${MAKAN_SKIP_BUILD:-0}" != 1 ]]; then
       say 'Building production images sequentially to limit memory usage'
       for service in app testapp management testmanagement landing-db landing-api landing-web edge; do
-        dc build "$service"
+        BUILDING_SERVICE="$service"
+        if [[ "$service" == landing-api && "${MAKAN_PYPI_MIRROR_URL+x}" == x ]]; then
+          dc build --build-arg "PYPI_MIRROR_URL=$MAKAN_PYPI_MIRROR_URL" "$service"
+        else
+          dc build "$service"
+        fi
+        BUILDING_SERVICE=''
       done
     fi
     say 'Validating the HTTPS reverse proxy configuration'

@@ -55,6 +55,23 @@ class DeploymentTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "preserved"):
             config.initialize(destination, old_file, "makan-landing-prod")
 
+    def test_missing_legacy_file_preserves_initialized_keys_and_explains_recovery(self):
+        before = self.env_file.read_bytes()
+        missing = self.folder / "missing-legacy.env"
+        with self.assertRaisesRegex(ValueError, "Legacy environment file does not exist") as error:
+            config.initialize(self.env_file, missing, "makan-landing-prod")
+        self.assertEqual(before, self.env_file.read_bytes())
+        self.assertIn("bash ./deploy.sh check", str(error.exception))
+        self.assertIn("bash ./deploy.sh up", str(error.exception))
+        for key in config.SECRET_KEYS:
+            self.assertNotIn(config.validate(self.env_file)[key], str(error.exception))
+
+    def test_missing_legacy_file_does_not_generate_replacement_keys(self):
+        destination = self.folder / "new-production.env"
+        with self.assertRaisesRegex(ValueError, "without import options"):
+            config.initialize(destination, self.folder / "missing-legacy.env", "makan-landing-prod")
+        self.assertFalse(destination.exists())
+
     def test_shell_substitution_in_dotenv_is_never_executed(self):
         marker = self.folder / "must-not-exist"
         content = self.env_file.read_text().replace(
@@ -142,6 +159,35 @@ exit 1
         result = subprocess.run(["bash", str(ROOT / "deploy.sh"), "down", "--volumes"], capture_output=True, text=True)
         self.assertNotEqual(0, result.returncode)
         self.assertIn("Unexpected arguments", result.stderr)
+
+    def test_successful_init_followed_by_accidental_legacy_import_keeps_credentials(self):
+        bin_folder = self.folder / "read-only-docker"
+        bin_folder.mkdir()
+        docker = bin_folder / "docker"
+        docker.write_text("""#!/bin/bash
+if [[ "$1" == --host ]]; then shift 2; fi
+if [[ "$1" == info ]]; then exit 0; fi
+if [[ "$1" == compose && "$2" == version ]]; then echo 5.7.0; exit 0; fi
+echo 'Unexpected Docker mutation in initialization regression test' >&2
+exit 90
+""")
+        docker.chmod(0o700)
+        environment = dict(os.environ, PATH=str(bin_folder) + os.pathsep + os.environ["PATH"], MAKAN_ENV_FILE=str(self.env_file))
+        before = self.env_file.read_bytes()
+        result = subprocess.run(["bash", str(ROOT / "deploy.sh"), "init"], env=environment, capture_output=True, text=True)
+        self.assertEqual(0, result.returncode, result.stderr)
+        self.assertIn("Initialization complete", result.stdout)
+        self.assertIn("bash ./deploy.sh check", result.stdout)
+        result = subprocess.run([
+            "bash", str(ROOT / "deploy.sh"), "init", "--import-landing-env",
+            str(self.folder / "missing-old-production.env"), "--landing-project", "makan-landing-prod",
+        ], env=environment, capture_output=True, text=True)
+        self.assertNotEqual(0, result.returncode)
+        self.assertIn("Legacy environment file does not exist", result.stderr)
+        self.assertIn("bash ./deploy.sh up", result.stderr)
+        self.assertIn("Setup stopped", result.stderr)
+        self.assertNotIn("bash deploy.sh logs", result.stderr)
+        self.assertEqual(before, self.env_file.read_bytes())
 
 
 if __name__ == "__main__":

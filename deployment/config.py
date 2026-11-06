@@ -91,9 +91,29 @@ def validate(path):
 
 
 def initialize(path, landing_env=None, landing_project=None):
+    if landing_project and not landing_env:
+        raise ValueError("--landing-project requires --import-landing-env")
+    if landing_env and not landing_env.is_file():
+        if path.exists():
+            validate(path)
+            recovery = (
+                "Current platform credentials were validated and preserved. "
+                "Continue this installation with: bash ./deploy.sh check, then bash ./deploy.sh up. "
+                "Do not delete the current credential file."
+            )
+        else:
+            recovery = "For a fresh installation, use: bash ./deploy.sh init (without import options)."
+        raise ValueError(
+            f"Legacy environment file does not exist: {landing_env}. "
+            "--import-landing-env is only for a real previous production installation. "
+            + recovery
+        )
     if path.exists():
         if landing_env or landing_project:
-            raise ValueError("Existing platform credentials were preserved. Import is only allowed before the first initialization")
+            raise ValueError(
+                "Existing platform credentials were preserved. Import is only allowed before the first initialization. "
+                "Do not replace the current credential file; review the legacy migration section before changing installations."
+            )
         validate(path)
         print("Existing credentials validated and preserved.")
         return
@@ -116,8 +136,6 @@ def initialize(path, landing_env=None, landing_project=None):
             "MAKAN_LANDING_SEO_INDEXING_ENABLED": old.get("SEO_INDEXING_ENABLED", "false"),
             "MAKAN_LANDING_ANALYTICS_ENABLED": old.get("ANALYTICS_ENABLED", "false"),
         })
-    elif landing_project:
-        raise ValueError("--landing-project requires --import-landing-env")
     path.parent.mkdir(parents=True, exist_ok=True)
     # Exclusive creation prevents a concurrent invocation from replacing credentials.
     fd = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
