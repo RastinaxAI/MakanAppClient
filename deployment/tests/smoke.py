@@ -6,6 +6,7 @@ Run from any directory: python3 deployment/tests/smoke.py
 """
 
 import json
+import hashlib
 import os
 from pathlib import Path
 import re
@@ -14,6 +15,7 @@ import subprocess
 import sys
 import tempfile
 import tarfile
+import time
 import uuid
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -38,6 +40,7 @@ def free_port():
 
 
 def main():
+    timings = {}
     project = "makan-platform-smoke-" + uuid.uuid4().hex[:8]
     work = ROOT / ".deployment"
     work.mkdir(mode=0o700, exist_ok=True)
@@ -83,7 +86,9 @@ def main():
         compose_file.chmod(0o600)
         compose = DOCKER + ["compose", "--env-file", "/dev/null", "-p", project, "-f", str(compose_file)]
         try:
+            started = time.monotonic()
             run(compose + ["up", "-d", "--no-build", "--wait", "--wait-timeout", "180", "landing-db"])
+            timings["database_ready_seconds"] = round(time.monotonic() - started, 2)
             jobs = [("migration", "landing-migrate", ["alembic", "upgrade", "head"]),
                     ("content-import", "landing-api", ["python", "-u", "-m", "app.commands.import_content"]),
                     ("content-import-repeat", "landing-api", ["python", "-u", "-m", "app.commands.import_content"])]
@@ -94,7 +99,9 @@ def main():
                     raise RuntimeError(f"Terminal job {name} failed (exit {status}):\n{output}")
                 assert name + " completed" in output
             print("PASS real migration + content imports via production runner in a controlling terminal", flush=True)
+            started = time.monotonic()
             run(compose + ["up", "-d", "--no-build", "--wait", "--wait-timeout", "240"])
+            timings["all_services_ready_seconds"] = round(time.monotonic() - started, 2)
             edge_id = run(compose + ["ps", "-q", "edge"], capture_output=True, text=True).stdout.strip()
             certificate = directory / "root.crt"
             run(DOCKER + ["cp", edge_id + ":/data/caddy/pki/authorities/local/root.crt", str(certificate)])
@@ -117,6 +124,17 @@ def main():
             www = run(curl + ["--resolve", f"www.makanapp.org:{https_port}:127.0.0.1", "--cacert", str(certificate), "-D", "-", "-o", "/dev/null", f"https://www.makanapp.org:{https_port}/smoke?check=1"], capture_output=True, text=True).stdout.lower()
             assert "308" in www and "location: https://makanapp.org/smoke?check=1" in www
             print("PASS canonical www redirect preserves path/query", flush=True)
+            for service in ("app", "testapp", "management", "testmanagement"):
+                host = service + ".makanapp.org"
+                source = ROOT / (service + "/web" if service in ("app", "testapp") else service)
+                assets = ["/fonts/makan-reference/Vazirmatn.ttf", "/brand/makan-logo-v2.webp"] if service in ("app", "testapp") else ["/guides/makan-owner-guide.pdf"]
+                for asset in assets:
+                    body = directory / "asset"
+                    code = run(curl + ["--resolve", f"{host}:{https_port}:127.0.0.1", "--cacert", str(certificate), "-o", str(body), "-w", "%{http_code}", f"https://{host}:{https_port}{asset}"], capture_output=True, text=True).stdout
+                    assert code == "200", f"Missing production asset: {host}{asset}"
+                    assert hashlib.sha256(body.read_bytes()).digest() == hashlib.sha256((source / "public" / asset.lstrip("/")).read_bytes()).digest()
+                run(compose + ["exec", "-T", service, "node", "-e", "const fs=require('node:fs');if(process.getuid()!==1000||fs.existsSync('/usr/local/lib/node_modules')||fs.existsSync('/usr/local/bin/npm')||fs.existsSync('/usr/local/bin/yarn'))process.exit(1)"])
+            print("PASS production font/logo/guide bytes + nonroot runtimes without npm/Yarn", flush=True)
             for service in ("app", "testapp", "management", "testmanagement"):
                 backend = "http://94.184.32.84" + (":8090" if service.startswith("test") else "")
                 javascript = "if(process.env.BACKEND_BASE_URL!==process.argv[1]||process.env.APP_ORIGIN!==process.argv[2]||process.env.COOKIE_SECURE!=='true')process.exit(1);fetch(process.env.BACKEND_BASE_URL+'/swagger/index.html',{signal:AbortSignal.timeout(12000)}).then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"
@@ -147,10 +165,14 @@ def main():
                 assert any(name.endswith("/authorities/local/root.crt") for name in tls.getnames())
             print("PASS media + TLS archives with read-only mounts and unprivileged users", flush=True)
             run(compose + ["down"], timeout=120)
+            started = time.monotonic()
             run(compose + ["up", "-d", "--no-build", "--wait", "--wait-timeout", "240"])
+            timings["recreated_services_ready_seconds"] = round(time.monotonic() - started, 2)
             after = run(compose + count_query, capture_output=True, text=True).stdout.strip()
             assert before == after
             print("PASS data persistence after complete container removal/recreation", flush=True)
+            (work / "last-smoke-timings.json").write_text(json.dumps(timings, indent=2) + "\n")
+            print("Readiness timings: " + json.dumps(timings), flush=True)
             print("SMOKE TEST PASSED (private local TLS CA; public ACME issuance requires the target server)", flush=True)
         finally:
             run(compose + ["down", "--volumes", "--remove-orphans"], timeout=120)

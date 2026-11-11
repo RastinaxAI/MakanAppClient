@@ -33,6 +33,7 @@ x-client-health: &client-health
   interval: 15s
   timeout: 5s
   start_period: 30s
+  start_interval: 2s
   retries: 5
 
 x-management-health: &management-health
@@ -40,6 +41,7 @@ x-management-health: &management-health
   interval: 15s
   timeout: 5s
   start_period: 30s
+  start_interval: 2s
   retries: 5
 
 x-landing-environment: &landing-environment
@@ -138,6 +140,7 @@ services:
       interval: 5s
       timeout: 3s
       start_period: 20s
+      start_interval: 2s
       retries: 30
 
   landing-migrate:
@@ -173,6 +176,7 @@ services:
       interval: 10s
       timeout: 6s
       start_period: 30s
+      start_interval: 2s
       retries: 10
 
   landing-web:
@@ -190,6 +194,8 @@ services:
     mem_limit: 768m
     pids_limit: 256
     depends_on: {landing-api: {condition: service_healthy}}
+    # The command is inherited; Compose requires an explicit startup period.
+    healthcheck: {start_period: 20s, start_interval: 2s}
 
   landing-maintenance:
     <<: *service
@@ -208,6 +214,7 @@ services:
       interval: 60s
       timeout: 5s
       start_period: 45s
+      start_interval: 2s
       retries: 3
 
   edge:
@@ -225,6 +232,7 @@ services:
     tmpfs: [/tmp:size=64m]
     mem_limit: 256m
     pids_limit: 128
+    healthcheck: {start_period: 10s, start_interval: 2s}
     depends_on:
       app: {condition: service_healthy}
       testapp: {condition: service_healthy}

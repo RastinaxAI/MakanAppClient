@@ -35,6 +35,8 @@ Usage: bash deploy.sh [command]
   status       Show this deployment's containers
   logs [name]  Follow logs (optional Compose service name)
   backup       Briefly stop landing writers; back up database, media, TLS and credentials
+  clean        Remove generated review/test output; preserve source, secrets and live state
+               Optional: --dry-run to preview the cleanup
   down         Stop/remove this deployment's containers; retain all volumes
   admin        Bootstrap the landing owner by phone (interactive)
   sms          Configure the landing SMS provider (interactive, hidden credentials)
@@ -52,10 +54,10 @@ HELP
 
 case "$COMMAND" in
   help|-h|--help) usage; exit 0 ;;
-  up|install|init|check|verify|status|logs|backup|down|admin|sms) ;;
+  up|install|init|check|verify|status|logs|backup|clean|down|admin|sms) ;;
   *) usage; die "Unknown command: $COMMAND" ;;
 esac
-if [[ "$COMMAND" != init && "$COMMAND" != logs && $# -gt 0 ]]; then
+if [[ "$COMMAND" != init && "$COMMAND" != logs && "$COMMAND" != clean && $# -gt 0 ]]; then
   die 'Unexpected arguments. Use bash deploy.sh help.'
 fi
 
@@ -63,10 +65,13 @@ require_root() { (( EUID == 0 )) || die 'Missing system packages require root; r
 
 ensure_host_tools() {
   local tool missing=0
-  for tool in python3 curl flock timeout ss; do
+  local required=(python3 curl flock timeout ss)
+  if [[ "$COMMAND" == clean ]]; then required=(python3 flock); fi
+  for tool in "${required[@]}"; do
     command -v "$tool" >/dev/null || missing=1
   done
   if (( missing )); then
+    [[ "$COMMAND" != clean ]] || die 'Cleanup requires python3 and flock (util-linux); Docker is not required.'
     case "$COMMAND" in up|install|init) ;; *) die 'Install prerequisites first: sudo bash deploy.sh install' ;; esac
     require_root
     command -v apt-get >/dev/null || die 'Install python3, curl, util-linux, coreutils and iproute2 for your OS.'
@@ -137,6 +142,16 @@ version = tuple(map(int, re.findall(r'\d+', sys.argv[1])[:2]))
 if version < (2, 24):
     raise SystemExit('Docker Compose 2.24+ is required; update the Compose plugin.')
 PY
+  case "$COMMAND" in
+    up|check)
+      version="$("${DOCKER[@]}" version --format '{{.Server.APIVersion}}')"
+      python3 - "$version" <<'PY'
+import sys
+if tuple(map(int, sys.argv[1].split('.')[:2])) < (1, 44):
+    raise SystemExit('Docker Engine 25+ (API 1.44+) is required for fast startup health checks; update Docker Engine.')
+PY
+      ;;
+  esac
 }
 
 init_environment() {
@@ -278,6 +293,7 @@ cleanup() {
     else
       case "$COMMAND" in
         init|install) printf '\nSetup stopped. Review the message above for the next step.\n' >&2 ;;
+        clean) printf '\nCleanup stopped. Review the message above for the next step.\n' >&2 ;;
         *) printf '\nDeployment command failed. Use: bash deploy.sh status / bash deploy.sh logs\n' >&2 ;;
       esac
     fi
@@ -296,7 +312,7 @@ COMPOSE=("${DOCKER[@]}" compose --parallel 1 --project-directory "$ROOT" \
   --env-file "$ENV_FILE" -p makan-platform -f "$ROOT/compose.production.yaml")
 
 case "$COMMAND" in
-  up|install|init|backup|down|admin|sms)
+  up|install|init|backup|clean|down|admin|sms)
     mkdir -p -- "$ROOT/.deployment"
     exec 9>"$ROOT/.deployment/deploy.lock"
     flock -n 9 || die 'Another deployment/backup/operator command is already running.' ;;
@@ -304,10 +320,13 @@ esac
 trap cleanup EXIT
 trap 'exit 130' INT
 trap 'exit 143' TERM
-ensure_engine
+if [[ "$COMMAND" != clean ]]; then ensure_engine; fi
 
 case "$COMMAND" in
   install) say 'Docker Engine and Compose are ready.' ;;
+  clean)
+    say 'Cleaning generated artifacts; application inputs, credentials and persistent data are protected'
+    python3 "$ROOT/deployment/cleanup.py" "$@" ;;
   init)
     init_environment "$@"
     if [[ "$(cfg get --key MAKAN_LANDING_EXTERNAL_VOLUMES)" == true ]]; then

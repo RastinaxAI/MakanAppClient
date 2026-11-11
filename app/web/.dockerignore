@@ -8,14 +8,18 @@
 !src/
 !src/**
 !contracts/
+contracts/**
 !contracts/client-surface.json
 !design/
+design/**
 !design/tokens.json
 !config/
+config/**
 !config/network.json
 !public/
 !public/**
 !scripts/
+scripts/**
 !scripts/docker-start.mjs
 !scripts/build-public-brand.mjs
 

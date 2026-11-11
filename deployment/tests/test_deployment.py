@@ -160,6 +160,19 @@ exit 1
         self.assertNotEqual(0, result.returncode)
         self.assertIn("Unexpected arguments", result.stderr)
 
+    def test_cleanup_preview_does_not_require_a_running_docker_engine(self):
+        bin_folder = self.folder / "no-engine"
+        bin_folder.mkdir()
+        docker = bin_folder / "docker"
+        docker.write_text("#!/bin/sh\necho 'Cleanup must not contact Docker' >&2\nexit 90\n")
+        docker.chmod(0o700)
+        environment = dict(os.environ, PATH=str(bin_folder) + os.pathsep + os.environ["PATH"])
+        result = subprocess.run(["bash", str(ROOT / "deploy.sh"), "clean", "--dry-run"],
+                                env=environment, capture_output=True, text=True)
+        self.assertEqual(0, result.returncode, result.stderr)
+        self.assertIn('"dry_run": true', result.stdout)
+        self.assertNotIn("Cleanup must not contact Docker", result.stderr)
+
     def test_successful_init_followed_by_accidental_legacy_import_keeps_credentials(self):
         bin_folder = self.folder / "read-only-docker"
         bin_folder.mkdir()

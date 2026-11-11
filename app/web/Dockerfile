@@ -1,3 +1,11 @@
+# Remove build-only package managers before creating the final filesystem layer.
+# COPY from scratch keeps their bytes out of the published image, rather than
+# hiding them in an upper layer while retaining the original base layers.
+FROM node:22-bookworm-slim AS runtime-filesystem
+RUN rm -rf /usr/local/lib/node_modules /opt/yarn* \
+    /usr/local/bin/npm /usr/local/bin/npx /usr/local/bin/corepack \
+    /usr/local/bin/yarn /usr/local/bin/yarnpkg
+
 FROM node:22-bookworm-slim AS dependencies
 WORKDIR /app
 ENV NEXT_TELEMETRY_DISABLED=1
@@ -11,7 +19,9 @@ COPY . .
 RUN --mount=type=cache,id=makan-next-webpack,target=/app/.next/cache,sharing=locked \
     mkdir -p public && npm run build -- --webpack
 
-FROM node:22-bookworm-slim AS runtime
+FROM scratch AS runtime
+COPY --from=runtime-filesystem / /
+ENV PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 WORKDIR /app
 ENV NODE_ENV=production \
     NEXT_TELEMETRY_DISABLED=1 \

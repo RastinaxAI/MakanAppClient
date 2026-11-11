@@ -9,8 +9,10 @@
 !src/
 !src/**
 !contracts/
+contracts/**
 !contracts/platform-permissions.json
 !public/
 !public/**
 !scripts/
+scripts/**
 !scripts/docker-start.mjs
