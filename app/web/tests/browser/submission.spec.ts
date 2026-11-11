@@ -1,3 +1,4 @@
+import { captureExactState } from './exact-state-capture';
 import { test, expect, login, ids, fixture } from './test';
 test('S09 → S17 → S10 persists drafts, retains text on save failure and submits once', async ({
   page,
@@ -46,6 +47,8 @@ test('S09 → S17 → S10 persists drafts, retains text on save failure and subm
     page.getByRole('heading', { name: 'تکلیف تحویل داده شد', exact: true }),
   ).toBeVisible();
   await expect(page).toHaveURL(/\/receipt\?attempt=/);
+  await captureExactState(page, ['MK-145']);
+
   await page.reload();
   await expect(
     page.getByRole('heading', { name: 'تکلیف تحویل داده شد', exact: true }),
@@ -80,8 +83,8 @@ test('unsaved draft survives reload and cancelled link navigation', async ({ pag
   await page.getByRole('button', { name: 'شروع پاسخ جدید', exact: true }).click();
   const answer = page.getByLabel('پاسخ تکلیف', { exact: true });
   await answer.fill('پیش‌نویس خصوصی من');
-  page.once('dialog', (d) => d.dismiss());
   await page.getByRole('banner').locator(':is(a,button)[aria-label="بازگشت"]:visible').click();
+  await page.getByRole('dialog').getByRole('button', { name: 'ادامه ویرایش', exact: true }).click();
   await expect(answer).toHaveValue('پیش‌نویس خصوصی من');
   page.once('dialog', (d) => d.accept());
   await page.reload();

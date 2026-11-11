@@ -1,6 +1,6 @@
 # پنل مدیریت ماکان
 
-اتصال جاری بر اساس راهنمای `vNext` و OpenAPI سرور تست در ۵ نوامبر ۲۰۲۶ به‌روز شده است؛ انتخاب مدیر و نسخه عضویت خودکار، پیگیری دقیق درخواست سازمان و مدل نوع‌دار فراگیران متصل‌اند. [راهنمای کلاس‌های شخصی](docs/PERSONAL-CLASSES.md) و [گزارش همین اتصال](docs/INTEGRATION-VNEXT.md) را ببینید.
+اتصال جاری بر اساس مستندات `e5bd3ea` و Swagger زنده سرور تست در ۱۰ نوامبر ۲۰۲۶ به‌روز شده است. بخش مالی، وضعیت پرداخت و اجرای سفارش را جدا نشان می‌دهد و مراجع پوشیدهٔ پیگیری و تسویه زیبال و زمان‌های جدید پرداخت را از سرور می‌خواند. آمادگی AI منابع، مجوز مستقل کتابخانه و اتصال کلاس‌های شخصی نیز برقرار است. [گزارش اتصال جدید](docs/INTEGRATION-e5bd3ea.md)، [راهنمای مالی](docs/FINANCE.md) و [گزارش اتصال قبلی](docs/INTEGRATION-6f8edf8.md) را ببینید.
 
 پنل فارسی مالک پلتفرم، با همان طراحی سرمه‌ای و روشن. ورود فقط برای `PlatformOwner` همراه با `platform.access` است و مجوز هر عملیات جدا بررسی می‌شود. شماره همراه 11 رقمی با شروع 09 و کد ورود دقیقاً 6 رقمی است.
 
@@ -23,11 +23,11 @@
 npm run release:package
 ```
 
-بسته آمادهٔ این تحویل `MakanManagement-server-20261106.tar.gz` است؛ `setup.sh` و راهنماها داخل آن هستند. فایل فشرده و فایل `.sha256` کنارش را از ویندوز به سرور بفرستید:
+بسته آمادهٔ این تحویل `MakanManagement-server-20261110.tar.gz` است؛ `setup.sh` و راهنماها داخل آن هستند. فایل فشرده و فایل `.sha256` کنارش را از ویندوز به سرور بفرستید:
 
 ```powershell
 cd C:\Users\OmidrezaBagheriyan\Desktop\MakanManagement
-scp .\release\MakanManagement-server-20261106.tar.gz .\release\MakanManagement-server-20261106.tar.gz.sha256 omid@89.46.217.168:/tmp/
+scp .\release\MakanManagement-server-20261110.tar.gz .\release\MakanManagement-server-20261110.tar.gz.sha256 omid@89.46.217.168:/tmp/
 ssh omid@89.46.217.168
 ```
 
@@ -36,9 +36,9 @@ ssh omid@89.46.217.168
 ```bash
 sudo bash -e <<'DEPLOY'
 cd /tmp
-sha256sum -c MakanManagement-server-20261106.tar.gz.sha256
+sha256sum -c MakanManagement-server-20261110.tar.gz.sha256
 install -d -m 755 /var/www/makanapp/management
-tar --no-same-owner --no-same-permissions -xzf MakanManagement-server-20261106.tar.gz -C /var/www/makanapp/management
+tar --no-same-owner --no-same-permissions -xzf MakanManagement-server-20261110.tar.gz -C /var/www/makanapp/management
 cd /var/www/makanapp/management
 bash ./setup.sh --update
 DEPLOY

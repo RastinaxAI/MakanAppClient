@@ -11,7 +11,7 @@ services:
       NODE_ENV: production
       # A nonempty backend override wins; otherwise use config/network.json.
       BACKEND_BASE_URL: ${BACKEND_BASE_URL:-}
-      APP_ORIGIN: https://app.makanapp.org
+      APP_ORIGIN: https://testapp.makanapp.org
       COOKIE_SECURE: 'true'
       HOSTNAME: 0.0.0.0
       PORT: '3000'

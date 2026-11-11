@@ -1,3 +1,91 @@
+.filterActions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.cancelledCheck {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  justify-content: space-between;
+  min-height: 68px;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  font-size: calc(14px * var(--text-scale, 1));
+  font-weight: 600;
+  cursor: pointer;
+}
+.cancelledCheck input {
+  appearance: none;
+  width: 42px;
+  height: 24px;
+  min-height: 24px;
+  border-radius: 24px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  position: relative;
+  flex: none;
+  order: 2;
+  margin: 0;
+  padding: 0;
+}
+.cancelledCheck input::after {
+  content: '';
+  position: absolute;
+  inset-block-start: 2px;
+  inset-inline-start: 2px;
+  height: 18px;
+  width: 18px;
+  background: var(--surface);
+  border-radius: 50%;
+}
+.cancelledCheck input:checked {
+  background: var(--primary);
+  border-color: var(--primary);
+}
+.cancelledCheck input:checked::after {
+  inset-inline-start: 20px;
+}
+.classChoices {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  min-width: 0;
+  padding: 0;
+  margin: 0;
+}
+.classChoices label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px;
+  min-height: 68px;
+  cursor: pointer;
+}
+.classChoices label + label {
+  border-top: 1px solid var(--border);
+}
+.classChoices strong {
+  display: block;
+  font-size: calc(16px * var(--text-scale, 1));
+  line-height: 1.7;
+}
+.classChoices small {
+  display: block;
+  color: var(--muted);
+  font-size: calc(13px * var(--text-scale, 1));
+  line-height: 1.7;
+}
+.classChoices input {
+  width: 20px;
+  height: 20px;
+  min-height: 20px;
+  flex: none;
+  accent-color: var(--primary);
+}
 .weekNavigation {
   display: grid;
   grid-template-columns: minmax(92px, auto) minmax(0, 1fr) minmax(92px, auto);
@@ -12,7 +100,7 @@
   flex-wrap: wrap;
 }
 .schedule > div:first-child > h2 {
-  font-size: 17px;
+  font-size: calc(17px * var(--text-scale, 1));
   line-height: 1.8;
 }
 .previous {
@@ -34,7 +122,7 @@
   min-width: 76px;
   min-height: 46px;
   padding: 10px 12px;
-  font-size: 13px;
+  font-size: calc(13px * var(--text-scale, 1));
   flex-shrink: 0;
 }
 .range {
@@ -44,12 +132,12 @@
 }
 .range > span {
   display: block;
-  font-size: 11px;
+  font-size: calc(11px * var(--text-scale, 1));
   color: var(--muted);
   margin-top: 4px;
 }
 .range .weekLabel {
-  font-size: 18px;
+  font-size: calc(18px * var(--text-scale, 1));
   font-weight: 700;
   line-height: 1.8;
   margin: 0;
@@ -67,13 +155,13 @@
   margin-bottom: 12px;
 }
 .dayGroup h3 {
-  font-size: 14px;
+  font-size: calc(14px * var(--text-scale, 1));
   font-weight: 650;
   margin: 0;
   color: var(--primary);
 }
 .dayGroup > header time {
-  font-size: 12px;
+  font-size: calc(12px * var(--text-scale, 1));
   color: var(--muted);
 }
 .sessions {
@@ -98,12 +186,12 @@
   overflow-wrap: anywhere;
 }
 .session h4 {
-  font-size: 15px;
+  font-size: calc(15px * var(--text-scale, 1));
   line-height: 1.8;
   margin: 0 0 6px;
 }
 .session p {
-  font-size: 12px;
+  font-size: calc(12px * var(--text-scale, 1));
   color: var(--muted);
   margin: 0 0 8px;
 }
@@ -112,7 +200,7 @@
   align-items: center;
   gap: 12px;
   flex-wrap: wrap;
-  font-size: 12px;
+  font-size: calc(12px * var(--text-scale, 1));
   color: var(--muted);
 }
 .sessionMeta > span:first-child {
@@ -121,7 +209,7 @@
   gap: 7px;
 }
 .status {
-  font-size: 11px;
+  font-size: calc(11px * var(--text-scale, 1));
   line-height: 1.8;
   padding: 3px 8px;
   border-radius: 7px;
@@ -145,13 +233,13 @@
   height: 36px;
 }
 .empty h3 {
-  font-size: 16px;
+  font-size: calc(16px * var(--text-scale, 1));
   font-weight: 650;
   line-height: 1.9;
 }
 .empty :global(.state) p {
   max-width: 310px;
-  font-size: 13px;
+  font-size: calc(13px * var(--text-scale, 1));
   line-height: 1.9;
 }
 @media (max-width: 600px) {
@@ -167,27 +255,27 @@
     min-height: 44px;
     padding: 9px 6px;
     gap: 3px;
-    font-size: 12px;
+    font-size: calc(12px * var(--text-scale, 1));
   }
   .navigationButton svg {
     width: 16px;
     height: 16px;
   }
   .range .weekLabel {
-    font-size: 16px;
+    font-size: calc(16px * var(--text-scale, 1));
   }
   .range > span {
-    font-size: 11px;
+    font-size: calc(11px * var(--text-scale, 1));
   }
   .schedule > div:first-child > h2 {
-    font-size: 16px;
+    font-size: calc(16px * var(--text-scale, 1));
   }
   .session {
     padding: 14px;
     gap: 12px;
   }
   .session h4 {
-    font-size: 14px;
+    font-size: calc(14px * var(--text-scale, 1));
   }
   .sessionMeta {
     gap: 8px;

@@ -3,6 +3,8 @@ export type Problem = {
   status?: number;
   code?: string;
   traceId?: string;
+  requestId?: string;
+  correlationId?: string;
   errors?: Record<string, string[]>;
   retryAfter?: number;
   retryable?: boolean;
@@ -35,6 +37,24 @@ const serviceMessages: Record<string, string> = {
   NETWORK_ERROR: uiText.text_ad5229f8ee19,
 };
 const actionMessages: Record<string, string> = {
+  PAYMENT_STORAGE_UNAVAILABLE: uiText.paymentCopy.storageUnavailable,
+  PAYMENT_PROVIDER_UNAVAILABLE: uiText.paymentCopy.unavailable,
+  PAYMENT_PENDING_VERIFICATION: uiText.paymentCopy.verificationPending,
+  PAYMENT_AMOUNT_MISMATCH: uiText.paymentCopy.mismatch,
+  PAYMENT_CURRENCY_MISMATCH: uiText.paymentCopy.mismatch,
+  PAYMENT_REFERENCE_CONFLICT: uiText.paymentCopy.mismatch,
+  SUBSCRIPTION_INACTIVE: uiText.aiIntegration.subscriptionInactive,
+  AI_CONTEXT_NOT_ALLOWED: uiText.aiIntegration.contextNotAllowed,
+  AI_PAYER_SELECTION_REQUIRED: uiText.aiIntegration.payerRequired,
+  AI_RESOURCE_SELECTION_REQUIRED: uiText.aiIntegration.resourceRequired,
+  AI_CHILD_SELECTION_REQUIRED: uiText.aiIntegration.childRequired,
+  AI_QUOTA_NOT_AVAILABLE: uiText.aiIntegration.quota,
+  QUOTA_EXCEEDED: uiText.aiIntegration.quotaExceeded,
+  AI_CITATION_INVALID: uiText.aiIntegration.citationInvalid,
+  AI_UNAVAILABLE: uiText.aiIntegration.serviceUnavailable,
+  AI_RUNTIME_UNAVAILABLE: uiText.aiIntegration.serviceUnavailable,
+  AI_PROVIDER_UNAVAILABLE: uiText.aiIntegration.serviceUnavailable,
+  AI_SERVICE_UNAVAILABLE: uiText.aiIntegration.serviceUnavailable,
   ORGANIZATION_LAST_MANAGER_REQUIRED: uiText.vnext.lastManager,
   CLASS_CAPACITY_EXCEEDED: uiText.vnext.capacityConflict,
   FILE_NOT_READY: uiText.text_e072ddab3385,
@@ -98,6 +118,8 @@ export function parseProblem(value: unknown, status: number, retry?: string | nu
         : typeof p.correlationId === 'string'
           ? p.correlationId
           : undefined,
+    requestId: typeof p.requestId === 'string' ? p.requestId : undefined,
+    correlationId: typeof p.correlationId === 'string' ? p.correlationId : undefined,
     errors,
     ...(typeof p.retryable === 'boolean' ? { retryable: p.retryable } : {}),
     ...(p.requiredAction === 'KEEP_DRAFT_NO_AUTO_RETRY'

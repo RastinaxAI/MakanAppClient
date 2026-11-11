@@ -22,7 +22,7 @@
     "generated:check": "node scripts/check-generated.mjs",
     "quality": "node scripts/quality.mjs",
     "test:browser": "playwright test",
-    "format:check": "prettier --check src tests/browser tests/unit tests/fixtures scripts design/tokens.json *.ts *.mts *.mjs package.json",
+    "format:check": "prettier --check src tests/browser tests/production tests/unit tests/fixtures scripts design/tokens.json *.ts *.mts package.json",
     "repro:check": "node scripts/repro-check.mjs",
     "prebuild": "node scripts/build-public-brand.mjs",
     "content:check": "vitest run tests/unit/content-architecture.test.ts",
@@ -45,18 +45,15 @@
     "react-dom": "19.3.1",
     "react-hook-form": "7.65.0",
     "server-only": "0.0.1",
-    "tailwind-merge": "3.3.1",
     "zod": "4.6.7"
   },
   "devDependencies": {
     "@playwright/test": "1.56.1",
-    "@tailwindcss/postcss": "4.3.3",
     "@types/node": "24.7.2",
     "@types/react": "19.2.2",
     "@types/react-dom": "19.2.2",
     "openapi-typescript": "7.13.0",
     "prettier": "3.6.2",
-    "tailwindcss": "4.3.3",
     "typescript": "5.9.3",
     "vitest": "4.1.12"
   }

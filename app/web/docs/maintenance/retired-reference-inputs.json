@@ -1,0 +1,167 @@
+{
+  "reason": "Only V5 is the active visual source. Old prototype inputs/tools and unrelated root data are outside the Next.js project; their contents are preserved.",
+  "files": [
+    {
+      "path": "design/reference-v2",
+      "backup": "/home/omidreza-bagheriyan/Desktop/MakanApp-cleanup-backup-2026-11-10/historical-reference-inputs/design/reference-v2",
+      "bytes": 7395881,
+      "status": "moved outside active workspace, recoverable"
+    },
+    {
+      "path": "design/reference-v3",
+      "backup": "/home/omidreza-bagheriyan/Desktop/MakanApp-cleanup-backup-2026-11-10/historical-reference-inputs/design/reference-v3",
+      "bytes": 7384143,
+      "status": "moved outside active workspace, recoverable"
+    },
+    {
+      "path": "design/reference-v4",
+      "backup": "/home/omidreza-bagheriyan/Desktop/MakanApp-cleanup-backup-2026-11-10/historical-reference-inputs/design/reference-v4",
+      "bytes": 79012975,
+      "status": "moved outside active workspace, recoverable"
+    },
+    {
+      "path": "design/prototype",
+      "backup": "/home/omidreza-bagheriyan/Desktop/MakanApp-cleanup-backup-2026-11-10/historical-reference-inputs/design/prototype",
+      "bytes": 126356,
+      "status": "moved outside active workspace, recoverable"
+    },
+    {
+      "path": "design/screens.json",
+      "backup": "/home/omidreza-bagheriyan/Desktop/MakanApp-cleanup-backup-2026-11-10/historical-reference-inputs/design/screens.json",
+      "bytes": 124279,
+      "status": "moved outside active workspace, recoverable"
+    },
+    {
+      "path": "design/flows.json",
+      "backup": "/home/omidreza-bagheriyan/Desktop/MakanApp-cleanup-backup-2026-11-10/historical-reference-inputs/design/flows.json",
+      "bytes": 24074,
+      "status": "moved outside active workspace, recoverable"
+    },
+    {
+      "path": "design/api-map.json",
+      "backup": "/home/omidreza-bagheriyan/Desktop/MakanApp-cleanup-backup-2026-11-10/historical-reference-inputs/design/api-map.json",
+      "bytes": 55847,
+      "status": "moved outside active workspace, recoverable"
+    },
+    {
+      "path": "design/implementation-map.json",
+      "backup": "/home/omidreza-bagheriyan/Desktop/MakanApp-cleanup-backup-2026-11-10/historical-reference-inputs/design/implementation-map.json",
+      "bytes": 39096,
+      "status": "moved outside active workspace, recoverable"
+    },
+    {
+      "path": "design/content-addresses.json",
+      "backup": "/home/omidreza-bagheriyan/Desktop/MakanApp-cleanup-backup-2026-11-10/historical-reference-inputs/design/content-addresses.json",
+      "bytes": 833525,
+      "status": "moved outside active workspace, recoverable"
+    },
+    {
+      "path": "design/mk-reference.json",
+      "backup": "/home/omidreza-bagheriyan/Desktop/MakanApp-cleanup-backup-2026-11-10/historical-reference-inputs/design/mk-reference.json",
+      "bytes": 153921,
+      "status": "moved outside active workspace, recoverable"
+    },
+    {
+      "path": "design/mk-route-retention.json",
+      "backup": "/home/omidreza-bagheriyan/Desktop/MakanApp-cleanup-backup-2026-11-10/historical-reference-inputs/design/mk-route-retention.json",
+      "bytes": 68522,
+      "status": "moved outside active workspace, recoverable"
+    },
+    {
+      "path": "design/v4-traceability.json",
+      "backup": "/home/omidreza-bagheriyan/Desktop/MakanApp-cleanup-backup-2026-11-10/historical-reference-inputs/design/v4-traceability.json",
+      "bytes": 809261,
+      "status": "moved outside active workspace, recoverable"
+    },
+    {
+      "path": "design/reference-v4-archive.json",
+      "backup": "/home/omidreza-bagheriyan/Desktop/MakanApp-cleanup-backup-2026-11-10/historical-reference-inputs/design/reference-v4-archive.json",
+      "bytes": 317,
+      "status": "moved outside active workspace, recoverable"
+    },
+    {
+      "path": "../MakanApp_Codex_Reference_Pack",
+      "backup": "/home/omidreza-bagheriyan/Desktop/MakanApp-cleanup-backup-2026-11-10/historical-reference-inputs/workspace-root/MakanApp_Codex_Reference_Pack",
+      "bytes": 60593545,
+      "status": "moved outside active workspace, recoverable"
+    },
+    {
+      "path": "../malikam_excel.json",
+      "backup": "/home/omidreza-bagheriyan/Desktop/MakanApp-cleanup-backup-2026-11-10/historical-reference-inputs/workspace-root/malikam_excel.json",
+      "bytes": 19716,
+      "status": "moved outside active workspace, recoverable"
+    },
+    {
+      "path": "scripts/summarize-mk-reference.mjs",
+      "backup": "/home/omidreza-bagheriyan/Desktop/MakanApp-cleanup-backup-2026-11-10/historical-reference-inputs/scripts/summarize-mk-reference.mjs",
+      "bytes": 5419,
+      "status": "moved outside active workspace, recoverable"
+    },
+    {
+      "path": "scripts/build-mk-blueprints.mjs",
+      "backup": "/home/omidreza-bagheriyan/Desktop/MakanApp-cleanup-backup-2026-11-10/historical-reference-inputs/scripts/build-mk-blueprints.mjs",
+      "bytes": 11616,
+      "status": "moved outside active workspace, recoverable"
+    },
+    {
+      "path": "scripts/build-mk-v3-gallery.mjs",
+      "backup": "/home/omidreza-bagheriyan/Desktop/MakanApp-cleanup-backup-2026-11-10/historical-reference-inputs/scripts/build-mk-v3-gallery.mjs",
+      "bytes": 4693,
+      "status": "moved outside active workspace, recoverable"
+    },
+    {
+      "path": "scripts/build-v4-traceability.mjs",
+      "backup": "/home/omidreza-bagheriyan/Desktop/MakanApp-cleanup-backup-2026-11-10/historical-reference-inputs/scripts/build-v4-traceability.mjs",
+      "bytes": 14071,
+      "status": "moved outside active workspace, recoverable"
+    },
+    {
+      "path": "scripts/import-mk-v2-reference.mjs",
+      "backup": "/home/omidreza-bagheriyan/Desktop/MakanApp-cleanup-backup-2026-11-10/historical-reference-inputs/scripts/import-mk-v2-reference.mjs",
+      "bytes": 4881,
+      "status": "moved outside active workspace, recoverable"
+    },
+    {
+      "path": "scripts/document-mk-reference.mjs",
+      "backup": "/home/omidreza-bagheriyan/Desktop/MakanApp-cleanup-backup-2026-11-10/historical-reference-inputs/scripts/document-mk-reference.mjs",
+      "bytes": 16111,
+      "status": "moved outside active workspace, recoverable"
+    },
+    {
+      "path": "scripts/document-mk-v2.mjs",
+      "backup": "/home/omidreza-bagheriyan/Desktop/MakanApp-cleanup-backup-2026-11-10/historical-reference-inputs/scripts/document-mk-v2.mjs",
+      "bytes": 5422,
+      "status": "moved outside active workspace, recoverable"
+    },
+    {
+      "path": "scripts/centralize-ui-content.mjs",
+      "backup": "/home/omidreza-bagheriyan/Desktop/MakanApp-cleanup-backup-2026-11-10/historical-reference-inputs/scripts/centralize-ui-content.mjs",
+      "bytes": 9879,
+      "status": "moved outside active workspace, recoverable"
+    },
+    {
+      "path": "scripts/compare-mk-reference.py",
+      "backup": "/home/omidreza-bagheriyan/Desktop/MakanApp-cleanup-backup-2026-11-10/historical-reference-inputs/scripts/compare-mk-reference.py",
+      "bytes": 2118,
+      "status": "moved outside active workspace, recoverable"
+    },
+    {
+      "path": "scripts/import-mk-v4-reference.mjs",
+      "backup": "/home/omidreza-bagheriyan/Desktop/MakanApp-cleanup-backup-2026-11-10/historical-reference-inputs/scripts/import-mk-v4-reference.mjs",
+      "bytes": 4517,
+      "status": "moved outside active workspace, recoverable"
+    },
+    {
+      "path": "scripts/build-mk-v2-gallery.mjs",
+      "backup": "/home/omidreza-bagheriyan/Desktop/MakanApp-cleanup-backup-2026-11-10/historical-reference-inputs/scripts/build-mk-v2-gallery.mjs",
+      "bytes": 4742,
+      "status": "moved outside active workspace, recoverable"
+    },
+    {
+      "path": "scripts/create-project-rescan-pdf.mjs",
+      "backup": "/home/omidreza-bagheriyan/Desktop/MakanApp-cleanup-backup-2026-11-10/historical-reference-inputs/scripts/create-project-rescan-pdf.mjs",
+      "bytes": 36117,
+      "status": "moved outside active workspace, recoverable"
+    }
+  ]
+}

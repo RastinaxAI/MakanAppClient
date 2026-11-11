@@ -1,7 +1,14 @@
 'use client';
+import {
+  Select as NativeSelect,
+  Input as NativeInput,
+  Textarea as NativeTextarea,
+} from '@/components/ui/input';
+
+import { uiClass } from '@/components/v5/classes';
+
 import * as uiText from '@/content/fa';
 import { useAcademicScope } from './academic-scope';
-import { PageBack } from '@/components/navigation/page-back';
 import { ActivityDeliveryStatus } from './activity-delivery';
 import { Button } from '@/components/ui/button';
 import { JalaliDateInput } from '@/components/ui/jalali-date-input';
@@ -12,7 +19,9 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { usePersonal, usePersonalApi } from '../provider';
-import { ReferenceColumns } from '../reference-layout';
+import { AssignmentForm } from './assignment-form';
+import { AssignmentFiles } from './assignment-files';
+import { V5Scene } from '@/components/v5/scene';
 import { ApiError } from '@/lib/api/errors';
 import f from './reference-form.module.css';
 import s from './school.module.css';
@@ -47,14 +56,14 @@ export function Assignments({ classId, teach }: { classId?: string; teach: boole
       {!classId && (
         <Card>
           <Field label={uiText.text_c476f4996767}>
-            <select value={chosen} onChange={(e) => setChosen(e.target.value)}>
+            <NativeSelect value={chosen} onChange={(e) => setChosen(e.target.value)}>
               <option value="">{uiText.text_64a80eb6ce5b}</option>
               {classes.data?.map((c) => (
                 <option key={c.id} value={c.id}>
                   {c.title}
                 </option>
               ))}
-            </select>
+            </NativeSelect>
           </Field>
           {classes.isError && <ErrorState error={classes.error} />}
         </Card>
@@ -65,9 +74,9 @@ export function Assignments({ classId, teach }: { classId?: string; teach: boole
         ) : q.isError ? (
           <ErrorState error={q.error} onRetry={() => void q.refetch()} />
         ) : q.data.length ? (
-          <div className={s.grid}>
+          <div className={uiClass(s.grid)}>
             {q.data.map((a) => (
-              <article key={a.id} className={s.classCard}>
+              <article key={a.id} className={uiClass(s.classCard)}>
                 <Status>{label(a.status)}</Status>
                 <h2>{a.title}</h2>
                 <p>
@@ -76,7 +85,7 @@ export function Assignments({ classId, teach }: { classId?: string; teach: boole
                   {uiText.text_fbb3425cdeea}
                   {date(a.dueAtUtc, true)}
                 </p>
-                <footer className={s.cardActions}>
+                <footer className={uiClass(s.cardActions)}>
                   <Button asChild>
                     <Link
                       href={base + '/assignments/' + a.id}
@@ -103,27 +112,32 @@ export function AssignmentFormPage({ classId }: { classId: string }) {
   if (
     scope.personal
       ? !scope.personal.assignments
-      : !['Teacher', 'Manager'].includes(session.context.activeRole ?? '')
+      : session.context.workspaceType !== 'Organization' ||
+        !['Teacher', 'Manager'].includes(session.context.activeRole ?? '')
   )
     return <ErrorState error={new ApiError(403)} />;
-  return (
-    <div data-school-form>
-      <h1 className="sr-only">{uiText.text_6ddab36198ac}</h1>
-      <ReferenceColumns form>
-        <p className={f.intro}>{uiText.text_f71501099cc4}</p>
-        <CreateAssignment classId={classId} />
-      </ReferenceColumns>
-    </div>
+  return scope.personal ? (
+    <CreateAssignment classId={classId} />
+  ) : (
+    <AssignmentForm key={classId} classId={classId} />
   );
 }
 function CreateAssignment({ classId }: { classId: string }) {
-  const { base } = useAcademicScope();
-  const { classApi, classPath } = useAcademicScope();
+  const { base, classApi, classPath, personal } = useAcademicScope();
   const a = useSchoolAction(),
     router = useRouter();
   return (
-    <form
-      className={f.body}
+    <V5Scene
+      id={personal ? 'MK-60' : 'MK-141'}
+      title={uiText.text_6ddab36198ac}
+      back={classPath(classId)}
+      schoolForm
+      onMore={() => window.dispatchEvent(new Event('makan:education-sections'))}
+      actions={
+        <Button type="submit" disabled={a.busy}>
+          {uiText.text_6cac361a9d88}
+        </Button>
+      }
       onSubmit={async (e) => {
         e.preventDefault();
         const f = new FormData(e.currentTarget);
@@ -138,36 +152,33 @@ function CreateAssignment({ classId }: { classId: string }) {
         if (result) router.push(base + '/assignments/' + result.id);
       }}
     >
-      <Field label={uiText.text_c864088e1061}>
-        <input required name="title" />
-      </Field>
-      <Field label={uiText.text_1d3c268468ff}>
-        <textarea required name="description" />
-      </Field>
-      <h2 className={f.sectionLabel}>{uiText.text_8dfc669046e4}</h2>
-      <Field label={uiText.text_2b26e703adf2}>
-        <JalaliDateInput required withTime name="due" />
-      </Field>
-      <div className={s.two}>
-        <Field label={uiText.text_0e469bc1ffab}>
-          <input name="attempts" type="number" required min={1} step={1} />
+      <p className={uiClass(f.intro)}>{uiText.text_f71501099cc4}</p>
+      <fieldset data-v5-workflow-fields disabled={a.busy}>
+        <Field label={uiText.text_c864088e1061}>
+          <NativeInput required name="title" />
         </Field>
-        <Field label={uiText.text_25823dfdfd3f}>
-          <input name="score" type="number" required min={0.01} step="0.01" />
+        <Field label={uiText.text_1d3c268468ff}>
+          <NativeTextarea required name="description" />
         </Field>
-      </div>
-      <label className={s.check}>
-        <input name="late" type="checkbox" />
-        {uiText.text_8dd151936022}
-      </label>
-      <div className={f.actions}>
-        <Button type="submit" disabled={a.busy}>
-          {uiText.text_6cac361a9d88}
-        </Button>
-        <PageBack href={classPath(classId)} />
-      </div>
+        <h2 className={uiClass(f.sectionLabel)}>{uiText.text_8dfc669046e4}</h2>
+        <Field label={uiText.text_2b26e703adf2}>
+          <JalaliDateInput required withTime name="due" />
+        </Field>
+        <div className={uiClass(s.two)}>
+          <Field label={uiText.text_0e469bc1ffab}>
+            <NativeInput name="attempts" type="number" required min={1} step={1} />
+          </Field>
+          <Field label={uiText.text_25823dfdfd3f}>
+            <NativeInput name="score" type="number" required min={0.01} step="0.01" />
+          </Field>
+        </div>
+        <label className={uiClass(s.check)}>
+          <NativeInput name="late" type="checkbox" />
+          {uiText.text_8dd151936022}
+        </label>
+      </fieldset>
       {a.feedback}
-    </form>
+    </V5Scene>
   );
 }
 export function AssignmentDetail({ id, teach }: { id: string; teach: boolean }) {
@@ -177,12 +188,12 @@ export function AssignmentDetail({ id, teach }: { id: string; teach: boolean }) 
   if (q.isPending) return <LoadingSkeleton />;
   if (q.isError) return <ErrorState error={q.error} onRetry={() => void q.refetch()} />;
   const item = q.data;
-  if (!scope.matches(item)) return <ErrorState error={new ApiError(404)} />;
+  if (item.id !== id || !scope.matches(item)) return <ErrorState error={new ApiError(404)} />;
   return (
     <>
       <SchoolHeading title={item.title} description={item.classTitle} back />
       <Card>
-        <div className={s.row}>
+        <div className={uiClass(s.row)}>
           <Status>{label(item.status)}</Status>
           <span>
             {uiText.text_fbb3425cdeea}
@@ -193,9 +204,10 @@ export function AssignmentDetail({ id, teach }: { id: string; teach: boolean }) 
             {item.maxScore}
           </span>
         </div>
-        <p className={s.bodyText}>{item.description}</p>
+        <p className={uiClass(s.bodyText)}>{item.description}</p>
+        {!scope.personal && <AssignmentFiles value={item} />}
         {teach && (!scope.personal || scope.personal.assignments) && item.status === 'Draft' && (
-          <div className={s.row}>
+          <div className={uiClass(s.row)}>
             <Button asChild variant="outline">
               <Link href={`${base}/assignments/${id}/edit`}>{uiText.text_1d3577cf9675}</Link>
             </Button>
@@ -247,13 +259,13 @@ export function TeacherLearners({ classId }: { classId: string }) {
   return (
     <Card title={uiText.text_e443a9f2c748}>
       {assigned && (
-        <p className={s.notice}>
+        <p className={uiClass(s.notice)}>
           {uiText.text_5e21cda4898b}{' '}
           {new Intl.NumberFormat('fa-IR').format(assigned.activeLearnerCount)}
           {uiText.text_56bfaedd15bf}
         </p>
       )}
-      <p className={s.hint}>{uiText.text_1cab39a10925}</p>
+      <p className={uiClass(s.hint)}>{uiText.text_1cab39a10925}</p>
       {q.isPending ? (
         <LoadingSkeleton />
       ) : q.isError ? (
@@ -261,8 +273,8 @@ export function TeacherLearners({ classId }: { classId: string }) {
       ) : (
         <>
           {q.data.items.length ? (
-            <div className={s.tableWrap}>
-              <table className={s.table}>
+            <div className={uiClass(s.tableWrap)}>
+              <table className={uiClass(s.table)}>
                 <thead>
                   <tr>
                     <th>{uiText.text_fbd179d162db}</th>

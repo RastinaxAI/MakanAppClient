@@ -1,3 +1,4 @@
+import { reviewPath } from './review-output';
 import { test, expect, login, fixture, origin } from './test';
 import { messagingWorkspace as t } from '@/content/fa';
 const conversation = '00000000-0000-4000-8000-000000000950';
@@ -168,7 +169,7 @@ test('workspace guidance fits both themes and phone tablet desktop viewports', a
 }) => {
   await login(context, 'Teacher', false);
   const { mkdir } = await import('node:fs/promises');
-  await mkdir('output/review/messaging-context-20261105/fixture', { recursive: true });
+  await mkdir(reviewPath('output/review/messaging-context-20261105/fixture'), { recursive: true });
   for (const theme of ['light', 'dark'])
     for (const width of [320, 390, 834, 1440]) {
       await page.setViewportSize({ width, height: 1000 });
@@ -184,7 +185,7 @@ test('workspace guidance fits both themes and phone tablet desktop viewports', a
         true,
       );
       await page.screenshot({
-        path: `output/review/messaging-context-20261105/fixture/${theme}-${width}.png`,
+        path: reviewPath(`output/review/messaging-context-20261105/fixture/${theme}-${width}.png`),
       });
     }
 });

@@ -1,5 +1,8 @@
 import { id, ids, make, classRow, paged } from './state.mjs';
-export function seedManagerCase(state) {
+import { seedReferenceCase } from './design-case.mjs';
+export function seedManagerCase(state, options = {}) {
+  if (options.exactV5Lesson) seedReferenceCase(state, { exactV5: true });
+  state.exactV5Catalog = options.exactV5Catalog === true;
   const members = ['معلم اول', 'معلم دوم', 'دانش‌آموز اول', 'دانش‌آموز دوم', 'والد آزمایشی'].map(
     (displayName, i) =>
       make('SchoolMemberResult', {
@@ -32,6 +35,107 @@ export function seedManagerCase(state) {
     ],
     invitations: [],
   };
+  // Explicit reference-data fixture; ordinary runtime never reads these values.
+  if (options.exactV5) {
+    state.design = true;
+    const m = state.managerCase;
+    m.classes = Array.from({ length: 12 }, (_, index) => ({
+      ...classRow(),
+      id: index ? id(18500 + index) : ids.class,
+      title:
+        index === 0
+          ? 'ریاضی دهم · گروه الف'
+          : index === 1
+            ? 'زبان دهم'
+            : 'علوم دهم · گروه ' + (index + 1),
+      courseTitle: index === 0 ? 'ریاضی' : index === 1 ? 'زبان' : 'علوم',
+      academicPeriodTitle: 'پاییز ۱۴۰۵',
+      capacity: 30,
+    }));
+    m.members[0].displayName = 'مریم رضایی';
+    m.members[1].displayName = 'علی کریمی';
+    for (let index = 2; index < 18; index++)
+      m.members.push(
+        make('SchoolMemberResult', {
+          userId: id(18700 + index),
+          membershipId: id(18800 + index),
+          organizationPersonId: id(18900 + index),
+          displayName: 'مدرس آزمایشی ' + (index + 1),
+          membershipStatus: 'Active',
+          activeRoles: ['Teacher'],
+          version: '1',
+          roleAssignments: [],
+        }),
+      );
+    m.learners = m.classes.flatMap((item, index) =>
+      Array.from({ length: index < 2 ? 24 : 20 }, (_, learner) =>
+        make('ClassLearnerResult', {
+          classId: item.id,
+          enrollmentId: id(20000 + index * 100 + learner),
+          learnerOrganizationPersonId: id(22000 + index * 100 + learner),
+          userId: id(24000 + index * 100 + learner),
+          displayName: 'دانش‌آموز آزمایشی ' + (learner + 1),
+          status: 'Active',
+          version: '1',
+        }),
+      ),
+    );
+    const teacherMembers = m.members.filter((member) => member.activeRoles.includes('Teacher'));
+    m.teachers = m.classes.map((item, index) =>
+      make('ClassTeacherResult', {
+        classId: item.id,
+        teacherAssignmentId: id(27000 + index),
+        teacherMembershipId: teacherMembers[index].membershipId,
+        userId: teacherMembers[index].userId,
+        personId: teacherMembers[index].personId,
+        displayName: teacherMembers[index].displayName,
+        status: 'Active',
+        version: '1',
+      }),
+    );
+    if (options.exactV5TeacherRoster) {
+      m.classes[0].title = 'ریاضی دهم';
+      m.teachers = m.teachers.filter((item) => item.classId !== ids.class);
+      for (const [index, displayName, assignedAtUtc] of [
+        [0, 'مریم رضایی', '2026-09-23T08:00:00Z'],
+        [1, 'امیر نظری', '2026-09-27T08:00:00Z'],
+      ])
+        m.teachers.push(
+          make('ClassTeacherResult', {
+            classId: ids.class,
+            teacherAssignmentId: id(27900 + index),
+            teacherMembershipId: teacherMembers[index].membershipId,
+            userId: teacherMembers[index].userId,
+            personId: teacherMembers[index].personId,
+            displayName,
+            assignedAtUtc,
+            status: 'Active',
+            version: '1',
+          }),
+        );
+    }
+    if (options.exactV5Attendance) {
+      const count = options.attendanceRosterCount ?? 3;
+      if (!Number.isInteger(count) || count < 1 || count > 200)
+        throw Error('Invalid attendance QA roster count');
+      m.classes[0].title = 'ریاضی دهم';
+      m.classes[0].capacity = Math.max(30, count);
+      const names = ['نازنین موسوی', 'امیر نادری', 'مریم احمدی'];
+      m.learners = m.learners.filter((row) => row.classId !== ids.class);
+      for (let index = 0; index < count; index++)
+        m.learners.push(
+          make('ClassLearnerResult', {
+            classId: ids.class,
+            enrollmentId: id(20000 + index),
+            learnerOrganizationPersonId: id(22000 + index),
+            userId: id(24000 + index),
+            displayName: names[index] ?? 'دانش‌آموز آزمایشی ' + (index + 1),
+            status: 'Active',
+            version: '1',
+          }),
+        );
+    }
+  }
 }
 export function managerRoute({ state, auth, url, req, body, send }) {
   const m = state.managerCase,
@@ -189,14 +293,26 @@ export function managerRoute({ state, auth, url, req, body, send }) {
         organizationId: ids.org,
         classId,
       });
-    if (req.method === 'GET')
-      return send(
-        paged(
-          teacher ? 'SchoolPageOfClassTeacherResult' : 'SchoolPageOfClassLearnerResult',
-          rows.filter((x) => x.classId === classId),
-          url,
+    if (req.method === 'GET') {
+      const result = paged(
+        teacher ? 'SchoolPageOfClassTeacherResult' : 'SchoolPageOfClassLearnerResult',
+        rows.filter(
+          (x) =>
+            x.classId === classId &&
+            (!url.searchParams.get('Search') ||
+              [x.displayName, x.username ?? ''].some((text) =>
+                text.includes(url.searchParams.get('Search')),
+              )) &&
+            (!url.searchParams.get('status') || x.status === url.searchParams.get('status')),
         ),
+        url,
       );
+      result.items = result.items.slice(
+        (result.page - 1) * result.pageSize,
+        result.page * result.pageSize,
+      );
+      return send(result);
+    }
     if (relationId) {
       const row = rows.find(
         (x) =>

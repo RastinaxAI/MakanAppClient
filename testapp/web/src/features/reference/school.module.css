@@ -1,0 +1,42 @@
+/* Product styles: owned here; original V5 source remains read-only in design/reference-v5. */
+.school {
+  width: 100%;
+  min-width: 0;
+  display: grid;
+  gap: 16px;
+}
+@media (max-width: 767px) {
+  .school {
+    gap: 16px;
+  }
+}
+.inline :global(nav) {
+  display: flex !important;
+  flex-wrap: nowrap;
+  overflow: auto;
+  background: var(--surface2);
+  border: 0;
+  border-radius: 12px;
+  padding: 4px;
+  gap: 4px;
+}
+.inline :global(nav a) {
+  flex: 1;
+  white-space: nowrap;
+  min-height: 40px;
+  border: 0;
+  border-radius: 9px;
+  padding: 8px 12px;
+  font-size: calc(14px * var(--text-scale, 1));
+  justify-content: center;
+}
+.inline :global(nav a[aria-current='page']) {
+  background: var(--surface);
+  color: var(--text);
+}
+.inline :global(nav svg) {
+  display: none;
+}
+.inline :global(nav[data-manager] a:nth-child(n + 4)) {
+  display: none;
+}

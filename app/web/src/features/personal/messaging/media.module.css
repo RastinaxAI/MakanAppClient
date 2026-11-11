@@ -6,9 +6,9 @@
   min-width: 44px;
   width: 44px;
   height: 44px;
-  border: 0;
-  border-radius: 12px;
-  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface);
   color: var(--muted);
 }
 .attachButton:hover {
@@ -22,7 +22,7 @@
   border-radius: 8px;
   background: var(--primary);
   color: var(--surface);
-  font-size: 9px;
+  font-size: calc(9px * var(--text-scale, 1));
   padding: 1px 5px;
 }
 .attachMenu {
@@ -36,7 +36,7 @@
   min-height: 50px;
   padding: 12px 14px;
   border-radius: 10px;
-  font-size: 13px;
+  font-size: calc(13px * var(--text-scale, 1));
   cursor: pointer;
   outline: 0;
 }
@@ -95,12 +95,12 @@
 }
 .draftInfo > strong {
   display: block;
-  font-size: 12px;
+  font-size: calc(12px * var(--text-scale, 1));
   overflow-wrap: anywhere;
 }
 .draftInfo > small {
   display: block;
-  font-size: 10px;
+  font-size: calc(10px * var(--text-scale, 1));
   color: var(--muted);
   margin-block: 3px;
 }
@@ -125,7 +125,7 @@
   gap: 5px;
   align-items: center;
   color: var(--teal);
-  font-size: 10px;
+  font-size: calc(10px * var(--text-scale, 1));
 }
 .selected {
   color: var(--muted);
@@ -133,11 +133,11 @@
 .itemError {
   display: block;
   color: var(--danger);
-  font-size: 10px;
+  font-size: calc(10px * var(--text-scale, 1));
   line-height: 1.9;
 }
 .caption {
-  font-size: 12px;
+  font-size: calc(12px * var(--text-scale, 1));
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -147,10 +147,10 @@
   min-height: 70px;
   max-height: 160px;
   border-radius: 14px;
-  font-size: 14px;
+  font-size: calc(14px * var(--text-scale, 1));
 }
 .transferError {
-  font-size: 11px;
+  font-size: calc(11px * var(--text-scale, 1));
   line-height: 1.9;
   color: var(--danger);
   overflow-wrap: anywhere;
@@ -181,7 +181,7 @@
   min-width: 0;
 }
 .meter > span {
-  font-size: 10px;
+  font-size: calc(10px * var(--text-scale, 1));
   color: var(--muted);
 }
 .meter progress {
@@ -193,7 +193,7 @@
   overflow: hidden;
 }
 .meter small {
-  font-size: 9px;
+  font-size: calc(9px * var(--text-scale, 1));
   color: var(--muted);
 }
 .pendingFiles {
@@ -207,7 +207,7 @@
   display: flex;
   align-items: center;
   gap: 7px;
-  font-size: 11px;
+  font-size: calc(11px * var(--text-scale, 1));
   color: var(--primary);
   overflow-wrap: anywhere;
 }
@@ -246,7 +246,7 @@
 .fileIntro strong,
 .fileReady strong {
   display: block;
-  font-size: 11px;
+  font-size: calc(11px * var(--text-scale, 1));
   font-weight: 600;
   overflow-wrap: anywhere;
   white-space: normal;
@@ -255,7 +255,7 @@
 .fileReady small {
   display: block;
   color: var(--muted);
-  font-size: 9px;
+  font-size: calc(9px * var(--text-scale, 1));
   margin-top: 4px;
 }
 .fileIcon {
@@ -327,10 +327,10 @@
     gap: 10px;
   }
   .draftInfo > strong {
-    font-size: 12px;
+    font-size: calc(12px * var(--text-scale, 1));
   }
   .caption textarea {
-    font-size: 16px;
+    font-size: calc(16px * var(--text-scale, 1));
   }
   .sheetActions {
     flex-wrap: wrap;
@@ -341,11 +341,11 @@
   }
   .fileIntro strong,
   .fileReady strong {
-    font-size: 12px;
+    font-size: calc(12px * var(--text-scale, 1));
   }
   .fileIntro small,
   .fileReady small {
-    font-size: 10px;
+    font-size: calc(10px * var(--text-scale, 1));
   }
   .attachment {
     width: 290px;
@@ -358,7 +358,7 @@
     gap: 10px;
   }
   .meter > span {
-    font-size: 11px;
+    font-size: calc(11px * var(--text-scale, 1));
   }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -366,18 +366,13 @@
     animation: none;
   }
 }
-.attachButton {
-  width: 48px;
-  height: 48px;
-  min-width: 48px;
-}
 .draftCard {
   border-radius: 12px;
   background: var(--soft);
 }
 .attachMenu > [role='menuitem'] {
   min-height: 52px;
-  font-size: 14px;
+  font-size: calc(14px * var(--text-scale, 1));
 }
 
 /* File cards sit inside a message bubble, with native transfer feedback retained. */
@@ -394,12 +389,12 @@
 }
 .fileIntro strong,
 .fileReady strong {
-  font-size: 13px;
+  font-size: calc(13px * var(--text-scale, 1));
   color: var(--primary);
 }
 .fileIntro small,
 .fileReady small {
-  font-size: 11px;
+  font-size: calc(11px * var(--text-scale, 1));
 }
 .fileIcon {
   width: 48px;
@@ -408,14 +403,8 @@
   background: var(--primary);
   color: var(--on-primary);
 }
-.attachButton {
-  width: 44px;
-  min-width: 44px;
-  height: 44px;
-  border-radius: 50%;
-}
 .attachMenu > [role='menuitem'] {
-  font-size: 14px;
+  font-size: calc(14px * var(--text-scale, 1));
   border-radius: 8px;
 }
 .draftCard {

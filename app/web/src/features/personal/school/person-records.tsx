@@ -1,17 +1,13 @@
 'use client';
+import { Input as NativeInput, Textarea as NativeTextarea } from '@/components/ui/input';
+
+import { uiClass } from '@/components/v5/classes';
+
 import * as uiText from '@/content/fa';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import {
-  CircleUserRound,
-  FileUser,
-  Link2,
-  Unlink,
-  Pencil,
-  FolderOpen,
-  ClipboardList,
-} from 'lucide-react';
+import { CircleUserRound, FileUser, Link2, Unlink, Pencil, FolderOpen } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { EmptyState, ErrorState, LoadingSkeleton, StatusBadge } from '@/components/ui/states';
 import type { components } from '@/generated/api/schema';
@@ -33,9 +29,9 @@ export function People() {
       new URLSearchParams({ page: String(page), pageSize: '30', ...(search ? { search } : {}) }),
   );
   return (
-    <div className={s.page}>
+    <div className={uiClass(s.page)}>
       <DirectoryHeader records />
-      <section className={s.panel} aria-label={uiText.text_e4b1c0f12b56}>
+      <section className={uiClass(s.panel)} aria-label={uiText.text_e4b1c0f12b56}>
         <SchoolSearch
           label={uiText.text_e52c421dff2c}
           onSearch={(value) => {
@@ -44,8 +40,8 @@ export function People() {
           }}
         />
       </section>
-      <section className={s.panel} aria-label={uiText.text_2b7ab2fd590c}>
-        <header className={s.resultHeading}>
+      <section className={uiClass(s.panel)} aria-label={uiText.text_2b7ab2fd590c}>
+        <header className={uiClass(s.resultHeading)}>
           <h2>{uiText.text_761e229676b7}</h2>
           {q.data && (
             <span>
@@ -61,8 +57,8 @@ export function People() {
         ) : (
           <>
             {q.data.items.length ? (
-              <div className={s.tableWrap}>
-                <table role="table" className={s.table}>
+              <div className={uiClass(s.tableWrap)}>
+                <table role="table" className={uiClass(s.table)}>
                   <thead role="rowgroup">
                     <tr role="row">
                       <th role="columnheader">{uiText.text_5e535aba42de}</th>
@@ -84,13 +80,13 @@ export function People() {
                           <StatusBadge value={record.status} />
                         </td>
                         <td role="cell" data-label={uiText.text_c28daebcd3bf}>
-                          <span className={s.muted}>
+                          <span className={uiClass(s.muted)}>
                             {record.isAccountLinked
                               ? uiText.text_490a4c57bf7a
                               : uiText.text_33547bc78c38}
                           </span>
                         </td>
-                        <td role="cell" className={s.actionCell}>
+                        <td role="cell" className={uiClass(s.actionCell)}>
                           <Button asChild size="sm">
                             <Link
                               href={`${base}/people/${record.id}`}
@@ -127,7 +123,8 @@ export function People() {
 export function PersonFormPage({ id }: { id?: string }) {
   return (
     <WorkflowPage
-      title={id ? uiText.text_5fe4a18d76e9 : uiText.text_68c9cbc200a9}
+      form
+      title={id ? uiText.text_5fe4a18d76e9 : uiText.v5Product.newPersonRecord}
       eyebrow={uiText.text_09de2f309ec3}
       back={id ? `${base}/people/${id}` : base + '/people'}
     >
@@ -164,9 +161,9 @@ function ExistingPerson({ id, edit = false }: { id: string; edit?: boolean }) {
   const record = q.data,
     name = record.displayName || record.firstName + ' ' + record.lastName;
   return (
-    <div className={s.page}>
-      <section className={s.recordHero}>
-        <span className={s.avatar} aria-hidden="true">
+    <div className={uiClass(s.page)}>
+      <section className={uiClass(s.recordHero)}>
+        <span className={uiClass(s.avatar)} aria-hidden="true">
           <CircleUserRound size={32} />
         </span>
         <div>
@@ -183,13 +180,13 @@ function ExistingPerson({ id, edit = false }: { id: string; edit?: boolean }) {
           </Button>
         )}
       </section>
-      <div className={s.detailGrid}>
-        <section className={s.panel}>
+      <div className={uiClass(s.detailGrid)}>
+        <section className={uiClass(s.panel)}>
           <h2>
             <FileUser size={20} />
             {uiText.text_61d235c5d463}
           </h2>
-          <dl className={s.facts}>
+          <dl className={uiClass(s.facts)}>
             <div>
               <dt>{uiText.text_69c1e5b1fe20}</dt>
               <dd>{record.firstName}</dd>
@@ -210,12 +207,12 @@ function ExistingPerson({ id, edit = false }: { id: string; edit?: boolean }) {
             </div>
           </dl>
         </section>
-        <section className={s.panel}>
+        <section className={uiClass(s.panel)}>
           <h2>
             {record.isAccountLinked ? <Link2 size={20} /> : <Unlink size={20} />}
             {uiText.text_7ff9b551cfbc}
           </h2>
-          <div className={s.accountState}>
+          <div className={uiClass(s.accountState)}>
             {record.isAccountLinked ? <Link2 size={20} /> : <Unlink size={20} />}
             <strong>
               {record.isAccountLinked ? uiText.text_76e5a8315199 : uiText.text_86c185646c12}
@@ -225,10 +222,10 @@ function ExistingPerson({ id, edit = false }: { id: string; edit?: boolean }) {
           {!record.canEditNames && <p>{uiText.text_678da4712ae9}</p>}
         </section>
       </div>
-      <section className={s.panel}>
-        <details className={s.identifiers}>
+      <section className={uiClass(s.panel)}>
+        <details className={uiClass(s.identifiers)}>
           <summary>{uiText.text_1a4e5a33c6e7}</summary>
-          <dl className={s.facts}>
+          <dl className={uiClass(s.facts)}>
             <div>
               <dt>{uiText.text_9adbdd5ac00c}</dt>
               <dd>
@@ -306,52 +303,37 @@ function PersonEditor({ original }: { original?: S['OrganizationPersonDto'] }) {
         }
       }}
     >
-      <section className={s.formGroup}>
-        <h2>
-          <FileUser size={20} />
-          {uiText.text_61d235c5d463}
-        </h2>
-        <div className={s.formFields}>
-          <Field label={uiText.text_69c1e5b1fe20}>
-            <input
-              autoComplete="given-name"
-              required
-              value={d.values.first}
-              onChange={(e) => d.set('first', e.target.value)}
-            />
-          </Field>
-          <Field label={uiText.text_3fe7ba4a2131}>
-            <input
-              autoComplete="family-name"
-              required
-              value={d.values.last}
-              onChange={(e) => d.set('last', e.target.value)}
-            />
-          </Field>
-          <Field label={uiText.text_0c372fe12c90}>
-            <input
-              value={d.values.display}
-              onChange={(e) => d.set('display', e.target.value)}
-              placeholder={uiText.text_97098199cc52}
-            />
-          </Field>
-        </div>
-      </section>
-      <section className={s.formGroup}>
-        <h2>
-          <ClipboardList size={20} />
-          {uiText.text_2979f12cb485}
-        </h2>
-        <p>{uiText.text_d38f60c41090}</p>
-        <Field label={uiText.text_e3f9741e73bf}>
-          <textarea
-            required
-            value={d.values.reason}
-            onChange={(e) => d.set('reason', e.target.value)}
-            placeholder={uiText.text_c02ab0f896b2}
-          />
-        </Field>
-      </section>
+      <Field label={uiText.text_69c1e5b1fe20}>
+        <NativeInput
+          autoComplete="given-name"
+          required
+          value={d.values.first}
+          onChange={(e) => d.set('first', e.target.value)}
+        />
+      </Field>
+      <Field label={uiText.text_3fe7ba4a2131}>
+        <NativeInput
+          autoComplete="family-name"
+          required
+          value={d.values.last}
+          onChange={(e) => d.set('last', e.target.value)}
+        />
+      </Field>
+      <Field label={uiText.text_0c372fe12c90}>
+        <NativeInput
+          value={d.values.display}
+          onChange={(e) => d.set('display', e.target.value)}
+          placeholder={uiText.text_97098199cc52}
+        />
+      </Field>
+      <Field label={uiText.text_e3f9741e73bf}>
+        <NativeTextarea
+          required
+          value={d.values.reason}
+          onChange={(e) => d.set('reason', e.target.value)}
+          placeholder={uiText.text_c02ab0f896b2}
+        />
+      </Field>
     </WorkflowForm>
   );
 }

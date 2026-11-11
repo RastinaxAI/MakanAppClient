@@ -1,0 +1,142 @@
+{
+  "reviewedAt": "2026-11-10T01:27:29.251852+00:00",
+  "environment": "Test",
+  "clientOrigin": "http://127.0.0.1:3130",
+  "backendOrigin": "http://94.184.32.84:8090",
+  "realAccount": true,
+  "role": "Student",
+  "credentialsRecorded": false,
+  "authorization": "Test accounts and fixed Test OTP supplied explicitly by the user; no credentials in this receipt.",
+  "observations": [
+    {
+      "operation": "OTP challenge",
+      "httpStatus": 202
+    },
+    {
+      "operation": "OTP verification",
+      "httpStatus": 200
+    },
+    {
+      "operation": "Personal source file upload",
+      "httpStatus": 201,
+      "fileAssetStatus": "Ready",
+      "uploads": 1,
+      "fileContent": "Declared synthetic nonpersonal text for connection testing"
+    },
+    {
+      "operation": "Personal source create",
+      "httpStatus": 409,
+      "code": "SUBSCRIPTION_INACTIVE",
+      "attempts": 2,
+      "manualFollowup": true,
+      "duplicateUpload": false,
+      "sourceCreated": false
+    },
+    {
+      "operation": "Personal simple-text quota preflight",
+      "httpStatus": 200,
+      "payer": "FreeTrial"
+    },
+    {
+      "operation": "Personal AI chat",
+      "httpStatus": 403,
+      "code": "AI_CONTEXT_NOT_ALLOWED",
+      "payer": "FreeTrial",
+      "attempts": 2,
+      "manualFollowup": true,
+      "answerAccepted": false
+    },
+    {
+      "operation": "Explicit workspace switch through existing UI",
+      "workspaceType": "Organization",
+      "role": "Student",
+      "landedOn": "/personal",
+      "personalIntentMigrated": false
+    },
+    {
+      "operation": "Organization simple-text quota preflight",
+      "httpStatus": 200,
+      "payer": "FreeTrial"
+    },
+    {
+      "operation": "Organization AI chat",
+      "httpStatus": 503,
+      "code": "AI_SERVICE_UNAVAILABLE",
+      "payer": "FreeTrial",
+      "attempts": 1,
+      "submittedBy": "Enter after two dev-time automation click attempts produced no request",
+      "answerAccepted": false
+    },
+    {
+      "operation": "Restart local connected preview in production",
+      "authenticatedSessionPreserved": true,
+      "uncertainRequestPreserved": true,
+      "automaticResend": false
+    },
+    {
+      "operation": "Existing authorized source lists",
+      "workspaceType": "Organization",
+      "role": "Student",
+      "personal": "Rendered empty state",
+      "library": "Rendered empty state",
+      "classListsChecked": 2,
+      "classListResult": "Both rendered empty state after choosing actual listed classes",
+      "idsGuessed": false,
+      "readySourceFound": false
+    },
+    {
+      "operation": "Organization source list",
+      "result": "Rendered read failure and item unavailable; HTTP status not independently captured",
+      "httpStatus": null
+    }
+  ],
+  "sourceAssetDisposition": "One acknowledged Ready Test upload remains unattached; source registration failed. No server file deletion attempted.",
+  "notVerified": [
+    "Teacher, Parent and Manager on the real service in this run",
+    "Real source create/version/publication",
+    "Real Knowledge ingest/reindex/supersede/delete",
+    "Real retrieval and RAG answer/citations",
+    "Underlying model vendor or provider implementation",
+    "Physical keyboard and device Push delivery",
+    "Public deployment"
+  ],
+  "externalPreconditions": [
+    "Active authorized Personal source subscription or another entitled Test account",
+    "AI service availability in the permitted Student Organization workspace",
+    "Backend policy clarification for Personal Chat returning AI_CONTEXT_NOT_ALLOWED after a successful quota preflight"
+  ],
+  "scopeLimit": "Observed errors apply to these exact requests and contexts; they do not prove every role or endpoint is unavailable.",
+  "screenshots": [
+    {
+      "path": "output/review/integration-6f8edf8/live/assistant-personal-context.jpg",
+      "sha256": "65d65bbc8d7180d3f6eb7d90e452920387c67555ccd375c5cff5f0f44f0ca78b",
+      "syntheticFixture": false
+    },
+    {
+      "path": "output/review/integration-6f8edf8/live/assistant-school-unavailable.jpg",
+      "sha256": "679486cbda4429fb58f192224fca1c2e41874fd3b937e4e0f5a05616a70a2ad0",
+      "syntheticFixture": false
+    },
+    {
+      "path": "output/review/integration-6f8edf8/live/production-preserved-request.jpg",
+      "sha256": "2c9eca2568f993f76e58a110a9123ee0a05ad1968bbbae755c31684d33cc696a",
+      "syntheticFixture": false
+    },
+    {
+      "path": "output/review/integration-6f8edf8/live/source-subscription.jpg",
+      "sha256": "77b3c960de323cc38e5f13c05ae379c2c415fec8bb782217b974dfafba49b84c",
+      "syntheticFixture": false
+    },
+    {
+      "path": "output/review/integration-6f8edf8/live/sources-class-empty.jpg",
+      "sha256": "6c4223a1df7c9b47c3ca09e7e0bedd55f18a6a3107e36b54d2f8bc86c9a18448",
+      "syntheticFixture": false
+    },
+    {
+      "path": "output/review/integration-6f8edf8/live/sources-personal-empty.jpg",
+      "sha256": "7427432e99750bf9f0300bfc378c4aa867d6b774cb8499bd299022ada2c8aa3f",
+      "syntheticFixture": false
+    }
+  ],
+  "report": "docs/integration/20261110-live-functional.md"
+}

@@ -1,0 +1,101 @@
+{
+  "date": "2026-11-10",
+  "scope": "real Next.js client integration; visual redesign remains stopped",
+  "buildId": "t0IyuxJ3X2DPUsZ9Ly_Ee",
+  "build": {
+    "status": "passed",
+    "log": "tmp/integration-6f8edf8/build-final.log",
+    "includesTypeScript": true
+  },
+  "lint": {
+    "status": "passed",
+    "sourceModules": 369,
+    "cycles": 0,
+    "log": "tmp/integration-6f8edf8/lint-verified.log"
+  },
+  "generated": {
+    "status": "passed",
+    "log": "tmp/integration-6f8edf8/generated-check.log"
+  },
+  "unit": {
+    "status": "passed",
+    "passed": 527,
+    "failed": 0,
+    "skipped": 0,
+    "files": 74,
+    "report": "tmp/integration-6f8edf8/unit-final-results.json"
+  },
+  "browser": {
+    "new": {
+      "startTime": "2026-11-09T22:19:48.379Z",
+      "duration": 63832.844000000005,
+      "expected": 24,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "related": {
+      "startTime": "2026-11-09T22:23:26.292Z",
+      "duration": 26667.514000000003,
+      "expected": 15,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "uniqueFinalPassed": 39,
+    "fullSuiteRun": false,
+    "channel": "Google Chrome 156",
+    "newReport": "tmp/integration-6f8edf8/browser-final-results.json",
+    "relatedReport": "tmp/integration-6f8edf8/related-final-results.json"
+  },
+  "sourceHashesRecordedAfterChecks": {
+    "contracts/openapi.json": "1ab0db7b24ea106f699003df730d98d5f02c4da307e64795a1089a3cc5649b17",
+    "contracts/client-surface.json": "5f83a0fc935357dd1db9518d925cad04f5f5e277dde97cb4862eda83b51a3aab",
+    "src/generated/api/contract.json": "71e02fc2dee9b6f0da61989db66e5fa53618fb967094294a7f5c49251eed54c3",
+    "src/generated/api/schema.d.ts": "24faf9133156b56f4c9bcaaf3f059f8cee33140071b1fd8686726ae3790c0697",
+    "docs/api-matrix.md": "901e5b0931b8d497728d72d3cfaa3b5aef5eefeabbff42cdef9dd7d7491378a5",
+    "src/app/api/client/backend/[...path]/route.ts": "aa1375dd58de39c1ae953e79844ed9b83bcb4be84953a63ed7fbe01ed1fc4731",
+    "src/lib/api/contract.ts": "209b67629369292b37b7ed1ca21c184909263190c769f5f585626f982e5724f9",
+    "src/lib/api/errors.ts": "fecb22bc9a6c3d5a33bf806c05059f719996f3f2b98cce2d75bfc376fd79bc87",
+    "src/content/fa.ts": "e8a6401bdada79f2b453aece2914f03e32f6021000e763a07e46afe0a0028848",
+    "src/features/reference/connected-assistant.tsx": "cc94442c19cbd28a3b616209ff198e87ce347e12898e805abda3b7b99239254f",
+    "src/features/personal/sources/catalog.tsx": "6d63cb1401bf577bb9f166d1b6361f5a13f4fb8f684ae9548696c465e93f16dc",
+    "src/features/personal/sources/knowledge.tsx": "d7b3f7c48f1a8b37ca38810f3975c02196ddbd61a4686d678c611b4249592747",
+    "tests/unit/ai-integration.test.ts": "dfa9307983d7d6f586891acb66362bb88326ffd86d94a4bb2330f8b9142c4e90",
+    "tests/unit/ai-bff.test.ts": "472d234229a5fd1f9b7c1a495f24f0d8c30412ea89e61bd940bdea0282a4b095",
+    "tests/browser/ai-integration.spec.ts": "221eeb8d17a44dd1dd46bf8ca8b5ef750fdf57eb2285e29ccb386582a844f0f1",
+    "tests/browser/release-80c.spec.ts": "5393e174b6fff67646a684509c66bff603c52ff28f3260eb62d9f62c6d4aab35",
+    "tests/fixtures/backend/ai.mjs": "86ebea85c5b1145e67677abea7bdbafd28a46ce7c03b191fb666dcf3f057df5f",
+    "tests/fixtures/backend/server.mjs": "35ff156081e6f58f2d021108c2c3889cbf0d22a8bf54608385fdffca911a2915",
+    "tests/fixtures/backend/sources.mjs": "8688957c5c6086be47fb55d403289582554ff41f12dcf2e5277bfbedb3934b6d",
+    "src/features/personal/assistant/business-tools.tsx": "142c2b08459c1600d320186d522a3c7f3bcea04a372c52371e16e8da95b411b9",
+    "src/features/personal/assistant/model.ts": "b28a779efa98b1e0aaf37d4a4bdae6b99940dbbd8c468f1fc9d35dad6a507e2a",
+    "src/features/personal/assistant/payer.tsx": "9b1bd24c654113892fccbd74a0d8c66e48ac968b200345c7935b58281557ca0d",
+    "src/features/personal/assistant/preflight.ts": "d57ec87afec98198faebbdb8d39eda6f690be11b94eb47fe30fd92d2e0e8c252",
+    "src/features/personal/assistant/result.tsx": "da3877e0e54c7c24b2b12fda303e0496eb065c900cdde118bf591ddf5982f1a3",
+    "src/features/personal/assistant/use-assistant-request.ts": "6dccf838bc78c717b067c7996e257a5018e2bed6651b90af20199eae2ea4ff4d"
+  },
+  "evidence": [
+    {
+      "path": "output/review/integration-6f8edf8/rag-mobile.png",
+      "sha256": "3812577619d5a77d69dd3583fc28ee059f6c630a51c32e5ba5374937cd0fac51"
+    }
+  ],
+  "preview": {
+    "url": "http://127.0.0.1:3163/personal/assistant",
+    "fixtureBackend": "http://127.0.0.1:3463",
+    "liveBackendDisabled": true,
+    "data": "declared isolated fixture; no provider calls"
+  },
+  "limitations": [
+    "Two student insight UI actions await a verified studentId identity mapping; their actual operations are in the SDK.",
+    "No live AI, Knowledge ingest, OTP, messaging, payments, Push or deployment acceptance was performed.",
+    "Design alignment and historical unverified states remain stopped, outside this integration check."
+  ],
+  "historicalAttempts": {
+    "initialBrowser": "17 launch failures: missing browser, not application assertions",
+    "firstChrome": "5 passed, 2 selector failures, 1 interrupted, 9 not run; selectors changed to accessible combobox role",
+    "secondChrome": "22 passed, 1 assignment-list fixture coverage failure; reused the existing class-scoped read path",
+    "firstRelated": "14 passed, 1 teardown route callback race; in-flight route work is now awaited without suppressing errors"
+  }
+}

@@ -1,5 +1,12 @@
+import { reviewPath } from './review-output';
 import { test, expect, login, fixture, origin } from './test';
 import { mkdir } from 'node:fs/promises';
+import {
+  chooseAssistantPayer,
+  assistantTools,
+  returnToAssistantQuestion,
+} from './assistant-controls';
+import { v4_more, aiIntegration as ai } from '../../src/content/fa';
 
 test.use({
   viewport: { width: 390, height: 844 },
@@ -14,6 +21,7 @@ for (const theme of ['light', 'dark']) {
   }) => {
     await context.addInitScript((value) => localStorage.setItem('makan-theme', value), theme);
     await request.post(fixture + '/__test__/design');
+    await request.post(fixture + '/__test__/ai-integration', { data: {} });
     const initial = await login(context);
     await page.goto('/personal/education');
     const nav = page.getByRole('navigation', { name: 'ناوبری حساب شخصی', exact: true });
@@ -58,35 +66,38 @@ for (const theme of ['light', 'dark']) {
     await page.goBack();
     await expect(page).toHaveURL(/\/profile$/);
     await nav.getByRole('link', { name: 'دستیار', exact: true }).click();
-    await page.getByRole('link', { name: 'استودیو و ابزارهای نمونه', exact: true }).click();
-    await page.getByRole('tab', { name: 'منابع', exact: true }).click();
-    await page.getByRole('button', { name: 'دیدن منابع نمونه', exact: true }).click();
-    await page.getByRole('tab', { name: 'گفتگو', exact: true }).click();
-    const question = page.getByRole('textbox', { name: 'پرسش از دستیار', exact: true });
+    await chooseAssistantPayer(page, 'Individual');
+    const question = page.getByRole('textbox', { name: 'سؤال از دستیار', exact: true });
     await question.fill('نقش هسته چیست؟');
+    await question.focus();
     expect(
       await question.evaluate((el) => ({
-        inner: getComputedStyle(el).outlineStyle,
-        outer: getComputedStyle(el.closest('form')!).outlineWidth,
-        color: getComputedStyle(el.closest('form')!).outlineColor,
+        width: getComputedStyle(el).outlineWidth,
+        color: getComputedStyle(el).outlineColor,
       })),
     ).toEqual({
-      inner: 'none',
-      outer: '2px',
+      width: '3px',
       color: theme === 'dark' ? 'rgb(140, 183, 255)' : 'rgb(13, 94, 204)',
     });
     await question.press('Enter');
-    await expect(page.locator('[data-assistant-response]')).toHaveCount(1);
-    await mkdir('output/review/telegram-reference', { recursive: true });
+    await expect(page.locator('[data-assistant-result]')).toContainText(
+      'پاسخ واقعی قرارداد در محیط آزمون',
+    );
+    await expect(page.getByRole('heading', { level: 1 })).toBeFocused();
+    await mkdir(reviewPath('output/review/telegram-reference'), { recursive: true });
     await page.screenshot({
-      path: `output/review/telegram-reference/assistant-focused-${theme}-390.png`,
+      path: reviewPath(`output/review/telegram-reference/assistant-focused-${theme}-390.png`),
     });
-    await page.getByRole('tab', { name: 'استودیو', exact: true }).click();
-    const tool = page.getByRole('button', { name: /فلش‌کارت/ }).first();
-    await tool.click();
-    await expect(page.getByRole('dialog')).toBeVisible();
+    await returnToAssistantQuestion(page);
+    await expect(question).toHaveValue('');
+    const tools = await assistantTools(page);
+    await expect(tools).toBeVisible();
+    await expect(tools).toContainText(ai.tools);
     await page.keyboard.press('Escape');
-    await expect(tool).toBeFocused();
+    await expect(tools).toHaveCount(0);
+    await expect(
+      page.getByRole('banner').getByRole('button', { name: v4_more, exact: true }),
+    ).toBeFocused();
     await nav.getByRole('link', { name: 'آموزشگاه', exact: true }).click();
     const after = await (await context.request.get(origin + '/api/client/session')).json();
     expect(after.context).toEqual(initial.context);

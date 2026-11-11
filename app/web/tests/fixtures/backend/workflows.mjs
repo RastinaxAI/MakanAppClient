@@ -111,7 +111,7 @@ export function workflowRoute({ state, url, body, auth, req, send }) {
         page = kind === 'courses' ? 'SchoolPageOfCourseResult' : 'SchoolPageOfAcademicPeriodResult';
       const initial = make(name, {
         id: id(kind === 'courses' ? 12 : 13),
-        title: kind === 'courses' ? 'ریاضی' : 'دورهٔ نمونه',
+        title: kind === 'courses' ? 'ریاضی' : state.exactV5Catalog ? 'پاییز ۱۴۰۵' : 'دورهٔ نمونه',
         organizationId: ids.org,
         status: 'Active',
       });
@@ -201,7 +201,8 @@ export function workflowRoute({ state, url, body, auth, req, send }) {
   const session = /^\/api\/v1\/academic\/sessions\/([^/]+)(?:\/(cancel|complete))?$/.exec(p);
   if (session) {
     const row = state.schedule.find((x) => x.id === session[1]);
-    if (!row) return send({ code: 'SESSION_NOT_FOUND' }, 404);
+    if (!row || row.organizationId !== auth.context.organizationId)
+      return send({ code: 'SESSION_NOT_FOUND' }, 404);
     if (req.method === 'GET') return send(row);
     if (!['Teacher', 'Manager'].includes(role)) return send({ code: 'WORKSPACE_NOT_ALLOWED' }, 403);
     if (body.expectedRowVersion !== row.rowVersion) return send({ code: 'VERSION_CONFLICT' }, 409);
@@ -219,6 +220,9 @@ export function workflowRoute({ state, url, body, auth, req, send }) {
       organizationId: ids.org,
       classId: p.split('/')[5],
       classTitle: 'ریاضی',
+      classRef: { kind: 'OrganizationClass', classId: p.split('/')[5] },
+      versionId: id(7600 + w.exams.size),
+      versionNumber: 1,
       versionStatus: 'Draft',
       status: 'Draft',
       questions: [],
@@ -228,25 +232,64 @@ export function workflowRoute({ state, url, body, auth, req, send }) {
     w.exams.set(row.id, row);
     return send(row, 201);
   }
+  const questionRemove = /^\/api\/v1\/academic\/exams\/([^/]+)\/questions\/([^/]+)$/.exec(p);
+  if (questionRemove && ['DELETE', 'PATCH'].includes(req.method)) {
+    if (!['Teacher', 'Manager'].includes(role)) return send({ code: 'WORKSPACE_NOT_ALLOWED' }, 403);
+    const row = w.exams.get(questionRemove[1]);
+    if (!row || row.organizationId !== auth.context.organizationId)
+      return send({ code: 'EXAM_NOT_FOUND' }, 404);
+    if (row.versionStatus !== 'Draft') return send({ code: 'EXAM_VERSION_PUBLISHED' }, 409);
+    const question = row.questions.find((q) => q.id === questionRemove[2]);
+    if (!question) return send({ code: 'EXAM_QUESTION_NOT_FOUND' }, 404);
+    if (
+      body.expectedVersionRowVersion !== row.versionRowVersion ||
+      body.expectedQuestionRowVersion !== question.rowVersion
+    )
+      return send({ code: 'VERSION_CONFLICT' }, 409);
+    if (req.method === 'PATCH') {
+      if (row.questions.some((q) => q.id !== question.id && q.order === body.order))
+        return send({ code: 'VALIDATION_ERROR' }, 422);
+      w.questionVersions ??= new Map();
+      const revision = (w.questionVersions.get(question.id) ?? 1) + 1;
+      w.questionVersions.set(question.id, revision);
+      const { expectedVersionRowVersion, expectedQuestionRowVersion, ...fields } = body;
+      Object.assign(question, fields, {
+        options: (body.options ?? []).map((v, i) =>
+          make('ExamEditorOptionDto', { ...v, id: question.options[i]?.id ?? id(7200 + i) }),
+        ),
+        rowVersion: Buffer.from(String(revision).padStart(8, '0')).toString('base64'),
+      });
+    } else row.questions = row.questions.filter((q) => q.id !== question.id);
+    row.versionRowVersion = String(Number(row.versionRowVersion) + 1);
+    return req.method === 'DELETE' ? send(undefined, 204) : send(row);
+  }
   const exam = /^\/api\/v1\/academic\/exams\/([^/]+)\/(editor|questions|publish)$/.exec(p);
   if (exam) {
     if (!['Teacher', 'Manager'].includes(role)) return send({ code: 'WORKSPACE_NOT_ALLOWED' }, 403);
     const row = w.exams.get(exam[1]);
-    if (!row) return send({ code: 'EXAM_NOT_FOUND' }, 404);
+    if (!row || row.organizationId !== auth.context.organizationId)
+      return send({ code: 'EXAM_NOT_FOUND' }, 404);
     if (exam[2] === 'editor') return send(row);
     if (body.expectedVersionRowVersion !== row.versionRowVersion)
       return send({ code: 'VERSION_CONFLICT' }, 409);
-    if (exam[2] === 'questions')
+    if (exam[2] === 'questions') {
+      if (row.versionStatus !== 'Draft') return send({ code: 'EXAM_VERSION_PUBLISHED' }, 409);
+      if (row.questions.some((q) => q.order === body.order))
+        return send({ code: 'VALIDATION_ERROR' }, 422);
       row.questions.push(
         make('ExamEditorQuestionDto', {
           ...body,
-          id: id(7100 + row.questions.length),
+          id: id((w.nextQuestionId = (w.nextQuestionId ?? 7099) + 1)),
+          rowVersion: Buffer.from('00000001').toString('base64'),
           options: (body.options ?? []).map((v, i) =>
             make('ExamEditorOptionDto', { ...v, id: id(7200 + i) }),
           ),
         }),
       );
-    else row.versionStatus = 'Published';
+    } else {
+      row.versionStatus = 'Published';
+      row.status = 'Published';
+    }
     row.versionRowVersion = String(Number(row.versionRowVersion) + 1);
     return send(row);
   }

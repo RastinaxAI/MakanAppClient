@@ -1,0 +1,86 @@
+/* Product styles: owned here; original V5 source remains read-only in design/reference-v5. */
+.v5-formation-status {
+  display: grid;
+  justify-items: center;
+  gap: 16px;
+  text-align: center;
+  padding: 6px 0 12px;
+}
+.v5-status-symbol {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 20px;
+  background: var(--success-soft);
+  color: var(--success);
+}
+.v5-status-symbol svg {
+  width: 28px;
+  height: 28px;
+}
+.v5-formation-status h2 {
+  font-size: calc(21px * var(--text-scale, 1));
+}
+.v5-formation-status p {
+  color: var(--muted);
+  font-size: calc(14px * var(--text-scale, 1));
+}
+:global(.formation-warning) .v5-status-symbol {
+  background: var(--warning-soft);
+  color: var(--warning);
+}
+.v5-formation-bar {
+  appearance: none;
+  width: 100%;
+  height: 8px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--line);
+  color: var(--action);
+}
+.v5-formation-bar::-webkit-progress-bar {
+  background: var(--line);
+  border-radius: 8px;
+}
+.v5-formation-bar::-webkit-progress-value {
+  background: var(--action);
+  border-radius: 8px;
+}
+.v5-formation-bar::-moz-progress-bar {
+  background: var(--action);
+  border-radius: 8px;
+}
+.v5-formation-steps {
+  padding: 18px;
+  margin: 0;
+  list-style: none;
+  display: grid;
+  gap: 18px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--surface);
+}
+.v5-formation-steps li {
+  display: flex;
+  gap: 12px;
+  align-items: start;
+  min-width: 0;
+}
+.v5-formation-steps li > span {
+  color: var(--accent-text);
+  padding-top: 2px;
+  flex: none;
+}
+.v5-formation-steps li > span svg {
+  width: 20px;
+  height: 20px;
+}
+.v5-formation-steps strong {
+  font-size: calc(14px * var(--text-scale, 1));
+}
+.v5-formation-steps small {
+  display: block;
+  color: var(--muted);
+  font-size: calc(12px * var(--text-scale, 1));
+}

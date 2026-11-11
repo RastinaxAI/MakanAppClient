@@ -1,8 +1,8 @@
 .theme {
-  --chat-header: var(--bg);
+  --chat-header: var(--surface);
   --detail-action: var(--surface);
-  --chat-background: var(--bg);
-  --chat-wallpaper: none;
+  --chat-background: var(--chat-canvas);
+  --chat-wallpaper: radial-gradient(var(--chat-pattern-dot) 0.8px, transparent 0.8px);
   --chat-selected: var(--primary-soft);
   --chat-badge-text: var(--on-primary);
   color: var(--text);
@@ -15,13 +15,13 @@
   padding: 24px max(16px, calc((100% - 760px) / 2));
 }
 .page > :first-child h1 {
-  font-size: 20px;
+  font-size: calc(20px * var(--text-scale, 1));
 }
 .page > :first-child > div > span {
   display: none;
 }
 .page > :first-child p {
-  font-size: 13px;
+  font-size: calc(13px * var(--text-scale, 1));
 }
 .page input:not([type='checkbox']),
 .page textarea,
@@ -58,7 +58,7 @@
   display: flex;
   align-items: center;
   gap: 14px;
-  font-size: 14px;
+  font-size: calc(14px * var(--text-scale, 1));
   outline: none;
   border-radius: 9px;
   cursor: pointer;
@@ -71,21 +71,11 @@
   height: 20px;
   color: var(--primary);
 }
-.dialog {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 20px;
-}
 @media (max-width: 767px) {
   .page {
     padding: 18px 12px 30px;
   }
   .page > :first-child {
     margin-bottom: 16px;
-  }
-  .dialog {
-    width: calc(100% - 16px);
-    max-height: 88dvh;
   }
 }

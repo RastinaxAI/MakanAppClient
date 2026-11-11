@@ -19,7 +19,7 @@ export function checkOrigin(request: Request) {
 }
 export async function backendFetch(path: string, init: RequestInit = {}, token?: string) {
   const headers = new Headers(init.headers);
-  headers.set('Accept', 'application/json');
+  if (!headers.has('Accept')) headers.set('Accept', 'application/json');
   if (token) headers.set('Authorization', `Bearer ${token}`);
   return fetch(upstreamUrl(path, serverConfig().backend), {
     ...init,

@@ -1,12 +1,37 @@
 import { test, expect, login, fixture, ids } from './test';
 import { mkdir } from 'node:fs/promises';
+import { chooseAssistantPayer, returnToAssistantQuestion } from './assistant-controls';
+import * as copy from '../../src/content/fa';
 
-test('dark theme stays coherent across panels and the assistant gives the answer most of the height', async ({
+test('an appearance storage failure stays on the editable page and never masquerades as a saved preference', async ({
+  page,
+  context,
+}) => {
+  await context.addInitScript(() => {
+    const original = Storage.prototype.setItem;
+    Storage.prototype.setItem = function (key, value) {
+      if (key === 'makan-theme') throw new DOMException('Storage blocked', 'QuotaExceededError');
+      return original.call(this, key, value);
+    };
+  });
+  await login(context, 'Student', false);
+  await page.goto('/personal/settings/appearance');
+  await page.getByRole('radio', { name: 'تاریک', exact: true }).check();
+  await page.getByRole('button', { name: 'ذخیره ظاهر', exact: true }).click();
+  await expect(page).toHaveURL(/settings\/appearance$/);
+  await expect(page.getByRole('main').getByRole('alert')).toContainText(copy.text_d1a91d934e1c);
+  await expect(page.getByRole('radio', { name: 'تاریک', exact: true })).toBeChecked();
+});
+
+test('dark theme persists across panels and real assistant request and result states', async ({
   page,
   context,
   request,
 }) => {
   expect((await request.post(fixture + '/__test__/design')).ok()).toBeTruthy();
+  expect(
+    (await request.post(fixture + '/__test__/ai-integration', { data: {} })).ok(),
+  ).toBeTruthy();
   await login(context, 'Student');
   await mkdir('test-results/assistant-theme', { recursive: true });
   await page.goto('/personal/settings/appearance');
@@ -16,7 +41,7 @@ test('dark theme stays coherent across panels and the assistant gives the answer
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
   for (const [width, height] of [
     [390, 844],
-    [834, 1194],
+    [834, 1112],
     [1440, 1000],
   ]) {
     await page.setViewportSize({ width, height });
@@ -27,9 +52,9 @@ test('dark theme stays coherent across panels and the assistant gives the answer
       await page.goto(url);
       await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
       if (name === 'education') {
-        await expect(page.locator('[data-mk-view="MK-04"]')).toBeVisible();
+        await expect(page.locator('[data-v5-scene="MK-04"]')).toBeVisible();
         expect(
-          await page.locator('[data-mk-view]').evaluate((el) => {
+          await page.locator('[data-v5-scene]').evaluate((el) => {
             let node: Element | null = el;
             while (node) {
               const color = getComputedStyle(node).backgroundColor;
@@ -38,7 +63,7 @@ test('dark theme stays coherent across panels and the assistant gives the answer
             }
             return 'transparent';
           }),
-        ).toBe('rgb(16, 26, 43)');
+        ).toBe('rgb(13, 23, 40)');
       }
       if (name === 'profile')
         await expect(page.getByRole('heading', { name: 'سارا احمدی', exact: true })).toBeVisible();
@@ -48,35 +73,35 @@ test('dark theme stays coherent across panels and the assistant gives the answer
       await page.screenshot({ path: `test-results/assistant-theme/${name}-dark-${width}.png` });
     }
     await page.goto('/personal/assistant/studio');
-    const pane = page.getByLabel('گفتگو با دستیار', { exact: true });
-    const field = page.getByRole('textbox', { name: 'پرسش از دستیار' });
-    await expect(field).toBeDisabled();
-    await expect(pane).toContainText('ارسال واقعی فعلاً فعال نیست');
-    await expect(page.getByText('فضای مطالعهٔ شما', { exact: true })).toHaveCount(0);
-    if (width <= 1023) await page.getByRole('tab', { name: 'منابع', exact: true }).click();
-    await page.getByRole('button', { name: 'دیدن منابع نمونه' }).click();
-    if (width <= 1023) await page.getByRole('tab', { name: 'گفتگو', exact: true }).click();
-    await field.fill('لطفاً رابطهٔ هسته، غشا و میتوکندری را بر اساس منابع انتخاب‌شده توضیح بده.');
-    await field.press('Enter');
-    await expect(page.locator('[data-assistant-response]')).toHaveCount(1);
-    await expect(field).toHaveValue('');
-    await expect(pane).toContainText('این پاسخ نمونه');
-    const surface = await pane.evaluate((node) => getComputedStyle(node).backgroundColor);
-    expect(surface).not.toBe('rgb(255, 255, 255)');
-    const body = pane.locator('[class*="chatBody"]');
-    const view = await body.boundingBox();
-    expect(view!.height).toBeGreaterThan(height * 0.48);
-    await body.evaluate((node) => {
-      node.scrollTop = 0;
-    });
-    await expect(page.locator('[data-assistant-response]')).toContainText('پاسخ نمایشی');
+    await expect(page).toHaveURL(/\/personal\/assistant$/);
+    const field = page.getByRole('textbox', { name: 'سؤال از دستیار', exact: true });
+    await expect(field).toBeEnabled();
+    await chooseAssistantPayer(page, 'Individual');
+    await field.fill('این یک پرسش ایزوله برای بررسی ظاهر پاسخ است.');
+    await page.getByRole('button', { name: 'ارسال سؤال', exact: true }).click();
+    const answer = page.locator('[data-assistant-result]');
+    await expect(answer).toContainText('پاسخ واقعی قرارداد در محیط آزمون');
+    await expect(page.getByRole('heading', { level: 1 })).toBeFocused();
+    expect(await answer.evaluate((node) => getComputedStyle(node).backgroundColor)).not.toBe(
+      'rgb(255, 255, 255)',
+    );
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(
+      true,
+    );
     await page.screenshot({ path: `test-results/assistant-theme/assistant-dark-${width}.png` });
+    await returnToAssistantQuestion(page);
+    await expect(field).toHaveValue('');
+    await expect(page.getByRole('heading', { level: 1 })).toBeFocused();
     // Personal messaging no longer changes the selected educational workspace.
     await page.goto('/personal/messages');
     await page.goto('/personal/messages/' + ids.chat);
     await expect(page.getByRole('textbox', { name: 'متن پیام', exact: true })).toBeVisible();
     await page.screenshot({ path: `test-results/assistant-theme/chat-dark-${width}.png` });
     await page.goto('/personal/profile');
+    await page
+      .getByRole('banner')
+      .getByRole('button', { name: 'گزینه‌های بیشتر', exact: true })
+      .click();
     await page.getByRole('button', { name: /فضاها و نقش‌های من/ }).click();
     await expect(page.getByRole('dialog')).toBeVisible();
     await expect(

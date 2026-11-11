@@ -28,6 +28,10 @@ export const fieldLabels: Record<string, string> = {
   processingFailureCode: 'کد خطای پردازش',
   fileReady: 'فایل آماده است',
   sourceReady: 'منبع آماده است',
+  aiReady: 'منبع برای هوش مصنوعی آماده است',
+  aiReadiness: 'وضعیت آمادگی هوش مصنوعی',
+  aiUnavailableReason: 'دلیل در دسترس نبودن هوش مصنوعی',
+  canUseForAi: 'اجازه استفاده از منبع برای هوش مصنوعی',
   file: 'فایل',
   originalFileName: 'نام فایل',
   contentType: 'نوع محتوا',
@@ -147,11 +151,20 @@ export const fieldLabels: Record<string, string> = {
   recentFailures: 'خطاهای اخیر',
   counts: 'تعداد پردازش‌ها',
   oldestPendingAtUtc: 'قدیمی‌ترین مورد در انتظار',
+  oldestPendingAgeSeconds: 'عمر قدیمی‌ترین مورد در انتظار (ثانیه)',
+  queues: 'جزئیات صف‌ها',
+  jobType: 'نوع پردازش',
+  deliveryAttemptId: 'شناسه تلاش ارسال',
+  attemptCount: 'تعداد تلاش‌های ارسال',
+  failureReason: 'دلیل خطای ارسال',
+  lastAttemptAtUtc: 'زمان آخرین تلاش',
+  nextAttemptAtUtc: 'زمان تلاش بعدی',
+  channel: 'روش ارسال',
   dependencies: 'وابستگی‌ها',
   notifications: 'اعلان‌ها',
   jobs: 'پردازش‌ها',
   observedAtUtc: 'زمان مشاهده',
-  aiIntegrationStatus: 'وضعیت اتصال AI',
+  aiIntegrationStatus: 'وضعیت اتصال هوش مصنوعی',
   activeMembershipCount: 'عضویت فعال',
   activeSubscriptionCount: 'اشتراک فعال',
   pendingInvitationCount: 'دعوت در انتظار',
@@ -184,6 +197,16 @@ export const fieldLabels: Record<string, string> = {
   planVersionId: 'شناسه نسخه پلن',
   purchaserUserId: 'شناسه خریدار',
   paidAtUtc: 'زمان پرداخت',
+  provider: 'درگاه ثبت‌شده',
+  fulfillmentState: 'وضعیت اجرای سفارش',
+  paymentId: 'شناسه پرداخت',
+  paymentAttemptId: 'شناسه تلاش پرداخت',
+  maskedProviderReference: 'مرجع پیگیری درگاه (پوشیده)',
+  maskedSettlementReference: 'مرجع تسویه (پوشیده)',
+  callbackReceivedAtUtc: 'زمان دریافت بازگشت از درگاه',
+  providerPaidAtUtc: 'زمان پرداخت اعلام‌شده درگاه',
+  verifiedAtUtc: 'زمان تأیید پرداخت',
+  completedAtUtc: 'زمان تکمیل',
   cancelledAtUtc: 'زمان لغو',
   paymentAttempts: 'تلاش‌های پرداخت',
   payment: 'اطلاعات پرداخت',
@@ -328,6 +351,16 @@ export function Value({ value, name = '' }: { value: unknown; name?: string }) {
   if (typeof value === 'boolean') return <span>{value ? 'بله' : 'خیر'}</span>;
   if (typeof value === 'number') return <>{number(value)}</>;
   if (typeof value === 'string') {
+    if (
+      ['maskedProviderReference', 'maskedSettlementReference'].includes(
+        name.split('.').pop() ?? name,
+      )
+    )
+      return (
+        <bdi dir="ltr" style={{ overflowWrap: 'anywhere' }}>
+          {value || '—'}
+        </bdi>
+      );
     if (['phoneNumber', 'maskedPhone'].includes(name.split('.').pop() ?? name))
       return (
         <bdi dir="ltr" style={{ whiteSpace: 'nowrap' }}>
@@ -339,7 +372,7 @@ export function Value({ value, name = '' }: { value: unknown; name?: string }) {
     )
       return <>{date(value, true)}</>;
     if (
-      /^(?:status|accountStatus|role|activeRole|type|scope|visibility)$/.test(
+      /^(?:status|accountStatus|role|activeRole|type|scope|visibility|fulfillmentState|aiIntegrationStatus|aiReadiness|pushProviderAvailability|smsProviderAvailability)$/.test(
         name.split('.').pop() ?? name,
       )
     )

@@ -1,4 +1,6 @@
 'use client';
+import { uiClass } from '@/components/v5/classes';
+
 import * as uiText from '@/content/fa';
 import { useAcademicScope } from './academic-scope';
 import Link from 'next/link';
@@ -37,11 +39,11 @@ function AssignmentHistory({ id }: { id: string }) {
   if (q.data.some((x) => x.assignmentId !== id || !scope.matches(x)))
     return <ErrorState error={new ApiError(502)} />;
   return (
-    <section className={e.panel}>
+    <section className={uiClass(e.panel)}>
       {q.data.length ? (
-        <div className={e.rows}>
+        <div className={uiClass(e.rows)}>
           {q.data.map((row) => (
-            <article className={e.row} key={row.id}>
+            <article className={uiClass(e.row)} key={row.id}>
               <div>
                 <h2>
                   {uiText.text_6fd4ea2ac138}
@@ -80,11 +82,11 @@ function ExamHistory({ id }: { id: string }) {
   if (q.isPending) return <LoadingSkeleton />;
   if (q.isError) return <ErrorState error={q.error} onRetry={() => void q.refetch()} />;
   return (
-    <section className={e.panel}>
+    <section className={uiClass(e.panel)}>
       {q.data.length ? (
-        <div className={e.rows}>
+        <div className={uiClass(e.rows)}>
           {q.data.map((row) => (
-            <article key={row.examAttemptId} className={e.row}>
+            <article key={row.examAttemptId} className={uiClass(e.row)}>
               <div>
                 <h2>
                   {uiText.text_1447bc999cc2}
@@ -166,10 +168,10 @@ function ExamResult({ id, parent }: { id: string; parent: boolean }) {
   if (value.examAttemptId !== id) return <ErrorState error={new ApiError(502)} />;
   if (value.releaseStatus !== 'Released')
     return (
-      <section className={e.panel}>
+      <section className={uiClass(e.panel)}>
         <Status>{evaluationLabel(value.releaseStatus)}</Status>
         <h2>{uiText.text_993184c04686}</h2>
-        <p className={s.hint}>{uiText.text_06cb849dea5b}</p>
+        <p className={uiClass(s.hint)}>{uiText.text_06cb849dea5b}</p>
       </section>
     );
   const feedback = parent
@@ -199,10 +201,10 @@ function ResultCard({
   revision: number | null;
 }) {
   return (
-    <section className={e.panel}>
+    <section className={uiClass(e.panel)}>
       <Status>{uiText.text_e4f1cf0d1e04}</Status>
       <h2>{uiText.text_4be8404a5b20}</h2>
-      <div className={e.score}>
+      <div className={uiClass(e.score)}>
         <strong>{score === null ? uiText.text_f07a81a06253 : score.toLocaleString('fa-IR')}</strong>
         <span>
           {maximum === null
@@ -211,10 +213,10 @@ function ResultCard({
         </span>
       </div>
       <h3>{uiText.text_6310111c0383}</h3>
-      <p className={e.answer} dir="auto">
+      <p className={uiClass(e.answer)} dir="auto">
         {feedback || uiText.text_a592243bf557}
       </p>
-      <p className={s.hint}>
+      <p className={uiClass(s.hint)}>
         {date(released, true)}
         {revision !== null ? uiText.format_838449e97408(revision.toLocaleString('fa-IR')) : ''}
       </p>

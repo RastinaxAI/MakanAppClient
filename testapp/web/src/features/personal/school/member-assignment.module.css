@@ -1,26 +1,27 @@
 .layout {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 310px;
-  gap: 24px;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 14px;
   align-items: start;
 }
-.selection,
+.selection {
+  min-width: 0;
+  display: grid;
+  gap: 14px;
+}
 .summary {
   min-width: 0;
-  padding: 24px;
+  padding: 18px;
   border: 1px solid var(--border);
-  border-radius: 18px;
+  border-radius: 16px;
   background: var(--surface);
-  display: grid;
-  gap: 18px;
 }
-.selection h2,
 .summary h2 {
-  font-size: 17px;
+  font-size: calc(16px * var(--text-scale, 1));
 }
-.selection p,
+.policy,
 .summary p {
-  font-size: 12px;
+  font-size: calc(12px * var(--text-scale, 1));
   line-height: 1.9;
   color: var(--muted);
 }
@@ -29,18 +30,29 @@
   margin: 0;
   list-style: none;
   display: grid;
-  gap: 10px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--surface);
+}
+.list li + li {
+  border-top: 1px solid var(--border);
 }
 .list label {
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 14px;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 16px;
-  min-height: 64px;
+  gap: 12px;
+  padding: 14px 16px;
+  min-height: 76px;
   cursor: pointer;
+}
+.list li:first-child label {
+  border-start-start-radius: 16px;
+  border-start-end-radius: 16px;
+}
+.list li:last-child label {
+  border-end-start-radius: 16px;
+  border-end-end-radius: 16px;
 }
 .list input[type='checkbox'] {
   flex: 0 0 20px;
@@ -55,44 +67,24 @@
 }
 .list label:has(input:checked) {
   background: var(--primary-soft);
-  border-color: var(--primary);
 }
 .list strong {
-  font-size: 14px;
+  font-size: calc(14px * var(--text-scale, 1));
 }
 .list small {
   display: block;
   color: var(--muted);
-  margin-top: 6px;
-  font-size: 11px;
-}
-.summary {
-  position: sticky;
-  top: 20px;
+  margin-top: 2px;
+  font-size: calc(12px * var(--text-scale, 1));
 }
 .result {
   display: grid;
   gap: 7px;
   padding-block: 10px;
   border-bottom: 1px solid var(--border);
-  font-size: 13px;
+  font-size: calc(13px * var(--text-scale, 1));
 }
 .result span {
   color: var(--muted);
-  font-size: 12px;
-}
-.summary > :global(.button) {
-  width: 100%;
-}
-@media (max-width: 900px) {
-  .layout {
-    grid-template-columns: 1fr;
-  }
-  .summary {
-    position: static;
-  }
-  .selection,
-  .summary {
-    padding: 18px;
-  }
+  font-size: calc(12px * var(--text-scale, 1));
 }

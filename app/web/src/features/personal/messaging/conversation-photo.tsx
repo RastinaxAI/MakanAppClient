@@ -1,4 +1,8 @@
 'use client';
+import { Input as NativeInput } from '@/components/ui/input';
+
+import { uiClass } from '@/components/v5/classes';
+
 import * as uiText from '@/content/fa';
 import { useEffect, useRef, useState } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
@@ -48,9 +52,9 @@ export function ConversationAvatar({
     setUrl(next);
     return () => URL.revokeObjectURL(next);
   }, [query.data]);
-  if (!url || broken) return <ProfileAvatar name={name} className={className} />;
+  if (!url || broken) return <ProfileAvatar name={name} className={uiClass(className)} />;
   return (
-    <span className={className} aria-label={name}>
+    <span className={uiClass(className)} aria-label={name}>
       <img
         src={url}
         alt=""
@@ -145,9 +149,9 @@ export function ConversationPhotoEditor({ value }: { value: S['ManagedConversati
     }
   }
   return (
-    <div className={c.photoEditor}>
+    <div className={uiClass(c.photoEditor)}>
       {preview ? (
-        <span className={c.editorAvatar}>
+        <span className={uiClass(c.editorAvatar)}>
           <img
             src={preview}
             alt={uiText.text_b85242f37ccd}
@@ -159,14 +163,14 @@ export function ConversationPhotoEditor({ value }: { value: S['ManagedConversati
           id={value.conversationId}
           photo={value.photo}
           name={value.title}
-          className={c.editorAvatar}
+          className={uiClass(c.editorAvatar)}
         />
       )}
       {allowed && (
-        <label className={c.photoAction}>
+        <label className={uiClass(c.photoAction)}>
           <Camera size={22} />
           {uiText.text_143aeaee6b15}
-          <input
+          <NativeInput
             type="file"
             aria-label={uiText.text_a7480130fc2b}
             accept="image/jpeg,image/png"
@@ -186,7 +190,7 @@ export function ConversationPhotoEditor({ value }: { value: S['ManagedConversati
         </label>
       )}
       {file && (
-        <div className={c.pager}>
+        <div className={uiClass(c.pager)}>
           <Button type="button" disabled={busy} onClick={() => void save()}>
             {busy
               ? uiText.text_56ec52fa6f01

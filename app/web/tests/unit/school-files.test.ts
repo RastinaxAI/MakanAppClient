@@ -68,6 +68,7 @@ function request(upload = false, query = upload ? 'classId=' + classId : 'lesson
 beforeEach(() => {
   vi.clearAllMocks();
   vi.stubEnv('SESSION_SECRET', '0'.repeat(64));
+  vi.stubEnv('BACKEND_BASE_URL', 'http://127.0.0.1:3457');
   vi.stubEnv('APP_ORIGIN', 'http://127.0.0.1:3000');
   state = {
     revision: 'a',
@@ -91,7 +92,7 @@ describe('school file binding and current authorization', () => {
     expect(r.status).toBe(200);
     expect(await r.text()).toBe('abc');
     expect(String(fetch.mock.calls[0][0])).toBe(
-      'http://94.184.32.84:8090/api/v1/files/' + fileId + '/content',
+      'http://127.0.0.1:3457/api/v1/files/' + fileId + '/content',
     );
   });
   it('preserves a backend Parent denial without requesting file bytes', async () => {

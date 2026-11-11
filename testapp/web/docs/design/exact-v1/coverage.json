@@ -1,0 +1,22 @@
+{
+  "total": 528,
+  "implementation": {
+    "product_state_exercised_visual_parity_tracked_in_evidence": 151,
+    "product_component_mapped_specific_state_not_yet_verified": 282,
+    "partial_contract_reference_control_unmapped": 3,
+    "existing_product_gap": 7,
+    "partial_contract_local_fields_preserved": 3,
+    "product_pending_existing_flow_preserved": 36,
+    "out_of_scope_separate_owner_application": 46
+  },
+  "visual": {
+    "product_state_captured_6_retained_checkpoints; see evidence": 148,
+    "product_state_captured_25_retained_checkpoints; see evidence": 2,
+    "not_reviewed_no_independent_state_checkpoint": 327,
+    "not_reviewed_in_this_client": 46,
+    "product_state_captured_36_retained_checkpoints; see evidence": 4,
+    "not_reviewed_reference_role_or_state_not_matched": 1
+  },
+  "prunedHistoricalMediaExcluded": 1068,
+  "source": "Supplied 528-row matrix + current product source + retained PNG checkpoints. Missing historical media are excluded. A captured state is not a claim of full visual parity."
+}

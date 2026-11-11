@@ -28,7 +28,7 @@
   padding: 12px 8px;
   border-radius: 10px;
   border-bottom: 2px solid transparent;
-  font-size: 13px;
+  font-size: calc(13px * var(--text-scale, 1));
   color: var(--muted);
   text-decoration: none;
 }
@@ -61,7 +61,7 @@
   align-items: center;
   gap: 6px;
   color: var(--primary);
-  font-size: 13px;
+  font-size: calc(13px * var(--text-scale, 1));
   min-height: 44px;
   justify-self: start;
 }
@@ -74,13 +74,13 @@
   border-bottom: 1px solid var(--border);
 }
 .classHeading h1 {
-  font-size: 26px;
+  font-size: calc(26px * var(--text-scale, 1));
   line-height: 1.6;
   margin: 4px 0;
 }
 .classHeading p,
 .classHeading span:not(.courseIcon) {
-  font-size: 13px;
+  font-size: calc(13px * var(--text-scale, 1));
   color: var(--muted);
   line-height: 1.8;
 }
@@ -92,7 +92,7 @@
   border-radius: 50%;
   background: var(--soft);
   color: var(--text);
-  font-size: 30px;
+  font-size: calc(30px * var(--text-scale, 1));
   flex-shrink: 0;
 }
 .classTabs {
@@ -107,7 +107,7 @@
   min-width: 0;
 }
 .classContent h1 {
-  font-size: 21px;
+  font-size: calc(21px * var(--text-scale, 1));
 }
 .classTabsMembers {
   grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -135,11 +135,11 @@
 }
 .classList h2,
 .parentItems h2 {
-  font-size: 16px;
+  font-size: calc(16px * var(--text-scale, 1));
 }
 .parentItems p {
   color: var(--muted);
-  font-size: 13px;
+  font-size: calc(13px * var(--text-scale, 1));
   margin-top: 10px;
 }
 @media (max-width: 700px) {
@@ -147,7 +147,7 @@
     flex: 0 0 auto;
     min-height: 44px;
     gap: 6px;
-    font-size: 12px;
+    font-size: calc(12px * var(--text-scale, 1));
     padding: 8px 12px;
   }
   .navigation {
@@ -159,12 +159,12 @@
     gap: 12px;
   }
   .classHeading h1 {
-    font-size: 22px;
+    font-size: calc(22px * var(--text-scale, 1));
   }
   .courseIcon {
     width: 50px;
     height: 50px;
-    font-size: 24px;
+    font-size: calc(24px * var(--text-scale, 1));
   }
   .classTabs a {
     display: grid;
@@ -172,7 +172,7 @@
     align-content: center;
     justify-items: center;
     gap: 8px;
-    font-size: 11px;
+    font-size: calc(11px * var(--text-scale, 1));
     padding: 10px 2px;
     min-height: 72px;
   }
@@ -182,7 +182,7 @@
     justify-content: center;
     min-height: 38px;
     width: 100%;
-    line-height: 19px;
+    line-height: calc(19px * var(--text-scale, 1));
   }
   .classPage {
     gap: 20px;

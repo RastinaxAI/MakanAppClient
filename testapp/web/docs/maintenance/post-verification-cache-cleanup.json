@@ -1,0 +1,42 @@
+{
+  "createdAt": "2026-11-10T01:39:08.947301+00:00",
+  "command": "npm run clean:cache",
+  "log": "tmp/current-review/post-verification-cache.log",
+  "removed": [
+    {
+      "path": ".next/cache",
+      "files": 103,
+      "bytes": 700279860
+    },
+    {
+      "path": ".next/dev",
+      "files": 732,
+      "bytes": 339994295
+    },
+    {
+      "path": "test-results",
+      "files": 108,
+      "bytes": 6153750
+    },
+    {
+      "path": "playwright-report",
+      "files": 0,
+      "bytes": 0
+    },
+    {
+      "path": "tsconfig.tsbuildinfo",
+      "files": 1,
+      "bytes": 245081
+    }
+  ],
+  "files": 944,
+  "bytes": 1046672986,
+  "preserved": [
+    "Production .next/BUILD_ID and compiled server/static output",
+    ".makan-qa-sessions and existing private development key",
+    "Docker volumes and local secret files",
+    "Native screenshot evidence and copied test-result receipts"
+  ],
+  "testReceiptsCopiedBeforeCleanup": true,
+  "workspaceDiskUsageApprox": "1.5 GiB including dependencies and retained evidence"
+}

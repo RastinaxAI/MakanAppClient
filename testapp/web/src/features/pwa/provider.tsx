@@ -1,9 +1,5 @@
 'use client';
 import { createContext, useContext, useEffect, useState } from 'react';
-import { installDismissalKey, installPromotionAllowed } from './install-preferences';
-import { usePathname } from 'next/navigation';
-import dynamic from 'next/dynamic';
-const InstallPromotion = dynamic(() => import('./promotion').then((m) => m.InstallPromotion));
 
 type InstallEvent = Event & {
   prompt: () => Promise<void>;
@@ -20,30 +16,13 @@ type Pwa = {
 };
 const PwaContext = createContext<Pwa | null>(null);
 export function PwaProvider({ children }: { children: React.ReactNode }) {
-  const pathname = usePathname();
   const [registration, setRegistration] = useState<ServiceWorkerRegistration | null>(null);
   const [installed, setInstalled] = useState(false);
   const [secure, setSecure] = useState(false);
   const [error, setError] = useState(false);
   const [ready, setReady] = useState(false);
   const [installPrompt, setInstallPrompt] = useState<InstallEvent | null>(null);
-  const [dismissed, setDismissed] = useState(true);
-  function dismissPromotion() {
-    setDismissed(true);
-    try {
-      localStorage.setItem(installDismissalKey, '1');
-    } catch {}
-  }
   useEffect(() => {
-    try {
-      setDismissed(localStorage.getItem(installDismissalKey) === '1');
-    } catch {
-      setDismissed(false);
-    }
-    const storageChanged = (event: StorageEvent) => {
-      if (event.key === installDismissalKey && event.newValue === '1') setDismissed(true);
-    };
-    window.addEventListener('storage', storageChanged);
     const media = window.matchMedia('(display-mode: standalone)');
     const updateInstalled = () =>
       setInstalled(
@@ -59,7 +38,6 @@ export function PwaProvider({ children }: { children: React.ReactNode }) {
     const didInstall = () => {
       setInstalled(true);
       setInstallPrompt(null);
-      dismissPromotion();
     };
     window.addEventListener('beforeinstallprompt', captureInstall);
     window.addEventListener('appinstalled', didInstall);
@@ -89,28 +67,19 @@ export function PwaProvider({ children }: { children: React.ReactNode }) {
       media.removeEventListener('change', updateInstalled);
       window.removeEventListener('beforeinstallprompt', captureInstall);
       window.removeEventListener('appinstalled', didInstall);
-      window.removeEventListener('storage', storageChanged);
     };
   }, []);
   async function install() {
     if (!installPrompt) return;
     await installPrompt.prompt();
-    const choice = await installPrompt.userChoice;
+    await installPrompt.userChoice;
     setInstallPrompt(null);
-    if (choice.outcome === 'dismissed' || choice.outcome === 'accepted') dismissPromotion();
   }
   return (
     <PwaContext.Provider
       value={{ registration, installed, installPrompt, secure, error, ready, install }}
     >
       {children}
-      {secure && !installed && !dismissed && installPromotionAllowed(pathname) && (
-        <InstallPromotion
-          canPrompt={!!installPrompt}
-          onInstall={install}
-          onDismiss={dismissPromotion}
-        />
-      )}
     </PwaContext.Provider>
   );
 }

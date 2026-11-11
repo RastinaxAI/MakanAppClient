@@ -1,4 +1,8 @@
 'use client';
+import { Input as NativeInput } from '@/components/ui/input';
+
+import { uiClass } from '@/components/v5/classes';
+
 import * as uiText from '@/content/fa';
 import { MessagingSurface } from './messaging-surface';
 import d from './directory.module.css';
@@ -155,14 +159,14 @@ export function ContactsPage() {
           contact: undefined,
         }));
   return (
-    <MessagingSurface className={d.directory}>
-      <div className={s.headingRow}>
-        <div className={s.heading}>
-          <h1 className="sr-only">{uiText.text_8236f4ce3dac}</h1>
+    <MessagingSurface className={uiClass(d.directory)}>
+      <div className={uiClass(s.headingRow)}>
+        <div className={uiClass(s.heading)}>
+          <h1 className={uiClass('sr-only')}>{uiText.text_8236f4ce3dac}</h1>
         </div>
         <PageBack href="/personal/messages" />
       </div>
-      <nav className={s.sectionLinks} aria-label={uiText.text_1971055384f8}>
+      <nav className={uiClass(s.sectionLinks)} aria-label={uiText.text_1971055384f8}>
         <button aria-pressed={tab === 'contacts'} onClick={() => changeTab('contacts')}>
           {uiText.text_759044ca1d2d}
         </button>
@@ -175,7 +179,7 @@ export function ContactsPage() {
         </button>
       </nav>
       {notice && (
-        <p className={s.success} role="status">
+        <p className={uiClass(s.success)} role="status">
           {notice}
         </p>
       )}
@@ -185,7 +189,7 @@ export function ContactsPage() {
         <ErrorState error={status.error} onRetry={() => void status.refetch()} />
       ) : (
         status.data.nextAction !== 'None' && (
-          <section className={s.profileCard} role="status">
+          <section className={uiClass(s.profileCard)} role="status">
             {canCreateDirect ? (
               <>
                 <p>{uiText.text_1b9ffc2a9963}</p>
@@ -210,14 +214,14 @@ export function ContactsPage() {
       )}
       {!!error && <ErrorState error={error} />}
       {lookupError && (
-        <p className="field-error" role="alert">
+        <p className={uiClass('field-error')} role="alert">
           {lookupError}
         </p>
       )}
       {tab === 'add' ? (
-        <section className={s.profileCard}>
+        <section className={uiClass(s.profileCard)}>
           <form
-            className={s.directoryForm}
+            className={uiClass(s.directoryForm)}
             onSubmit={async (event) => {
               event.preventDefault();
               let command: components['schemas']['ResolvePersonCommand'];
@@ -248,7 +252,7 @@ export function ContactsPage() {
           >
             <label>
               {uiText.text_54c852331c9b}
-              <input
+              <NativeInput
                 dir="ltr"
                 aria-label={uiText.text_30d28a3021cd}
                 placeholder={uiText.text_cff9c0e723ac}
@@ -273,12 +277,12 @@ export function ContactsPage() {
             <EmptyState title={uiText.text_0364864766f8} description={uiText.text_2dd3b2bb5816} />
           )}
           {person && (
-            <div className={s.foundPerson}>
-              <div className={s.profileIdentity}>
+            <div className={uiClass(s.foundPerson)}>
+              <div className={uiClass(s.profileIdentity)}>
                 <ProfileAvatar
                   photo={person.profilePhoto}
                   name={person.displayName}
-                  className={s.largeAvatar}
+                  className={uiClass(s.largeAvatar)}
                 />
                 <div>
                   <h2>{person.displayName}</h2>
@@ -294,14 +298,14 @@ export function ContactsPage() {
                 </div>
               </div>
               {person.userId === session.user.id ? (
-                <p className={s.muted}>{uiText.text_c068733f39cf}</p>
+                <p className={uiClass(s.muted)}>{uiText.text_c068733f39cf}</p>
               ) : (
                 <>
-                  <label className={s.singleField}>
+                  <label className={uiClass(s.singleField)}>
                     {uiText.text_07436f1f45ac}
-                    <input value={savedName} onChange={(e) => setSavedName(e.target.value)} />
+                    <NativeInput value={savedName} onChange={(e) => setSavedName(e.target.value)} />
                   </label>
-                  <div className={s.actions}>
+                  <div className={uiClass(s.actions)}>
                     <Button
                       disabled={busy}
                       onClick={() => void save(person, savedName.trim() || null)}
@@ -322,16 +326,18 @@ export function ContactsPage() {
                       {uiText.text_2d995041bb4a}
                     </Button>
                   </div>
-                  {!person.canStartDirect && <p className={s.muted}>{uiText.text_b8440364bb81}</p>}
+                  {!person.canStartDirect && (
+                    <p className={uiClass(s.muted)}>{uiText.text_b8440364bb81}</p>
+                  )}
                 </>
               )}
             </div>
           )}
         </section>
       ) : (
-        <section className={s.profileCard}>
+        <section className={uiClass(s.profileCard)}>
           <form
-            className={s.directoryForm}
+            className={uiClass(s.directoryForm)}
             role="search"
             onSubmit={(event) => {
               event.preventDefault();
@@ -340,10 +346,10 @@ export function ContactsPage() {
             }}
           >
             <label>
-              <span className="sr-only">
+              <span className={uiClass('sr-only')}>
                 {tab === 'contacts' ? uiText.text_88c808fdf7f4 : uiText.text_2562435815a8}
               </span>
-              <input
+              <NativeInput
                 aria-label={uiText.text_2c54ecc60e86}
                 value={draft}
                 onChange={(e) => setDraft(e.target.value)}
@@ -354,7 +360,7 @@ export function ContactsPage() {
             </label>
             <Button type="submit" variant="outline">
               <Search size={17} />
-              <span className="sr-only">{uiText.text_2a93eb7f06ce}</span>
+              <span className={uiClass('sr-only')}>{uiText.text_2a93eb7f06ce}</span>
             </Button>
           </form>
           {tab === 'search' && !query ? (
@@ -369,13 +375,16 @@ export function ContactsPage() {
               description={tab === 'contacts' ? uiText.text_17f6af62f546 : uiText.text_dae5c09caaa2}
             />
           ) : (
-            <div className={s.contactRows}>
+            <div className={uiClass(s.contactRows)}>
               {rows.map((row) => (
-                <article key={row.profile.userId} className={`${s.contactRow} ${d.contact}`}>
+                <article
+                  key={row.profile.userId}
+                  className={uiClass(`${s.contactRow} ${d.contact}`)}
+                >
                   <ProfileAvatar
                     photo={row.profile.profilePhoto}
                     name={row.name}
-                    className={s.avatar}
+                    className={uiClass(s.avatar)}
                   />
                   <div>
                     <strong>{row.name}</strong>
@@ -420,7 +429,7 @@ export function ContactsPage() {
             </div>
           )}
           {(tab === 'contacts' || !!query) && (
-            <div className={s.paging}>
+            <div className={uiClass(s.paging)}>
               <Button
                 size="icon"
                 variant="outline"
@@ -486,7 +495,7 @@ function ContactActions({
         </Button>
       </DialogTrigger>
       <DialogContent
-        className={`${t.theme} ${t.dialog}`}
+        className={uiClass(`${t.theme}`)}
         title={uiText.text_dae770ce3334}
         description={contact.savedName || contact.profile.displayName}
       >
@@ -513,16 +522,16 @@ function ContactActions({
             }
           }}
         >
-          <label className={s.singleField}>
+          <label className={uiClass(s.singleField)}>
             {uiText.text_796ebc9a8741}
-            <input
+            <NativeInput
               value={alias}
               disabled={busy}
               onChange={(event) => setAlias(event.target.value)}
             />
           </label>
-          <label className={s.selectContact}>
-            <input
+          <label className={uiClass(s.selectContact)}>
+            <NativeInput
               type="checkbox"
               checked={favorite}
               disabled={busy}
@@ -534,7 +543,7 @@ function ContactActions({
             {busy ? uiText.text_b5ef00b1806f : uiText.text_b7d4e6239152}
           </Button>
         </form>
-        <p className={s.muted}>{uiText.text_d5499ef00124}</p>
+        <p className={uiClass(s.muted)}>{uiText.text_d5499ef00124}</p>
         {!!error && <ErrorState error={error} />}
         {error instanceof ApiError && [409, 412].includes(error.status) && (
           <Button
@@ -548,7 +557,7 @@ function ContactActions({
             {uiText.text_b41fe8563d7d}
           </Button>
         )}
-        <div className={s.actions}>
+        <div className={uiClass(s.actions)}>
           <Button
             variant="outline"
             disabled={busy}

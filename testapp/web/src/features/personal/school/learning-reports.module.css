@@ -1,0 +1,97 @@
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.tabs a {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 8px 14px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+  font-size: calc(14px * var(--text-scale, 1));
+}
+.tabs a[aria-current='page'] {
+  background: var(--primary-soft);
+  color: var(--primary);
+  border-color: var(--primary);
+}
+.body {
+  display: grid;
+  gap: 18px;
+  min-width: 0;
+}
+.updated {
+  font-size: calc(12px * var(--text-scale, 1));
+  color: var(--muted);
+}
+.table {
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--surface);
+}
+.table table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+.table th {
+  background: var(--surface2);
+  text-align: start;
+  color: var(--muted);
+  font-size: calc(12px * var(--text-scale, 1));
+  padding: 13px 12px;
+  overflow-wrap: anywhere;
+}
+.table td {
+  padding: 16px 12px;
+  border-top: 1px solid var(--border);
+  font-size: calc(14px * var(--text-scale, 1));
+  line-height: 1.85;
+  overflow-wrap: anywhere;
+}
+.cards {
+  display: none;
+}
+.cards h2 {
+  font-size: calc(17px * var(--text-scale, 1));
+  margin-bottom: 8px;
+}
+.cards dl {
+  margin: 0;
+}
+.cards dl > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 0;
+  border-top: 1px solid var(--border);
+  font-size: calc(13px * var(--text-scale, 1));
+}
+.cards dt {
+  color: var(--muted);
+}
+.cards dd {
+  margin: 0;
+  min-width: 0;
+  text-align: end;
+  overflow-wrap: anywhere;
+}
+@media (max-width: 767px) {
+  .table {
+    display: none;
+  }
+  .cards {
+    display: grid;
+    gap: 12px;
+  }
+}
+:global(:root[data-reading='large']) .table {
+  display: none;
+}
+:global(:root[data-reading='large']) .cards {
+  display: grid;
+  gap: 12px;
+}

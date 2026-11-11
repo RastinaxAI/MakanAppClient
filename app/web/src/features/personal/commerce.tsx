@@ -1,4 +1,8 @@
 'use client';
+import { Select as NativeSelect, Input as NativeInput } from '@/components/ui/input';
+
+import { uiClass } from '@/components/v5/classes';
+
 import * as uiText from '@/content/fa';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
@@ -7,12 +11,17 @@ import { Button } from '@/components/ui/button';
 import { ConfirmAction } from '@/components/ui/confirm-action';
 import { ErrorState, LoadingSkeleton, EmptyState, label } from '@/components/ui/states';
 import { useUnsavedChanges } from '@/components/hooks/use-unsaved-changes';
-import { PageBack } from '@/components/navigation/page-back';
+import { useViewState } from '@/components/hooks/use-view-state';
+import { V5Scene } from '@/components/v5/scene';
 import type { components } from '@/generated/api/schema';
 import { ApiError } from '@/lib/api/errors';
 import { date } from '@/lib/formatting';
 import { usePersonal, usePersonalApi } from './provider';
 import { useAccountAction } from './use-account-action';
+import { OrderPayment } from './order-payment';
+import { validPaymentId } from './payment-model';
+import { acceptOrder } from './payment-model';
+import { clientValidator } from '@/lib/api/client-contract';
 import {
   quotaLabels,
   quotaRemaining,
@@ -23,10 +32,37 @@ import {
 import s from './service-layout.module.css';
 type S = components['schemas'];
 export function CommercePage() {
-  const org = useSearchParams().get('scope') === 'organization';
-  return <Commerce key={String(org)} organization={org} />;
+  const params = useSearchParams();
+  const org = params.get('scope') === 'organization';
+  const orderId = params.get('orderId'),
+    attemptId = params.get('paymentAttemptId');
+  if (
+    (orderId && !validPaymentId(orderId)) ||
+    (attemptId && !validPaymentId(attemptId)) ||
+    (attemptId && !orderId)
+  )
+    return <ErrorState error={new ApiError(400)} />;
+  return (
+    <Commerce
+      key={String(org)}
+      organization={org}
+      ordersOnly={params.get('view') === 'payments'}
+      returnedOrderId={orderId ?? undefined}
+      returnedAttemptId={attemptId ?? undefined}
+    />
+  );
 }
-function Commerce({ organization }: { organization: boolean }) {
+function Commerce({
+  organization,
+  ordersOnly = false,
+  returnedOrderId,
+  returnedAttemptId,
+}: {
+  organization: boolean;
+  ordersOnly?: boolean;
+  returnedOrderId?: string;
+  returnedAttemptId?: string;
+}) {
   const { session, call } = usePersonal();
   const allowed =
     !organization ||
@@ -40,7 +76,7 @@ function Commerce({ organization }: { organization: boolean }) {
   });
   const plans = usePersonalApi<S['CommercialPlanDto'][]>(
     '/api/v1/commerce/catalog?audience=' + owner,
-    { enabled: allowed },
+    { enabled: allowed && !ordersOnly && !returnedAttemptId },
   );
   const [quote, setQuote] = useState<S['CommercialQuoteDto']>(),
     [purpose, setPurpose] = useState<S['CommercialOrderPurpose']>('Purchase'),
@@ -48,9 +84,17 @@ function Commerce({ organization }: { organization: boolean }) {
     [selected, setSelected] = useState(''),
     [order, setOrder] = useState<S['OrderDto']>(),
     [now, setNow] = useState(Date.now());
-  const [orderUncertain, setOrderUncertain] = useState(false);
+  const commandKey = `makan:draft:order:${session.user.id}:${session.revision}:${scope}`;
+  const [command, setCommand, restored] = useViewState<S['CreateOrderCommand'] | null>(
+    commandKey,
+    null,
+    (value): value is S['CreateOrderCommand'] | null =>
+      value === null ||
+      clientValidator({ $ref: '#/components/schemas/CreateOrderCommand' }).safeParse(value).success,
+  );
+  const orderUncertain = !!command;
   useUnsavedChanges(orderUncertain);
-  const command = useRef<S['CreateOrderCommand'] | undefined>(undefined),
+  const createLock = useRef(false),
     a = useAccountAction();
   useEffect(() => {
     if (!quote) return;
@@ -67,29 +111,107 @@ function Commerce({ organization }: { organization: boolean }) {
   )
     return <ErrorState error={new ApiError(502, { code: 'CONTRACT_MISMATCH' })} />;
   const previewReady = !!quote && quoteAllowsPurchase(quote, selected, now);
+  async function createOrder() {
+    if (createLock.current || !restored || (!command && !previewReady)) return false;
+    const frozen = command ?? {
+      planVersionId: quote!.planVersionId,
+      clientOperationId: crypto.randomUUID(),
+      purpose,
+      subscriptionId: current.subscriptionId,
+    };
+    createLock.current = true;
+    try {
+      try {
+        sessionStorage.setItem(commandKey, JSON.stringify(frozen));
+      } catch {
+        throw new ApiError(503, { code: 'PAYMENT_STORAGE_UNAVAILABLE' });
+      }
+      setCommand(frozen);
+      const result = await call<S['CreateOrderResult']>(
+        '/api/v1/commerce/' + (organization ? '' : 'personal/') + 'orders',
+        { method: 'POST', expectedStatus: 200, body: JSON.stringify(frozen) },
+      );
+      const created = acceptOrder(
+        result.order,
+        result.order.orderId,
+        organization ? session.context.organizationId : null,
+      );
+      if (created.planVersionId !== frozen.planVersionId)
+        throw new ApiError(502, { code: 'CONTRACT_MISMATCH' });
+      sessionStorage.removeItem(commandKey);
+      setCommand(null);
+      setOrder(created);
+      await summary.refetch();
+      return true;
+    } catch (e) {
+      if (e instanceof ApiError && [400, 403, 404, 422].includes(e.status)) {
+        sessionStorage.removeItem(commandKey);
+        setCommand(null);
+      }
+      throw e;
+    } finally {
+      createLock.current = false;
+    }
+  }
+  if (returnedOrderId && returnedAttemptId)
+    return (
+      <V5Scene
+        id="MK-385"
+        title={uiText.paymentCopy.title}
+        back="/personal/subscription?view=payments"
+        kind="status"
+        deep
+      >
+        <OrderPayment
+          orderId={returnedOrderId}
+          organization={organization}
+          returnedAttemptId={returnedAttemptId}
+        />
+      </V5Scene>
+    );
+  if (ordersOnly)
+    return (
+      <V5Scene
+        id="MK-382"
+        title={uiText.serverAlignedUi.payments}
+        back="/personal/profile"
+        kind="list"
+      >
+        <Button asChild variant="outline">
+          <Link href={'/personal/subscription' + (organization ? '?scope=organization' : '')}>
+            {uiText.serverAlignedUi.planUsage}
+          </Link>
+        </Button>
+        <Orders
+          organization={organization}
+          returnedOrderId={returnedOrderId}
+          returnedAttemptId={returnedAttemptId}
+        />
+      </V5Scene>
+    );
   return (
-    <div className={s.page}>
-      <PageBack href={organization ? '/personal/education' : '/personal/profile'} />
-      <header className={s.heading}>
-        <div>
-          <h1>{organization ? uiText.text_2ae205425d42 : uiText.text_ab67aa4d93be}</h1>
-          <p>{organization ? uiText.text_6ff6f7651ca5 : uiText.text_7341b0ece9cc}</p>
-        </div>
-        {(organization ||
-          (session.context.workspaceType === 'Organization' &&
-            session.context.activeRole === 'Manager')) &&
-          !orderUncertain && (
-            <Button variant="outline" asChild>
-              <Link href={'/personal/subscription' + (organization ? '' : '?scope=organization')}>
-                {organization ? uiText.text_d86b9666ec8d : uiText.text_2ae205425d42}
-              </Link>
-            </Button>
-          )}
-      </header>
-      <section className={s.panel}>
-        <span className={s.status}>{subscriptionLabels[current.state] ?? current.state}</span>
+    <V5Scene
+      id={organization ? 'MK-381' : 'MK-380'}
+      title={organization ? uiText.text_2ae205425d42 : uiText.text_ab67aa4d93be}
+      subtitle={organization ? uiText.text_6ff6f7651ca5 : uiText.text_7341b0ece9cc}
+      back={organization ? '/personal/education' : '/personal/profile'}
+    >
+      {(organization ||
+        (session.context.workspaceType === 'Organization' &&
+          session.context.activeRole === 'Manager')) &&
+        !orderUncertain && (
+          <Button variant="outline" asChild>
+            <Link href={'/personal/subscription' + (organization ? '' : '?scope=organization')}>
+              {organization ? uiText.text_d86b9666ec8d : uiText.text_2ae205425d42}
+            </Link>
+          </Button>
+        )}
+      <section className={uiClass(s.panel)}>
+        <span className={uiClass(s.status)}>
+          {subscriptionLabels[current.state] ?? current.state}
+        </span>
         <h2>{current.planDisplayName ?? uiText.text_f596b5c9d314}</h2>
-        <dl className={s.detail}>
+        <dl className={uiClass(s.detail)}>
           <div>
             <dt>{uiText.text_7ed97f2495a5}</dt>
             <dd>
@@ -107,14 +229,14 @@ function Commerce({ organization }: { organization: boolean }) {
             </div>
           )}
         </dl>
-        {current.hasPendingPayment && <p className={s.hint}>{uiText.text_8731cd667f6e}</p>}
+        {current.hasPendingPayment && <p className={uiClass(s.hint)}>{uiText.text_8731cd667f6e}</p>}
       </section>
-      <section className={s.panel}>
+      <section className={uiClass(s.panel)}>
         <h2>{uiText.text_86a2d2d4def4}</h2>
         {current.quotas.length ? (
-          <div className={s.grid}>
+          <div className={uiClass(s.grid)}>
             {current.quotas.map((q) => (
-              <div className={s.quota} key={q.key} data-exceeded={q.isOverQuota}>
+              <div className={uiClass(s.quota)} key={q.key} data-exceeded={q.isOverQuota}>
                 <h3>{quotaLabels[q.key]}</h3>
                 <strong>
                   {uiText.text_9abd6e4940e3}
@@ -131,14 +253,14 @@ function Commerce({ organization }: { organization: boolean }) {
             ))}
           </div>
         ) : (
-          <p className={s.hint}>{uiText.text_5de725f5f494}</p>
+          <p className={uiClass(s.hint)}>{uiText.text_5de725f5f494}</p>
         )}
-        <p className={s.meta}>
+        <p className={uiClass(s.meta)}>
           {uiText.text_dc39ddb24c12}
           {date(current.observedAtUtc, true)}
         </p>
       </section>
-      <section className={s.panel}>
+      <section className={uiClass(s.panel)}>
         <h2>{uiText.text_16d1d8fb88d8}</h2>
         {plans.isPending ? (
           <LoadingSkeleton />
@@ -148,15 +270,15 @@ function Commerce({ organization }: { organization: boolean }) {
           <EmptyState title={uiText.text_13877f13269f} />
         ) : (
           <>
-            <label className={s.field}>
+            <label className={uiClass(s.field)}>
               {uiText.text_d9772fd00176}
-              <select
+              <NativeSelect
                 value={selected}
                 disabled={a.busy || orderUncertain}
                 onChange={(e) => {
                   setSelected(e.target.value);
                   setQuote(undefined);
-                  command.current = undefined;
+                  setCommand(null);
                 }}
               >
                 <option value="">{uiText.text_c47e8cf0803f}</option>
@@ -169,23 +291,23 @@ function Commerce({ organization }: { organization: boolean }) {
                       {p.priceToman.toLocaleString('fa-IR')} {p.displayCurrency}
                     </option>
                   ))}
-              </select>
+              </NativeSelect>
             </label>
-            <label className={s.field}>
+            <label className={uiClass(s.field)}>
               {uiText.text_a1dbc531a2cd}
-              <select
+              <NativeSelect
                 value={purpose}
                 disabled={a.busy || orderUncertain}
                 onChange={(e) => {
                   setPurpose(e.target.value as S['CommercialOrderPurpose']);
                   setQuote(undefined);
-                  command.current = undefined;
+                  setCommand(null);
                 }}
               >
                 <option value="Purchase">{uiText.text_06e54bf7afe6}</option>
                 <option value="Renewal">{uiText.text_3225fab3cd96}</option>
                 <option value="Upgrade">{uiText.text_a5ebe3e6fe5e}</option>
-              </select>
+              </NativeSelect>
             </label>
             <Button
               disabled={a.busy || orderUncertain || !selected}
@@ -199,23 +321,23 @@ function Commerce({ organization }: { organization: boolean }) {
                 if (result) {
                   setQuote(result);
                   setNow(Date.now());
-                  command.current = undefined;
+                  setCommand(null);
                 }
               }}
             >
               {uiText.text_d2160f8eb18d}
             </Button>
             {quote && (
-              <div className={s.panel}>
+              <div className={uiClass(s.panel)}>
                 {(quote.paymentAvailable !== true ||
                   quote.previewOnly !== false ||
                   quote.startsUponVerifiedPayment !== true) && (
                   <p role="status">{uiText.vnext.paymentUnavailable}</p>
                 )}
-                <strong className={s.price}>
+                <strong className={uiClass(s.price)}>
                   {quote.priceToman.toLocaleString('fa-IR')} {quote.displayCurrency}
                 </strong>
-                <p className={s.hint}>
+                <p className={uiClass(s.hint)}>
                   {uiText.text_bae7e088f1e1}{' '}
                   {quote.expiresAtUtc ? date(quote.expiresAtUtc, true) : uiText.text_2b1bf830baea}
                   {uiText.text_9ae95d6b5b73}
@@ -223,52 +345,13 @@ function Commerce({ organization }: { organization: boolean }) {
                 {Date.parse(quote.expiresAtUtc ?? '') <= now && (
                   <p role="status">{uiText.text_194fed9c2345}</p>
                 )}
-                {!organization && (
-                  <ConfirmAction
-                    trigger={uiText.text_6ff723ebc69c}
-                    title={uiText.text_cdc6409eb6a5}
-                    description={uiText.text_2a70b317c5f5}
-                    disabled={!previewReady && !command.current}
-                    confirm={uiText.text_0c2133fae476}
-                    onConfirm={async () => {
-                      command.current ??= {
-                        planVersionId: quote.planVersionId,
-                        clientOperationId: crypto.randomUUID(),
-                        purpose,
-                        subscriptionId: current.subscriptionId,
-                      };
-                      setOrderUncertain(true);
-                      let result: S['CreateOrderResult'];
-                      try {
-                        result = await call<S['CreateOrderResult']>(prefix + '/orders', {
-                          method: 'POST',
-                          body: JSON.stringify(command.current),
-                        });
-                      } catch (e) {
-                        if (
-                          e instanceof ApiError &&
-                          e.status < 500 &&
-                          ![408, 409].includes(e.status)
-                        ) {
-                          setOrderUncertain(false);
-                          command.current = undefined;
-                        }
-                        throw e;
-                      }
-                      setOrderUncertain(false);
-                      setOrder(result.order);
-                      await summary.refetch();
-                      return true;
-                    }}
-                  />
-                )}
               </div>
             )}
             {current.subscriptionId && (
               <>
-                <label className={s.field}>
+                <label className={uiClass(s.field)}>
                   {uiText.text_4097df6f7123}
-                  <input value={reason} onChange={(e) => setReason(e.target.value)} />
+                  <NativeInput value={reason} onChange={(e) => setReason(e.target.value)} />
                 </label>
                 <ConfirmAction
                   trigger={uiText.text_bca8396dc77f}
@@ -292,10 +375,20 @@ function Commerce({ organization }: { organization: boolean }) {
             )}
           </>
         )}
+        {(quote || command) && (
+          <ConfirmAction
+            trigger={command ? uiText.paymentCopy.retryOrder : uiText.text_6ff723ebc69c}
+            title={uiText.text_cdc6409eb6a5}
+            description={uiText.text_2a70b317c5f5}
+            disabled={!restored || (!previewReady && !command)}
+            confirm={uiText.text_0c2133fae476}
+            onConfirm={createOrder}
+          />
+        )}
         {!!a.error && <ErrorState error={a.error} />}
       </section>
       {order && (
-        <section className={s.panel} role="status">
+        <section className={uiClass(s.panel)} role="status">
           <h2>{uiText.text_ed47f8b6e65c}</h2>
           <p>
             {uiText.text_2b18443f7114}
@@ -303,30 +396,47 @@ function Commerce({ organization }: { organization: boolean }) {
             {uiText.text_5adab0015a6e}
             {label(order.fulfillmentState)}
           </p>
-          <p className={s.hint}>{uiText.text_f22a3f010537}</p>
+          <p className={uiClass(s.hint)}>{uiText.text_f22a3f010537}</p>
         </section>
       )}
-      {!organization && <PersonalOrders />}
-    </div>
+      <Orders
+        key={returnedOrderId ?? order?.orderId ?? 'history'}
+        organization={organization}
+        returnedOrderId={returnedOrderId ?? order?.orderId}
+        returnedAttemptId={returnedAttemptId}
+        paymentPlanId={previewReady ? quote?.planVersionId : undefined}
+      />
+    </V5Scene>
   );
 }
-function PersonalOrders() {
-  const q = usePersonalApi<S['OrderListResult']>('/api/v1/commerce/personal/orders?limit=20', {
-    poll: 15000,
-  });
+function Orders({
+  organization,
+  returnedOrderId,
+  returnedAttemptId,
+  paymentPlanId,
+}: {
+  organization: boolean;
+  returnedOrderId?: string;
+  returnedAttemptId?: string;
+  paymentPlanId?: string;
+}) {
+  const q = usePersonalApi<S['OrderListResult']>(
+    '/api/v1/commerce/' + (organization ? '' : 'personal/') + 'orders?limit=20',
+    {
+      poll: 15000,
+    },
+  );
   const [selected, setSelected] = useState<string>();
-  const detail = usePersonalApi<S['OrderDto']>('/api/v1/commerce/personal/orders/' + selected, {
-    enabled: !!selected,
-  });
+  const selectedId = selected ?? returnedOrderId;
   return (
-    <section className={s.panel}>
+    <section className={uiClass(s.panel)}>
       <h2>{uiText.text_efb1be1f18cb}</h2>
       {q.isPending ? (
         <LoadingSkeleton />
       ) : q.isError ? (
         <ErrorState error={q.error} onRetry={() => void q.refetch()} />
       ) : q.data.items.length ? (
-        <ul className={s.list}>
+        <ul className={uiClass(s.list)}>
           {q.data.items.map((o) => (
             <li key={o.orderId}>
               <strong>
@@ -335,7 +445,7 @@ function PersonalOrders() {
                 {(o.priceToman ?? o.amount).toLocaleString('fa-IR')}{' '}
                 {o.displayCurrency ?? o.currency}
               </strong>
-              <p className={s.meta}>{date(o.createdAtUtc, true)}</p>
+              <p className={uiClass(s.meta)}>{date(o.createdAtUtc, true)}</p>
               <Button variant="outline" onClick={() => setSelected(o.orderId)}>
                 {uiText.text_f0452fb92a5a}
               </Button>
@@ -345,31 +455,15 @@ function PersonalOrders() {
       ) : (
         <EmptyState title={uiText.text_f53c7f5829aa} />
       )}
-      {selected &&
-        (detail.isPending ? (
-          <LoadingSkeleton />
-        ) : detail.isError ? (
-          <ErrorState error={detail.error} />
-        ) : (
-          <dl className={s.detail}>
-            <div>
-              <dt>{uiText.text_cb52f9e6dc45}</dt>
-              <dd>{label(detail.data.status)}</dd>
-            </div>
-            <div>
-              <dt>{uiText.text_62b1f7b3faed}</dt>
-              <dd>{label(detail.data.fulfillmentState)}</dd>
-            </div>
-            <div>
-              <dt>{uiText.text_3962cd7270f8}</dt>
-              <dd>
-                {detail.data.paidAtUtc
-                  ? date(detail.data.paidAtUtc, true)
-                  : uiText.text_d2793bd966f1}
-              </dd>
-            </div>
-          </dl>
-        ))}
+      {selectedId && (
+        <OrderPayment
+          key={selectedId}
+          orderId={selectedId}
+          organization={organization}
+          paymentPlanId={paymentPlanId}
+          returnedAttemptId={selectedId === returnedOrderId ? returnedAttemptId : undefined}
+        />
+      )}
     </section>
   );
 }

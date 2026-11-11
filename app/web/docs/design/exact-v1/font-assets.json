@@ -1,0 +1,60 @@
+{
+  "method": "Read SFNT name/fvar tables with Python standard library; files unmodified. CSS aliases and loading are checked in a separate browser probe.",
+  "fonts": [
+    {
+      "path": "public/fonts/makan-reference/Vazirmatn.ttf",
+      "sha256": "696249a2c74b39ffdef55de4df2809c5b639d3ff80d618d8160a095d2fd49dca",
+      "names": {
+        "1": [
+          "Vazirmatn"
+        ],
+        "2": [
+          "Regular"
+        ],
+        "4": [
+          "Vazirmatn Regular"
+        ],
+        "6": [
+          "Vazirmatn-Regular"
+        ]
+      },
+      "axes": [
+        {
+          "tag": "wght",
+          "min": 100.0,
+          "default": 400.0,
+          "max": 900.0
+        }
+      ],
+      "bytes": 241328
+    },
+    {
+      "path": "design/reference-v5/MakanApp_Responsive_Design_v5/editable-source/assets/Vazirmatn.ttf",
+      "sha256": "696249a2c74b39ffdef55de4df2809c5b639d3ff80d618d8160a095d2fd49dca",
+      "names": {
+        "1": [
+          "Vazirmatn"
+        ],
+        "2": [
+          "Regular"
+        ],
+        "4": [
+          "Vazirmatn Regular"
+        ],
+        "6": [
+          "Vazirmatn-Regular"
+        ]
+      },
+      "axes": [
+        {
+          "tag": "wght",
+          "min": 100.0,
+          "default": 400.0,
+          "max": 900.0
+        }
+      ],
+      "bytes": 241328
+    }
+  ],
+  "sameBinary": true
+}

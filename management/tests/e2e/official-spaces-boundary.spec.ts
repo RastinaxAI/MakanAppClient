@@ -21,7 +21,7 @@ test.beforeEach(async () => {
   await control({ reset: true });
 });
 
-test('owner cannot use official school spaces, private attachments, replay or repair through admin BFF', async ({
+test('owner cannot use school spaces, private attachments, replay, repair or AI Knowledge through admin BFF', async ({
   page,
 }) => {
   const revision = await login(page);
@@ -35,6 +35,13 @@ test('owner cannot use official school spaces, private attachments, replay or re
     ['GET', `/api/v1/academic/exam-attempts/${id}/answers/${id}/attachments/${id}`],
     ['GET', '/api/v1/realtime/changes'],
     ['POST', '/api/admin/v1/official-spaces/repair'],
+    ['POST', '/api/v1/ai/knowledge/retrieve'],
+    ['POST', '/api/v1/ai/knowledge/rag/answer'],
+    ['POST', `/api/v1/sources/${id}/versions/1/knowledge/ingest`],
+    ['GET', `/api/v1/sources/${id}/versions/1/knowledge/status`],
+    ['POST', `/api/v1/sources/${id}/versions/1/knowledge/delete`],
+    ['POST', `/api/v1/sources/${id}/versions/1/knowledge/supersede`],
+    ['POST', `/api/v1/sources/${id}/versions/1/knowledge/reindex`],
   ];
   for (const [method, path] of cases) {
     const response = await page.request.fetch('/api/backend' + path, {
@@ -69,8 +76,16 @@ test('metadata strips excess official flags and private fields rather than creat
   await expect(page.getByText('PRIVATE_CONTENT_NOT_FOR_METADATA')).toHaveCount(0);
   await expect(page.getByText('گروه رسمی آزمایشی', { exact: true })).toHaveCount(0);
   await fs.mkdir('maintenance/generated/screenshots/admin-42c51a3', { recursive: true });
-  await page.screenshot({ path: 'maintenance/generated/screenshots/admin-42c51a3/messaging-desktop.png', fullPage: true });
+  await page.screenshot({
+    path: 'maintenance/generated/screenshots/admin-42c51a3/messaging-desktop.png',
+    fullPage: true,
+  });
   await page.setViewportSize({ width: 390, height: 844 });
-  await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
-  await page.screenshot({ path: 'maintenance/generated/screenshots/admin-42c51a3/messaging-mobile.png', fullPage: true });
+  await expect
+    .poll(() => page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1))
+    .toBe(true);
+  await page.screenshot({
+    path: 'maintenance/generated/screenshots/admin-42c51a3/messaging-mobile.png',
+    fullPage: true,
+  });
 });

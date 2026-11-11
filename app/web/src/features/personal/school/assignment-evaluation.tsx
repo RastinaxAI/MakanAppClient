@@ -1,4 +1,12 @@
 'use client';
+import {
+  Select as NativeSelect,
+  Input as NativeInput,
+  Textarea as NativeTextarea,
+} from '@/components/ui/input';
+
+import { uiClass } from '@/components/v5/classes';
+
 import * as uiText from '@/content/fa';
 import { useAcademicScope } from './academic-scope';
 import { useEffect, useRef, useState } from 'react';
@@ -55,20 +63,24 @@ function Queue({ assignmentId }: { assignmentId?: string }) {
     { poll: 15000 },
   );
   return (
-    <section className={e.panel}>
-      <div className={e.filters}>
+    <section className={uiClass(e.panel)}>
+      <div className={uiClass(e.filters)}>
         <Field label={uiText.text_0731f9491612}>
-          <select value={status} onChange={(ev) => setStatus(ev.target.value)}>
+          <NativeSelect value={status} onChange={(ev) => setStatus(ev.target.value)}>
             <option value="">{uiText.text_fa55e47f28bc}</option>
             {(['AwaitingEvaluation', 'Draft', 'Released', 'CorrectionDraft'] as const).map((v) => (
               <option key={v} value={v}>
                 {evaluationLabel(v)}
               </option>
             ))}
-          </select>
+          </NativeSelect>
         </Field>
-        <label className={s.check}>
-          <input type="checkbox" checked={late} onChange={(ev) => setLate(ev.target.checked)} />
+        <label className={uiClass(s.check)}>
+          <NativeInput
+            type="checkbox"
+            checked={late}
+            onChange={(ev) => setLate(ev.target.checked)}
+          />
           {uiText.text_f125a09fb052}
         </label>
       </div>
@@ -77,10 +89,10 @@ function Queue({ assignmentId }: { assignmentId?: string }) {
       ) : q.isError ? (
         <ErrorState error={q.error} onRetry={() => void q.refetch()} />
       ) : q.data.length ? (
-        <div className={e.rows}>
+        <div className={uiClass(e.rows)}>
           {q.data.map((row) => (
             <Link
-              className={e.row}
+              className={uiClass(e.row)}
               key={row.submissionAttemptId}
               href={attemptRoute(base, row.submissionAttemptId) + '/evaluate'}
             >
@@ -158,7 +170,7 @@ function EvaluationState({
   const value = row.reviewStatus === 'AwaitingEvaluation' ? undefined : q.data;
   if (value && value.submissionAttemptId !== id) return <ErrorState error={new ApiError(502)} />;
   return (
-    <div className={e.layout}>
+    <div className={uiClass(e.layout)}>
       <SubmissionRead value={submission} />
       {review ? (
         <EvaluationReview
@@ -174,9 +186,9 @@ function EvaluationState({
 }
 function SubmissionRead({ value }: { value: S['SubmissionForEvaluationResult'] }) {
   return (
-    <section className={e.panel}>
+    <section className={uiClass(e.panel)}>
       <h2>{value.assignmentTitle}</h2>
-      <div className={e.meta}>
+      <div className={uiClass(e.meta)}>
         <span>{value.studentDisplayName}</span>
         <span>
           {uiText.text_1447bc999cc2}
@@ -184,12 +196,12 @@ function SubmissionRead({ value }: { value: S['SubmissionForEvaluationResult'] }
         </span>
         <span>{date(value.submittedAtUtc, true)}</span>
       </div>
-      <p className={e.answer} dir="auto">
+      <p className={uiClass(e.answer)} dir="auto">
         {value.answerText || uiText.text_699df53d9134}
       </p>
       <h2>{uiText.text_b7504f07794e}</h2>
       {value.attachments.length ? (
-        <div className={e.rows}>
+        <div className={uiClass(e.rows)}>
           {value.attachments.map((file) => (
             <EvaluationFile
               key={file.fileAssetId}
@@ -199,7 +211,7 @@ function SubmissionRead({ value }: { value: S['SubmissionForEvaluationResult'] }
           ))}
         </div>
       ) : (
-        <p className={s.hint}>{uiText.text_b07222592c31}</p>
+        <p className={uiClass(s.hint)}>{uiText.text_b07222592c31}</p>
       )}
     </section>
   );
@@ -219,9 +231,9 @@ function EvaluationFile({
   const controller = useRef<AbortController | null>(null);
   useEffect(() => () => controller.current?.abort(), []);
   return (
-    <div className={e.row}>
-      <div className={e.fileDetails}>
-        <span className={e.fileIcon}>
+    <div className={uiClass(e.row)}>
+      <div className={uiClass(e.fileDetails)}>
+        <span className={uiClass(e.fileIcon)}>
           {file.contentType.startsWith('image/') ? <FileImage size={22} /> : <FileText size={22} />}
         </span>
         <div>
@@ -274,7 +286,7 @@ function EvaluationFile({
             : uiText.text_fddd72f44b1a}
       </Button>
       {busy && (
-        <div className={e.fileProgress} role="status">
+        <div className={uiClass(e.fileProgress)} role="status">
           <progress
             aria-label={uiText.text_6f83baa49c64 + file.originalFileName}
             max={progress?.total ?? undefined}
@@ -316,10 +328,10 @@ function EvaluationForm({
     );
   if (value && value.status !== 'Draft' && !correction)
     return (
-      <section className={e.panel}>
+      <section className={uiClass(e.panel)}>
         <h2>{evaluationLabel(value.status)}</h2>
         <p>{uiText.text_0a907e4db7e6}</p>
-        <div className={e.actions}>
+        <div className={uiClass(e.actions)}>
           <Button asChild>
             <Link href={attemptRoute(base, id) + '/evaluation-review'}>
               {uiText.text_f74b92f4e375}
@@ -338,7 +350,7 @@ function EvaluationForm({
   const valid =
     validScore(d.values.score, submission.maxScore) && (!correction || !!d.values.reason.trim());
   return (
-    <section className={e.panel}>
+    <section className={uiClass(e.panel)}>
       <h2>{correction ? uiText.text_93d697d4f295 : uiText.text_b258bdb17ed3}</h2>
       <form
         onSubmit={async (ev) => {
@@ -367,9 +379,9 @@ function EvaluationForm({
           }
         }}
       >
-        <fieldset className={s.form} disabled={a.busy || !d.ready || d.stale}>
+        <fieldset className={uiClass(s.form)} disabled={a.busy || !d.ready || d.stale}>
           <Field label={uiText.format_afd74191ca72(submission.maxScore.toLocaleString('fa-IR'))}>
-            <input
+            <NativeInput
               type="number"
               min={0}
               max={submission.maxScore}
@@ -380,25 +392,25 @@ function EvaluationForm({
             />
           </Field>
           <Field label={uiText.text_3adafc73e1d2}>
-            <textarea
+            <NativeTextarea
               value={d.values.learner}
               onChange={(ev) => d.set('learner', ev.target.value)}
             />
           </Field>
           <Field label={uiText.text_29b4c343a306}>
-            <textarea
+            <NativeTextarea
               value={d.values.guardian}
               onChange={(ev) => d.set('guardian', ev.target.value)}
             />
           </Field>
-          <div className={e.private}>
+          <div className={uiClass(e.private)}>
             <h3>
               <LockKeyhole size={18} />
               {uiText.text_bae472294345}
             </h3>
             <p>{uiText.text_65815ac74e0f}</p>
             <Field label={uiText.text_941348bfcf12}>
-              <textarea
+              <NativeTextarea
                 value={d.values.private}
                 onChange={(ev) => d.set('private', ev.target.value)}
               />
@@ -406,14 +418,14 @@ function EvaluationForm({
           </div>
           {correction && (
             <Field label={uiText.text_5a351482a930}>
-              <textarea
+              <NativeTextarea
                 required
                 value={d.values.reason}
                 onChange={(ev) => d.set('reason', ev.target.value)}
               />
             </Field>
           )}
-          <div className={e.actions}>
+          <div className={uiClass(e.actions)}>
             <Button type="submit" disabled={!valid}>
               {a.busy ? uiText.text_a143258455bb : uiText.text_443deeea74b8}
             </Button>
@@ -438,7 +450,7 @@ function EvaluationReview({
   const { call } = usePersonal();
   if (!value)
     return (
-      <section className={e.panel}>
+      <section className={uiClass(e.panel)}>
         <EmptyState title={uiText.text_ae21f41e1594} />
         <Button asChild>
           <Link href={attemptRoute(base, id) + '/evaluate'}>{uiText.text_0d12062fab6e}</Link>
@@ -446,17 +458,17 @@ function EvaluationReview({
       </section>
     );
   return (
-    <section className={e.panel}>
+    <section className={uiClass(e.panel)}>
       <h2>{uiText.text_e66b52706c41}</h2>
       <Status>{evaluationLabel(value.status)}</Status>
-      <div className={e.score}>
+      <div className={uiClass(e.score)}>
         <strong>{value.score.toLocaleString('fa-IR')}</strong>
         <span>
           {uiText.text_928bdfd562d1}
           {value.maxScore.toLocaleString('fa-IR')}
         </span>
       </div>
-      <dl className={e.summary}>
+      <dl className={uiClass(e.summary)}>
         <div>
           <dt>{uiText.text_0a1a85c1271a}</dt>
           <dd>{value.learnerFeedback || uiText.text_7b9c695e1e57}</dd>
@@ -466,10 +478,10 @@ function EvaluationReview({
           <dd>{value.guardianVisibleFeedback || uiText.text_7b9c695e1e57}</dd>
         </div>
       </dl>
-      <p className={s.hint}>
+      <p className={uiClass(s.hint)}>
         {uiText.text_5ea656f46842} {value.revisionNumber.toLocaleString('fa-IR')}
       </p>
-      <div className={e.actions}>
+      <div className={uiClass(e.actions)}>
         {value.status === 'Draft' ? (
           <>
             <Button asChild variant="outline">

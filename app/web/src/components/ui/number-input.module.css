@@ -1,0 +1,42 @@
+.control {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+  min-height: 48px;
+  padding-inline: 13px;
+  border: 1px solid var(--control-border);
+  border-radius: 12px;
+  color: var(--text);
+  background: var(--surface);
+  font-size: calc(16px * var(--text-scale, 1));
+  line-height: 1.7;
+  cursor: text;
+}
+.control:focus-within {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 2px;
+  border-color: var(--primary);
+}
+.control:has([aria-invalid='true']) {
+  border-color: var(--danger);
+}
+.control[data-disabled] {
+  opacity: 0.6;
+  cursor: default;
+}
+.control input.number {
+  flex: 0 1 auto;
+  width: auto;
+  min-width: 1ch;
+  max-width: 100%;
+  padding: 11px 0;
+  border: 0;
+  border-radius: 0;
+  outline: 0;
+  background: transparent;
+  font: inherit;
+}
+.control > span {
+  flex: 0 0 auto;
+}

@@ -1,4 +1,12 @@
 'use client';
+import {
+  Select as NativeSelect,
+  Textarea as NativeTextarea,
+  Input as NativeInput,
+} from '@/components/ui/input';
+
+import { uiClass } from '@/components/v5/classes';
+
 import * as uiText from '@/content/fa';
 import { useAcademicScope } from './academic-scope';
 import { ApiError } from '@/lib/api/errors';
@@ -7,13 +15,22 @@ import { EmptyState, ErrorState, label, LoadingSkeleton } from '@/components/ui/
 import type { components } from '@/generated/api/schema';
 import { date } from '@/lib/formatting';
 import Link from 'next/link';
-import { useState } from 'react';
+import dynamic from 'next/dynamic';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import { usePersonalApi } from '../provider';
 import { ActivityDeliveryStatus } from './activity-delivery';
 import { ExamDiscovery } from './exam-discovery';
+import { ExamQuestionRemove } from './exam-question-remove';
 import s from './school.module.css';
 import { Card, Field, SchoolHeading, Status, useSchoolAction } from './shared';
 type S = components['schemas'];
+const ExamQuestionForm = dynamic(
+  () => import('./exam-question-form').then((m) => m.ExamQuestionForm),
+  {
+    loading: () => <LoadingSkeleton />,
+  },
+);
 export function Exams({ classId, teach }: { classId?: string; teach: boolean }) {
   return teach ? (
     <ExamDiscovery classId={classId} />
@@ -46,14 +63,14 @@ function LearnerExams({ classId, teach }: { classId?: string; teach: boolean }) 
       {teach && !classId && (
         <Card>
           <Field label={uiText.text_36167d33608a}>
-            <select value={chosen} onChange={(e) => setChosen(e.target.value)}>
+            <NativeSelect value={chosen} onChange={(e) => setChosen(e.target.value)}>
               <option value="">{uiText.text_e4f0b64f490d}</option>
               {classes.data?.map((c) => (
                 <option key={c.id} value={c.id}>
                   {c.title}
                 </option>
               ))}
-            </select>
+            </NativeSelect>
           </Field>
           {classes.isError && <ErrorState error={classes.error} />}
         </Card>
@@ -63,9 +80,9 @@ function LearnerExams({ classId, teach }: { classId?: string; teach: boolean }) 
       ) : q.isError ? (
         <ErrorState error={q.error} onRetry={() => void q.refetch()} />
       ) : rows?.length ? (
-        <div className={s.grid}>
+        <div className={uiClass(s.grid)}>
           {rows.map((exam) => (
-            <article key={exam.versionId} className={s.classCard}>
+            <article key={exam.versionId} className={uiClass(s.classCard)}>
               <Status>{label(exam.publicationState)}</Status>
               <h2>{exam.title}</h2>
               <p>
@@ -79,7 +96,7 @@ function LearnerExams({ classId, teach }: { classId?: string; teach: boolean }) 
                 {date(exam.rules.availableFromUtc, true)}
                 {uiText.text_f6d897a5e343} {date(exam.rules.availableUntilUtc, true)}
               </p>
-              <footer className={s.cardActions}>
+              <footer className={uiClass(s.cardActions)}>
                 <Button asChild>
                   <Link
                     href={base + '/exams/' + exam.id + (teach ? '/edit' : '')}
@@ -108,11 +125,44 @@ function LearnerExams({ classId, teach }: { classId?: string; teach: boolean }) 
 export function ExamEditor({ id }: { id: string }) {
   const scope = useAcademicScope();
   const { base } = useAcademicScope();
+  const params = useSearchParams(),
+    router = useRouter();
+  const selected = params.get('question');
+  const [deletedSelection, setDeletedSelection] = useState('');
   const q = usePersonalApi<S['ExamEditorDto']>('/api/v1/academic/exams/' + id + '/editor');
+  useEffect(() => {
+    if (!selected && deletedSelection) {
+      requestAnimationFrame(() =>
+        document.querySelector<HTMLElement>('[data-exam-question-list]')?.focus(),
+      );
+      if (q.data && !q.data.questions.some((question) => question.id === deletedSelection))
+        setDeletedSelection('');
+    }
+  }, [selected, deletedSelection, q.data]);
   if (q.isPending) return <LoadingSkeleton />;
   if (q.isError) return <ErrorState error={q.error} onRetry={() => void q.refetch()} />;
   const item = q.data;
-  if (!scope.matches(item)) return <ErrorState error={new ApiError(404)} />;
+  if (item.id !== id || !scope.matches(item)) return <ErrorState error={new ApiError(404)} />;
+  if (!scope.personal && selected) {
+    const question = item.questions.find((row) => row.id === selected);
+    if (!question && deletedSelection === selected) return <LoadingSkeleton />;
+    if (!question) return <ErrorState error={new ApiError(404)} />;
+    if (item.versionStatus !== 'Draft') return <ErrorState error={new ApiError(403)} />;
+    return (
+      <ExamQuestionForm
+        key={id + ':' + selected}
+        exam={item}
+        question={question}
+        onSaved={() => router.replace(`${base}/exams/${id}/edit`)}
+        onDeleted={() => {
+          setDeletedSelection(selected);
+          router.replace(`${base}/exams/${id}/edit`);
+        }}
+        onRefresh={() => q.refetch()}
+      />
+    );
+  }
+  const questions = item.questions.filter((question) => question.id !== deletedSelection);
   return (
     <>
       <SchoolHeading
@@ -133,7 +183,7 @@ export function ExamEditor({ id }: { id: string }) {
         </Button>
       )}
       <Card>
-        <div className={s.row}>
+        <div className={uiClass(s.row)}>
           <Status>{label(item.versionStatus)}</Status>
           <span>
             {item.durationMinutes}
@@ -144,13 +194,13 @@ export function ExamEditor({ id }: { id: string }) {
             {uiText.text_931d9d5a6b04}
           </span>
           <span>
-            {item.questions.length}
+            {questions.length}
             {uiText.text_5c2e40bca3fb}
           </span>
         </div>
-        <p className={s.bodyText}>{item.description}</p>
+        <p className={uiClass(s.bodyText)}>{item.description}</p>
         {item.versionStatus === 'Draft' && (
-          <div className={s.row}>
+          <div className={uiClass(s.row)}>
             <Button asChild>
               <Link href={`${base}/exams/${id}/questions/new`}>{uiText.text_e109aef32077}</Link>
             </Button>
@@ -160,33 +210,54 @@ export function ExamEditor({ id }: { id: string }) {
           </div>
         )}
       </Card>
-      <Card title={uiText.text_795a6fe29020}>
-        {item.questions.length ? (
-          item.questions.map((question) => (
-            <div className={s.question} key={question.id}>
-              <div className={s.row}>
-                <strong>
-                  {uiText.text_649c0357f354}
-                  {question.order}
-                  {uiText.text_588da4105320}
-                  {question.score}
-                  {uiText.text_931d9d5a6b04}
-                </strong>
-                <Status>{label(question.type)}</Status>
+      <section data-exam-question-list tabIndex={-1} aria-label={uiText.text_795a6fe29020}>
+        <Card title={uiText.text_795a6fe29020}>
+          {questions.length ? (
+            questions.map((question) => (
+              <div className={uiClass(s.question)} key={question.id}>
+                <div className={uiClass(s.row)}>
+                  <strong>
+                    {uiText.text_649c0357f354}
+                    {question.order}
+                    {uiText.text_588da4105320}
+                    {question.score}
+                    {uiText.text_931d9d5a6b04}
+                  </strong>
+                  <Status>{label(question.type)}</Status>
+                </div>
+                <p className={uiClass(s.bodyText)}>{question.prompt}</p>
+                {question.options.map((option) => (
+                  <p key={option.id} className={uiClass(s.option)}>
+                    {option.text}
+                    {option.isCorrect ? uiText.text_46c49ce8a96c : ''}
+                  </p>
+                ))}
+                {!scope.personal && item.versionStatus === 'Draft' && (
+                  <>
+                    <Button asChild variant="outline">
+                      <Link
+                        href={`${base}/exams/${id}/edit?question=${question.id}`}
+                        aria-label={
+                          uiText.v5ExamQuestion.edit + ' ' + question.order.toLocaleString('fa-IR')
+                        }
+                      >
+                        {uiText.v5ExamQuestion.edit}
+                      </Link>
+                    </Button>
+                    <ExamQuestionRemove
+                      exam={item}
+                      question={question}
+                      onRefresh={() => q.refetch()}
+                    />
+                  </>
+                )}
               </div>
-              <p className={s.bodyText}>{question.prompt}</p>
-              {question.options.map((option) => (
-                <p key={option.id} className={s.option}>
-                  {option.text}
-                  {option.isCorrect ? uiText.text_46c49ce8a96c : ''}
-                </p>
-              ))}
-            </div>
-          ))
-        ) : (
-          <EmptyState title={uiText.text_a75c8aa4206a} />
-        )}
-      </Card>
+            ))
+          ) : (
+            <EmptyState title={uiText.text_a75c8aa4206a} />
+          )}
+        </Card>
+      </section>
     </>
   );
 }
@@ -236,22 +307,22 @@ export function AddQuestion({ exam, onSaved }: { exam: S['ExamEditorDto']; onSav
       }}
     >
       <Field label={uiText.text_36f2e5cc8da2}>
-        <select value={type} onChange={(e) => setType(e.target.value as typeof type)}>
+        <NativeSelect value={type} onChange={(e) => setType(e.target.value as typeof type)}>
           <option value="Descriptive">{uiText.text_65f21708171c}</option>
           <option value="ObjectiveSingleChoice">{uiText.text_8fc194cdb8aa}</option>
-        </select>
+        </NativeSelect>
       </Field>
       <Field label={uiText.text_59612200f820}>
-        <textarea name="prompt" required />
+        <NativeTextarea name="prompt" required />
       </Field>
       <Field label={uiText.text_6672f1a95acb}>
-        <input type="number" name="score" min={0} step="any" required />
+        <NativeInput type="number" name="score" min={0} step="any" required />
       </Field>
       {type === 'Descriptive' && (
         <fieldset>
           <legend>{uiText.text_ed2595d209e5}</legend>
           <label>
-            <input
+            <NativeInput
               type="checkbox"
               checked={filesAllowed}
               onChange={(e) => setFilesAllowed(e.target.checked)}
@@ -261,14 +332,14 @@ export function AddQuestion({ exam, onSaved }: { exam: S['ExamEditorDto']; onSav
           {filesAllowed && (
             <>
               <label>
-                <input
+                <NativeInput
                   type="checkbox"
                   checked={textRequired}
                   onChange={(e) => setTextRequired(e.target.checked)}
                 />{' '}
                 {uiText.text_aacb94b9f8cb}
               </label>
-              <fieldset className={s.question}>
+              <fieldset className={uiClass(s.question)}>
                 <legend>{uiText.text_3a731fae4981}</legend>
                 {(
                   [
@@ -277,8 +348,8 @@ export function AddQuestion({ exam, onSaved }: { exam: S['ExamEditorDto']; onSav
                     ['image/png', uiText.text_bf8629a7be63],
                   ] as const
                 ).map(([mime, title]) => (
-                  <label className={s.option} key={mime}>
-                    <input
+                  <label className={uiClass(s.option)} key={mime}>
+                    <NativeInput
                       type="checkbox"
                       checked={contentTypes.includes(mime)}
                       onChange={(e) =>
@@ -293,10 +364,10 @@ export function AddQuestion({ exam, onSaved }: { exam: S['ExamEditorDto']; onSav
                 {!contentTypes.length && <p role="alert">{uiText.text_c1e5b4aacabd}</p>}
               </fieldset>
               <Field label={uiText.text_5b0f84fa02d1}>
-                <input type="number" name="maximumCount" min={1} step={1} />
+                <NativeInput type="number" name="maximumCount" min={1} step={1} />
               </Field>
               <Field label={uiText.text_93b036d10054}>
-                <input type="number" name="maximumMegabytes" min={1} step={1} />
+                <NativeInput type="number" name="maximumMegabytes" min={1} step={1} />
               </Field>
             </>
           )}
@@ -306,11 +377,11 @@ export function AddQuestion({ exam, onSaved }: { exam: S['ExamEditorDto']; onSav
         <>
           {[1, 2, 3, 4].map((n) => (
             <Field label={uiText.text_92d381e9e27f + n} key={n}>
-              <input name={'option' + n} required />
+              <NativeInput name={'option' + n} required />
             </Field>
           ))}
           <Field label={uiText.text_1ac128e79e40}>
-            <select name="correct" required>
+            <NativeSelect name="correct" required>
               <option value="">{uiText.text_e974ebd76aac}</option>
               {[1, 2, 3, 4].map((n) => (
                 <option value={n} key={n}>
@@ -318,7 +389,7 @@ export function AddQuestion({ exam, onSaved }: { exam: S['ExamEditorDto']; onSav
                   {n}
                 </option>
               ))}
-            </select>
+            </NativeSelect>
           </Field>
         </>
       )}

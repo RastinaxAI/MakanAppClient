@@ -1,4 +1,8 @@
 'use client';
+import { Select as NativeSelect, Input as NativeInput } from '@/components/ui/input';
+
+import { uiClass } from '@/components/v5/classes';
+
 import * as uiText from '@/content/fa';
 import { useState } from 'react';
 import { vnext as t } from '@/content/fa';
@@ -29,10 +33,10 @@ export function SentInvitations() {
   );
   return (
     <Card title={t.sentInvitations}>
-      <p className={s.hint}>{t.sentHint}</p>
-      <div className={s.two}>
+      <p className={uiClass(s.hint)}>{t.sentHint}</p>
+      <div className={uiClass(s.two)}>
         <Field label={t.status}>
-          <select
+          <NativeSelect
             value={status}
             onChange={(e) => {
               setStatus(e.target.value);
@@ -45,10 +49,10 @@ export function SentInvitations() {
                 {label(v)}
               </option>
             ))}
-          </select>
+          </NativeSelect>
         </Field>
         <Field label={t.invitationType}>
-          <select
+          <NativeSelect
             value={kind}
             onChange={(e) => {
               setKind(e.target.value);
@@ -61,7 +65,7 @@ export function SentInvitations() {
                 {t[v]}
               </option>
             ))}
-          </select>
+          </NativeSelect>
         </Field>
       </div>
       {q.isPending ? (
@@ -73,7 +77,7 @@ export function SentInvitations() {
       ) : (
         <>
           {!q.data.items.length && <EmptyState title={t.empty} />}
-          <div className={s.editorList}>
+          <div className={uiClass(s.editorList)}>
             {q.data.items.map((item) => (
               <SentInvitation key={item.invitationId} item={item} />
             ))}
@@ -94,7 +98,7 @@ function SentInvitation({ item }: { item: S['SchoolSentInvitationDto'] }) {
   const path = invitationRevokePath(item);
   const [reason, setReason] = useState('');
   return (
-    <article className={s.question}>
+    <article className={uiClass(s.question)}>
       <h3>{item.targetDisplayName}</h3>
       {item.targetUsername && (
         <bdi>
@@ -113,7 +117,11 @@ function SentInvitation({ item }: { item: S['SchoolSentInvitationDto'] }) {
       {path && item.version ? (
         <>
           <Field label={t.reason}>
-            <input value={reason} maxLength={500} onChange={(e) => setReason(e.target.value)} />
+            <NativeInput
+              value={reason}
+              maxLength={500}
+              onChange={(e) => setReason(e.target.value)}
+            />
           </Field>
           <ConfirmAction
             title={t.revoke}
@@ -134,7 +142,7 @@ function SentInvitation({ item }: { item: S['SchoolSentInvitationDto'] }) {
           />
         </>
       ) : (
-        item.status === 'Pending' && <p className={s.hint}>{t.unavailableAction}</p>
+        item.status === 'Pending' && <p className={uiClass(s.hint)}>{t.unavailableAction}</p>
       )}
       {command.feedback}
     </article>

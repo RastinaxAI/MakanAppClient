@@ -1,0 +1,415 @@
+{
+  "date": "2026-11-10",
+  "backupOutsideWorkspace": "/home/omidreza-bagheriyan/Desktop/MakanApp-cleanup-backup-2026-11-10/retired-unreachable-source-v1.zip",
+  "removedFiles": 67,
+  "records": [
+    {
+      "path": "src/components/ui/course-cover.tsx",
+      "bytes": 895,
+      "sha256": "106daf197ab627b859bbe2bf1b77adda45cb5c56422023822389d5cb51757f0f",
+      "reason": "No Next.js entry reaches this module; obsolete renderer/preview or its exclusive test/tool"
+    },
+    {
+      "path": "src/components/ui/data-view.tsx",
+      "bytes": 13389,
+      "sha256": "8a0061ddca97e6c01beaecad5ecb996c403c08b1168aa293d88ef3540e87b9a2",
+      "reason": "No Next.js entry reaches this module; obsolete renderer/preview or its exclusive test/tool"
+    },
+    {
+      "path": "src/components/ui/section-tabs.tsx",
+      "bytes": 782,
+      "sha256": "71d23e9b8ca4259c8557bc939fb061abd048035cb44c4bff90aa2d805ccc8e9a",
+      "reason": "No Next.js entry reaches this module; obsolete renderer/preview or its exclusive test/tool"
+    },
+    {
+      "path": "src/features/extracurricular/education-model.ts",
+      "bytes": 10870,
+      "sha256": "114a69de847266d83b70e0081d5dd239e3d8ab0a45edaec25cbc2672a1a18863",
+      "reason": "No Next.js entry reaches this module; obsolete renderer/preview or its exclusive test/tool"
+    },
+    {
+      "path": "src/features/extracurricular/preview-service.ts",
+      "bytes": 19143,
+      "sha256": "ea02c87e51c89bd4f95055d464eb7de28331b485e3c98524c15483c6e9316f01",
+      "reason": "No Next.js entry reaches this module; obsolete renderer/preview or its exclusive test/tool"
+    },
+    {
+      "path": "src/features/extracurricular/service.ts",
+      "bytes": 2666,
+      "sha256": "fd7e0a78fa74848f7f7af87fdab9a4b75db8c6839d70c87d3226399927cdbb18",
+      "reason": "No Next.js entry reaches this module; obsolete renderer/preview or its exclusive test/tool"
+    },
+    {
+      "path": "src/features/personal/personal-classes.tsx",
+      "bytes": 11478,
+      "sha256": "d63c02c731e97c076ffb71b87d35aac59123096658972e003f1b7e8a5628eb4e",
+      "reason": "No Next.js entry reaches this module; obsolete renderer/preview or its exclusive test/tool"
+    },
+    {
+      "path": "src/features/personal/reference-layout.tsx",
+      "bytes": 3475,
+      "sha256": "89b7cf96d42236943f38466cd322828e58cdd86ca571b61e18736064a795b4f9",
+      "reason": "No Next.js entry reaches this module; obsolete renderer/preview or its exclusive test/tool"
+    },
+    {
+      "path": "src/features/personal/school/upcoming.tsx",
+      "bytes": 2032,
+      "sha256": "5bb3d67df1fb378e4abf974b27bdd6f6eec75b6e60f03b96ea482e3402b26275",
+      "reason": "No Next.js entry reaches this module; obsolete renderer/preview or its exclusive test/tool"
+    },
+    {
+      "path": "src/features/reference/bundles/features-extracurricular-class-management.ts",
+      "bytes": 499,
+      "sha256": "8641f5558138b2a2e744af7b529c5fe2d9a2d541d076d3907b19c97965263b93",
+      "reason": "No Next.js entry reaches this module; obsolete renderer/preview or its exclusive test/tool"
+    },
+    {
+      "path": "src/features/reference/bundles/features-extracurricular-connected.ts",
+      "bytes": 1165,
+      "sha256": "09d1b7aa170710ac19587a69eb2ce8ae3256252280acd5d49d05a8a07e9ffbf0",
+      "reason": "No Next.js entry reaches this module; obsolete renderer/preview or its exclusive test/tool"
+    },
+    {
+      "path": "src/features/reference/bundles/features-extracurricular-formation.ts",
+      "bytes": 234,
+      "sha256": "e71fe66a72b726d134bce8dae3fe6e2196b787a41eb65256fe8baf4a384b5961",
+      "reason": "No Next.js entry reaches this module; obsolete renderer/preview or its exclusive test/tool"
+    },
+    {
+      "path": "src/features/reference/bundles/features-extracurricular-learning.ts",
+      "bytes": 234,
+      "sha256": "5d0d78239463b08f687390c57f85b73c8dd13fec4c72abd6fe41551ae98bfc77",
+      "reason": "No Next.js entry reaches this module; obsolete renderer/preview or its exclusive test/tool"
+    },
+    {
+      "path": "src/features/reference/bundles/features-personal-messaging-privacy.ts",
+      "bytes": 191,
+      "sha256": "0bcf75ebca9dfaf20eac9fc6b3f257e273beddfafefffc9aed13c435ebd932ca",
+      "reason": "No Next.js entry reaches this module; obsolete renderer/preview or its exclusive test/tool"
+    },
+    {
+      "path": "src/features/reference/bundles/features-personal-school-lessons.ts",
+      "bytes": 191,
+      "sha256": "7e96464dbf40b3d0fc13d7b41c6438d5e508574c03c3e97e35ce9930156a8d10",
+      "reason": "No Next.js entry reaches this module; obsolete renderer/preview or its exclusive test/tool"
+    },
+    {
+      "path": "src/features/reference/bundles/features-personal-school-submission-flow.ts",
+      "bytes": 191,
+      "sha256": "642cc91aec4bdedcbda00076265062a73bf3815e834493e5f00bfad2f3e305bf",
+      "reason": "No Next.js entry reaches this module; obsolete renderer/preview or its exclusive test/tool"
+    },
+    {
+      "path": "src/features/reference/bundles/features-personal-security-devices.ts",
+      "bytes": 191,
+      "sha256": "836105139fc33a68b228d24055a7526c8f937df8ccc7b08d6c3088063e849498",
+      "reason": "No Next.js entry reaches this module; obsolete renderer/preview or its exclusive test/tool"
+    },
+    {
+      "path": "src/features/reference/bundles/features-personal-sources-catalog.ts",
+      "bytes": 280,
+      "sha256": "68cd5c36f2f3dcf4d7707c457bd3bf91399eb50f5ea124e55ed7446c92f476f6",
+      "reason": "No Next.js entry reaches this module; obsolete renderer/preview or its exclusive test/tool"
+    },
+    {
+      "path": "src/features/reference/registry.ts",
+      "bytes": 398,
+      "sha256": "2d9a2ea15312e462488f97111558be8a64733aa1e7cff22a55d978d3f8fa68d0",
+      "reason": "No Next.js entry reaches this module; obsolete renderer/preview or its exclusive test/tool"
+    },
+    {
+      "path": "src/features/reference/screen.tsx",
+      "bytes": 21468,
+      "sha256": "711eee22b19ddc4e931d11adbb3b35a97a6c569654d305e75cfba96089873289",
+      "reason": "No Next.js entry reaches this module; obsolete renderer/preview or its exclusive test/tool"
+    },
+    {
+      "path": "src/features/reference/views/MK-05.ts",
+      "bytes": 22247,
+      "sha256": "2ff7e7214c0375bb0b27c77f04a3d85dd2b424d1f7a056b301174c58f1df89e2",
+      "reason": "No Next.js entry reaches this module; obsolete renderer/preview or its exclusive test/tool"
+    },
+    {
+      "path": "src/features/reference/views/MK-06.ts",
+      "bytes": 19274,
+      "sha256": "ed8fa91bb103bce0c4996283b788e915f0d57e144b61a1311fe3e931b7199de3",
+      "reason": "No Next.js entry reaches this module; obsolete renderer/preview or its exclusive test/tool"
+    },
+    {
+      "path": "src/features/reference/views/MK-10.ts",
+      "bytes": 27006,
+      "sha256": "56d87e79b82f483a61b8d1f8bbb0cfbf8cc49953793640d86bbe7a7c445a0e03",
+      "reason": "No Next.js entry reaches this module; obsolete renderer/preview or its exclusive test/tool"
+    },
+    {
+      "path": "src/features/reference/views/MK-11.ts",
+      "bytes": 41597,
+      "sha256": "34fb525a2ae736fd9cf046a07dcc2114c330fbc7813d50fc9cecb44f8cca762b",
+      "reason": "No Next.js entry reaches this module; obsolete renderer/preview or its exclusive test/tool"
+    },
+    {
+      "path": "src/features/reference/views/MK-12.ts",
+      "bytes": 22952,
+      "sha256": "0ce45efa7813a78e92d2aea1f0d37f3f5aaaf98e1f4c9c800ba747ecdfc87cc3",
+      "reason": "No Next.js entry reaches this module; obsolete renderer/preview or its exclusive test/tool"
+    },
+    {
+      "path": "src/features/reference/views/MK-13.ts",
+      "bytes": 15510,
+      "sha256": "9a5c42a31c8cabfb117f98d32b3adf35e54422798af4a9a4a7b1f3e541911973",
+      "reason": "No Next.js entry reaches this module; obsolete renderer/preview or its exclusive test/tool"
+    },
+    {
+      "path": "src/features/reference/views/MK-14.ts",
+      "bytes": 18925,
+      "sha256": "3d678e71506c8af8dd08392d6bd178bcc822ff8787195223a31393cdf5f40b56",
+      "reason": "No Next.js entry reaches this module; obsolete renderer/preview or its exclusive test/tool"
+    },
+    {
+      "path": "src/features/reference/views/MK-15.ts",
+      "bytes": 16796,
+      "sha256": "ee181b0a803c59d43578e16f8cb20101c4beb5b4b3e5aa24c3cb5a04c3bdb129",
+      "reason": "No Next.js entry reaches this module; obsolete renderer/preview or its exclusive test/tool"
+    },
+    {
+      "path": "src/features/reference/views/MK-16.ts",
+      "bytes": 17028,
+      "sha256": "12e1eccc3c80813d1097d79bf87108f8ace2a29d2bcb44919e11f85b595046bc",
+      "reason": "No Next.js entry reaches this module; obsolete renderer/preview or its exclusive test/tool"
+    },
+    {
+      "path": "src/features/reference/views/MK-18.ts",
+      "bytes": 18730,
+      "sha256": "efd4cb89fba09da38ee53aabc3ba495e8d607423d7c291ba17bcc8a965daa3bd",
+      "reason": "No Next.js entry reaches this module; obsolete renderer/preview or its exclusive test/tool"
+    },
+    {
+      "path": "src/features/reference/views/MK-20.ts",
+      "bytes": 16784,
+      "sha256": "e658104d364538e2426f90e7a5ee3956facda6f15bcc8abe7e8a785fafcd7314",
+      "reason": "No Next.js entry reaches this module; obsolete renderer/preview or its exclusive test/tool"
+    },
+    {
+      "path": "src/features/reference/views/MK-24.ts",
+      "bytes": 36027,
+      "sha256": "df84069c951c60c96c76c34d7eee8ffe06b44de73dd97b2aa4464cd336c0f81f",
+      "reason": "No Next.js entry reaches this module; obsolete renderer/preview or its exclusive test/tool"
+    },
+    {
+      "path": "src/features/reference/views/MK-25.ts",
+      "bytes": 24167,
+      "sha256": "cddac2ddebc60a0e7bc1f3feb5142fafdc80476ec7d41c96c84a4409dd53cc9a",
+      "reason": "No Next.js entry reaches this module; obsolete renderer/preview or its exclusive test/tool"
+    },
+    {
+      "path": "src/features/reference/views/MK-26.ts",
+      "bytes": 21992,
+      "sha256": "6fa96afec35be72ad5303e4f68fd1711c1e9850b3e2ef56db2a18449228a3da5",
+      "reason": "No Next.js entry reaches this module; obsolete renderer/preview or its exclusive test/tool"
+    },
+    {
+      "path": "src/features/reference/views/MK-27.ts",
+      "bytes": 14493,
+      "sha256": "29eb3860f8b87451625a8bce95284c88b993ef29d33cc8b3cc0200c766928073",
+      "reason": "No Next.js entry reaches this module; obsolete renderer/preview or its exclusive test/tool"
+    },
+    {
+      "path": "src/features/reference/views/MK-28.ts",
+      "bytes": 13065,
+      "sha256": "b9101c748c7e9daa5f8b69ab1911872f35f4f496fad76e2431bd0e4a0156d7c7",
+      "reason": "No Next.js entry reaches this module; obsolete renderer/preview or its exclusive test/tool"
+    },
+    {
+      "path": "src/features/reference/views/MK-29.ts",
+      "bytes": 17496,
+      "sha256": "daa74e7154bdc3c4ef17a9403c92adc81daa0d4151eb056b7cd083a34bfafff9",
+      "reason": "No Next.js entry reaches this module; obsolete renderer/preview or its exclusive test/tool"
+    },
+    {
+      "path": "src/features/reference/views/MK-292.ts",
+      "bytes": 15859,
+      "sha256": "8cdbbf15fe233988f6f58f71f5cb0b71c0e20db95f6e646a0e9f38406a9cbedd",
+      "reason": "No Next.js entry reaches this module; obsolete renderer/preview or its exclusive test/tool"
+    },
+    {
+      "path": "src/features/reference/views/MK-293.ts",
+      "bytes": 12476,
+      "sha256": "dddb289112528a318b94538ba9ba50dac5c1ade4e3036e6eaa617d3d89791ea4",
+      "reason": "No Next.js entry reaches this module; obsolete renderer/preview or its exclusive test/tool"
+    },
+    {
+      "path": "src/features/reference/views/MK-296.ts",
+      "bytes": 10245,
+      "sha256": "c7d9bbecad7fb28085e55c4c2d4e1b9c70025a61feb7831f073386b8c2476a22",
+      "reason": "No Next.js entry reaches this module; obsolete renderer/preview or its exclusive test/tool"
+    },
+    {
+      "path": "src/features/reference/views/MK-297.ts",
+      "bytes": 12093,
+      "sha256": "a41865c02e6257ace69a92b26aecc3f2c944ef78f59c18f85aa1a5b9ef5558db",
+      "reason": "No Next.js entry reaches this module; obsolete renderer/preview or its exclusive test/tool"
+    },
+    {
+      "path": "src/features/reference/views/MK-30.ts",
+      "bytes": 30906,
+      "sha256": "0e5b704d8d00f12983d0bff6c24bfb2efa0996bf5f5f62d5d0431e2fd1d46c80",
+      "reason": "No Next.js entry reaches this module; obsolete renderer/preview or its exclusive test/tool"
+    },
+    {
+      "path": "src/features/reference/views/MK-302.ts",
+      "bytes": 9446,
+      "sha256": "1e5fe45d789f4616dcaac7d45cc19c0429327bd15d9489d1b95c4a08f3898800",
+      "reason": "No Next.js entry reaches this module; obsolete renderer/preview or its exclusive test/tool"
+    },
+    {
+      "path": "src/features/reference/views/MK-303.ts",
+      "bytes": 13480,
+      "sha256": "17d7831e230a0c1e304bf0dd89f58e11dd13a9eac1785f476bc9e65d5715b7e0",
+      "reason": "No Next.js entry reaches this module; obsolete renderer/preview or its exclusive test/tool"
+    },
+    {
+      "path": "src/features/reference/views/MK-305.ts",
+      "bytes": 13658,
+      "sha256": "73cf7d15a2000c9e14db1e14b2e3fa748ad2bcfb295c38819dc07457a278dd01",
+      "reason": "No Next.js entry reaches this module; obsolete renderer/preview or its exclusive test/tool"
+    },
+    {
+      "path": "src/features/reference/views/MK-31.ts",
+      "bytes": 16533,
+      "sha256": "03a86962f033de51a23af82cf9eb257e7a0eb55051e72584436174419f6d2398",
+      "reason": "No Next.js entry reaches this module; obsolete renderer/preview or its exclusive test/tool"
+    },
+    {
+      "path": "src/features/reference/views/MK-32.ts",
+      "bytes": 17292,
+      "sha256": "0b128fbd97e587a88d2bfb1bc6786c6ba5f07d613563e64006bbade82eac9932",
+      "reason": "No Next.js entry reaches this module; obsolete renderer/preview or its exclusive test/tool"
+    },
+    {
+      "path": "src/features/reference/views/MK-33.ts",
+      "bytes": 22844,
+      "sha256": "8f4b37f94b63bb614653c021ea49ca1ce38b768cf9270d5a88e4e47d88ad830d",
+      "reason": "No Next.js entry reaches this module; obsolete renderer/preview or its exclusive test/tool"
+    },
+    {
+      "path": "src/features/reference/views/MK-34.ts",
+      "bytes": 30113,
+      "sha256": "887f556853feadf753354bdee6d5f1066f3e8c54c2115ccbb5e177a32d3030ed",
+      "reason": "No Next.js entry reaches this module; obsolete renderer/preview or its exclusive test/tool"
+    },
+    {
+      "path": "src/features/reference/views/MK-356.ts",
+      "bytes": 25337,
+      "sha256": "29d71e5293ce6f58358f2a49c0993af35d2e9e9a3d8efe8cd89ae58075eac690",
+      "reason": "No Next.js entry reaches this module; obsolete renderer/preview or its exclusive test/tool"
+    },
+    {
+      "path": "src/features/reference/views/MK-357.ts",
+      "bytes": 20936,
+      "sha256": "3c5ae98ca2e086b86a12d4b3fc4d568ad79be509b8a832905fcd18e6c7579221",
+      "reason": "No Next.js entry reaches this module; obsolete renderer/preview or its exclusive test/tool"
+    },
+    {
+      "path": "src/features/reference/views/MK-359.ts",
+      "bytes": 11781,
+      "sha256": "e24a4b9f0c61389059c329ae040c80fe57bd3a4cffeda5e1c527a2a6b331e356",
+      "reason": "No Next.js entry reaches this module; obsolete renderer/preview or its exclusive test/tool"
+    },
+    {
+      "path": "src/features/reference/views/MK-44.ts",
+      "bytes": 27803,
+      "sha256": "2fcfba2dbb8b86c558238ddde256c4b010aba336a7932b26c6dad833eebaa61b",
+      "reason": "No Next.js entry reaches this module; obsolete renderer/preview or its exclusive test/tool"
+    },
+    {
+      "path": "src/features/reference/views/MK-45.ts",
+      "bytes": 17214,
+      "sha256": "90ac31350827c29f98f3b02955ef3ab02b12ee0affed85237b41821c83574365",
+      "reason": "No Next.js entry reaches this module; obsolete renderer/preview or its exclusive test/tool"
+    },
+    {
+      "path": "src/features/reference/views/MK-48.ts",
+      "bytes": 23968,
+      "sha256": "133cfa0c8bb755ea1e58a7106cb3576ac3e5988f86ee8b823d66fd1539211f10",
+      "reason": "No Next.js entry reaches this module; obsolete renderer/preview or its exclusive test/tool"
+    },
+    {
+      "path": "src/features/reference/views/MK-49.ts",
+      "bytes": 27922,
+      "sha256": "b2a3a1d674f34fb7d5343e7db4de649c5a09279fb5ae7f67fe555a2960090655",
+      "reason": "No Next.js entry reaches this module; obsolete renderer/preview or its exclusive test/tool"
+    },
+    {
+      "path": "src/features/reference/views/MK-55.ts",
+      "bytes": 15244,
+      "sha256": "de0aa03594a59abda926b1cab462e0c9b05f566e2ba438da3ae3dd74ede1b3d9",
+      "reason": "No Next.js entry reaches this module; obsolete renderer/preview or its exclusive test/tool"
+    },
+    {
+      "path": "src/features/reference/views/MK-66.ts",
+      "bytes": 23022,
+      "sha256": "d976e71a895e844d16b62655fcf580cf9e24fefff0d00f9b5fe759ad77f636bf",
+      "reason": "No Next.js entry reaches this module; obsolete renderer/preview or its exclusive test/tool"
+    },
+    {
+      "path": "src/lib/flags.ts",
+      "bytes": 230,
+      "sha256": "c1677ba7c7bacb13556d3a27584a1ecd4baa524fc53af07bbaee51ab399b7227",
+      "reason": "No Next.js entry reaches this module; obsolete renderer/preview or its exclusive test/tool"
+    },
+    {
+      "path": "src/components/ui/course-cover.module.css",
+      "bytes": 4063,
+      "sha256": "046d84c0594350b5d236c317433510f44191fe323b42422e1595dcebd56ea239",
+      "reason": "No Next.js entry reaches this module; obsolete renderer/preview or its exclusive test/tool"
+    },
+    {
+      "path": "src/features/personal/reference-layout.module.css",
+      "bytes": 2913,
+      "sha256": "a2923aaa18e3b190c01932cc5974b618fd4384bbdb6a3d4d248b2b4a7648bbb4",
+      "reason": "No Next.js entry reaches this module; obsolete renderer/preview or its exclusive test/tool"
+    },
+    {
+      "path": "src/features/personal/school/upcoming.module.css",
+      "bytes": 1479,
+      "sha256": "76434a558488cf26eacae563640257312f7931f245d9ab475fbb5f7df7484c47",
+      "reason": "No Next.js entry reaches this module; obsolete renderer/preview or its exclusive test/tool"
+    },
+    {
+      "path": "tests/unit/extracurricular-reference.test.ts",
+      "bytes": 12237,
+      "sha256": "d7b1b2ff0e0903831b50f395f7ab3945fc0a86bcd6696b35bcdcec5c7823c0cf",
+      "reason": "No Next.js entry reaches this module; obsolete renderer/preview or its exclusive test/tool"
+    },
+    {
+      "path": "tests/unit/independent-education.test.ts",
+      "bytes": 7176,
+      "sha256": "13b722d3d5837098beb96c0ae3e0aa1311d0eefcc28c939c88c196f6b0f29c4c",
+      "reason": "No Next.js entry reaches this module; obsolete renderer/preview or its exclusive test/tool"
+    },
+    {
+      "path": "tests/unit/v4-design.test.ts",
+      "bytes": 2654,
+      "sha256": "670189f2661175665a1af0250c3d8cdc68c01f10abbee2c4af41934fce88c9ad",
+      "reason": "No Next.js entry reaches this module; obsolete renderer/preview or its exclusive test/tool"
+    },
+    {
+      "path": "scripts/build-reference-bundles.mjs",
+      "bytes": 2563,
+      "sha256": "e282d723eacf06cd5b023ae05ab578c344810a91aef357cd17dcce9245f8ddac",
+      "reason": "No Next.js entry reaches this module; obsolete renderer/preview or its exclusive test/tool"
+    },
+    {
+      "path": "../packages/toolkit/test/cloud_observability.py",
+      "bytes": 1175,
+      "sha256": "2408df504627987f8f9f7abfa1ffd3372a1189e47a03efa224f8ec7fd5f26087",
+      "reason": "Unrelated toolkit test with no project dependency"
+    }
+  ],
+  "retiredTests": [
+    "extracurricular-reference: offline mock lifecycle only, replaced by current API/browser tests",
+    "independent-education: offline preview model only",
+    "v4-design: superseded 189-page reference and obsolete binding registry"
+  ],
+  "preserved": "All application entry points and runtime-reachable shared components; current API behavior and active Next.js dependencies"
+}

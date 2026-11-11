@@ -29,12 +29,12 @@
   min-width: 0;
 }
 .pageHeader h1 {
-  font-size: 24px;
+  font-size: calc(24px * var(--text-scale, 1));
   font-weight: 750;
   line-height: 1.7;
 }
 .pageHeader p {
-  font-size: 13px;
+  font-size: calc(13px * var(--text-scale, 1));
   color: var(--muted);
   line-height: 1.9;
   margin-top: 3px;
@@ -70,7 +70,7 @@
   border: 0;
   background: transparent;
   color: var(--muted);
-  font-size: 13px;
+  font-size: calc(13px * var(--text-scale, 1));
   border-radius: 11px;
   line-height: 1.6;
 }
@@ -91,7 +91,7 @@
   padding-inline: 5px;
   border-radius: 8px;
   background: var(--surface);
-  font-size: 11px;
+  font-size: calc(11px * var(--text-scale, 1));
   font-variant-numeric: tabular-nums;
 }
 .filters button[aria-pressed='true'] .count {
@@ -110,12 +110,12 @@
   margin-bottom: 20px;
 }
 .resultsHeading h2 {
-  font-size: 14px;
+  font-size: calc(14px * var(--text-scale, 1));
   font-weight: 650;
 }
 .resultsHeading > span {
   color: var(--muted);
-  font-size: 12px;
+  font-size: calc(12px * var(--text-scale, 1));
 }
 .empty {
   display: grid;
@@ -137,13 +137,13 @@
   margin-bottom: 4px;
 }
 .empty h3 {
-  font-size: 17px;
+  font-size: calc(17px * var(--text-scale, 1));
   line-height: 1.8;
   font-weight: 700;
 }
 .empty p {
   max-width: 390px;
-  font-size: 13px;
+  font-size: calc(13px * var(--text-scale, 1));
   line-height: 2;
   color: var(--muted);
   margin: 0;
@@ -175,18 +175,18 @@
   border-radius: 15px;
 }
 .card h2 {
-  font-size: 17px;
+  font-size: calc(17px * var(--text-scale, 1));
   line-height: 1.8;
   overflow-wrap: anywhere;
 }
 .card header p {
-  font-size: 12px;
+  font-size: calc(12px * var(--text-scale, 1));
   color: var(--muted);
   margin-top: 4px;
   line-height: 1.8;
 }
 .status {
-  font-size: 11px;
+  font-size: calc(11px * var(--text-scale, 1));
   background: var(--soft);
   padding: 6px 10px;
   border-radius: 9px;
@@ -220,7 +220,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 12px;
+  font-size: calc(12px * var(--text-scale, 1));
   color: var(--muted);
   min-width: 0;
   line-height: 1.9;
@@ -238,14 +238,14 @@
   margin-inline-start: 6px;
 }
 .person {
-  font-size: 13px;
+  font-size: calc(13px * var(--text-scale, 1));
   line-height: 1.9;
   margin-bottom: 10px;
   overflow-wrap: anywhere;
 }
 .details {
   border-top: 1px solid var(--border);
-  font-size: 13px;
+  font-size: calc(13px * var(--text-scale, 1));
 }
 .details summary {
   display: flex;
@@ -282,7 +282,7 @@
   overflow-wrap: anywhere;
 }
 .details p {
-  font-size: 12px;
+  font-size: calc(12px * var(--text-scale, 1));
   line-height: 1.9;
   color: var(--muted);
   margin-top: 10px;
@@ -298,7 +298,7 @@
   display: flex;
   align-items: flex-start;
   gap: 10px;
-  font-size: 13px;
+  font-size: calc(13px * var(--text-scale, 1));
   line-height: 1.9;
   cursor: pointer;
   padding-block: 4px;
@@ -341,10 +341,10 @@
     border-radius: 14px;
   }
   .pageHeader h1 {
-    font-size: 21px;
+    font-size: calc(21px * var(--text-scale, 1));
   }
   .pageHeader p {
-    font-size: 12px;
+    font-size: calc(12px * var(--text-scale, 1));
   }
   .panel {
     border-radius: 19px;
@@ -359,14 +359,14 @@
     flex-direction: column;
     gap: 4px;
     padding: 8px 3px;
-    font-size: 11px;
+    font-size: calc(11px * var(--text-scale, 1));
     min-height: 64px;
     border-radius: 9px;
   }
   .count {
     height: 19px;
     min-width: 21px;
-    font-size: 10px;
+    font-size: calc(10px * var(--text-scale, 1));
   }
   .results {
     padding: 16px;
@@ -376,10 +376,10 @@
     min-height: 280px;
   }
   .empty h3 {
-    font-size: 15px;
+    font-size: calc(15px * var(--text-scale, 1));
   }
   .empty p {
-    font-size: 12px;
+    font-size: calc(12px * var(--text-scale, 1));
   }
   .card {
     padding: 16px;
@@ -397,7 +397,7 @@
     align-self: start;
   }
   .card h2 {
-    font-size: 15px;
+    font-size: calc(15px * var(--text-scale, 1));
   }
   .status {
     grid-column: 2;
@@ -411,7 +411,7 @@
     gap: 8px;
   }
   .actions button {
-    font-size: 12px;
+    font-size: calc(12px * var(--text-scale, 1));
     padding-inline: 10px;
   }
 }

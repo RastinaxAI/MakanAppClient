@@ -1,0 +1,50 @@
+{
+  "reviewedAt": "2026-11-10",
+  "guideRelease": "6f8edf8",
+  "environment": "Test",
+  "swagger": "http://94.184.32.84:8090/swagger/index.html",
+  "openapi": "http://94.184.32.84:8090/openapi/v1.json",
+  "releaseCommitProvenByOpenApi": false,
+  "reason": "OpenAPI info.version is 1.0.0 and exposes no commit identifier. Endpoint presence proves the observed schema, not deployed release or provider availability.",
+  "old": {
+    "paths": 391,
+    "operations": 442
+  },
+  "current": {
+    "paths": 398,
+    "operations": 449,
+    "schemas": 729,
+    "clientOperations": 325
+  },
+  "added": [
+    "GET /api/v1/sources/{sourceId}/versions/{version}/knowledge/status",
+    "POST /api/v1/ai/knowledge/rag/answer",
+    "POST /api/v1/ai/knowledge/retrieve",
+    "POST /api/v1/sources/{sourceId}/versions/{version}/knowledge/delete",
+    "POST /api/v1/sources/{sourceId}/versions/{version}/knowledge/ingest",
+    "POST /api/v1/sources/{sourceId}/versions/{version}/knowledge/reindex",
+    "POST /api/v1/sources/{sourceId}/versions/{version}/knowledge/supersede"
+  ],
+  "removed": [],
+  "changedOperations": [
+    "GET /api/v1/academic/evaluations/queue",
+    "GET /api/v1/conversations",
+    "GET /api/v1/conversations/account",
+    "GET /api/v1/conversations/{conversationId}/summary"
+  ],
+  "rawOpenApiSha256": "73c96c5d4203f7b87375ae1e436767206b6eaa0d8314f91ab01cf9bf87f9fb7d",
+  "snapshotSha256": "1ab0db7b24ea106f699003df730d98d5f02c4da307e64795a1089a3cc5649b17",
+  "buildId": "t0IyuxJ3X2DPUsZ9Ly_Ee",
+  "documents": [
+    {
+      "path": "/home/omidreza-bagheriyan/Downloads/Telegram Desktop/MakanApp_Documentation_Pack_6f8edf8_FA/MakanApp_Frontend_Backend_Integration_Guide_6f8edf8_FA.pdf",
+      "pages": 25,
+      "sha256": "c3a5d55080e735fda4c6b492b4bb35948e382a2b750f0358a05c0c571b0268e7"
+    },
+    {
+      "path": "/home/omidreza-bagheriyan/Downloads/Telegram Desktop/MakanApp_Documentation_Pack_6f8edf8_FA/MakanApp_Backend_Architecture_Integration_Master_6f8edf8_FA.pdf",
+      "pages": 10,
+      "sha256": "35cba6a3896cb45a841f5a2fffba080d905e1dbf209e92d6cd66615b78309f27"
+    }
+  ]
+}

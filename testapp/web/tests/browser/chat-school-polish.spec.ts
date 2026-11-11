@@ -1,3 +1,4 @@
+import { reviewPath } from './review-output';
 import { test, expect, login, fixture, ids } from './test';
 import { mkdir } from 'node:fs/promises';
 for (const kind of ['Direct', 'Saved']) {
@@ -49,10 +50,10 @@ for (const kind of ['Direct', 'Saved']) {
     await expect(bubble).toHaveAttribute('data-message-state', 'confirmed');
     await expect(bubble.getByLabel('ارسال‌شده', { exact: true })).toBeVisible();
     await expect(history.getByText('در سرور ثبت شد', { exact: false })).toHaveCount(0);
-    await mkdir('output/review/chat-school-polish', { recursive: true });
+    await mkdir(reviewPath('output/review/chat-school-polish'), { recursive: true });
     await page.setViewportSize({ width: 390, height: 844 });
     await page.screenshot({
-      path: `output/review/chat-school-polish/${kind}-confirmed-mobile.png`,
+      path: reviewPath(`output/review/chat-school-polish/${kind}-confirmed-mobile.png`),
     });
     freeze = false;
     await expect(bubble).toHaveAttribute('data-message-state', 'history');
@@ -137,7 +138,7 @@ for (const role of ['Personal', 'Student', 'Teacher', 'Parent', 'Manager']) {
     await expect(
       page.getByRole('main').getByRole('status', { name: 'در حال دریافت اطلاعات', exact: true }),
     ).toHaveCount(0);
-    await mkdir('output/review/chat-school-polish', { recursive: true });
+    await mkdir(reviewPath('output/review/chat-school-polish'), { recursive: true });
     for (const [width, height] of [
       [320, 780],
       [390, 844],
@@ -180,7 +181,7 @@ for (const role of ['Personal', 'Student', 'Teacher', 'Parent', 'Manager']) {
       );
       if ([390, 834, 1440].includes(width))
         await page.screenshot({
-          path: `output/review/chat-school-polish/school-${role}-${width}.png`,
+          path: reviewPath(`output/review/chat-school-polish/school-${role}-${width}.png`),
         });
     }
     if (role === 'Teacher') {
@@ -191,7 +192,9 @@ for (const role of ['Personal', 'Student', 'Teacher', 'Parent', 'Manager']) {
         .locator('svg')
         .evaluateAll((nodes) => nodes.map((n) => n.getBoundingClientRect().top));
       expect(Math.max(...tops) - Math.min(...tops)).toBeLessThanOrEqual(2);
-      await page.screenshot({ path: 'output/review/chat-school-polish/class-tabs-mobile.png' });
+      await page.screenshot({
+        path: reviewPath('output/review/chat-school-polish/class-tabs-mobile.png'),
+      });
     }
   });
 }

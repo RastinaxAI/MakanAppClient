@@ -1,0 +1,114 @@
+{
+  "checkedAtUtc": "2026-11-08T23:43:21.958514+00:00",
+  "method": "Read-only IAB browser DOM geometry through documented CUA APIs; no OTP requested and no authentication or data mutation. Browser had no existing authenticated Makan tab.",
+  "url": "https://testapp.makanapp.org/enter",
+  "scope": "Public login baseline recorded at checkedAtUtc, plus the later user-authorized Student read-only review in authenticatedStudentReview. These observations have separate timestamps and scope.",
+  "theme": "dark",
+  "font": "Vazirmatn, sans-serif",
+  "desktop": {
+    "viewport": [
+      1440,
+      1000
+    ],
+    "requestCode": {
+      "x": 26,
+      "y": 936,
+      "width": 1388,
+      "height": 48
+    }
+  },
+  "policy": [
+    {
+      "viewport": [
+        390,
+        844
+      ],
+      "rect": {
+        "x": 17.609375,
+        "y": 300.421875,
+        "width": 354.765625,
+        "height": 25.34375
+      },
+      "documentOverflow": false
+    },
+    {
+      "viewport": [
+        834,
+        1112
+      ],
+      "rect": {
+        "x": 239.609375,
+        "y": 638.28125,
+        "width": 354.765625,
+        "height": 25.34375
+      },
+      "documentOverflow": false
+    },
+    {
+      "viewport": [
+        320,
+        844
+      ],
+      "rect": {
+        "x": 12,
+        "y": 300.421875,
+        "width": 296,
+        "height": 50.6875
+      },
+      "documentOverflow": false
+    }
+  ],
+  "limitations": [
+    "Read-only public geometry does not establish the source cause.",
+    "The local V5 changes have not been deployed.",
+    "Only the listed authenticated Student views were read. Author roles, live mutations, revocation and cross-role authorization guarantees were not tested."
+  ],
+  "viewportOverride": "reset after review",
+  "authenticatedStudentReview": {
+    "reviewedAt": "2026-11-09T14:28:04.774231+00:00",
+    "access": "User signed into the IAB test account; Student organization workspace visible. No credentials, OTP, cookies or authentication state read/exported.",
+    "pages": [
+      {
+        "route": "/personal/education/classes",
+        "state": "Three returned test-class links,1440x1000; no document horizontal overflow."
+      },
+      {
+        "route": "/personal/education/classes/{authorizedClassId}?tab=sessions",
+        "state": "Authorized Student class, official Group/Channel visibly not ready; current week empty.390x844 and1440x1000 no document horizontal overflow.390class tabs82.5x90;weekcontrols48high;five navtargets~73.6x59."
+      },
+      {
+        "route": "/personal/education/classes/{authorizedClassId}?tab=lessons",
+        "state": "Authorized published lesson listed; no author controls exercised."
+      },
+      {
+        "route": "/personal/education/lessons/{authorizedLessonId}",
+        "state": "Published reader with one returned attachment.390x844,834x1112,1440x1000 no document horizontal overflow. Download target318x48 on390 and146.36x48 on834/1440; no download requested."
+      }
+    ],
+    "theme": "Observed dark throughout; RTL and loaded Makan Reference/Vazirmatn family. User theme unchanged.",
+    "notReviewed": [
+      "Teacher/Manager/Parent live variants",
+      "any authenticated live mutation",
+      "all other internal states",
+      "physical keyboard/device behavior"
+    ],
+    "limitations": "Read-only live baseline, not comparison with identical reference data and not evidence that local changes were deployed. Browser viewport override reset after review; tab retained for continuation.",
+    "screenshots": "CUA inline screenshots of desktop class and published lesson are retained in the conversation; local product/reference comparison artifacts remain separate.",
+    "workspaceRead": "The existing workspace page showed only one checked Student organization choice. No selection or role change was submitted; returned to the published lesson."
+  },
+  "recordUpdatedAtUtc": "2026-11-09T15:05:14.507882+00:00",
+  "studentAttendanceReportAttempt": {
+    "observedAt": "2026-11-09T16:39:10.817115+00:00",
+    "route": "/personal/education/reports?kind=attendance",
+    "actor": "Current signed-in Student in the unchanged organization workspace",
+    "observedUI": [
+      "گزارش‌های آموزشگاه",
+      "دسترسی محدود است",
+      "اجازه انجام این کار را ندارید."
+    ],
+    "scope": "Read-only navigation. No report rows were available. A UI denial does not establish whether the deployed route guard, API authorization or another deployment/configuration difference caused it; no HTTP status is inferred.",
+    "mutations": 0,
+    "authOrSessionExported": false,
+    "returnedToPreviouslyObservedAuthorizedLesson": true
+  }
+}

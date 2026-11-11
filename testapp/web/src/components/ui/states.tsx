@@ -1,18 +1,36 @@
 'use client';
+import { uiClass } from '@/components/v5/classes';
+
 import * as uiText from '@/content/fa';
 import Link from '@/components/ui/app-link';
 import { roleLabels } from '@/config/navigation';
 import { ApiError } from '@/lib/api/errors';
 import { date } from '@/lib/formatting';
 import { AlertCircle, Inbox, LockKeyhole, RefreshCw, WifiOff } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
 import { Button } from './button';
-export function LoadingSkeleton() {
+import s from './states.module.css';
+export function LoadingSkeleton({ variant }: { variant?: 'cards' } = {}) {
+  if (variant === 'cards')
+    return (
+      <div
+        className={uiClass('skeleton-wrap v5-loading-cards')}
+        role="status"
+        aria-label={uiText.text_d16616ab5bf1}
+      >
+        {[0, 1, 2].map((index) => (
+          <div className={uiClass('card')} aria-hidden="true" key={index}>
+            <div className={uiClass('skeleton medium')} />
+            <div className={uiClass('skeleton short')} />
+          </div>
+        ))}
+      </div>
+    );
   return (
-    <div className="skeleton-wrap" role="status" aria-label={uiText.text_d16616ab5bf1}>
-      <div className="skeleton h-12" />
+    <div className={uiClass('skeleton-wrap')} role="status" aria-label={uiText.text_d16616ab5bf1}>
+      <div className={uiClass('skeleton ' + s.loadingHeading)} />
       {[0, 1, 2, 3, 4].map((n) => (
-        <div key={n} className="skeleton h-16" />
+        <div key={n} className={uiClass('skeleton ' + s.loadingRow)} />
       ))}
     </div>
   );
@@ -20,19 +38,44 @@ export function LoadingSkeleton() {
 export function EmptyState({
   title = uiText.text_757df1f837e6,
   description = uiText.text_1ca6ac3cbcd2,
+  variant,
+  icon,
+  action,
 }: {
   title?: string;
   description?: string;
+  variant?: 'v5' | 'v5-full';
+  icon?: ReactNode;
+  action?: ReactNode;
 }) {
   return (
-    <div className="state">
-      <Inbox />
+    <div
+      className={uiClass(
+        variant === 'v5' ? 'empty small-empty' : variant === 'v5-full' ? 'empty' : 'state',
+      )}
+    >
+      {variant ? (
+        <div className={uiClass('empty-mark')}>{icon || <Inbox />}</div>
+      ) : (
+        icon || <Inbox />
+      )}
       <h3>{title}</h3>
       <p>{description}</p>
+      {action}
     </div>
   );
 }
-export function ErrorState({ error, onRetry }: { error: unknown; onRetry?: () => void }) {
+export function ErrorState({
+  error,
+  onRetry,
+  staleDataAt,
+  busy = false,
+}: {
+  error: unknown;
+  onRetry?: () => void;
+  staleDataAt?: string;
+  busy?: boolean;
+}) {
   const err = error instanceof ApiError ? error : new ApiError(503);
   const [retryAt, setRetryAt] = useState(0),
     [now, setNow] = useState(Date.now());
@@ -45,8 +88,32 @@ export function ErrorState({ error, onRetry }: { error: unknown; onRetry?: () =>
   }, [error]);
   const Icon =
     err.status === 403 ? LockKeyhole : err.problem.code === 'NETWORK_ERROR' ? WifiOff : AlertCircle;
+  if (staleDataAt && err.status >= 500)
+    return (
+      <div className={uiClass('v5-stale-notice')} role="alert">
+        <RefreshCw size={20} />
+        <p>
+          {uiText.v5Product.staleData}
+          <small>
+            {uiText.v5Product.lastSuccessfulRead}
+            {date(staleDataAt)}
+          </small>
+        </p>
+        {onRetry && (
+          <Button
+            size="icon"
+            variant="ghost"
+            disabled={busy || now < retryAt}
+            aria-label={uiText.text_47eab78b8d28}
+            onClick={onRetry}
+          >
+            <RefreshCw size={19} />
+          </Button>
+        )}
+      </div>
+    );
   return (
-    <div className="state error-state" role="alert">
+    <div className={uiClass('state error-state')} role="alert">
       <Icon />
       <h3>
         {err.status === 403
@@ -132,6 +199,7 @@ const statuses: Record<string, string> = {
   Scheduled: uiText.text_48ba2fffd7f8,
   Cancelled: uiText.text_7a56ac65be94,
   Present: uiText.text_40284b78e717,
+  NotRecorded: uiText.text_5749a86140fa,
   Absent: uiText.text_921c15ca4d6d,
   Late: uiText.text_5d5d32eb4327,
   Excused: uiText.text_85a79064a177,
@@ -149,15 +217,15 @@ export function StatusBadge({ value }: { value: unknown }) {
         ? 'warning'
         : 'neutral';
   return (
-    <span className={`badge badge-${tone}`}>
-      <span className="badge-dot" />
+    <span className={uiClass(`badge badge-${tone}`)}>
+      <span className={uiClass('badge-dot')} />
       {label(text)}
     </span>
   );
 }
 export function UpdatedAt({ at }: { at: number }) {
   return at > 0 ? (
-    <span className="updated">
+    <span className={uiClass('updated')}>
       {uiText.text_97c4b62c6c33}
       {date(new Date(at).toISOString(), true)}
     </span>

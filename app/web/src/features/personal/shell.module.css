@@ -1,8 +1,7 @@
 /* Product shell replaced by the V5 composition. Business state lives in shell.tsx. */
 .shell {
-  height: 100dvh;
+  height: 100%;
   min-height: 0;
-  overflow: hidden;
   --personal-nav: 208px;
   --personal-header: 94px;
   --personal-bottom: 0px;
@@ -32,7 +31,7 @@
   border: 0;
   background: none;
   color: var(--text);
-  font-size: 27px;
+  font-size: calc(27px * var(--text-scale, 1));
   font-weight: 800;
   text-align: start;
 }
@@ -47,21 +46,24 @@
   align-items: center;
   gap: 8px;
   text-align: start;
-  min-height: 64px;
+  min-height: 0;
 }
 .workspaceSwitch > span {
   flex: 1;
   min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
 }
 .workspaceSwitch strong {
   display: block;
-  font-size: 13px;
+  font-size: calc(13px * var(--text-scale, 1));
 }
 .workspaceSwitch small {
   display: block;
-  font-size: 11px;
+  font-size: calc(11px * var(--text-scale, 1));
   color: var(--muted);
-  margin-top: 4px;
+  margin: 0;
 }
 .sidebarBottom {
   margin-top: auto;
@@ -72,7 +74,7 @@
   align-items: center;
   min-height: 48px;
   padding: 10px 12px;
-  font-size: 14px;
+  font-size: calc(14px * var(--text-scale, 1));
   border-radius: 12px;
 }
 .sidebarSetting:hover {
@@ -91,12 +93,12 @@
 }
 .account strong {
   display: block;
-  font-size: 12px;
+  font-size: calc(12px * var(--text-scale, 1));
   overflow-wrap: anywhere;
 }
 .account small {
   display: block;
-  font-size: 11px;
+  font-size: calc(11px * var(--text-scale, 1));
   color: var(--muted);
 }
 .avatar {
@@ -111,7 +113,7 @@
   flex: none;
 }
 .workspace {
-  height: 100dvh;
+  height: 100%;
   display: flex;
   flex-direction: column;
   margin-inline-start: var(--personal-nav);
@@ -148,14 +150,14 @@
   min-width: 0;
 }
 .pageTitle {
-  font-size: 24px;
+  font-size: calc(24px * var(--text-scale, 1));
   line-height: 1.7;
   font-weight: 750;
   margin: 0;
   overflow-wrap: anywhere;
 }
 .headerSubtitle {
-  font-size: 12px;
+  font-size: calc(12px * var(--text-scale, 1));
   color: var(--muted);
   margin: 0;
   line-height: 1.7;
@@ -201,12 +203,12 @@
 .mobileNav {
   display: none;
 }
-.messageMain,
-.assistantMain {
+.shell .messageMain,
+.shell .assistantMain {
   display: flex;
   padding: 0;
   max-width: none;
-  overflow: hidden;
+  overflow: visible;
 }
 .messagingPageMain {
   padding: 0;
@@ -224,7 +226,7 @@
   padding: 0;
   max-width: none;
   display: flex;
-  overflow: hidden;
+  overflow: visible;
 }
 .main > div:has(> [data-v5-scene]) {
   display: contents;
@@ -254,7 +256,7 @@
 }
 .spaceList small {
   display: block;
-  font-size: 12px;
+  font-size: calc(12px * var(--text-scale, 1));
   color: var(--muted);
 }
 @media (min-width: 768px) and (max-width: 1199px) {
@@ -284,7 +286,7 @@
     padding: 16px 22px;
   }
   .pageTitle {
-    font-size: 23px;
+    font-size: calc(23px * var(--text-scale, 1));
   }
   .main {
     padding: 24px;
@@ -297,7 +299,7 @@
   .shell {
     --personal-nav: 0px;
     --personal-header: 90px;
-    --personal-bottom: calc(74px + env(safe-area-inset-bottom));
+    --personal-bottom: 0px;
   }
   .sidebar {
     display: none;
@@ -310,13 +312,13 @@
     gap: 8px;
   }
   .pageTitle {
-    font-size: 21px;
+    font-size: calc(21px * var(--text-scale, 1));
   }
   .headerTitle :global(.rx-crumb) {
     display: none;
   }
   .headerSubtitle {
-    font-size: 11px;
+    font-size: calc(11px * var(--text-scale, 1));
   }
   .headerEnd {
     gap: 4px;
@@ -327,24 +329,23 @@
   .main {
     padding: 18px 16px calc(var(--personal-bottom) + 18px);
   }
-  .messageMain,
-  .assistantMain {
+  .shell .messageMain,
+  .shell .assistantMain {
     padding: 0 0 var(--personal-bottom);
   }
   .mobileNav {
     display: block;
-    position: fixed;
-    bottom: 0;
-    inset-inline: 0;
+    flex: none;
+    position: relative;
     z-index: 25;
-    height: var(--personal-bottom);
+    height: auto;
+  }
+  .shell:has([data-ui='composer']:focus-within) .mobileNav {
+    display: none;
   }
   .shell[data-focused],
   .shell:has([data-v5-deep]) {
     --personal-bottom: 0px;
-  }
-  .shell[data-focused] .mobileNav {
-    display: none;
   }
   .shell:has([data-v5-scene]) .main {
     padding-bottom: var(--personal-bottom);
@@ -361,7 +362,7 @@
     padding-inline: 12px;
   }
   .pageTitle {
-    font-size: 19px;
+    font-size: calc(19px * var(--text-scale, 1));
   }
 }
 .shell :global(.v5-shell-actions) {

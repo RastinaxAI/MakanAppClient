@@ -7,6 +7,16 @@
   flex: 1;
   min-width: 0;
 }
+.optionSummary {
+  text-align: start;
+  cursor: pointer;
+}
+.scheduleStatus {
+  padding: 0;
+  min-height: 44px;
+  background: transparent;
+  flex: none;
+}
 .poll {
   display: flex;
   flex-direction: column;
@@ -19,7 +29,7 @@
   display: flex;
   gap: 8px;
   align-items: center;
-  font-size: 14px;
+  font-size: calc(14px * var(--text-scale, 1));
 }
 .poll > strong > svg {
   flex-shrink: 0;
@@ -27,7 +37,7 @@
 }
 .poll > small {
   color: var(--muted);
-  font-size: 11px;
+  font-size: calc(11px * var(--text-scale, 1));
 }
 .pollOption {
   display: flex;
@@ -35,7 +45,7 @@
   gap: 10px;
   align-items: center;
   padding: 8px 0;
-  font-size: 13px;
+  font-size: calc(13px * var(--text-scale, 1));
   min-height: 44px;
   cursor: pointer;
 }
@@ -53,7 +63,7 @@
   accent-color: var(--primary-button);
 }
 .pollOption b {
-  font-size: 12px;
+  font-size: calc(12px * var(--text-scale, 1));
   font-weight: 600;
 }
 .progress {
@@ -71,7 +81,7 @@
   border-radius: inherit;
   background: var(--primary);
 }
-.poll .editChecklist {
+.editChecklist {
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -88,7 +98,7 @@
   align-items: center;
   justify-content: center;
   gap: 5px;
-  font-size: 11px;
+  font-size: calc(11px * var(--text-scale, 1));
   color: var(--primary);
   min-height: 44px;
   padding-inline: 8px;
@@ -102,7 +112,7 @@
     min-width: 200px;
   }
   .toolLinks a {
-    font-size: 10px;
+    font-size: calc(10px * var(--text-scale, 1));
     padding-inline: 5px;
   }
   .toolLinks svg {

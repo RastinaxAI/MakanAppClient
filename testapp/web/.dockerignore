@@ -5,15 +5,12 @@
 !next.config.ts
 !next-env.d.ts
 !tsconfig.json
-!postcss.config.mjs
 !src/
 !src/**
 !contracts/
 !contracts/client-surface.json
 !design/
 !design/tokens.json
-!design/reference-v3/
-!design/reference-v3/screens.json
 !config/
 !config/network.json
 !public/
@@ -21,3 +18,7 @@
 !scripts/
 !scripts/docker-start.mjs
 !scripts/build-public-brand.mjs
+
+# Used by local PDF diagnostic tools; the product uses the variable face.
+public/fonts/makan-reference/Vazirmatn-Regular.ttf
+public/fonts/makan-reference/Vazirmatn-Bold.ttf

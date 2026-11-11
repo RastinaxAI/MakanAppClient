@@ -1,4 +1,6 @@
 'use client';
+import { uiClass } from '@/components/v5/classes';
+
 import { ShieldCheck } from 'lucide-react';
 import { ApiError } from '@/lib/api/errors';
 import type { components } from '@/generated/api/schema';
@@ -17,7 +19,7 @@ export function OfficialBadge({
   summary: components['schemas']['ConversationSummaryResult'];
 }) {
   return officialMetadataMatches(summary) ? (
-    <span className={s.badge}>
+    <span className={uiClass(s.badge)}>
       <ShieldCheck size={15} />
       {summary.official!.displayLabel}
     </span>

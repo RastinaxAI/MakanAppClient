@@ -5,6 +5,8 @@ export type S = components['schemas'];
 export const classApi = '/api/v1/personal-classes';
 export const requestApi = '/api/v1/personal-class-requests';
 export const classBase = '/personal/extracurricular';
+// V5.1 product gate: API availability does not approve the independent education release.
+export const independentLearningReleased = false;
 export function requestInput(draft: ClassDraft): S['PersonalClassRequestInput'] {
   return {
     title: draft.title.trim(),

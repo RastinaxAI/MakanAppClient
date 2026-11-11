@@ -12,15 +12,15 @@ import zipfile
 root = Path(__file__).resolve().parent.parent
 output = root / 'output/delivery/makan-client-source.zip'
 files = []
-for folder in ['src', 'public', 'config', 'contracts', 'design', 'scripts', 'tests', 'output/design',
-               'docs/user-guide', 'docs/design']:
+for folder in ['src', 'public', 'config', 'contracts', 'design', 'scripts', 'tests',
+               'docs/user-guide', 'docs/design', 'docs/integration', 'docs/maintenance']:
     files.extend(p for p in (root / folder).rglob('*') if p.is_file()
                  and 'evidence' not in p.parts and '__pycache__' not in p.parts)
 for name in ['README.md', 'AGENTS.md', '.nvmrc', '.gitignore', '.prettierignore',
              '.prettierrc.json', '.dockerignore', '.env.example', '.env.docker.example',
              'package.json', 'package-lock.json', 'tsconfig.json', 'next.config.ts',
-             'next-env.d.ts', 'postcss.config.mjs', 'vitest.config.mts',
-             'playwright.config.ts', 'playwright.personal.config.ts', 'playwright.guide.config.ts', 'Dockerfile',
+             'next-env.d.ts', 'vitest.config.mts',
+             'playwright.config.ts', 'playwright.personal.config.ts', 'playwright.guide.config.ts', 'playwright.production.config.ts', 'Dockerfile',
              'compose.yaml', 'compose.local.yaml', 'docker-compose.yml']:
     if (root / name).is_file(): files.append(root / name)
 for name in ['MakanApp_Panel_User_Guide_FA.pdf', 'MakanApp_Messaging_Diagnostic_FA_20261105.pdf',

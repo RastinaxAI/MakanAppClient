@@ -1,0 +1,80 @@
+{
+  "status": "targeted_checks_complete",
+  "taskComplete": false,
+  "buildId": "JH53k-9RLWkxigrKbrEZP",
+  "iteration": 68,
+  "createdAt": "2026-11-09T13:56:06.350673+00:00",
+  "scenarios": [
+    "MK-150",
+    "MK-151",
+    "MK-152",
+    "MK-153"
+  ],
+  "implementation": "Native organization question create/edit and real More menu removal on existing routes. Scoped drafts, actual typed commands, objective options, exact file byte policy retained. Only exact204 confirms deletion. Frozen confirmation survives background snapshots and requires explicit review when versions change. Numeric caret and focus restored. Independent proposal rollout unchanged.",
+  "checks": {
+    "unit": 517,
+    "unitFiles": 72,
+    "typecheck": true,
+    "lintModules": 350,
+    "cycles": 0,
+    "build": true,
+    "browser": {
+      "passed": 73,
+      "batches": 2,
+      "files": 9,
+      "failures": 0,
+      "skip": 0,
+      "flaky": 0,
+      "receipts": "tmp/exact-v1/browser-sixtyeighth-receipts.json"
+    },
+    "main": {
+      "captured": 24,
+      "stateVerified": 24,
+      "overflow": 0,
+      "archive": "output/review/exact-v1/after-sixtyeighth-question",
+      "unreviewedAtLeast4": 0,
+      "unpairedReferenceControls": 0
+    },
+    "responsive": {
+      "boundary": 44,
+      "largeText200": 44,
+      "widths": [
+        320,
+        360,
+        390,
+        430,
+        768,
+        834,
+        1024,
+        1194,
+        1280,
+        1440,
+        1920
+      ],
+      "errors": 0,
+      "overflow": 0,
+      "pngDimensionsVerified": true,
+      "receipts": "tmp/exact-v1/responsive-sixtyeighth-question-serial2-receipts.json"
+    }
+  },
+  "differences": [
+    "No question short-title DTO: actual stored prompt is used in removal metadata; reference sample short title is not fabricated.",
+    "Product logo and authorized user/workspace captions retained; reference decoration/person names are not runtime fixtures.",
+    "VersionNumber1 is confined to correctly seeded explicit QA data. Runtime uses actual server version."
+  ],
+  "sources": {
+    "src/features/personal/school/exam-question-form.tsx": "a49c6b5c6b7e8b71b977232ad77f372849e029e42e89385c83502385c4fe69db",
+    "src/features/personal/school/exam-question-remove.tsx": "bd3e4749f0942f26d719b4213d6479e7882326ea430c95be2cdcb16a38fcb02e",
+    "src/features/personal/school/exams.tsx": "212939c5a59cb77351728be657645fd6edcee49e93613182bf62a5deab651d0b",
+    "src/features/personal/school/creation-pages.tsx": "df2b224fe097a64416556aa56608e25007ce18ed0e53b2464b558977ddb5b810",
+    "src/components/ui/confirm-action.tsx": "082d2f16fe5a14e93d69783a6906779c85a6d51dd7600001161b95230620cb26",
+    "src/components/ui/number-input.tsx": "e475553dbf5917f9402909cd0bcf4b9f5d3808710662ddcab343e971805074f3",
+    "src/lib/api/client.ts": "4ba690555198ed77a577d5ca4d9ef6fee6d3a2038026ccb47ede143c21e333b4",
+    "src/features/personal/provider.tsx": "c6e2d9dfe8a79ca569c603316688ca07ea93cf1e8b3c9988de7c6f82670ebbde",
+    "src/content/fa.ts": "ebc1317d2e2c85558c3848f6ebb488a729834268155c832c29e28492b50734d8",
+    "tests/browser/exact-exam-question-native.spec.ts": "0dda40a6a11826fe443773d34fe65c249fb4dda9fcabc8a3ecb7ca6c4952bc8a",
+    "tests/browser/exact-exam-question-remove.spec.ts": "85484d82f3e4ee96d1099c5a6553ac966d2bdab78aea7b9b947402fd4669b61e",
+    "tests/fixtures/backend/workflows.mjs": "3a168e56c1596b1a8586a2ddd7093b7f6e053fc358c6e2d6af2a80c4dec62692",
+    "scripts/review-exact-v5.mjs": "9b16534082c5619ae0c49121a835f6040e8770b43908c1d7b3fb41ab95d2f952"
+  }
+}

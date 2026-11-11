@@ -1,3 +1,4 @@
+import { reviewPath } from './review-output';
 import { test, expect, login, fixture, ids } from './test';
 import { mkdir } from 'node:fs/promises';
 
@@ -42,7 +43,7 @@ test('invitation filters, readable cards and recoverable empty states fit phone,
   await filters.getByRole('button', { name: 'در انتظار', exact: true }).click();
   await expect(panel.getByRole('article')).toHaveCount(1);
   await expect(panel).not.toContainText('دعوت منقضی‌شده');
-  await mkdir('output/review/invitations-redesign', { recursive: true });
+  await mkdir(reviewPath('output/review/invitations-redesign'), { recursive: true });
   for (const width of [320, 390, 834, 1440]) {
     await page.setViewportSize({ width, height: 1000 });
     await filters.getByRole('button', { name: 'همه', exact: true }).click();
@@ -58,7 +59,7 @@ test('invitation filters, readable cards and recoverable empty states fit phone,
       true,
     );
     await page.screenshot({
-      path: `output/review/invitations-redesign/cards-${width}.png`,
+      path: reviewPath(`output/review/invitations-redesign/cards-${width}.png`),
       fullPage: true,
     });
     await filters.getByRole('button', { name: 'ردشده', exact: true }).click();
@@ -71,7 +72,7 @@ test('invitation filters, readable cards and recoverable empty states fit phone,
       'true',
     );
     await page.screenshot({
-      path: `output/review/invitations-redesign/empty-${width}.png`,
+      path: reviewPath(`output/review/invitations-redesign/empty-${width}.png`),
       fullPage: true,
     });
     await panel.getByRole('button', { name: 'نمایش همهٔ دعوت‌ها', exact: true }).click();
@@ -99,7 +100,7 @@ test('invitation filters, readable cards and recoverable empty states fit phone,
       true,
     );
     await page.screenshot({
-      path: `output/review/invitations-redesign/empty-dark-${width}.png`,
+      path: reviewPath(`output/review/invitations-redesign/empty-dark-${width}.png`),
       fullPage: true,
     });
   }

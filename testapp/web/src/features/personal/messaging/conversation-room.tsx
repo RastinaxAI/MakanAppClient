@@ -1,4 +1,8 @@
 'use client';
+import { Textarea as NativeTextarea } from '@/components/ui/input';
+
+import { uiClass } from '@/components/v5/classes';
+
 import * as uiText from '@/content/fa';
 import { PageBack } from '@/components/navigation/page-back';
 import { Button } from '@/components/ui/button';
@@ -10,14 +14,13 @@ import { contextSignature } from '@/lib/client-surface';
 import { date, number } from '@/lib/formatting';
 import { useInfiniteQuery, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
-  ArrowRight,
   ArrowUpLeft,
   Building2,
   Check,
   CheckCheck,
   Clock,
   Send,
-  Settings,
+  PanelRight,
   X,
 } from 'lucide-react';
 import Link from 'next/link';
@@ -41,14 +44,14 @@ import { findConversationSummary, isManagedConversation } from './summary';
 import { OfficialBadge, useOfficialConversationAccess } from './official';
 import { AcademicActivity } from './academic-activity';
 import { ConversationActions } from './conversation-actions';
-import { ConversationAvatar } from './conversation-photo';
 import { MessageBubble, MessageBody } from './message-bubble';
 import { canForwardMessage } from './message-action-policy';
 import { visibleLocalMessages, type AcknowledgedMessage } from './message-reconciliation';
 import { currentInitialTargets } from './invitation-model';
 import { conversationNeedsWorkspace } from './workspace-model';
 import { ConversationWorkspaceNotice } from './workspace-notice';
-import { RichMessage, RichToolLinks } from './rich-messages';
+import { RichMessage } from './rich-messages';
+import { useSceneHeader } from '@/components/v5/form-actions';
 type Summary = components['schemas']['ConversationSummaryResult'];
 type Message = components['schemas']['ConversationMessageResult'];
 
@@ -94,7 +97,7 @@ export function ConversationRoom({
     );
   if (!resolved)
     return (
-      <div className={s.roomState}>
+      <div className={uiClass(s.roomState)}>
         <PageBack href="/personal/messages" />
         {lookup.isError ? (
           <ErrorState error={lookup.error} onRetry={() => void lookup.refetch()} />
@@ -126,6 +129,21 @@ function ResolvedConversationRoom({
   const { session, call } = usePersonal(),
     cache = useQueryClient();
   const managed = isManagedConversation(summary.type);
+  const measureRegion = useCallback(
+    (property: string) => (node: HTMLDivElement | HTMLElement | null) => {
+      if (!node) return;
+      const workspace = node.closest<HTMLElement>('[data-messenger]');
+      if (!workspace) return;
+      const observer = new ResizeObserver(() => {
+        workspace.style.setProperty(property, `${node.getBoundingClientRect().height}px`);
+      });
+      observer.observe(node);
+      return () => observer.disconnect();
+    },
+    [],
+  );
+  const headerRegion = useMemo(() => measureRegion('--chat-header-height'), [measureRegion]);
+  const composerRegion = useMemo(() => measureRegion('--chat-composer-height'), [measureRegion]);
   const officialAccess = useOfficialConversationAccess(summary);
   const metadata = usePersonalApi<components['schemas']['ManagedConversationResult']>(
     '/api/v1/conversations/' + id,
@@ -418,6 +436,18 @@ function ResolvedConversationRoom({
   const name = summary
     ? conversationTitle(summary)
     : metadata.data?.title || uiText.text_99c891fdab48;
+  const workspaceHeading = useMemo(
+    () => ({
+      title: name,
+      subtitle:
+        summary.scope === 'Personal'
+          ? uiText.text_d034f3bcfe7f
+          : summary.organization?.organizationName || uiText.text_7298890ac877,
+      tools: <ConversationActions id={id} managed={managed} writable={writable} />,
+    }),
+    [name, summary.scope, summary.organization?.organizationName, id, managed, writable],
+  );
+  const embeddedHeader = useSceneHeader(workspaceHeading, ready && !forbidden && !messageDenied);
   const localAuthor = managed
     ? {
         displayName: session.user.displayName || session.user.firstName || uiText.text_578786ff448b,
@@ -433,7 +463,7 @@ function ResolvedConversationRoom({
     (officialAccess.declared && !officialAccess.ready && !officialAccess.error)
   )
     return (
-      <div className={s.roomState}>
+      <div className={uiClass(s.roomState)}>
         <PageBack
           href={
             summary.scope === 'Organization'
@@ -446,7 +476,7 @@ function ResolvedConversationRoom({
     );
   if ((managed && metadata.isError) || forbidden || messageDenied || officialAccess.error)
     return (
-      <div className={s.roomState}>
+      <div className={uiClass(s.roomState)}>
         <PageBack
           href={
             summary.scope === 'Organization'
@@ -464,68 +494,44 @@ function ResolvedConversationRoom({
   return (
     <>
       <section
-        className={s.room}
+        className={uiClass(s.room)}
         data-message-room
         data-scope={conversation.scope}
         data-conversation-type={conversation.type}
         aria-label={uiText.text_6a022c87a2bf + name}
       >
-        <header className={s.roomHeader} data-chat-header>
-          <Button asChild className={s.back} size="icon" variant="ghost">
+        {!embeddedHeader && (
+          <header ref={headerRegion} className={uiClass(s.roomHeader)} data-chat-header>
             <Link
-              href={
-                summary.scope === 'Organization'
-                  ? '/personal/messages?view=organization'
-                  : '/personal/messages'
-              }
-              aria-label={uiText.text_5d8f912f993a}
+              className={uiClass(s.identity)}
+              href={`/personal/messages/${id}/info`}
+              aria-label={uiText.text_3a3510c0ba99}
             >
-              <ArrowRight size={21} />
+              <ProfileAvatar name={name} className={uiClass(s.avatar)} />
+              <div className={uiClass(s.identityText)}>
+                <span className={uiClass(s.roomCrumb)}>
+                  {uiText.v5Product.conversations} / {uiText.text_f6aa82db3906}
+                </span>
+                <h2 dir="auto">{name}</h2>
+                <OfficialBadge summary={summary} />
+                <span className={uiClass(s.identitySubtitle)}>
+                  {conversation.type === 'Direct'
+                    ? uiText.text_8f421b73047d
+                    : conversation.type === 'Saved'
+                      ? uiText.text_c8d071ed9a9d
+                      : conversation.type === 'Channel'
+                        ? uiText.text_2db356b462dd
+                        : uiText.text_774668d4acc7}
+                </span>
+              </div>
             </Link>
-          </Button>
-          <Link
-            className={s.identity}
-            href={`/personal/messages/${id}/info`}
-            aria-label={uiText.text_3a3510c0ba99}
-          >
-            {managed ? (
-              <ConversationAvatar
-                id={id}
-                photo={metadata.data?.photo ?? summary.photo}
-                name={name}
-                className={s.avatar}
-              />
-            ) : (
-              <>
-                <ProfileAvatar
-                  photo={
-                    conversation.type === 'Direct'
-                      ? summary.otherParticipant?.profilePhoto
-                      : conversation.type === 'Saved'
-                        ? session.user.profilePhoto
-                        : undefined
-                  }
-                  name={name}
-                  className={s.avatar}
-                />
-              </>
-            )}
-            <div className={s.identityText}>
-              <h2 dir="auto">{name}</h2>
-              <OfficialBadge summary={summary} />
-              <span className={s.identitySubtitle}>
-                {conversation.type === 'Direct'
-                  ? uiText.text_8f421b73047d
-                  : conversation.type === 'Saved'
-                    ? uiText.text_c8d071ed9a9d
-                    : conversation.type === 'Channel'
-                      ? uiText.text_2db356b462dd
-                      : uiText.text_774668d4acc7}
-              </span>
-            </div>
-          </Link>
-          <ConversationActions id={id} managed={isManagedConversation(conversation.type)} />
-        </header>
+            <ConversationActions
+              id={id}
+              managed={isManagedConversation(conversation.type)}
+              writable={writable}
+            />
+          </header>
+        )}
         <CreationReceipt
           participants={metadata.data?.participants ?? []}
           targets={
@@ -540,14 +546,14 @@ function ResolvedConversationRoom({
                 ]) ?? [])
           }
         />
-        <div className={s.scope}>
+        <div className={uiClass(s.scope)}>
           <Building2 size={14} />
           {conversation.scope === 'Personal'
             ? uiText.text_25d5b2def6af
             : (summary?.organization?.organizationName ?? uiText.text_7298890ac877)}
         </div>
         <div
-          className={s.history}
+          className={uiClass(s.history)}
           ref={scroller}
           onScroll={() => {
             const node = scroller.current;
@@ -570,7 +576,7 @@ function ResolvedConversationRoom({
               )}
               {history.hasNextPage && (
                 <Button
-                  className={s.older}
+                  className={uiClass(s.older)}
                   variant="outline"
                   disabled={history.isFetchingNextPage}
                   onClick={() => void history.fetchNextPage()}
@@ -581,7 +587,10 @@ function ResolvedConversationRoom({
               {!messages.length &&
                 !localMessages.acknowledged.length &&
                 !localMessages.pending.length && (
-                  <section className={s.startConversation} aria-label={uiText.text_4ca85a23d967}>
+                  <section
+                    className={uiClass(s.startConversation)}
+                    aria-label={uiText.text_4ca85a23d967}
+                  >
                     <ProfileAvatar
                       name={name}
                       photo={
@@ -589,7 +598,7 @@ function ResolvedConversationRoom({
                           ? summary.otherParticipant?.profilePhoto
                           : undefined
                       }
-                      className={s.avatar}
+                      className={uiClass(s.avatar)}
                     />
                     <h2>{name}</h2>
                     <p>
@@ -608,7 +617,7 @@ function ResolvedConversationRoom({
                   <Fragment key={message.messageId}>
                     {(index === 0 ||
                       date(messages[index - 1].sentAtUtc) !== date(message.sentAtUtc)) && (
-                      <p className={s.dayDivider}>
+                      <p className={uiClass(s.dayDivider)}>
                         {date(message.sentAtUtc) === date(new Date().toISOString())
                           ? uiText.text_9a8e4bfdd18e
                           : date(message.sentAtUtc)}
@@ -618,7 +627,11 @@ function ResolvedConversationRoom({
                       message={message}
                       canForward={canForwardMessage(message, conversation, writable)}
                       own={own}
-                      sender={isManagedConversation(conversation.type) ? message.sender : undefined}
+                      sender={
+                        isManagedConversation(conversation.type) || !own
+                          ? message.sender
+                          : undefined
+                      }
                       sequence={message.sequence}
                       text={message.isDeleted ? null : message.text}
                       onReply={
@@ -662,7 +675,7 @@ function ResolvedConversationRoom({
                       )}
                       {!message.isDeleted && message.attachments.length > 0 && (
                         <div
-                          className={s.attachments}
+                          className={uiClass(s.attachments)}
                           data-gallery={
                             message.attachments.length > 1 &&
                             message.attachments.every((asset) =>
@@ -681,7 +694,7 @@ function ResolvedConversationRoom({
                           ))}
                         </div>
                       )}
-                      <div className={s.messageMeta}>
+                      <div className={uiClass(s.messageMeta)}>
                         <time title={date(message.sentAtUtc, true)}>
                           {shortTime(message.sentAtUtc)}
                           {message.isEdited ? uiText.text_d1260a2bc5bc : ''}
@@ -691,7 +704,7 @@ function ResolvedConversationRoom({
                           peerRead !== undefined &&
                           peerRead >= message.sequence ? (
                             <CheckCheck
-                              className={s.readTick}
+                              className={uiClass(s.readTick)}
                               size={16}
                               aria-label={uiText.text_bb4316d764c2}
                             />
@@ -706,13 +719,13 @@ function ResolvedConversationRoom({
               {localMessages.acknowledged.map((item) => (
                 <article
                   key={item.receipt.clientMessageId}
-                  className={`${s.bubble} ${s.own} ${managed ? s.feedMessage : ''}`}
+                  className={uiClass(`${s.bubble} ${s.own} ${managed ? s.feedMessage : ''}`)}
                   data-message-state="confirmed"
                 >
                   <MessageBody sender={localAuthor}>
                     <p dir="auto">{item.text}</p>
                     <AttachmentSummary attachments={item.attachments} />
-                    <div className={s.messageMeta}>
+                    <div className={uiClass(s.messageMeta)}>
                       <time title={date(item.receipt.sentAtUtc, true)}>
                         {shortTime(item.receipt.sentAtUtc)}
                       </time>
@@ -724,24 +737,26 @@ function ResolvedConversationRoom({
               {localMessages.pending.map((message) => (
                 <article
                   key={message.id}
-                  className={`${s.bubble} ${s.own} ${managed ? s.feedMessage : ''} ${sending === message.id ? '' : s.pending}`}
+                  className={uiClass(
+                    `${s.bubble} ${s.own} ${managed ? s.feedMessage : ''} ${sending === message.id ? '' : s.pending}`,
+                  )}
                   data-message-state={sending === message.id ? 'sending' : 'unconfirmed'}
                 >
                   <MessageBody sender={localAuthor}>
                     <p dir="auto">{message.command.text}</p>
                     <AttachmentSummary attachments={message.attachments} />
                     {sending === message.id ? (
-                      <div className={s.messageMeta}>
+                      <div className={uiClass(s.messageMeta)}>
                         <time>{shortTime(message.createdAt)}</time>
                         <Clock size={14} aria-label={uiText.text_53bf8bd91a86} />
                       </div>
                     ) : (
-                      <small className={s.localStatus}>
+                      <small className={uiClass(s.localStatus)}>
                         {message.error ?? uiText.text_1ec80fd5a1e8}
                       </small>
                     )}
                     {sending !== message.id && (
-                      <div className={s.pendingActions}>
+                      <div className={uiClass(s.pendingActions)}>
                         <Button
                           size="sm"
                           variant="outline"
@@ -791,26 +806,28 @@ function ResolvedConversationRoom({
             </>
           )}
         </div>
-        <div className={s.composerArea}>
-          {writable && <RichToolLinks id={id} />}
+        <div ref={composerRegion} className={uiClass(s.composerArea)}>
           {writable && needsRestriction && restriction.isError && (
-            <div className={s.mediaPermissionError} role="status">
+            <div className={uiClass(s.mediaPermissionError)} role="status">
               {uiText.text_917b9bf81a8b}
               <button onClick={() => void restriction.refetch()}>{uiText.text_41c9d368bbac}</button>
             </div>
           )}
           {!!error && (
-            <div className={s.sendError} role="alert">
+            <div className={uiClass(s.sendError)} role="alert">
               {error instanceof Error ? error.message : uiText.text_ee786ae11865}
             </div>
           )}
           {!!readError && (
-            <button className={s.readRetry} onClick={() => void markRead(lastReadAttempt.current)}>
+            <button
+              className={uiClass(s.readRetry)}
+              onClick={() => void markRead(lastReadAttempt.current)}
+            >
               {uiText.text_0ac3a64e7697}
             </button>
           )}
           {reply && (
-            <div className={s.reply}>
+            <div className={uiClass(s.reply)}>
               <ArrowUpLeft size={18} />
               <span>
                 <strong>
@@ -838,7 +855,8 @@ function ResolvedConversationRoom({
           )}
           {writable && !history.isError ? (
             <form
-              className={s.composer}
+              className={uiClass(s.composer)}
+              data-ui="composer"
               onSubmit={(event) => {
                 event.preventDefault();
                 void send();
@@ -850,8 +868,8 @@ function ResolvedConversationRoom({
                 caption={draft}
                 onSend={send}
               />
-              <div className={s.composeInput}>
-                <textarea
+              <div className={uiClass(s.composeInput)}>
+                <NativeTextarea
                   ref={composer}
                   aria-label={uiText.text_8b2fcc6817d9}
                   placeholder={uiText.text_5be55bdb4435}
@@ -872,7 +890,7 @@ function ResolvedConversationRoom({
               </div>
               <button
                 type="submit"
-                className={s.send}
+                className={uiClass(s.send)}
                 disabled={!!sending || !draft.trim()}
                 aria-label={uiText.text_51dd685556b8}
               >
@@ -880,17 +898,41 @@ function ResolvedConversationRoom({
               </button>
             </form>
           ) : (
-            <p className={s.readOnly}>{uiText.text_afacfaf1253c}</p>
+            <p className={uiClass(s.readOnly)}>{uiText.text_afacfaf1253c}</p>
           )}
         </div>
       </section>
-      <aside className={s.inspector}>
-        <span className={s.largeAvatar}>{name.slice(0, 1)}</span>
-        <h2>{name}</h2>
+      <aside
+        className={uiClass(s.inspector)}
+        data-chat-context
+        aria-label={uiText.v5Product.context}
+      >
+        <div className={uiClass(s.contextTag)}>
+          <PanelRight size={16} />
+          {uiText.v5Product.context}
+        </div>
+        <h2>
+          {conversation.scope === 'Personal'
+            ? uiText.v5Product.conversations
+            : summary.organization?.organizationName || uiText.text_7298890ac877}
+        </h2>
         <p>
-          {conversation.scope === 'Personal' ? uiText.text_ab3c684df5df : uiText.text_7298890ac877}
+          {conversation.scope === 'Personal' ? uiText.text_d034f3bcfe7f : uiText.text_7298890ac877}{' '}
+          · {session.user.displayName}
         </p>
         <dl>
+          <div>
+            <dt>{name}</dt>
+            <dd>
+              {conversation.type === 'Direct'
+                ? uiText.text_8f421b73047d
+                : conversation.type === 'Saved'
+                  ? uiText.text_c8d071ed9a9d
+                  : conversation.type === 'Channel'
+                    ? uiText.text_2db356b462dd
+                    : uiText.text_774668d4acc7}
+            </dd>
+          </div>
           {managed && metadata.data ? (
             <>
               <div>
@@ -910,14 +952,7 @@ function ResolvedConversationRoom({
                 </dd>
               </div>
             </>
-          ) : (
-            <div>
-              <dt>{uiText.text_36ee8a4d404c}</dt>
-              <dd>
-                {summary.type === 'Saved' ? uiText.text_9f3597ff2f66 : uiText.text_8f421b73047d}
-              </dd>
-            </div>
-          )}
+          ) : null}
           {managed && (
             <div>
               <dt>{uiText.text_d2e8c7886801}</dt>
@@ -927,10 +962,7 @@ function ResolvedConversationRoom({
             </div>
           )}
         </dl>
-        <Link href="/personal/settings">
-          <Settings size={16} />
-          {uiText.navigation_settings}
-        </Link>
+        <p>{uiText.v5Product.contextBackPolicy}</p>
       </aside>
     </>
   );
@@ -949,7 +981,7 @@ function CreationReceipt({
     added = current.filter((target) => target.outcome === 'Added').length,
     unavailable = targets.filter((target) => target.outcome === 'NotAvailable').length;
   return (
-    <section className={s.readOnly} aria-label={uiText.text_18e4bfbdd46c} role="status">
+    <section className={uiClass(s.readOnly)} aria-label={uiText.text_18e4bfbdd46c} role="status">
       {pending.length > 0 && (
         <p>
           {pending.length.toLocaleString('fa-IR')}

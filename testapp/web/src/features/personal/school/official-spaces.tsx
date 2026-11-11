@@ -1,4 +1,6 @@
 'use client';
+import { uiClass } from '@/components/v5/classes';
+
 import * as uiText from '@/content/fa';
 import Link from 'next/link';
 import { MessageCircle, Megaphone, ShieldCheck, RefreshCw } from 'lucide-react';
@@ -23,13 +25,13 @@ export function OfficialSpaces({ classId }: { classId?: string }) {
   const title = classId ? uiText.text_42fb54edaf34 : uiText.text_cf55a848d0e2;
   if (q.isPending)
     return (
-      <section className={s.panel} aria-label={title}>
+      <section className={uiClass(s.panel)} aria-label={title}>
         <LoadingSkeleton />
       </section>
     );
   if (q.isError)
     return (
-      <section className={s.panel} aria-label={title}>
+      <section className={uiClass(s.panel)} aria-label={title}>
         <ErrorState error={q.error} onRetry={() => void q.refetch()} />
       </section>
     );
@@ -41,8 +43,8 @@ export function OfficialSpaces({ classId }: { classId?: string }) {
   )
     return <ErrorState error={new ApiError(502, { code: 'CONTRACT_MISMATCH' })} />;
   return (
-    <section className={s.panel} aria-label={title}>
-      <header className={s.heading}>
+    <section className={uiClass(s.panel)} aria-label={title}>
+      <header className={uiClass(s.heading)}>
         <h2>
           <ShieldCheck size={20} />
           {title}
@@ -56,7 +58,7 @@ export function OfficialSpaces({ classId }: { classId?: string }) {
           <RefreshCw size={18} />
         </Button>
       </header>
-      <div className={s.pair}>
+      <div className={uiClass(s.pair)}>
         {(['Group', 'Channel'] as const).map((purpose) => {
           const endpoint = purpose === 'Group' ? pair.group : pair.channel;
           const readable = readableOfficialEndpoint(pair, purpose);

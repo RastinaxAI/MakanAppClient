@@ -1,0 +1,91 @@
+{
+  "createdAt": "2026-11-10T03:32:20.739788+00:00",
+  "finalBuildId": "iICCzziYRaXpkRWoAVd3k",
+  "build": {
+    "passed": true,
+    "log": "tmp/current-review/build-logout-fix.log",
+    "typeScriptIncluded": true
+  },
+  "lint": {
+    "passed": true,
+    "moduleBoundaries": 307,
+    "cycles": 0,
+    "log": "tmp/current-review/lint-logout-fix.log"
+  },
+  "format": {
+    "passed": true,
+    "log": "tmp/current-review/format-logout-fix.log"
+  },
+  "unit": {
+    "passed": true,
+    "tests": 484,
+    "testFiles": 71
+  },
+  "browser": {
+    "startTime": "2026-11-10T03:22:54.918Z",
+    "duration": 78365.51000000001,
+    "expected": 49,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "ordinaryProduction": {
+    "startTime": "2026-11-10T03:25:48.952Z",
+    "duration": 3851.6899999999996,
+    "expected": 1,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "initialBrowserRun": {
+    "stats": {
+      "startTime": "2026-11-10T03:10:23.432Z",
+      "duration": 21123.854,
+      "expected": 0,
+      "skipped": 0,
+      "unexpected": 2,
+      "flaky": 0
+    },
+    "productRegression": "Queued expiry during deliberate logout displayed the unwanted resume dialog.",
+    "testLocatorFailure": "The failed-logout probe initially matched the Next.js route announcer as well as the real alert. It was scoped to the visible error and rerun.",
+    "artifacts": "tmp/current-review/logout-before-artifacts.zip"
+  },
+  "browserCatalog": "Total: 499 tests in 85 files",
+  "fullFinalSuiteClaimed": false,
+  "generated": {
+    "passed": true,
+    "clientOperations": 325,
+    "schemas": 568,
+    "ownerOperations": 0,
+    "log": "tmp/current-review/generated-logout-fix.log"
+  },
+  "liveVerification": "docs/integration/20261110-four-role-live.json",
+  "changedRuntimeFile": "src/features/personal/provider.tsx",
+  "testsFile": "tests/browser/brand-security.spec.ts",
+  "sourceHashes": {
+    "src/features/personal/provider.tsx": "d8c72b5e160e63e9ef2cbd3d7122c073f3ee78b019d772adb0f00696ab0076cb",
+    "tests/browser/brand-security.spec.ts": "2b09c64f8c4897f22727c6b79dbe329d45719be66e4b1140b385848cf89ab1f1"
+  },
+  "receipts": [
+    {
+      "path": "tmp/current-review/unit-logout-fix-results.json",
+      "sha256": "4aafee7503843a23b887b27914e1f9f4f7d9265d3512bb453dc7173c1f4ba61f"
+    },
+    {
+      "path": "tmp/current-review/browser-logout-fix-results.json",
+      "sha256": "2b23377381497bb0cb6049136779f5721b4ec1835736ca3feca6fa3cec103a66"
+    },
+    {
+      "path": "tmp/current-review/production-logout-fix-results.json",
+      "sha256": "3e3fb665fa062cb989640c435c96024138081b2fa56759903a57044839fb9f13"
+    },
+    {
+      "path": "tmp/current-review/logout-before-results.json",
+      "sha256": "5af6beef85f3737987846043562c174254c37e88f873433901ac9830564d9a2b"
+    }
+  ],
+  "visualEvidence": "Retained V5 geometry captures keep their original build IDs. This change affects logout behavior; full design verification remains unfinished.",
+  "cleanupAfterVerification": "docs/maintenance/four-role-cache-cleanup.json",
+  "diffCheckPassed": true,
+  "originalStudentSessionAndPendingRequestPreserved": true
+}

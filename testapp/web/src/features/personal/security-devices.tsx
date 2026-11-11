@@ -1,5 +1,5 @@
 'use client';
-import '@/features/reference/bundles/features-personal-security-devices';
+import { uiClass } from '@/components/v5/classes';
 
 import * as uiText from '@/content/fa';
 import { ReferenceFrame } from '@/features/reference/frame';
@@ -29,11 +29,11 @@ export function SecurityDevices({ id }: { id?: string }) {
   return (
     <ReferenceFrame
       id="MK-48"
-      title={id ? uiText.text_bcdc391af4f9 : undefined}
+      title={id ? uiText.text_bcdc391af4f9 : uiText.text_36e2e9a2e4a1}
       back={id ? '/personal/settings/devices' : '/personal/profile'}
     >
-      <div className="card hero">
-        <div className="between">
+      <div className={uiClass('card hero')}>
+        <div className={uiClass('between')}>
           <h3>{uiText.text_c7645d8f947c}</h3>
           <ShieldCheck size={23} />
         </div>
@@ -46,25 +46,27 @@ export function SecurityDevices({ id }: { id?: string }) {
       ) : (
         <>
           {notice && (
-            <p role="status" className={s.badge}>
+            <p role="status" className={uiClass(s.badge)}>
               {notice}
             </p>
           )}
-          <div className="list">
+          <div className={uiClass('list')}>
             {rows?.length ? (
               rows.map((row) => (
-                <section className="mk-session-row" key={row.id}>
-                  <div className="row">
-                    <span className="tile-icon">
+                <section className={uiClass('mk-session-row')} key={row.id}>
+                  <div className={uiClass('row')}>
+                    <span className={uiClass('tile-icon')}>
                       <MonitorSmartphone size={23} />
                     </span>
-                    <div className="grow">
+                    <div className={uiClass('grow')}>
                       <strong>{row.deviceName || uiText.text_012b8e7bb3b3}</strong>
-                      <small className="muted">
+                      <small className={uiClass('muted')}>
                         {uiText.text_975d46ff5255}
                         {date(row.createdAtUtc, true)}
                       </small>
-                      {row.isCurrent && <span className="badge">{uiText.text_ea0c56a7535c}</span>}
+                      {row.isCurrent && (
+                        <span className={uiClass('badge')}>{uiText.text_ea0c56a7535c}</span>
+                      )}
                     </div>
                     {!id && (
                       <Link
@@ -78,7 +80,7 @@ export function SecurityDevices({ id }: { id?: string }) {
                     )}
                   </div>
                   {id && (
-                    <dl className={s.details}>
+                    <dl className={uiClass(s.details)}>
                       <div>
                         <dt>{uiText.text_1b292af7dfa0}</dt>
                         <dd>{date(row.createdAtUtc, true)}</dd>
@@ -93,7 +95,7 @@ export function SecurityDevices({ id }: { id?: string }) {
                       </div>
                     </dl>
                   )}
-                  <div className={s.actions}>
+                  <div className={uiClass(s.actions)}>
                     {row.isCurrent ? (
                       <ConfirmAction
                         trigger={uiText.text_989d2fe946b8}
@@ -125,7 +127,7 @@ export function SecurityDevices({ id }: { id?: string }) {
             )}
           </div>
           {!id && q.data.some((row) => !row.isCurrent) && (
-            <div className={s.actions}>
+            <div className={uiClass(s.actions)}>
               <ConfirmAction
                 destructive
                 trigger={uiText.text_a2d7c2cecc5f}

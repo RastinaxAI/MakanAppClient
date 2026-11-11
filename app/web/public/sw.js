@@ -75,19 +75,40 @@ self.addEventListener('fetch', (event) => {
     event.respondWith(caches.match(event.request).then((cached) => cached || fetch(event.request)));
   }
 });
+let notificationSettingsWork = Promise.resolve();
+function updateNotificationSettings(work) {
+  const next = notificationSettingsWork.catch(() => {}).then(work);
+  notificationSettingsWork = next;
+  return next;
+}
 self.addEventListener('message', (event) => {
   // Accept preferences only from same-origin app windows, never arbitrary origins.
   if (!event.source?.url || new URL(event.source.url).origin !== self.location.origin) return;
   if (event.data?.type === 'SKIP_WAITING' || event.data === 'SKIP_WAITING') self.skipWaiting();
   if (event.data?.type === 'PUSH_ENABLED') {
-    event.waitUntil(setting({ enabled: true, userId: String(event.data.userId || '') }));
+    event.waitUntil(
+      updateNotificationSettings(() =>
+        setting({ enabled: true, userId: String(event.data.userId || '') }),
+      ),
+    );
   }
   if (event.data?.type === 'PUSH_DISABLED') {
     event.waitUntil(
-      (async () => {
+      updateNotificationSettings(async () => {
         await setting({ enabled: false });
         for (const notification of await self.registration.getNotifications()) notification.close();
-      })(),
+      }),
+    );
+  }
+  if (event.data?.type === 'PUSH_ACCOUNT_CHANGED') {
+    const userId = String(event.data.userId || '').toLowerCase();
+    event.waitUntil(
+      updateNotificationSettings(async () => {
+        const preferences = await setting();
+        if (!preferences?.enabled || preferences.userId?.toLowerCase() === userId) return;
+        await setting({ enabled: false });
+        for (const notification of await self.registration.getNotifications()) notification.close();
+      }),
     );
   }
 });

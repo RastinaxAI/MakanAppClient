@@ -49,6 +49,14 @@ npm test
 
 نگاشت مجوزها از `contracts/platform-permissions.json` می‌آید. نقش مالک مجوز اضافی عملیات یا دسترسی به محتوای خصوصی ایجاد نمی‌کند.
 
+گزارش جاری تطبیق با مستندات `e5bd3ea` و Swagger زنده در [INTEGRATION-e5bd3ea.md](INTEGRATION-e5bd3ea.md) است. آزمون‌های اختصاصی مالی، محدودیت مسیرهای پرداخت و وضعیت سرویس‌ها:
+
+```powershell
+npx playwright test tests/e2e/release-e5bd3ea.spec.ts tests/e2e/release-6f8edf8.spec.ts tests/e2e/official-spaces-boundary.spec.ts
+```
+
+این آزمون‌ها از مجوزهای واقعی و مستقل مالی، عملیات و اعلان‌ها در fixture استفاده می‌کنند؛ نگاشت عمومی `fixture.manage` جای آن‌ها را نمی‌گیرد. آزمون واحد `documented-permissions.test.ts` نیز نگاشت‌های صریح `x-platform-permissions` در snapshot جاری را با نگاشت پنل مقایسه می‌کند. [گزارش قبلی 6f8edf8](INTEGRATION-6f8edf8.md) برای پیگیری تاریخی نگه داشته شده است.
+
 ## آزمون زنده اتصال
 
 پس از build، ابزار زیر یک نمونه موقت محلی پنل روی پورت 3112 اجرا می‌کند و آن را به بک‌اند تنظیم‌شده وصل می‌کند. هیچ توکن، شماره، کد ورود یا بدنه خصوصی در گزارش ذخیره نمی‌شود. مقدار متغیرها را فقط در نشست ترمینال وارد کنید و در فایل یا Git ننویسید:

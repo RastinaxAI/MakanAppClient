@@ -1,7 +1,10 @@
+import { reviewPath } from './review-output';
 import { test, expect, login, ids, fixture } from './test';
 import { mkdir } from 'node:fs/promises';
+import { choosePrivacyAudience } from './privacy-controls';
+import { privacySettings as privacy, v4_more } from '../../src/content/fa';
 
-const shots = 'output/review/assessment-settings';
+const shots = reviewPath('output/review/assessment-settings');
 test('assignment answer sheet has context, stages and in-flow actions at all supported widths', async ({
   page,
   context,
@@ -138,34 +141,36 @@ test('exam countdown expires from server time, locks writing and never fabricate
   );
 });
 
-test('privacy save stays inside its form, retains failed edits and uses returned versions for later saves', async ({
+test('privacy submit stays bound to its form, retains failed edits and uses returned versions for later saves', async ({
   page,
   context,
   request,
 }) => {
   await login(context);
   await page.goto('/personal/settings/privacy');
-  const select = page.getByLabel('دریافت پیام مستقیم', { exact: true });
-  const save = page.getByRole('button', { name: 'ثبت تنظیمات', exact: true });
+  const select = page.getByTestId('privacy-directMessagesAudience');
+  const save = page.getByRole('button', { name: privacy.save, exact: true });
   await expect(save).toBeDisabled();
-  await select.selectOption('Nobody');
+  await choosePrivacyAudience(page, 'directMessagesAudience', 'Nobody');
   await request.post(fixture + '/__test__/fault', {
     data: { path: '/messaging/privacy', method: 'PUT', status: 503 },
   });
   await save.click();
   await expect(page.getByRole('main').getByRole('alert')).toBeVisible();
-  await expect(select).toHaveValue('Nobody');
+  await expect(select).toContainText(privacy.audiences.Nobody);
   await expect(page.getByText('تنظیمات در سرور ثبت شد.', { exact: true })).toHaveCount(0);
   page.once('dialog', (dialog) => dialog.dismiss());
+  await page.getByRole('banner').getByRole('button', { name: v4_more, exact: true }).click();
   await page.getByRole('button', { name: 'دریافت نسخهٔ تازه', exact: true }).click();
-  await expect(select).toHaveValue('Nobody');
+  await page.keyboard.press('Escape');
+  await expect(select).toContainText(privacy.audiences.Nobody);
   await request.post(fixture + '/__test__/fault', {
     data: { path: '/messaging/privacy', method: 'PUT', delay: 350 },
   });
   await save.click();
   await expect(page.getByRole('button', { name: 'در حال ثبت…', exact: true })).toBeDisabled();
   await expect(page.getByText('تنظیمات در سرور ثبت شد.', { exact: true })).toBeVisible();
-  await select.selectOption('Contacts');
+  await choosePrivacyAudience(page, 'directMessagesAudience', 'Contacts');
   await save.click();
   await expect(save).toBeDisabled();
   const state = await (await request.get(fixture + '/__test__/state')).json();
@@ -175,6 +180,10 @@ test('privacy save stays inside its form, retains failed edits and uses returned
   );
   expect(puts).toHaveLength(3);
   expect(puts.at(-1).body.expectedVersion).toBe('2');
+  await expect(save).toHaveAttribute(
+    'form',
+    (await page.locator('[data-privacy-form]').getAttribute('id'))!,
+  );
   await mkdir(shots, { recursive: true });
   for (const [width, height] of [
     [320, 844],
@@ -185,7 +194,9 @@ test('privacy save stays inside its form, retains failed edits and uses returned
     await page.setViewportSize({ width, height });
     await save.scrollIntoViewIfNeeded();
     expect(
-      await page.locator('[data-privacy-actions]').evaluate((el) => getComputedStyle(el).position),
+      await page
+        .locator('[data-privacy-actions]:visible')
+        .evaluate((el) => getComputedStyle(el).position),
     ).toBe('static');
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(
       true,
@@ -197,6 +208,6 @@ test('privacy save stays inside its form, retains failed edits and uses returned
   await page.getByRole('button', { name: 'ذخیره ظاهر', exact: true }).click();
   await page.goto('/personal/settings/privacy');
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.getByRole('button', { name: 'ثبت تنظیمات', exact: true }).scrollIntoViewIfNeeded();
+  await page.getByRole('button', { name: privacy.save, exact: true }).scrollIntoViewIfNeeded();
   await page.screenshot({ path: `${shots}/privacy-dark-mobile.png` });
 });

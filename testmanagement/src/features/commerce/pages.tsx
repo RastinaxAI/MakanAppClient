@@ -1,11 +1,13 @@
 'use client';
 import { useSearchParams } from 'next/navigation';
+import { RefreshCw } from 'lucide-react';
 import { PageHeader } from '@/components/layout/page-header';
+import { Button } from '@/components/ui/button';
 import { ListView } from '@/components/ui/list-view';
 import { Panel, DataView } from '@/components/ui/data-view';
 import { SectionTabs } from '@/components/ui/section-tabs';
 import { CommandDialog } from '@/components/ui/command-dialog';
-import { LoadingSkeleton, ErrorState } from '@/components/ui/states';
+import { LoadingSkeleton, ErrorState, UpdatedAt } from '@/components/ui/states';
 import { useApi } from '@/lib/api/hooks';
 import type { components } from '@/generated/api/schema';
 import { useAccess } from '@/features/access-context/provider';
@@ -163,15 +165,20 @@ export function PlanDetail({ id }: { id: string }) {
 export function FinancePage() {
   return (
     <>
-      <PageHeader title="مالی" description="سفارش‌ها و اطلاعات پرداخت موجود در قرارداد سرور" />
+      <PageHeader title="مالی" description="پیگیری سفارش‌ها، پرداخت و فعال‌سازی اشتراک" />
+      <p className="notice">
+        وضعیت پرداخت و اجرای سفارش جداگانه گزارش می‌شوند. پرداخت ثبت‌شده‌ای که اشتراکش در انتظار
+        فعال‌سازی است، به پرداخت مجدد نیاز ندارد.
+      </p>
       <ListView
         endpoint="/api/admin/v1/finance/orders"
         title="سفارش‌ها"
         statusEnum="OrderStatus"
         columns={[
           { key: 'orderId', title: 'سفارش', link: (r) => '/admin/finance/' + r.orderId },
+          { key: 'status', title: 'وضعیت پرداخت سفارش' },
+          { key: 'fulfillmentState', title: 'اجرای سفارش' },
           { key: 'organization.name', title: 'سازمان' },
-          { key: 'status', title: 'وضعیت' },
           {
             key: 'amount',
             title: 'مبلغ',
@@ -193,22 +200,120 @@ export function OrderDetail({ id }: { id: string }) {
   const { can } = useAccess();
   const q = useApi<components['schemas']['PlatformOrderItem']>(path);
   if (!can(path)) return <ErrorState error={new ApiError(403)} />;
+  const order = q.data;
   return (
     <>
       <PageHeader
         title="جزئیات سفارش"
         description="مبلغ و واحد پول مستقیماً از سرور دریافت می‌شوند."
         parent={{ href: '/admin/finance', label: 'سفارش‌ها' }}
+        action={
+          !q.isError && (
+            <Button variant="outline" disabled={q.isFetching} onClick={() => void q.refetch()}>
+              <RefreshCw size={16} className={q.isFetching ? 'spin' : ''} />
+              تازه‌سازی سفارش
+            </Button>
+          )
+        }
       />
       {q.isPending ? (
         <LoadingSkeleton />
       ) : q.isError ? (
-        <ErrorState error={q.error} />
-      ) : (
-        <Panel title="اطلاعات سفارش">
-          <DataView value={q.data} />
-        </Panel>
-      )}
+        <ErrorState error={q.error} onRetry={() => void q.refetch()} />
+      ) : order ? (
+        <>
+          {order.status === 'Paid' &&
+            order.fulfillmentState === 'SubscriptionActivationPending' && (
+              <p className="notice warning" role="status">
+                پرداخت ثبت شده است؛ فعال‌سازی اشتراک هنوز در انتظار است. برای این سفارش دوباره
+                پرداخت نکنید؛ وضعیت فعال‌سازی را از همین صفحه پیگیری کنید.
+              </p>
+            )}
+          <div className="detail-grid">
+            <Panel title="اطلاعات سفارش">
+              <DataView
+                value={{
+                  ...order,
+                  fulfillmentState: order.fulfillmentState,
+                  amount: money(order.amount, order.currency),
+                }}
+                fields={[
+                  'orderId',
+                  'purchaserUserId',
+                  'organization',
+                  'planVersionId',
+                  'status',
+                  'fulfillmentState',
+                  'amount',
+                  'createdAtUtc',
+                  'paidAtUtc',
+                  'cancelledAtUtc',
+                ]}
+              />
+            </Panel>
+            <Panel title="پرداخت ثبت‌شده">
+              {order.payment ? (
+                <DataView
+                  value={{
+                    ...order.payment,
+                    maskedSettlementReference: order.payment.maskedSettlementReference,
+                    providerPaidAtUtc: order.payment.providerPaidAtUtc,
+                    amount: money(order.payment.amount, order.payment.currency),
+                  }}
+                  fields={[
+                    'paymentId',
+                    'paymentAttemptId',
+                    'provider',
+                    'maskedProviderReference',
+                    'maskedSettlementReference',
+                    'amount',
+                    'paidAtUtc',
+                    'providerPaidAtUtc',
+                  ]}
+                />
+              ) : (
+                <p className="field-help">پرداخت قطعی برای این سفارش گزارش نشده است.</p>
+              )}
+            </Panel>
+          </div>
+          <Panel title="تلاش‌های پرداخت">
+            {order.paymentAttempts.length ? (
+              order.paymentAttempts.map((attempt) => (
+                <div className="nested-block" key={attempt.paymentAttemptId}>
+                  <DataView
+                    value={{
+                      ...attempt,
+                      maskedSettlementReference: attempt.maskedSettlementReference,
+                      callbackReceivedAtUtc: attempt.callbackReceivedAtUtc,
+                      amount: money(attempt.amount, attempt.currency),
+                    }}
+                    fields={[
+                      'paymentAttemptId',
+                      'provider',
+                      'status',
+                      'amount',
+                      'maskedProviderReference',
+                      'maskedSettlementReference',
+                      'createdAtUtc',
+                      'callbackReceivedAtUtc',
+                      'verifiedAtUtc',
+                      'completedAtUtc',
+                      'failureCode',
+                    ]}
+                  />
+                </div>
+              ))
+            ) : (
+              <p className="field-help">تلاشی برای پرداخت گزارش نشده است.</p>
+            )}
+            <p className="field-help">
+              مرجع پیگیری درگاه و مرجع تسویه مستقل‌اند. دریافت بازگشت از درگاه به‌تنهایی تأیید
+              پرداخت نیست؛ نتیجه ثبت‌شده سرور مرجع است.
+            </p>
+          </Panel>
+          <UpdatedAt at={q.dataUpdatedAt} />
+        </>
+      ) : null}
     </>
   );
 }

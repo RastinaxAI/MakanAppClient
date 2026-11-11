@@ -1,32 +1,27 @@
 .panel {
-  padding: 24px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 18px;
+  display: grid;
+  gap: 14px;
   min-width: 0;
 }
-.heading {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-  margin-bottom: 20px;
+.picker {
+  width: 100%;
+  color: var(--text);
+  font-family: inherit;
+  cursor: pointer;
 }
-.heading > div {
-  flex: 1;
-  min-width: 0;
+.picker:disabled {
+  cursor: default;
+  opacity: 0.6;
 }
-.heading h2 {
-  font-size: 16px;
+.picker b {
+  font-size: calc(13px * var(--text-scale, 1));
 }
-.heading p,
-.picker p,
-.pending p {
-  font-size: 12px;
+.hint {
+  font-size: calc(12px * var(--text-scale, 1));
+  line-height: 1.8;
   color: var(--muted);
-  line-height: 1.9;
-  margin-top: 5px;
+  margin: 0;
 }
-.icon,
 .fileIcon {
   display: grid;
   place-items: center;
@@ -37,20 +32,11 @@
   color: var(--primary);
   border-radius: 12px;
 }
-.count {
-  font-size: 11px;
+.pending p {
+  font-size: calc(12px * var(--text-scale, 1));
   color: var(--muted);
-  white-space: nowrap;
-}
-.picker {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  border: 1px dashed var(--primary-border);
-  background: var(--bg);
-  padding: 18px;
-  border-radius: 14px;
+  line-height: 1.9;
+  margin-top: 5px;
 }
 .fileInput {
   position: absolute;
@@ -64,27 +50,16 @@
   clip-path: inset(50%);
   white-space: nowrap;
 }
-.picker > svg {
-  color: var(--primary);
-  flex-shrink: 0;
-}
-.picker > div {
-  flex: 1;
-  min-width: 0;
-}
-.picker strong {
-  font-size: 14px;
-}
 .list {
   list-style: none;
   padding: 0;
-  margin: 20px 0 0;
+  margin: 0;
   display: grid;
   gap: 10px;
 }
 .list li {
   display: flex;
-  gap: 12px;
+  gap: 10px;
   align-items: center;
   padding: 12px;
   border: 1px solid var(--border);
@@ -94,20 +69,19 @@
   flex: 1;
   min-width: 0;
 }
-.list strong {
-  font-size: 13px;
+.list h4 {
+  font-size: calc(13px * var(--text-scale, 1));
+  margin: 0;
   display: block;
+  font-weight: 700;
   overflow-wrap: anywhere;
 }
 .list small {
   display: block;
-  font-size: 11px;
+  font-size: calc(12px * var(--text-scale, 1));
   color: var(--muted);
-  margin-top: 6px;
-}
-.ready {
-  color: var(--primary);
-  flex-shrink: 0;
+  line-height: 1.6;
+  margin: 0;
 }
 .progress {
   margin-top: 18px;
@@ -119,7 +93,7 @@
   display: flex;
   justify-content: space-between;
   gap: 12px;
-  font-size: 12px;
+  font-size: calc(12px * var(--text-scale, 1));
 }
 .progress progress {
   width: 100%;
@@ -145,7 +119,7 @@
 }
 .pending strong {
   overflow-wrap: anywhere;
-  font-size: 13px;
+  font-size: calc(13px * var(--text-scale, 1));
 }
 .actions {
   display: flex;
@@ -169,38 +143,19 @@
 .download strong {
   display: block;
   overflow-wrap: anywhere;
-  font-size: 14px;
+  font-size: calc(14px * var(--text-scale, 1));
 }
 .download small {
   display: block;
   margin-top: 7px;
   color: var(--muted);
-  font-size: 12px;
+  font-size: calc(12px * var(--text-scale, 1));
 }
 .download progress {
   width: 100%;
   accent-color: var(--primary);
 }
 @media (max-width: 600px) {
-  .panel {
-    padding: 16px;
-  }
-  .heading {
-    flex-wrap: wrap;
-  }
-  .picker {
-    flex-wrap: wrap;
-    padding: 16px;
-  }
-  .picker > div {
-    flex-basis: calc(100% - 48px);
-  }
-  .picker > :global(.button) {
-    width: 100%;
-  }
-  .list li {
-    gap: 9px;
-  }
   .fileIcon {
     width: 36px;
     height: 36px;
@@ -208,7 +163,37 @@
   .download > :global(.button) {
     width: 100%;
   }
-  .count {
-    margin-inline-start: auto;
-  }
+}
+
+.compactDownload {
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+}
+.compactDownload progress {
+  width: 100%;
+}
+.compactFile {
+  width: 100%;
+  color: var(--text);
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+}
+.compactFile:disabled {
+  cursor: default;
+}
+.compactName {
+  display: block;
+  font-size: calc(14px * var(--text-scale, 1));
+  font-weight: 700;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+.compactDescription {
+  display: block;
+  margin: 0;
+  color: var(--muted);
+  font-size: calc(12px * var(--text-scale, 1));
+  line-height: 1.6;
 }

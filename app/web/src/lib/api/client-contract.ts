@@ -1,6 +1,7 @@
-import { contract, operationFor, validator } from './contract';
-// One runtime contract and one matcher prevent literal paths (e.g. invitations)
-// from being interpreted as parameterized resource IDs.
-export const clientContract = contract;
-export const clientValidator = validator;
-export const clientOperationFor = operationFor;
+import raw from '@/generated/api/browser-contract.json';
+import { createContractRuntime, type ContractCatalog } from './schema-validator';
+// A generated closure of browser consumers; the BFF retains the full allowed contract.
+const runtime = createContractRuntime(raw as unknown as ContractCatalog);
+export const clientContract = runtime.contract;
+export const clientValidator = runtime.validator;
+export const clientOperationFor = runtime.operationFor;

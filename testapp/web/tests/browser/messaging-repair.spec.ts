@@ -1,6 +1,12 @@
+import { reviewPath } from './review-output';
 import { test, expect, login, fixture, origin } from './test';
 import type { BrowserContext, Page } from '@playwright/test';
-import { messagingInvitations as t, messagingPrivacyDefaults as privacyText } from '@/content/fa';
+import {
+  messagingInvitations as t,
+  messagingPrivacyDefaults as privacyText,
+  privacySettings as privacy,
+  v4_more,
+} from '@/content/fa';
 const teacher = '00000000-0000-4000-8000-000000000102';
 async function createThroughApi(context: BrowserContext, kind = 'groups') {
   const session = await (await context.request.get(origin + '/api/client/session')).json();
@@ -45,7 +51,7 @@ for (const kind of ['groups', 'channels'])
       await sender
         .getByLabel(kind === 'groups' ? 'نام گروه' : 'نام کانال', { exact: true })
         .fill('گفتگوی نیازمند پذیرش');
-      await sender.getByRole('button', { name: 'انتخاب مخاطبین', exact: true }).click();
+      await sender.getByRole('button', { name: 'انتخاب افراد', exact: true }).click();
       await sender
         .locator('label')
         .filter({ hasText: 'test.Teacher' })
@@ -131,8 +137,10 @@ test('declining an invitation does not add the recipient to the conversation', a
     await expect(panel.getByText(t.declined, { exact: true })).toBeVisible();
     await expect(page.getByRole('link').filter({ hasText: created.title })).toHaveCount(0);
     await page.reload();
-    await page.locator('[data-messaging-invitations] summary').click();
-    await expect(page.getByText(t.empty, { exact: true })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'پیام‌ها', exact: true })).toBeVisible();
+    // The reference inbox omits its optional invitation panel when no pending invite remains.
+    await expect(page.locator('[data-messaging-invitations]')).toHaveCount(0);
+    await expect(page.getByRole('link').filter({ hasText: created.title })).toHaveCount(0);
   } finally {
     await recipient.close();
   }
@@ -210,8 +218,9 @@ test('non-explicit privacy offers Everyone but only saves the policy after an ex
   await login(context, 'Teacher', false);
   await page.goto('/personal/settings/privacy');
   const form = page.locator('[data-privacy-form]');
-  for (const field of await form.getByRole('combobox').all())
-    await expect(field).toHaveValue('Everyone');
+  await expect(form.locator('.v5-row')).toHaveCount(5);
+  for (const row of await form.locator('.v5-row').all())
+    await expect(row).toContainText(privacy.audiences.Everyone);
   await expect(form.getByText(privacyText.unsaved, { exact: true })).toBeVisible();
   let state = await (await request.get(fixture + '/__test__/state')).json();
   expect(
@@ -220,7 +229,7 @@ test('non-explicit privacy offers Everyone but only saves the policy after an ex
         r.path === '/api/v1/messaging/privacy' && r.method === 'PUT',
     ),
   ).toHaveLength(0);
-  await form.getByRole('button', { name: 'ثبت تنظیمات', exact: true }).click();
+  await page.getByRole('button', { name: privacy.save, exact: true }).click();
   await expect(form.getByRole('status')).toContainText('تنظیمات');
   state = await (await request.get(fixture + '/__test__/state')).json();
   const writes = state.requests.filter(
@@ -239,8 +248,10 @@ test('non-explicit privacy offers Everyone but only saves the policy after an ex
   ])
     expect(writes[0].body[field]).toBe('Everyone');
   await page.reload();
-  await expect(form.getByLabel('دعوت به گروه', { exact: true })).toHaveValue('Everyone');
-  await expect(form.getByRole('button', { name: 'ثبت تنظیمات', exact: true })).toBeDisabled();
+  await expect(page.getByTestId('privacy-groupInvitesAudience')).toContainText(
+    privacy.audiences.Everyone,
+  );
+  await expect(page.getByRole('button', { name: privacy.save, exact: true })).toBeDisabled();
 });
 test('saved privacy choices remain intact until the user chooses and saves Everyone', async ({
   page,
@@ -252,14 +263,21 @@ test('saved privacy choices remain intact until the user chooses and saves Every
   });
   await login(context, 'Teacher', false);
   await page.goto('/personal/settings/privacy');
-  const form = page.locator('[data-privacy-form]');
-  await expect(form.getByLabel('دعوت به گروه', { exact: true })).toHaveValue('Contacts');
-  await expect(form.getByLabel('نمایش شمارهٔ همراه', { exact: true })).toHaveValue('Nobody');
-  await expect(form.getByRole('button', { name: 'ثبت تنظیمات', exact: true })).toBeDisabled();
-  await form.getByRole('button', { name: privacyText.everyone, exact: true }).click();
-  await expect(form.getByLabel('دعوت به گروه', { exact: true })).toHaveValue('Everyone');
-  await form.getByRole('button', { name: 'ثبت تنظیمات', exact: true }).click();
-  await expect(form.getByRole('button', { name: 'ثبت تنظیمات', exact: true })).toBeDisabled();
+  await expect(page.getByTestId('privacy-groupInvitesAudience')).toContainText(
+    privacy.audiences.Contacts,
+  );
+  await expect(page.getByTestId('privacy-phoneNumberVisibilityAudience')).toContainText(
+    privacy.audiences.Nobody,
+  );
+  const save = page.getByRole('button', { name: privacy.save, exact: true });
+  await expect(save).toBeDisabled();
+  await page.getByRole('banner').getByRole('button', { name: v4_more, exact: true }).click();
+  await page.getByRole('button', { name: privacyText.everyone, exact: true }).click();
+  await expect(page.getByTestId('privacy-groupInvitesAudience')).toContainText(
+    privacy.audiences.Everyone,
+  );
+  await save.click();
+  await expect(save).toBeDisabled();
 });
 test('invitation controls fit both themes and mobile tablet desktop sizes', async ({
   context,
@@ -271,7 +289,7 @@ test('invitation controls fit both themes and mobile tablet desktop sizes', asyn
   await createThroughApi(context);
   await login(context, 'Teacher', false);
   const { mkdir } = await import('node:fs/promises');
-  await mkdir('output/review/messaging-20261105/fixture', { recursive: true });
+  await mkdir(reviewPath('output/review/messaging-20261105/fixture'), { recursive: true });
   for (const theme of ['light', 'dark'])
     for (const width of [320, 390, 834, 1440]) {
       await page.setViewportSize({ width, height: 900 });
@@ -285,7 +303,9 @@ test('invitation controls fit both themes and mobile tablet desktop sizes', asyn
         true,
       );
       await page.screenshot({
-        path: `output/review/messaging-20261105/fixture/invitations-${theme}-${width}.png`,
+        path: reviewPath(
+          `output/review/messaging-20261105/fixture/invitations-${theme}-${width}.png`,
+        ),
       });
     }
 });

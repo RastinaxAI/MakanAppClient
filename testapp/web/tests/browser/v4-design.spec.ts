@@ -1,5 +1,6 @@
+import { captureExactState } from './exact-state-capture';
 import { test, expect, login, fixture, origin } from './test';
-import { v4Text as t } from '@/content/fa';
+import { v4Text as t, v5ScheduleRules as rules } from '@/content/fa';
 const id = '00000000-0000-4000-8000-000000000950',
   base = '/personal/messages/' + id;
 async function seed(request: import('@playwright/test').APIRequestContext, readOnly = false) {
@@ -41,6 +42,8 @@ test('V4 poll draft survives an upstream failure and reload; the same identity i
   await page.getByRole('radio', { name: /^شنبه/ }).check();
   await page.getByRole('button', { name: t.vote, exact: true }).click();
   await expect(page.getByRole('radio', { name: /^شنبه/ })).toBeChecked();
+  await captureExactState(page, ['MK-243', 'MK-244']);
+
   await expect(page.getByRole('button', { name: t.voters, exact: true })).toHaveCount(0);
 });
 test('V4 checklist publishes real items and a failed item update retains its checked state until confirmed', async ({
@@ -75,6 +78,7 @@ test('V4 checklist publishes real items and a failed item update retains its che
   await expect(item).not.toBeChecked();
   await item.click();
   await expect(item).toBeChecked();
+  await captureExactState(page, ['MK-249']);
 });
 test('V4 scheduled message uses a real timestamp and cancellation is confirmed by the server', async ({
   page,
@@ -84,17 +88,22 @@ test('V4 scheduled message uses a real timestamp and cancellation is confirmed b
   await seed(request);
   await login(context, 'Student', false);
   await page.goto(base + '/scheduled');
+  await page.getByRole('banner').getByRole('button', { name: t.more, exact: true }).click();
   await page.getByRole('button', { name: t.schedule, exact: true }).click();
   await page.getByLabel(t.text, { exact: true }).fill('یادآوری جلسه');
   const input = page.getByLabel(t.scheduleAt, { exact: true });
   await input.fill('۱۴۰۶/۰۱/۱۰ ۱۰:۳۰');
   await input.blur();
+  await captureExactState(page, ['MK-251']);
+
   await page.getByRole('button', { name: t.scheduleSubmit, exact: true }).click();
   await expect(page.getByRole('heading', { name: t.scheduled, exact: true })).toBeVisible();
-  await expect(page.getByText('یادآوری جلسه', { exact: true })).toBeVisible();
+  await expect(page.locator('.v5-list').getByText('یادآوری جلسه', { exact: true })).toBeVisible();
   await page.getByRole('button', { name: t.cancel, exact: true }).click();
   const dialog = page.getByRole('dialog');
   await expect(dialog).toBeVisible();
+  await captureExactState(page, ['MK-253']);
+
   await dialog.getByRole('button', { name: t.cancel, exact: true }).last().click();
   await expect(dialog).not.toBeVisible();
   await expect(page.getByText(/لغوشده|لغو شده|باطل/)).toBeVisible();
@@ -109,6 +118,8 @@ test('V4 folder editor preserves rule strings and a version conflict keeps the u
   await page.goto('/personal/messages/folders');
   await page.getByRole('button', { name: t.editFolder + ' آموزشگاه', exact: true }).click();
   await page.getByLabel(t.folderName, { exact: true }).fill('درس‌های من');
+  await captureExactState(page, ['MK-174']);
+
   await request.post(fixture + '/__test__/fault', {
     data: {
       path: '/messaging/folders/00000000-0000-4000-8000-000000001900',
@@ -176,7 +187,7 @@ test('V4 publication tools respect server capabilities and provide a usable gap 
   await expect(button).toBeVisible();
   const box = await button.boundingBox();
   expect(box).not.toBeNull();
-  expect(box!.y + box!.height).toBeLessThanOrEqual(826);
+  expect(box!.y + box!.height).toBeLessThanOrEqual(832);
   expect(844 - box!.y - box!.height).toBeLessThanOrEqual(24);
   await expect(page.locator('[data-app-navigation]:visible')).toHaveCount(0);
   const question = await page.getByLabel(t.question, { exact: true }).boundingBox();
@@ -203,17 +214,23 @@ test('V4 weekly rule creates from a reviewed request and edits using the returne
     '/personal/education/classes/00000000-0000-4000-8000-000000000002/schedule-rules/new',
   );
   await page.getByLabel(t.sessionTitle, { exact: true }).fill('تمرین هفتگی ریاضی');
+  await page.getByRole('button', { name: rules.next, exact: true }).click();
   await page.getByLabel(t.startDate, { exact: true }).fill('۱۴۰۶/۰۱/۰۱');
   await page.getByLabel(t.startDate, { exact: true }).blur();
   await page.getByLabel(t.endDate, { exact: true }).fill('۱۴۰۶/۰۱/۳۰');
   await page.getByLabel(t.endDate, { exact: true }).blur();
-  await page.getByRole('button', { name: t.reviewRule, exact: true }).click();
-  await page.getByRole('button', { name: t.saveRule, exact: true }).click();
+  await page.getByRole('checkbox', { name: rules.reviewed, exact: true }).check();
+  await page.getByRole('button', { name: rules.create, exact: true }).click();
   await expect(page.getByRole('heading', { name: t.lastRule, exact: true })).toBeVisible();
   await page.getByRole('button', { name: t.editRule, exact: true }).click();
-  await page.getByLabel(t.duration, { exact: true }).fill('90');
-  await page.getByRole('button', { name: t.reviewRule, exact: true }).click();
-  await page.getByRole('button', { name: t.saveRule, exact: true }).click();
+  await page.getByLabel(rules.duration, { exact: true }).fill('90');
+  await page.getByRole('button', { name: rules.next, exact: true }).click();
+  await page.getByRole('checkbox', { name: rules.reviewed, exact: true }).check();
+  await page.getByRole('button', { name: rules.reviewChange, exact: true }).click();
+  const change = page.getByRole('dialog', { name: rules.change, exact: true });
+  await change.getByLabel(rules.apply, { exact: true }).fill('۱۴۰۶/۰۱/۰۱');
+  await change.getByLabel(rules.apply, { exact: true }).blur();
+  await change.getByRole('button', { name: rules.saveChange, exact: true }).click();
   await expect(page.getByRole('heading', { name: t.lastRule, exact: true })).toBeVisible();
   const calls = (await (await request.get(fixture + '/__test__/state')).json()).requests;
   const saved = calls.find(

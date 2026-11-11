@@ -1,4 +1,8 @@
 'use client';
+import { Input as NativeInput, Select as NativeSelect } from '@/components/ui/input';
+
+import { uiClass } from '@/components/v5/classes';
+
 import * as uiText from '@/content/fa';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
@@ -83,10 +87,10 @@ export function AssistantSourceConnection({
     }
   }
   return (
-    <section className="mk-ui mk-source-picker" aria-label={uiText.text_a5a599a4d5ad}>
-      <label className="search">
+    <section className={uiClass('mk-ui mk-source-picker')} aria-label={uiText.text_a5a599a4d5ad}>
+      <label className={uiClass('search')}>
         <Search size={19} />
-        <input
+        <NativeInput
           aria-label={uiText.text_032399b8b323}
           placeholder={uiText.text_032399b8b323}
           value={search}
@@ -96,7 +100,7 @@ export function AssistantSourceConnection({
           }}
         />
       </label>
-      <div className="seg" role="group" aria-label={uiText.text_1592fbd1126a}>
+      <div className={uiClass('seg')} role="group" aria-label={uiText.text_1592fbd1126a}>
         {(
           [
             ['Personal', uiText.text_8957887c2b2f],
@@ -106,7 +110,7 @@ export function AssistantSourceConnection({
         ).map(([key, title]) => (
           <button
             type="button"
-            className={scope === key ? 'on' : ''}
+            className={uiClass(scope === key ? 'on' : '')}
             key={key}
             onClick={() => {
               setScope(key);
@@ -126,9 +130,9 @@ export function AssistantSourceConnection({
         ) : classes.isError ? (
           <ErrorState error={classes.error} />
         ) : (
-          <label className="field">
+          <label className={uiClass('field')}>
             {uiText.text_f6eddb045e16}
-            <select
+            <NativeSelect
               value={classId}
               onChange={(event) => {
                 setClass(event.target.value);
@@ -141,10 +145,10 @@ export function AssistantSourceConnection({
                   {item.title}
                 </option>
               ))}
-            </select>
+            </NativeSelect>
           </label>
         ))}
-      {scope === 'Library' && <p className="alert warn">{uiText.text_4d31b36f9183}</p>}
+      {scope === 'Library' && <p className={uiClass('alert warn')}>{uiText.text_4d31b36f9183}</p>}
       {scope === 'Class' && (!school || !classId) ? null : q.isPending ? (
         <LoadingSkeleton />
       ) : q.isError ? (
@@ -153,13 +157,13 @@ export function AssistantSourceConnection({
         <EmptyState title={search ? uiText.text_76263ba743f2 : uiText.text_09fcb17b9340} />
       ) : (
         <>
-          <div className="list">
+          <div className={uiClass('list')}>
             {q.data.items.map((source) => (
-              <label key={source.sourceId} className="row">
-                <span className="tile-icon">
+              <label key={source.sourceId} className={uiClass('row')}>
+                <span className={uiClass('tile-icon')}>
                   <FileText size={22} />
                 </span>
-                <span className="grow">
+                <span className={uiClass('grow')}>
                   <h4 dir="auto">{source.title}</h4>
                   <p>
                     {sourceAiSelectable(source)
@@ -177,7 +181,7 @@ export function AssistantSourceConnection({
                     {source.aiReady ? uiText.text_376e9c9561e2 : uiText.text_caac18ea6580}
                   </p>
                 </span>
-                <input
+                <NativeInput
                   type="checkbox"
                   aria-label={uiText.text_390a9cb6ef20 + source.title}
                   checked={
@@ -197,7 +201,7 @@ export function AssistantSourceConnection({
               </label>
             ))}
           </div>
-          <div className="between">
+          <div className={uiClass('between')}>
             <Button
               size="sm"
               variant="ghost"
@@ -206,7 +210,7 @@ export function AssistantSourceConnection({
             >
               {uiText.text_88e65319d694}
             </Button>
-            <span className="tiny muted">
+            <span className={uiClass('tiny muted')}>
               {uiText.text_2714496eef16}
               {page.toLocaleString('fa-IR')}
             </span>
@@ -221,7 +225,7 @@ export function AssistantSourceConnection({
           </div>
         </>
       )}
-      <div className="alert good">
+      <div className={uiClass('alert good')}>
         {selected.length.toLocaleString('fa-IR')}
         {uiText.text_aaa93351b89c}
       </div>
@@ -230,7 +234,7 @@ export function AssistantSourceConnection({
       </Button>
       {result && <p role="status">{preflightMessage(result)}</p>}
       {!!error && <ErrorState error={error} />}
-      <Link className="text-action" href="/personal/resources">
+      <Link className={uiClass('text-action')} href="/personal/resources">
         {uiText.text_bb441d2b8688}
       </Link>
     </section>

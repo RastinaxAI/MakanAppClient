@@ -15,8 +15,9 @@ test('two isolated accounts exchange messages and update recipient inbox without
       .getByRole('textbox', { name: 'متن پیام', exact: true })
       .fill('سلام آزمایشی از دانشجو');
     await sender.getByRole('button', { name: 'ارسال پیام', exact: true }).click();
-    await expect(receiver.getByText('سلام آزمایشی از دانشجو', { exact: true })).toBeVisible();
-    await receiver.getByRole('link').filter({ hasText: 'سلام آزمایشی از دانشجو' }).click();
+    const inbox = receiver.getByLabel('فهرست گفتگوها', { exact: true });
+    await expect(inbox.getByText('سلام آزمایشی از دانشجو', { exact: true })).toBeVisible();
+    await inbox.getByRole('link').filter({ hasText: 'سلام آزمایشی از دانشجو' }).click();
     await receiver
       .getByRole('textbox', { name: 'متن پیام', exact: true })
       .fill('پاسخ آزمایشی استاد');

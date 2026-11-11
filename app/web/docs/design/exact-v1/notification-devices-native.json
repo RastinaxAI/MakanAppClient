@@ -1,0 +1,271 @@
+{
+  "updatedAt": "2026-11-09T19:56:28.040555+00:00",
+  "status": "native_five_reference_states_exercised_with_explicit_limits; whole task incomplete",
+  "taskComplete": false,
+  "scope": "Only the real active web Next.js/React client; no atlas runtime, owner application, legacy Vite or deployment.",
+  "current": {
+    "buildId": "Xso5zy1etbhTx0RWSMSnO",
+    "iteration": 81,
+    "build": "passed",
+    "typecheck": "passed",
+    "lint": {
+      "modules": 361,
+      "cycles": 0,
+      "status": "passed"
+    },
+    "unit": {
+      "passed": 518,
+      "files": 72,
+      "status": "passed",
+      "log": "tmp/exact-v1/unit-eightyfirst.log"
+    },
+    "browser": {
+      "passed": 41,
+      "unexpected": 0,
+      "skipped": 0,
+      "flaky": 0,
+      "native": 33,
+      "related": 7,
+      "receipt": "tmp/exact-v1/browser-eightyfirst-summary.json",
+      "platformReadOnlySupplement": {
+        "buildId": "Xso5zy1etbhTx0RWSMSnO",
+        "supplement": "actual Chrome native APIs read-only after service-worker activation; no prompt, no register action and no registration POST",
+        "passed": 1,
+        "unexpected": 0,
+        "skipped": 0,
+        "flaky": 0,
+        "productSourceFilesChecked": 418,
+        "changedProductSourceFiles": [],
+        "newTest": "tests/browser/exact-notification-platform.spec.ts",
+        "newTestSha256": "189a033030faf2dd7014e018dfecdadd78b3f650be26f2c3c43d4ece9fefe76b",
+        "catalogTests": 448,
+        "catalogFiles": 83
+      }
+    },
+    "catalog": {
+      "tests": 448,
+      "files": 83,
+      "method": "explicit --list;not a complete448test run"
+    },
+    "main": {
+      "frames": 30,
+      "valid": 30,
+      "documentOverflow": 0,
+      "unreviewedGeometryAtLeast4CSSpx": 0,
+      "archive": "output/review/exact-v1/after-eightyfirst-main-notifications",
+      "geometry": "tmp/exact-v1/geometry-eightyfirst-notifications.json",
+      "reference": "output/review/exact-v1/reference-seventyeighth-notifications",
+      "before": "output/review/exact-v1/before-seventyseventh-notifications (compiled76 missing-native-UI baseline)"
+    },
+    "responsiveHistory": {
+      "iteration": 79,
+      "frames": 165,
+      "boundary": 55,
+      "large200": 55,
+      "shortLarge400": 55,
+      "documentOverflow": 0,
+      "pngDimensionsVerified": true,
+      "receipt": "tmp/exact-v1/responsive-seventyninth-notifications-receipts.json"
+    },
+    "sourceFreeze": {
+      "files": 701,
+      "changedDuringTestsAndCaptures": 0,
+      "source": "tmp/exact-v1/source-eightyfirst-at-browser-start.json",
+      "receipt": "tmp/exact-v1/browser-eightyfirst-summary.json",
+      "note": "Later audit/report edits are curation, not product changes during tests."
+    }
+  },
+  "scenarios": [
+    {
+      "id": "MK-347",
+      "pdfPage": 399,
+      "route": "/personal/settings/notifications/device",
+      "component": "NotificationDevice"
+    },
+    {
+      "id": "MK-348",
+      "pdfPage": 400,
+      "route": "/personal/settings/notifications/devices",
+      "component": "NotificationDevices"
+    },
+    {
+      "id": "MK-349",
+      "pdfPage": 401,
+      "route": "/personal/settings/notifications/devices",
+      "component": "DeletePushDevice (in-page dialog)"
+    },
+    {
+      "id": "MK-435",
+      "pdfPage": 514,
+      "route": "/personal/settings/notifications/device",
+      "component": "NotificationDevice (actual denied permission)"
+    },
+    {
+      "id": "RX-040",
+      "pdfPage": 455,
+      "route": "/personal/settings/notifications/device?view=preferences",
+      "component": "NotificationDevice + actual NotificationPermissionPreferences"
+    }
+  ],
+  "contracts": {
+    "source": "contracts/openapi.json, filtered by contracts/client-surface.json; 307 client-only operations,539schemas,0owner operations",
+    "operations": [
+      {
+        "method": "GET",
+        "path": "/api/v1/notifications/devices/web-push/configuration",
+        "expectedResponse": 200
+      },
+      {
+        "method": "GET",
+        "path": "/api/v1/notifications/devices",
+        "parameters": [
+          "page",
+          "pageSize",
+          "includeRevoked"
+        ],
+        "expectedResponse": 200
+      },
+      {
+        "method": "POST",
+        "path": "/api/v1/notifications/devices/web-push",
+        "body": [
+          "endpoint",
+          "p256dh",
+          "auth",
+          "expectedVersion? nullable"
+        ],
+        "expectedResponse": 200
+      },
+      {
+        "method": "DELETE",
+        "path": "/api/v1/notifications/devices/{registrationId}",
+        "body": null,
+        "versionParameter": null,
+        "expectedResponse": 204
+      }
+    ],
+    "validVersionForms": "Preference rowVersion is required nullable string; registration version is optional nullable string; list version is required string with no nonempty constraint. Exact returned values are retained, not fabricated.",
+    "notIntegrated": "General native-platform POST/devices is unnecessary for a browser subscription. No raw-token form or owner endpoint was added."
+  },
+  "behavior": [
+    "No permission request or registration POST on mount. Explicit enable validates secure PWA readiness/configuration/key, then uses the actual PushSubscription and registered VAPID key.",
+    "Permission, account push preference and server device registration are separate. Device enable never changes account preferences. RX040 uses actual Messages/Assignments preferences and the existing versioned update command.",
+    "Only HTTP200 typed Web acknowledgment followed by the own active row with matching ID and creation timestamp can clear uncertainty and enable display. Correlation is persisted across reload/manual read; a mismatched timestamp cannot become active later.",
+    "Only user ID, fingerprint digest, registration ID, actual version, creation timestamp and uncertainty metadata are stored. Raw endpoint and subscription keys are not stored by the app. Local correlation is never an ownership/permission grant.",
+    "Known registration lookup reads own paginated records, including revoked records to obtain actual reactivation version. Missing rows or concurrent inconsistent pages do not prove inactive identity.",
+    "Deletion freezes the actual row identity and rereads it before the id-only unversioned command. Last-seen/version changes alone are not invented deletion preconditions. Only204 confirms removal.",
+    "Delete settlement refreshes the list even after the dialog was dismissed. It never repeats DELETE and does not show a completed-action notice in a dismissed dialog. Other account devices remain. Fresh confirmed revocation stops local display; login sessions and account preferences are untouched.",
+    "Account changes/logout disable display for an earlier account through the existing public-only worker. Worker settings messages are same-origin and serialized; generic lock-screen text and user filtering remain.",
+    "Ordinary account push switches preserve returned inactive quiet-hour values. The existing complete preference form retains its earlier normalization behavior.",
+    "A later empty page preserves Previous and uses a page-scoped empty label when totalCount is positive; it does not claim that the whole account has no devices.",
+    "The existing modal variant supplies mobile bottom sheet/tablet dialog/desktop drawer. Focus traps, Escape, return to the row or heading when removed,44px targets, and320/390/430x400200percent text have focused browser checks. No new CSS patch layer was needed."
+  ],
+  "referenceData": {
+    "fixture": "Declared loopback only. Main captures seed actual user Sara and one Android record, then register the mock browser through the real component/API flow before list/delete capture.",
+    "labelAdjustment": "The reference render clone changes sample phone Android wording to generic Android device in body, context and dialog. Original PDF/HTML/assets are not edited; the DTO has no phone form factor.",
+    "copy": "MK435 developer-facing instruction is implemented as human help copy and verified official help links. Document group breadcrumbs/atlas tools and device presentation are excluded from product per request.",
+    "brand": "Approved product Makan logo is preserved; the document illustration does not redefine the brand.",
+    "guideSources": [
+      {
+        "title": "Chrome official notification help",
+        "url": "https://support.google.com/chrome/answer/3220216"
+      },
+      {
+        "title": "Firefox official Web Push help",
+        "url": "https://support.mozilla.org/en-US/kb/push-notifications-firefox"
+      },
+      {
+        "title": "Safari Mac official Websites settings",
+        "url": "https://support.apple.com/guide/safari/ibrwe2159f50/mac"
+      }
+    ]
+  },
+  "history": {
+    "76": "30 before captures show the real old category404 behavior, not a missing server API or a completed feature.",
+    "77": "Native wiring and518units/build; initial test helper context header and Back-locator errors preserved separately.30mainframes exposed plain-policy boxing, missing portal summary styles and wrong desktop modal variant.",
+    "78": "25native passed;30matched frames0geometry flags. Two later stronger tests proved reload could trust a mismatched ACK and push-only update cleared inactive quiet values; both fixed79.",
+    "79": "28native+43related+3PWA/scope=74passed;30main+165responsive valid. Two later probes proved global-empty wording on a later page and stale list after closing a pending delete; fixed80.",
+    "80": "29passed plus one incorrect test expectation: other Android record correctly remained. Corrected close test passed. Two conformance probes exposed over-constrained nullable/empty version handling; fixed81.30main valid/geometry0.",
+    "81": "33native+7related+1actual-browser read-only supplement=41passed,0skip/failure/flaky.30main/geometry0. Original40series had701frozenhashes unchanged; supplement adds a test file only and verifies all product source hashes unchanged."
+  },
+  "limitations": [
+    "Mutation/error tests use declared browser doubles. A supplemental read-only Chrome case uses actual native worker/notification APIs without a permission/register action. Physical permission prompts and push delivery remain unverified; no CUA permission action or live notification was sent.",
+    "The own-device list exposes no endpoint, subscription fingerprint, friendly device name or phone form factor. Current-browser identity requires the typed registration acknowledgment, actual local subscription fingerprint and matching own list row; other labels use the actual platform.",
+    "The first lost acknowledgment leaves no registration ID to correlate. Platform-only list rows cannot determine which belongs to the subscription. No automatic POST or guessed first-Web binding is allowed; recovery needs verified endpoint/correlation or idempotency semantics. The loopback fixture upsert model is not production proof.",
+    "The active role/workspace remains selected. This feature explicitly shows personal account scope and never grants organizational or independent-class permissions.",
+    "Main81 measurements apply to these five matched states only. The165boundary/large/short responsive frames from79retain79build IDs and are not relabelled81. No claim of full image pixel parity or complete447-test regression."
+  ],
+  "changedFiles": [
+    "src/features/personal/notification-devices.tsx",
+    "src/features/personal/use-notification-device.ts",
+    "src/features/personal/notification-device-model.ts",
+    "src/features/personal/notification-preference-model.ts",
+    "src/features/personal/notification-settings.tsx",
+    "src/features/personal/provider.tsx",
+    "src/lib/push-display.ts",
+    "public/sw.js",
+    "src/app/(personal)/personal/settings/notifications/[[...category]]/page.tsx",
+    "src/content/fa.ts",
+    "contracts/client-surface.json",
+    "src/generated/api/schema.d.ts",
+    "src/generated/api/contract.json",
+    "docs/api-matrix.md",
+    "tests/browser/exact-notification-devices.spec.ts",
+    "tests/unit/pwa-worker.test.ts",
+    "tests/fixtures/backend/notification-devices.mjs",
+    "tests/fixtures/backend/server.mjs",
+    "tests/fixtures/push-browser.mjs",
+    "tests/fixtures/push-browser.d.mts",
+    "scripts/exact-v5-cases.mjs",
+    "scripts/review-exact-v5.mjs",
+    "scripts/measure-exact-v5.mjs",
+    "scripts/audit-exact-v5.py",
+    "tests/browser/exact-notification-platform.spec.ts"
+  ],
+  "sourceHashes": {
+    "src/features/personal/notification-devices.tsx": "4f030483da7ce83665f75cf6bda6f517a170a99c27444f2a39d024b41a8fdb9f",
+    "src/features/personal/use-notification-device.ts": "bc524280623880001ca863e12bff6a3d1a11ef5e9ec7c1f3685fc4fcc4b618eb",
+    "src/features/personal/notification-device-model.ts": "95b39caee2d6e45e76abd74751da1b8d89dfce28329f93b6a807b2e78b5db742",
+    "src/features/personal/notification-preference-model.ts": "64fb7e9805f1d6b3eece577fe8720d9ced19d6544185875c8fa1762941e74a6e",
+    "src/features/personal/notification-settings.tsx": "cad61f50fcf93b5c32b1fb35dcb614ff7863c72e05e3b66574e5bf4982afc443",
+    "src/features/personal/provider.tsx": "eb05a2ecbaee868769c70bd824a8be30855333adb513f0e0e166f61e8b773d2f",
+    "src/lib/push-display.ts": "1440f38ee69e2897e12e9afb2f0cf84e2427453252c5ef774d6972bb44fef45d",
+    "public/sw.js": "8b0a021c9664d7f46318db33e2a6dee2c94b5338af2b15e4e250a5699abe61a7",
+    "src/app/(personal)/personal/settings/notifications/[[...category]]/page.tsx": "88390479b6c3aac23f0d16677f3e94d1e1f28d65be0a69063f0fddd626cbb146",
+    "src/content/fa.ts": "2560968dea35aa0eba0ed972f9e9b7b457b4d11352e2aa27e325071e17a80b33",
+    "contracts/client-surface.json": "a398a4c381b1a94b879f2bb8265d5be9e223b5225b82d2a4d288af9d51b9908d",
+    "src/generated/api/schema.d.ts": "1def6b6e2e51cf1ca66bb0bef18d7f7bcb800bdf7119f50e278401251d3165db",
+    "src/generated/api/contract.json": "3dc3a24d8bed422f4ed5068226f124d048b7b730c4ebc1cd2e58f76d3fe8d026",
+    "docs/api-matrix.md": "334d88f7522764685a10338b8f774d2c7cc276cda744380cde2956df4bf80916",
+    "tests/browser/exact-notification-devices.spec.ts": "8544f817682355f6593187ca697061f8abd8e9fd940d70978a914f50fff4a7a8",
+    "tests/unit/pwa-worker.test.ts": "be82013a64fb8c335c9017d7b7a52042eacd2ec6afe8f1ea6421a3f9f8c22d01",
+    "tests/fixtures/backend/notification-devices.mjs": "3de569f50954399115db6445561af4d9564e52df409476e1fe726e9c9f19b72d",
+    "tests/fixtures/backend/server.mjs": "4eeec5ca6900beaa4c9b8119a872f7d9390f6ee21edcd21716248bcc45fa6bbf",
+    "tests/fixtures/push-browser.mjs": "f4e968b41300717551c1253a1ef3af9bfc463dec3c4c11be33ec15f82af1e294",
+    "tests/fixtures/push-browser.d.mts": "73816bdf1e6bb6934ea96ea677e8543f226fb38f455de272b94633f3898a62f2",
+    "scripts/exact-v5-cases.mjs": "79ec1b249cc6f388c141237d870bf2438365fe31b5b2e1458cfc6aeb0b1c80f5",
+    "scripts/review-exact-v5.mjs": "bcab1db8ef67603c392094ca15d722e64a86605b6e435ab11690c9c301d8701a",
+    "scripts/measure-exact-v5.mjs": "654f1e5361820cdeef996787f3e676247d5690d899c36668d64302d872ed64c9",
+    "scripts/audit-exact-v5.py": "18a5e1473a103535d7a4d2c6f35bd3177dc761c2e8056ec6e10d2cb2d4e5c48c",
+    "tests/browser/exact-notification-platform.spec.ts": "189a033030faf2dd7014e018dfecdadd78b3f650be26f2c3c43d4ece9fefe76b"
+  },
+  "preview": {
+    "origin": "http://127.0.0.1:3163",
+    "fixture": "http://127.0.0.1:3463",
+    "buildId": "Xso5zy1etbhTx0RWSMSnO",
+    "verifiedAt": "2026-11-09T20:22:16.762264+00:00",
+    "route": "/personal/settings/notifications/devices",
+    "browserTab": "IAB2/tab3 deliverable",
+    "verification": "Actual UI re-login with declared disposable Teacher account, authorized Aftab Teacher workspace selected. AX and screenshot show one own Android fixture record, personal feature context and unchanged school workspace. Dark theme retained. No permission/register/delete button clicked.",
+    "liveTab": "tab2 authorized Student lesson retained as handoff; no live account mutation"
+  },
+  "gallery": {
+    "verifiedAt": "2026-11-09T20:36:38.416329+00:00",
+    "rows": 7234,
+    "uniqueImmutableImages": 6248,
+    "allSha256Verified": true,
+    "dataSha256": "c139c456e3cc13feb9c503b64bcc238bc6adc69247c6c464039595fc7001d671",
+    "latestProductBuildId": "Xso5zy1etbhTx0RWSMSnO",
+    "scope": "Own build IDs retained; includes actual native-browser read-only supplement."
+  }
+}

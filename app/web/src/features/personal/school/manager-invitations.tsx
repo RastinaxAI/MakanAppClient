@@ -1,4 +1,6 @@
 'use client';
+import { uiClass } from '@/components/v5/classes';
+
 import * as uiText from '@/content/fa';
 import Link from 'next/link';
 import { ArrowLeft, FolderSync, UserRoundPlus, UsersRound } from 'lucide-react';
@@ -18,9 +20,9 @@ export function ManagerInvitations() {
       moreLabel={uiText.text_589d5004f227}
       onMore={() => window.dispatchEvent(new Event('makan:education-sections'))}
     >
-      <div className={s.stack}>
-        <nav className={s.invitationActions} aria-label={uiText.text_e61d50d522fa}>
-          <Link className={s.primaryAction} href={base + '/guardians/new'}>
+      <div className={uiClass(s.stack)}>
+        <nav className={uiClass(s.invitationActions)} aria-label={uiText.text_e61d50d522fa}>
+          <Link className={uiClass(s.primaryAction)} href={base + '/guardians/new'}>
             <UserRoundPlus size={22} />
             <span>{uiText.text_afeb96c95c63}</span>
             <ArrowLeft size={17} />

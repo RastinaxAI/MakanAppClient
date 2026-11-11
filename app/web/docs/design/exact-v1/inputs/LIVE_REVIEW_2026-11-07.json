@@ -1,0 +1,169 @@
+{
+  "review_date_client": "2026-11-07",
+  "requested_url": "https://testapp.makanapp.org/",
+  "observed_final_url": "https://testapp.makanapp.org/enter",
+  "scope": "Read-only public sign-in UI. No authenticated application views or production repository inspected.",
+  "reference_design": "MakanApp v5 Blue, delivered 2026-11-06",
+  "reference_backend_snapshot": "2026-11-05; not refreshed or operationally tested in this review",
+  "reference_login_id": "MK-02",
+  "reference_pdf_page": 15,
+  "theme_observed": "dark",
+  "font_observed": "Vazirmatn, sans-serif",
+  "ui_operations": [
+    "Navigated to the supplied URL",
+    "Read accessibility tree and DOM-backed styles and dimensions",
+    "Viewed browser screenshots",
+    "Temporarily changed viewport sizes",
+    "Restored default viewport"
+  ],
+  "business_or_auth_operations": [],
+  "observations": [
+    {
+      "viewport": [
+        1280,
+        720
+      ],
+      "input": {
+        "x": 420,
+        "y": 344.140625,
+        "width": 440,
+        "height": 50.390625
+      },
+      "submit_button": {
+        "x": 26,
+        "y": 656,
+        "width": 1228,
+        "height": 48
+      }
+    },
+    {
+      "viewport": [
+        1440,
+        1000
+      ],
+      "input": {
+        "x": 500,
+        "y": 484.140625,
+        "width": 440,
+        "height": 50.390625
+      },
+      "submit_button": {
+        "x": 26,
+        "y": 936,
+        "width": 1388,
+        "height": 48
+      },
+      "terms_control_height": 25.34375,
+      "theme_attribute": "dark",
+      "color_scheme": "dark"
+    },
+    {
+      "viewport": [
+        834,
+        1112
+      ],
+      "input": {
+        "x": 197,
+        "y": 539.296875,
+        "width": 440,
+        "height": 50.390625
+      },
+      "submit_button": {
+        "x": 22,
+        "y": 1048,
+        "width": 790,
+        "height": 48
+      },
+      "terms_control_height": 25.34375,
+      "document_horizontal_overflow": 0
+    },
+    {
+      "viewport": [
+        390,
+        844
+      ],
+      "input": {
+        "x": 17.609375,
+        "y": 201.4375,
+        "width": 354.765625,
+        "height": 50.390625
+      },
+      "submit_button": {
+        "x": 18,
+        "y": 776,
+        "width": 354,
+        "height": 48
+      },
+      "terms_control_height": 25.34375,
+      "document_horizontal_overflow": 0
+    },
+    {
+      "viewport": [
+        320,
+        740
+      ],
+      "input": {
+        "x": 12,
+        "y": 201.4375,
+        "width": 296,
+        "height": 50.390625
+      },
+      "submit_button": {
+        "x": 18,
+        "y": 672,
+        "width": 284,
+        "height": 48
+      },
+      "terms_control_height": 50.6875,
+      "document_horizontal_overflow": 0
+    }
+  ],
+  "findings": [
+    {
+      "id": "OBS-01",
+      "severity": "major_visual_difference",
+      "observed": "Desktop sign-in CTA fills almost the entire viewport (1388 CSS px at 1440 px).",
+      "reference": "MK-02-D has a compact centered action in the bottom action bar.",
+      "recommended_investigation": "Inspect AuthLayout, Button width variants and desktop breakpoint CSS in the actual repository.",
+      "root_cause_verified_in_code": false
+    },
+    {
+      "id": "OBS-02",
+      "severity": "visual_difference",
+      "observed": "Sign-in title/logo grouping is centered; the reference frame uses different title alignment.",
+      "reference": "MK-02, PDF page 15.",
+      "recommended_investigation": "Match the actual viewport header alignment and spacing; preserve the approved brand asset.",
+      "root_cause_verified_in_code": false
+    },
+    {
+      "id": "OBS-03",
+      "severity": "accessibility_followup",
+      "observed": "The terms/privacy sentence is exposed as a button about 25.34 CSS px high at widths 390 and 834.",
+      "reference": "Design minimum interactive target is 44 CSS px.",
+      "recommended_investigation": "Verify keyboard semantics and accessible hit area without changing the reference typography.",
+      "behavior_activated": false
+    }
+  ],
+  "positive_observations": [
+    "Rendered font is Vazirmatn.",
+    "Observed dark background, surface, text and action colors match the design token family.",
+    "The observed public sign-in page had no document horizontal overflow at 320, 390 and 834 CSS px."
+  ],
+  "unverified": [
+    "Authenticated school UI",
+    "Messaging UI",
+    "Independent-class UI",
+    "Assistant and profile",
+    "Platform administration",
+    "Repository code and CSS root cause",
+    "API business behavior",
+    "Light-theme UI rendering",
+    "Native mobile keyboard and device behavior"
+  ],
+  "comparison_rules": [
+    "Use the same theme, data, role, state, viewport and focus state.",
+    "Compare the viewport inside the reference frame; exclude PDF presentation chrome and mock device borders.",
+    "Dark appearance by itself is not a defect.",
+    "Do not generalize the public-page observations to authenticated views."
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "createdAt": "2026-11-10T01:39:08.947301+00:00",
+  "activeApp": "web/src/app (Next.js App Router)",
+  "runtimeAudit": {
+    "sourceModules": 309,
+    "reachableSource": 308,
+    "unreachableCandidates": [],
+    "externalProjectInputs": [
+      "config/network.json",
+      "contracts/client-surface.json",
+      "design/tokens.json"
+    ]
+  },
+  "nextEntries": 58,
+  "legacyViteApplicationEntries": [],
+  "note": "Vitest retains its own transitive Vite development dependency; it is not a root Vite application or a deployed service. The active Next runtime has no atlas renderer, old sample-answer studio or old prototype dependency.",
+  "preserved": "Application assets, current V5 reference, contracts/tests, secrets, encrypted sessions and Docker session volumes.",
+  "backupOutsideWorkspace": "/home/omidreza-bagheriyan/Desktop/MakanApp-cleanup-backup-2026-11-10",
+  "receipts": [
+    "generated-output-cleanup.json",
+    "retired-source.json",
+    "retired-assistant-samples.json",
+    "retired-reference-inputs.json",
+    "retired-v2-browser-reference.json",
+    "post-verification-cache-cleanup.json",
+    "four-role-cache-cleanup.json"
+  ],
+  "limitations": "Reachability is evidence for module use, not a universal permission to delete unclassified files. Historical documentation is retained as prior evidence, not active application code."
+}

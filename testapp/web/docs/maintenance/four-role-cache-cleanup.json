@@ -1,0 +1,41 @@
+{
+  "createdAt": "2026-11-10T03:37:58.405338+00:00",
+  "command": "npm run clean:cache",
+  "files": 778,
+  "bytes": 468998742,
+  "removed": [
+    {
+      "path": ".next/cache",
+      "files": 24,
+      "bytes": 106226466
+    },
+    {
+      "path": ".next/dev",
+      "files": 749,
+      "bytes": 362334554
+    },
+    {
+      "path": "test-results",
+      "files": 5,
+      "bytes": 437722
+    },
+    {
+      "path": "playwright-report",
+      "files": 0,
+      "bytes": 0
+    },
+    {
+      "path": "tsconfig.tsbuildinfo",
+      "files": 0,
+      "bytes": 0
+    }
+  ],
+  "log": "tmp/current-review/cleanup-four-role-cache.log",
+  "preserved": [
+    "Production compiled app and BUILD_ID",
+    "Encrypted sessions and private development key",
+    "Docker volumes and local secrets",
+    "Native evidence and copied test-result receipts"
+  ],
+  "temporaryConnectedRoleRuntimeStopped": true
+}

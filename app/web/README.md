@@ -1,163 +1,57 @@
-# فرانت‌اند ماکان — V5
+# ماکان — کلاینت Next.js
 
-برنامهٔ فعال فقط `web/` است. مرجع طراحی V5 در `design/reference-v5` و نگاشت آن در `design/responsive-reference.json` حفظ شده‌اند. ابزارهای پیش‌نمایش توسعه، دادهٔ تولیدشدهٔ اطلس و قالب‌های بلااستفاده از کد اجرایی حذف شدند؛ مسیرهای `/preview/reference/*` دیگر در برنامه وجود ندارند. شواهد تصویری V5 به‌صورت گالری ایستا باقی‌اند.
+تنها برنامهٔ اجرایی این پروژه داخل `web/` است: Next.js 16.4.2، React 19.3.1 و TypeScript. `src/app` از App Router استفاده می‌کند؛ BFF و نشست server-only در همین برنامه‌اند. ریشه فقط راه‌انداز npm و Compose است. پنل مالک در برنامهٔ مستقل MakanManagement قرار دارد.
 
-[تغییرات طراحی](docs/DESIGN_V5_REPLACEMENT_FA.md) · [گزارش پاک‌سازی و عملکرد](docs/PROJECT_CLEANUP_FA.md) · [تصاویر V5](output/review/v5/index.html) · [پیشرفت](docs/PROGRESS.md)
+## اجرا
 
-پاک‌سازی کش محلی، پس از توقف سرور توسعه: `npm run clean:cache`. این فرمان build قابل اجرا، فایل‌های محیطی و نشست‌ها را حذف نمی‌کند. تست‌ها، ابزار ساخت و فایل قفل برای توسعهٔ بعدی نگه‌داری می‌شوند؛ تصویر production در Docker همچنان از خروجی standalone استفاده می‌کند.
+Node.js 22 یا جدیدتر لازم است؛ نسخهٔ توسعه در `.nvmrc` ثبت شده است. از این پوشه اجرا کنید:
 
-پایهٔ سرویس از `config/network.json`، متن‌های ثابت از `src/content/fa.ts` و نسخهٔ فعال مرجع از `design/reference.json` مصرف می‌شوند. اجرای متصل محلی: [ورود](http://127.0.0.1:3145/enter). فقط `web/` فعال است؛ راهنمای استقرار فعلی در ریشه حفظ شده است.
-
-رفع خطای ۴۰۴ گفتگوی آموزشگاه و راه‌حل قابل ارسال به بک‌اند: [گزارش مرحلهٔ قبل](docs/MESSAGING_404_FIX_20261105_FA.md). FE-03 اکنون پیاده شده است.
-
-تشخیص و اصلاح دعوت پیام‌رسان، پیش‌فرض privacy و قید زمینهٔ سازمانی: [گزارش پیش از رفع FE-03](docs/MESSAGING_DIAGNOSTIC_20261105_FA.md).
-
-اتصال جاری vNext و وضعیت آزمون/محدودیت‌ها: [تحویل ۵ نوامبر](docs/RELEASE_VNEXT_20261105_FA.md). اجرای متصل محلی: [ورود](http://127.0.0.1:3145/enter). گزارش‌های تاریخ‌دار بعدی سابقهٔ انتشارهای قبلی‌اند.
-
-اتصال قرارداد جدید و شواهد: [راهنمای 80c2e61](docs/RELEASE_80C_INTEGRATION_FA.md). آدرس سرور از `config/network.json` تنظیم می‌شود. بستهٔ آمادهٔ انتقال و روش نصب/آپدیت سرور در [راهنمای ریشه](../readme.md) هستند؛ نتیجهٔ بررسی راه‌اندازی در [DEPLOYMENT_80C_CHECKS.json](docs/quality/DEPLOYMENT_80C_CHECKS.json) ثبت است.
-
-# سابقهٔ مرجع آبی MK نسخهٔ سوم، ۳ نوامبر ۲۰۲۶
-
-این بخش سابقهٔ PDF نسخهٔ سوم و منابع آن در `design/reference-v3` با ۸۲ نمای MK است؛ مرجع فعال اکنون V4 است. لوگوی تصویری شما و اصلاحات صریح ورود و دسکتاپ حفظ شده‌اند. اشاره‌های تلگرام و نتایج قدیمی در ادامه، تاریخچهٔ تحویل‌های پیشین‌اند. فقط برنامهٔ Next.js داخل web فعال است؛ پنل مالک در MakanManagement جدا می‌ماند.
-
-اصلاح تازه: پیام‌ها و دستیار از چارچوب و ناوبری مشترک با آیکون‌های واحد استفاده می‌کنند؛ [مقایسهٔ دو صفحه](output/review/navigation-unify/index.html)، [گزارش تغییرات](docs/NAVIGATION_THEME_UNIFY_FA.md) و [نتیجهٔ بررسی‌ها](docs/quality/NAVIGATION_THEME_CHECKS.json). نوشته‌ها، حالت فعال، متن بزرگ، فضای امن و کاهش حرکت در نوار پایین بررسی شده‌اند.
-
-ورود سبک‌تر شده، شماره و کد فقط رقم می‌پذیرند، لوگو در هر دو مرحله و همهٔ اندازه‌ها دیده می‌شود و دکمه پس از فیلد قرار دارد. برگشت استودیو به دستیار، جایگزینی مقصد کلاس‌های شخصی با فوق‌برنامه و خروج واقعی در پروفایل/تنظیمات اجرا شده‌اند. متن ثابت رابط از `src/content/fa.ts` و آدرس اصلی سرویس از `config/network.json` مصرف می‌شوند.
-
-[راهنمای متن‌ها، سرور و امنیت](docs/BLUE_BRAND_ARCHITECTURE_SECURITY_FA.md) · [نتیجهٔ دقیق بررسی برند آبی](docs/quality/BLUE_BRAND_CHECKS.json) · [اجرای متصل محلی](http://127.0.0.1:3145/enter)
-
-[جدول ۸۲ نما و مسیرها](docs/MK_REFERENCE_TRACEABILITY_FA.md) · [تطبیق نسخهٔ سوم و محدودیت‌ها](docs/MK_V3_ALIGNMENT_FA.md) · [گالری مقایسهٔ تصاویر](output/review/mk-v3/index.html) · [نتیجهٔ آزمون‌های این نوبت](docs/quality/MK_V3_CHECKS.json) · [پیشرفت جاری](docs/PROGRESS.md)
-
-اصلاح تازه: نوار دکمه‌های پایین فرم‌ها ۲۰ پیکسل فاصله از لبه، به‌علاوهٔ فضای امن دستگاه، دارد؛ [تصویر اصلاح‌شده](output/review/action-spacing/after-500-light.png) و [نتیجهٔ بررسی فاصله‌ها](docs/quality/ACTION_SPACING_CHECKS.json). تصاویر گالری V3 شواهد مرحلهٔ پیش از این اصلاح‌اند.
-
-نصب و اجرا از همین پوشه:
-
-```bash
+```sh
 npm ci
-npm run dev -- --port 3133
+npm run dev:design-review
 ```
 
-Node.js نسخهٔ ۲۲ یا جدیدتر لازم است. آدرس سرویس در `config/network.json` تنظیم می‌شود؛ `BACKEND_BASE_URL` فقط در صورت داشتن مقدار، برای استقرار آن را بازنویسی می‌کند. APP_ORIGIN، SESSION_SECRET، SESSION_DIRECTORY و COOKIE_SECURE مطابق راهنمای تنظیمات موجود تعیین شوند؛ هیچ راز یا نشست داخل مرورگر یا مخزن قرار نمی‌گیرد. متغیرهای خصوصی فعلی را حفظ کنید. دستور ساخت: `NEXT_STANDALONE=true npm run build -- --webpack`؛ راه‌اندازی تولید مطابق Docker/راهنمای فعلی پروژه است. این مرحله روی سرور مقصد مستقر نشده است.
+[ورود محلی](http://127.0.0.1:3130/enter) به بک‌اند تستِ `config/network.json` وصل می‌شود. این فرمان دادهٔ نمونه یا پاسخ ساختگی دستیار را فعال نمی‌کند. کلید توسعه و نشست‌ها در `.makan-qa-sessions` با دسترسی محدود، خارج از Git نگه‌داری می‌شوند؛ کلید موجود بازنویسی نمی‌شود. برای تغییر پورت، `MAKAN_DEV_PORT` را تنظیم کنید.
 
-برای بررسی مستقل با دادهٔ ساختگی و نشست جدا، پس از build اجرا کنید:
-
-```bash
-node scripts/mk-reference-review.mjs --production
-```
-
-این launcher سابقهٔ بررسی V3 است؛ برای V4 از `scripts/v4-review-server.mjs` و پورت ۳۱۵۸ استفاده کنید. MK-19 و تمام نماهای مالک در مرور V4 هم بسته‌اند. حالت مرور صریحاً آزمایشی است، به سرور عمومی چیزی نمی‌نویسد و در اجرای عادی خاموش است. MAKAN_REFERENCE_PREVIEW پیش‌فرض غیرفعال است.
-
-آزمون‌ها: `npm test`، `npm run typecheck`، `npm run lint`، `npm run generated:check`، `npm run format:check` و `PLAYWRIGHT_CHANNEL=chrome npx playwright test`. برای تصاویر و جریان‌های مرجع در اجرای بررسی: `node scripts/verify-mk-reference.mjs`، `node scripts/capture-mk-reference.mjs`، `python3 scripts/compare-mk-reference.py`، `node scripts/check-mk-responsive.mjs`. آزمون مرورگر سرور و دادهٔ محلی خودش را ایجاد می‌کند. بررسی خواندن زنده، اختیاری و جداست و اجرای خودکار عملیات واقعی دامنه را مجاز نمی‌کند.
-
----
-
-# آپدیت سرور نصب‌شده
-
-اتصال جاری به سرور 8090 و تغییرات قرارداد 154c437 در [مستند تحویل و آزمون](docs/RELEASE_154C437_INTEGRATION_FA.md) ثبت است: صندوق حساب با cursor سرور، مجوز مؤثر گفتگو، عکس گروه/کانال، منابع متصل و preflight دستیار. نتایج جاری در `docs/quality/RELEASE_154C437_CHECKS.json` قرار می‌گیرند؛ گزارش‌های پایین تاریخچهٔ مرحله‌های قبل‌اند.
-
-سورس جدید را در `/var/www/makanapp/app` جایگزین و `sudo bash setup.sh --update` را از ریشه اجرا کنید. حالت آپدیت فایل محیط، حجم نشست، Nginx و TLS را حفظ می‌کند. بستهٔ سورس شامل `setup.sh` است. مراحل انتقال ZIP و عیب‌یابی در [راهنمای سرور](../readme.md) قرار دارند.
-
-بررسی مستقل اسکریپت از ریشه: ابتدا `docker build -f web/tests/deployment/Dockerfile -t makan-deployment-test:local .` و سپس `python3 web/tests/deployment/test_setup.py`؛ این image فقط ابزار آزمون است. ۱۶ آزمون داخل لینوکس ایزوله با Docker/سرویس‌های شبیه‌سازی‌شده اجرا می‌شوند؛ شبکه، Docker socket، تنظیمات محرمانه و سرویس واقعی در اختیار تست نیستند. در لینوکس دارای Bubblewrap، جایگزین مستقل از daemon دستور `MAKAN_DEPLOY_TEST_RUNNER=bwrap python3 web/tests/deployment/test_setup.py` است. ۹ آزمون ورود واقعی runtime با ماژول سرور موقت نیز با `python3 web/tests/deployment/test_runtime.py` اجرا می‌شوند. workflow مستقل deployment-helper این بررسی‌ها و `bash -n setup.sh` را در CI تعریف می‌کند؛ اجرای CI میزبانی‌شده جدا از نتیجهٔ محلی است.
-
----
-
-# کلاینت پنج‌نقشی ماکان
-
-مرجع بصری جاری از ۲ نوامبر ۲۰۲۶، PDF تلگرام ارسالی کاربر است؛ پروفایل، پیام‌رسان، گروه/کانال و اجزای مشترک آموزشگاه/دستیار از آن پیروی می‌کنند. [نگاشت مرجع](design/telegram-reference.json) و [گزارش جاری، بررسی‌ها و محدودیت‌ها](docs/PROGRESS.md) وضعیت تازه را ثبت می‌کنند؛ گزارش‌های استقرار بندهای بعدی تاریخی‌اند.
-
-راهنمای راه‌اندازی جاری در [README ریشه](../readme.md) است. برای استفاده‌کنندهٔ پنل، [راهنمای تصویری PDF](output/pdf/MakanApp_Panel_User_Guide_FA.pdf) و [نسخهٔ مرورگر](docs/user-guide/index.html) ساخته شده‌اند. [روش بازتولید](docs/user-guide/BUILD.md) از سورس واحد، تصاویر نمونه و فونت برند استفاده می‌کند.
-
-بررسی زندهٔ Docker با چهار حساب تست مدیر/استاد/دانشجو/والد انجام شد:۲۰مرحلهٔ نمایش و۸۰جابه‌جایی تب، حفظ نقش بعد از reload، فیلتر دعوت‌ها و جزئیات دعوت پذیرفته‌شدهٔ والد موفق؛ خطای سرویس و مرورگر صفر. پذیرش/رد واقعی به دعوت Pending اختصاصی تست نیاز دارد. [گزارش و روش تکرار اختیاری](docs/quality/DOCKER_FOUR_ROLE_HANDOFF.md). این ابزار در CI و بدون opt-in اجرا نمی‌شود.
-
-مرحلهٔ جاری: دعوت‌های من یک مقصد مشترک دارد؛ نمایش دسکتاپ از۱۰۲۴ و تبلت/موبایل مطابق عرض پنجره است. ورود فقط شمارهٔ۱۱رقمی با09 و کد۶رقمی را می‌پذیرد. JS decoded ورود۱۶٫۷٪ کمتر از تحویل قبلی شد. `npm run quality` با۲۴۸تست واحد و۹۸تست مرورگر، صفرشکست/skip/flaky موفق است. [گزارش تغییر و بررسی](docs/quality/RESPONSIVE_SIGNIN_HANDOFF.md)، [نتیجهٔ ثبت‌شده](docs/quality/RESPONSIVE_SIGNIN_RESULTS.json). بندهای بعدی سابقهٔ مراحل پیشین‌اند.
-
-بررسی تکمیلی۱۰۲۴ و تغییر تب‌ها نیز موفق شد؛ مجموع۹۹سناریوی یکتا در اجرای کامل و تکمیلی بررسی شده‌اند. Docker8080 با image8ace1d457915، حفظ volume نشست و پاسخ سالم به‌روز است؛ [رسید استقرار](docs/quality/RESPONSIVE_SIGNIN_DOCKER.json).
-
-تحویل قبلی، بهینه‌سازی سرعت: GETهای مستقلِ BFF موازی و بررسی‌های هم‌زمان یک نشست ادغام شدند؛ مجوز نتیجه‌شده TTL ندارد و mutation/refresh اختصاصی باقی‌اند. بارگیری کد فرم‌ها و نصب PWA مرحله‌ای شد. در benchmark محلی، JS اولیهٔ آموزشگاه Student۲۳٫۸٪ کمتر و batch سه درخواست۱۰۹۲→۳۵۵ms بود؛ زمان cold rendering متغیر است. quality کامل۲۳۴واحد/۹۵مرورگر موفق؛ preview3130 و Docker8080 به‌روز و سالم‌اند. [گزارش و روش سنجش](docs/quality/PERFORMANCE_HANDOFF.md)، [نتایج](docs/quality/PERFORMANCE_RESULTS.json).
-
-آخرین اصلاح ظاهر: دعوت‌های دریافتی با فیلترهای یکپارچه، شمارش معتبر، حالت خالی قابل اقدام و کارت خواناتر؛ lint، typecheck، build و۸تست مرورگر هدفمند موفق شدند. preview3130 و Docker8080 با حفظ نشست به‌روزند؛ [گزارش](docs/PROGRESS.md) و [شواهد](docs/quality/INVITATIONS_REDESIGN.json). کل مجموعهٔ تست‌ها در این اصلاح دوباره اجرا نشده است.
-
-به‌روزرسانی42c51a3: snapshot فضاها، پیام/فایل/replay شخصی مستقل از نقش آموزشی، زوج رسمی گروه/کانال و کارت فعالیت آموزشی به قرارداد جدید وصل شدند. نگاشت نیازمندی در [برنامه](docs/PLAN.md)، جزئیات طراحی در [طراحی](docs/DESIGN.md) و درخواست‌های باقی‌ماندهٔ بک‌اند در [G19](docs/API_GAPS.md) است. خواندن زندهٔ چهار حساب تست انجام شد؛ زوج‌های رسمی نمونه هنوز Missing و lookup انتشار نمونه404 هستند. [شواهد خواندن زنده](docs/quality/RELEASE_42C51A3_LIVE_READS.json) به معنی موفقیت ارسال رسمی یا اجرای backfill نیست. نتیجهٔ کیفیت و استقرار این مرحله در [گزارش انتشار](docs/quality/RELEASE_42C51A3_HANDOFF.md) ثبت می‌شود؛ بندهای پایین تاریخچهٔ تحویل‌های قبلی‌اند.
-
-کیفیت نهایی این انتشار: `npm run quality` موفق؛۲۲۸تست واحد و۹۳تست مرورگر، صفرشکست/skip/flaky. [لاگ کامل](docs/quality/RELEASE_42C51A3_QUALITY.log).
-
-همین نسخه روی [preview3130](http://127.0.0.1:3130/enter) و [Docker8080](http://127.0.0.1:8080/enter) اجراست؛ کانتینر healthy و نشست‌ها حفظ شده‌اند. [رسید استقرار](docs/quality/RELEASE_42C51A3_DOCKER.json).
-
-آخرین تحویل: بازطراحی اعضای آموزشگاه و پرونده‌های آموزشی، فیلترهای سمت سرور، کارت موبایل/جدول دسکتاپ، ویرایش مجاز و حفظ پیش‌نویس در خطا. `npm run quality` شامل۲۱۴تست واحد و۷۹تست مرورگر موفق است؛ [شواهد](docs/quality/MEMBERS_DOCKER_QUALITY.log) و [گزارش مرحله](docs/quality/MEMBERS_HANDOFF.md). راه‌انداز ریشه فقط همین Next.js را اجرا می‌کند؛ سورس، خروجی و وابستگی‌های Vite قدیمی خارج از پروژه آرشیو شده‌اند. وضعیت واقعی استقرار در [راهنمای Docker](docs/docker.md) ثبت می‌شود.
-
-مرحلهٔ دوم: ارزیابی تکلیف و آزمون، نتیجهٔ امنِ مخاطب، ویرایش/انتشار تکلیف و صفحه‌های اطلاعات/اعضا/رسانه/تنظیمات گفتگو اضافه شدند. [پوشش تمام ورودی‌های فهرست](docs/quality/EXPANSION_COVERAGE.md)، [درخواست‌های بک‌اند G16](docs/API_GAPS.md)، [گزارش اجرا](docs/PROGRESS.md) و [نتیجهٔ نهایی بررسی](docs/quality/EXPANSION_NEXT.json). همهٔ فهرست هنوز تکمیل نشده و تست محلی جای بررسی زندهٔ سرور نیست.
-
-اجرای تازهٔ الگوی صفحه‌های مستقل: فرم‌های مدیر/معلم، پروندهٔ سازمانی و اعضای کلاس، جلسه و آزمون؛ تنظیمات اعلان و دستگاه‌ها و مرکز اعلان به پروژه اضافه شدند. [پوشش دقیق این مرحله](design/figma-expansion/app-implementation.json)، [گزارش اجرا و محدودیت‌ها](docs/PROGRESS.md) و [شواهد بررسی](docs/quality/PROJECT_EXPANSION.json). اتصال‌ها بر قرارداد موجود نوشته شده و با fixture محلی بررسی شده‌اند؛ این تحویل به معنی تکمیل همهٔ ۱۴۶ صفحه یا آزمون موفق عملیات روی سرور واقعی نیست.
-
-آخرین اصلاح: ردیف‌های هم‌تراز حساب و ترجیحات و برنامهٔ **هفتگی** کلاس با قبل/بعد و بازهٔ شمسی؛ [نتیجهٔ کیفیت](docs/quality/PREFERENCES_WEEKLY.json) و [پیشرفت جاری](docs/PROGRESS.md). تصمیم ماهانهٔ مرحلهٔ پیش با درخواست جدید جایگزین شد.
-
-بازطراحی تازهٔ ویرایش پروفایل و آموزشگاه: [پیشرفت](docs/PROGRESS.md) و [نتیجهٔ کیفیت](docs/quality/SCHOOL_REDESIGN.json). آموزشگاه چهار بخش و کلاس صفحهٔ مستقل دارد؛ برنامه ماهانه و دعوت‌ها دارای جزئیات/پذیرش/رد هستند.
-
-تغییرات اخیر پروفایل، جستجوی آموزشگاه و پیوست عکس/PDF تکلیف: [پیشرفت جاری](docs/PROGRESS.md)، [درخواست‌های بک‌اند G14](docs/API_GAPS.md)، [شواهد اسکن و کیفیت](docs/quality/PROJECT_RESCAN.json). فایل آزمون منتظر قرارداد بک‌اند است. گزارش PDF با `node scripts/create-project-rescan-pdf.mjs` بازتولید می‌شود.
-
-آخرین اصلاح ظاهر: [گزارش تطبیق با PDF](docs/quality/VISUAL_MATCH.md)، [نتایج بررسی](docs/quality/VISUAL_RESULTS.json). منو و ناوبری پایین چهار مقصد آموزشگاه، دستیار ماکان، پیام‌ها، پروفایل دارند. پس از ورود، `/personal/workspaces` انتخاب فضای مجاز را نشان می‌دهد؛ `/welcome` معرفی عمومی است. گزارش معماری قبلی تاریخچهٔ همان مرحله را حفظ می‌کند.
-
-مرجع فعلی `Makan Application/web` است. Next.js 16.4.2، React 19.3.1، TypeScript 5.9.3، npm و lockfile نسخهٔ۳ حفظ شدند. بررسی محلی با Node.js 24.19.0 و image با Node.js22 انجام می‌شود. حساب شخصی بدون نقش آموزشی، دانشجو، استاد، والدین و مدیر آموزشگاه دامنهٔ این کلاینت‌اند. پنل مالک در پروژهٔ مستقل MakanManagement حفظ شده است؛ Vite تاریخی ریشه با درخواست صریح کاربر بازنشسته شد.
-
-## شروع سریع
-
-فرمان‌ها را داخل `web` اجرا کنید:
-
-```powershell
-npm ci
-# فقط برای نصب تازه؛ env موجود را بازنویسی نکنید:
-Copy-Item .env.example .env.local
-npm run dev -- --port 3130
-```
-
-پیش از اجرا، `SESSION_SECRET` را با مقدار تصادفی۶۴رقمی hex پر کنید. `APP_ORIGIN` باید دقیقاً origin مرورگر و `BACKEND_BASE_URL` origin سرویس باشد. env، کوکی و نشست خصوصی منتشر نشوند. [ورود محلی](http://127.0.0.1:3130/enter).
-
-```powershell
+```sh
 npm run build
-npm start -- --port 3130
+npm run preview:upgrade
 ```
 
-اجرای عادی طبق env به سرویس واقعی وصل می‌شود. نام سازگار `preview:upgrade` پورت3130 و سرور آزمایشی94.184.32.84:8090 را صریح انتخاب می‌کند و دادهٔ نمایشی نیست.
+برای استقرار از [راهنمای ریشه](../readme.md)، `Dockerfile` و Compose موجود استفاده کنید. فایل‌های خصوصی محیط و volume نشست را حفظ کنید. ورود واقعی به حساب تست و آمادگی سرویس AI جدا از موفقیت build بررسی می‌شوند.
 
-## بررسی‌ها
+## ساختار فعال
 
-```powershell
-npm test
+- `src/app`: مسیرها، layoutها، Route Handlerها و metadata Next.js.
+- `src/features`: امکانات واقعی آموزشگاه، فوق‌برنامه، دستیار، منابع، پیام‌رسان و حساب.
+- `src/components`: اجزای مشترک، ناوبری، فرم و پنجره‌ها.
+- `src/lib/server`: نشست، احراز هویت و مرز مجاز ارتباط با بک‌اند؛ توکن در مرورگر افشا نمی‌شود.
+- `contracts` و `src/generated`: snapshot ثبت‌شدهٔ OpenAPI، سطح مجاز کلاینت و SDK تولیدشده.
+- `src/content/fa.ts`: متن ثابت رابط؛ `src/design` و `design/tokens.json`: تم و طراحی مشترک.
+- `design/reference-v5`: تنها مرجع فعال طراحی. این پوشه ابزار/سند طراحی است و برنامهٔ اجرایی نیست.
+- `tests`: آزمون‌های واحد و مرورگر با بک‌اند ایزوله؛ نتیجهٔ آن‌ها شاهد اجرای provider زنده نیست.
+
+## دستیار و منابع
+
+دستیار از APIهای Chat، Knowledge/RAG و ابزارهای مجاز نقش فعال استفاده می‌کند. انتخاب پرداخت‌کننده صریح است؛ intent پیش از ارسال حفظ می‌شود و پاسخ نامطمئن retry خودکار ندارد. منبع و نسخهٔ استناد با انتخاب و preflight معتبر تطبیق داده می‌شوند. مسیر قدیمی استودیوی نمایشی به دستیار واقعی هدایت می‌شود.
+
+منابع، فهرست، جزئیات، محتوا، نسخه‌ها، نمایش و آماده‌سازی برای دستیار دارند. مجوزهای برگشتی سرور تعیین‌کننده‌اند. فایل، منبع و Knowledge سه وضعیت مجزا دارند؛ آپلود موفق به معنی آماده‌شدن پاسخ AI نیست. [گزارش قرارداد](docs/integration/6f8edf8-implementation.md) و [آزمون واقعی چهار حساب و پیش‌نیازهای باز](docs/integration/20261110-four-role-live.md) را ببینید.
+
+## بررسی و نگه‌داری
+
+```sh
 npm run lint
 npm run typecheck
+npm test
 npm run generated:check
-npx playwright install chromium
-npm run quality
-npm run repro:check
+npm run build
+PLAYWRIGHT_CHANNEL=chrome npm run test:e2e
 ```
 
-`quality`: format → lint → typecheck → unit → generated → build → browser. `lint` تحلیل declarationهای بلااستفاده با TypeScript و مرز import/چرخه است؛ ESLint معرفی نشده است. `test:e2e`، `test:browser` و نام سازگار `test:personal` همگی fixture محلی را اجرا می‌کنند. پورت‌های3132 و3457 باید آزاد باشند؛ سرور قبلی reuse نمی‌شود. این تست‌ها روی سرور واقعی پیام، پرداخت یا تغییر حساب ایجاد نمی‌کنند. fixture آدرس backend خارجی را رد می‌کند و مسیر ناشناخته موفقیت ساختگی ندارد.
+آزمون مرورگر production build لازم دارد و بک‌اند ایزولهٔ خودش را اجرا می‌کند. `npm run quality` همین مراحل را با بررسی قالب‌بندی اجرا می‌کند. دریافت snapshot تازهٔ بک‌اند از `npm run api:update` و بازتولید SDK از `npm run api:generate` انجام می‌شود؛ تغییر قرارداد نیاز به بررسی دارد. `npm run design:build` فقط توکن و فهرست مرجع V5 را تولید می‌کند، نه محصول جایگزین.
 
-`repro:check` staging تازهٔ `tmp/clean-checkout-*` می‌سازد و بدون env خصوصی، node_modules و build قبلی، نصب از lock، بررسی تولید، lint، unit و build را اجرا می‌کند. گزارش در `test-results/clean-checkout/results.json` است؛ مرورگر در quality جدا بررسی می‌شود. staging پس از ثبت شواهد قابل حذف است.
+ممیزی وابستگی مسیرهای واقعی: `node scripts/audit-next-runtime.mjs --json`. نامزد بدون مصرف، به‌تنهایی مجوز حذف فایل نیست. پس از توقف سرور توسعه، `npm run clean:cache` کش ابزارها را پاک می‌کند و build production، secrets و نشست‌ها را حفظ می‌کند.
 
-## منابع معتبر و تولید
+[پیشرفت و محدودیت‌های جاری](docs/PROGRESS.md) · [ماتریس ۵۲۸ موقعیت](docs/design/exact-v1/screen-route-matrix.csv) · [رسیدهای پاک‌سازی](docs/maintenance) · [راهنمای آزمون مرورگر](tests/browser/test.ts)
 
-- مسیر، نقش و چهار مقصد: `src/config/navigation.ts`؛ مجوز مؤثر از نشست و قرارداد سرور می‌آید، انتخاب UI مجوز ایجاد نمی‌کند.
-- قرارداد backend: `contracts/openapi.json`؛ SDK محدود کلاینت: `src/generated/api/schema.d.ts` و `contract.json`، شامل۲۳۶ عملیات و۴۴۱ schema؛ admin تولید نمی‌شود.
-- طراحیv2: `design/tokens.json` → `src/design/tokens.css`.
-- مرجع۱۳۰صفحه: `design/screens.json`؛ وضعیت واقعی هرکدام: `design/implementation-map.json` → `docs/quality/SCREEN_COVERAGE.json`.
-- source مستقل prototype: `design/prototype/*` → `output/design/makan-responsive-prototype.html`؛ تمام اطلاعات و تعامل‌ها نمونه و بدون سرویس واقعی‌اند. صفحه‌های مالک فقط در مرجع آفلاین حفظ شده‌اند.
-
-```powershell
-npm run design:build
-npm run api:generate
-```
-
-خروجی تولیدی را دستی ویرایش نکنید. `generated:check` مغایرت را خطا می‌داند. `api:update` فقط GET قرارداد تازه می‌گیرد؛ diff را بررسی و SDK را دوباره تولید کنید. وجود endpoint اثبات اجرای درست سرویس نیست.
-
-بستهٔ سورس اختیاری با Python3 استاندارد: `python scripts/package-source.py`؛ خروجی `output/delivery/makan-client-source.zip`. نصب/اجرای برنامه و quality به Python وابسته نیستند. ZIP شامل web و workflow ریشه، همراه manifest و بدون env خصوصی، نشست، node_modules، build و trace است. تاریخچه‌های غیرقابل اجرا در workspace محفوظ و از بسته حذف‌اند.
-
-## افزودن قابلیت
-
-route در `src/app` ورودی صفحه باشد؛ orchestration و UI در feature مربوط، قواعد مستقل در model/policy، درخواست در API client موجود و تبدیل امن/مجوز در BFF قرار بگیرد. cache و draft به user/context وابسته باشند. قرارداد پیشنهادی وارد SDK واقعی نشود؛ fixture و تست موفق/خطا و نگاشت پوشش به‌روز شوند. فرم‌های مستقل و receipt فقط طبق تأیید معتبر سرویس ساخته شوند.
-
-## وضعیت و تحویل
-
-[معماری](docs/quality/ARCHITECTURE.md)، [گزارش نهایی](docs/quality/TECHNICAL_HANDOFF.md)، [پوشش طراحی](docs/quality/SCREEN_COVERAGE.json)، [طراحی](docs/DESIGN.md)، [شکاف API](docs/API_GAPS.md)، [پیشرفت](docs/PROGRESS.md)، [Docker](docs/docker.md).
-
-همهٔ۱۳۰ صفحه در محصول پیاده نشده‌اند؛ AI و پرداخت فعال فرض نمی‌شوند. سورس backend و Expo در این دامنه موجود نیست. امنیت سرور، CI میزبانی‌شده، Figma، دستگاه فیزیکی و استقرار مقصد از آزمون محلی نتیجه گرفته نمی‌شود. آزمون‌های تاریخی سرور، بدون حذف assertion در `tests/evidence/legacy-live/*.source` محفوظ و این مرحله اجرا نشده‌اند. سابقهٔ بازیابی کلاینت در `docs/CLIENT_RECOVERY.json` است.
+تطبیق کامل همهٔ حالت‌های PDF و آزمون حساب واقعی باید از رسید همان حالت خوانده شود؛ تصاویر اطلس یا پاس‌شدن build، شاهد تکمیل کل محصول نیستند.

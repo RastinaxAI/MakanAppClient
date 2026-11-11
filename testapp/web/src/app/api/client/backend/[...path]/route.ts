@@ -1,9 +1,6 @@
 import { NextResponse } from 'next/server';
 import { randomUUID } from 'node:crypto';
-import {
-  clientOperationFor as operationFor,
-  clientValidator as validator,
-} from '@/lib/api/client-contract';
+import { operationFor, validator } from '@/lib/api/contract';
 import { isClientOperation, requiresSchoolContext } from '@/lib/client-surface';
 import { clientSessionId, getClientState } from '@/lib/server/client-session';
 import { readSession, writeSession, withSessionLock, withSessionRead } from '@/lib/server/session';
@@ -23,7 +20,10 @@ async function handler(request: Request, { params }: { params: Promise<{ path: s
   const templateSegments = op.path.slice(1).split('/');
   for (const definition of op.parameters.filter((p) => p.in === 'path')) {
     const index = templateSegments.indexOf(`{${definition.name}}`);
-    if (index < 0 || !validator(definition.schema).safeParse(segments[index]).success)
+    const raw = segments[index];
+    const value =
+      definition.schema.type === 'integer' && /^-?\d+$/.test(raw ?? '') ? Number(raw) : raw;
+    if (index < 0 || !validator(definition.schema).safeParse(value).success)
       return problem(400, 'INVALID_PATH_PARAMETER');
   }
   const id = await clientSessionId();
@@ -60,6 +60,19 @@ async function handler(request: Request, { params }: { params: Promise<{ path: s
       }
       for (const definition of op.parameters.filter((p) => p.in === 'query' && p.required))
         if (!query.has(definition.name)) return problem(400, 'MISSING_QUERY_PARAMETER');
+      const headers = new Headers();
+      // Only contract-declared headers cross the BFF. In particular, bodyless AI
+      // operations need their original operation ID on an explicit retry.
+      for (const definition of op.parameters.filter((p) => p.in === 'header')) {
+        const value = request.headers.get(definition.name);
+        if (value === null) {
+          if (definition.required) return problem(400, 'MISSING_REQUEST_HEADER');
+          continue;
+        }
+        if (!validator(definition.schema).safeParse(value).success)
+          return problem(400, 'INVALID_REQUEST_HEADER');
+        headers.set(definition.name, value);
+      }
       let body: string | undefined;
       if (op.body) {
         const parsed = validator(op.body).safeParse(await request.json().catch(() => null));
@@ -68,7 +81,12 @@ async function handler(request: Request, { params }: { params: Promise<{ path: s
             { status: 400, code: 'VALIDATION_ERROR', errors: parsed.error.flatten().fieldErrors },
             { status: 400, headers: { 'Cache-Control': 'no-store' } },
           );
+        const operationId = (parsed.data as { operationId?: string | null })?.operationId;
+        const headerId = headers.get('X-AI-Operation-Id');
+        if (operationId && headerId && operationId.toLowerCase() !== headerId.toLowerCase())
+          return problem(400, 'AI_OPERATION_ID_MISMATCH');
         body = JSON.stringify(parsed.data);
+        headers.set('Content-Type', 'application/json');
       }
       const session = await readSession(id);
       if (!session) return problem(401);
@@ -79,7 +97,7 @@ async function handler(request: Request, { params }: { params: Promise<{ path: s
         {
           method: request.method,
           signal: request.signal,
-          headers: body ? { 'Content-Type': 'application/json' } : undefined,
+          headers,
           body,
         },
       );
@@ -93,6 +111,30 @@ async function handler(request: Request, { params }: { params: Promise<{ path: s
           await writeSession(id, { ...after, revision: randomUUID(), contextSignature: undefined });
       }
       const result = await safeResponse(response, op.response, validator);
+      if (
+        process.env.NODE_ENV === 'development' &&
+        [
+          '/api/v1/sources',
+          '/api/v1/ai/chat',
+          '/api/v1/commerce/ai/simple-text/preflight',
+        ].includes(path) &&
+        request.method === 'POST' &&
+        !result.ok
+      ) {
+        const detail = (await result
+          .clone()
+          .json()
+          .catch(() => null)) as { code?: unknown } | null;
+        const code =
+          typeof detail?.code === 'string' && /^[A-Z0-9_]{1,100}$/.test(detail.code)
+            ? detail.code
+            : 'UNCLASSIFIED';
+        console.warn('Makan operation rejected', {
+          operation: op.path,
+          status: result.status,
+          code,
+        });
+      }
       result.headers.set('X-Makan-Context', (await readSession(id))?.revision ?? '');
       return result;
     });

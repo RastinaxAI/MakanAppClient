@@ -10,19 +10,19 @@
   gap: 20px;
 }
 .heading h1 {
-  font-size: 24px;
+  font-size: calc(24px * var(--text-scale, 1));
   font-weight: 750;
   line-height: 1.9;
 }
 .heading p {
-  font-size: 13px;
+  font-size: calc(13px * var(--text-scale, 1));
   color: var(--muted);
   line-height: 1.9;
   margin-top: 5px;
 }
 .eyebrow {
   color: var(--primary);
-  font-size: 12px;
+  font-size: calc(12px * var(--text-scale, 1));
 }
 .heading :global(.button) {
   flex-shrink: 0;
@@ -44,7 +44,7 @@
   min-height: 58px;
   padding: 10px 18px;
   border-radius: 12px;
-  font-size: 14px;
+  font-size: calc(14px * var(--text-scale, 1));
   font-weight: 600;
   color: var(--text);
   text-align: center;
@@ -87,7 +87,7 @@
   border-radius: 11px;
   background: var(--surface);
   color: var(--muted);
-  font-size: 13px;
+  font-size: calc(13px * var(--text-scale, 1));
   cursor: pointer;
 }
 .roles button[aria-pressed='true'] {
@@ -113,14 +113,14 @@
   flex-wrap: wrap;
 }
 .resultHeading h2 {
-  font-size: 16px;
+  font-size: calc(16px * var(--text-scale, 1));
   font-weight: 700;
 }
 .resultHeading > span {
   padding: 5px 10px;
   background: var(--bg);
   border-radius: 8px;
-  font-size: 12px;
+  font-size: calc(12px * var(--text-scale, 1));
   color: var(--muted);
 }
 .resultHeading > a {
@@ -128,7 +128,7 @@
   display: flex;
   align-items: center;
   gap: 7px;
-  font-size: 12px;
+  font-size: calc(12px * var(--text-scale, 1));
   color: var(--primary);
   min-height: 44px;
 }
@@ -140,12 +140,12 @@
   width: 100%;
   border-collapse: collapse;
   text-align: right;
-  font-size: 13px;
+  font-size: calc(13px * var(--text-scale, 1));
 }
 .table th {
   padding: 12px 14px;
   background: var(--bg);
-  font-size: 12px;
+  font-size: calc(12px * var(--text-scale, 1));
   color: var(--muted);
   font-weight: 550;
 }
@@ -176,13 +176,13 @@
 }
 .identity strong {
   display: block;
-  font-size: 14px;
+  font-size: calc(14px * var(--text-scale, 1));
   line-height: 1.8;
   overflow-wrap: anywhere;
 }
 .identity small {
   display: block;
-  font-size: 11px;
+  font-size: calc(11px * var(--text-scale, 1));
   color: var(--muted);
   line-height: 1.8;
   margin-top: 4px;
@@ -198,7 +198,7 @@
   border-radius: 14px;
   color: var(--primary);
   font-weight: 700;
-  font-size: 14px;
+  font-size: calc(14px * var(--text-scale, 1));
 }
 .badges {
   display: flex;
@@ -211,13 +211,13 @@
   border-radius: 8px;
   background: var(--primary-soft);
   color: var(--primary);
-  font-size: 11px;
+  font-size: calc(11px * var(--text-scale, 1));
   white-space: nowrap;
 }
 .muted,
 .unlinked {
   color: var(--muted);
-  font-size: 12px;
+  font-size: calc(12px * var(--text-scale, 1));
   line-height: 1.9;
 }
 .unlinked {
@@ -233,7 +233,7 @@
 .table :global(.button) {
   min-height: 42px;
   white-space: nowrap;
-  font-size: 12px;
+  font-size: calc(12px * var(--text-scale, 1));
 }
 .recordHero {
   display: flex;
@@ -246,7 +246,7 @@
   flex-wrap: wrap;
 }
 .recordHero h2 {
-  font-size: 21px;
+  font-size: calc(21px * var(--text-scale, 1));
   font-weight: 750;
   line-height: 1.9;
   overflow-wrap: anywhere;
@@ -255,7 +255,7 @@
   width: 64px;
   height: 64px;
   flex-basis: 64px;
-  font-size: 22px;
+  font-size: calc(22px * var(--text-scale, 1));
 }
 .recordHero > div {
   flex: 1;
@@ -263,7 +263,7 @@
 }
 .recordHero p {
   color: var(--muted);
-  font-size: 12px;
+  font-size: calc(12px * var(--text-scale, 1));
   line-height: 1.9;
 }
 .detailGrid {
@@ -273,7 +273,7 @@
 }
 .panel h2,
 .formGroup h2 {
-  font-size: 16px;
+  font-size: calc(16px * var(--text-scale, 1));
   font-weight: 700;
   line-height: 1.9;
   margin-bottom: 18px;
@@ -291,12 +291,12 @@
   min-width: 0;
 }
 .facts dt {
-  font-size: 12px;
+  font-size: calc(12px * var(--text-scale, 1));
   color: var(--muted);
   margin-bottom: 7px;
 }
 .facts dd {
-  font-size: 14px;
+  font-size: calc(14px * var(--text-scale, 1));
   margin: 0;
   overflow-wrap: anywhere;
 }
@@ -307,7 +307,7 @@
   padding: 16px;
   background: var(--primary-soft);
   border-radius: 12px;
-  font-size: 13px;
+  font-size: calc(13px * var(--text-scale, 1));
   margin-bottom: 14px;
 }
 .accountState svg {
@@ -315,12 +315,12 @@
   color: var(--primary);
 }
 .panel p {
-  font-size: 12px;
+  font-size: calc(12px * var(--text-scale, 1));
   line-height: 1.95;
   color: var(--muted);
 }
 .identifiers {
-  font-size: 12px;
+  font-size: calc(12px * var(--text-scale, 1));
   color: var(--muted);
 }
 .identifiers summary {
@@ -351,7 +351,7 @@
   grid-column: 1/-1;
 }
 .formGroup p {
-  font-size: 12px;
+  font-size: calc(12px * var(--text-scale, 1));
   color: var(--muted);
   line-height: 1.9;
   margin: 0 0 12px;
@@ -377,7 +377,7 @@
     gap: 12px;
   }
   .heading h1 {
-    font-size: 21px;
+    font-size: calc(21px * var(--text-scale, 1));
   }
   .heading p {
     display: none;
@@ -387,7 +387,7 @@
   }
   .sections a {
     padding-inline: 8px;
-    font-size: 12px;
+    font-size: calc(12px * var(--text-scale, 1));
     gap: 7px;
   }
   .roles {
@@ -400,7 +400,7 @@
   }
   .roles button {
     padding-inline: 12px;
-    font-size: 12px;
+    font-size: calc(12px * var(--text-scale, 1));
     flex-shrink: 0;
   }
   .filters {
@@ -435,7 +435,7 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    font-size: 12px;
+    font-size: calc(12px * var(--text-scale, 1));
   }
   .table td:first-child {
     grid-column: 1/-1;
@@ -444,7 +444,7 @@
   }
   .table td[data-label]::before {
     content: attr(data-label);
-    font-size: 11px;
+    font-size: calc(11px * var(--text-scale, 1));
     color: var(--muted);
   }
   .table .actionCell {
@@ -459,27 +459,27 @@
     min-height: 44px;
   }
   .table .identity strong {
-    font-size: 14px;
+    font-size: calc(14px * var(--text-scale, 1));
   }
   .identity small {
-    font-size: 11px;
+    font-size: calc(11px * var(--text-scale, 1));
   }
   .resultHeading {
     gap: 8px;
     margin-bottom: 16px;
   }
   .resultHeading h2 {
-    font-size: 15px;
+    font-size: calc(15px * var(--text-scale, 1));
   }
   .resultHeading > a {
-    font-size: 11px;
+    font-size: calc(11px * var(--text-scale, 1));
   }
   .recordHero {
     padding: 20px;
     gap: 14px;
   }
   .recordHero h2 {
-    font-size: 18px;
+    font-size: calc(18px * var(--text-scale, 1));
   }
   .recordHero > :global(.button) {
     width: 100%;

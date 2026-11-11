@@ -1,0 +1,2401 @@
+/* Product styles: owned here; original V5 source remains read-only in design/reference-v5. */
+:where(.scope) .confirm-actions {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px;
+}
+:where(.scope) .text-muted {
+  color: var(--muted);
+}
+:where(.scope) .dropdown {
+  min-width: 200px;
+  z-index: 100;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: 0 10px 40px #0f172a18;
+  padding: 6px;
+}
+:where(.scope) .dropdown [role='menuitem'] {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  outline: 0;
+}
+:where(.scope) .dropdown [role='menuitem'][data-highlighted] {
+  background: var(--primary-soft);
+}
+:where(.scope) .dropdown [role='separator'] {
+  border-top: 1px solid var(--border);
+  margin: 4px;
+}
+:where(.scope) .panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-bottom: 24px;
+  min-width: 0;
+}
+:where(.scope) .panel-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 20px 23px;
+  border-bottom: 1px solid var(--border);
+}
+:where(.scope) .panel-heading p {
+  font-size: calc(11px * var(--text-scale, 1));
+  color: var(--muted);
+  margin-top: 3px;
+}
+:where(.scope) .panel-body {
+  padding: 23px;
+}
+:where(.scope) .badge-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+}
+:where(.scope) .badge-neutral {
+  background: var(--bg);
+  color: var(--muted);
+}
+:where(.scope) .updated {
+  font-size: calc(10px * var(--text-scale, 1));
+  color: var(--muted);
+}
+:where(.scope) .state {
+  min-height: 240px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  flex-direction: column;
+  gap: 12px;
+  overflow-wrap: anywhere;
+}
+:where(.scope) .state > svg {
+  width: 33px;
+  height: 33px;
+  color: var(--muted);
+}
+:where(.scope) .state p {
+  color: var(--muted);
+  max-width: 480px;
+}
+:where(.scope) .state small {
+  font-size: calc(10px * var(--text-scale, 1));
+  max-width: 100%;
+  word-break: break-all;
+}
+:where(.scope) .error-state > svg {
+  color: var(--danger);
+}
+:where(.scope) .skeleton-wrap {
+  padding: 22px;
+  display: grid;
+  gap: 13px;
+}
+:where(.scope) .bootstrap {
+  max-width: 650px;
+  margin: 10vh auto;
+  padding: 24px;
+}
+:where(.scope) .v5-summary {
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 18px;
+  margin: 0;
+}
+:where(.scope) .v5-summary > div {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 10px 0;
+}
+:where(.scope) .v5-summary > div + div {
+  border-top: 1px solid var(--border);
+}
+:where(.scope) .v5-summary dt {
+  color: var(--muted);
+  font-size: calc(13px * var(--text-scale, 1));
+}
+:where(.scope) .v5-summary dd {
+  margin: 0;
+  font-weight: 500;
+  font-size: calc(14px * var(--text-scale, 1));
+  min-width: 0;
+  overflow-wrap: anywhere;
+  text-align: end;
+}
+@media (max-width: 767px) {
+  :where(.scope) .v5-summary {
+    padding: 16px;
+  }
+}
+@media (max-width: 767px) {
+  :where(.scope) .v5-summary dt {
+    font-size: calc(12px * var(--text-scale, 1));
+  }
+}
+@media (max-width: 767px) {
+  :where(.scope) .v5-summary dd {
+    font-size: calc(13px * var(--text-scale, 1));
+  }
+}
+:where(.scope) .form-grid {
+  display: grid;
+  gap: 17px;
+}
+:where(.scope) .form-message {
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: calc(12px * var(--text-scale, 1));
+  overflow-wrap: anywhere;
+}
+:where(.scope) .form-message.error {
+  color: var(--danger);
+  background: #b4231809;
+}
+:where(.scope) .form-message.success {
+  color: var(--success);
+}
+:where(.scope) .tabs {
+  display: flex;
+  gap: 20px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 24px;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+:where(.scope) .tab {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  background: none;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  color: var(--muted);
+  padding: 10px 1px 14px;
+  font-size: calc(12px * var(--text-scale, 1));
+}
+:where(.scope) .tab.active {
+  border-bottom-color: var(--primary);
+  color: var(--primary);
+  font-weight: 600;
+}
+:where(.scope) .id-copy {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  max-width: 100%;
+  font-size: calc(11px * var(--text-scale, 1));
+  word-break: break-all;
+  white-space: normal;
+}
+:where(.scope) .id-copy button {
+  background: transparent;
+  border: 0;
+  color: var(--muted);
+  padding: 3px;
+}
+:where(.scope) .skip-link {
+  position: fixed;
+  top: 0;
+  transform: translateY(calc(-100% - 10px));
+  max-width: calc(100% - 40px);
+  inset-inline-start: 20px;
+  z-index: 200;
+  background: var(--primary-button);
+  color: var(--on-primary);
+  padding: 10px;
+}
+:where(.scope) .skip-link:focus {
+  top: 10px;
+  transform: none;
+}
+:where(.scope) .nested-block {
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin: 10px 0;
+  font-size: calc(12px * var(--text-scale, 1));
+}
+:where(.scope) .nested-block h3 {
+  font-size: calc(13px * var(--text-scale, 1));
+  margin-bottom: 0;
+}
+:where(.scope) .view-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+:where(.scope) .view-field {
+  font-size: calc(12px * var(--text-scale, 1));
+  overflow-wrap: anywhere;
+}
+:where(.scope) .view-field > span {
+  display: block;
+  color: var(--muted);
+  font-size: calc(11px * var(--text-scale, 1));
+  margin-bottom: 3px;
+}
+:where(.scope) .view-field.wide {
+  grid-column: 1/-1;
+}
+@media (max-width: 580px) {
+  :where(.scope) .panel-heading {
+    padding: 16px;
+  }
+}
+@media (max-width: 580px) {
+  :where(.scope) .panel-body {
+    padding: 17px;
+  }
+}
+@media (max-width: 580px) {
+  :where(.scope) .tabs {
+    gap: 22px;
+    margin-bottom: 20px;
+  }
+}
+@media (max-width: 580px) {
+  :where(.scope) .view-grid {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 580px) {
+  :where(.scope) .view-field.wide {
+    grid-column: auto;
+  }
+}
+:where(.scope) .panel {
+  box-shadow: 0 5px 20px #254f6c03;
+}
+:where(.scope) .panel-heading h2 {
+  letter-spacing: -0.3px;
+}
+:where(.scope) .panel-heading h2 {
+  overflow-wrap: anywhere;
+}
+:where(.scope) .panel-heading {
+  flex-wrap: wrap;
+}
+:where(.scope) .panel-heading > .button {
+  flex-shrink: 0;
+}
+:where(.scope) .form-grid > * {
+  min-width: 0;
+}
+:where(.scope) .view-grid > * {
+  min-width: 0;
+}
+:where(.scope) .tabs {
+  max-width: 100%;
+  overscroll-behavior-inline: contain;
+  scrollbar-width: thin;
+}
+:where(.scope) .tab {
+  min-height: 44px;
+  flex-shrink: 0;
+}
+@media (max-width: 640px) {
+  :where(.scope) .panel {
+    margin-bottom: 16px;
+    border-radius: 16px;
+  }
+}
+@media (max-width: 640px) {
+  :where(.scope) .panel-heading {
+    padding: 16px;
+  }
+}
+@media (max-width: 640px) {
+  :where(.scope) .panel-body {
+    padding: 16px;
+  }
+}
+@media (max-width: 640px) {
+  :where(.scope) .panel-heading h2 {
+    font-size: calc(16px * var(--text-scale, 1));
+  }
+}
+@media (max-width: 640px) {
+  :where(.scope) .view-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (max-width: 640px) {
+  :where(.scope) .tabs {
+    gap: 18px;
+  }
+}
+@media (max-width: 640px) {
+  :where(.scope) .tab {
+    font-size: calc(13px * var(--text-scale, 1));
+  }
+}
+@media (max-width: 640px) {
+  :where(.scope) .id-copy {
+    font-size: calc(12px * var(--text-scale, 1));
+  }
+}
+@media (max-width: 640px) {
+  :where(.scope) .id-copy button {
+    min-width: 44px;
+    min-height: 44px;
+  }
+}
+:where(.scope) .mk-target-choice {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  min-height: 48px;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+  font-size: calc(14px * var(--text-scale, 1));
+}
+:where(.scope) .mk-target-choice input[type='radio'] {
+  width: 20px;
+  height: 20px;
+  min-height: 20px;
+  flex: none;
+  accent-color: var(--primary);
+}
+@media (max-width: 767px) {
+  :where(.scope) [data-radix-popper-content-wrapper]:has(.mk-message-menu) {
+    position: fixed !important;
+    inset: auto 0 0 !important;
+    transform: none !important;
+    width: 100% !important;
+    z-index: 1101 !important;
+  }
+}
+@media (max-width: 767px) {
+  :where(.scope) .mk-message-menu {
+    width: 100%;
+    min-width: 0;
+    border-radius: 26px 26px 0 0;
+    padding: 12px 18px max(18px, env(safe-area-inset-bottom));
+    box-shadow: none;
+  }
+}
+@media (max-width: 767px) {
+  :where(.scope) .mk-message-menu::before {
+    content: '';
+    display: block;
+    width: 36px;
+    height: 4px;
+    background: var(--border);
+    border-radius: 4px;
+    margin: 0 auto 15px;
+  }
+}
+@media (max-width: 767px) {
+  :where(.scope) .mk-message-menu [role='menuitem'] {
+    min-height: 48px;
+    border-radius: 0;
+    border-bottom: 1px solid var(--border);
+  }
+}
+:where(.scope) svg {
+  width: 24px;
+  height: 24px;
+  flex: none;
+  stroke-width: 1.8;
+  vertical-align: middle;
+}
+:where(.scope) .latin {
+  direction: ltr;
+  unicode-bidi: isolate;
+  display: inline-block;
+}
+:where(.scope) .muted {
+  color: var(--muted, #5c6d85);
+}
+:where(.scope) .small {
+  font-size: 13px;
+  line-height: 1.8;
+}
+:where(.scope) .tiny {
+  font-size: 11px;
+  line-height: 1.7;
+}
+:where(.scope) .flex {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+:where(.scope) .between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+:where(.scope) .stack {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+:where(.scope) .grow {
+  min-width: 0;
+}
+:where(.scope) .center {
+  text-align: center;
+}
+:where(.scope) .ring {
+  border: 1px solid var(--line, #dce5f1);
+  border-radius: 14px;
+}
+:where(.scope) .sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+:where(.scope) .card {
+  border: 1px solid var(--line);
+}
+:where(.scope) .card.flat {
+  border: 0;
+}
+:where(.scope) .card.hero {
+  background: var(--soft);
+  border-color: var(--soft);
+}
+:where(.scope) .card h3 {
+  margin: 0;
+  line-height: 1.7;
+}
+:where(.scope) .card p {
+  margin: 0;
+}
+:where(.scope) .card .overline {
+  font-size: 11px;
+  letter-spacing: 0.1px;
+  color: var(--muted);
+  margin-bottom: 7px;
+}
+:where(.scope) .row {
+  display: flex;
+  align-items: center;
+}
+:where(.scope) .row + .row {
+  border-top: 1px solid var(--line);
+}
+:where(.scope) .row h4 {
+  margin: 0;
+  font-weight: 700;
+}
+:where(.scope) .row p {
+  margin: 0;
+  color: var(--muted);
+}
+:where(.scope) .row .chev {
+  color: var(--muted);
+}
+:where(.scope) .row .chev svg {
+  width: 18px;
+  height: 18px;
+}
+:where(.scope) .tile-icon svg {
+  width: 22px;
+  height: 22px;
+}
+:where(.scope) .avatar {
+  width: 44px;
+  height: 44px;
+  flex: none;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 16px;
+  font-weight: 700;
+  background: var(--soft);
+  color: var(--accent);
+}
+:where(.scope) .avatar.neutral {
+  background: var(--surface2);
+  color: var(--muted);
+}
+:where(.scope) .avatar.small-av {
+  width: 34px;
+  height: 34px;
+  font-size: 12px;
+}
+:where(.scope) .avatar-stack .avatar {
+  margin-right: -4px;
+  border: 2px solid var(--surface);
+  width: 29px;
+  height: 29px;
+  font-size: 9px;
+}
+:where(.scope) .search {
+  flex: none;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 0 13px;
+}
+:where(.scope) .search svg {
+  width: 19px;
+  height: 19px;
+}
+:where(.scope) .search .kbd {
+  font-size: 10px;
+  opacity: 0.7;
+  margin-right: auto;
+}
+:where(.scope) .badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  min-height: 25px;
+  padding: 3px 9px;
+  border-radius: 7px;
+  font-weight: 600;
+  white-space: nowrap;
+  line-height: 1.5;
+  color: var(--accent);
+  background: var(--soft);
+}
+:where(.scope) .badge svg {
+  width: 12px;
+  height: 12px;
+  stroke-width: 2;
+}
+:where(.scope) .badge.neutral {
+  background: var(--surface2);
+  color: var(--muted);
+}
+:where(.scope) .badge.warn {
+  background: var(--warnbg);
+  color: var(--warning);
+}
+:where(.scope) .badge.bad {
+  background: var(--badbg);
+  color: var(--danger);
+}
+:where(.scope) .count {
+  min-width: 21px;
+  height: 21px;
+  border-radius: 7px;
+  padding: 1px 5px;
+  background: var(--accent);
+  color: var(--surface);
+  font-size: 10px;
+  display: grid;
+  place-items: center;
+}
+:where(.scope) .seg {
+  height: 44px;
+  display: flex;
+  border-radius: 12px;
+  flex: none;
+}
+:where(.scope) .seg span {
+  flex: 1;
+  color: var(--muted);
+  border-radius: 9px;
+  font-weight: 500;
+}
+:where(.scope) .seg .on {
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: 0 1px 5px #00000009;
+  font-weight: 700;
+}
+:where(.scope) .chips {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex: none;
+  flex-wrap: wrap;
+}
+:where(.scope) .chip {
+  height: 34px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  gap: 5px;
+  color: var(--muted);
+}
+:where(.scope) .chip.on {
+  background: var(--soft);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+:where(.scope) .chip svg {
+  width: 15px;
+  height: 15px;
+}
+:where(.scope) .section-title {
+  font-weight: 700;
+}
+:where(.scope) .text-action {
+  font-size: 12px;
+  color: var(--accent);
+  font-weight: 700;
+}
+:where(.scope) .button-row {
+  display: flex;
+  gap: 10px;
+}
+:where(.scope) .button-row .btn {
+  flex: 1;
+}
+:where(.scope) .checkline {
+  display: flex;
+  gap: 9px;
+  align-items: flex-start;
+}
+:where(.scope) .checkbox {
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  border-radius: 6px;
+  display: grid;
+  place-items: center;
+  margin-top: 1px;
+}
+:where(.scope) .checkbox.checked {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--surface);
+}
+:where(.scope) .checkbox svg {
+  width: 15px;
+  height: 15px;
+}
+:where(.scope) .radio {
+  width: 19px;
+  height: 19px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  display: grid;
+  place-items: center;
+  flex: none;
+  background: var(--surface);
+}
+:where(.scope) .radio.selected {
+  border: 5px solid var(--accent);
+}
+:where(.scope) .toggle {
+  height: 26px;
+  width: 44px;
+  flex: none;
+  border-radius: 15px;
+  background: var(--line);
+  padding: 3px;
+  display: flex;
+  justify-content: flex-end;
+  direction: ltr;
+}
+:where(.scope) .toggle::after {
+  content: '';
+  height: 20px;
+  width: 20px;
+  background: var(--surface);
+  border-radius: 50%;
+  box-shadow: 0 1px 3px #0002;
+}
+:where(.scope) .toggle.on {
+  background: var(--accent);
+}
+:where(.scope) .toggle.on::after {
+  background: #fff;
+}
+:where(.scope) .alert {
+  display: flex;
+  gap: 9px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--muted);
+}
+:where(.scope) .alert svg {
+  width: 19px;
+  height: 19px;
+  margin-top: 2px;
+  color: var(--accent);
+}
+:where(.scope) .alert.warn {
+  border-color: transparent;
+}
+:where(.scope) .alert.warn svg {
+  color: var(--warning);
+}
+:where(.scope) .alert.bad {
+  border-color: transparent;
+}
+:where(.scope) .alert.bad svg {
+  color: var(--danger);
+}
+:where(.scope) .alert.good {
+  border-color: transparent;
+}
+:where(.scope) .stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+:where(.scope) .stat {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  text-align: center;
+}
+:where(.scope) .stat b {
+  display: block;
+  line-height: 1.5;
+}
+:where(.scope) .stat span {
+  color: var(--muted);
+}
+:where(.scope) .link-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+:where(.scope) .link-card {
+  min-height: 78px;
+  padding: 13px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  color: var(--accent);
+}
+:where(.scope) .link-card svg {
+  width: 21px;
+  height: 21px;
+}
+:where(.scope) .link-card .small {
+  font-size: 10px;
+  color: var(--muted);
+  font-weight: 400;
+}
+:where(.scope) .progress {
+  flex: none;
+  border-radius: 6px;
+  background: var(--surface2);
+  overflow: hidden;
+  direction: rtl;
+}
+:where(.scope) .progress i {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+  border-radius: 6px;
+}
+:where(.scope) .stepper .step {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: center;
+  font-size: 10px;
+  color: var(--muted);
+}
+:where(.scope) .stepper .dot {
+  height: 27px;
+  width: 27px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  border-radius: 50%;
+  font-size: 12px;
+}
+:where(.scope) .stepper .current {
+  color: var(--accent);
+  font-weight: 700;
+}
+:where(.scope) .stepper .current .dot {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--soft);
+  color: var(--accent);
+}
+:where(.scope) .timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+:where(.scope) .time-step.pending .time-dot {
+  background: var(--surface2);
+  color: var(--muted);
+}
+:where(.scope) .kv {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+}
+:where(.scope) .kv + .kv {
+  border-top: 1px solid var(--line);
+}
+:where(.scope) .kv .key {
+  color: var(--muted);
+}
+:where(.scope) .kv .val {
+  max-width: 65%;
+  text-align: left;
+  font-weight: 500;
+}
+:where(.scope) .empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 15px;
+}
+:where(.scope) .empty .empty-mark {
+  width: 88px;
+  height: 88px;
+  border-radius: 28px;
+  background: var(--soft);
+  color: var(--accent);
+  display: grid;
+  place-items: center;
+  position: relative;
+}
+:where(.scope) .empty .empty-mark svg {
+  width: 40px;
+  height: 40px;
+  stroke-width: 1.3;
+}
+:where(.scope) .empty h3 {
+  line-height: 1.65;
+  margin: 0;
+}
+:where(.scope) .empty p {
+  color: var(--muted);
+  margin: 0;
+  max-width: 270px;
+}
+:where(.scope) .empty.small-empty {
+  padding: 19px 8px;
+  gap: 12px;
+}
+:where(.scope) .empty.small-empty .empty-mark {
+  height: 62px;
+  width: 62px;
+  border-radius: 20px;
+}
+:where(.scope) .empty.small-empty .empty-mark svg {
+  height: 29px;
+  width: 29px;
+}
+:where(.scope) .empty.small-empty h3 {
+  font-size: 17px;
+}
+:where(.scope) .date-strip {
+  display: flex;
+  gap: 8px;
+  justify-content: space-between;
+}
+:where(.scope) .date-cell {
+  width: 42px;
+  min-height: 62px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  font-size: 10px;
+  color: var(--muted);
+}
+:where(.scope) .date-cell b {
+  font-size: 15px;
+  color: var(--text);
+}
+:where(.scope) .schedule {
+  display: flex;
+  gap: 12px;
+  padding: 13px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  border-radius: 14px;
+}
+:where(.scope) .schedule .time {
+  font-size: 12px;
+  color: var(--accent);
+  line-height: 1.7;
+  min-width: 38px;
+}
+:where(.scope) .schedule h4 {
+  margin: 0;
+  font-size: 15px;
+}
+:where(.scope) .schedule p {
+  font-size: 11px;
+  color: var(--muted);
+  margin: 0;
+  line-height: 1.8;
+}
+:where(.scope) .schedule .bar {
+  width: 3px;
+  border-radius: 5px;
+  background: var(--accent);
+  flex: none;
+}
+:where(.scope) .checklist .row {
+  padding: 12px 0;
+}
+:where(.scope) .checklist .row:first-child {
+  padding-top: 0;
+}
+:where(.scope) .checklist .row:last-child {
+  padding-bottom: 0;
+}
+:where(.scope) .meta {
+  font-size: 10px;
+  color: var(--muted);
+}
+:where(.scope) .banner-title {
+  font-size: 26px;
+  font-weight: 800;
+  line-height: 1.6;
+  margin: 0;
+}
+:where(.scope) .file {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+:where(.scope) .file h4 {
+  margin: 0;
+}
+:where(.scope) .file p {
+  color: var(--muted);
+  margin: 4px 0 0;
+}
+:where(.scope) .file .doc-icon {
+  width: 39px;
+  height: 45px;
+  border: 1px solid var(--line);
+  background: var(--soft);
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  color: var(--accent);
+}
+:where(.scope) .file .doc-icon svg {
+  width: 20px;
+  height: 20px;
+}
+:where(.scope) .upload {
+  border: 1.5px dashed var(--line);
+  background: var(--surface);
+  border-radius: 14px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 9px;
+}
+:where(.scope) .upload svg {
+  color: var(--accent);
+  width: 26px;
+  height: 26px;
+}
+:where(.scope) .upload b {
+  font-size: 13px;
+}
+:where(.scope) .upload p {
+  color: var(--muted);
+  margin: 0;
+}
+:where(.scope) .chat-row .name {
+  font-size: 14px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+:where(.scope) .chat-row .name svg {
+  width: 13px;
+  height: 13px;
+  color: var(--accent);
+}
+:where(.scope) .chat-row .preview {
+  color: var(--muted);
+  font-size: 12px;
+  margin-top: 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 228px;
+}
+:where(.scope) .bubble {
+  border: 1px solid var(--line);
+  border-radius: 16px 5px 16px 16px;
+  align-self: flex-start;
+  box-shadow: 0 1px 2px #00000003;
+}
+:where(.scope) .bubble.mine {
+  border-color: transparent;
+  border-radius: 5px 16px 16px 16px;
+}
+:where(.scope) .bubble .sender {
+  color: var(--accent);
+  font-size: 11px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+:where(.scope) .bubble .msg-time {
+  font-size: 9px;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+  margin-top: 5px;
+  direction: ltr;
+}
+:where(.scope) .bubble .msg-time svg {
+  width: 13px;
+  height: 13px;
+}
+:where(.scope) .quote {
+  border-right: 3px solid var(--accent);
+  padding: 5px 8px;
+  background: var(--surface2);
+  border-radius: 5px;
+  margin-bottom: 8px;
+  font-size: 11px;
+  color: var(--muted);
+}
+:where(.scope) .quote b {
+  color: var(--accent);
+}
+:where(.scope) .composer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  background: var(--surface);
+  border-top: 1px solid var(--line);
+  flex: none;
+  min-height: 65px;
+}
+:where(.scope) .composer .compose-input {
+  height: 42px;
+  border-radius: 13px;
+  background: var(--surface2);
+  font-size: 13px;
+  color: var(--muted);
+  padding: 10px 12px;
+  flex: 1;
+}
+:where(.scope) .composer .send {
+  width: 41px;
+  height: 41px;
+  background: var(--accent);
+  color: var(--surface);
+  display: grid;
+  place-items: center;
+  border-radius: 13px;
+}
+:where(.scope) .composer svg {
+  width: 21px;
+  height: 21px;
+  color: inherit;
+}
+:where(.scope) .composer .send svg {
+  color: inherit;
+  width: 19px;
+  height: 19px;
+}
+:where(.scope) .otp {
+  display: flex;
+  gap: 9px;
+  direction: ltr;
+  justify-content: center;
+  margin: 6px 0;
+}
+:where(.scope) .otp span {
+  height: 51px;
+  width: 44px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  border-radius: 12px;
+  font-size: 22px;
+  font-weight: 700;
+}
+:where(.scope) .otp span.focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--soft);
+}
+:where(.scope) .skeleton {
+  height: 12px;
+  background: var(--line);
+  border-radius: 7px;
+  margin: 8px 0;
+  opacity: 0.7;
+}
+:where(.scope) .skeleton.short {
+  width: 58%;
+}
+:where(.scope) .skeleton.medium {
+  width: 80%;
+}
+:where(.scope) .audio {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-width: 205px;
+}
+:where(.scope) .audio .wave {
+  display: flex;
+  gap: 3px;
+  align-items: center;
+  flex: 1;
+  height: 29px;
+}
+:where(.scope) .audio .wave i {
+  display: block;
+  width: 3px;
+  border-radius: 2px;
+  background: var(--accent);
+  opacity: 0.65;
+}
+:where(.scope) .check-circle.on {
+  color: #fff;
+  background: var(--accent);
+  border-color: var(--accent);
+}
+:where(.scope) .data-table .person {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+:where(.scope) .data-table .person .avatar {
+  width: 31px;
+  height: 31px;
+  font-size: 10px;
+}
+:where(.scope) .data-table .more svg {
+  width: 16px;
+  height: 16px;
+}
+:where(.scope) .tagline {
+  text-align: center;
+  font-size: 11px;
+  color: var(--muted);
+  margin: 0;
+  line-height: 1.9;
+}
+:where(.scope) .two-col .card {
+  padding: 13px;
+}
+:where(.scope) .two-col .card b {
+  display: block;
+  font-size: 18px;
+}
+:where(.scope) .two-col .card span {
+  font-size: 11px;
+  color: var(--muted);
+}
+:where(.scope) .user-summary {
+  padding: 22px 15px;
+  text-align: center;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+}
+:where(.scope) .user-summary .avatar {
+  margin: 0 auto 11px;
+  width: 60px;
+  height: 60px;
+  font-size: 23px;
+}
+:where(.scope) .user-summary h3 {
+  font-size: 21px;
+  margin: 0;
+}
+:where(.scope) .user-summary p {
+  font-size: 12px;
+  color: var(--muted);
+  margin: 0;
+}
+:where(.scope) .quiz-option.selected {
+  border-color: var(--accent);
+  background: var(--soft);
+}
+:where(.scope) .question-nos .done {
+  background: var(--soft);
+  color: var(--accent);
+  border-color: transparent;
+}
+:where(.scope) .question-nos .current {
+  border-color: var(--accent);
+  font-weight: 700;
+}
+:where(.scope) .grade {
+  font-size: 30px;
+  line-height: 1.6;
+  font-weight: 800;
+  color: var(--accent);
+}
+:where(.scope) .user-summary.compact-profile {
+  padding: 14px 15px;
+}
+:where(.scope) .bubble .message {
+  font-size: 15px;
+  line-height: 1.85;
+}
+:where(.scope) .edu-body .edu-list .row {
+  padding: 12px;
+  min-height: 66px;
+}
+:where(.scope) .edu-list .row h4 {
+  font-size: 14px;
+}
+:where(.scope) .edu-meta .kv {
+  padding: 9px 0;
+}
+:where(.scope) .edu-timer.warning {
+  background: var(--warnbg);
+  color: var(--warning);
+}
+:where(.scope) .edu-editor-option.selected {
+  border-color: var(--accent);
+  background: var(--soft);
+}
+:where(.scope) .edu-editor-option .badge {
+  font-size: 9px;
+  padding: 3px 5px;
+  margin-right: auto;
+}
+:where(.scope) .edu-body .empty.small-empty {
+  padding: 24px 12px;
+}
+:where(.scope) .edu-body .empty h3 {
+  font-size: 21px;
+}
+:where(.scope) .edu-body .empty p {
+  font-size: 13px;
+  line-height: 1.9;
+}
+:where(.scope) .edu-exam-layout .card {
+  padding: 15px;
+}
+:where(.scope) .edu-exam-layout .kv {
+  font-size: 12px;
+  padding: 10px 0;
+}
+:where(.scope) .edu-exam-layout .kv .key {
+  font-size: 11px;
+}
+:where(.scope) .edu-exam-layout .kv .val {
+  font-size: 11px;
+}
+:where(.scope) .edu-questions .between {
+  font-size: 13px;
+  gap: 4px;
+}
+:where(.scope) .edu-q-item.on {
+  background: var(--soft);
+  border-color: var(--accent);
+}
+:where(.scope) .date-cell.active {
+  background: var(--action);
+  border-color: var(--action);
+  color: var(--on-action);
+}
+:where(.scope) .stepper .done .dot {
+  background: var(--action);
+  border-color: var(--action);
+  color: var(--on-action);
+}
+:where(.scope) .date-cell.active b {
+  color: var(--on-action);
+}
+:where(.scope) .radio {
+  border-color: var(--control-border);
+}
+:where(.scope) .checkbox {
+  border-color: var(--control-border);
+}
+:where(.scope) .alert.good {
+  background: var(--success-soft);
+  color: var(--success);
+}
+:where(.scope) .alert.good svg {
+  color: var(--success);
+}
+:global(:root[data-theme='dark']) .scope .toggle::after {
+  background: #a2b4ce;
+}
+:global(:root[data-theme='dark']) .scope .toggle.on::after {
+  background: var(--on-action);
+}
+:where(.scope) .v4-body .v4-hero {
+  padding: 14px 16px;
+}
+:where(.scope) .v4-hero h3 {
+  font-size: 21px;
+  margin-top: 0;
+}
+:where(.scope) .v4-hero p {
+  font-size: 13px;
+  line-height: 1.85;
+}
+:where(.scope) .v4-meta {
+  padding: 9px 14px;
+}
+:where(.scope) .v4-meta .kv {
+  padding: 9px 0;
+}
+:where(.scope) .v4-list .row {
+  padding: 12px;
+  min-height: 62px;
+}
+:where(.scope) .v4-list .row h4 {
+  font-size: 14px;
+}
+:where(.scope) .v4-list .row p {
+  font-size: 12px;
+}
+:where(.scope) .v4-bars .between {
+  font-size: 13px;
+}
+:where(.scope) .v4-chat-preview .bubble {
+  max-width: 95%;
+}
+:where(.scope) .v4-modal .row {
+  min-height: 56px;
+  padding: 10px;
+}
+:where(.scope) .v4-modal .v4-meta {
+  padding: 5px 13px;
+}
+:where(.scope) .v4-desk .v4-list .row {
+  min-height: 59px;
+}
+:where(.scope) .v4-body .upload {
+  padding: 15px;
+}
+:where(.scope) .v4-body .empty.small-empty {
+  padding: 24px 12px;
+}
+:where(.scope) .v4-modal-body .list {
+  flex-shrink: 0;
+}
+:where(.scope) .v4-modal-body > .card {
+  flex-shrink: 0;
+}
+.scope * {
+  min-width: 0;
+}
+.scope .card {
+  background: var(--surface);
+  border-color: var(--line);
+  padding: 18px;
+  border-radius: 16px;
+}
+.scope .card h3 {
+  font-size: var(--card-title-size, calc(17px * var(--text-scale, 1)));
+  font-weight: 750;
+  line-height: 1.65;
+}
+.scope .card p {
+  font-size: var(--card-body-size, calc(14px * var(--text-scale, 1)));
+  color: var(--muted);
+  line-height: var(--card-body-line-height, 1.9);
+}
+.scope .list {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  overflow: hidden;
+}
+.scope .row {
+  padding: 14px;
+  min-height: 68px;
+  gap: 12px;
+}
+.scope .row h4 {
+  font-size: calc(14px * var(--text-scale, 1));
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+.scope .row p {
+  font-size: calc(12px * var(--text-scale, 1));
+  line-height: 1.7;
+}
+.scope .row[role='button']:hover {
+  background: var(--soft);
+}
+.scope .row[role='button']:focus-visible {
+  outline-offset: -4px;
+}
+.scope .row .tile-icon {
+  width: 40px;
+  height: 40px;
+}
+.scope .alert {
+  font-size: calc(14px * var(--text-scale, 1));
+  line-height: 1.9;
+  padding: 13px 15px;
+  border-radius: 12px;
+}
+.scope .alert.bad {
+  color: var(--danger);
+  background: var(--badbg);
+}
+.scope .alert.warn {
+  color: var(--warning);
+  background: var(--warnbg);
+}
+.scope .policy {
+  font-size: calc(13px * var(--text-scale, 1));
+  color: var(--muted);
+  line-height: 1.95;
+}
+.scope .badge {
+  font-size: calc(12px * var(--text-scale, 1));
+}
+.scope .file {
+  padding: 14px;
+  min-height: 70px;
+  background: var(--surface);
+}
+.scope .file h4 {
+  font-size: calc(14px * var(--text-scale, 1));
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+  direction: auto;
+}
+.scope .file p {
+  font-size: calc(12px * var(--text-scale, 1));
+}
+.scope .kv {
+  gap: 16px;
+  align-items: flex-start;
+  padding: 10px 0;
+}
+.scope .kv .key {
+  font-size: calc(13px * var(--text-scale, 1));
+}
+.scope .kv .val {
+  font-size: calc(14px * var(--text-scale, 1));
+  overflow-wrap: anywhere;
+}
+.scope .seg {
+  background: var(--surface2);
+  padding: 5px;
+}
+.scope .seg span {
+  min-height: 44px;
+  display: grid;
+  place-items: center;
+  font-size: calc(14px * var(--text-scale, 1));
+}
+.scope .chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(13px * var(--text-scale, 1));
+  padding: 5px 13px;
+}
+.scope .search {
+  height: 48px;
+  font-size: calc(14px * var(--text-scale, 1));
+  background: var(--surface2);
+}
+.scope .checkline {
+  font-size: calc(14px * var(--text-scale, 1));
+  line-height: 1.9;
+  min-height: 44px;
+  cursor: pointer;
+  padding: 8px 0;
+}
+.scope .checkbox {
+  flex: none;
+}
+.scope .switch-hit .toggle {
+  pointer-events: none;
+}
+.scope .progress {
+  height: 7px;
+  margin-top: 12px;
+}
+.scope .stats {
+  gap: 12px;
+}
+.scope .stat {
+  padding: 15px;
+}
+.scope .stat b {
+  font-size: calc(28px * var(--text-scale, 1));
+}
+.scope .stat span {
+  font-size: calc(13px * var(--text-scale, 1));
+}
+.scope .empty {
+  padding: 24px 18px;
+}
+.scope .empty h3 {
+  font-size: calc(22px * var(--text-scale, 1));
+}
+.scope .empty p {
+  font-size: calc(14px * var(--text-scale, 1));
+  line-height: 2;
+}
+.scope .bubble {
+  max-width: 85%;
+  padding: 14px 16px;
+  background: var(--surface);
+}
+.scope .bubble.mine {
+  align-self: flex-end;
+  background: var(--soft);
+}
+.scope .message {
+  font-size: calc(16px * var(--text-scale, 1));
+  line-height: 1.9;
+}
+.scope .calendar-grid .selected {
+  background: var(--action);
+  color: var(--on-action);
+}
+.scope .upload {
+  min-height: 110px;
+  padding: 18px;
+  border-color: var(--control-border);
+}
+.scope .upload p {
+  font-size: calc(12px * var(--text-scale, 1));
+  line-height: 1.8;
+}
+.scope [dir='auto'] {
+  unicode-bidi: plaintext;
+}
+@container device (max-width:767px) {
+  .scope .card {
+    padding: 16px;
+  }
+}
+@container device (max-width:767px) {
+  .scope .card h3 {
+    font-size: var(--card-title-size, calc(17px * var(--text-scale, 1)));
+  }
+}
+@container device (max-width:767px) {
+  .scope .kv .key {
+    font-size: calc(12px * var(--text-scale, 1));
+  }
+}
+@container device (max-width:767px) {
+  .scope .kv .val {
+    font-size: calc(13px * var(--text-scale, 1));
+  }
+}
+@container device (max-width:767px) {
+  .scope .bubble {
+    max-width: 95%;
+  }
+}
+@container device (max-width:767px) {
+  .scope .upload {
+    padding: 14px;
+  }
+}
+@container device (max-width:359px) {
+  .scope .row {
+    padding: 12px;
+    gap: 8px;
+  }
+}
+@container device (max-width:359px) {
+  .scope .row h4 {
+    font-size: calc(15px * var(--text-scale, 1));
+  }
+}
+@container device (max-width:359px) {
+  .scope .row .tile-icon {
+    width: 32px;
+    height: 32px;
+  }
+}
+@container device (max-width:359px) {
+  .scope .stats {
+    gap: 6px;
+  }
+}
+@container device (max-width:359px) {
+  .scope .stat {
+    padding: 10px 6px;
+  }
+}
+@container device (max-width:359px) {
+  .scope .stat b {
+    font-size: calc(24px * var(--text-scale, 1));
+  }
+}
+@container device (max-width:359px) {
+  .scope .stat span {
+    font-size: calc(11px * var(--text-scale, 1));
+  }
+}
+@container device (max-width:359px) {
+  .scope .seg span {
+    font-size: calc(12px * var(--text-scale, 1));
+    padding: 5px;
+  }
+}
+@container device (max-width:359px) {
+  .scope .chip {
+    font-size: calc(12px * var(--text-scale, 1));
+    padding: 5px 9px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .scope * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+.scope .calendar-grid button.selected {
+  background: var(--action);
+  color: var(--on-action);
+}
+.scope .chip {
+  min-height: 44px;
+}
+.scope .edu-exam-layout > .card {
+  min-width: 0;
+}
+.scope .edu-exam-layout > .stack {
+  min-width: 0;
+}
+.scope .seg {
+  overflow-x: auto;
+  scrollbar-width: thin;
+  gap: 4px;
+}
+.scope .seg [role='tab'] {
+  white-space: nowrap;
+  min-width: min-content;
+  padding: 7px 10px;
+  flex: 1;
+}
+.scope .date-strip {
+  overflow-x: auto;
+  max-width: 100%;
+}
+@container device (max-width:1199px) and (min-width:768px) {
+  .scope .edu-exam-layout > .stack {
+    grid-column: 1/-1;
+  }
+}
+@container device (max-width:767px) {
+  .scope .edu-exam-layout > .stack {
+    grid-column: auto;
+  }
+}
+@container device (max-width:767px) {
+  .scope .between:has(> .search) {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+@container device (max-width:767px) {
+  .scope .between:has(> .chips) {
+    flex-wrap: wrap;
+  }
+}
+@container device (max-width:767px) {
+  .scope .chips {
+    flex-wrap: wrap;
+  }
+}
+@container device (max-width:767px) {
+  .scope .between.small {
+    flex-wrap: wrap;
+  }
+}
+:where(.scope) .v5-list {
+  min-width: 0;
+}
+.scope .search input {
+  flex: 1;
+  min-width: 0;
+  min-height: 44px;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--text);
+  font-size: inherit;
+}
+.scope .seg > button {
+  position: relative;
+  isolation: isolate;
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 44px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 9px;
+  padding: 7px 10px;
+  font: inherit;
+  font-size: calc(14px * var(--text-scale, 1));
+  line-height: 1.65;
+  text-align: center;
+  color: var(--muted);
+  background: transparent;
+  overflow-wrap: anywhere;
+}
+.scope .seg:has(> button) {
+  height: auto;
+  padding-block: 0;
+  overflow: visible;
+}
+.scope .seg > button.on {
+  color: var(--text);
+  background: transparent;
+  box-shadow: none;
+  font-weight: 700;
+}
+.scope .seg > button.on::before {
+  content: '';
+  position: absolute;
+  inset: 5px 0;
+  z-index: -1;
+  border-radius: 9px;
+  background: var(--surface);
+  box-shadow: 0 1px 5px #00000009;
+}
+:where(.scope) .v5-row {
+  width: 100%;
+  background: var(--surface);
+  text-align: start;
+  font: inherit;
+  color: var(--text);
+  border: 0;
+  display: flex;
+}
+:where(.scope) .v5-row + .v5-row {
+  border-top: 1px solid var(--line);
+}
+:where(.scope) .v5-row-copy strong {
+  display: block;
+  font-size: calc(16px * var(--text-scale, 1));
+  line-height: 1.7;
+}
+:where(.scope) .v5-row-copy small {
+  display: block;
+  font-size: calc(13px * var(--text-scale, 1));
+  line-height: 1.7;
+  color: var(--muted);
+  margin-top: 0;
+}
+
+@container device (max-width: 767px) {
+  :where(.scope) .v5-row-copy strong {
+    font-size: calc(14px * var(--text-scale, 1));
+  }
+  :where(.scope) .v5-row-copy small {
+    font-size: calc(12px * var(--text-scale, 1));
+  }
+}
+
+:where(.scope) .v5-row-main {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
+  min-height: 44px;
+  background: none;
+  border: 0;
+  font: inherit;
+  color: inherit;
+  text-align: start;
+  padding: 0;
+}
+:where(.scope) .v5-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--muted);
+}
+:where(.scope) .v5-note p {
+  margin: 0;
+}
+:where(.scope) .v5-note svg {
+  flex: none;
+  color: var(--primary);
+}
+:where(.scope) .v5-hero h2 {
+  font-size: calc(21px * var(--text-scale, 1));
+  margin: 0;
+  line-height: 1.7;
+}
+:where(.scope) .v5-hero p {
+  margin: 0;
+  color: var(--muted);
+  font-size: calc(14px * var(--text-scale, 1));
+  line-height: 1.9;
+}
+.scope :is(.app-body, .mk-source-surface) {
+  min-width: 0;
+}
+.scope .mk-source-surface {
+  display: grid;
+  gap: 18px;
+}
+.scope .app-body {
+  padding: 0;
+  overflow: visible;
+  height: auto;
+  max-width: none;
+}
+.scope .section-title {
+  margin: 1px 0 -3px;
+  font-size: calc(16px * var(--text-scale, 1));
+  line-height: 1.65;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.scope .state {
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--surface);
+  padding: 24px 18px;
+}
+.scope .state p {
+  font-size: calc(14px * var(--text-scale, 1));
+  line-height: 2;
+}
+.scope [data-v5-workflow-fields] {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--v5-layout-gap, 18px);
+}
+.scope [data-v5-workflow-fields] > :has(textarea) {
+  grid-column: 1/-1;
+}
+.scope [data-v5-workflow-fields] > p {
+  grid-column: 1/-1;
+}
+.scope [data-v5-workflow-fields] > h2 {
+  grid-column: 1/-1;
+}
+.scope [data-v5-workflow-fields] > h3 {
+  grid-column: 1/-1;
+}
+.scope [data-v5-workflow-fields] > :has(> [data-v4-field]) {
+  grid-column: 1/-1;
+}
+.scope [data-v5-workflow-fields] > label:has(input[type='checkbox']) {
+  grid-column: 1/-1;
+}
+:where(.scope) .v4-inline-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+:where(.scope) .v4-check {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  gap: 12px;
+  min-height: 68px;
+  padding: 14px;
+  font-size: calc(14px * var(--text-scale, 1));
+}
+:where(.scope) .v4-check + .v4-check {
+  border-top: 1px solid var(--line);
+}
+:where(.scope) .v5-setting-choice {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--surface);
+}
+:where(.scope) .v4-check strong {
+  display: block;
+  font-size: calc(16px * var(--text-scale, 1));
+  line-height: 1.7;
+}
+:where(.scope) .v4-check small {
+  display: block;
+  color: var(--muted);
+  font-size: calc(13px * var(--text-scale, 1));
+  line-height: 1.7;
+}
+:where(.scope) .v5-switch {
+  --switch-thumb: var(--surface);
+  min-width: 44px;
+  min-height: 44px;
+  display: grid;
+  place-items: center;
+  flex: none;
+  cursor: pointer;
+}
+:global(:root[data-theme='dark']) :where(.scope) .v5-switch {
+  --switch-thumb: var(--muted);
+}
+:where(.scope) .v4-check input[type='checkbox'] {
+  appearance: none;
+  position: relative;
+  min-width: 44px;
+  width: 44px;
+  height: 26px;
+  min-height: 26px;
+  margin-inline-start: auto;
+  border: 0;
+  border-radius: 15px;
+  background: var(--line);
+  padding: 3px;
+}
+:where(.scope) .v5-switch input[type='checkbox'] {
+  appearance: none;
+  position: relative;
+  min-width: 44px;
+  width: 44px;
+  height: 26px;
+  min-height: 26px;
+  margin-inline-start: auto;
+  border: 0;
+  border-radius: 15px;
+  background: var(--line);
+  padding: 3px;
+}
+:where(.scope) .v4-check input[type='checkbox']::after {
+  content: '';
+  position: absolute;
+  right: 3px;
+  top: 3px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--surface);
+  box-shadow: 0 1px 3px #0002;
+}
+:where(.scope) .v5-switch input[type='checkbox']::after {
+  content: '';
+  position: absolute;
+  right: 3px;
+  top: 3px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  box-shadow: 0 1px 3px #0002;
+}
+:where(.scope) .v5-switch input[type='checkbox']::after {
+  background: var(--switch-thumb);
+}
+:where(.scope) .v4-check input:checked {
+  background: var(--primary);
+}
+:where(.scope) .v5-switch input:checked {
+  background: var(--accent);
+}
+:where(.scope) .v4-check input:checked::after {
+  right: 21px;
+  background: white;
+}
+:where(.scope) .v5-switch input:checked::after {
+  background: var(--on-action, var(--on-primary));
+}
+:where(.scope) .v5-loading-cards.skeleton-wrap {
+  padding: 0;
+  gap: var(--v5-layout-gap, 18px);
+}
+:where(.scope) .v5-loading-cards .skeleton {
+  height: 12px;
+  margin: 8px 0;
+}
+:where(.scope) .v4-form-error {
+  background: var(--badbg);
+  color: var(--danger);
+  padding: 13px 15px;
+  border-radius: 12px;
+}
+:where(.scope) .v4-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+:where(.scope) .v4-metrics > div {
+  padding: 15px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--surface);
+  text-align: center;
+}
+:where(.scope) .v4-metrics b {
+  display: block;
+  font-size: calc(28px * var(--text-scale, 1));
+}
+:where(.scope) .v4-metrics small {
+  font-size: calc(13px * var(--text-scale, 1));
+  color: var(--muted);
+}
+@media (max-width: 767px) {
+  .scope [data-v5-workflow-fields] {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+}
+:where(.scope) .v5-user-summary {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+:where(.scope) .v5-user-summary > .avatar {
+  width: 56px;
+  height: 56px;
+  flex: none;
+  background: var(--soft);
+  color: var(--primary);
+  border-radius: 50%;
+  overflow: hidden;
+  font-size: calc(24px * var(--text-scale, 1));
+  display: grid;
+  place-items: center;
+}
+:where(.scope) .v5-user-summary h2 {
+  font-size: calc(21px * var(--text-scale, 1));
+}
+:where(.scope) .v5-user-summary p {
+  font-size: calc(13px * var(--text-scale, 1));
+  color: var(--muted);
+  text-align: start;
+  margin: 3px 0 8px;
+}
+:where(.scope) .v5-space-choices {
+  display: grid;
+  gap: 8px;
+}
+:where(.scope) .v5-space-choices button {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+  color: var(--text);
+  text-align: start;
+  min-height: 68px;
+}
+:where(.scope) .v5-space-choices button[aria-pressed='true'] {
+  border-color: var(--primary);
+  background: var(--soft);
+}
+:where(.scope) .v5-space-choices small {
+  display: block;
+  color: var(--muted);
+  font-size: calc(12px * var(--text-scale, 1));
+}
+:where(.scope) .v5-space-choices svg {
+  width: 22px;
+  height: 22px;
+}
+.scope .fixed-actions {
+  position: static;
+  display: flex;
+  gap: 9px;
+  flex: 1;
+  background: none;
+  border: 0;
+  padding: 0;
+}
+.scope .fixed-actions > .btn {
+  flex: 1;
+}
+.scope .grow {
+  flex: 1;
+}
+.scope summary {
+  min-height: 44px;
+  padding-block: 8px;
+  cursor: pointer;
+}
+.scope a.text-action {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+}
+.scope .tile-icon {
+  flex: none;
+  display: grid;
+  place-items: center;
+  background: var(--soft);
+  color: var(--primary);
+  border-radius: 12px;
+  width: 40px;
+  height: 40px;
+}
+:where(.scope) .v5-feed-heading > .text-action {
+  margin-block: min(0px, calc((26.4px * var(--text-scale, 1) - 44px) / 2));
+}
+:where(.scope) .v5-review-notice {
+  position: fixed;
+  inset: auto 16px 24px;
+  z-index: 100;
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 8px 32px #0002;
+  max-width: 560px;
+  margin: auto;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+:where(.scope) h3 {
+  font-weight: 700;
+}
+:where(.scope) .v5-stale-notice {
+  display: flex;
+  align-items: start;
+  gap: 12px;
+  padding: 16px;
+  border-radius: 16px;
+  background: var(--warning-soft);
+  color: var(--warning);
+  font-size: calc(13px * var(--text-scale, 1));
+  line-height: 1.9;
+}
+:where(.scope) .v5-stale-notice > svg {
+  flex: none;
+  margin-top: 3px;
+}
+:where(.scope) .v5-stale-notice p {
+  min-width: 0;
+  flex: 1;
+}
+:where(.scope) .v5-stale-notice small {
+  display: block;
+  font-size: calc(11px * var(--text-scale, 1));
+}
+:where(.scope) .v5-native-form {
+  min-width: 0;
+  margin: 0;
+  display: grid;
+  gap: var(--v5-layout-gap, 18px);
+  align-content: start;
+}
+:where(.scope) .v5-native-fields {
+  min-width: 0;
+  margin: 0;
+  display: grid;
+  gap: var(--v5-layout-gap, 18px);
+  align-content: start;
+}
+:where(.scope) .v5-native-fields[data-fields-layout='dialog'] {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 16px;
+}
+@media (max-width: 767px) {
+  :where(.scope) .v5-native-fields[data-fields-layout='dialog'] {
+    gap: 14px;
+  }
+}
+:where(.scope) .v5-search {
+  padding-block: 0;
+}
+:where(.scope) .v5-search .v5-search-clear {
+  flex: none;
+  margin-inline-end: -12px;
+}
+:where(.scope) .v5-search input {
+  color: inherit;
+}
+:where(.scope) .v5-status-control {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+/* Shared native radio choices: appearance, privacy and attendance. */
+.v5-choice-list {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 0;
+  margin: 0;
+}
+.v5-choice-list label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  min-height: 68px;
+  cursor: pointer;
+}
+.v5-choice-list strong {
+  display: block;
+  font-size: calc(16px * var(--text-scale, 1));
+  line-height: 1.7;
+}
+.v5-choice-list label + label {
+  border-top: 1px solid var(--border);
+}
+.v5-choice-list small {
+  display: block;
+  color: var(--muted);
+  font-size: calc(13px * var(--text-scale, 1));
+  line-height: 1.7;
+}
+.v5-choice-list input {
+  appearance: none;
+  width: 19px;
+  height: 19px;
+  min-height: 19px;
+  border: 1px solid var(--control-border);
+  border-radius: 50%;
+  background: var(--surface);
+  margin: 0;
+}
+.v5-choice-list input:checked {
+  border: 5px solid var(--primary-button);
+}
+:where(.scope) .v5-segmented {
+  display: flex;
+  height: 44px;
+  flex: none;
+  gap: 4px;
+  min-width: 0;
+  padding: 5px;
+  background: var(--surface2);
+  border-radius: 12px;
+}
+:where(.scope) .v5-segmented > a {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  place-items: center;
+  flex: 1;
+  min-width: 0;
+  min-height: 44px;
+  padding: 7px 10px;
+  border-radius: 9px;
+  color: var(--muted);
+  font-size: calc(14px * var(--text-scale, 1));
+  font-weight: 500;
+  text-align: center;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+:where(.scope) .v5-segmented > a[aria-current='page'] {
+  color: var(--text);
+  font-weight: 700;
+}
+:where(.scope) .v5-segmented > a[aria-current='page']::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 5px;
+  z-index: -1;
+  border-radius: inherit;
+  background: var(--surface);
+}
+:global(:root[data-reading='large']) :where(.scope) .v5-segmented {
+  height: auto;
+}
+@media (max-width: 359px) {
+  :where(.scope) .v5-segmented > a {
+    font-size: calc(12px * var(--text-scale, 1));
+    padding: 5px;
+  }
+}
+:where(.scope) .v5-native-fields {
+  padding: 0;
+  border: 0;
+  grid-template-columns: minmax(0, 1fr);
+}
+:where(.scope) .v5-secondary-command {
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--surface);
+}
+:where(.scope) .v5-secondary-command > summary {
+  min-height: 48px;
+  padding: 12px 16px;
+  color: var(--accent-text);
+  cursor: pointer;
+  font-size: calc(14px * var(--text-scale, 1));
+}
+:where(.scope) .v5-secondary-command > .card {
+  border: 0;
+  border-top: 1px solid var(--line);
+}
+@container content (min-width: 680px) {
+  :where(.scope) .v5-native-form {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@container content (min-width: 680px) {
+  :where(.scope) .v5-native-form > * {
+    grid-column: 1 / -1;
+  }
+}
+@container content (min-width: 680px) {
+  :where(.scope) .v5-native-fields {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+:where(.scope) .v5-lesson-files {
+  display: grid;
+  gap: 14px;
+  min-width: 0;
+}
+
+@container content (min-width: 680px) {
+  .scope [data-v5-workflow-fields] {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

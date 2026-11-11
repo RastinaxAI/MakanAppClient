@@ -21,6 +21,10 @@ export const errorMessages: Record<number, string> = {
   504: 'زمان پاسخ‌گویی تمام شد. پیش از تکرار اقدام، نتیجه را بررسی کنید.',
 };
 const businessMessages: Record<string, string> = {
+  PLATFORM_LAST_OWNER_REQUIRED:
+    'حداقل یک مالک پلتفرم باید فعال بماند. انتساب‌های نقش را تازه‌سازی و بررسی کنید.',
+  PLATFORM_LAST_MANAGER_REQUIRED:
+    'حداقل یک مدیر باید فعال بماند. عضویت‌ها را تازه‌سازی و بررسی کنید.',
   PERSONAL_CLASS_MANAGER_REQUIRED:
     'این عضویت دیگر مدیر فعال و مجاز کلاس نیست. اعضای کلاس را دوباره بررسی کنید.',
   MEMBERSHIP_LOOKUP_INCOMPLETE:

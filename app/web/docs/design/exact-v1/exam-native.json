@@ -1,0 +1,88 @@
+{
+  "updatedAt": "2026-11-09T11:41:10.642315+00:00",
+  "buildId": "RfdLJl1eyeZUUyBk6ZSmk",
+  "taskComplete": false,
+  "components": [
+    "src/features/personal/school/exam-form.tsx",
+    "src/features/personal/school/creation-pages.tsx",
+    "src/components/ui/number-input.tsx",
+    "src/components/ui/number-input.module.css",
+    "src/design/v5-product.css",
+    "tests/browser/exact-exam-native.spec.ts",
+    "tests/browser/project-expansion.spec.ts",
+    "tests/fixtures/backend/workflows.mjs",
+    "tests/fixtures/backend/assignment-drafts.mjs"
+  ],
+  "sourceSha256": {
+    "src/features/personal/school/exam-form.tsx": "0eb73f90a81d6acf6be24f8f3496686afb6f9b9d6af42db73726a870c4e3e964",
+    "src/features/personal/school/creation-pages.tsx": "411eacb33762f40b048b6a17b6ed394bcdeb1fdab21b4a886cbc495398171e98",
+    "src/components/ui/number-input.tsx": "10936774c79a26ebb467f68ac3e9c9b1d338f716ea6ce0ded58eeb79427c7df1",
+    "src/components/ui/number-input.module.css": "f546192e088eef38ab32362d06b8706024e7c576a7d8d04a3a46f4d8b7c36b3a",
+    "src/design/v5-product.css": "baa210d7f1ee1dd07663b1473ac2790522ec7547fe8850c61c272568514f0e3c",
+    "tests/browser/exact-exam-native.spec.ts": "89a300c922574a0eed7cd3d0412def35d32a5cab53379d9f9b9c816cc8a17a7c",
+    "tests/browser/project-expansion.spec.ts": "f6e6511c3d338f1a4de298ca9693e4f11c9207a429b2d670119f8ff12aacd731",
+    "tests/fixtures/backend/workflows.mjs": "4dedf9b704a6790919d26cbd415ee5c1c5677a8dc57dcb727dc1bfdb0ad5c42f",
+    "tests/fixtures/backend/assignment-drafts.mjs": "e766a7d0d4c39fec2b84e0b994dc683b320c641e9f2bfe9f7a4f5fc864c0d868"
+  },
+  "contract": "Existing CreateExamDraftCommand POST; same ExamEditorDto ACK, two existing enum values, no new backend operation or publication on create. Organization and independent flows stay separate.",
+  "browser": {
+    "passed": 41,
+    "failed": 0,
+    "files": 6,
+    "skipped": 0,
+    "flaky": 0,
+    "receipts": "tmp/exact-v1/browser-sixtythird-receipts.json",
+    "scope": "Targeted regression, not full356."
+  },
+  "visual": {
+    "captured": 12,
+    "verified": 12,
+    "overflow": 0,
+    "errors": 0,
+    "unreviewedRectanglesAtLeast4": 0,
+    "archive": "output/review/exact-v1/after-sixtythird-exam",
+    "remaining": "Numeric value-to-unit text gap is visually too wide; adjust intrinsic width in64. Enum placeholder is a documented data difference."
+  },
+  "responsive": {
+    "boundaryConfigurations": 22,
+    "largeTextConfigurations": 22,
+    "errors": 0,
+    "overflow": 0,
+    "pngDimensionsVerified": true,
+    "receipts": "tmp/exact-v1/responsive-sixtythird-exam-receipts.json"
+  },
+  "before": "output/review/exact-v1/before-sixtysecond-exam",
+  "reference": "output/review/exact-v1/reference-sixtysecond-exam",
+  "build65": {
+    "buildId": "mFq8lAOG3QD9VQKD5XWxR",
+    "sourceSnapshot": "tmp/exact-v1/source-sixtyfifth.json",
+    "unitPassed": 517,
+    "moduleBoundaries": 349,
+    "browser": {
+      "passed": 365,
+      "files": 77,
+      "successfulIndependentBatches": 12,
+      "initialFailedAttempts": 3,
+      "summary": "tmp/exact-v1/browser-sixtyfifth-full-summary.json",
+      "scope": "Compiled65 only; pending66 is not covered."
+    },
+    "visual": {
+      "main": 18,
+      "boundary": 33,
+      "large200": 33,
+      "unreviewedRectanglesAtLeast4": 0,
+      "backgroundControlCandidates": 24,
+      "archives": [
+        "output/review/exact-v1/after-sixtyfifth-exam",
+        "output/review/exact-v1/after-boundaries-sixtyfifth-exam",
+        "output/review/exact-v1/after-large-sixtyfifth-exam"
+      ]
+    },
+    "deletion": "Registered DELETE with expected version and question rowversions; only exact HTTP204 is accepted. Conflict refresh never silently deletes. Shared summary and DOM action order match the modal.",
+    "limitations": [
+      "Question form backdrop still differs from the editor list; source66 prepares native selection and fields.",
+      "Fixture versionNumber0 vs reference1 is preserved until the frozen regression finishes; no hardcoded UI version.",
+      "Metadata shows actual prompt because no short question-title field exists."
+    ]
+  }
+}

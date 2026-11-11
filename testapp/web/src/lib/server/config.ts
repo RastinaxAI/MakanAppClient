@@ -23,7 +23,7 @@ export function serverConfig() {
   const origin = new URL(
     process.env.APP_ORIGIN ??
       (process.env.NODE_ENV === 'production'
-        ? 'https://app.makanapp.org'
+        ? 'https://testapp.makanapp.org'
         : 'http://127.0.0.1:3000'),
   );
   return {

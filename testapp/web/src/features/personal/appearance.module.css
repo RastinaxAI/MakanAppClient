@@ -1,0 +1,54 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+.page :global(.policy) {
+  font-size: calc(13px * var(--text-scale, 1));
+  line-height: 1.95;
+  color: var(--muted);
+  margin: 0;
+}
+.themeChoices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  border: 0;
+  padding: 0;
+  margin: 12px 0;
+  min-width: 0;
+}
+.themeChoices label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  min-height: 44px;
+  padding: 8px 14px;
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  background: var(--surface);
+  color: var(--muted);
+  font-size: calc(12px * var(--text-scale, 1));
+  font-weight: 650;
+  cursor: pointer;
+}
+.themeChoices label:has(input:checked) {
+  background: var(--primary-soft);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.themeChoices label:focus-within {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+}
+.themeChoices input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  min-height: 1px;
+  padding: 0;
+  border: 0;
+  opacity: 0;
+}

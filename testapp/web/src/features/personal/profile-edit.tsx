@@ -1,4 +1,6 @@
 'use client';
+import { Input as NativeInput } from '@/components/ui/input';
+
 import * as uiText from '@/content/fa';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
@@ -70,7 +72,7 @@ export function PersonalProfileEdit() {
           ] as const
         ).map((field) => (
           <V4Field key={field.key} label={field.label}>
-            <input
+            <NativeInput
               disabled={busy || photoBusy}
               autoComplete={field.autoComplete}
               value={values[field.key]}
@@ -79,7 +81,7 @@ export function PersonalProfileEdit() {
           </V4Field>
         ))}
         <V4Field label={uiText.text_173fec6019a6}>
-          <input
+          <NativeInput
             disabled={busy || photoBusy}
             dir="ltr"
             autoComplete="username"

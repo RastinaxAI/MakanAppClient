@@ -8,26 +8,8 @@
   min-height: 0;
   margin: 0;
 }
-.brandHeading {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-}
-.brandHeading :global(.brand-mark) {
-  width: 30px;
-  height: 30px;
-  border-radius: 8px;
-  flex: none;
-}
-.brandHeading h1 {
-  font-size: 24px;
-  line-height: 1.7;
-  margin: 0;
-  font-weight: 750;
-}
 .header {
-  text-align: center;
+  text-align: start;
 }
 .field {
   display: flex;
@@ -36,26 +18,15 @@
   min-width: 0;
 }
 .field label {
-  font-size: 14px;
+  font-size: calc(14px * var(--text-scale, 1));
   font-weight: 600;
 }
 .field input {
-  width: 100%;
-  min-height: 48px;
-  padding: 11px 13px;
-  border: 1px solid var(--control-border);
-  border-radius: 12px;
-  font-size: 16px;
-  background: var(--surface);
-  color: var(--text);
   font-variant-numeric: tabular-nums;
-}
-.field input[aria-invalid='true'] {
-  border-color: var(--danger);
 }
 .hint,
 .error {
-  font-size: 12px;
+  font-size: calc(12px * var(--text-scale, 1));
   line-height: 1.8;
   margin: 0;
 }
@@ -69,44 +40,33 @@
   display: flex;
   gap: 12px;
 }
-.actions :global(.button) {
-  width: 100%;
-  min-height: 48px;
+.actions > :global(.button) {
+  flex: none;
 }
 .policy {
-  font-size: 13px;
-  line-height: 1.95;
+  font-size: calc(11px * var(--text-scale, 1));
+  line-height: 1.9;
   color: var(--muted);
   text-align: center;
   margin: 0;
 }
 .codeActions {
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  gap: 12px;
-  flex-wrap: wrap;
+  flex-direction: row;
+  gap: 14px;
 }
 .edit {
   border: 0;
   background: none;
   color: var(--primary);
   min-height: 44px;
-  padding: 8px;
+  padding: 0;
+  line-height: 1.8;
+  margin-block: min(0px, calc((1lh - 44px) / 2));
   font: inherit;
-  font-size: 13px;
-}
-.security {
-  display: flex;
-  gap: 8px;
-  padding: 13px 15px;
-  border-radius: 12px;
-  background: var(--soft);
-  font-size: 13px;
-  color: var(--muted);
-  line-height: 1.9;
-}
-.security svg {
-  flex: none;
+  font-size: calc(13px * var(--text-scale, 1));
 }
 .otp {
   position: relative;
@@ -117,29 +77,54 @@
 .otp input {
   position: absolute;
   inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 51px;
   opacity: 0;
-  z-index: 1;
+  cursor: text;
 }
 .digits {
   display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
-  gap: 8px;
+  grid-template-columns: repeat(6, minmax(0, 44px));
+  justify-content: center;
+  gap: 9px;
+  margin: 6px 0;
+  direction: ltr;
 }
 .digits span {
   display: grid;
   place-items: center;
-  min-height: 48px;
-  background: var(--surface);
-  border: 1px solid var(--control-border);
+  min-height: 51px;
+  border: 1px solid var(--line);
   border-radius: 12px;
-  font-size: 21px;
+  background: var(--surface);
+  color: var(--text);
+  font-size: calc(22px * var(--text-scale, 1));
+  font-weight: 700;
+  line-height: 1.7;
 }
-.otp:focus-within .digits span[data-active='true'] {
-  outline: 3px solid var(--focus);
-  outline-offset: 3px;
+.otp:focus-within .digits [data-active] {
+  border-color: var(--accent);
+  outline: 2px solid var(--soft);
+  outline-offset: 0;
 }
-.digits span[data-invalid='true'] {
+.otp:has([aria-invalid='true']) .digits span {
   border-color: var(--danger);
+}
+.loginCard {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.loginCard .policy {
+  margin-top: 0;
+}
+.loginCard .codeActions {
+  margin-top: 0;
+}
+.loginCard .intro {
+  font-size: calc(14px * var(--text-scale, 1));
 }
 .spinner {
   animation: spin 900ms linear infinite;
@@ -151,13 +136,13 @@
 }
 @media (max-width: 767px) {
   .identity h1 {
-    font-size: 21px;
+    font-size: calc(21px * var(--text-scale, 1));
+  }
+  .actions > :global(.button) {
+    flex: 1;
   }
   .form {
     width: 100%;
-  }
-  .header {
-    margin-bottom: 8px;
   }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -166,9 +151,6 @@
   }
 }
 
-.header {
-  text-align: center;
-}
 .form > .actions {
   flex: none;
 }
@@ -178,6 +160,13 @@
   border: 0;
   color: inherit;
   padding: 0;
+  min-height: 44px;
+  display: block;
+  margin-block: min(0px, calc((1lh - 44px) / 2));
+  margin-inline: auto;
+  max-width: 100%;
+  text-align: inherit;
+  border-radius: 8px;
   cursor: pointer;
 }
 .form :global(.rx-content) {
@@ -187,20 +176,10 @@
 .form :global(.rx-body-grid) {
   text-align: start;
 }
-@media (max-width: 767px) {
-  .brandHeading h1 {
-    font-size: 21px;
-  }
-  .form > .actions {
-    padding-bottom: calc(20px + env(safe-area-inset-bottom));
-  }
-  .brandHeading :global(.brand-mark) {
-    width: 28px;
-    height: 28px;
-  }
+.form .intro {
+  font-size: calc(15px * var(--text-scale, 1));
 }
-@media (max-width: 359px) {
-  .brandHeading h1 {
-    font-size: 19px;
-  }
+
+.codeIntro {
+  margin: 10px 0 3px;
 }

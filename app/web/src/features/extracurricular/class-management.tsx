@@ -1,14 +1,31 @@
 'use client';
-import '@/features/reference/bundles/features-extracurricular-class-management';
+import {
+  Textarea as NativeTextarea,
+  Input as NativeInput,
+  Select as NativeSelect,
+  SearchField,
+} from '@/components/ui/input';
+
+import { uiClass } from '@/components/v5/classes';
 
 import * as uiText from '@/content/fa';
-import { useEffect, useState, type ReactNode } from 'react';
+import {
+  useCallback,
+  useContext,
+  useEffect,
+  useId,
+  useMemo,
+  useState,
+  type ReactNode,
+} from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams, usePathname } from 'next/navigation';
+import { useQueries } from '@tanstack/react-query';
 import { integration80c as t } from '@/content/fa';
 import { vnext } from '@/content/fa';
-import { Button } from '@/components/ui/button';
+import { Button, buttonClass } from '@/components/ui/button';
 import { ConfirmAction } from '@/components/ui/confirm-action';
+import { Dialog, DialogContent, useDialogFormAction } from '@/components/ui/dialog';
 import { ErrorState, LoadingSkeleton, EmptyState } from '@/components/ui/states';
 import { usePersonal, usePersonalApi } from '@/features/personal/provider';
 import { resolvePersonInput } from '@/features/personal/messaging/directory';
@@ -20,11 +37,31 @@ import {
   classApi as api,
   stateLabel,
   hasFlag,
-  delegableAcademicCapabilities,
+  independentLearningReleased,
   type S,
 } from './api-model';
 import { StaticConnectedFrame } from './frame';
+import { ClassMemberWorkspace } from './class-member';
 import { useClassCommand } from './use-class-command';
+import { useViewState } from '@/components/hooks/use-view-state';
+import { contextSignature } from '@/lib/client-surface';
+import { V4Hero, V4List, V4Row } from '@/components/v4/page';
+import {
+  useSceneFormAction,
+  useSceneContextSummary,
+  useSceneMenuTools,
+  SceneMenuClose,
+} from '@/components/v5/form-actions';
+import {
+  BookOpen,
+  Users,
+  UserPlus,
+  ClipboardList,
+  MessagesSquare,
+  History,
+  Settings,
+  SearchX,
+} from 'lucide-react';
 
 function QueryResult({
   q,
@@ -42,37 +79,67 @@ function QueryResult({
   );
 }
 export function ClassOverview({ id }: { id: string }) {
+  const { session } = usePersonal();
   const q = usePersonalApi<S['PersonalClassDto']>(`${api}/${id}`, { poll: 10000 });
   return (
-    <StaticConnectedFrame id="MK-24" title={q.data?.title ?? t.independent}>
+    <StaticConnectedFrame
+      id={
+        q.data?.archived ? 'MK-25' : q.data?.managerUserId === session.user.id ? 'MK-24' : 'MK-23'
+      }
+      title={q.data?.title ?? t.independent}
+    >
       <QueryResult q={q}>
         {q.data && (
           <>
-            <section className="card">
-              <span className="badge">{stateLabel(q.data.state ?? 'Unknown')}</span>
-              <h3>{q.data.title}</h3>
-              <p>
+            <V4Hero title={q.data.title}>
+              <span className={uiClass('badge')}>{stateLabel(q.data.state ?? 'Unknown')}</span>
+              <span>
                 {t.capacity}
                 {uiText.text_45822f54a0d0}
                 {q.data.capacity?.toLocaleString('fa-IR') ?? '—'}
-              </p>
-              <p>{t.grantHint}</p>
-            </section>
-            <div className="list">
+              </span>
+            </V4Hero>
+            <V4List>
               {[
-                ['learning', t.learning],
-                ['members', t.members],
-                ['requests', t.joins],
-                ['invite', t.invite],
-                ['setup', t.spaces],
-                ['info', t.history],
-                ['edit', t.settings],
-              ].map(([path, label]) => (
-                <Link className="row" key={path} href={`${base}/classes/${id}/${path}`}>
-                  {label}
-                </Link>
-              ))}
-            </div>
+                {
+                  path: 'learning',
+                  title: t.learning,
+                  Icon: BookOpen,
+                  show: independentLearningReleased,
+                },
+                { path: 'members', title: t.members, Icon: Users, show: true },
+                {
+                  path: 'requests',
+                  title: t.joins,
+                  Icon: ClipboardList,
+                  show: q.data.capabilities?.canManageMembers,
+                },
+                {
+                  path: 'invite',
+                  title: t.invite,
+                  Icon: UserPlus,
+                  show: q.data.capabilities?.canManageMembers,
+                },
+                { path: 'setup', title: t.spaces, Icon: MessagesSquare, show: true },
+                { path: 'info', title: t.history, Icon: History, show: true },
+                {
+                  path: 'edit',
+                  title: t.settings,
+                  Icon: Settings,
+                  show: q.data.managerUserId === session.user.id,
+                },
+              ]
+                .filter((item) => item.show)
+                .map(({ path, title, Icon }) => (
+                  <V4Row
+                    key={path}
+                    title={title}
+                    icon={<Icon size={22} />}
+                    href={`${base}/classes/${id}/${path}`}
+                  />
+                ))}
+            </V4List>
+            <p className={uiClass('policy')}>{t.grantHint}</p>
             <ClassSpaces value={q.data} />
           </>
         )}
@@ -86,16 +153,48 @@ function VersionForm({
   children,
   onSubmit,
   label = t.save,
+  primary = false,
+  onCancel,
+  reasonValue,
+  onReasonChange,
+  reasonLabel = t.reason,
 }: {
   version: string;
   busy: boolean;
   children: ReactNode;
   onSubmit: (data: FormData, version: string) => Promise<unknown>;
   label?: string;
+  primary?: boolean;
+  onCancel?: () => void;
+  reasonValue?: string;
+  onReasonChange?: (value: string) => void;
+  reasonLabel?: string;
 }) {
+  const formId = useId();
   const [committed, setCommitted] = useState(false);
   const [expected, setExpected] = useState(version),
     stale = expected !== version;
+  const action = useMemo(
+    () => (
+      <Button type="submit" form={formId} disabled={busy || stale || !version} aria-busy={busy}>
+        {label}
+      </Button>
+    ),
+    [formId, busy, stale, version, label],
+  );
+  const lifted = useSceneFormAction(action, primary);
+  const dialogActions = useMemo(
+    () => (
+      <div className={uiClass('confirm-actions')}>
+        {action}
+        <Button type="button" variant="outline" onClick={onCancel}>
+          {uiText.text_fa7af603d430}
+        </Button>
+      </div>
+    ),
+    [action, onCancel],
+  );
+  const inDialog = useDialogFormAction(dialogActions, !!onCancel);
   useEffect(() => {
     if (committed) {
       setExpected(version);
@@ -104,7 +203,8 @@ function VersionForm({
   }, [committed, version]);
   return (
     <form
-      className="card stack"
+      id={formId}
+      className={uiClass(primary || onCancel ? 'v5-native-form' : 'card stack')}
       onSubmit={async (e) => {
         e.preventDefault();
         if (!stale && !busy) {
@@ -113,10 +213,19 @@ function VersionForm({
         }
       }}
     >
-      <fieldset className="stack" disabled={busy}>
+      <fieldset
+        className={uiClass(primary || onCancel ? 'v5-native-fields' : 'stack')}
+        disabled={busy}
+      >
         {children}
-        <Field label={t.reason}>
-          <textarea name="reason" required maxLength={500} />
+        <Field label={reasonLabel}>
+          <NativeTextarea
+            name="reason"
+            required
+            maxLength={500}
+            value={reasonValue}
+            onChange={onReasonChange ? (event) => onReasonChange(event.target.value) : undefined}
+          />
         </Field>
       </fieldset>
       {stale && (
@@ -127,7 +236,7 @@ function VersionForm({
           </Button>
         </>
       )}
-      <Button disabled={busy || stale || !version}>{label}</Button>
+      {!lifted && !inDialog && action}
     </form>
   );
 }
@@ -140,6 +249,9 @@ export function ClassManagement({
   section: string;
   memberId?: string;
 }) {
+  const params = useSearchParams();
+  const { session } = usePersonal();
+  const [emptyMemberSearch, setEmptyMemberSearch] = useState(false);
   const q = usePersonalApi<S['PersonalClassDto']>(`${api}/${id}`, {
     enabled: section !== 'join',
     poll: 10000,
@@ -150,26 +262,69 @@ export function ClassManagement({
         <JoinClass id={id} />
       </StaticConnectedFrame>
     );
+  if (section === 'members' && memberId && q.data)
+    return (
+      <ClassMemberWorkspace
+        id={id}
+        classValue={q.data}
+        memberId={memberId}
+        page={membershipPage(params.get('page'))}
+      />
+    );
   return (
     <StaticConnectedFrame
-      back={`${base}/classes/${id}`}
+      back={
+        section === 'members' && memberId
+          ? `${base}/classes/${id}/members?page=${membershipPage(params.get('page'))}`
+          : `${base}/classes/${id}`
+      }
       id={
         section === 'members'
-          ? 'MK-305'
+          ? memberId
+            ? 'MK-306'
+            : emptyMemberSearch
+              ? 'MK-54'
+              : 'MK-305'
           : section === 'requests'
             ? 'MK-303'
             : section === 'invite'
               ? 'MK-296'
               : section === 'edit'
                 ? 'MK-293'
-                : 'MK-292'
+                : section === 'info'
+                  ? 'MK-318'
+                  : 'MK-292'
       }
-      title={q.data?.title ?? t.independent}
+      title={
+        section === 'members'
+          ? memberId
+            ? uiText.v5Product.memberDetails
+            : emptyMemberSearch
+              ? uiText.v5ClassMembers.membersTitle
+              : uiText.v5Product.classMembersAndRoles
+          : section === 'requests'
+            ? t.joins
+            : section === 'invite'
+              ? uiText.v5Product.inviteToClass
+              : section === 'edit'
+                ? t.settings
+                : section === 'info'
+                  ? uiText.v5Product.classHistory
+                  : uiText.v5Product.classSpaces
+      }
+      subtitle={
+        section === 'members' && emptyMemberSearch
+          ? q.data?.title
+          : q.data?.managerUserId === session.user.id
+            ? uiText.v5Product.independentClassManager
+            : undefined
+      }
+      contextTitle={q.data?.title}
     >
       <QueryResult q={q}>
         {q.data &&
           (section === 'members' ? (
-            <Members value={q.data} memberId={memberId} />
+            <Members value={q.data} onEmptySearchChange={setEmptyMemberSearch} />
           ) : section === 'requests' ? (
             <JoinRequests value={q.data} />
           ) : section === 'invite' ? (
@@ -192,20 +347,20 @@ function ClassSpaces({ value }: { value: S['PersonalClassDto'] }) {
   const command = useClassCommand('repair:' + value.id),
     [pending, setPending] = useState(false);
   return (
-    <section className="card stack">
+    <section className={uiClass('card stack')}>
       <h3>{t.spaces}</h3>
       <QueryResult q={q}>
         {q.data && (
-          <div className="link-pair">
+          <div className={uiClass('link-pair')}>
             {(['group', 'channel'] as const).map((kind) => {
               const space = q.data![kind];
               return (
-                <div className="link-card" key={kind}>
+                <div className={uiClass('link-card')} key={kind}>
                   <h4>{t[kind]}</h4>
                   <p>{stateLabel(space.state)}</p>
                   {space.conversationId && space.capabilities.canRead && (
                     <Link
-                      className="btn secondary"
+                      className={uiClass(buttonClass('btn secondary'))}
                       href={`/personal/messages/${space.conversationId}`}
                     >
                       {t.open}
@@ -272,7 +427,7 @@ function Invitation({ value }: { value: S['PersonalClassInvitationDto'] }) {
     { session } = usePersonal();
   const pending = value.status === 'Pending' && Date.parse(value.expiresAtUtc) > Date.now();
   return (
-    <article className="card stack">
+    <article className={uiClass('card stack')}>
       <h3>{value.classTitle || t.invitations}</h3>
       {value.inviter && (
         <p>
@@ -325,6 +480,7 @@ function Invitation({ value }: { value: S['PersonalClassInvitationDto'] }) {
   );
 }
 function InviteMember({ value }: { value: S['PersonalClassDto'] }) {
+  const formId = useId();
   const { call } = usePersonal(),
     [target, setTarget] = useState(''),
     [roles, setRoles] = useState('Learner');
@@ -332,11 +488,26 @@ function InviteMember({ value }: { value: S['PersonalClassDto'] }) {
     [invitation, setInvitation] = useState<S['PersonalClassInvitationDto']>();
   const command = useClassCommand('invite:' + value.id),
     [resolving, setResolving] = useState(false);
+  const action = useMemo(
+    () => (
+      <Button
+        type="submit"
+        form={formId}
+        disabled={command.busy || resolving}
+        aria-busy={command.busy || resolving}
+      >
+        {t.invite}
+      </Button>
+    ),
+    [formId, command.busy, resolving],
+  );
+  const lifted = useSceneFormAction(action, value.capabilities?.canManageMembers === true);
   if (!value.capabilities?.canManageMembers) return <ErrorState error={new ApiError(403)} />;
   return (
     <>
       <form
-        className="card stack"
+        id={formId}
+        className={uiClass('v5-native-form')}
         onSubmit={async (e) => {
           e.preventDefault();
           if (resolving || command.busy) return;
@@ -367,20 +538,20 @@ function InviteMember({ value }: { value: S['PersonalClassDto'] }) {
         }}
       >
         <Field label={t.target}>
-          <input required value={target} onChange={(e) => setTarget(e.target.value)} />
+          <NativeInput required value={target} onChange={(e) => setTarget(e.target.value)} />
         </Field>
         <Field label={t.roles}>
-          <select value={roles} onChange={(e) => setRoles(e.target.value)}>
+          <NativeSelect value={roles} onChange={(e) => setRoles(e.target.value)}>
             <option value="Learner">{t.learner}</option>
             <option value="Teacher">{t.teacher}</option>
-          </select>
+          </NativeSelect>
         </Field>
-        <Button disabled={command.busy || resolving}>{t.invite}</Button>
+        {!lifted && action}
         {!!error && <ErrorState error={error} />}
         {command.feedback}
       </form>
       {invitation && (
-        <div className="card">
+        <div className={uiClass('card')}>
           <p role="status">{t.pendingMember}</p>
           <p>
             {stateLabel(invitation.status ?? 'Unknown')}
@@ -411,7 +582,7 @@ function JoinClass({ id }: { id: string }) {
   const command = useClassCommand('join:' + id),
     [result, setResult] = useState<S['PersonalClassJoinDto']>();
   return (
-    <section className="card stack">
+    <section className={uiClass('card stack')}>
       <p>{t.pendingMember}</p>
       <Button
         disabled={command.busy || !!result}
@@ -463,222 +634,344 @@ function JoinDecision({
   canManage: boolean;
 }) {
   const command = useClassCommand('join-decision:' + value.id);
+  const { session } = usePersonal();
+  const [open, setOpen] = useState(false);
+  const key =
+    'makan:draft:view:' +
+    session.user.id +
+    ':' +
+    contextSignature(session.context) +
+    ':join-decision:' +
+    value.id +
+    ':';
+  const [reason, setReason, ready] = useViewState(
+    key + 'reason',
+    '',
+    (v): v is string => typeof v === 'string' && v.length <= 500,
+  );
+  const [decision, setDecision] = useViewState(
+    key + 'decision',
+    'Approved',
+    (v): v is string => v === 'Approved' || v === 'Rejected',
+  );
   return (
-    <article className="card stack">
+    <article className={uiClass('card stack')}>
       <p>
         <MemberName userId={value.userId} />
       </p>
       <p>{stateLabel(value.status)}</p>
       {canManage && value.status === 'Pending' && (
-        <VersionForm
-          version={value.version}
-          busy={command.busy}
-          label={t.action}
-          onSubmit={(f, version) =>
-            command.run(`${api}/join-requests/${value.id}/decision`, {
-              expectedVersion: version,
-              decision: f.get('decision'),
-              reason: f.get('reason'),
-            })
-          }
-        >
-          <Field label={t.status}>
-            <select name="decision">
-              <option value="Approved">{t.approve}</option>
-              <option value="Rejected">{t.reject}</option>
-            </select>
-          </Field>
-        </VersionForm>
+        <>
+          <Button disabled={!ready || command.busy} onClick={() => setOpen(true)}>
+            {uiText.v5Product.reviewJoinRequest}
+          </Button>
+          <Dialog open={open} onOpenChange={setOpen}>
+            <DialogContent title={uiText.v5Product.reviewJoinRequest}>
+              <div className={uiClass('card')}>
+                <MemberName userId={value.userId} />
+                <p>{uiText.v5Product.joinReviewPolicy}</p>
+              </div>
+              <VersionForm
+                version={value.version}
+                busy={command.busy}
+                label={t.action}
+                reasonValue={reason}
+                onReasonChange={setReason}
+                onCancel={() => setOpen(false)}
+                onSubmit={async (f, version) => {
+                  const result = await command.run(`${api}/join-requests/${value.id}/decision`, {
+                    expectedVersion: version,
+                    decision: f.get('decision'),
+                    reason: f.get('reason'),
+                  });
+                  if (result) {
+                    setOpen(false);
+                    setReason('');
+                  }
+                  return result;
+                }}
+              >
+                <Field label={t.status}>
+                  <NativeSelect
+                    name="decision"
+                    value={decision}
+                    onChange={(event) => setDecision(event.target.value)}
+                  >
+                    <option value="Approved">{t.approve}</option>
+                    <option value="Rejected">{t.reject}</option>
+                  </NativeSelect>
+                </Field>
+              </VersionForm>
+              {command.feedback}
+            </DialogContent>
+          </Dialog>
+        </>
       )}
-      {command.feedback}
+      {!open && command.feedback}
     </article>
   );
 }
-function Members({ value, memberId }: { value: S['PersonalClassDto']; memberId?: string }) {
-  const [page, setPage] = useState(1);
+function Members({
+  value,
+  onEmptySearchChange,
+}: {
+  value: S['PersonalClassDto'];
+  onEmptySearchChange: (empty: boolean) => void;
+}) {
+  const { session, call } = usePersonal();
+  const params = useSearchParams(),
+    router = useRouter(),
+    path = usePathname();
+  const page = membershipPage(params.get('page'));
+  const setPage = (next: number) => {
+    const query = new URLSearchParams(params);
+    query.set('page', String(next));
+    router.replace(path + '?' + query, { scroll: false });
+  };
   const q = usePersonalApi<S['PersonalClassPageOfPersonalClassMembershipDto']>(
     `${api}/${value.id}/memberships?page=${page}&pageSize=30`,
     { poll: 10000 },
   );
-  const grants = usePersonalApi<S['PersonalClassPageOfPersonalClassAcademicPermissionDto']>(
-    `${api}/${value.id}/academic-permissions?page=1&pageSize=100`,
-    { enabled: value.capabilities?.canManageRoles === true },
+  const members = q.data?.items ?? [];
+  // The same public-profile reads and cache keys used by member details. Only
+  // the returned membership page is searched; no unregistered query is sent.
+  const identities = useQueries({
+    queries: members.map((member) => {
+      const path = '/api/v1/people/' + member.userId;
+      return {
+        queryKey: ['personal', session.user.id, session.revision, path],
+        queryFn: async ({ signal }: { signal: AbortSignal }) => {
+          const profile = await call<S['MessagingPublicProfileResult']>(path, { signal });
+          if (profile.userId !== member.userId)
+            throw new ApiError(502, { code: 'CONTRACT_MISMATCH' });
+          return profile;
+        },
+        enabled: session.user.id !== member.userId,
+      };
+    }),
+  });
+  const named = members.map((member, index) => ({
+    member,
+    name:
+      (member.userId === session.user.id
+        ? session.user.displayName || session.user.firstName
+        : identities[index]?.data?.displayName) || uiText.v5Product.classMember,
+  }));
+  const [search, setSearch, searchReady] = useViewState(
+    session.user.id + ':' + contextSignature(session.context) + ':class-members:' + value.id,
+    '',
+    (s): s is string => typeof s === 'string' && s.length <= 200,
+  );
+  const query = searchReady ? search : '';
+  const visible = named.filter(({ name }) =>
+    name.toLocaleLowerCase('fa').includes(query.trim().toLocaleLowerCase('fa')),
+  );
+  const identitiesPending = identities.some(
+    (identity) => identity.isPending && identity.fetchStatus !== 'idle',
+  );
+  const emptySearch =
+    q.isSuccess &&
+    !!query.trim() &&
+    q.data.items.length > 0 &&
+    !visible.length &&
+    !identitiesPending;
+  useEffect(() => {
+    onEmptySearchChange(emptySearch);
+    return () => onEmptySearchChange(false);
+  }, [emptySearch, onEmptySearchChange]);
+  const [transfersOpen, setTransfersOpen] = useState(false);
+  const closeMenu = useContext(SceneMenuClose);
+  useSceneMenuTools(
+    <Button
+      variant="outline"
+      onClick={() => {
+        closeMenu?.();
+        setTransfersOpen(true);
+      }}
+    >
+      {t.transfer}
+    </Button>,
+    true,
+  );
+  useSceneContextSummary(
+    q.isSuccess
+      ? visible.slice(0, 3).map(({ member, name }) => ({
+          label: name,
+          value: memberDescription(member),
+        }))
+      : [],
+    true,
   );
   return (
     <>
       <QueryResult q={q}>
         {q.data && (
           <>
-            {q.data.items
-              .filter((m) => !memberId || m.id === memberId)
-              .map((m) => (
-                <Member
-                  key={m.id}
-                  value={m}
-                  classValue={value}
-                  grants={grants.data?.items}
-                  grantsReady={grants.isSuccess}
-                />
+            <SearchField
+              aria-label={uiText.v5Product.memberName}
+              placeholder={uiText.v5Product.memberName}
+              maxLength={200}
+              value={query}
+              onChange={(event) => setSearch(event.target.value)}
+              onClear={() => setSearch('')}
+            />
+            {(page > 1 || q.data.totalCount > q.data.pageSize) && (
+              <p className={uiClass('policy')}>{uiText.v5Product.memberPageSearchPolicy}</p>
+            )}
+            {visible.length > 0 && (
+              <V4List>
+                {visible.map(({ member, name }) => (
+                  <MemberListRow
+                    key={member.id}
+                    value={member}
+                    name={name}
+                    classId={value.id}
+                    page={page}
+                  />
+                ))}
+              </V4List>
+            )}
+            {q.data.items.length > 0 &&
+              !visible.length &&
+              (identitiesPending ? (
+                <LoadingSkeleton variant="cards" />
+              ) : (
+                <>
+                  <EmptyState
+                    variant="v5-full"
+                    icon={<SearchX />}
+                    title={uiText.v5Product.noMatchingMembers}
+                    description={uiText.v5ClassMembers.searchHint}
+                  />
+                  <Button variant="outline" onClick={() => setSearch('')}>
+                    {uiText.v5Product.clearMemberSearch}
+                  </Button>
+                </>
               ))}
-            <Pager page={page} total={q.data.totalCount} onChange={setPage} />
+            {!!query.trim() && (
+              <p className={uiClass('hint')}>{uiText.v5ClassMembers.searchPolicy}</p>
+            )}
+            {!q.data.items.length && (
+              <EmptyState
+                title={
+                  page > 1 || q.data.totalCount > 0 ? uiText.v5ClassMembers.emptyPage : vnext.empty
+                }
+              />
+            )}
+            {(page > 1 || q.data.totalCount > q.data.pageSize) && (
+              <Pager page={page} total={q.data.totalCount} onChange={setPage} />
+            )}
           </>
         )}
       </QueryResult>
-      {grants.isError && <ErrorState error={grants.error} onRetry={() => void grants.refetch()} />}
-      <Transfers classValue={value} />
+      <Dialog open={transfersOpen} onOpenChange={setTransfersOpen}>
+        <DialogContent title={t.transfer}>
+          {transfersOpen && <Transfers classValue={value} />}
+        </DialogContent>
+      </Dialog>
     </>
   );
 }
-function Member({
+function membershipPage(value: string | null) {
+  const page = Number(value);
+  return Number.isSafeInteger(page) && page > 0 ? page : 1;
+}
+function MemberListRow({
   value,
-  classValue,
-  grants,
-  grantsReady,
+  classId,
+  page,
+  name,
 }: {
   value: S['PersonalClassMembershipDto'];
-  classValue: S['PersonalClassDto'];
-  grants?: S['PersonalClassAcademicPermissionDto'][];
-  grantsReady: boolean;
+  classId: string;
+  page: number;
+  name: string;
 }) {
-  const command = useClassCommand('member:' + value.id),
-    grant = grants?.find((g) => g.membershipId === value.id && g.isEffective);
-  const [selected, setSelected] = useState(
-    ['Learner', 'Teacher', 'Manager'].filter((role) => hasFlag(value.localRoles, role)),
-  );
-  const [capabilities, setCapabilities] = useState(
-    ['AuthorAssignments', 'AuthorExams', 'Grade'].filter((c) => hasFlag(grant?.capabilities, c)),
-  );
-  const [grantInitialized, setGrantInitialized] = useState(false);
-  useEffect(() => {
-    if (grantsReady && !grantInitialized) {
-      setCapabilities(
-        ['AuthorAssignments', 'AuthorExams', 'Grade'].filter((c) =>
-          hasFlag(grant?.capabilities, c),
-        ),
-      );
-      setGrantInitialized(true);
-    }
-  }, [grantsReady, grantInitialized, grant?.capabilities]);
-  const prefix = `${api}/${classValue.id}/memberships/${value.id}`;
-  const delegable = delegableAcademicCapabilities(classValue);
-  const selectedCapabilities = capabilities.filter((c) => delegable.includes(c));
   return (
-    <article className="card stack">
-      <h3>
-        <MemberName userId={value.userId} />
-      </h3>
-      <p>
-        {stateLabel(value.status)}
-        {uiText.text_78887da22764}{' '}
-        {['Learner', 'Teacher', 'Manager']
-          .filter((r) => hasFlag(value.localRoles, r))
-          .map((r) => ({ Learner: t.learner, Teacher: t.teacher, Manager: t.manager })[r])
-          .join(' / ')}
-      </p>
-      {value.status === 'Active' && classValue.capabilities?.canManageRoles && (
-        <>
-          <VersionForm
-            version={value.version}
-            busy={command.busy}
-            onSubmit={(f, version) =>
-              command.run(
-                prefix + '/roles',
-                {
-                  expectedVersion: version,
-                  roles: selected.join(', ') || 'None',
-                  delegatedCapabilities: value.delegatedCapabilities,
-                  reason: f.get('reason'),
-                },
-                { method: 'PUT' },
-              )
-            }
-          >
-            <Field label={t.roles}>
-              <select
-                multiple
-                value={selected}
-                onChange={(e) => setSelected(Array.from(e.target.selectedOptions, (o) => o.value))}
-              >
-                <option value="Learner">{t.learner}</option>
-                <option value="Teacher">{t.teacher}</option>
-                <option value="Manager">{t.manager}</option>
-              </select>
-            </Field>
-          </VersionForm>
-          {grantsReady && hasFlag(value.localRoles, 'Teacher') && (
-            <VersionForm
-              version={value.version + ':' + (grant?.version ?? '')}
-              busy={command.busy}
-              onSubmit={(f) =>
-                command.run(
-                  `${api}/${classValue.id}/academic-permissions/${value.id}`,
-                  {
-                    capabilities: selectedCapabilities.join(', ') || 'None',
-                    expectedMembershipVersion: value.version,
-                    expectedGrantVersion: grant?.version ?? null,
-                    reason: f.get('reason'),
-                  },
-                  { method: 'PUT', idempotent: true },
-                )
-              }
-            >
-              <p>{vnext.delegatedHint}</p>
-              {!delegable.length && <p>{vnext.noDelegation}</p>}
-              <Field label={t.grants}>
-                <select
-                  multiple
-                  value={selectedCapabilities}
-                  onChange={(e) =>
-                    setCapabilities(Array.from(e.target.selectedOptions, (o) => o.value))
-                  }
-                >
-                  {delegable.map((c) => (
-                    <option key={c} value={c}>
-                      {
-                        {
-                          AuthorAssignments: t.authorAssignments,
-                          AuthorExams: t.authorExams,
-                          Grade: t.grade,
-                        }[c]
-                      }
-                    </option>
-                  ))}
-                </select>
-              </Field>
-            </VersionForm>
-          )}
-        </>
-      )}
-      {value.status === 'Active' && classValue.capabilities?.canManageMembers && (
-        <VersionForm
-          version={value.version}
-          busy={command.busy}
-          label={t.remove}
-          onSubmit={(f, version) =>
-            command.run(
-              prefix,
-              { expectedVersion: version, reason: f.get('reason') },
-              { method: 'DELETE' },
-            )
-          }
-        >
-          <p>{t.remove}</p>
-        </VersionForm>
-      )}
-      {command.feedback}
-    </article>
+    <V4Row
+      testId={'membership-' + value.id}
+      title={name}
+      description={memberDescription(value)}
+      iconClassName="avatar"
+      icon={Array.from(name)[0]}
+      href={`${base}/classes/${classId}/members/${value.id}?page=${page}`}
+      end={
+        <span className={uiClass('badge')}>
+          {hasFlag(value.localRoles, 'Manager')
+            ? t.manager
+            : hasFlag(value.localRoles, 'Teacher')
+              ? t.teacher
+              : stateLabel(value.status)}
+        </span>
+      }
+    />
   );
+}
+function memberDescription(value: S['PersonalClassMembershipDto']) {
+  const roles = ['Learner', 'Teacher', 'Manager']
+    .filter((role) => hasFlag(value.localRoles, role))
+    .map((role) => ({ Learner: t.learner, Teacher: t.teacher, Manager: t.manager })[role])
+    .join(' / ');
+  return roles + ' · ' + stateLabel(value.status);
 }
 function ClassSettings({ value }: { value: S['PersonalClassDto'] }) {
   const command = useClassCommand('settings:' + value.id),
     { session } = usePersonal();
   const manager = value.managerUserId === session.user.id;
+  const [capacity, setCapacity] = useState(String(value.capacity ?? 1));
+  const [accepting, setAccepting] = useState(value.acceptingJoinRequests);
+  const [reason, setReason] = useState('');
+  const [lifecycle, setLifecycle] = useState<'activate' | 'suspend' | 'archive' | null>(null);
+  const [reasons, setReasons] = useState({ activate: '', suspend: '', archive: '' });
+  const closeLifecycle = useCallback(() => setLifecycle(null), []);
+  const closeMenu = useContext(SceneMenuClose);
+  const lifecycleMenu = useMemo(
+    () => (
+      <div className={uiClass('stack')}>
+        {(['activate', 'suspend', 'archive'] as const)
+          .filter((action) => action !== 'archive' || value.capabilities?.canArchive)
+          .map((action) => (
+            <Button
+              key={action}
+              variant="outline"
+              onClick={() => {
+                closeMenu?.();
+                setLifecycle(action);
+              }}
+            >
+              {t[action]}
+            </Button>
+          ))}
+        <Link
+          className={uiClass(buttonClass('button button-outline'))}
+          href={`${base}/classes/${value.id}/members`}
+        >
+          {t.transfer}
+        </Link>
+      </div>
+    ),
+    [closeMenu, value.capabilities?.canArchive, value.id],
+  );
+  const actionsInMenu = useSceneMenuTools(lifecycleMenu, manager && !!value.version);
+  useSceneContextSummary([
+    { label: t.capacity, value: capacity },
+    { label: t.reason, value: reason },
+  ]);
   if (!value.version || !manager) return <ErrorState error={new ApiError(403)} />;
   return (
     <>
+      <div className={uiClass('card')}>
+        <div className={uiClass('kv')}>
+          <span className={uiClass('key')}>{uiText.v5Product.registeredTitle}</span>
+          <span className={uiClass('val')}>{value.title}</span>
+        </div>
+      </div>
       <VersionForm
+        primary
         version={value.version}
         busy={command.busy}
+        reasonValue={reason}
+        onReasonChange={setReason}
         onSubmit={(f, version) =>
           command.run(
             `${api}/${value.id}/settings`,
@@ -693,39 +986,80 @@ function ClassSettings({ value }: { value: S['PersonalClassDto'] }) {
         }
       >
         <Field label={t.capacity}>
-          <input
+          <NativeInput
             required
             name="capacity"
             type="number"
             min={1}
-            defaultValue={value.capacity ?? 1}
+            value={capacity}
+            onChange={(event) => setCapacity(event.target.value)}
           />
         </Field>
-        <label>
-          <input name="accepting" type="checkbox" defaultChecked={value.acceptingJoinRequests} />
-          {t.accepting}
+        <label className={uiClass('v4-check v5-setting-choice')}>
+          <span className={uiClass('grow')}>
+            <strong>{t.accepting}</strong>
+            <small>{uiText.v5Product.joinRequestsDescription}</small>
+          </span>
+          <NativeInput
+            name="accepting"
+            type="checkbox"
+            aria-label={t.accepting}
+            checked={accepting}
+            onChange={(event) => setAccepting(event.target.checked)}
+          />
         </label>
       </VersionForm>
-      {(['activate', 'suspend', 'archive'] as const)
-        .filter((action) => action !== 'archive' || value.capabilities?.canArchive)
-        .map((action) => (
-          <VersionForm
-            key={action}
-            version={value.version!}
-            busy={command.busy}
-            label={t[action]}
-            onSubmit={(f, version) =>
-              command.run(`${api}/${value.id}/${action}`, {
-                expectedVersion: version,
-                reason: f.get('reason'),
-              })
-            }
-          >
-            <p>{t[action]}</p>
-          </VersionForm>
-        ))}
+      {!actionsInMenu && lifecycleMenu}
       {command.feedback}
-      <Transfers classValue={value} />
+      <Dialog
+        open={!!lifecycle}
+        onOpenChange={(open) => {
+          if (!open) closeLifecycle();
+        }}
+      >
+        {lifecycle && (
+          <DialogContent
+            title={t[lifecycle]}
+            description={uiText.v5Product.classLifecyclePolicy[lifecycle]}
+            scenario={
+              lifecycle === 'suspend' ? 'MK-320' : lifecycle === 'archive' ? 'MK-322' : undefined
+            }
+            onCloseAutoFocus={(event) => {
+              event.preventDefault();
+              document
+                .querySelector<HTMLElement>(
+                  '[data-v5-scene="MK-293"] .rx-head button.rx-icon-button',
+                )
+                ?.focus();
+            }}
+          >
+            <VersionForm
+              version={value.version}
+              busy={command.busy}
+              label={t[lifecycle]}
+              reasonValue={reasons[lifecycle]}
+              onReasonChange={(text) =>
+                setReasons((current) => ({ ...current, [lifecycle]: text }))
+              }
+              onCancel={closeLifecycle}
+              reasonLabel={lifecycle === 'archive' ? uiText.v5Product.archiveReason : t.reason}
+              onSubmit={async (fields, version) => {
+                const result = await command.run(`${api}/${value.id}/${lifecycle}`, {
+                  expectedVersion: version,
+                  reason: fields.get('reason'),
+                });
+                if (result) {
+                  setReasons((current) => ({ ...current, [lifecycle]: '' }));
+                  closeLifecycle();
+                }
+                return result;
+              }}
+            >
+              {command.feedback}
+            </VersionForm>
+          </DialogContent>
+        )}
+      </Dialog>
     </>
   );
 }
@@ -738,7 +1072,7 @@ function Transfers({ classValue }: { classValue?: S['PersonalClassDto'] }) {
     { poll: 10000 },
   );
   return (
-    <section className="card stack">
+    <section className={uiClass('card stack')}>
       <h3>{t.transfer}</h3>
       {classValue?.managerUserId === session.user.id && classValue.version && (
         <VersionForm
@@ -754,7 +1088,7 @@ function Transfers({ classValue }: { classValue?: S['PersonalClassDto'] }) {
           }
         >
           <Field label={t.transferTarget}>
-            <input name="target" required pattern="[a-fA-F0-9-]{36}" dir="ltr" />
+            <NativeInput name="target" required pattern="[a-fA-F0-9-]{36}" dir="ltr" />
           </Field>
         </VersionForm>
       )}
@@ -801,7 +1135,7 @@ function ClassHistory({ id }: { id: string }) {
       {q.data && (
         <>
           {q.data.items.map((v) => (
-            <article className="card" key={v.id}>
+            <article className={uiClass('card')} key={v.id}>
               <p>{stateLabel(v.action)}</p>
               <p>{date(v.occurredAtUtc, true)}</p>
             </article>
@@ -813,16 +1147,20 @@ function ClassHistory({ id }: { id: string }) {
   );
 }
 
-function MemberName({ userId }: { userId: string }) {
+function useMemberName(userId: string) {
+  return useMemberIdentity(userId) || uiText.v5Product.classMember;
+}
+function useMemberIdentity(userId: string) {
   const { session } = usePersonal();
   const q = usePersonalApi<S['MessagingPublicProfileResult']>('/api/v1/people/' + userId, {
-    enabled: session.user.id !== userId,
+    enabled: !!userId && session.user.id !== userId,
   });
-  return (
-    <span>
-      {session.user.id === userId
-        ? session.user.displayName || session.user.firstName || t.learner
-        : q.data?.displayName || t.learner}
-    </span>
-  );
+  return session.user.id === userId
+    ? session.user.displayName || session.user.firstName
+    : q.data?.userId === userId
+      ? q.data.displayName
+      : undefined;
+}
+function MemberName({ userId }: { userId: string }) {
+  return <span>{useMemberName(userId)}</span>;
 }

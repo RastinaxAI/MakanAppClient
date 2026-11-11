@@ -1,4 +1,8 @@
 'use client';
+import { Input as NativeInput, Textarea as NativeTextarea } from '@/components/ui/input';
+
+import { uiClass } from '@/components/v5/classes';
+
 import * as uiText from '@/content/fa';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
@@ -51,7 +55,7 @@ function TransferMeter({ progress, label }: { progress?: TransferProgress; label
       ? Math.min(100, Math.round((progress.loaded / progress.total) * 100))
       : null;
   return (
-    <div className={s.meter}>
+    <div className={uiClass(s.meter)}>
       <span>
         {label}
         {percent !== null
@@ -223,7 +227,7 @@ export function AttachmentPicker({
           <button
             type="button"
             ref={trigger}
-            className={s.attachButton}
+            className={uiClass(s.attachButton)}
             aria-label={uiText.text_01eac8227680}
             disabled={disabled || busy}
           >
@@ -233,7 +237,7 @@ export function AttachmentPicker({
         </Menu.Trigger>
         <Menu.Portal>
           <Menu.Content
-            className={`dropdown ${t.theme} ${t.menu} ${s.attachMenu}`}
+            className={uiClass(`dropdown ${t.theme} ${t.menu} ${s.attachMenu}`)}
             side="top"
             align="start"
             sideOffset={12}
@@ -264,7 +268,7 @@ export function AttachmentPicker({
           </Menu.Content>
         </Menu.Portal>
       </Menu.Root>
-      <input
+      <NativeInput
         ref={camera}
         type="file"
         accept="image/*"
@@ -273,7 +277,7 @@ export function AttachmentPicker({
         aria-label={uiText.text_15e11a432ae3}
         onChange={(event) => choose(event.currentTarget)}
       />
-      <input
+      <NativeInput
         ref={photo}
         type="file"
         accept="image/*"
@@ -282,7 +286,7 @@ export function AttachmentPicker({
         aria-label={uiText.text_9105d8bdec0d}
         onChange={(event) => choose(event.currentTarget)}
       />
-      <input
+      <NativeInput
         ref={video}
         type="file"
         accept="video/*"
@@ -291,7 +295,7 @@ export function AttachmentPicker({
         aria-label={uiText.text_8815ba986d1a}
         onChange={(event) => choose(event.currentTarget)}
       />
-      <input
+      <NativeInput
         ref={file}
         type="file"
         multiple
@@ -307,7 +311,7 @@ export function AttachmentPicker({
         }}
       >
         <DialogContent
-          className={`${t.theme} ${t.dialog}`}
+          className={uiClass(`${t.theme}`)}
           title={uiText.text_4314e718c6d3}
           description={uiText.text_43428a0f7e51}
           onCloseAutoFocus={(event) => {
@@ -316,17 +320,17 @@ export function AttachmentPicker({
           }}
         >
           <form
-            className={s.sendSheet}
+            className={uiClass(s.sendSheet)}
             onSubmit={(event) => {
               event.preventDefault();
               event.stopPropagation();
               void submit();
             }}
           >
-            <div className={s.draftList}>
+            <div className={uiClass(s.draftList)}>
               {items.map((item) => (
-                <article key={item.key} className={s.draftCard}>
-                  <div className={s.draftThumb}>
+                <article key={item.key} className={uiClass(s.draftCard)}>
+                  <div className={uiClass(s.draftThumb)}>
                     {item.preview ? (
                       item.file.type.startsWith('video/') ? (
                         <video src={item.preview} muted playsInline preload="metadata" />
@@ -337,7 +341,7 @@ export function AttachmentPicker({
                       <FileText size={30} />
                     )}
                   </div>
-                  <div className={s.draftInfo}>
+                  <div className={uiClass(s.draftInfo)}>
                     <strong dir="auto">{item.file.name}</strong>
                     <small>{formatFileSize(item.file.size)}</small>
                     {item.phase === 'uploading' || item.phase === 'processing' ? (
@@ -350,19 +354,19 @@ export function AttachmentPicker({
                         }
                       />
                     ) : item.phase === 'ready' ? (
-                      <span className={s.ready}>
+                      <span className={uiClass(s.ready)}>
                         <Check size={14} />
                         {uiText.text_69791a3b81bf}
                       </span>
                     ) : item.error ? (
-                      <span className={s.itemError}>{item.error}</span>
+                      <span className={uiClass(s.itemError)}>{item.error}</span>
                     ) : (
-                      <span className={s.selected}>{uiText.text_e14b064baee8}</span>
+                      <span className={uiClass(s.selected)}>{uiText.text_e14b064baee8}</span>
                     )}
                   </div>
                   <button
                     type="button"
-                    className={s.remove}
+                    className={uiClass(s.remove)}
                     aria-label={uiText.text_6f5fc5cfc9f9 + item.file.name}
                     disabled={busy}
                     onClick={() => remove(item)}
@@ -372,9 +376,9 @@ export function AttachmentPicker({
                 </article>
               ))}
             </div>
-            <label className={s.caption}>
+            <label className={uiClass(s.caption)}>
               {uiText.text_eaca3b73fa59}
-              <textarea
+              <NativeTextarea
                 rows={2}
                 value={text}
                 disabled={busy}
@@ -383,11 +387,11 @@ export function AttachmentPicker({
               />
             </label>
             {error && (
-              <p className={s.transferError} role="alert">
+              <p className={uiClass(s.transferError)} role="alert">
                 {error}
               </p>
             )}
-            <div className={s.sheetActions}>
+            <div className={uiClass(s.sheetActions)}>
               {busy && phase === 'upload' ? (
                 <Button type="button" variant="outline" onClick={() => abort.current?.abort()}>
                   {uiText.text_a72404308ae9}
@@ -403,7 +407,7 @@ export function AttachmentPicker({
                 </Button>
               )}
               <Button type="submit" disabled={busy || !items.length || disabled}>
-                {busy ? <LoaderCircle className={s.spin} size={18} /> : <Send size={18} />}{' '}
+                {busy ? <LoaderCircle className={uiClass(s.spin)} size={18} /> : <Send size={18} />}{' '}
                 {busy
                   ? phase === 'sending'
                     ? uiText.text_e735f9d9a2a5
@@ -421,7 +425,7 @@ export function AttachmentPicker({
 }
 export function AttachmentSummary({ attachments }: { attachments?: Attachment[] }) {
   return attachments?.length ? (
-    <div className={s.pendingFiles}>
+    <div className={uiClass(s.pendingFiles)}>
       {attachments.map((asset) => (
         <span key={asset.fileAssetId}>
           <Paperclip size={15} />
@@ -507,12 +511,15 @@ export function MessageAttachment({
     return () => observer.disconnect();
   }, [image]);
   return (
-    <div ref={root} className={`${s.attachment} ${image || video ? s.mediaAttachment : ''}`}>
+    <div
+      ref={root}
+      className={uiClass(`${s.attachment} ${image || video ? s.mediaAttachment : ''}`)}
+    >
       {phase === 'ready' && url ? (
         <>
           {image ? (
             <a
-              className={s.imageLink}
+              className={uiClass(s.imageLink)}
               href={url}
               target="_blank"
               rel="noopener noreferrer"
@@ -536,7 +543,7 @@ export function MessageAttachment({
           ) : audio ? (
             <audio src={url} controls preload="metadata" onError={() => setPlaybackError(true)} />
           ) : null}
-          <div className={s.fileReady}>
+          <div className={uiClass(s.fileReady)}>
             <FileText size={19} />
             <span>
               <strong dir="auto">{asset.fileName}</strong>
@@ -550,12 +557,14 @@ export function MessageAttachment({
               <Download size={19} />
             </a>
           </div>
-          {playbackError && <small className={s.itemError}>{uiText.text_5f11ce92fa61}</small>}
+          {playbackError && (
+            <small className={uiClass(s.itemError)}>{uiText.text_5f11ce92fa61}</small>
+          )}
         </>
       ) : (
         <>
-          <div className={s.fileIntro}>
-            <span className={s.fileIcon}>
+          <div className={uiClass(s.fileIntro)}>
+            <span className={uiClass(s.fileIcon)}>
               {image ? (
                 <ImageIcon size={24} />
               ) : video ? (
@@ -592,7 +601,7 @@ export function MessageAttachment({
             <TransferMeter progress={progress} label={uiText.text_3ebc8cefd354} />
           )}
           {error && (
-            <p role={phase === 'error' ? 'alert' : 'status'} className={s.transferError}>
+            <p role={phase === 'error' ? 'alert' : 'status'} className={uiClass(s.transferError)}>
               {error}
             </p>
           )}

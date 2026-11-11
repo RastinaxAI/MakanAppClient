@@ -1,0 +1,307 @@
+/* Product styles: owned here; original V5 source remains read-only in design/reference-v5. */
+.dialog-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--dialog-overlay);
+  z-index: 60;
+}
+.dialog-content {
+  --dialog-overflow: visible;
+  --dialog-body-flex: 0 1 auto;
+  --dialog-body-overflow: auto;
+  font-family: Vazirmatn, sans-serif;
+  line-height: 1.65;
+  position: fixed;
+  top: calc(var(--app-visual-height, 100dvh) / 2);
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: calc(100% - 64px);
+  max-width: 600px;
+  max-height: calc(var(--app-visual-height, 100dvh) - 64px);
+  min-height: 140px;
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--control-border);
+  border-radius: 22px;
+  padding: 0;
+  z-index: 61;
+  display: flex;
+  flex-direction: column;
+  overflow-y: var(--dialog-overflow);
+  scroll-padding-block: 16px;
+  overscroll-behavior: contain;
+  box-shadow: 0 24px 80px #050f2845;
+}
+.dialog-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 18px 22px;
+  border-bottom: 1px solid var(--border);
+  flex: none;
+}
+.dialog-heading h2 {
+  font-size: calc(18px * var(--text-scale, 1));
+  line-height: 1.7;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.dialog-description {
+  font-size: calc(13px * var(--text-scale, 1));
+  color: var(--muted);
+  line-height: 1.95;
+}
+.dialog-content :global(.dialog-policy) {
+  color: var(--muted);
+  line-height: 1.95;
+}
+.dialog-body {
+  overflow: var(--dialog-body-overflow);
+  flex: var(--dialog-body-flex);
+  min-height: 0;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  scroll-padding-block: 20px;
+  overscroll-behavior: contain;
+}
+.dialog-content :global(.dialog-policy) {
+  font-size: calc(13px * var(--text-scale, 1));
+}
+.dialog-actions {
+  flex: none;
+  padding: 16px 22px;
+  border-top: 1px solid var(--border);
+}
+.dialog-actions :global(.confirm-actions) {
+  margin: 0;
+  gap: 12px;
+}
+.dialog-actions :global(.button) {
+  flex: 1;
+  min-height: 48px;
+}
+.dialog-content :global(.v5-dialog-summary) {
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 18px;
+  margin: 0;
+}
+.v5-dialog-hero {
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--surface);
+}
+.v5-dialog-hero h3 {
+  margin: 0;
+  font-size: calc(21px * var(--text-scale, 1));
+  font-weight: 700;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+.v5-dialog-hero p {
+  margin: 0;
+  color: var(--muted);
+  font-size: calc(14px * var(--text-scale, 1));
+  line-height: 1.9;
+  overflow-wrap: anywhere;
+}
+.dialog-content :global(.v5-dialog-summary > div) {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 10px 0;
+}
+.dialog-content :global(.v5-dialog-summary > div + div) {
+  border-top: 1px solid var(--border);
+}
+.dialog-content :global(.v5-dialog-summary dt) {
+  color: var(--muted);
+  font-size: calc(13px * var(--text-scale, 1));
+}
+.dialog-content :global(.v5-dialog-summary dd) {
+  margin: 0;
+  font-weight: 500;
+  font-size: calc(14px * var(--text-scale, 1));
+  min-width: 0;
+  overflow-wrap: anywhere;
+  text-align: end;
+}
+.dialog-body :global(.stack) {
+  display: flex;
+  flex-direction: column;
+  gap: inherit;
+}
+.dialog-heading > :global(.button) {
+  flex: none;
+}
+@media (min-width: 1200px) {
+  .sheet-content {
+    inset-block: 0;
+    inset-inline-start: auto;
+    inset-inline-end: 0;
+    left: 0;
+    top: 0;
+    transform: none;
+    height: 100dvh;
+    max-height: 100dvh;
+    max-width: 480px;
+    width: min(100%, 480px);
+    border-radius: 0 18px 18px 0;
+    padding-bottom: max(22px, env(safe-area-inset-bottom));
+  }
+}
+@media (min-width: 768px) and (max-width: 1199px) {
+  .dialog-content.sheet-content {
+    inset: auto;
+    top: calc(var(--app-visual-height, 100dvh) / 2);
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: auto;
+    max-height: calc(var(--app-visual-height, 100dvh) - 64px);
+    width: calc(100% - 64px);
+    max-width: 600px;
+    border-radius: 22px;
+  }
+}
+@media (max-width: 767px) {
+  .dialog-content {
+    inset: auto 0 max(0px, calc(100dvh - var(--app-visual-height, 100dvh)));
+    transform: none;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    max-height: calc(var(--app-visual-height, 100dvh) - 64px);
+    border-radius: 24px 24px 0 0;
+    padding: 0;
+  }
+}
+@media (max-width: 767px) {
+  .dialog-content.sheet-content {
+    inset: auto 0 max(0px, calc(100dvh - var(--app-visual-height, 100dvh)));
+    transform: none;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    max-height: calc(var(--app-visual-height, 100dvh) - 64px);
+    border-radius: 24px 24px 0 0;
+    padding: 0;
+  }
+}
+@media (max-width: 767px) {
+  .dialog-heading h2 {
+    font-size: calc(18px * var(--text-scale, 1));
+  }
+}
+@media (max-width: 767px) {
+  .dialog-body {
+    padding: 18px 16px;
+    gap: 14px;
+  }
+}
+@media (max-width: 767px) {
+  .dialog-content :global(.v5-dialog-summary) {
+    padding: 16px;
+  }
+}
+@media (max-width: 767px) {
+  .v5-dialog-hero {
+    padding: 16px;
+  }
+}
+@media (max-width: 767px) {
+  .v5-dialog-hero h3 {
+    font-size: calc(20px * var(--text-scale, 1));
+  }
+}
+@media (max-width: 767px) {
+  .dialog-content :global(.v5-dialog-summary dt) {
+    font-size: calc(12px * var(--text-scale, 1));
+  }
+}
+@media (max-width: 767px) {
+  .dialog-content :global(.v5-dialog-summary dd) {
+    font-size: calc(13px * var(--text-scale, 1));
+  }
+}
+@media (max-width: 767px) {
+  .dialog-body :global(.confirm-actions) {
+    flex-direction: column;
+  }
+}
+@media (max-width: 767px) {
+  .dialog-actions {
+    padding: 12px 16px max(16px, env(safe-area-inset-bottom));
+  }
+}
+@media (max-width: 767px) {
+  .dialog-actions :global(.confirm-actions) {
+    flex-direction: column;
+    gap: 8px;
+  }
+}
+@media (max-width: 767px) {
+  .dialog-body :global(.confirm-actions) > :global(.button) {
+    width: 100%;
+  }
+}
+@media (max-width: 767px) {
+  .dialog-actions :global(.confirm-actions) > :global(.button) {
+    width: 100%;
+    flex: none;
+  }
+}
+:global(:root[data-reading='large']) .dialog-content {
+  --dialog-overflow: auto;
+  --dialog-body-flex: none;
+  --dialog-body-overflow: visible;
+}
+@media (max-height: 540px) {
+  .dialog-content {
+    --dialog-overflow: auto;
+    --dialog-body-flex: none;
+    --dialog-body-overflow: visible;
+  }
+}
+.dialog-heading > div {
+  min-width: 0;
+}
+@media (max-width: 640px) {
+  .dialog-heading :global(.button) {
+    flex-shrink: 0;
+  }
+}
+.dialog-body [data-v5-workflow-fields] {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--v5-layout-gap, 18px);
+}
+.dialog-body [data-v5-workflow-fields] > :has(textarea) {
+  grid-column: 1/-1;
+}
+.dialog-body [data-v5-workflow-fields] > h2 {
+  grid-column: 1/-1;
+}
+.dialog-body [data-v5-workflow-fields] > h3 {
+  grid-column: 1/-1;
+}
+.dialog-body [data-v5-workflow-fields] > :has(> [data-v4-field]) {
+  grid-column: 1/-1;
+}
+.dialog-body [data-v5-workflow-fields] > label:has(input[type='checkbox']) {
+  grid-column: 1/-1;
+}
+.dialog-body [data-v5-workflow-fields] > p {
+  grid-column: 1/-1;
+}
+@media (max-width: 767px) {
+  .dialog-body [data-v5-workflow-fields] {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+}

@@ -1,148 +1,118 @@
-import { readFile, mkdir, writeFile } from 'node:fs/promises';
+import { v5Lessons as lessons, v5Assignments as assignment } from '../../src/content/fa';
+import { selectParentChild } from './parent-controls';
+import { mkdir, writeFile } from 'node:fs/promises';
 import { test, expect, login, schoolSections, ids, fixture } from './test';
 
-test('current responsive geometry and historical route reference at 390, 834 and 1440', async ({
+test('current Next product geometry and authoring flows at the three V5 viewport sizes', async ({
   page,
   context,
   request,
-  browser,
 }) => {
   expect((await request.post(fixture + '/__test__/design')).ok()).toBeTruthy();
   await login(context, 'Student');
   await mkdir('test-results/reference-match', { recursive: true });
-  const reference = await browser.newPage();
-  const html = await readFile('output/design/makan-responsive-prototype.html', 'utf8');
-  await reference.setContent(html);
-  await reference.addStyleTag({
-    content:
-      '.status{display:none!important} body.clean .canvas-wrap{zoom:1!important} .screen-index-label{display:none!important}',
-  }); // Exclude simulated OS chrome and preview scaling; compare native viewport geometry.
   const metrics = [];
-  try {
-    for (const [device, width, height] of [
-      ['mobile', 390, 844],
-      ['tablet', 834, 1194],
-      ['desktop', 1440, 1000],
-    ] as const) {
-      await page.setViewportSize({ width, height });
-      await reference.setViewportSize({ width, height });
-      await page.goto('/personal/education');
-      await expect(page.locator('[data-mk-view="MK-04"]')).toHaveCount(1);
-      const destinations = page
-        .getByRole('navigation', { name: 'ناوبری حساب شخصی' })
-        .filter({ visible: true })
-        .getByRole('link');
-      await expect(destinations).toHaveCount(5);
-      for (const [index, name] of [
-        'آموزشگاه',
-        'فوق‌برنامه',
-        'دستیار',
-        'پیام‌ها',
-        'پروفایل',
-      ].entries()) {
-        await expect(destinations.nth(index)).toHaveAccessibleName(name);
-      }
-      const header = await page.getByRole('banner').boundingBox();
-      expect(header!.height).toBeGreaterThanOrEqual(width < 768 ? 90 : width < 1200 ? 88 : 94);
-      expect(header!.height).toBeLessThan(180);
-      await page.screenshot({ path: `test-results/reference-match/S01-actual-${width}.png` });
-      await reference.evaluate((device) => {
-        document.body.classList.add('clean');
-        const p = (
-          window as unknown as {
-            MakanPreview: { setDevice: (d: string) => void; go: (id: string) => void };
-          }
-        ).MakanPreview;
-        p.setDevice(device);
-        p.go('S01');
-      }, device);
-      await reference.screenshot({ path: `test-results/reference-match/S01-target-${width}.png` });
-      metrics.push({
-        screen: 'S01',
-        width,
-        note: 'School overview follows the newer explicit request: five destinations and native MK-04 geometry; historical prototype artwork is superseded.',
-      });
-      expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(
-        true,
+  for (const [width, height] of [
+    [390, 844],
+    [834, 1112],
+    [1440, 1000],
+  ] as const) {
+    await page.setViewportSize({ width, height });
+    await page.goto('/personal/education');
+    await expect(page.locator('[data-mk-view="MK-04"]')).toHaveCount(1);
+    const destinations = page
+      .getByRole('navigation', { name: 'ناوبری حساب شخصی' })
+      .filter({ visible: true })
+      .getByRole('link');
+    await expect(destinations).toHaveCount(5);
+    for (const [index, name] of [
+      'آموزشگاه',
+      'فوق‌برنامه',
+      'دستیار',
+      'پیام‌ها',
+      'پروفایل',
+    ].entries()) {
+      await expect(destinations.nth(index)).toHaveAccessibleName(name);
+    }
+    const header = await page.getByRole('banner').boundingBox();
+    expect(header!.height).toBeGreaterThanOrEqual(width < 768 ? 90 : width < 1200 ? 88 : 94);
+    expect(header!.height).toBeLessThan(180);
+    await page.screenshot({ path: `test-results/reference-match/S01-actual-${width}.png` });
+    metrics.push({
+      screen: 'MK-04',
+      width,
+      height,
+      evidence:
+        'Actual Next product with isolated design fixture; no atlas counted as product verification.',
+    });
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(
+      true,
+    );
+    await page.goto('/personal/profile/details');
+    await expect(page.getByRole('heading', { name: 'سارا احمدی', exact: true })).toBeVisible();
+    await expect(page.getByRole('region', { name: 'وضعیت سنی', exact: true })).toBeVisible();
+    await page.screenshot({ path: `test-results/reference-match/U01-actual-${width}.png` });
+  }
+  await login(context, 'Student', false);
+  for (const [width, height] of [
+    [390, 844],
+    [834, 1112],
+    [1440, 1000],
+  ]) {
+    await page.setViewportSize({ width, height });
+    await page.goto('/personal/messages/' + ids.chat);
+    await expect(
+      page
+        .getByLabel('پیام‌های گفتگو', { exact: true })
+        .getByText('حتماً، تا جلسهٔ بعد.', { exact: true }),
+    ).toBeVisible();
+    await page.screenshot({ path: `test-results/reference-match/C03-actual-${width}.png` });
+  }
+  await login(context, 'Teacher');
+  page.on('dialog', (d) => void d.accept());
+  for (const [width, height] of [
+    [390, 844],
+    [834, 1112],
+    [1440, 1000],
+  ]) {
+    await page.setViewportSize({ width, height });
+    await page.goto(`/personal/education/classes/${ids.class}/lessons/new`);
+    await page.getByLabel(lessons.title, { exact: true }).fill('معادله‌های خطی');
+    await page
+      .getByLabel('متن درس', { exact: true })
+      .fill(
+        'در یک معادله خطی، مجهول توان اول دارد. برای یافتن x، در دو طرف معادله عمل یکسان انجام می‌دهیم.',
       );
-      await page.goto('/personal/profile/details');
-      await expect(page.getByRole('heading', { name: 'سارا احمدی', exact: true })).toBeVisible();
-      await expect(page.getByRole('region', { name: 'وضعیت سنی', exact: true })).toBeVisible();
-      await page.screenshot({ path: `test-results/reference-match/U01-actual-${width}.png` });
-      await reference.evaluate(() => {
-        (window as unknown as { MakanPreview: { go: (id: string) => void } }).MakanPreview.go(
-          'U01',
-        );
-      });
-      await reference.screenshot({ path: `test-results/reference-match/U01-target-${width}.png` });
-    }
-    await login(context, 'Student', false);
-    for (const [width, height] of [
-      [390, 844],
-      [834, 1194],
-      [1440, 1000],
-    ]) {
-      await page.setViewportSize({ width, height });
-      await page.goto('/personal/messages/' + ids.chat);
-      await expect(
-        page
-          .getByLabel('پیام‌های گفتگو', { exact: true })
-          .getByText('حتماً، تا جلسهٔ بعد.', { exact: true }),
-      ).toBeVisible();
-      await page.screenshot({ path: `test-results/reference-match/C03-actual-${width}.png` });
-    }
-    await login(context, 'Teacher');
-    page.on('dialog', (d) => void d.accept());
-    for (const [width, height] of [
-      [390, 844],
-      [834, 1194],
-      [1440, 1000],
-    ]) {
-      await page.setViewportSize({ width, height });
-      await page.goto(`/personal/education/classes/${ids.class}/lessons/new`);
-      await page.getByLabel('عنوان درس و جزوه', { exact: true }).fill('معادله‌های خطی');
-      await page
-        .getByLabel('متن درس', { exact: true })
-        .fill(
-          'در یک معادله خطی، مجهول توان اول دارد. برای یافتن x، در دو طرف معادله عمل یکسان انجام می‌دهیم.',
-        );
-      await page.getByLabel('ترتیب نمایش', { exact: true }).fill('3');
-      await page.getByText('یک موضوع روشن، یک درس تازه.', { exact: true }).click();
-      const submit = page.getByRole('button', { name: 'ذخیرهٔ پیش‌نویس', exact: true });
-      await expect(submit).toBeInViewport();
-      await expect(
-        page.getByRole('navigation', { name: 'ناوبری حساب شخصی' }).filter({ visible: true }),
-      ).toHaveCount(width >= 768 ? 1 : 0);
-      await page.screenshot({ path: `test-results/reference-match/T02-actual-${width}.png` });
-    }
-    await page.getByRole('button', { name: 'ذخیرهٔ پیش‌نویس', exact: true }).click();
-    await expect(page).toHaveURL(/\/review$/);
-    await page.getByRole('link', { name: 'ویرایش پیش‌نویس', exact: true }).click();
-    for (const [width, height] of [
-      [390, 844],
-      [834, 1194],
-      [1440, 1000],
-    ]) {
-      await page.setViewportSize({ width, height });
-      await expect(page.getByLabel('عنوان درس و جزوه', { exact: true })).toHaveValue(
-        'معادله‌های خطی',
-      );
-      await page.screenshot({ path: `test-results/reference-match/T03-actual-${width}.png` });
-    }
-    await page.goto(`/personal/education/classes/${ids.class}/assignments/new`);
-    for (const [width, height] of [
-      [390, 844],
-      [834, 1194],
-      [1440, 1000],
-    ]) {
-      await page.setViewportSize({ width, height });
-      await expect(
-        page.getByRole('button', { name: 'ذخیرهٔ پیش‌نویس تکلیف', exact: true }),
-      ).toBeInViewport();
-      await page.screenshot({ path: `test-results/reference-match/T05-actual-${width}.png` });
-    }
-  } finally {
-    await reference.close();
+    await page.getByLabel('ترتیب نمایش', { exact: true }).fill('3');
+    await page.getByLabel(lessons.order, { exact: true }).blur();
+    const submit = page.getByRole('button', { name: lessons.save, exact: true });
+    await expect(submit).toBeInViewport();
+    await expect(
+      page.getByRole('navigation', { name: 'ناوبری حساب شخصی' }).filter({ visible: true }),
+    ).toHaveCount(width >= 768 ? 1 : 0);
+    await page.screenshot({ path: `test-results/reference-match/T02-actual-${width}.png` });
+  }
+  await page.getByRole('button', { name: lessons.save, exact: true }).click();
+  await expect(page).toHaveURL(/\/review$/);
+  await page.getByRole('link', { name: 'ویرایش پیش‌نویس', exact: true }).click();
+  for (const [width, height] of [
+    [390, 844],
+    [834, 1112],
+    [1440, 1000],
+  ]) {
+    await page.setViewportSize({ width, height });
+    await expect(page.getByLabel(lessons.editTitle, { exact: true })).toHaveValue('معادله‌های خطی');
+    await page.screenshot({ path: `test-results/reference-match/T03-actual-${width}.png` });
+  }
+  await page.goto(`/personal/education/classes/${ids.class}/assignments/new`);
+  for (const [width, height] of [
+    [390, 844],
+    [834, 1112],
+    [1440, 1000],
+  ]) {
+    await page.setViewportSize({ width, height });
+    await expect(page.getByRole('button', { name: assignment.next, exact: true })).toBeInViewport();
+    await page.screenshot({ path: `test-results/reference-match/T05-actual-${width}.png` });
   }
   await writeFile('test-results/reference-match/geometry.json', JSON.stringify(metrics, null, 2));
 });
@@ -160,7 +130,7 @@ test('workspace selection is explicit and a Student cannot author a class assign
   ).toHaveCount(0);
   for (const [width, height] of [
     [390, 844],
-    [834, 1194],
+    [834, 1112],
     [1440, 1000],
   ]) {
     await page.setViewportSize({ width, height });
@@ -185,16 +155,17 @@ test('Parent sees only the selected child dashboard and Manager uses the referen
   await request.post(fixture + '/__test__/design');
   await login(context, 'Parent');
   await page.goto('/personal/education');
-  await page
-    .getByRole('combobox', { name: 'انتخاب فرزند', exact: true })
-    .selectOption('00000000-0000-4000-8000-000000000501');
+  await selectParentChild(page, '00000000-0000-4000-8000-000000000501');
   await expect(page.getByRole('heading', { name: 'سارا احمدی', exact: true })).toBeVisible();
+  await page.goto('/personal/education');
   await expect(
-    page.getByText('اطلاعات آموزشیِ منتشرشدهٔ سارا احمدی را اینجا دنبال کنید.', { exact: true }),
+    page.getByText('این نما مربوط به اطلاعات مجاز سارا احمدی در آموزشگاه آفتاب است.', {
+      exact: true,
+    }),
   ).toBeVisible();
   for (const [width, height] of [
     [390, 844],
-    [834, 1194],
+    [834, 1112],
     [1440, 1000],
   ]) {
     await page.setViewportSize({ width, height });
@@ -208,7 +179,7 @@ test('Parent sees only the selected child dashboard and Manager uses the referen
   await page.keyboard.press('Escape');
   for (const [width, height] of [
     [390, 844],
-    [834, 1194],
+    [834, 1112],
     [1440, 1000],
   ]) {
     await page.setViewportSize({ width, height });
@@ -235,7 +206,7 @@ test('exam question navigation retains answers and exposes final review separate
   await expect(page.getByRole('radio', { name: '۴', exact: true })).toBeChecked();
   for (const [width, height] of [
     [390, 844],
-    [834, 1194],
+    [834, 1112],
     [1440, 1000],
   ]) {
     await page.setViewportSize({ width, height });
@@ -251,7 +222,7 @@ test('public introduction and phone sign-in follow the PDF without owner navigat
 }) => {
   for (const [width, height] of [
     [390, 844],
-    [834, 1194],
+    [834, 1112],
     [1440, 1000],
   ]) {
     await page.setViewportSize({ width, height });
@@ -298,7 +269,7 @@ test('desktop inbox restores only a previously opened, currently filtered conver
   await expect(page.getByRole('textbox', { name: 'متن پیام', exact: true })).toBeVisible();
   for (const [width, height] of [
     [390, 844],
-    [834, 1194],
+    [834, 1112],
     [1440, 1000],
   ]) {
     await page.setViewportSize({ width, height });

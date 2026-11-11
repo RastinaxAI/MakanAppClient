@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import {
   scheduleRuleCommand,
+  scheduleRuleDetails,
   type RuleDraft,
 } from '@/features/personal/school/schedule-rule-model';
 const valid: RuleDraft = {
@@ -33,7 +34,19 @@ describe('V4 weekly rule requests', () => {
     { from: '2027-05-01' },
     { link: 'javascript:alert(1)' },
     { title: ' ' },
+    { zone: ' ' },
   ])('blocks invalid or unsafe inputs %j', (changes) => {
     expect(scheduleRuleCommand({ ...valid, ...changes })).toBeNull();
+  });
+  it('allows the details step without manufacturing an executable date range', () => {
+    const value = { ...valid, from: '', until: '' };
+    expect(scheduleRuleDetails(value)).toMatchObject({ sessionTitle: 'Algebra' });
+    expect(scheduleRuleCommand(value)).toBeNull();
+  });
+  it('preserves an explicitly selected time zone and existing seconds', () => {
+    expect(scheduleRuleCommand({ ...valid, time: '16:30:42', zone: 'Asia/Dubai' })).toMatchObject({
+      timeZoneId: 'Asia/Dubai',
+      localStartTime: '16:30:42',
+    });
   });
 });

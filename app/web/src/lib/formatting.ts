@@ -4,6 +4,9 @@ export function latinDigits(value: string) {
     String(c.charCodeAt(0) >= 0x6f0 ? c.charCodeAt(0) - 0x6f0 : c.charCodeAt(0) - 0x660),
   );
 }
+export function persianDigits(value: string) {
+  return latinDigits(value).replace(/\d/g, (digit) => String.fromCharCode(0x6f0 + Number(digit)));
+}
 export function number(value: number | null | undefined) {
   return value == null ? '—' : new Intl.NumberFormat('fa-IR').format(value);
 }

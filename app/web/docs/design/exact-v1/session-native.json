@@ -1,0 +1,131 @@
+{
+  "status": "build73_targeted_and_visual_checks_passed_cancel_reason_contract_gap_open",
+  "taskComplete": false,
+  "scenarios": [
+    "MK-124",
+    "MK-125",
+    "MK-126",
+    "MK-127"
+  ],
+  "contract": [
+    "Existing GET/PATCH sessions/id; versioned POST cancel/complete; GET attendance. No new product endpoint.",
+    "Expected server200 and matching session/org/class/status/new version before success.",
+    "Explicit edit review retained; scoped draft requires explicit replacement after a server version change.",
+    "Completion count is the real authorized attendance snapshot. Required review binds to that snapshot; no zero fallback on errors."
+  ],
+  "differences": [
+    "SessionVersionCommand in active and full snapshot has only expectedRowVersion, with no cancellation reason. Reference reason field is not added to the request or falsely presented as persisted.",
+    "SessionResult and DashboardSessionItem lack a teacher identity/name. Student is not allowed to read the management teacher roster. Unknown teacher is displayed as an em dash.",
+    "The edit notice asks to review time/link; no unsupported notification-impact promise is made."
+  ],
+  "evidenceBefore": "output/review/exact-v1/before-sixtyninth-session (compiled68 legacy app,24matched fixture screenshots)",
+  "evidenceReference": "output/review/exact-v1/reference-sixtyninth-session (24internalviewport images)",
+  "buildId": "k7g51a-Z2Q5Zva6JggXcQ",
+  "updatedAt": "2026-11-09T15:49:45.346024+00:00",
+  "history": {
+    "build70": "docs/design/exact-v1/session-native-build70-history.json",
+    "build71": "UFxN4g8VMvgtFL2rQnfWW;48targeted,24main+132responsive; short-height checkbox40px failure retained",
+    "build72": "Q9i27pWDwdClVZTcOmGyO;49targeted,24main+132responsive; short probe passed,131-character title primary0px failure retained"
+  },
+  "sourceHashes": {
+    "src/features/personal/school/session-page.tsx": "73b33a6a017a146eae71101ae44260e4afae6c88e0ed0b409422274b5cf0417e",
+    "src/features/personal/school/session-actions.tsx": "737b22f638d9cf10c5d1fd5b4511743a6a6c186523921b2126b36d12318d2a69",
+    "src/features/personal/school/session-time.ts": "828c9ecbec698fa9762f92201d24cf6310f2207f092be0e91fb587c646d41bbf",
+    "src/features/personal/school/workflow.tsx": "5fd0c1c264f26fd6bdf5009f7b667dd8fe8117b8c82026c7c4fdab32472b0f83",
+    "src/components/v5/scene.tsx": "73f9bfd213a958132fd24e7d42ad741d9edd7c3d168b6199780c95042315b446",
+    "src/components/ui/jalali-date-input.tsx": "9a4f94f3239624ee102196cc4c64375356b00eb87b2c456a1565ad82b9892d13",
+    "src/content/fa.ts": "553704854ec266a1c56d63e68bc8b6e54b8b065c3785419d3245403d577ec484",
+    "src/design/v5-author.css": "75cedb276d9710c32896007219f9ec69351e70f189d5a86c7500579e5baf7476",
+    "scripts/build-v5-product-styles.mjs": "be1cea239fe5fd59e0f1f12ad050f67b54f25a75eb0047f6f13d3af43fa9131a",
+    "scripts/review-exact-v5.mjs": "359a4dc187b819bcc0ec3bcf984561e922a84558616f0c0e9f0e35f817322810",
+    "scripts/measure-exact-v5.mjs": "009a81900c510efbb9b84183a4ff19e75c4d169152f1dfd0370f985c25f15b31",
+    "tests/browser/exact-session-native.spec.ts": "872ed8c6cb771bc771a148da68c0ecc83c6e3cfb86cf07846ad2701d8b5b5c43",
+    "tests/browser/project-expansion.spec.ts": "228a8eb0ed3c767ed0938f2a12fc96e0ab787b0cebf4ba9261f8bd231f570b46",
+    "tests/fixtures/backend/attendance.mjs": "11103c949377d9d94d624ab1a8d9a983d7f688066ae5a557e4340a21c0dfcb65",
+    "tests/fixtures/backend/server.mjs": "7a151e1b975fd9f8e2fbb480f6b3d6b9ce6b932c3d301ca37a3f411e12ec2670",
+    "tests/fixtures/backend/workflows.mjs": "16a4a666be086f8193bfd1d7492d50f100e6a6cad95b344a742394939371be44",
+    "tests/fixtures/session-reference.mjs": "2bfc06924528fa5ac087f4cd2fc060a1ad91fa3c596da12596731dbb20931dde",
+    "src/app/globals.css": "b9c58f97560fef39d353ae1a69e985b3415acddf82c3a97034577eb7a214633c",
+    "tests/browser/exact-dialog-accessibility.spec.ts": "095cdcc4c3c8797825aaad64689f4f34a627bc0558253b3bd05f3404dcec57aa"
+  },
+  "checks": {
+    "unit": 517,
+    "unitFiles": 72,
+    "typecheck": true,
+    "lintModules": 352,
+    "cycles": 0,
+    "browser": {
+      "passed": 50,
+      "failed": 0,
+      "skipped": 0,
+      "flaky": 0,
+      "receipts": "tmp/exact-v1/browser-seventythird-receipts.json"
+    },
+    "main": {
+      "captured": 24,
+      "errors": 0,
+      "overflow": 0,
+      "archive": "output/review/exact-v1/after-seventythird-session"
+    },
+    "responsive": {
+      "boundary": 44,
+      "large200": 44,
+      "shortLargeHeight400": 44,
+      "errors": 0,
+      "overflow": 0,
+      "pngDimensionsVerified": true,
+      "receipts": "tmp/exact-v1/responsive-seventythird-session-receipts.json"
+    },
+    "geometry": {
+      "unreviewedRectanglesAtLeast4CSSpx": 0,
+      "documentedDependentVerticalExceptions": 32,
+      "unpairedReasonTextareas": 6,
+      "exceptionReason": "MK126 reference reason has no field in registered SessionVersionCommand; no dummy field/padding is introduced."
+    },
+    "interactionProbes": {
+      "short": "output/review/exact-v1/short-probe-seventythird/results.json",
+      "long": "output/review/exact-v1/long-probe-seventythird/results.json",
+      "shortCheckboxVisibleHeights": [
+        122.375,
+        69.1875,
+        69.1875
+      ],
+      "longActualTitleLength": 131,
+      "longPrimaryVisibleHeights": [
+        70,
+        70,
+        70
+      ],
+      "widths": [
+        320,
+        390,
+        430
+      ],
+      "largeTextPercent": 200,
+      "focusTrapEscape": true,
+      "noMutation": true,
+      "noDocumentOrDialogHorizontalOverflow": true
+    },
+    "fullRegression": {
+      "buildId": "k7g51a-Z2Q5Zva6JggXcQ",
+      "completedAt": "2026-11-09T16:09:20.698922+00:00",
+      "passedUniqueTests": 394,
+      "files": 80,
+      "batches": 14,
+      "unexpected": 0,
+      "skipped": 0,
+      "flaky": 0,
+      "adoptedSameBuildTraceSourceVerifiedTests": 50,
+      "remainingSerialTests": 344,
+      "frozenFiles": 735,
+      "changedFrozenFiles": [],
+      "receipts": "tmp/exact-v1/browser-seventythird-full-receipts.json",
+      "freeze": "tmp/exact-v1/browser-seventythird-full-freeze.json"
+    }
+  },
+  "implementationNotes": [
+    "Only SessionEditor uses the common JalaliDateInput plain variant; whole-input touch and ArrowDown still open the actual calendar. Other callers retain their default button.",
+    "Shared dialog flow uses CSS variables for normal, short-height and large-text modes. Large text/short height scroll the entire dialog so the untruncated header cannot crush the body/actions.",
+    "Two sibling border selectors omitted by the style generator were restored in the generator, then the product stylesheet regenerated."
+  ]
+}

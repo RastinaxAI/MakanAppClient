@@ -1,4 +1,6 @@
 'use client';
+import { uiClass } from '@/components/v5/classes';
+
 import * as uiText from '@/content/fa';
 import { useAcademicScope } from './academic-scope';
 import { useState } from 'react';
@@ -37,10 +39,10 @@ function ExamReview({ id }: { id: string }) {
   if (!scope.matches(item)) return <ErrorState error={new ApiError(403)} />;
   return (
     <>
-      <section className={s.card}>
+      <section className={uiClass(s.card)}>
         <h2>{item.title}</h2>
-        <p className={s.hint}>{item.classTitle}</p>
-        <dl className={s.summary}>
+        <p className={uiClass(s.hint)}>{item.classTitle}</p>
+        <dl className={uiClass(s.summary)}>
           {[
             [uiText.text_8ea5a5c720cd, date(item.availableFromUtc, true)],
             [uiText.text_5cff509ed1c9, date(item.availableUntilUtc, true)],
@@ -81,7 +83,7 @@ function ExamReview({ id }: { id: string }) {
             }}
           />
         ) : (
-          <p role="status" className={s.notice}>
+          <p role="status" className={uiClass(s.notice)}>
             {uiText.text_94f6599576df}
           </p>
         )}
@@ -94,11 +96,11 @@ function ExamReview({ id }: { id: string }) {
           sourceVersionId={item.versionId}
         />
       )}
-      <section className={s.card}>
+      <section className={uiClass(s.card)}>
         <h2>{uiText.text_db44a1fe2fd1}</h2>
-        <p className={s.hint}>{uiText.text_abefd1a02a01}</p>
+        <p className={uiClass(s.hint)}>{uiText.text_abefd1a02a01}</p>
         {item.questions.map((question, i) => (
-          <article key={question.id} className={s.question}>
+          <article key={question.id} className={uiClass(s.question)}>
             <h3>
               {uiText.text_649c0357f354}
               {(i + 1).toLocaleString('fa-IR')}
@@ -106,7 +108,7 @@ function ExamReview({ id }: { id: string }) {
               {question.score.toLocaleString('fa-IR')}
               {uiText.text_931d9d5a6b04}
             </h3>
-            <p className={s.bodyText} dir="auto">
+            <p className={uiClass(s.bodyText)} dir="auto">
               {question.prompt}
             </p>
             {question.options.map((option) => (

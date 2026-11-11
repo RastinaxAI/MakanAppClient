@@ -1,4 +1,8 @@
 'use client';
+import { Input as NativeInput } from '@/components/ui/input';
+
+import { uiClass } from '@/components/v5/classes';
+
 import { v4Text as t } from '@/content/fa';
 import { useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
@@ -30,7 +34,7 @@ export function MessagingFolders() {
         actions={<Button onClick={() => setEditing(null)}>{t.back}</Button>}
       >
         <V4Field label={t.folderName}>
-          <input maxLength={100} />
+          <NativeInput maxLength={100} />
         </V4Field>
         <V4List>
           <V4Row title={t.folderTypes} description={t.folderTypePending} icon={<FolderOpen />} />
@@ -84,7 +88,7 @@ export function MessagingFolders() {
                 icon={<FolderOpen />}
                 onClick={() => setFolder(item.id)}
                 end={
-                  <div className="v4-inline-actions">
+                  <div className={uiClass('v4-inline-actions')}>
                     <Button
                       type="button"
                       variant="ghost"
@@ -191,12 +195,21 @@ function FolderEditor({
         }}
       >
         <V4Field label={t.folderName}>
-          <input required maxLength={100} value={name} onChange={(e) => setName(e.target.value)} />
+          <NativeInput
+            required
+            maxLength={100}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
         </V4Field>
         <V4List>
-          <label className="v4-check">
+          <label className={uiClass('v4-check')}>
             <span>{t.folderUnread}</span>
-            <input type="checkbox" checked={unread} onChange={(e) => setUnread(e.target.checked)} />
+            <NativeInput
+              type="checkbox"
+              checked={unread}
+              onChange={(e) => setUnread(e.target.checked)}
+            />
           </label>
         </V4List>
         <V4Note>{t.folderTypePending}</V4Note>
@@ -246,7 +259,7 @@ function FolderConversations({ id }: { id: string }) {
       ) : (
         <EmptyState title={t.noMessages} />
       )}
-      <div className="v4-inline-actions">
+      <div className={uiClass('v4-inline-actions')}>
         <Button
           type="button"
           variant="outline"

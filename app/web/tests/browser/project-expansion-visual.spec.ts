@@ -1,3 +1,4 @@
+import { reviewPath } from './review-output';
 import { test, expect, login, ids } from './test';
 import { mkdir } from 'node:fs/promises';
 
@@ -6,13 +7,13 @@ test('expanded workflow and account pages preserve RTL, visible controls and res
   context,
 }) => {
   test.setTimeout(120000);
-  const folder = 'output/review/project-expansion';
+  const folder = reviewPath('output/review/project-expansion');
   await mkdir(folder, { recursive: true });
   const groups = [
     {
       role: 'Manager',
       pages: [
-        ['class-create', '/personal/education/classes/new', 'نام کلاس'],
+        ['class-create', '/personal/education/classes/new', 'عنوان کلاس'],
         ['person-create', '/personal/education/people/new', 'نام'],
         ['course-create', '/personal/education/courses/new', 'عنوان درس'],
         ['period-create', '/personal/education/periods/new', 'عنوان دوره'],
@@ -22,7 +23,7 @@ test('expanded workflow and account pages preserve RTL, visible controls and res
       role: 'Teacher',
       pages: [
         ['session-create', `/personal/education/classes/${ids.class}/sessions/new`, 'عنوان جلسه'],
-        ['exam-create', `/personal/education/classes/${ids.class}/exams/new`, 'عنوان آزمون'],
+        ['exam-create', `/personal/education/classes/${ids.class}/exams/new`, 'عنوان'],
       ],
     },
     {

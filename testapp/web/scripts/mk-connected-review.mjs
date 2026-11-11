@@ -4,8 +4,10 @@ import { randomBytes } from 'node:crypto';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 const root = process.cwd(),
-  directory = path.join(root, 'tmp/mk-reference/live-sessions');
-await fs.mkdir(directory, { recursive: true, mode: 0o700 });
+  reviewParent = path.join(root, 'tmp/mk-reference');
+await fs.mkdir(reviewParent, { recursive: true, mode: 0o700 });
+const directory = await fs.mkdtemp(path.join(reviewParent, 'live-review-'));
+await fs.chmod(directory, 0o700);
 const network = JSON.parse(await fs.readFile(path.join(root, 'config/network.json'), 'utf8'));
 const app = spawn(
   process.execPath,
@@ -28,6 +30,7 @@ const app = spawn(
 );
 process.on('SIGTERM', () => app.kill('SIGTERM'));
 process.on('SIGINT', () => app.kill('SIGTERM'));
-app.on('exit', (code) => {
+app.on('exit', async (code) => {
+  await fs.rm(directory, { recursive: true, force: true });
   process.exitCode = code ?? 1;
 });

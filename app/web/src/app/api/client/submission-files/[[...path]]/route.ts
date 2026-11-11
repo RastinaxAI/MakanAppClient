@@ -5,7 +5,7 @@ import { clientSessionId, getClientState } from '@/lib/server/client-session';
 import { readSession, withSessionLock } from '@/lib/server/session';
 import { authenticatedFetch, checkOrigin, safeResponse } from '@/lib/server/backend';
 import { serverConfig } from '@/lib/server/config';
-import { clientValidator } from '@/lib/api/client-contract';
+import { validator as clientValidator } from '@/lib/api/contract';
 import { ApiError, parseProblem } from '@/lib/api/errors';
 import { submissionMimeTypes } from '@/lib/submission-file';
 import type { components } from '@/generated/api/schema';

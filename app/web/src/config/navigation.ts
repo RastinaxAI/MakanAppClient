@@ -117,6 +117,8 @@ export function isSchoolPath(section: readonly string[]) {
       'invitations',
       'search',
       'classes',
+      'courses',
+      'periods',
       'people',
       'members',
       'teachers',
@@ -128,6 +130,7 @@ export function isSchoolPath(section: readonly string[]) {
       'resources',
       'evaluations',
       'reports',
+      'content',
     ].includes(area);
   if (section.length === 2 && id === 'new')
     return ['classes', 'people', 'courses', 'periods', 'guardians'].includes(area);

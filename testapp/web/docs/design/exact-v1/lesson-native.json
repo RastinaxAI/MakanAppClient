@@ -1,0 +1,83 @@
+{
+  "build55": {
+    "buildId": "MEcOi_THk1eD6K1f5XDg0",
+    "build": "passed",
+    "unit": {
+      "passed": 512,
+      "files": 72,
+      "log": "tmp/exact-v1/unit-fiftyfifth.log"
+    },
+    "lint": {
+      "status": "passed",
+      "log": "tmp/exact-v1/lint-fiftyfifth.log",
+      "boundaries": 343,
+      "cycles": 0
+    },
+    "typecheck": "passed",
+    "format": "passed",
+    "generated": {
+      "operations": 304,
+      "schemas": 534,
+      "ownerOperations": 0,
+      "log": "tmp/exact-v1/generated-fiftyfifth.log"
+    },
+    "browser": {
+      "passed": 39,
+      "failed": 0,
+      "skipped": 0,
+      "retried": 0,
+      "independentSerialBatches": 2,
+      "receipts": "tmp/exact-v1/browser-fiftyfifth-receipts.json",
+      "scope": "Eight targeted files on same immutable build55; not all334 browser tests.",
+      "processNote": "Batch02 fresh report and child close receipt report code0 and17/17 pass; outer exec session later returned143. This wrapper status is retained, not rewritten as0."
+    },
+    "visual": "running",
+    "scope": "Shared authorized attachment download preserved on review and published reader; removal stays reachable in edit menu; file typography and publication hero corrected.",
+    "mainVisual": {
+      "captured": 36,
+      "verified": 36,
+      "errors": 0,
+      "overflow": 0,
+      "archive": "output/review/exact-v1/after-fiftyfifth-forms"
+    },
+    "responsive": {
+      "boundary": 66,
+      "largeText": 66,
+      "families": 6,
+      "widths": [
+        320,
+        360,
+        390,
+        430,
+        768,
+        834,
+        1024,
+        1194,
+        1280,
+        1440,
+        1920
+      ],
+      "theme": "light; main captures both themes",
+      "noErrorsOrOverflow": true,
+      "nativeImageDimensionsVerified": true,
+      "receipts": "tmp/exact-v1/responsive-fiftyfifth-forms-receipts.json"
+    },
+    "geometry": {
+      "priorityComparedConfigurations": 36,
+      "priorityUnreviewedAtLeast4": 0,
+      "allEvidenceConfigurations": 690,
+      "allEvidenceUnreviewedRectangles": 342,
+      "unpairedReferenceControls": 180,
+      "note": "All-evidence metadata spans multiple builds and differing data. Unpaired controls are inventory candidates for review, not proven missing controls. No pixel-perfect claim; long-date formatting remains open."
+    }
+  },
+  "realComponents": [
+    "LessonForm",
+    "LessonFields",
+    "LessonAttachmentEditor",
+    "LessonDraftReview",
+    "LessonDownload"
+  ],
+  "contract": "Existing lesson GET/POST/PATCH/publish and file-transfer BFF; registered existing Teacher/Manager ClassRoster GET for count. No new operation/permission or production sample data.",
+  "focusAndState": "Required native44px review checkbox; Escape and Tab containment/return; reviewed flag resets on reopen; exact reviewed version survives a definitive failed publication. Invalid id/org/status/version ACK cannot become success. Published reader receives logical heading focus and retains receipt."
+}

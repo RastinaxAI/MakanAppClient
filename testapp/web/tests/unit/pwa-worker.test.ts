@@ -163,6 +163,37 @@ describe('PWA cache and notification boundaries', () => {
     });
     expect(w.self.skipWaiting).not.toHaveBeenCalled();
   });
+  it('keeps display for the confirmed account and disables it on account change or logout', async () => {
+    const w = worker();
+    vm.runInContext(
+      'let preferences={enabled:true,userId:"first-user"}; setting=async(value)=>value===undefined?preferences:(preferences=value)',
+      w.context,
+    );
+    const message = async (data: unknown) => {
+      let pending: Promise<unknown> | undefined;
+      w.listeners.message({
+        source: { url: 'https://panel.example.test/personal' },
+        data,
+        waitUntil: (work: Promise<unknown>) => {
+          pending = work;
+        },
+      });
+      await pending;
+    };
+    await message({ type: 'PUSH_ACCOUNT_CHANGED', userId: 'first-user' });
+    expect(vm.runInContext('preferences.enabled', w.context)).toBe(true);
+    await message({ type: 'PUSH_ACCOUNT_CHANGED', userId: 'second-user' });
+    expect(vm.runInContext('preferences.enabled', w.context)).toBe(false);
+    await message({ type: 'PUSH_ENABLED', userId: 'first-user' });
+    await Promise.all([
+      message({ type: 'PUSH_ACCOUNT_CHANGED', userId: 'third-user' }),
+      message({ type: 'PUSH_ENABLED', userId: 'second-user' }),
+    ]);
+    expect(vm.runInContext('preferences.enabled', w.context)).toBe(true);
+    expect(vm.runInContext('preferences.userId', w.context)).toBe('second-user');
+    await message({ type: 'PUSH_DISABLED' });
+    expect(vm.runInContext('preferences.enabled', w.context)).toBe(false);
+  });
   it('notification click opens only the inbox and leaves an existing draft alone', async () => {
     const w = worker();
     let pending;

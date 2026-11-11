@@ -1,3 +1,6 @@
+import { reviewPath } from './review-output';
+import { selectParentChild } from './parent-controls';
+import { captureExactState } from './exact-state-capture';
 import { test, expect, login, ids, fixture, origin } from './test';
 import { mkdir } from 'node:fs/promises';
 const examAttempt = '00000000-0000-4000-8000-000000000007';
@@ -14,8 +17,12 @@ test('assignment evaluation retains failed drafts, previews audience feedback an
   await request.post(fixture + '/__test__/assessments');
   await login(context, 'Teacher');
   await page.goto(base + '/evaluations');
+  await expect(page.getByRole('link', { name: /دانش‌آموز آزمایشی/ })).toBeVisible();
+  await captureExactState(page, ['MK-146']);
   await page.getByRole('link', { name: /دانش‌آموز آزمایشی/ }).click();
   await expect(page.getByText('پاسخ کامل دانش‌آموز برای ارزیابی')).toBeVisible();
+  await captureExactState(page, ['MK-147', 'MK-458']);
+
   await request.post(fixture + '/__test__/fault', {
     data: { path: `/files/${file}/content`, method: 'GET', delay: 1500 },
   });
@@ -55,6 +62,8 @@ test('assignment evaluation retains failed drafts, previews audience feedback an
     data: { path: '/evaluation/release', method: 'POST', status: 409 },
   });
   await page.getByRole('button', { name: 'انتشار ارزیابی', exact: true }).click();
+  await captureExactState(page, ['MK-148']);
+
   await page.getByRole('dialog').getByRole('button', { name: 'انتشار نتیجه', exact: true }).click();
   await expect(page.getByRole('dialog').getByRole('alert')).toBeVisible();
   await page.getByRole('dialog').getByRole('button', { name: 'انتشار نتیجه', exact: true }).click();
@@ -70,6 +79,7 @@ test('assignment evaluation retains failed drafts, previews audience feedback an
     'href',
     submission + '/result',
   );
+  await captureExactState(page, ['MK-144']);
   const state = await (await request.get(fixture + '/__test__/state')).json();
   const save = state.requests.find(
     (r: { method: string; path: string }) => r.method === 'PUT' && r.path.endsWith('/evaluation'),
@@ -84,6 +94,8 @@ test('exam manual grading separates saving, completion and publication, and supp
   await request.post(fixture + '/__test__/assessments');
   await login(context, 'Teacher');
   await page.goto(`${base}/exams/${ids.exam}/grading`);
+  await expect(page.getByRole('link', { name: /دانش‌آموز آزمایشی/ })).toBeVisible();
+  await captureExactState(page, ['MK-158']);
   await page.getByRole('link', { name: /دانش‌آموز آزمایشی/ }).click();
   await page.getByRole('button', { name: 'شروع تصحیح پاسخ‌برگ' }).click();
   await expect(page.getByRole('button', { name: 'تکمیل و بازبینی نتیجه' })).toBeDisabled();
@@ -91,6 +103,8 @@ test('exam manual grading separates saving, completion and publication, and supp
   await page.getByLabel('نمره از ۲۰', { exact: true }).fill('18');
   await page.getByLabel('بازخورد دانش‌آموز', { exact: true }).fill('تصحیح سؤال برای دانش‌آموز');
   await page.getByLabel('یادداشت خصوصی ارزیاب', { exact: true }).fill('SECRET_QUESTION_NOTE');
+  await captureExactState(page, ['MK-459']);
+
   await request.post(fixture + '/__test__/fault', {
     data: { path: '/grading/questions/' + question, method: 'PATCH', status: 503 },
   });
@@ -103,6 +117,17 @@ test('exam manual grading separates saving, completion and publication, and supp
   await page.getByLabel('بازخورد قابل نمایش به والد', { exact: true }).fill('نتیجه والد آزمون');
   await page.getByLabel('یادداشت خصوصی ارزیاب', { exact: true }).fill('SECRET_EXAM_NOTE');
   await page.getByRole('button', { name: 'تکمیل و بازبینی نتیجه' }).click();
+  const completeDialog = page.getByRole('dialog', { name: 'تکمیل ارزیابی آزمون', exact: true });
+  await expect(completeDialog).toBeVisible();
+  const beforeCompletion = await (await request.get(fixture + '/__test__/state')).json();
+  expect(
+    beforeCompletion.requests.filter(
+      (row: { path: string; method: string }) =>
+        row.path.endsWith('/grading/complete') && row.method === 'POST',
+    ),
+  ).toHaveLength(0);
+  await captureExactState(page, ['MK-159']);
+  await completeDialog.getByRole('button', { name: 'تکمیل ارزیابی', exact: true }).click();
   await expect(page).toHaveURL(/grading-review$/);
   const recorded = await (await request.get(fixture + '/__test__/state')).json();
   const completed = recorded.requests.find((r: { path: string }) =>
@@ -117,6 +142,8 @@ test('exam manual grading separates saving, completion and publication, and supp
   await page.getByRole('link', { name: 'ایجاد اصلاحیه', exact: true }).click();
   await expect(page.getByRole('button', { name: 'ساخت پیش‌نویس اصلاحیه' })).toBeDisabled();
   await page.getByLabel('دلیل اصلاح', { exact: true }).fill('بررسی مجدد پاسخ');
+  await captureExactState(page, ['MK-160']);
+
   await page.getByRole('button', { name: 'ساخت پیش‌نویس اصلاحیه' }).click();
   await expect(page).toHaveURL(/\/grading$/);
   await login(context, 'Student');
@@ -169,7 +196,9 @@ test('student and parent cannot open author data; unpublished results and unrela
   await page.goto(submission + '/evaluate');
   await expect(page.getByText('پاسخ کامل دانش‌آموز برای ارزیابی')).toHaveCount(0);
   await page.goto(submission + '/result');
-  await expect(page.getByText('ابتدا فرزند را انتخاب کنید')).toBeVisible();
+  await expect(
+    page.getByRole('heading', { name: 'ابتدا فرزند را انتخاب کنید', exact: true }),
+  ).toBeVisible();
   const state = await (await request.get(fixture + '/__test__/state')).json();
   expect(state.requests.some((r: { path: string }) => r.path.endsWith('/guardian-result'))).toBe(
     false,
@@ -182,7 +211,7 @@ test('new assessment pages remain readable without overflow at three viewports',
 }) => {
   await request.post(fixture + '/__test__/assessments');
   const session = await login(context, 'Teacher');
-  await mkdir('output/review/assessment-expansion', { recursive: true });
+  await mkdir(reviewPath('output/review/assessment-expansion'), { recursive: true });
   const capture = async (name: string, url: string, label?: string, text?: string) => {
     await page.goto(url);
     if (label) await expect(page.getByLabel(label, { exact: true })).toBeVisible();
@@ -198,7 +227,9 @@ test('new assessment pages remain readable without overflow at three viewports',
         true,
       );
       expect(await page.locator('form form').count()).toBe(0);
-      await page.screenshot({ path: `output/review/assessment-expansion/${name}-${width}.png` });
+      await page.screenshot({
+        path: reviewPath(`output/review/assessment-expansion/${name}-${width}.png`),
+      });
     }
   };
   for (const [name, url] of [
@@ -222,7 +253,9 @@ test('new assessment pages remain readable without overflow at three viewports',
         true,
       );
       expect(await page.locator('form form').count()).toBe(0);
-      await page.screenshot({ path: `output/review/assessment-expansion/${name}-${width}.png` });
+      await page.screenshot({
+        path: reviewPath(`output/review/assessment-expansion/${name}-${width}.png`),
+      });
     }
   }
   const headers = { Origin: origin, 'X-Makan-Context': session.revision };
@@ -298,7 +331,7 @@ test('new assessment pages remain readable without overflow at three viewports',
   await expect(page.getByText('بازخورد نهایی آزمون', { exact: true })).toBeVisible();
   await page.setViewportSize({ width: 390, height: 844 });
   await page.screenshot({
-    path: 'output/review/assessment-expansion/exam-publication-dark-390.png',
+    path: reviewPath('output/review/assessment-expansion/exam-publication-dark-390.png'),
   });
 });
 
@@ -437,9 +470,7 @@ test('parent result uses the selected child relation and guardian feedback witho
   ).toBeTruthy();
   await login(context, 'Parent');
   await page.goto('/personal/education');
-  await page
-    .getByRole('combobox', { name: 'انتخاب فرزند', exact: true })
-    .selectOption('00000000-0000-4000-8000-000000000501');
+  await selectParentChild(page, '00000000-0000-4000-8000-000000000501');
   await expect(page.getByRole('heading', { name: 'سارا احمدی', exact: true })).toBeVisible();
   await page.goto(submission + '/result');
   await expect(page.getByText('بازخورد منتشرشده برای والد', { exact: true })).toBeVisible();

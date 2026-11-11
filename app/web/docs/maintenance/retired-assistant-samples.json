@@ -1,0 +1,26 @@
+{
+  "backupOutsideWorkspace": "/home/omidreza-bagheriyan/Desktop/MakanApp-cleanup-backup-2026-11-10/retired-assistant-samples.zip",
+  "reason": "Removed the old fake-answer studio; its existing address redirects to the real API-backed assistant in every runtime. No model/provider results are fabricated in product code.",
+  "files": [
+    {
+      "path": "src/features/personal/assistant.tsx",
+      "sha256": "a87d066ef199f3a27e767695e29ad978bda21703e26179984ca7ea1d0e413d38",
+      "bytes": 19555
+    },
+    {
+      "path": "src/features/personal/assistant.module.css",
+      "sha256": "635c7206489eb2aae7927500ebc0faba1e9727172abc3c0bb4995790691c8332",
+      "bytes": 17243
+    },
+    {
+      "path": "src/lib/server/development-samples.ts",
+      "sha256": "452ccb125be704c7cf91dc0cfaf2829719e24578a7741115ebe2b087d2938ff7",
+      "bytes": 402
+    },
+    {
+      "path": "src/features/reference/types.ts",
+      "sha256": "feabb76ecf4575981a2364735997b60dcfcf4a76b7f701816b576f58cc432d4f",
+      "bytes": 653
+    }
+  ]
+}

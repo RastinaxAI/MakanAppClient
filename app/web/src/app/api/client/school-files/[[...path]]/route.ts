@@ -4,7 +4,7 @@ import { clientSessionId, getClientState } from '@/lib/server/client-session';
 import { readSession, withSessionLock } from '@/lib/server/session';
 import { authenticatedFetch, checkOrigin, safeResponse } from '@/lib/server/backend';
 import { serverConfig } from '@/lib/server/config';
-import { clientValidator } from '@/lib/api/client-contract';
+import { validator as clientValidator } from '@/lib/api/contract';
 import { ApiError, parseProblem } from '@/lib/api/errors';
 import type { components } from '@/generated/api/schema';
 export const runtime = 'nodejs';
@@ -36,10 +36,17 @@ async function handler(request: Request, { params }: { params: Promise<{ path?: 
     const metadata = request.method === 'GET' && parts.length === 1;
     if (!upload && (!(content || metadata) || !guid.test(parts[0]))) throw new ApiError(404);
     const classId = url.searchParams.get('classId'),
-      lessonId = url.searchParams.get('lessonId');
+      lessonId = url.searchParams.get('lessonId'),
+      assignmentId = url.searchParams.get('assignmentId');
     if (
       url.searchParams.size !== 1 ||
-      (content ? !lessonId || !guid.test(lessonId) : !classId || !guid.test(classId))
+      (upload
+        ? !classId || !guid.test(classId)
+        : assignmentId
+          ? !guid.test(assignmentId)
+          : content
+            ? !lessonId || !guid.test(lessonId)
+            : !classId || !guid.test(classId))
     )
       throw new ApiError(400);
     const type = request.headers.get('Content-Type') ?? '';
@@ -56,7 +63,42 @@ async function handler(request: Request, { params }: { params: Promise<{ path?: 
         throw new ApiError(403, { code: 'ORGANIZATION_WORKSPACE_REQUIRED' });
       const session = await readSession(id);
       if (!session) throw new ApiError(401);
-      if (content) {
+      if (assignmentId) {
+        const assignment = await decoded<components['schemas']['AssignmentResult']>(
+          (
+            await authenticatedFetch(id, session, '/api/v1/academic/assignments/' + assignmentId, {
+              signal: request.signal,
+            })
+          ).response,
+          { $ref: '#/components/schemas/AssignmentResult' },
+        );
+        if (
+          assignment.id !== assignmentId ||
+          assignment.organizationId !== state.context.organizationId ||
+          (assignment.classRef &&
+            (assignment.classRef.kind !== 'OrganizationClass' ||
+              assignment.classRef.classId !== assignment.classId))
+        )
+          throw new ApiError(409, { code: 'CONTEXT_CHANGED' });
+        if (!assignment.attachmentFileIds?.includes(parts[0])) throw new ApiError(404);
+        if (content) {
+          const asset = await decoded<components['schemas']['FileAssetResult']>(
+            (
+              await authenticatedFetch(id, session, '/api/v1/files/' + parts[0], {
+                signal: request.signal,
+              })
+            ).response,
+            { $ref: '#/components/schemas/FileAssetResult' },
+          );
+          if (
+            asset.id !== parts[0] ||
+            asset.organizationId !== state.context.organizationId ||
+            asset.personalClassId
+          )
+            throw new ApiError(502, { code: 'CONTRACT_MISMATCH' });
+          if (asset.status !== 'Ready') throw new ApiError(404);
+        }
+      } else if (content) {
         const lesson = await decoded<components['schemas']['ClassLessonResult']>(
           (
             await authenticatedFetch(id, session, '/api/v1/academic/lessons/' + lessonId, {
@@ -144,8 +186,9 @@ async function handler(request: Request, { params }: { params: Promise<{ path?: 
         $ref: '#/components/schemas/FileAssetResult',
       });
       if (
-        asset.uploadedByUserId !== prepared.userId ||
+        (!assignmentId && asset.uploadedByUserId !== prepared.userId) ||
         asset.organizationId !== prepared.organizationId ||
+        (assignmentId && !!asset.personalClassId) ||
         (!upload && asset.id !== parts[0])
       )
         throw new ApiError(502, { code: 'CONTRACT_MISMATCH' });

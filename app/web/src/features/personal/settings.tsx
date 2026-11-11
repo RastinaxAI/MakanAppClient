@@ -1,8 +1,13 @@
 'use client';
+import { Input as NativeInput } from '@/components/ui/input';
+
+import { uiClass } from '@/components/v5/classes';
+
 import * as uiText from '@/content/fa';
-import { Button } from '@/components/ui/button';
+import appearance from './appearance.module.css';
+import { Button, buttonClass } from '@/components/ui/button';
 import { Bell, MonitorSmartphone, UserRound, Wallet } from 'lucide-react';
-import { Moon, Palette, ShieldCheck, Sun } from 'lucide-react';
+import { Palette, ShieldCheck, Type, Accessibility, Headphones } from 'lucide-react';
 import Link from 'next/link';
 import { V5Scene } from '@/components/v5/scene';
 import { V4List, V4Row } from '@/components/v4/page';
@@ -11,7 +16,6 @@ import { usePersonal } from './provider';
 import { label } from '@/components/ui/states';
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
-import { Dialog, DialogContent } from '@/components/ui/dialog';
 export function ProfilePreferences() {
   return <PersonalSettings />;
 }
@@ -29,6 +33,25 @@ export function PersonalSettings() {
         .filter(Boolean)
         .join(' · ')}
       deep={false}
+      menu={
+        <div className={uiClass('stack')}>
+          <Link
+            className={uiClass(buttonClass('button button-outline'))}
+            href="/personal/settings/reading"
+          >
+            {uiText.v4Text.reading}
+          </Link>
+          <Link className={uiClass(buttonClass('button button-outline'))} href="/personal/profile">
+            {uiText.navigation_profile}
+          </Link>
+          <Link
+            className={uiClass(buttonClass('button button-outline'))}
+            href="/personal/settings/help"
+          >
+            {uiText.v4Text.support}
+          </Link>
+        </div>
+      }
     >
       <V4List>
         {[
@@ -79,85 +102,106 @@ export function AppearanceSettings() {
   const { theme, changeTheme, error } = useThemePreference(),
     router = useRouter();
   const [draft, setDraft] = useState(theme);
+  const [reading, setReading] = useState({ large: false, reduce: false });
+  useEffect(
+    () =>
+      setReading({
+        large: document.documentElement.dataset.reading === 'large',
+        reduce: document.documentElement.dataset.motion === 'reduce',
+      }),
+    [],
+  );
   useEffect(() => setDraft(theme), [theme]);
   const t = uiText.v5Product;
   return (
-    <>
-      <PersonalSettings />
-      <Dialog
-        open
-        onOpenChange={(open) => {
-          if (!open) router.push('/personal/settings');
-        }}
-      >
-        <DialogContent
-          title={uiText.text_11a1d93d127f}
-          description={t.appearancePolicy}
-          className="v5-appearance-dialog"
-        >
-          <fieldset className="v5-appearance-choices">
-            <legend className="sr-only">{uiText.text_88619bd1891f}</legend>
+    <V5Scene
+      id="MK-339"
+      title={t.appearance}
+      back="/personal/settings"
+      kind="form"
+      deep
+      actions={
+        <>
+          <Button
+            onClick={() => {
+              if (changeTheme(draft)) router.push('/personal/settings');
+            }}
+          >
+            {t.saveAppearance}
+          </Button>
+          <Button variant="outline" onClick={() => router.push('/personal/settings')}>
+            {uiText.text_fa7af603d430}
+          </Button>
+        </>
+      }
+    >
+      <div className={appearance.page}>
+        <section className={uiClass('card')}>
+          <h3>{uiText.text_11a1d93d127f}</h3>
+          <fieldset className={appearance.themeChoices}>
+            <legend className={uiClass('sr-only')}>{uiText.text_88619bd1891f}</legend>
             {(
               [
-                {
-                  value: 'system',
-                  title: uiText.text_a11180341c26,
-                  description: t.systemDescription,
-                  Icon: MonitorSmartphone,
-                },
-                {
-                  value: 'light',
-                  title: uiText.text_be9fd3bd1ba1,
-                  description: t.lightDescription,
-                  Icon: Sun,
-                },
-                {
-                  value: 'dark',
-                  title: uiText.text_9a0be82749f7,
-                  description: t.darkDescription,
-                  Icon: Moon,
-                },
+                { value: 'light', title: uiText.text_be9fd3bd1ba1 },
+                { value: 'dark', title: uiText.text_9a0be82749f7 },
+                { value: 'system', title: uiText.text_09ac966bd1cb },
               ] as const
-            ).map(({ value, title, description, Icon }) => (
+            ).map(({ value, title }) => (
               <label key={value}>
-                <Icon size={24} />
-                <span className="grow">
-                  <strong>{title}</strong>
-                  <small>{description}</small>
-                </span>
-                <input
+                <NativeInput
                   type="radio"
-                  aria-label={title}
                   name="appearance"
+                  aria-label={title}
                   value={value}
                   checked={draft === value}
                   onChange={() => setDraft(value)}
                 />
+                <span>{title}</span>
               </label>
             ))}
           </fieldset>
-          <p className="policy">{t.appearancePolicy}</p>
-          <div className="confirm-actions">
-            <Button
-              onClick={() => {
-                changeTheme(draft);
-                router.push('/personal/settings');
-              }}
-            >
-              {t.saveAppearance}
-            </Button>
-            <Button variant="outline" onClick={() => router.push('/personal/settings')}>
-              {uiText.text_fa7af603d430}
-            </Button>
-          </div>
-          <Link href="/personal/settings/reading">{uiText.v4Text.reading}</Link>
-          {error && (
-            <p role="alert" className="field-error">
-              {error}
-            </p>
-          )}
-        </DialogContent>
-      </Dialog>
-    </>
+          <p className={uiClass('policy')}>{t.appearancePolicy}</p>
+        </section>
+        <section className={uiClass('card')}>
+          <h3>{uiText.v4Text.reading}</h3>
+          <V4List>
+            <V4Row
+              href="/personal/settings/reading"
+              icon={<Type />}
+              title={uiText.v4Text.largerText}
+              description={reading.large ? t.preferenceOn : t.preferenceOff}
+            />
+            <V4Row
+              href="/personal/settings/reading"
+              icon={<Accessibility />}
+              title={uiText.v4Text.reduceMotion}
+              description={reading.reduce ? t.preferenceOn : uiText.text_09ac966bd1cb}
+            />
+          </V4List>
+        </section>
+        <V4List>
+          <V4Row
+            href="/personal/settings/notifications"
+            icon={<Bell />}
+            title={uiText.text_9f2a436a61f3}
+          />
+          <V4Row
+            href="/personal/settings/privacy"
+            icon={<ShieldCheck />}
+            title={uiText.v5Product.communication}
+          />
+          <V4Row
+            href="/personal/settings/help"
+            icon={<Headphones />}
+            title={uiText.v4Text.support}
+          />
+        </V4List>
+        {error && (
+          <p role="alert" className={uiClass('field-error')}>
+            {error}
+          </p>
+        )}
+      </div>
+    </V5Scene>
   );
 }

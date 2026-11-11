@@ -26,8 +26,8 @@ export function LibraryPage() {
         action={<SourceEditor />}
       />
       <p className="notice">
-        نمایش عمومی فقط برای منابع منتشرشده و عمومی است. استفاده هوش مصنوعی از منابع در این نسخه
-        فعال نیست.
+        دانلود عمومی کتابخانه فعال نیست. انتشار و نمایانی منبع به‌تنهایی اجازه دریافت فایل یا
+        استفاده هوش مصنوعی ایجاد نمی‌کنند؛ وضعیت هر منبع را در پرونده آن بررسی کنید.
       </p>
       <ListView
         endpoint={catalog}
@@ -184,10 +184,21 @@ export function LibraryDetail({ id }: { id: string }) {
             }}
           />
         </Panel>
+        <Panel title="آمادگی استفاده هوش مصنوعی" description="وضعیت گزارش‌شده برای همین منبع">
+          <DataView
+            value={{
+              aiReady: source.aiReady,
+              aiReadiness: source.aiReadiness,
+              aiUnavailableReason: source.aiUnavailableReason,
+              canUseForAi: source.capabilities.canUseForAi,
+            }}
+          />
+        </Panel>
       </div>
       <p className="notice">
         محتوای بازبینی منتشرشده تغییر نمی‌کند؛ برای جایگزینی فایل، نسخه جدید بسازید. پردازش منبع به
-        معنی فعال بودن بازیابی هوش مصنوعی نیست.
+        معنی موفقیت بازیابی هوش مصنوعی نیست؛ آمادگی منبع و اجازه استفاده از آن جداگانه از سرور
+        دریافت می‌شوند.
       </p>
     </>
   );

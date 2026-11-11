@@ -26,6 +26,16 @@ test('V5 settings fills its reading area and preserves appearance navigation', a
   await expect(page.locator('.rx-context-panel')).toBeVisible();
   await page.getByRole('link', { name: /ظاهر و خوانایی/ }).click();
   await expect(page.getByRole('radio', { name: /تاریک/ })).toBeVisible();
+  await page.keyboard.press('Escape');
+  await page
+    .getByRole('banner')
+    .getByRole('button', { name: 'گزینه‌های بیشتر', exact: true })
+    .click();
+  await page
+    .getByRole('dialog')
+    .getByRole('link', { name: 'خوانایی و نمایش', exact: true })
+    .click();
+  await expect(page).toHaveURL(/\/personal\/settings\/reading$/);
 });
 test('V5 form moves its single visible action from header to bottom without losing data', async ({
   page,

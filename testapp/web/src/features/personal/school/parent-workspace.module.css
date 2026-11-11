@@ -1,0 +1,64 @@
+.child {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--surface);
+  color: var(--text);
+  text-decoration: none;
+}
+.child > svg {
+  flex: none;
+}
+.identity {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+.copy {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.copy strong,
+.copy small {
+  display: block;
+}
+.copy strong {
+  font-size: calc(16px * var(--text-scale, 1));
+  line-height: 1.65;
+}
+.copy small {
+  font-size: calc(13px * var(--text-scale, 1));
+  line-height: 1.8;
+  color: var(--muted);
+}
+.timeline {
+  min-width: 0;
+  color: var(--text);
+  text-decoration: none;
+}
+.timeline :global(.time) {
+  font-size: calc(12px * var(--text-scale, 1));
+}
+.timeline :global(.time) small {
+  display: block;
+  font-size: calc(9px * var(--text-scale, 1));
+}
+.timeline h4 {
+  overflow-wrap: anywhere;
+  font-size: calc(15px * var(--text-scale, 1));
+}
+.timeline p {
+  overflow-wrap: anywhere;
+  font-size: calc(11px * var(--text-scale, 1));
+}
+@media (min-width: 768px) {
+  .child {
+    padding: 18px;
+  }
+}

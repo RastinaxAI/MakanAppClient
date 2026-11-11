@@ -1,4 +1,8 @@
 'use client';
+import { Input as NativeInput } from '@/components/ui/input';
+
+import { uiClass } from '@/components/v5/classes';
+
 import * as uiText from '@/content/fa';
 import { useRef, useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
@@ -26,8 +30,7 @@ export function ConversationTopics({ value }: { value: S['ManagedConversationRes
     poll: 10000,
   });
   return (
-    <section className={c.panel}>
-      <h2>{uiText.text_0de00f83cacf}</h2>
+    <section className={uiClass(c.panel)} aria-label={uiText.text_0de00f83cacf}>
       {q.isPending ? (
         <LoadingSkeleton />
       ) : q.isError ? (
@@ -36,7 +39,7 @@ export function ConversationTopics({ value }: { value: S['ManagedConversationRes
         <>
           {q.data.canManage && conversationCapability(value, 'canManageTopics') && (
             <form
-              className={c.form}
+              className={uiClass(c.form)}
               onSubmit={async (ev) => {
                 ev.preventDefault();
                 if (lock.current || !title.trim()) return;
@@ -68,7 +71,7 @@ export function ConversationTopics({ value }: { value: S['ManagedConversationRes
             >
               <label>
                 {uiText.text_05a7e9536fa3}
-                <input
+                <NativeInput
                   required
                   disabled={busy || !!command.current}
                   value={title}
@@ -82,7 +85,7 @@ export function ConversationTopics({ value }: { value: S['ManagedConversationRes
             </form>
           )}
           {!!error && <ErrorState error={error} />}
-          <div className={c.linkList}>
+          <div className={uiClass(c.linkList)}>
             {q.data.items.length ? (
               q.data.items.map((topic) => (
                 <article key={topic.topicId}>
@@ -97,6 +100,7 @@ export function ConversationTopics({ value }: { value: S['ManagedConversationRes
                   </div>
                   {q.data.canManage && conversationCapability(value, 'canManageTopics') && (
                     <ConfirmAction
+                      scenario="MK-226"
                       title={
                         topic.status === 'Open'
                           ? uiText.text_65693f7108d5
@@ -137,7 +141,7 @@ export function ConversationTopics({ value }: { value: S['ManagedConversationRes
               <EmptyState title={uiText.text_5d148496581b} />
             )}
           </div>
-          <div className={c.pager}>
+          <div className={uiClass(c.pager)}>
             <Button variant="outline" disabled={page <= 1} onClick={() => setPage(page - 1)}>
               {uiText.text_28d94a2716a9}
             </Button>

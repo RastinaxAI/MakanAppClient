@@ -9,7 +9,7 @@ const bindings = Object.fromEntries(
     .filter(
       (o) =>
         o.path.startsWith('/api/admin/') &&
-        !/\/library\/sources|\/personal-class|\/expanded-context$|\/enforce-content-removal$/.test(
+        !/\/library\/sources|\/personal-class|\/operations\/|\/finance\/|\/expanded-context$|\/enforce-content-removal$/.test(
           o.path,
         ),
     )

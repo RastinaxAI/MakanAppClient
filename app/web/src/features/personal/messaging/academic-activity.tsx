@@ -1,4 +1,6 @@
 'use client';
+import { uiClass } from '@/components/v5/classes';
+
 import * as uiText from '@/content/fa';
 import Link from 'next/link';
 import { useRef, useState } from 'react';
@@ -68,8 +70,8 @@ export function AcademicActivity({
     }
   }
   return (
-    <section className={s.activity} aria-label={uiText.text_2b89c5e7c77c + name}>
-      <span className={s.badge}>
+    <section className={uiClass(s.activity)} aria-label={uiText.text_2b89c5e7c77c + name}>
+      <span className={uiClass(s.badge)}>
         <Icon size={19} />
         {card.kind === 'Session'
           ? {

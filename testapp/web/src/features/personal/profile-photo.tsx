@@ -1,4 +1,8 @@
 'use client';
+import { Input as NativeInput } from '@/components/ui/input';
+
+import { uiClass } from '@/components/v5/classes';
+
 import * as uiText from '@/content/fa';
 import { Button } from '@/components/ui/button';
 import { ErrorState } from '@/components/ui/states';
@@ -45,7 +49,7 @@ export function ProfileAvatar({
     return () => URL.revokeObjectURL(next);
   }, [query.data]);
   return (
-    <span className={`${s.avatar} ${className}`} aria-label={name}>
+    <span className={uiClass(`${s.avatar} ${className}`)} aria-label={name}>
       {url && !broken ? (
         <img src={url} alt="" onError={() => setBroken(true)} />
       ) : (
@@ -140,17 +144,17 @@ export function ProfilePhotoEditor({
     }
   }
   return (
-    <section className={s.editor} aria-label={uiText.text_81387363cbf9}>
-      <div className={s.identity}>
+    <section className={uiClass(s.editor)} aria-label={uiText.text_81387363cbf9}>
+      <div className={uiClass(s.identity)}>
         {preview ? (
-          <span className={s.preview}>
+          <span className={uiClass(s.preview)}>
             <img src={preview} alt={uiText.text_c54182000e02} />
           </span>
         ) : (
           <ProfileAvatar
             photo={session.user.profilePhoto}
             name={session.user.displayName || session.user.firstName || uiText.text_8b4cb595cd35}
-            className={s.preview}
+            className={uiClass(s.preview)}
           />
         )}
         <div>
@@ -158,11 +162,11 @@ export function ProfilePhotoEditor({
           <p>{uiText.text_cb7c102e0609}</p>
         </div>
       </div>
-      <div className={s.actions}>
-        <label className={s.choose}>
+      <div className={uiClass(s.actions)}>
+        <label className={uiClass(s.choose)}>
           <Camera size={18} />
           {uiText.text_679d612cbfb1}
-          <input
+          <NativeInput
             aria-label={uiText.text_6e3ddb3deb6e}
             type="file"
             accept="image/jpeg,image/png"
@@ -202,9 +206,9 @@ export function ProfilePhotoEditor({
           </Button>
         )}
       </div>
-      {disabled && <p className={s.help}>{uiText.text_a8c3522a70b0}</p>}
+      {disabled && <p className={uiClass(s.help)}>{uiText.text_a8c3522a70b0}</p>}
       {progress && (
-        <div role="status" className={s.progress}>
+        <div role="status" className={uiClass(s.progress)}>
           <span>
             {progress.phase === 'uploading' ? uiText.text_1f91726d3ebc : uiText.text_43bcd5743f72}
             {progress.total

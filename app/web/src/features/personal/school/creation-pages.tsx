@@ -1,22 +1,29 @@
 'use client';
+import { Input as NativeInput, Textarea as NativeTextarea } from '@/components/ui/input';
+
+import { uiClass } from '@/components/v5/classes';
+
 import * as uiText from '@/content/fa';
 import { useAcademicScope } from './academic-scope';
-import { Button } from '@/components/ui/button';
+import { Button, buttonClass } from '@/components/ui/button';
 import { JalaliDateInput } from '@/components/ui/jalali-date-input';
 import { ErrorState, LoadingSkeleton } from '@/components/ui/states';
 import type { components } from '@/generated/api/schema';
 import { ApiError } from '@/lib/api/errors';
 import { date } from '@/lib/formatting';
+import { jalaliDisplayValue } from '@/lib/jalali-date';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
-import { usePersonalApi } from '../provider';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { usePersonal, usePersonalApi } from '../provider';
 import { useResourceCommand } from '../use-resource-command';
 import { CatalogPicker } from './directory';
 import { ClassMembersOverview } from './class-members';
 import { ClassMemberAssignment } from './member-assignment';
 import { GuardianInvitationForm } from './onboarding';
 import { AddQuestion } from './exams';
+import { ExamForm } from './exam-form';
+import { ExamQuestionForm } from './exam-question-form';
 import { Field, toUtc, useSchoolAction } from './shared';
 import { WorkflowForm, WorkflowPage, useWorkflowDraft } from './workflow';
 import s from './school.module.css';
@@ -26,7 +33,7 @@ const authors = ['Manager', 'Teacher'];
 export function ClassCreatePage() {
   const { base } = useAcademicScope();
   return (
-    <WorkflowPage title={uiText.text_34aeac5f09b4} back={base + '/classes'}>
+    <WorkflowPage form title={uiText.text_fc6eddd72380} back={base + '/classes'}>
       <ClassCreator />
     </WorkflowPage>
   );
@@ -36,7 +43,9 @@ function ClassCreator() {
   const d = useWorkflowDraft('class:new', {
       title: '',
       course: '',
+      courseTitle: '',
       period: '',
+      periodTitle: '',
       capacity: '',
       active: true,
     }),
@@ -50,10 +59,10 @@ function ClassCreator() {
     Number(d.values.capacity) > 0;
   if (created)
     return (
-      <section className={s.receipt}>
+      <section className={uiClass(s.receipt)}>
         <h2>{uiText.text_946c6e906859}</h2>
         <p>{created.title}</p>
-        <div className={managerStyle.steps}>
+        <div className={uiClass(managerStyle.steps)}>
           <div>
             <span>{uiText.text_f911d7c42a09}</span>
             <Button asChild>
@@ -102,11 +111,19 @@ function ClassCreator() {
       error={
         <>
           {a.feedback}
-          {!valid && <p className={s.hint}>{uiText.text_5fb4677a90df}</p>}
+          {!valid && <p className={uiClass(s.hint)}>{uiText.text_5fb4677a90df}</p>}
         </>
       }
       rows={[
-        [uiText.text_e5199f5b6d80, d.values.title],
+        [
+          uiText.v5Product.educationalPeriod,
+          d.values.periodTitle || (d.values.period ? uiText.text_f240dea8c236 : ''),
+        ],
+        [
+          uiText.v5Product.courseCatalog,
+          d.values.courseTitle || (d.values.course ? uiText.text_f240dea8c236 : ''),
+        ],
+        [uiText.v5Product.classTitle, d.values.title],
         [uiText.text_57400196e6de, d.values.capacity],
         [
           uiText.text_eabfbd7982f4,
@@ -115,48 +132,52 @@ function ClassCreator() {
       ]}
       notice={uiText.text_1227743339e4}
     >
-      <div className={s.two}>
-        <Field label={uiText.text_e5199f5b6d80}>
-          <input required value={d.values.title} onChange={(e) => d.set('title', e.target.value)} />
-        </Field>
-        <Field label={uiText.text_23c14d587863}>
-          <input
-            required
-            min={1}
-            step={1}
-            type="number"
-            value={d.values.capacity}
-            onChange={(e) => d.set('capacity', e.target.value)}
-          />
-        </Field>
-      </div>
-      <div className={s.two}>
-        <section className={s.workflowGroup}>
-          <h2>{uiText.text_f742001e0e88}</h2>
-          <CatalogPicker
-            kind="courses"
-            value={d.values.course}
-            onChange={(v) => d.set('course', v)}
-          />
-          <Link href={base + '/courses/new'}>{uiText.text_9f30c2048bc7}</Link>
-        </section>
-        <section className={s.workflowGroup}>
-          <h2>{uiText.text_4abb03b122f4}</h2>
-          <CatalogPicker
-            kind="periods"
-            value={d.values.period}
-            onChange={(v) => d.set('period', v)}
-          />
-          <Link href={base + '/periods/new'}>{uiText.text_51add6a204d5}</Link>
-        </section>
-      </div>
-      <label className={s.check}>
-        <input
+      <CatalogPicker
+        kind="periods"
+        value={d.values.period}
+        valueTitle={d.values.periodTitle}
+        onChange={(id, title) => {
+          d.set('period', id);
+          d.set('periodTitle', title);
+        }}
+        createHref={base + '/periods/new'}
+        createLabel={uiText.text_51add6a204d5}
+      />
+      <CatalogPicker
+        kind="courses"
+        value={d.values.course}
+        valueTitle={d.values.courseTitle}
+        onChange={(id, title) => {
+          d.set('course', id);
+          d.set('courseTitle', title);
+        }}
+        createHref={base + '/courses/new'}
+        createLabel={uiText.text_9f30c2048bc7}
+      />
+      <Field label={uiText.v5Product.classTitle}>
+        <NativeInput
+          required
+          value={d.values.title}
+          onChange={(e) => d.set('title', e.target.value)}
+        />
+      </Field>
+      <Field label={uiText.text_57400196e6de}>
+        <NativeInput
+          required
+          min={1}
+          step={1}
+          type="number"
+          value={d.values.capacity}
+          onChange={(e) => d.set('capacity', e.target.value)}
+        />
+      </Field>
+      <label className={uiClass(s.check)}>
+        <NativeInput
           type="checkbox"
           checked={d.values.active}
           onChange={(e) => d.set('active', e.target.checked)}
         />
-        {uiText.text_65b84c86f2b8}
+        {uiText.v5Product.activateClassAfterCreate}
       </label>
     </WorkflowForm>
   );
@@ -165,7 +186,8 @@ export function CatalogCreatePage({ kind }: { kind: 'courses' | 'periods' }) {
   const { base } = useAcademicScope();
   return (
     <WorkflowPage
-      title={kind === 'courses' ? uiText.text_bc7837ca0bbb : uiText.text_c19ede0cddae}
+      form
+      title={kind === 'courses' ? uiText.text_bc7837ca0bbb : uiText.v5SchoolForms.newPeriod}
       back={base + '/classes/new'}
     >
       <CatalogCreator kind={kind} />
@@ -174,6 +196,7 @@ export function CatalogCreatePage({ kind }: { kind: 'courses' | 'periods' }) {
 }
 function CatalogCreator({ kind }: { kind: 'courses' | 'periods' }) {
   const { base } = useAcademicScope();
+  const { session } = usePersonal();
   const d = useWorkflowDraft('catalog:' + kind, { title: '', start: '', end: '' }),
     a = useSchoolAction();
   const [saved, setSaved] = useState(false);
@@ -182,7 +205,7 @@ function CatalogCreator({ kind }: { kind: 'courses' | 'periods' }) {
     (kind === 'courses' || (!!d.values.start && !!d.values.end && d.values.end >= d.values.start));
   if (saved)
     return (
-      <section className={s.receipt}>
+      <section className={uiClass(s.receipt)}>
         <h2>{kind === 'courses' ? uiText.text_a8e9400f558e : uiText.text_55dd273e4ada}</h2>
         <Button asChild>
           <Link href={base + '/classes/new'}>{uiText.text_75454f626ebf}</Link>
@@ -195,26 +218,39 @@ function CatalogCreator({ kind }: { kind: 'courses' | 'periods' }) {
       ready={d.ready}
       canCommit={valid}
       rows={[
-        [uiText.text_74190f4bb095, d.values.title],
+        [
+          kind === 'periods' ? uiText.v5SchoolForms.periodTitle : uiText.text_74190f4bb095,
+          d.values.title,
+        ],
         ...(kind === 'periods'
           ? ([
-              [uiText.text_103613fd03b5, date(d.values.start, true)],
-              [uiText.text_3f05817a3011, date(d.values.end, true)],
+              [
+                uiText.v5SchoolForms.startDate,
+                d.values.start ? jalaliDisplayValue(d.values.start) : '',
+              ],
+              [uiText.v5SchoolForms.endDate, d.values.end ? jalaliDisplayValue(d.values.end) : ''],
             ] as [string, string][])
           : []),
       ]}
       error={
         <>
           {a.feedback}
-          {!valid && <p className={s.hint}>{uiText.text_e847e6618d02}</p>}
+          {!valid && !!d.values.title.length && (
+            <p className={uiClass(s.hint)}>{uiText.text_e847e6618d02}</p>
+          )}
         </>
       }
       onSave={async () => {
         if (!valid) return;
-        const result = await a.run('/api/v1/academic/' + kind, {
-          title: d.values.title.trim(),
-          ...(kind === 'periods' ? { startDate: d.values.start, endDate: d.values.end } : {}),
-        });
+        const result = await a.run<S['CourseResult'] | S['AcademicPeriodResult']>(
+          '/api/v1/academic/' + kind,
+          {
+            title: d.values.title.trim(),
+            ...(kind === 'periods' ? { startDate: d.values.start, endDate: d.values.end } : {}),
+          },
+          'POST',
+          (row) => row.organizationId === session.context.organizationId,
+        );
         if (result) {
           d.reset();
           setSaved(true);
@@ -222,18 +258,22 @@ function CatalogCreator({ kind }: { kind: 'courses' | 'periods' }) {
       }}
     >
       <Field label={kind === 'courses' ? uiText.text_9398dccd15ef : uiText.text_8ce15ef5c0a9}>
-        <input required value={d.values.title} onChange={(e) => d.set('title', e.target.value)} />
+        <NativeInput
+          required
+          value={d.values.title}
+          onChange={(e) => d.set('title', e.target.value)}
+        />
       </Field>
       {kind === 'periods' && (
         <>
-          <Field label={uiText.text_c2e6c9ca70e0}>
+          <Field label={uiText.v5SchoolForms.startDate}>
             <JalaliDateInput
               required
               value={d.values.start}
               onValueChange={(v) => d.set('start', v)}
             />
           </Field>
-          <Field label={uiText.text_07659e16252d}>
+          <Field label={uiText.v5SchoolForms.endDate}>
             <JalaliDateInput
               min={d.values.start}
               required
@@ -251,9 +291,10 @@ export function SessionCreatePage({ classId }: { classId: string }) {
   const { base } = useAcademicScope();
   return (
     <WorkflowPage
+      form
       roles={authors}
       classId={classId}
-      title={uiText.text_8a8bca7672c8}
+      title={uiText.v5Product.newSession}
       back={`${base}/classes/${classId}?tab=sessions`}
     >
       <SessionCreator classId={classId} />
@@ -262,6 +303,9 @@ export function SessionCreatePage({ classId }: { classId: string }) {
 }
 function SessionCreator({ classId }: { classId: string }) {
   const { base } = useAcademicScope();
+  const [timeZone, setTimeZone] = useState('');
+  useEffect(() => setTimeZone(Intl.DateTimeFormat().resolvedOptions().timeZone), []);
+  const zoneLabel = timeZone === 'Asia/Tehran' ? uiText.v5Product.tehranTimeZone : timeZone;
   const d = useWorkflowDraft('session:new:' + classId, { title: '', start: '', end: '', link: '' }),
     a = useSchoolAction(),
     router = useRouter();
@@ -271,19 +315,26 @@ function SessionCreator({ classId }: { classId: string }) {
     Date.parse(d.values.end) > Date.parse(d.values.start);
   return (
     <WorkflowForm
-      ready={d.ready}
+      ready={d.ready && !!timeZone}
       canCommit={valid}
       busy={a.busy}
       rows={[
-        [uiText.text_69450aad3cb7, d.values.title],
-        [uiText.text_103613fd03b5, date(d.values.start, true)],
-        [uiText.text_3f05817a3011, date(d.values.end, true)],
+        [uiText.v5SchoolForms.sessionTitle, d.values.title],
+        [
+          uiText.v5SchoolForms.start,
+          d.values.start ? jalaliDisplayValue(d.values.start, true, true) : '',
+        ],
+        [
+          uiText.v5SchoolForms.end,
+          d.values.end ? jalaliDisplayValue(d.values.end, true, true) : '',
+        ],
+        [uiText.v5Product.timeZone, zoneLabel],
         [uiText.text_ea3eced42f9c, d.values.link],
       ]}
       error={
         <>
           {a.feedback}
-          {!valid && <p className={s.hint}>{uiText.text_73b7befc5afa}</p>}
+          {!valid && <p className={uiClass(s.hint)}>{uiText.text_73b7befc5afa}</p>}
         </>
       }
       onSave={async () => {
@@ -294,7 +345,7 @@ function SessionCreator({ classId }: { classId: string }) {
             title: d.values.title.trim(),
             startUtc: toUtc(d.values.start),
             endUtc: toUtc(d.values.end),
-            timeZoneId: Intl.DateTimeFormat().resolvedOptions().timeZone,
+            timeZoneId: timeZone,
             meetingUrl: d.values.link.trim() || null,
           },
         );
@@ -305,26 +356,39 @@ function SessionCreator({ classId }: { classId: string }) {
       }}
     >
       <Field label={uiText.text_70786012eed4}>
-        <input required value={d.values.title} onChange={(e) => d.set('title', e.target.value)} />
+        <NativeInput
+          required
+          value={d.values.title}
+          onChange={(e) => d.set('title', e.target.value)}
+        />
       </Field>
-      <Field label={uiText.text_0d5f82b11e8c}>
+      <Field label={uiText.v5SchoolForms.start}>
         <JalaliDateInput
           withTime
+          compactTimeDate
           required
           value={d.values.start}
           onValueChange={(v) => d.set('start', v)}
         />
       </Field>
-      <Field label={uiText.text_0559b65628ea}>
+      <Field label={uiText.v5SchoolForms.end}>
         <JalaliDateInput
           withTime
+          compactTimeDate
           required
           value={d.values.end}
           onValueChange={(v) => d.set('end', v)}
         />
       </Field>
-      <Field label={uiText.text_9d6b7140edeb}>
-        <input
+      <Field label={uiText.v5Product.timeZone}>
+        <NativeInput
+          readOnly
+          value={zoneLabel}
+          aria-description={uiText.v5Product.sessionTimeZoneHint}
+        />
+      </Field>
+      <Field label={uiText.v5Product.optionalSessionLink}>
+        <NativeInput
           type="url"
           dir="ltr"
           value={d.values.link}
@@ -335,15 +399,16 @@ function SessionCreator({ classId }: { classId: string }) {
   );
 }
 export function ExamCreatePage({ classId }: { classId: string }) {
-  const { classPath } = useAcademicScope();
+  const { classPath, personal } = useAcademicScope();
   return (
     <WorkflowPage
+      form
       roles={authors}
       classId={classId}
       title={uiText.text_00f6d8e48e00}
       back={classPath(classId) + '/exams'}
     >
-      <ExamCreator classId={classId} />
+      {personal ? <ExamCreator classId={classId} /> : <ExamForm key={classId} classId={classId} />}
     </WorkflowPage>
   );
 }
@@ -389,7 +454,7 @@ function ExamCreator({ classId }: { classId: string }) {
       error={
         <>
           {a.feedback}
-          {!valid && <p className={s.hint}>{uiText.text_8476a4fa8850}</p>}
+          {!valid && <p className={uiClass(s.hint)}>{uiText.text_8476a4fa8850}</p>}
         </>
       }
       onSave={async () => {
@@ -411,10 +476,14 @@ function ExamCreator({ classId }: { classId: string }) {
       }}
     >
       <Field label={uiText.text_981230e1e35e}>
-        <input required value={d.values.title} onChange={(e) => d.set('title', e.target.value)} />
+        <NativeInput
+          required
+          value={d.values.title}
+          onChange={(e) => d.set('title', e.target.value)}
+        />
       </Field>
       <Field label={uiText.text_4a72e6b798a7}>
-        <textarea
+        <NativeTextarea
           value={d.values.description}
           onChange={(e) => d.set('description', e.target.value)}
         />
@@ -443,7 +512,7 @@ function ExamCreator({ classId }: { classId: string }) {
         ] as const
       ).map(([key, title]) => (
         <Field key={key} label={title}>
-          <input
+          <NativeInput
             type="number"
             min={key === 'score' ? 0 : 1}
             step={key === 'score' ? 'any' : 1}
@@ -453,8 +522,8 @@ function ExamCreator({ classId }: { classId: string }) {
           />
         </Field>
       ))}
-      <label className={s.check}>
-        <input
+      <label className={uiClass(s.check)}>
+        <NativeInput
           type="checkbox"
           checked={d.values.random}
           onChange={(e) => d.set('random', e.target.checked)}
@@ -468,7 +537,7 @@ export function GuardianCreatePage() {
   const { base } = useAcademicScope();
   return (
     <WorkflowPage title={uiText.text_c82d6822d030} back={base + '/guardians'}>
-      <section className={s.card}>
+      <section className={uiClass(s.card)}>
         <GuardianInvitationForm />
       </section>
     </WorkflowPage>
@@ -482,13 +551,48 @@ export function ClassMembersPage({
   kind: 'learners' | 'teachers' | 'all';
 }) {
   const { base } = useAcademicScope();
+  const teachers = useSearchParams().get('member') === 'teachers';
+  const { session } = usePersonal();
+  const classes = usePersonalApi<S['ClassResult'][]>('/api/v1/academic/classes', {
+    enabled:
+      session.context.workspaceType === 'Organization' &&
+      ['Manager', 'Teacher'].includes(session.context.activeRole ?? ''),
+  });
+  const classroom = classes.data?.find(
+    (item) => item.id === classId && item.organizationId === session.context.organizationId,
+  );
   return (
     <WorkflowPage
+      form={kind !== 'all'}
+      classNotice={false}
       classId={classId}
       roles={kind === 'all' ? authors : ['Manager']}
+      scenario={kind === 'all' ? (teachers ? 'MK-101' : 'MK-98') : undefined}
+      menu={
+        kind === 'all' ? (
+          <nav className={uiClass('stack')} aria-label={uiText.v5Product.classMemberTypes}>
+            <Link
+              className={uiClass(buttonClass('button button-outline'))}
+              href={`${base}/classes/${classId}/members?member=learners`}
+            >
+              {uiText.v5Product.classLearners}
+            </Link>
+            <Link
+              className={uiClass(buttonClass('button button-outline'))}
+              href={`${base}/classes/${classId}/members?member=teachers`}
+            >
+              {uiText.v5Product.classTeachers}
+            </Link>
+          </nav>
+        ) : undefined
+      }
       title={
         kind === 'all'
-          ? uiText.text_29c02fa4bd09
+          ? teachers
+            ? classroom
+              ? uiText.v5Product.classTeachersPrefix + classroom.title
+              : uiText.v5Product.classTeachers
+            : uiText.v5Product.classLearners
           : kind === 'learners'
             ? uiText.text_e82efffd7b2d
             : uiText.text_0766ac45d984
@@ -496,9 +600,7 @@ export function ClassMembersPage({
       back={`${base}/classes/${classId}`}
     >
       {kind === 'all' ? (
-        <section className={s.card}>
-          <ClassMembersOverview classId={classId} />
-        </section>
+        <ClassMembersOverview classId={classId} showSwitcher={false} />
       ) : (
         <ClassMemberAssignment key={classId + ':' + kind} classId={classId} kind={kind} />
       )}
@@ -506,9 +608,10 @@ export function ClassMembersPage({
   );
 }
 export function QuestionCreatePage({ id }: { id: string }) {
-  const { base } = useAcademicScope();
+  const { base, personal } = useAcademicScope();
   return (
     <WorkflowPage
+      form={!personal}
       roles={authors}
       title={uiText.text_78bf2b9b9225}
       back={`${base}/exams/${id}/edit`}
@@ -518,14 +621,25 @@ export function QuestionCreatePage({ id }: { id: string }) {
   );
 }
 function QuestionCreator({ id }: { id: string }) {
-  const { base } = useAcademicScope();
+  const scope = useAcademicScope(),
+    { base } = scope;
   const q = usePersonalApi<S['ExamEditorDto']>(`/api/v1/academic/exams/${id}/editor`),
     router = useRouter();
   if (q.isPending) return <LoadingSkeleton />;
   if (q.isError) return <ErrorState error={q.error} onRetry={() => void q.refetch()} />;
+  if (q.data.id !== id || !scope.matches(q.data)) return <ErrorState error={new ApiError(404)} />;
   if (q.data.versionStatus !== 'Draft') return <ErrorState error={new ApiError(403)} />;
+  if (!scope.personal)
+    return (
+      <ExamQuestionForm
+        key={id}
+        exam={q.data}
+        onSaved={() => router.replace(`${base}/exams/${id}/edit`)}
+        onRefresh={() => q.refetch()}
+      />
+    );
   return (
-    <section className={s.card}>
+    <section className={uiClass(s.card)}>
       <h2>{q.data.title}</h2>
       <AddQuestion exam={q.data} onSaved={() => router.replace(`${base}/exams/${id}/edit`)} />
     </section>

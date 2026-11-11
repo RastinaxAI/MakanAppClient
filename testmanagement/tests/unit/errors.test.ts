@@ -22,7 +22,7 @@ describe('Errors and Persian boundaries', () => {
     });
   });
   it('does not expose obsolete verification extensions', () =>
-    expect(parseProblem({needsStepUp:true}, 403)).not.toHaveProperty('needsStepUp'));
+    expect(parseProblem({ needsStepUp: true }, 403)).not.toHaveProperty('needsStepUp'));
   it('distinguishes failed OTP delivery, malformed service responses and browser connectivity', () => {
     const unavailable = new ApiError(502, { code: 'OTP_SERVICE_UNAVAILABLE' });
     const malformed = new ApiError(502, { code: 'OTP_RESPONSE_INVALID' });
@@ -42,6 +42,15 @@ describe('Errors and Persian boundaries', () => {
       60,
     );
   });
+  it('explains last owner and last manager conflicts using safe backend codes', () => {
+    for (const [code, text] of [
+      ['PLATFORM_LAST_OWNER_REQUIRED', 'حداقل یک مالک پلتفرم'],
+      ['PLATFORM_LAST_MANAGER_REQUIRED', 'حداقل یک مدیر باید فعال بماند'],
+    ]) {
+      expect(new ApiError(409, { code }).message).toContain(text);
+      expect(new ApiError(403, { code }).message).toBe(new ApiError(403).message);
+    }
+  });
   it.each([403, 409, 412, 429, 503])('gives distinct error text for %i', (status) => {
     expect(new ApiError(status).message.length).toBeGreaterThan(10);
     expect(new ApiError(status).status).toBe(status);
@@ -57,7 +66,10 @@ describe('Errors and Persian boundaries', () => {
   });
 });
 it('maps a safe correlation id without exposing internal error details', () => {
-  const problem = parseProblem({ correlationId: 'support-123', detail: 'private backend detail' }, 500);
+  const problem = parseProblem(
+    { correlationId: 'support-123', detail: 'private backend detail' },
+    500,
+  );
   expect(problem.traceId).toBe('support-123');
   expect(problem).not.toHaveProperty('detail');
 });

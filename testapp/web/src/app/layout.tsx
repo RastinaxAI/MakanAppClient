@@ -1,14 +1,14 @@
+import { uiClass } from '@/components/v5/classes';
 import * as uiText from '@/content/fa';
 import type { Metadata, Viewport } from 'next';
 import tokens from '../../design/tokens.json';
-import '@fontsource-variable/vazirmatn';
 import '@majidh1/jalalidatepicker/dist/jalalidatepicker.min.css';
 import './globals.css';
 import '@/design/tokens.css';
 import './jalali-date-input.css';
 
-import '@/design/v5-author.css';
-import '@/design/v5-product.css';
+import foundations from '@/components/v5/foundations.module.css';
+import fields from '@/components/ui/field.module.css';
 import { RootProviders } from '@/components/providers';
 export const metadata: Metadata = {
   title: { default: uiText.text_3ddc4fb260f2, template: uiText.text_9f26748fd7d4 },
@@ -21,6 +21,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
+  interactiveWidget: 'resizes-content',
   themeColor: tokens.light.bg,
   viewportFit: 'cover',
 };
@@ -28,6 +29,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="fa" dir="rtl" suppressHydrationWarning>
       <head>
+        <link
+          rel="preload"
+          href="/fonts/makan-reference/Vazirmatn.ttf"
+          as="font"
+          type="font/ttf"
+          crossOrigin="anonymous"
+        />
         <script
           id="makan-theme-bootstrap"
           dangerouslySetInnerHTML={{
@@ -35,10 +43,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           }}
         />
       </head>
-      <body>
+      <body className={uiClass(`${foundations.scope} ${fields.scope}`)}>
         <RootProviders>{children}</RootProviders>
         {process.env.MAKAN_TEST_MODE === 'fixture' && (
-          <div className="fixture-indicator" aria-hidden="true">
+          <div className={uiClass('fixture-indicator')} aria-hidden="true">
             {uiText.text_b2e9c858df63}
           </div>
         )}

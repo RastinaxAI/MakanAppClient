@@ -5,7 +5,7 @@ import { readSession, withSessionLock } from '@/lib/server/session';
 import { authenticatedFetch, checkOrigin, problem, safeResponse } from '@/lib/server/backend';
 import { conversationCapability } from '@/features/personal/messaging/management-policy';
 import { serverConfig } from '@/lib/server/config';
-import { clientValidator } from '@/lib/api/client-contract';
+import { validator as clientValidator } from '@/lib/api/contract';
 import { ApiError, parseProblem } from '@/lib/api/errors';
 import { canAttachConversation, mediaRestricted } from '@/features/personal/messaging/model';
 import {

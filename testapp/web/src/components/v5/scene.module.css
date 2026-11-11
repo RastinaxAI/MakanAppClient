@@ -1,0 +1,222 @@
+/* Page regions follow the V5 viewport, independent of the reference document frames. */
+.scene {
+  --v5-layout-gap: 16px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  margin: 0;
+}
+.scene :global(.rx-head) {
+  min-height: 76px;
+  padding: 12px 24px;
+  gap: 12px;
+}
+.scene :global(.rx-crumb) {
+  display: none;
+}
+.scene :global(.rx-head h1) {
+  letter-spacing: normal;
+  font-size: calc(21px * var(--text-scale, 1));
+  font-weight: 800;
+  line-height: 1.5;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.scene :global(.rx-head p) {
+  margin-top: 3px;
+}
+.brandMark {
+  flex: none;
+}
+.brandMark img {
+  display: block;
+  width: 36px;
+  height: 36px;
+  border-radius: 11px;
+}
+.scene .contextToggle {
+  display: none;
+}
+.scene :global(.rx-back) {
+  display: grid;
+}
+.scene :global(.rx-head .head-action) {
+  display: flex;
+  gap: 8px;
+}
+.scene:global([data-overlay-active]) :global(.rx-head .head-action),
+.scene:global([data-overlay-active]) > :global(.rx-bottom-actions) {
+  display: none;
+}
+.scene :global(.rx-workspace) {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  max-width: 1280px;
+}
+.scene :global(.rx-content) {
+  padding: 24px;
+}
+.scene :global(.rx-body-grid > *) {
+  min-width: 0;
+  grid-column: 1/-1;
+}
+.scene :global(.rx-body-grid > form),
+.scene:global(.kind-form) :global(.app-body) {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--v5-layout-gap);
+  align-content: start;
+}
+.scene :global(.rx-body-grid > form > *),
+.scene:global(.kind-form) :global(.app-body > *) {
+  min-width: 0;
+  grid-column: 1/-1;
+}
+.scene :global(.rx-body-grid > form > .field),
+.scene:global(.kind-form) :global(.app-body > .field) {
+  grid-column: auto;
+}
+.scene :global(.rx-body-grid > form > .field:has(textarea)),
+.scene:global(.kind-form) :global(.app-body > .field:has(textarea)) {
+  grid-column: 1/-1;
+}
+.scene :global(.rx-bottom-actions) {
+  border-top: 1px solid var(--line);
+  background: var(--surface);
+  flex: none;
+}
+.scene :global(.rx-bottom-actions > .button) {
+  flex: 1;
+}
+.scene :global(button.input) {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  text-align: start;
+}
+.scene :global(button.input > svg) {
+  flex: none;
+}
+@media (min-width: 1200px) {
+  .scene[data-desktop-action-placement='footer'] {
+    --desktop-footer-display: flex;
+    --desktop-header-action-display: none;
+  }
+  .scene :global(.rx-head .head-action) {
+    display: var(--desktop-header-action-display, flex);
+  }
+  .scene :global(.rx-workspace[data-with-context]) {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 280px;
+    gap: 24px;
+  }
+  .scene :global(.rx-bottom-actions) {
+    display: var(--desktop-footer-display, none);
+  }
+}
+@media (min-width: 768px) and (max-width: 1199px) {
+  .scene :global(.rx-workspace[data-with-context]) {
+    display: block;
+  }
+  .scene :global(.rx-context-panel) {
+    display: none;
+  }
+}
+@media (max-width: 1199px) {
+  .scene :global(.rx-head .head-action) {
+    display: none;
+  }
+  .scene .contextToggle {
+    display: grid;
+  }
+}
+@media (max-width: 767px) {
+  .scene {
+    --v5-layout-gap: 16px;
+  }
+  .scene :global(.rx-head) {
+    min-height: 72px;
+    padding: calc(10px + env(safe-area-inset-top)) 16px 10px;
+    gap: 8px;
+  }
+  .scene :global(.rx-content) {
+    padding: 16px;
+  }
+  .scene :global(.rx-head h1) {
+    font-size: calc(19px * var(--text-scale, 1));
+  }
+  .scene :global(.rx-bottom-actions) {
+    padding-bottom: max(12px, env(safe-area-inset-bottom));
+  }
+  .scene :global(.rx-bottom-actions .button) {
+    font-size: calc(14px * var(--text-scale, 1));
+  }
+  .scene :global(.rx-body-grid > form),
+  .scene:global(.kind-form) :global(.app-body) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (max-height: 640px) {
+  .scene :global(.rx-head) {
+    min-height: 64px;
+    padding-block: calc(8px + env(safe-area-inset-top)) 8px;
+  }
+  .scene :global(.rx-bottom-actions) {
+    padding-block: 8px max(12px, env(safe-area-inset-bottom));
+  }
+  .scene :global(.rx-content) {
+    scroll-padding-block: 24px;
+  }
+}
+
+.scene :global(.rx-workspace-footer) {
+  flex: none;
+  min-width: 0;
+  background: var(--surface);
+}
+.scene:global(.layout-messenger) :global(.rx-content) {
+  padding: 0;
+  display: flex;
+  overflow: visible;
+}
+.scene:global(.layout-messenger) :global(.rx-workspace) {
+  max-width: none;
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+.scene:global(.layout-messenger) :global(.rx-body-grid) {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+
+.scene:global(.layout-editor) :global(.rx-workspace),
+.scene:global([data-v5-restricted]) :global(.rx-workspace) {
+  display: block;
+}
+@media (max-width: 359px) {
+  .scene :global(.rx-head) {
+    padding-inline: 12px;
+  }
+  .scene :global(.rx-content) {
+    padding-inline: 12px;
+  }
+}
+@container content (min-width: 680px) {
+  .scene :global(.rx-body-grid > form),
+  .scene:global(.kind-form) :global(.app-body) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.scene:global(.kind-chat) :global(.rx-content) {
+  background-color: var(--chat-canvas);
+  background-image: radial-gradient(var(--chat-pattern-dot) 0.8px, transparent 0.8px);
+  background-size: 24px 24px;
+}

@@ -12,7 +12,7 @@ it('uses the current backend and public app origin in production', () => {
   vi.stubEnv('NODE_ENV', 'production');
   expect(serverConfig()).toMatchObject({
     backend: 'http://94.184.32.84:8090',
-    origin: 'https://app.makanapp.org',
+    origin: 'https://testapp.makanapp.org',
   });
 });
 

@@ -20,7 +20,7 @@ function applyTheme(value: PersonalTheme) {
 }
 type ThemeValue = {
   theme: PersonalTheme;
-  changeTheme: (value: PersonalTheme) => void;
+  changeTheme: (value: PersonalTheme) => boolean;
   error: string;
 };
 const ThemeContext = createContext<ThemeValue | null>(null);
@@ -55,8 +55,10 @@ export function ThemePreferenceProvider({ children }: { children: ReactNode }) {
     try {
       localStorage.setItem('makan-theme', value);
       window.dispatchEvent(new Event('makan-theme-changed'));
+      return true;
     } catch {
       setError(uiText.text_d1a91d934e1c);
+      return false;
     }
   }
   return (

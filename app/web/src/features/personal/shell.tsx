@@ -1,4 +1,6 @@
 'use client';
+import { uiClass } from '@/components/v5/classes';
+
 import * as uiText from '@/content/fa';
 import { ReferenceBrand } from '@/components/ui/brand';
 import { Button } from '@/components/ui/button';
@@ -20,6 +22,7 @@ import { usePathname } from 'next/navigation';
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { useScrollMemory } from '@/components/navigation/scroll-memory';
 import s from './shell.module.css';
+import frameStyles from '@/components/v5/frame.module.css';
 import { ProfileAvatar } from './profile-photo';
 import { usePersonal, usePersonalApi } from './provider';
 import { useWorkspaceSnapshot, WorkspaceVisibilityNotice } from './workspaces';
@@ -31,10 +34,39 @@ import { ProductContext } from '@/components/v5/scene';
 import { PageHeadingProvider, usePageHeading } from '@/components/navigation/page-heading';
 export function PersonalShell({ children }: { children: ReactNode }) {
   const { session } = usePersonal();
+  const viewport = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const visual = window.visualViewport;
+    if (!visual) return;
+    let frame = 0;
+    const update = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        const occluded = visual.scale === 1 && visual.height < innerHeight - 80;
+        if (occluded) {
+          viewport.current?.style.setProperty('--app-viewport-height', `${visual.height}px`);
+          document.documentElement.style.setProperty('--app-visual-height', `${visual.height}px`);
+        } else {
+          viewport.current?.style.removeProperty('--app-viewport-height');
+          document.documentElement.style.removeProperty('--app-visual-height');
+        }
+      });
+    };
+    visual.addEventListener('resize', update);
+    document.addEventListener('focusin', update);
+    document.addEventListener('focusout', update);
+    return () => {
+      cancelAnimationFrame(frame);
+      visual.removeEventListener('resize', update);
+      document.removeEventListener('focusin', update);
+      document.removeEventListener('focusout', update);
+      document.documentElement.style.removeProperty('--app-visual-height');
+    };
+  }, []);
   return (
     <PageBackProvider key={session.user.id + ':' + session.revision}>
       <PageHeadingProvider>
-        <div className="v5-product-viewport">
+        <div ref={viewport} className={uiClass('v5-product-viewport ' + frameStyles.viewport)}>
           <PersonalShellContent>{children}</PersonalShellContent>
         </div>
       </PageHeadingProvider>
@@ -81,6 +113,10 @@ function PersonalShellContent({ children }: { children: ReactNode }) {
     (session.context.workspaceType === 'Organization'
       ? uiText.text_b05e4b9892e2
       : uiText.text_ab3c684df5df);
+  const domainRole =
+    educationLayout && session.context.activeRole
+      ? label(session.context.activeRole)
+      : uiText.text_d034f3bcfe7f;
   const guardianChildren = usePersonalApi<components['schemas']['AuthorizedChildResult'][]>(
     '/api/v1/guardian/children',
     {
@@ -153,7 +189,7 @@ function PersonalShellContent({ children }: { children: ReactNode }) {
                                           : uiText.brand_name;
   return (
     <div
-      className={s.shell + ' rx-root'}
+      className={uiClass(s.shell + ' rx-root')}
       data-reference-shell
       data-page-heading-active={!!heading || undefined}
       data-area={
@@ -169,29 +205,29 @@ function PersonalShellContent({ children }: { children: ReactNode }) {
       data-messaging={messageLayout || undefined}
       data-messaging-page={messagingPage || undefined}
     >
-      <a className="skip-link" href="#personal-content">
+      <a className={uiClass('skip-link')} href="#personal-content">
         {uiText.text_05508133d927}
       </a>
-      <aside className={s.sidebar}>
-        <button className={s.brand} onClick={openPicker} aria-label={uiText.text_e357d20c5ae7}>
+      <aside className={uiClass(s.sidebar)}>
+        <button
+          className={uiClass(s.brand)}
+          onClick={openPicker}
+          aria-label={uiText.text_e357d20c5ae7}
+        >
           <ReferenceBrand />
         </button>
-        <button className={s.workspaceSwitch} onClick={openPicker}>
+        <button className={uiClass(s.workspaceSwitch)} onClick={openPicker}>
           <span>
-            <strong>{workspaceTitle}</strong>
-            <small>
-              {session.context.activeRole
-                ? label(session.context.activeRole)
-                : uiText.text_d034f3bcfe7f}
-            </small>
+            <small>{uiText.serverAlignedUi.activeWorkspace}</small>
+            <strong>{educationLayout ? workspaceTitle : uiText.v5Product.personalWorkspace}</strong>
           </span>
           <ChevronDown size={16} />
         </button>
         <AppNavigation presentation="sidebar" />
-        <div className={s.sidebarBottom}>
+        <div className={uiClass(s.sidebarBottom)}>
           <Link
             href="/personal/settings"
-            className={s.sidebarSetting}
+            className={uiClass(s.sidebarSetting)}
             aria-label={uiText.navigation_settings}
           >
             <Settings size={23} />
@@ -199,10 +235,14 @@ function PersonalShellContent({ children }: { children: ReactNode }) {
           </Link>
           <Link
             href="/personal/profile"
-            className={s.account}
+            className={uiClass(s.account)}
             aria-label={uiText.text_8b4cb595cd35}
           >
-            <ProfileAvatar photo={session.user.profilePhoto} name={name} className={s.avatar} />
+            <ProfileAvatar
+              photo={session.user.profilePhoto}
+              name={name}
+              className={uiClass(s.avatar)}
+            />
             <span>
               <strong>{name}</strong>
               <small>{uiText.text_8b4cb595cd35}</small>
@@ -210,13 +250,13 @@ function PersonalShellContent({ children }: { children: ReactNode }) {
           </Link>
         </div>
       </aside>
-      <div className={s.workspace}>
-        <header className={s.header}>
+      <div className={uiClass(s.workspace)}>
+        <header className={uiClass(s.header)}>
           <Dialog open={picker} onOpenChange={setPicker}>
             {peerRoot ? (
               <DialogTrigger asChild>
                 <button
-                  className={s.context}
+                  className={uiClass(s.context)}
                   aria-label={
                     uiText.text_4fdfc489ee16 +
                     workspaceTitle +
@@ -230,7 +270,11 @@ function PersonalShellContent({ children }: { children: ReactNode }) {
                 </button>
               </DialogTrigger>
             ) : (
-              <Link className={s.context} href={backTarget} aria-label={uiText.common_back}>
+              <Link
+                className={uiClass(s.context)}
+                href={backTarget}
+                aria-label={uiText.common_back}
+              >
                 <ChevronRight size={20} />
               </Link>
             )}
@@ -246,7 +290,7 @@ function PersonalShellContent({ children }: { children: ReactNode }) {
                 }
               }}
             >
-              <div className={s.spaceList}>
+              <div className={uiClass(s.spaceList)}>
                 {spaces.isError ? (
                   <ErrorState error={spaces.error} onRetry={() => void spaces.refetch()} />
                 ) : spaces.isPending ? (
@@ -279,10 +323,12 @@ function PersonalShellContent({ children }: { children: ReactNode }) {
               <WorkspaceVisibilityNotice snapshot={spaces.data} />
             </DialogContent>
           </Dialog>
-          <div className={s.headerTitle}>
-            <div className="rx-crumb">{workspaceTitle}</div>
+          <div className={uiClass(s.headerTitle)}>
+            <div className={uiClass('rx-crumb')}>
+              {educationLayout ? workspaceTitle : uiText.brand_name}
+            </div>
             <HeaderHeading
-              className={s.pageTitle}
+              className={uiClass(s.pageTitle)}
               aria-label={
                 heading?.title ??
                 (home
@@ -296,7 +342,7 @@ function PersonalShellContent({ children }: { children: ReactNode }) {
                 heading.title
               ) : home ? (
                 <button
-                  className={s.titleSwitch}
+                  className={uiClass(s.titleSwitch)}
                   onClick={openPicker}
                   aria-label={uiText.text_ea58c94d0d26}
                 >
@@ -308,7 +354,7 @@ function PersonalShellContent({ children }: { children: ReactNode }) {
                 pageTitle
               )}
             </HeaderHeading>
-            <p className={s.headerSubtitle}>
+            <p className={uiClass(s.headerSubtitle)}>
               {assistantRoot ? (
                 uiText.text_e3ca4bcedb43
               ) : (
@@ -323,8 +369,8 @@ function PersonalShellContent({ children }: { children: ReactNode }) {
               )}
             </p>
           </div>
-          <div className={s.headerEnd}>
-            {heading?.action && <div className={s.pageAction}>{heading.action}</div>}
+          <div className={uiClass(s.headerEnd)}>
+            {heading?.action && <div className={uiClass(s.pageAction)}>{heading.action}</div>}
             {pathname === '/personal/profile' ? (
               <Button asChild size="icon" variant="ghost">
                 <Link href="/personal/profile/preferences" aria-label={uiText.text_8aa6893911d9}>
@@ -363,25 +409,27 @@ function PersonalShellContent({ children }: { children: ReactNode }) {
         </header>
         <main
           ref={mainScroll}
-          className={`${s.main} ${messageLayout ? s.messageMain : ''} ${messagingPage && !messageLayout ? s.messagingPageMain : ''} ${pathname.startsWith('/personal/assistant') || pathname === '/personal/ai' ? s.assistantMain : ''}`}
+          className={uiClass(
+            `${s.main} ${messageLayout ? s.messageMain : ''} ${messagingPage && !messageLayout ? s.messagingPageMain : ''} ${pathname.startsWith('/personal/assistant') || pathname === '/personal/ai' ? s.assistantMain : ''}`,
+          )}
           id="personal-content"
         >
           {!!error && <ErrorState error={error} />}
           <ProductContext.Provider
             value={{
-              title: workspaceTitle,
-              role: session.context.activeRole
-                ? label(session.context.activeRole)
-                : uiText.text_d034f3bcfe7f,
+              title: educationLayout ? workspaceTitle : uiText.brand_name,
+              role: educationLayout ? domainRole : '',
             }}
           >
             {children}
           </ProductContext.Provider>
         </main>
         {heading?.action && (
-          <footer className="v5-shell-actions rx-bottom-actions">{heading.action}</footer>
+          <footer className={uiClass('v5-shell-actions rx-bottom-actions')}>
+            {heading.action}
+          </footer>
         )}
-        <div className={s.mobileNav}>
+        <div className={uiClass(s.mobileNav)}>
           <AppNavigation presentation="dock" />
         </div>
       </div>

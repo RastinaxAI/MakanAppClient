@@ -61,11 +61,16 @@ export function fileTransfer<T>(
         'i',
       ).test(path) &&
       !new RegExp('^/api/client/profile-media(?:/' + guid + '(?:/metadata)?)?$', 'i').test(path) &&
+      !new RegExp('^/api/client/report-exports/' + guid + '/content$', 'i').test(path) &&
       !new RegExp('^/api/client/school-files(?:/' + guid + ')?\\?classId=' + guid + '$', 'i').test(
         path,
       ) &&
       !new RegExp(
         '^/api/client/school-files/' + guid + '/content\\?lessonId=' + guid + '$',
+        'i',
+      ).test(path) &&
+      !new RegExp(
+        '^/api/client/school-files/' + guid + '(?:/content)?\\?assignmentId=' + guid + '$',
         'i',
       ).test(path) &&
       !new RegExp(

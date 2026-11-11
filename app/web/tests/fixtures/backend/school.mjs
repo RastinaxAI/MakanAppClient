@@ -169,6 +169,11 @@ export function schoolRoute({ state, url, body, auth, send, req }) {
     return send(l);
   }
   if (p === `/api/v1/academic/classes/${ids.class}/assignments`) return send([assignment()]);
+  if (
+    req.method === 'GET' &&
+    state.designClasses?.some((c) => p === `/api/v1/academic/classes/${c.id}/assignments`)
+  )
+    return send([]);
   if (p === `/api/v1/academic/assignments/${ids.assignment}`) return send(assignment());
   if (p === `/api/v1/academic/assignments/${ids.assignment}/attempts/me`)
     return send(state.attempt ? [state.attempt] : []);

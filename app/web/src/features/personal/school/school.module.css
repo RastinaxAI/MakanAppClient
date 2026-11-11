@@ -1,11 +1,11 @@
 .moreSections {
   margin-top: 28px;
-  font-size: 12px;
+  font-size: calc(12px * var(--text-scale, 1));
   color: var(--muted);
 }
 .childPicker {
   margin-bottom: 20px;
-  font-size: 12px;
+  font-size: calc(12px * var(--text-scale, 1));
   color: var(--muted);
 }
 .childPicker summary {
@@ -22,11 +22,11 @@
   margin: auto;
 }
 .portal .heading h1 {
-  font-size: 26px;
+  font-size: calc(26px * var(--text-scale, 1));
   line-height: 1.6;
 }
 .portal .heading p {
-  font-size: 13px;
+  font-size: calc(13px * var(--text-scale, 1));
   line-height: 1.9;
 }
 .context {
@@ -49,7 +49,7 @@
 }
 .context strong {
   display: block;
-  font-size: 17px;
+  font-size: calc(17px * var(--text-scale, 1));
 }
 .context small {
   display: block;
@@ -74,7 +74,7 @@
   border-radius: 12px;
   border: 1px solid var(--border);
   background: var(--surface);
-  font-size: 13px;
+  font-size: calc(13px * var(--text-scale, 1));
 }
 .tabs a[aria-current='page'] {
   background: var(--primary-button);
@@ -91,11 +91,11 @@
   gap: 20px;
 }
 .heading h1 {
-  font-size: 28px;
+  font-size: calc(28px * var(--text-scale, 1));
   font-weight: 800;
 }
 .heading p {
-  font-size: 13px;
+  font-size: calc(13px * var(--text-scale, 1));
   color: var(--muted);
   line-height: 2;
   margin-top: 8px;
@@ -105,7 +105,7 @@
   gap: 8px;
   align-items: center;
   min-height: 44px;
-  font-size: 12px;
+  font-size: calc(12px * var(--text-scale, 1));
   color: var(--primary);
   margin-bottom: 12px;
 }
@@ -125,36 +125,36 @@
   margin-bottom: 20px;
 }
 .card h2 {
-  font-size: 18px;
+  font-size: calc(18px * var(--text-scale, 1));
   font-weight: 750;
 }
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  grid-template-columns: minmax(0, 1fr);
   gap: 18px;
 }
 .classCard {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 12px;
   background: var(--surface);
-  padding: 24px;
+  padding: 18px;
   border: 1px solid var(--border);
   border-radius: 20px;
-  min-height: 220px;
+  min-height: 0;
 }
 .classCard:hover {
   border-color: var(--primary);
 }
 .classCard h2 {
-  font-size: 20px;
+  font-size: calc(17px * var(--text-scale, 1));
 }
 .classCard > svg {
   color: var(--primary);
 }
 .classCard p {
   color: var(--muted);
-  font-size: 13px;
+  font-size: calc(13px * var(--text-scale, 1));
   line-height: 1.9;
 }
 .classCard footer {
@@ -162,7 +162,7 @@
   justify-content: space-between;
   align-items: center;
   margin-top: auto;
-  font-size: 12px;
+  font-size: calc(12px * var(--text-scale, 1));
   color: var(--primary);
 }
 .classCard .cardActions {
@@ -177,7 +177,7 @@
   background: var(--primary-soft);
   color: var(--primary);
   padding: 3px 10px;
-  font-size: 11px;
+  font-size: calc(11px * var(--text-scale, 1));
   white-space: nowrap;
 }
 .row {
@@ -191,17 +191,7 @@
   flex-direction: column;
   gap: 18px;
 }
-.formDialog {
-  scroll-padding-block-start: 140px;
-}
-.formDialog :global(.dialog-heading) {
-  position: sticky;
-  top: 0;
-  z-index: 3;
-  padding-block: 10px;
-  background: var(--surface);
-  border-bottom: 1px solid var(--border);
-}
+
 .form form {
   display: flex;
   flex-direction: column;
@@ -210,19 +200,19 @@
 .field {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  font-size: 13px;
+  gap: 7px;
+  font-size: calc(13px * var(--text-scale, 1));
   min-width: 0;
 }
 .field input,
 .field select,
 .field textarea {
   width: 100%;
-  font-size: 14px;
-  min-height: 46px;
+  font-size: calc(16px * var(--text-scale, 1));
+  min-height: 48px;
 }
 .field textarea {
-  min-height: 110px;
+  min-height: 116px;
   resize: vertical;
 }
 .two {
@@ -231,7 +221,7 @@
   gap: 16px;
 }
 .hint {
-  font-size: 12px;
+  font-size: calc(12px * var(--text-scale, 1));
   color: var(--muted);
   line-height: 2;
 }
@@ -241,14 +231,14 @@
   border: 1px solid var(--border);
   border-radius: 14px;
   line-height: 2;
-  font-size: 13px;
+  font-size: calc(13px * var(--text-scale, 1));
   margin-bottom: 20px;
 }
 .success {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 13px;
+  font-size: calc(13px * var(--text-scale, 1));
   line-height: 2;
   color: var(--teal);
   padding: 12px 0;
@@ -262,7 +252,7 @@
   width: 100%;
   border-collapse: collapse;
   text-align: start;
-  font-size: 13px;
+  font-size: calc(13px * var(--text-scale, 1));
 }
 .table th {
   background: var(--bg);
@@ -293,7 +283,7 @@
   justify-content: center;
   align-items: center;
   margin: 20px 0;
-  font-size: 12px;
+  font-size: calc(12px * var(--text-scale, 1));
 }
 .toolbar {
   display: flex;
@@ -307,7 +297,7 @@
 .bodyText {
   white-space: pre-wrap;
   line-height: 2.1;
-  font-size: 14px;
+  font-size: calc(14px * var(--text-scale, 1));
   margin: 16px 0;
 }
 .question {
@@ -329,7 +319,7 @@
   padding: 12px;
   border-radius: 12px;
   margin: 8px 0;
-  font-size: 14px;
+  font-size: calc(14px * var(--text-scale, 1));
 }
 .option input {
   width: 20px;
@@ -350,7 +340,7 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  font-size: 13px;
+  font-size: calc(13px * var(--text-scale, 1));
   min-height: 44px;
 }
 .check input {
@@ -373,10 +363,10 @@
     padding: 16px;
   }
   .context strong {
-    font-size: 15px;
+    font-size: calc(15px * var(--text-scale, 1));
   }
   .heading h1 {
-    font-size: 24px;
+    font-size: calc(24px * var(--text-scale, 1));
   }
   .heading > div {
     align-items: flex-start;
@@ -391,12 +381,12 @@
   }
   .tabs a {
     padding: 10px 14px;
-    font-size: 12px;
+    font-size: calc(12px * var(--text-scale, 1));
   }
   .field input,
   .field select,
   .field textarea {
-    font-size: 16px;
+    font-size: calc(16px * var(--text-scale, 1));
   }
   .table th,
   .table td {
@@ -463,11 +453,11 @@
 }
 .answerFileRow strong {
   display: block;
-  font-size: 14px;
+  font-size: calc(14px * var(--text-scale, 1));
 }
 .answerFileRow small {
   color: var(--muted);
-  font-size: 12px;
+  font-size: calc(12px * var(--text-scale, 1));
 }
 .context {
   padding: 0 0 20px;
@@ -476,7 +466,7 @@
   border-radius: 0;
 }
 .context strong {
-  font-size: 16px;
+  font-size: calc(16px * var(--text-scale, 1));
 }
 .tabs {
   padding: 12px 0;
@@ -487,7 +477,7 @@
 .tabs a {
   border: 0;
   border-radius: 8px;
-  font-size: 13px;
+  font-size: calc(13px * var(--text-scale, 1));
   padding: 10px 14px;
   min-height: 44px;
 }
@@ -499,7 +489,7 @@
   font-weight: 750;
 }
 .heading p {
-  font-size: 14px;
+  font-size: calc(14px * var(--text-scale, 1));
 }
 .card,
 .classCard {
@@ -511,29 +501,39 @@
   min-height: 205px;
 }
 .classCard h2 {
-  font-size: 20px;
+  font-size: calc(20px * var(--text-scale, 1));
 }
 .card h2 {
-  font-size: 18px;
+  font-size: calc(18px * var(--text-scale, 1));
 }
-.formDialog {
-  max-width: 640px;
-}
+
 .field label {
-  font-size: 14px;
+  font-size: calc(14px * var(--text-scale, 1));
 }
 .form input,
 .form select,
 .form textarea {
-  border-radius: 8px;
-  min-height: 52px;
+  border-radius: 12px;
+  font-size: calc(16px * var(--text-scale, 1));
+  line-height: 1.7;
+  padding: 11px 13px;
+  border-color: var(--control-border);
+  background: var(--surface);
+  color: var(--text);
+}
+.form input,
+.form select {
+  min-height: 48px;
+}
+.form textarea {
+  min-height: 116px;
 }
 @media (max-width: 767px) {
   .portal .heading h1 {
-    font-size: 22px;
+    font-size: calc(22px * var(--text-scale, 1));
   }
   .heading h1 {
-    font-size: 25px;
+    font-size: calc(25px * var(--text-scale, 1));
   }
   .heading > div {
     flex-wrap: wrap;
@@ -543,45 +543,10 @@
   .classCard {
     padding: 20px 16px;
   }
-  .formDialog {
-    inset: 0;
-    transform: none;
-    width: 100%;
-    max-width: none;
-    height: 100dvh;
-    max-height: 100dvh;
-    border: 0;
-    border-radius: 0;
-    padding: 24px 20px max(24px, env(safe-area-inset-bottom));
-  }
-  .formDialog :global(.dialog-heading) {
-    position: sticky;
-    top: -24px;
-    background: var(--surface);
-    z-index: 3;
-    padding-top: 20px;
-  }
 }
 @media (max-width: 767px) {
-  .formDialog.formDialog:global(.dialog-content) {
-    inset: 0;
-    transform: none;
-    width: 100%;
-    height: 100dvh;
-    max-width: none;
-    max-height: 100dvh;
-    border-radius: 0;
-    padding: 24px 20px max(24px, env(safe-area-inset-bottom));
-  }
 }
 @media (max-width: 767px) {
-  .formDialog.formDialog:global(.dialog-content) {
-    padding-top: calc(24px + env(safe-area-inset-top));
-  }
-  .formDialog :global(.dialog-heading) {
-    top: calc(-24px - env(safe-area-inset-top));
-    padding-top: calc(20px + env(safe-area-inset-top));
-  }
 }
 .card,
 .classCard {
@@ -627,7 +592,7 @@
   gap: 18px;
   padding: 12px 0;
   border-bottom: 1px solid var(--border);
-  font-size: 14px;
+  font-size: calc(14px * var(--text-scale, 1));
 }
 .summary dt {
   color: var(--muted);
@@ -653,11 +618,11 @@
   gap: 16px;
 }
 .workflowGroup h2 {
-  font-size: 15px;
+  font-size: calc(15px * var(--text-scale, 1));
   margin: 0 0 8px;
 }
 .workflowGroup a {
-  font-size: 13px;
+  font-size: calc(13px * var(--text-scale, 1));
   color: var(--primary);
   min-height: 44px;
   display: inline-flex;
@@ -711,13 +676,13 @@
   }
   .roster td:nth-child(2) {
     grid-column: 1;
-    font-size: 12px;
+    font-size: calc(12px * var(--text-scale, 1));
     color: var(--muted);
   }
   .roster td:nth-child(3) {
     grid-column: 2;
     grid-row: 1;
-    font-size: 11px;
+    font-size: calc(11px * var(--text-scale, 1));
     color: var(--muted);
   }
   .roster td:nth-child(4) {
@@ -727,6 +692,49 @@
     width: 100%;
     white-space: normal;
     min-height: 44px;
-    font-size: 12px;
+    font-size: calc(12px * var(--text-scale, 1));
   }
+}
+.searchBar {
+  display: block;
+  min-width: 0;
+  margin: 0;
+}
+.rosterList {
+  display: grid;
+  gap: 14px;
+  min-width: 0;
+}
+.rosterList[data-with-statistics] {
+  gap: 18px;
+}
+.rosterPolicy {
+  margin: 0;
+  color: var(--muted);
+  font-size: calc(13px * var(--text-scale, 1));
+  line-height: 1.95;
+}
+
+@container content (min-width: 650px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.formDialog {
+  container: dialog / inline-size;
+}
+.lessonReading {
+  --card-body-size: calc(16px * var(--text-scale, 1));
+  --card-body-line-height: 2.1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  max-width: 800px;
+  margin-inline: auto;
+}
+.lessonText {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
 }

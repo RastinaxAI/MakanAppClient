@@ -1,4 +1,6 @@
 'use client';
+import { uiClass } from '@/components/v5/classes';
+
 import { useAcademicScope } from './academic-scope';
 import * as uiText from '@/content/fa';
 import Link from 'next/link';
@@ -21,8 +23,8 @@ export function ActivityDeliveryStatus({
   const scope = useAcademicScope();
   if (scope.personal) return null;
   return (
-    <section className={s.panel} aria-label={uiText.text_f45e2124d2b3}>
-      <header className={s.heading}>
+    <section className={uiClass(s.panel)} aria-label={uiText.text_f45e2124d2b3}>
+      <header className={uiClass(s.heading)}>
         <h2>{uiText.text_f45e2124d2b3}</h2>
       </header>
       {sourceVersionId ? (
@@ -54,7 +56,7 @@ function DeliveryLookup({
   if (q.isError) return <ErrorState error={q.error} onRetry={() => void q.refetch()} />;
   if (!q.data.length) return <EmptyState title={uiText.text_131283425e90} />;
   return (
-    <dl className={s.delivery}>
+    <dl className={uiClass(s.delivery)}>
       {q.data.map((row) => (
         <div key={row.eventId + ':' + row.purpose}>
           <dt>

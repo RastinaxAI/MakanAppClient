@@ -1,0 +1,49 @@
+{
+  "date": "2026-11-10",
+  "scope": "Read-only source/PDF diagnosis and prompt authoring; no app source change or project cleanup performed in this turn.",
+  "pdf": {
+    "sha256": "17d6c09071c04745eea0d6efc4f2cf636eb973fc68fe1c96808620dac7c36cb4",
+    "pages": 569,
+    "format": "A2; compare internal device viewports",
+    "visuallyInspectedPages": [
+      15,
+      132,
+      249
+    ]
+  },
+  "evidence": [
+    {
+      "file": "src/app/layout.tsx",
+      "finding": "Multiple global design styles imported together."
+    },
+    {
+      "file": "src/app/globals.css",
+      "lines": [
+        85,
+        1090
+      ],
+      "finding": "Root-level h1 size is assigned 26px then 28px."
+    },
+    {
+      "file": "src/features/personal/messaging/messenger.module.css",
+      "lines": [
+        65,
+        952,
+        1152
+      ],
+      "finding": "Same root .search selector changes padding in three rules, independent of media variants."
+    },
+    {
+      "files": [
+        "src/features/personal/shell.tsx",
+        "src/components/v5/scene.tsx",
+        "src/design/v5-author.css"
+      ],
+      "finding": "Reference compound root-state selectors need adaptation to the product DOM, which places kind on an inner section."
+    }
+  ],
+  "interpretation": "CSS architecture/selector ownership is a demonstrated issue. Tailwind-specific impact on any element requires matched/computed style inspection; removal alone is not an established cure.",
+  "recommendation": "Keep Next.js; consolidate tokens/minimal base and explicit CSS Modules ownership. Audit Tailwind use before removal.",
+  "unusedFileLimit": "Import-graph reachability is not proof for public assets, scripts, file conventions, dynamic class names or every execution path.",
+  "prompt": "docs/prompts/MakanApp_PDF_Implementation_And_Static_Cleanup_FA.txt"
+}

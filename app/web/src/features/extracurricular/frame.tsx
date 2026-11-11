@@ -1,25 +1,18 @@
 'use client';
+import { uiClass } from '@/components/v5/classes';
+
 import * as uiText from '@/content/fa';
 import { useRouter } from 'next/navigation';
 import { useState, type ReactNode } from 'react';
 import { usePersonal } from '@/features/personal/provider';
-import { Button } from '@/components/ui/button';
+import { Button, buttonClass } from '@/components/ui/button';
+import Link from 'next/link';
+import { V5Scene } from '@/components/v5/scene';
 import s from './connected.module.css';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
-import {
-  ReferenceScreen,
-  referenceNodeKey,
-  type ReferenceControl,
-} from '@/features/reference/screen';
+import { SceneFooterPortal } from '@/components/v5/form-actions';
 const base = '/personal/extracurricular';
-const destinations: Record<string, string> = {
-  آموزشگاه: '/personal/education',
-  فوق‌برنامه: base,
-  دستیار: '/personal/assistant',
-  پیام‌ها: '/personal/messages',
-  پروفایل: '/personal/profile',
-};
-export function useFrameActions(fallback: string) {
+export function useFrameActions() {
   const router = useRouter(),
     { session } = usePersonal();
   const [notice, setNotice] = useState('');
@@ -32,26 +25,6 @@ export function useFrameActions(fallback: string) {
     notice,
     setNotice,
     router,
-    action: (control: ReferenceControl) => {
-      if (control.kind === 'navigation') {
-        const destination = destinations[control.label];
-        if (destination) router.push(destination);
-        return;
-      }
-      if (control.label === uiText.common_back) {
-        router.push(fallback);
-        return;
-      }
-      if (control.label === uiText.text_9b1651192a2c) {
-        router.push('/personal/notifications');
-        return;
-      }
-      if (control.label === uiText.text_739d6daf2013) {
-        setNotice(uiText.text_ac7f20593202);
-        return;
-      }
-      setNotice(uiText.text_8ffd373a72b0);
-    },
   };
 }
 export function FrameNotice({ message, close }: { message: string; close: () => void }) {
@@ -64,7 +37,7 @@ export function FrameNotice({ message, close }: { message: string; close: () => 
     >
       <DialogContent title={uiText.text_2224cd680a48}>
         <p>{message}</p>
-        <div className="confirm-actions">
+        <div className={uiClass('confirm-actions')}>
           <Button onClick={close}>{uiText.text_b90ffe172b6d}</Button>
         </div>
       </DialogContent>
@@ -76,41 +49,56 @@ export function StaticConnectedFrame({
   title,
   children,
   back = base,
+  actions,
+  menu,
+  subtitle = uiText.text_22e1884c93fc,
+  contextTitle,
+  kind,
+  mobileFooter,
 }: {
   id: string;
   back?: string;
   title?: string;
   children: ReactNode;
+  actions?: ReactNode;
+  menu?: ReactNode;
+  subtitle?: string;
+  contextTitle?: string;
+  kind?: 'form' | 'list' | 'article' | 'dashboard' | 'status';
+  mobileFooter?: ReactNode;
 }) {
-  const frame = useFrameActions(back);
-  const body = <main className={'app-body ' + s.body}>{children}</main>;
-  const key =
-    referenceNodeKey(id, 'app-body') ??
-    referenceNodeKey(id, 'chat-bg') ??
-    referenceNodeKey(id, 'desk-body');
-  if (!key) throw new Error('Missing connected body slot');
-  const footer = referenceNodeKey(id, 'fixed-actions'),
-    composer = referenceNodeKey(id, 'composer');
-  const overlays = ['veil', 'sheet-modal']
-    .map((c) => referenceNodeKey(id, c))
-    .filter((v): v is string => !!v);
   return (
-    <>
-      <ReferenceScreen
-        id={id}
-        bindings={{
-          heading: { title, subtitle: uiText.text_22e1884c93fc },
-          onAction: frame.action,
-          onChange: () => {},
-          replacements: {
-            [key]: body,
-            ...(footer ? { [footer]: null } : {}),
-            ...(composer ? { [composer]: null } : {}),
-            ...Object.fromEntries(overlays.map((k) => [k, null])),
-          },
-        }}
-      />
-      <FrameNotice message={frame.notice} close={() => frame.setNotice('')} />
-    </>
+    <V5Scene
+      id={id}
+      title={title ?? uiText.navigation_extracurricular}
+      back={back}
+      subtitle={subtitle}
+      contextTitle={contextTitle}
+      kind={kind}
+      footerSlot={!!mobileFooter}
+      actions={actions}
+      menu={
+        menu ?? (
+          <nav className={uiClass('stack')}>
+            <Link className={uiClass(buttonClass('button button-outline'))} href={base}>
+              {uiText.navigation_extracurricular}
+            </Link>
+            <Link
+              className={uiClass(buttonClass('button button-outline'))}
+              href={base + '/requests'}
+            >
+              {uiText.integration80c.requests}
+            </Link>
+          </nav>
+        )
+      }
+    >
+      <div className={uiClass('app-body ' + s.body)}>{children}</div>
+      {mobileFooter && (
+        <SceneFooterPortal>
+          <div className={s.mobileFooter}>{mobileFooter}</div>
+        </SceneFooterPortal>
+      )}
+    </V5Scene>
   );
 }

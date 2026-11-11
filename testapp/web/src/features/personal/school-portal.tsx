@@ -1,10 +1,12 @@
 'use client';
+import { uiClass } from '@/components/v5/classes';
+
 import * as uiText from '@/content/fa';
 import dynamic from 'next/dynamic';
 import { Button } from '@/components/ui/button';
 import { EmptyState, ErrorState, label, LoadingSkeleton } from '@/components/ui/states';
 import { isSchoolRole, isSchoolPath } from '@/config/navigation';
-import type { components } from '@/generated/api/schema';
+import { TeacherContentPage } from './school/teacher-content';
 import { ApiError } from '@/lib/api/errors';
 import {
   BookOpen,
@@ -17,173 +19,178 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
-import { usePersonal, usePersonalApi } from './provider';
+import { usePersonal } from './provider';
 import { useWorkspaceSnapshot } from './workspaces';
 import { visibleWorkspaces, canEnterWorkspace } from './workspace-model';
 import { SchoolFeed } from './school/feed';
 import s from './school/school.module.css';
-import { base, Card, Pager, SchoolHeading } from './school/shared';
+import { base, Card, SchoolHeading } from './school/shared';
 import { ChildSelector } from './school/child-selector';
+import { useAuthorizedChildren } from './school/use-authorized-children';
 import { SchoolSearch } from './school/search';
 import layout from './school/education-layout.module.css';
 import { ReferenceSchoolFrame } from '@/features/reference/connected-school';
 import { SchoolCatalog } from './school/catalog';
+import { LearningReports } from './school/learning-reports';
 import { SchoolSectionMenu } from './school/section-menu';
 import { ScheduleRules } from './school/schedule-rules';
+const dynamicLoading = () => <LoadingSkeleton />;
 const LessonFormPage = dynamic(() => import('./school/lessons').then((m) => m.LessonFormPage), {
-  loading: LoadingSkeleton,
+  loading: dynamicLoading,
 });
 const MemberDirectory = dynamic(
   () => import('./school/member-directory').then((m) => m.MemberDirectory),
-  { loading: LoadingSkeleton },
+  { loading: dynamicLoading },
 );
 const ExamEditor = dynamic(() => import('./school/exams').then((m) => m.ExamEditor), {
-  loading: LoadingSkeleton,
+  loading: dynamicLoading,
 });
 const Exams = dynamic(() => import('./school/exams').then((m) => m.Exams), {
-  loading: LoadingSkeleton,
+  loading: dynamicLoading,
 });
 const StudentExam = dynamic(() => import('./school/exams').then((m) => m.StudentExam), {
-  loading: LoadingSkeleton,
+  loading: dynamicLoading,
 });
 const AssignmentDetail = dynamic(
   () => import('./school/learning').then((m) => m.AssignmentDetail),
-  { loading: LoadingSkeleton },
+  { loading: dynamicLoading },
 );
 const Assignments = dynamic(() => import('./school/learning').then((m) => m.Assignments), {
-  loading: LoadingSkeleton,
+  loading: dynamicLoading,
 });
 const Schedule = dynamic(() => import('./school/learning').then((m) => m.Schedule), {
-  loading: LoadingSkeleton,
+  loading: dynamicLoading,
 });
 const AssignmentFormPage = dynamic(
   () => import('./school/learning').then((m) => m.AssignmentFormPage),
-  { loading: LoadingSkeleton },
+  { loading: dynamicLoading },
 );
 const LessonDetail = dynamic(() => import('./school/lessons').then((m) => m.LessonDetail), {
-  loading: LoadingSkeleton,
+  loading: dynamicLoading,
 });
 const ResourcesClasses = dynamic(() => import('./school/lessons').then((m) => m.ResourcesClasses), {
-  loading: LoadingSkeleton,
+  loading: dynamicLoading,
 });
 const Classes = dynamic(() => import('./school/manager').then((m) => m.Classes), {
-  loading: LoadingSkeleton,
+  loading: dynamicLoading,
 });
 const Enrollments = dynamic(() => import('./school/manager').then((m) => m.Enrollments), {
-  loading: LoadingSkeleton,
+  loading: dynamicLoading,
 });
 const Guardians = dynamic(() => import('./school/manager').then((m) => m.Guardians), {
-  loading: LoadingSkeleton,
+  loading: dynamicLoading,
 });
 const People = dynamic(() => import('./school/manager').then((m) => m.People), {
-  loading: LoadingSkeleton,
+  loading: dynamicLoading,
 });
 const Teachers = dynamic(() => import('./school/manager').then((m) => m.Teachers), {
-  loading: LoadingSkeleton,
+  loading: dynamicLoading,
 });
 const SubmissionFlow = dynamic(
   () => import('./school/submission-flow').then((m) => m.SubmissionFlow),
-  { loading: LoadingSkeleton },
+  { loading: dynamicLoading },
 );
-const ParentDaily = dynamic(() => import('./school/parent-daily').then((m) => m.ParentDaily), {
-  loading: LoadingSkeleton,
-});
+const ParentWorkspace = dynamic(
+  () => import('./school/parent-workspace').then((m) => m.ParentWorkspace),
+  {
+    loading: dynamicLoading,
+  },
+);
 const ClassDetail = dynamic(() => import('./school/class-detail').then((m) => m.ClassDetail), {
-  loading: LoadingSkeleton,
+  loading: dynamicLoading,
 });
 const ParentClasses = dynamic(() => import('./school/class-detail').then((m) => m.ParentClasses), {
-  loading: LoadingSkeleton,
+  loading: dynamicLoading,
 });
 const InvitationsPage = dynamic(
   () => import('./school/invitations').then((m) => m.InvitationsPage),
-  { loading: LoadingSkeleton },
+  { loading: dynamicLoading },
 );
 const ClassCreatePage = dynamic(
   () => import('./school/creation-pages').then((m) => m.ClassCreatePage),
-  { loading: LoadingSkeleton },
+  { loading: dynamicLoading },
 );
 const CatalogCreatePage = dynamic(
   () => import('./school/creation-pages').then((m) => m.CatalogCreatePage),
-  { loading: LoadingSkeleton },
+  { loading: dynamicLoading },
 );
 const PersonFormPage = dynamic(
   () => import('./school/creation-pages').then((m) => m.PersonFormPage),
-  { loading: LoadingSkeleton },
+  { loading: dynamicLoading },
 );
 const PersonDetailPage = dynamic(
   () => import('./school/creation-pages').then((m) => m.PersonDetailPage),
-  { loading: LoadingSkeleton },
+  { loading: dynamicLoading },
 );
 const SessionCreatePage = dynamic(
   () => import('./school/creation-pages').then((m) => m.SessionCreatePage),
-  { loading: LoadingSkeleton },
+  { loading: dynamicLoading },
 );
 const ExamCreatePage = dynamic(
   () => import('./school/creation-pages').then((m) => m.ExamCreatePage),
-  { loading: LoadingSkeleton },
+  { loading: dynamicLoading },
 );
 const GuardianCreatePage = dynamic(
   () => import('./school/creation-pages').then((m) => m.GuardianCreatePage),
-  { loading: LoadingSkeleton },
+  { loading: dynamicLoading },
 );
 const ClassMembersPage = dynamic(
   () => import('./school/creation-pages').then((m) => m.ClassMembersPage),
-  { loading: LoadingSkeleton },
+  { loading: dynamicLoading },
 );
 const QuestionCreatePage = dynamic(
   () => import('./school/creation-pages').then((m) => m.QuestionCreatePage),
-  { loading: LoadingSkeleton },
+  { loading: dynamicLoading },
 );
 const SessionPage = dynamic(() => import('./school/session-page').then((m) => m.SessionPage), {
-  loading: LoadingSkeleton,
+  loading: dynamicLoading,
 });
 const ExamReviewPage = dynamic(() => import('./school/exam-review').then((m) => m.ExamReviewPage), {
-  loading: LoadingSkeleton,
+  loading: dynamicLoading,
 });
 const AssignmentEvaluationQueue = dynamic(
   () => import('./school/assignment-evaluation').then((m) => m.AssignmentEvaluationQueue),
-  { loading: LoadingSkeleton },
+  { loading: dynamicLoading },
 );
 const AssignmentEvaluationPage = dynamic(
   () => import('./school/assignment-evaluation').then((m) => m.AssignmentEvaluationPage),
-  { loading: LoadingSkeleton },
+  { loading: dynamicLoading },
 );
 const ExamGradingQueue = dynamic(
   () => import('./school/exam-grading').then((m) => m.ExamGradingQueue),
-  { loading: LoadingSkeleton },
+  { loading: dynamicLoading },
 );
 const ExamGradingPage = dynamic(
   () => import('./school/exam-grading').then((m) => m.ExamGradingPage),
-  { loading: LoadingSkeleton },
+  { loading: dynamicLoading },
 );
 const AssessmentHistory = dynamic(
   () => import('./school/assessment-results').then((m) => m.AssessmentHistory),
-  { loading: LoadingSkeleton },
+  { loading: dynamicLoading },
 );
 const AssessmentResult = dynamic(
   () => import('./school/assessment-results').then((m) => m.AssessmentResult),
-  { loading: LoadingSkeleton },
+  { loading: dynamicLoading },
 );
 const AssignmentEditPage = dynamic(
   () => import('./school/assignment-editor').then((m) => m.AssignmentEditPage),
-  { loading: LoadingSkeleton },
+  { loading: dynamicLoading },
 );
 const ManagerHome = dynamic(() => import('./school/manager-home').then((m) => m.ManagerHome), {
-  loading: LoadingSkeleton,
+  loading: dynamicLoading,
 });
 const ManagerClass = dynamic(() => import('./school/manager-class').then((m) => m.ManagerClass), {
-  loading: LoadingSkeleton,
+  loading: dynamicLoading,
 });
 const ManagerReports = dynamic(
   () => import('./school/manager-reports').then((m) => m.ManagerReports),
-  { loading: LoadingSkeleton },
+  { loading: dynamicLoading },
 );
 const ManagerInvitations = dynamic(
   () => import('./school/manager-invitations').then((m) => m.ManagerInvitations),
-  { loading: LoadingSkeleton },
+  { loading: dynamicLoading },
 );
 
-type S = components['schemas'];
 export function PersonalEducation({ section = [] }: { section?: string[] }) {
   const { session } = usePersonal();
   const active = session.context.workspaceType === 'Organization';
@@ -212,15 +219,18 @@ export function PersonalEducation({ section = [] }: { section?: string[] }) {
         ['classes', uiText.text_e7b1ccd0bda3, BookOpen],
         ['schedule', uiText.text_82ec67c14936, CalendarDays],
         ['invitations', uiText.text_016c18389868, Mail],
+        ...(!parent
+          ? ([['reports', uiText.learningReports.navigation, ChartNoAxesCombined]] as const)
+          : []),
       ] as const);
   const navigationPage =
     manager && ['people', 'members', 'teachers', 'students'].includes(page) ? 'members' : page;
   const navigation = (
-    <SchoolSectionMenu inline={page === 'overview'}>
+    <SchoolSectionMenu>
       <nav
         ref={tabsRef}
         data-manager={manager || undefined}
-        className={`${layout.navigation} ${manager ? layout.managerNavigation : ''}`}
+        className={uiClass(`${layout.navigation} ${manager ? layout.managerNavigation : ''}`)}
         aria-label={uiText.text_589d5004f227}
       >
         {tabs.map(([key, title, Icon]) => (
@@ -238,7 +248,8 @@ export function PersonalEducation({ section = [] }: { section?: string[] }) {
     </SchoolSectionMenu>
   );
   if (!isSchoolPath(section)) return <ErrorState error={new ApiError(404)} />;
-  if (section.length === 0 || (section.length === 1 && page === 'overview'))
+  if (section.length === 0 || (section.length === 1 && page === 'overview')) {
+    if (active && parent) return <ParentWorkspace />;
     return (
       <ReferenceSchoolFrame>
         {navigation}
@@ -255,16 +266,17 @@ export function PersonalEducation({ section = [] }: { section?: string[] }) {
         )}
       </ReferenceSchoolFrame>
     );
+  }
   if (page === 'invitations')
     return (
-      <div className={s.portal}>
+      <div className={uiClass(s.portal)}>
         {navigation}
         {active && manager ? <ManagerInvitations /> : <InvitationsPage />}
       </div>
     );
   if (!active)
     return (
-      <div className={s.portal}>
+      <div className={uiClass(s.portal)}>
         {navigation}
         <SchoolHeading title={uiText.text_8fa4122032f4} description={uiText.text_13e372aa992c} />
         <WorkspaceList />
@@ -273,7 +285,7 @@ export function PersonalEducation({ section = [] }: { section?: string[] }) {
   if (!isSchoolRole(role)) return <ErrorState error={new ApiError(403)} />;
   if (page === 'search')
     return (
-      <div className={s.portal}>
+      <div className={uiClass(s.portal)}>
         {navigation}
         <SchoolSearch />
       </div>
@@ -283,6 +295,7 @@ export function PersonalEducation({ section = [] }: { section?: string[] }) {
     ['assignments', 'exams'].includes(page) ||
     ['submissions', 'exam-submissions'].includes(page) ||
     ((teacher || manager) && page === 'evaluations') ||
+    (teacher && page === 'content') ||
     (!parent && ['classes', 'lessons', 'resources', 'sessions'].includes(page)) ||
     (manager &&
       [
@@ -295,11 +308,15 @@ export function PersonalEducation({ section = [] }: { section?: string[] }) {
         'periods',
         'reports',
       ].includes(page));
+  if (parent && allowed && section.length === 1 && (page === 'assignments' || page === 'exams'))
+    return <ParentWorkspace reports={page} />;
   return (
-    <div className={s.portal} key={session.revision}>
+    <div className={uiClass(s.portal)} key={session.revision}>
       {navigation}
       {!allowed ? (
         <ErrorState error={new ApiError(403)} />
+      ) : page === 'content' ? (
+        <TeacherContentPage />
       ) : page === 'evaluations' ? (
         <AssignmentEvaluationQueue />
       ) : page === 'submissions' ? (
@@ -358,6 +375,10 @@ export function PersonalEducation({ section = [] }: { section?: string[] }) {
         <SessionCreatePage classId={section[1]} />
       ) : page === 'classes' && section[3] === 'new' && section[2] === 'exams' ? (
         <ExamCreatePage classId={section[1]} />
+      ) : page === 'classes' && section[3] === 'new' && section[2] === 'assignments' ? (
+        <AssignmentFormPage classId={section[1]} />
+      ) : page === 'classes' && section[3] === 'new' && section[2] === 'lessons' ? (
+        <LessonFormPage classId={section[1]} />
       ) : page === 'classes' &&
         section[3] === 'new' &&
         ['enrollments', 'teachers'].includes(section[2]) ? (
@@ -375,12 +396,10 @@ export function PersonalEducation({ section = [] }: { section?: string[] }) {
         )
       ) : page === 'reports' && manager ? (
         <ManagerReports />
+      ) : page === 'reports' ? (
+        <LearningReports teacher={teacher} />
       ) : page === 'classes' && section[1] ? (
-        section[2] === 'lessons' && section[3] === 'new' ? (
-          <LessonFormPage classId={section[1]} />
-        ) : section[2] === 'assignments' && section[3] === 'new' ? (
-          <AssignmentFormPage classId={section[1]} />
-        ) : manager ? (
+        manager ? (
           <ManagerClass id={section[1]} />
         ) : (
           <ClassDetail id={section[1]} manager={false} teacher={teacher} />
@@ -452,9 +471,9 @@ function WorkspaceList() {
   return (
     <>
       {organizations.length ? (
-        <div className={s.grid}>
+        <div className={uiClass(s.grid)}>
           {organizations.map((w) => (
-            <div key={w.membershipId + ':' + w.role} className={s.classCard}>
+            <div key={w.membershipId + ':' + w.role} className={uiClass(s.classCard)}>
               <Building2 size={28} />
               <h2>{w.organizationName}</h2>
               <p>{label(w.role ?? '')}</p>
@@ -493,77 +512,26 @@ function SchoolOverview() {
   return <SchoolFeed />;
 }
 function ParentSchool({ page, classId }: { page: string; classId?: string }) {
-  const { session, call, reload } = usePersonal();
-  const children = usePersonalApi<S['AuthorizedChildResult'][]>('/api/v1/guardian/children', {
-    poll: 5000,
-  });
-  const [busy, setBusy] = useState(false),
-    [error, setError] = useState<unknown>(),
-    [pendingId, setPendingId] = useState<string>();
-  const selectionLock = useRef(false);
-  const active = children.isSuccess
-    ? children.data?.find(
-        (child) =>
-          child.organizationId === session.context.organizationId &&
-          child.learnerOrganizationPersonId === session.context.subjectOrganizationPersonId &&
-          child.relationStatus === 'Active',
-      )
-    : undefined;
+  if (page === 'overview' || page === 'assignments' || page === 'exams')
+    return <ParentWorkspace reports={page === 'overview' ? undefined : page} />;
+  return <ParentClassWorkspace page={page} classId={classId} />;
+}
+function ParentClassWorkspace({ page, classId }: { page: string; classId?: string }) {
+  const { children, scoped, active, busy, pendingId, error, retry, select } =
+    useAuthorizedChildren();
   return (
     <>
       <ChildSelector
-        children={
-          children.data?.filter(
-            (child) => child.organizationId === session.context.organizationId,
-          ) ?? []
-        }
+        children={scoped}
         active={active}
         pendingId={pendingId}
         busy={busy}
         loading={children.isPending}
-        error={children.error ?? error}
-        onRetry={() => {
-          setError(undefined);
-          void children.refetch();
-        }}
-        onSelect={async (id) => {
-          if (selectionLock.current || id === active?.learnerOrganizationPersonId) return;
-          const child = children.data?.find(
-            (c) =>
-              c.learnerOrganizationPersonId === id &&
-              c.organizationId === session.context.organizationId &&
-              c.relationStatus === 'Active',
-          );
-          if (!child) return;
-          selectionLock.current = true;
-          setBusy(true);
-          setPendingId(id);
-          setError(undefined);
-          try {
-            await call('/api/v1/guardian/children/' + id + '/select', { method: 'POST' });
-            await reload();
-          } catch (e) {
-            if (!(e instanceof Error && e.name === 'AbortError')) setError(e);
-          } finally {
-            selectionLock.current = false;
-            setBusy(false);
-            setPendingId(undefined);
-          }
-        }}
+        disabled={!children.isSuccess}
+        error={error}
+        onRetry={retry}
+        onSelect={(id) => void select(id)}
       />
-      {['assignments', 'exams'].includes(page) && (
-        <SchoolHeading
-          title={
-            page === 'overview'
-              ? uiText.text_14130edb2ced
-              : page === 'assignments'
-                ? uiText.text_5a73fd9b2b49
-                : uiText.text_960478099184
-          }
-          description={uiText.text_77c36f68bc81}
-        />
-      )}
-
       {busy ? (
         <LoadingSkeleton />
       ) : (
@@ -572,64 +540,8 @@ function ParentSchool({ page, classId }: { page: string; classId?: string }) {
           <ParentClasses id={classId} />
         ) : page === 'schedule' ? (
           <Schedule teach={false} />
-        ) : page === 'overview' ? (
-          <ParentDaily child={active} />
-        ) : (
-          <ParentReports
-            key={session.revision + page}
-            kind={page === 'assignments' ? 'assignments' : 'exams'}
-          />
-        ))
+        ) : null)
       )}
     </>
-  );
-}
-function ParentReports({ kind }: { kind: 'assignments' | 'exams' }) {
-  const [page, setPage] = useState(1);
-  const q = usePersonalApi<
-    S['ReportPageOfParentAssignmentReportItem'] | S['ReportPageOfParentExamReportItem']
-  >(`/api/v1/reports/parent/${kind}?PageNumber=${page}&PageSize=30`);
-  return (
-    <Card title={kind === 'assignments' ? uiText.text_813016dea0b5 : uiText.text_58bde8323225}>
-      {q.isPending ? (
-        <LoadingSkeleton />
-      ) : q.isError ? (
-        <ErrorState error={q.error} onRetry={() => void q.refetch()} />
-      ) : (
-        <>
-          {q.data.items.length ? (
-            <div className={s.editorList}>
-              {q.data.items.map((item, index) => (
-                <div className={s.question} key={index}>
-                  <h3>{item.title}</h3>
-                  <p className={s.hint}>{item.classTitle}</p>
-                  <p>
-                    {'submissionStatus' in item
-                      ? item.submissionStatus
-                        ? label(item.submissionStatus)
-                        : uiText.text_2675dd46965d
-                      : item.latestAttemptStatus
-                        ? label(item.latestAttemptStatus)
-                        : uiText.text_8b56533a0281}
-                  </p>
-                  <p>
-                    {uiText.text_faeb420f283e}{' '}
-                    {item.releasedScore === null
-                      ? uiText.text_0765fd5b5dc0
-                      : item.releasedScore + uiText.text_a624a1e41ffd + item.maximumScore}
-                  </p>
-                  {item.guardianVisibleFeedback && (
-                    <p className={s.bodyText}>{item.guardianVisibleFeedback}</p>
-                  )}
-                </div>
-              ))}
-            </div>
-          ) : (
-            <EmptyState title={uiText.text_248322604318} />
-          )}
-          <Pager page={page} total={q.data.totalCount} onChange={setPage} />
-        </>
-      )}
-    </Card>
   );
 }

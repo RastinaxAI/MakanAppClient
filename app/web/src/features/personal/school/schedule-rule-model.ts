@@ -10,6 +10,7 @@ export type RuleDraft = {
   title: string;
   link: string;
   apply: string;
+  zone?: string;
 };
 export const ruleDays: S['DayOfWeek'][] = [
   'Saturday',
@@ -20,7 +21,7 @@ export const ruleDays: S['DayOfWeek'][] = [
   'Thursday',
   'Friday',
 ];
-export function scheduleRuleCommand(value: RuleDraft): S['CreateScheduleRuleCommand'] | null {
+export function scheduleRuleDetails(value: RuleDraft) {
   const duration = Number(value.duration);
   if (
     !ruleDays.includes(value.day as S['DayOfWeek']) ||
@@ -29,10 +30,7 @@ export function scheduleRuleCommand(value: RuleDraft): S['CreateScheduleRuleComm
     duration <= 0 ||
     duration > 1440 ||
     !value.title.trim() ||
-    !/^\d{4}-\d{2}-\d{2}$/.test(value.from) ||
-    !/^\d{4}-\d{2}-\d{2}$/.test(value.until) ||
-    value.until < value.from ||
-    (value.link.trim() && !safeMeetingUrl(value.link))
+    !(value.zone ?? 'Asia/Tehran').trim()
   )
     return null;
   const [hour, minute, second = '00'] = value.time.split(':');
@@ -41,10 +39,24 @@ export function scheduleRuleCommand(value: RuleDraft): S['CreateScheduleRuleComm
     localDayOfWeek: value.day as S['DayOfWeek'],
     localStartTime: `${hour}:${minute}:${second}`,
     durationMinutes: duration,
-    timeZoneId: 'Asia/Tehran',
+    timeZoneId: (value.zone ?? 'Asia/Tehran').trim(),
+    sessionTitle: value.title.trim(),
+  };
+}
+export function scheduleRuleCommand(value: RuleDraft): S['CreateScheduleRuleCommand'] | null {
+  const details = scheduleRuleDetails(value);
+  if (
+    !details ||
+    !/^\d{4}-\d{2}-\d{2}$/.test(value.from) ||
+    !/^\d{4}-\d{2}-\d{2}$/.test(value.until) ||
+    value.until < value.from ||
+    (value.link.trim() && !safeMeetingUrl(value.link))
+  )
+    return null;
+  return {
+    ...details,
     effectiveFrom: value.from,
     effectiveUntil: value.until,
-    sessionTitle: value.title.trim(),
     meetingUrl: safeMeetingUrl(value.link) || null,
   };
 }

@@ -1,15 +1,27 @@
 'use client';
+import { Input as NativeInput } from '@/components/ui/input';
+
+import { uiClass } from '@/components/v5/classes';
+
 import * as uiText from '@/content/fa';
 import { latinDigits } from '@/lib/formatting';
 import {
   dateRangeError,
+  jalaliDisplayValue,
   jalaliInputValue,
   parseJalaliInput,
   toJalaliDate,
 } from '@/lib/jalali-date';
 import { jalaliPickerState } from '@/lib/jalali-picker-state';
 import { CalendarDays, X } from 'lucide-react';
-import { useEffect, useId, useRef, useState, type InputHTMLAttributes } from 'react';
+import {
+  useEffect,
+  useLayoutEffect,
+  useId,
+  useRef,
+  useState,
+  type InputHTMLAttributes,
+} from 'react';
 type Picker = {
   startWatch: (options: Record<string, unknown>) => void;
   updateOptions: (options: Record<string, unknown>) => void;
@@ -44,6 +56,8 @@ type Props = Omit<
   min?: string;
   max?: string;
   withTime?: boolean;
+  compactTimeDate?: boolean;
+  showPickerButton?: boolean;
 };
 export function JalaliDateInput({
   value,
@@ -52,10 +66,14 @@ export function JalaliDateInput({
   min,
   max,
   withTime = false,
+  compactTimeDate = false,
+  showPickerButton = true,
   name,
   id,
   disabled,
   required,
+  onFocus,
+  onBlur,
   'aria-describedby': describedBy,
   ...rest
 }: Props) {
@@ -66,6 +84,7 @@ export function JalaliDateInput({
     [text, setText] = useState(() => jalaliInputValue(initial, withTime)),
     [error, setError] = useState(''),
     [open, setOpen] = useState(false),
+    [focused, setFocused] = useState(false),
     [loadingError, setLoadingError] = useState(false);
   const input = useRef<HTMLInputElement>(null),
     host = useRef<HTMLDivElement>(null),
@@ -74,6 +93,11 @@ export function JalaliDateInput({
     currentChange = useRef<(text: string, fromPicker?: boolean) => void>(() => {});
   const errorId = inputId + '-error',
     hostId = inputId + '-calendar';
+  useLayoutEffect(() => {
+    // Select after React has committed the numeric editing value. Formatting on
+    // focus must not collapse a browser's replacement selection to the old end.
+    if (focused && input.current === document.activeElement) input.current?.select();
+  }, [focused]);
   useEffect(() => {
     if (value !== undefined && value !== emitted.current) {
       emitted.current = value;
@@ -234,6 +258,9 @@ export function JalaliDateInput({
         position: 'right',
       });
       jalaliPickerState.current = { input: input.current, close };
+      // v1 only parses ASCII numeric dates. Keep that editing value while open;
+      // the resting label is formatted separately, without changing the command value.
+      input.current.value = latinDigits(text);
       picker.show(input.current);
       setOpen(true);
       setLoadingError(false);
@@ -242,10 +269,11 @@ export function JalaliDateInput({
       setLoadingError(true);
     }
   }
+  const resting = !focused && !open && !!canonical && !error;
   return (
     <div
       ref={root}
-      className="makan-date-field"
+      className={uiClass('makan-date-field')}
       onKeyDown={(event) => {
         if (event.key === 'Escape' && open) {
           event.preventDefault();
@@ -278,26 +306,39 @@ export function JalaliDateInput({
         }
       }}
     >
-      <div className="makan-date-control">
-        <input
+      <div className={uiClass('makan-date-control')} data-picker-button={showPickerButton}>
+        <NativeInput
           {...rest}
           ref={input}
           id={inputId}
           type="text"
-          dir="ltr"
+          dir={resting ? 'rtl' : 'ltr'}
           data-jdp=""
           data-jdp-min-date={min ? toJalaliDate(min.slice(0, 10)) : undefined}
           data-jdp-max-date={max ? toJalaliDate(max.slice(0, 10)) : undefined}
-          value={text}
+          value={resting ? jalaliDisplayValue(canonical, withTime, compactTimeDate) : text}
           required={required}
           disabled={disabled}
           autoComplete="off"
           placeholder={withTime ? uiText.text_7aa4140b0d61 : uiText.text_1097f8d4306d}
           aria-invalid={!!error || rest['aria-invalid']}
+          aria-controls={!showPickerButton ? hostId : rest['aria-controls']}
+          aria-keyshortcuts={!showPickerButton ? 'ArrowDown' : rest['aria-keyshortcuts']}
+          aria-description={
+            rest['aria-description'] ?? (!showPickerButton ? uiText.dateInputPickerHint : undefined)
+          }
           aria-describedby={
             [describedBy, error ? errorId : ''].filter(Boolean).join(' ') || undefined
           }
           onChange={(event) => currentChange.current(event.target.value)}
+          onFocus={(event) => {
+            setFocused(true);
+            onFocus?.(event);
+          }}
+          onBlur={(event) => {
+            setFocused(false);
+            onBlur?.(event);
+          }}
           onClick={() => {
             if (!open) void show();
           }}
@@ -308,27 +349,29 @@ export function JalaliDateInput({
             }
           }}
         />
-        <button
-          type="button"
-          className="makan-date-trigger"
-          disabled={disabled}
-          aria-label={open ? uiText.text_2d85945743f6 : uiText.text_d220baef32d8}
-          aria-expanded={open}
-          aria-controls={hostId}
-          onClick={() => {
-            if (open) close();
-            else void show();
-          }}
-        >
-          {open ? <X size={19} /> : <CalendarDays size={19} />}
-        </button>
+        {showPickerButton && (
+          <button
+            type="button"
+            className={uiClass('makan-date-trigger')}
+            disabled={disabled}
+            aria-label={open ? uiText.text_2d85945743f6 : uiText.text_d220baef32d8}
+            aria-expanded={open}
+            aria-controls={hostId}
+            onClick={() => {
+              if (open) close();
+              else void show();
+            }}
+          >
+            {open ? <X size={19} /> : <CalendarDays size={19} />}
+          </button>
+        )}
       </div>
-      {name && <input type="hidden" name={name} value={canonical} disabled={disabled} />}
+      {name && <NativeInput type="hidden" name={name} value={canonical} disabled={disabled} />}
       <div
         id={hostId}
         ref={host}
         hidden={!open}
-        className="makan-jdp-host"
+        className={uiClass('makan-jdp-host')}
         onClick={(event) => {
           if ((event.target as HTMLElement).closest('.jdp-btn-close')) {
             close();
@@ -337,12 +380,12 @@ export function JalaliDateInput({
         }}
       />
       {error && (
-        <small id={errorId} className="makan-date-error" role="status">
+        <small id={errorId} className={uiClass('makan-date-error')} role="status">
           {error}
         </small>
       )}
       {loadingError && (
-        <small role="status" className="makan-date-error">
+        <small role="status" className={uiClass('makan-date-error')}>
           {uiText.text_91dd003a74aa}
         </small>
       )}

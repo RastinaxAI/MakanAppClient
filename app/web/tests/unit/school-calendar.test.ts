@@ -5,6 +5,8 @@ import {
   schoolWeekRange,
   nearestUpcoming,
   sessionEndDayLabel,
+  schoolDayRange,
+  localCalendarDay,
 } from '@/features/personal/school/calendar-model';
 describe('weekly school agenda', () => {
   it('starts Saturday and ends Friday when opened in the middle of the week', () => {
@@ -50,6 +52,16 @@ describe('weekly school agenda', () => {
   it('rejects invalid calendar days instead of silently rolling into another week', () => {
     expect(() => schoolWeekRange('2025-02-30')).toThrow();
     expect(() => schoolWeekRange('invalid')).toThrow();
+  });
+  it('queries a whole local day through its last millisecond and excludes the next day', () => {
+    const range = schoolDayRange('2024-02-29');
+    const next = schoolDayRange('2024-03-01');
+    expect(localCalendarDay(range.fromUtc)).toBe('2024-02-29');
+    expect(localCalendarDay(range.toUtc)).toBe('2024-02-29');
+    expect(new Date(range.fromUtc).getHours()).toBe(0);
+    expect(new Date(range.toUtc).getHours()).toBe(23);
+    expect(Date.parse(next.fromUtc) - Date.parse(range.toUtc)).toBe(1);
+    expect(() => schoolDayRange('2025-02-29')).toThrow();
   });
   it('selects the closest future item, ignores past and invalid times and preserves input order', () => {
     const rows = [

@@ -39,6 +39,102 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/ai/chat": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["post_api_v1_ai_chat"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/ai/students/analyze": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["post_api_v1_ai_students_analyze"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/ai/study-plan": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["post_api_v1_ai_study_plan"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/ai/homeworks/{assignmentId}/explain": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["post_api_v1_ai_homeworks_by_assignmentId_explain"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/ai/exams/{examId}/prepare": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["post_api_v1_ai_exams_by_examId_prepare"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/ai/parents/child-summary": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["post_api_v1_ai_parents_child_summary"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/ai/teachers/classes/{classId}/summary": {
         parameters: {
             query?: never;
@@ -49,6 +145,86 @@ export interface paths {
         get?: never;
         put?: never;
         post: operations["post_api_v1_ai_teachers_classes_by_classId_summary"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/ai/teachers/classes/{classId}/students/{studentId}/insight": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["post_api_v1_ai_teachers_classes_by_classId_students_by_studentId_insight"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/ai/teachers/classes/{classId}/activity-suggestions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["post_api_v1_ai_teachers_classes_by_classId_activity_suggestions"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/ai/managers/school-summary": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["post_api_v1_ai_managers_school_summary"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/ai/managers/classes/{classId}/insight": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["post_api_v1_ai_managers_classes_by_classId_insight"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/ai/managers/classes/{classId}/students/{studentId}/insight": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["post_api_v1_ai_managers_classes_by_classId_students_by_studentId_insight"];
         delete?: never;
         options?: never;
         head?: never;
@@ -478,6 +654,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
+        /** @description نشست معتبر و مجوز جاری لازم است. سفارش شخصی فقط برای خریدار و سفارش سازمانی برای Manager سازمانِ Workspace جاری مجاز است. مبلغ ریال و شرایط از سفارش frozen می‌آیند. ProviderReference شناسهٔ trackId است و SettlementReference مرجع refNumber. وضعیت Order، PaymentAttempt و Fulfillment مستقل‌اند. Recovery فقط شناسهٔ تلاش را می‌پذیرد؛ Retry تسویه یا تحویل تکراری نمی‌سازد. تاریخچه حداکثر ۱۰۰ رخداد اخیر است و حذف نمی‌شود. */
         get: operations["get_api_v1_commerce_summary"];
         put?: never;
         post?: never;
@@ -494,8 +671,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
+        /** @description نشست معتبر و مجوز جاری لازم است. سفارش شخصی فقط برای خریدار و سفارش سازمانی برای Manager سازمانِ Workspace جاری مجاز است. مبلغ ریال و شرایط از سفارش frozen می‌آیند. ProviderReference شناسهٔ trackId است و SettlementReference مرجع refNumber. وضعیت Order، PaymentAttempt و Fulfillment مستقل‌اند. Recovery فقط شناسهٔ تلاش را می‌پذیرد؛ Retry تسویه یا تحویل تکراری نمی‌سازد. تاریخچه حداکثر ۱۰۰ رخداد اخیر است و حذف نمی‌شود. */
         get: operations["get_api_v1_commerce_orders"];
         put?: never;
+        /** @description نشست معتبر و مجوز جاری لازم است. سفارش شخصی فقط برای خریدار و سفارش سازمانی برای Manager سازمانِ Workspace جاری مجاز است. مبلغ ریال و شرایط از سفارش frozen می‌آیند. ProviderReference شناسهٔ trackId است و SettlementReference مرجع refNumber. وضعیت Order، PaymentAttempt و Fulfillment مستقل‌اند. Recovery فقط شناسهٔ تلاش را می‌پذیرد؛ Retry تسویه یا تحویل تکراری نمی‌سازد. تاریخچه حداکثر ۱۰۰ رخداد اخیر است و حذف نمی‌شود. */
         post: operations["post_api_v1_commerce_orders"];
         delete?: never;
         options?: never;
@@ -512,6 +691,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
+        /** @description نشست معتبر و مجوز جاری لازم است. سفارش شخصی فقط برای خریدار و سفارش سازمانی برای Manager سازمانِ Workspace جاری مجاز است. مبلغ ریال و شرایط از سفارش frozen می‌آیند. ProviderReference شناسهٔ trackId است و SettlementReference مرجع refNumber. وضعیت Order، PaymentAttempt و Fulfillment مستقل‌اند. Recovery فقط شناسهٔ تلاش را می‌پذیرد؛ Retry تسویه یا تحویل تکراری نمی‌سازد. تاریخچه حداکثر ۱۰۰ رخداد اخیر است و حذف نمی‌شود. */
         post: operations["post_api_v1_commerce_orders_by_orderId_payments"];
         delete?: never;
         options?: never;
@@ -526,6 +706,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
+        /** @description نشست معتبر و مجوز جاری لازم است. سفارش شخصی فقط برای خریدار و سفارش سازمانی برای Manager سازمانِ Workspace جاری مجاز است. مبلغ ریال و شرایط از سفارش frozen می‌آیند. ProviderReference شناسهٔ trackId است و SettlementReference مرجع refNumber. وضعیت Order، PaymentAttempt و Fulfillment مستقل‌اند. Recovery فقط شناسهٔ تلاش را می‌پذیرد؛ Retry تسویه یا تحویل تکراری نمی‌سازد. تاریخچه حداکثر ۱۰۰ رخداد اخیر است و حذف نمی‌شود. */
         get: operations["get_api_v1_commerce_orders_by_orderId"];
         put?: never;
         post?: never;
@@ -544,6 +725,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
+        /** @description نشست معتبر و مجوز جاری لازم است. سفارش شخصی فقط برای خریدار و سفارش سازمانی برای Manager سازمانِ Workspace جاری مجاز است. مبلغ ریال و شرایط از سفارش frozen می‌آیند. ProviderReference شناسهٔ trackId است و SettlementReference مرجع refNumber. وضعیت Order، PaymentAttempt و Fulfillment مستقل‌اند. Recovery فقط شناسهٔ تلاش را می‌پذیرد؛ Retry تسویه یا تحویل تکراری نمی‌سازد. تاریخچه حداکثر ۱۰۰ رخداد اخیر است و حذف نمی‌شود. */
         post: operations["post_api_v1_commerce_personal_quote"];
         delete?: never;
         options?: never;
@@ -560,6 +742,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
+        /** @description نشست معتبر و مجوز جاری لازم است. سفارش شخصی فقط برای خریدار و سفارش سازمانی برای Manager سازمانِ Workspace جاری مجاز است. مبلغ ریال و شرایط از سفارش frozen می‌آیند. ProviderReference شناسهٔ trackId است و SettlementReference مرجع refNumber. وضعیت Order، PaymentAttempt و Fulfillment مستقل‌اند. Recovery فقط شناسهٔ تلاش را می‌پذیرد؛ Retry تسویه یا تحویل تکراری نمی‌سازد. تاریخچه حداکثر ۱۰۰ رخداد اخیر است و حذف نمی‌شود. */
         post: operations["post_api_v1_commerce_organization_quote"];
         delete?: never;
         options?: never;
@@ -574,6 +757,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
+        /** @description نشست معتبر و مجوز جاری لازم است. سفارش شخصی فقط برای خریدار و سفارش سازمانی برای Manager سازمانِ Workspace جاری مجاز است. مبلغ ریال و شرایط از سفارش frozen می‌آیند. ProviderReference شناسهٔ trackId است و SettlementReference مرجع refNumber. وضعیت Order، PaymentAttempt و Fulfillment مستقل‌اند. Recovery فقط شناسهٔ تلاش را می‌پذیرد؛ Retry تسویه یا تحویل تکراری نمی‌سازد. تاریخچه حداکثر ۱۰۰ رخداد اخیر است و حذف نمی‌شود. */
         get: operations["get_api_v1_commerce_catalog"];
         put?: never;
         post?: never;
@@ -590,6 +774,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
+        /** @description نشست معتبر و مجوز جاری لازم است. سفارش شخصی فقط برای خریدار و سفارش سازمانی برای Manager سازمانِ Workspace جاری مجاز است. مبلغ ریال و شرایط از سفارش frozen می‌آیند. ProviderReference شناسهٔ trackId است و SettlementReference مرجع refNumber. وضعیت Order، PaymentAttempt و Fulfillment مستقل‌اند. Recovery فقط شناسهٔ تلاش را می‌پذیرد؛ Retry تسویه یا تحویل تکراری نمی‌سازد. تاریخچه حداکثر ۱۰۰ رخداد اخیر است و حذف نمی‌شود. */
         get: operations["get_api_v1_commerce_personal_subscription"];
         put?: never;
         post?: never;
@@ -606,6 +791,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
+        /** @description نشست معتبر و مجوز جاری لازم است. سفارش شخصی فقط برای خریدار و سفارش سازمانی برای Manager سازمانِ Workspace جاری مجاز است. مبلغ ریال و شرایط از سفارش frozen می‌آیند. ProviderReference شناسهٔ trackId است و SettlementReference مرجع refNumber. وضعیت Order، PaymentAttempt و Fulfillment مستقل‌اند. Recovery فقط شناسهٔ تلاش را می‌پذیرد؛ Retry تسویه یا تحویل تکراری نمی‌سازد. تاریخچه حداکثر ۱۰۰ رخداد اخیر است و حذف نمی‌شود. */
         get: operations["get_api_v1_commerce_organization_subscription"];
         put?: never;
         post?: never;
@@ -624,6 +810,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
+        /** @description نشست معتبر و مجوز جاری لازم است. سفارش شخصی فقط برای خریدار و سفارش سازمانی برای Manager سازمانِ Workspace جاری مجاز است. مبلغ ریال و شرایط از سفارش frozen می‌آیند. ProviderReference شناسهٔ trackId است و SettlementReference مرجع refNumber. وضعیت Order، PaymentAttempt و Fulfillment مستقل‌اند. Recovery فقط شناسهٔ تلاش را می‌پذیرد؛ Retry تسویه یا تحویل تکراری نمی‌سازد. تاریخچه حداکثر ۱۰۰ رخداد اخیر است و حذف نمی‌شود. */
         post: operations["post_api_v1_commerce_ai_simple_text_preflight"];
         delete?: never;
         options?: never;
@@ -638,8 +825,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
+        /** @description نشست معتبر و مجوز جاری لازم است. سفارش شخصی فقط برای خریدار و سفارش سازمانی برای Manager سازمانِ Workspace جاری مجاز است. مبلغ ریال و شرایط از سفارش frozen می‌آیند. ProviderReference شناسهٔ trackId است و SettlementReference مرجع refNumber. وضعیت Order، PaymentAttempt و Fulfillment مستقل‌اند. Recovery فقط شناسهٔ تلاش را می‌پذیرد؛ Retry تسویه یا تحویل تکراری نمی‌سازد. تاریخچه حداکثر ۱۰۰ رخداد اخیر است و حذف نمی‌شود. */
         get: operations["get_api_v1_commerce_personal_orders"];
         put?: never;
+        /** @description نشست معتبر و مجوز جاری لازم است. سفارش شخصی فقط برای خریدار و سفارش سازمانی برای Manager سازمانِ Workspace جاری مجاز است. مبلغ ریال و شرایط از سفارش frozen می‌آیند. ProviderReference شناسهٔ trackId است و SettlementReference مرجع refNumber. وضعیت Order، PaymentAttempt و Fulfillment مستقل‌اند. Recovery فقط شناسهٔ تلاش را می‌پذیرد؛ Retry تسویه یا تحویل تکراری نمی‌سازد. تاریخچه حداکثر ۱۰۰ رخداد اخیر است و حذف نمی‌شود. */
         post: operations["post_api_v1_commerce_personal_orders"];
         delete?: never;
         options?: never;
@@ -654,6 +843,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
+        /** @description نشست معتبر و مجوز جاری لازم است. سفارش شخصی فقط برای خریدار و سفارش سازمانی برای Manager سازمانِ Workspace جاری مجاز است. مبلغ ریال و شرایط از سفارش frozen می‌آیند. ProviderReference شناسهٔ trackId است و SettlementReference مرجع refNumber. وضعیت Order، PaymentAttempt و Fulfillment مستقل‌اند. Recovery فقط شناسهٔ تلاش را می‌پذیرد؛ Retry تسویه یا تحویل تکراری نمی‌سازد. تاریخچه حداکثر ۱۰۰ رخداد اخیر است و حذف نمی‌شود. */
         get: operations["get_api_v1_commerce_personal_orders_by_orderId"];
         put?: never;
         post?: never;
@@ -672,6 +862,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
+        /** @description نشست معتبر و مجوز جاری لازم است. سفارش شخصی فقط برای خریدار و سفارش سازمانی برای Manager سازمانِ Workspace جاری مجاز است. مبلغ ریال و شرایط از سفارش frozen می‌آیند. ProviderReference شناسهٔ trackId است و SettlementReference مرجع refNumber. وضعیت Order، PaymentAttempt و Fulfillment مستقل‌اند. Recovery فقط شناسهٔ تلاش را می‌پذیرد؛ Retry تسویه یا تحویل تکراری نمی‌سازد. تاریخچه حداکثر ۱۰۰ رخداد اخیر است و حذف نمی‌شود. */
         post: operations["post_api_v1_commerce_personal_orders_by_orderId_payments"];
         delete?: never;
         options?: never;
@@ -688,6 +879,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
+        /** @description نشست معتبر و مجوز جاری لازم است. سفارش شخصی فقط برای خریدار و سفارش سازمانی برای Manager سازمانِ Workspace جاری مجاز است. مبلغ ریال و شرایط از سفارش frozen می‌آیند. ProviderReference شناسهٔ trackId است و SettlementReference مرجع refNumber. وضعیت Order، PaymentAttempt و Fulfillment مستقل‌اند. Recovery فقط شناسهٔ تلاش را می‌پذیرد؛ Retry تسویه یا تحویل تکراری نمی‌سازد. تاریخچه حداکثر ۱۰۰ رخداد اخیر است و حذف نمی‌شود. */
         post: operations["post_api_v1_commerce_personal_subscription_downgrade"];
         delete?: never;
         options?: never;
@@ -704,6 +896,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
+        /** @description نشست معتبر و مجوز جاری لازم است. سفارش شخصی فقط برای خریدار و سفارش سازمانی برای Manager سازمانِ Workspace جاری مجاز است. مبلغ ریال و شرایط از سفارش frozen می‌آیند. ProviderReference شناسهٔ trackId است و SettlementReference مرجع refNumber. وضعیت Order، PaymentAttempt و Fulfillment مستقل‌اند. Recovery فقط شناسهٔ تلاش را می‌پذیرد؛ Retry تسویه یا تحویل تکراری نمی‌سازد. تاریخچه حداکثر ۱۰۰ رخداد اخیر است و حذف نمی‌شود. */
         post: operations["post_api_v1_commerce_organization_subscription_downgrade"];
         delete?: never;
         options?: never;
@@ -1263,8 +1456,8 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * Summary مجاز گفتگو مستقل از صفحه و فیلتر Inbox
-         * @description Direct، Saved، Group و Channel مجاز را با DTO موجود Inbox می‌خواند؛ archive مانع deep-link نیست. نشست، workspace جاری و participant فعال همچنان الزامی‌اند. شناسهٔ نامجاز یا context متفاوت 404 می‌گیرد. این مسیر مجوز مدیریت گروه یا ارسال پیام جدید ایجاد نمی‌کند.
+         * Summary مجاز گفتگو مستقل از Workspace انتخاب‌شده و صفحهٔ Inbox
+         * @description BE-404-A: همان DTO و مجوز جاری Global Inbox حساب برای Direct، Saved، Group و Channel استفاده می‌شود؛ archive مانع deep-link نیست. نشست معتبر، حساب و participant فعال و برای سازمان، عضویت و نقش جاری همان سازمان و مجوز منبع رسمی الزامی‌اند. شناسهٔ حدسی، عضویت پایان‌یافته یا منبع نامجاز 404 می‌گیرد. انتخاب Workspace دیگر مجوز تازه‌ای ایجاد نمی‌کند و این مسیر Workspace را عوض نمی‌کند. تاریخچه، ارسال، فایل، Hub، اعضا، تنظیمات و مدیریت همچنان بافت و مجوز کامل خود را می‌خواهند. پاسخ no-store است.
          */
         get: operations["get_api_v1_conversations_by_conversationId_summary"];
         put?: never;
@@ -2683,6 +2876,125 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/sources/{sourceId}/versions/{version}/knowledge/ingest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** @description نشست فعال، Context و SourceVersion دقیق در Backend بازبینی می‌شوند؛ Library بسته است. Feature Gate باید فعال باشد. ClientOperationId در body کلید intent است؛ Headerهای Operation/Payer مسیر Business AI برای این API استفاده نمی‌شوند. RAG از سهمیهٔ SimpleText موجود استفاده می‌کند؛ replay تکمیل‌شده409 است و پاسخ خصوصی ذخیره نمی‌شود. Citation مجوز نیست؛ پس از پاسخ نیز دسترسی دوباره بررسی می‌شود. Ingest و lifecycle به writer و ExpectedVersion جاری نیاز دارند. */
+        post: operations["post_api_v1_sources_by_sourceId_versions_by_version_knowledge_ingest"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/sources/{sourceId}/versions/{version}/knowledge/status": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description نشست فعال، Context و SourceVersion دقیق در Backend بازبینی می‌شوند؛ Library بسته است. Feature Gate باید فعال باشد. ClientOperationId در body کلید intent است؛ Headerهای Operation/Payer مسیر Business AI برای این API استفاده نمی‌شوند. RAG از سهمیهٔ SimpleText موجود استفاده می‌کند؛ replay تکمیل‌شده409 است و پاسخ خصوصی ذخیره نمی‌شود. Citation مجوز نیست؛ پس از پاسخ نیز دسترسی دوباره بررسی می‌شود. Ingest و lifecycle به writer و ExpectedVersion جاری نیاز دارند. */
+        get: operations["get_api_v1_sources_by_sourceId_versions_by_version_knowledge_status"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/sources/{sourceId}/versions/{version}/knowledge/delete": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** @description نشست فعال، Context و SourceVersion دقیق در Backend بازبینی می‌شوند؛ Library بسته است. Feature Gate باید فعال باشد. ClientOperationId در body کلید intent است؛ Headerهای Operation/Payer مسیر Business AI برای این API استفاده نمی‌شوند. RAG از سهمیهٔ SimpleText موجود استفاده می‌کند؛ replay تکمیل‌شده409 است و پاسخ خصوصی ذخیره نمی‌شود. Citation مجوز نیست؛ پس از پاسخ نیز دسترسی دوباره بررسی می‌شود. Ingest و lifecycle به writer و ExpectedVersion جاری نیاز دارند. */
+        post: operations["post_api_v1_sources_by_sourceId_versions_by_version_knowledge_delete"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/sources/{sourceId}/versions/{version}/knowledge/supersede": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** @description نشست فعال، Context و SourceVersion دقیق در Backend بازبینی می‌شوند؛ Library بسته است. Feature Gate باید فعال باشد. ClientOperationId در body کلید intent است؛ Headerهای Operation/Payer مسیر Business AI برای این API استفاده نمی‌شوند. RAG از سهمیهٔ SimpleText موجود استفاده می‌کند؛ replay تکمیل‌شده409 است و پاسخ خصوصی ذخیره نمی‌شود. Citation مجوز نیست؛ پس از پاسخ نیز دسترسی دوباره بررسی می‌شود. Ingest و lifecycle به writer و ExpectedVersion جاری نیاز دارند. */
+        post: operations["post_api_v1_sources_by_sourceId_versions_by_version_knowledge_supersede"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/sources/{sourceId}/versions/{version}/knowledge/reindex": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** @description نشست فعال، Context و SourceVersion دقیق در Backend بازبینی می‌شوند؛ Library بسته است. Feature Gate باید فعال باشد. ClientOperationId در body کلید intent است؛ Headerهای Operation/Payer مسیر Business AI برای این API استفاده نمی‌شوند. RAG از سهمیهٔ SimpleText موجود استفاده می‌کند؛ replay تکمیل‌شده409 است و پاسخ خصوصی ذخیره نمی‌شود. Citation مجوز نیست؛ پس از پاسخ نیز دسترسی دوباره بررسی می‌شود. Ingest و lifecycle به writer و ExpectedVersion جاری نیاز دارند. */
+        post: operations["post_api_v1_sources_by_sourceId_versions_by_version_knowledge_reindex"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/ai/knowledge/retrieve": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** @description نشست فعال، Context و SourceVersion دقیق در Backend بازبینی می‌شوند؛ Library بسته است. Feature Gate باید فعال باشد. ClientOperationId در body کلید intent است؛ Headerهای Operation/Payer مسیر Business AI برای این API استفاده نمی‌شوند. RAG از سهمیهٔ SimpleText موجود استفاده می‌کند؛ replay تکمیل‌شده409 است و پاسخ خصوصی ذخیره نمی‌شود. Citation مجوز نیست؛ پس از پاسخ نیز دسترسی دوباره بررسی می‌شود. Ingest و lifecycle به writer و ExpectedVersion جاری نیاز دارند. */
+        post: operations["post_api_v1_ai_knowledge_retrieve"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/ai/knowledge/rag/answer": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** @description نشست فعال، Context و SourceVersion دقیق در Backend بازبینی می‌شوند؛ Library بسته است. Feature Gate باید فعال باشد. ClientOperationId در body کلید intent است؛ Headerهای Operation/Payer مسیر Business AI برای این API استفاده نمی‌شوند. RAG از سهمیهٔ SimpleText موجود استفاده می‌کند؛ replay تکمیل‌شده409 است و پاسخ خصوصی ذخیره نمی‌شود. Citation مجوز نیست؛ پس از پاسخ نیز دسترسی دوباره بررسی می‌شود. Ingest و lifecycle به writer و ExpectedVersion جاری نیاز دارند. */
+        post: operations["post_api_v1_ai_knowledge_rag_answer"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/conversations/{conversationId}/messages/{messageId}/reports": {
         parameters: {
             query?: never;
@@ -2790,6 +3102,54 @@ export interface paths {
         put?: never;
         post?: never;
         delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/notifications/devices": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["get_api_v1_notifications_devices"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/notifications/devices/web-push": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["post_api_v1_notifications_devices_web_push"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/notifications/devices/{registrationId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete: operations["delete_api_v1_notifications_devices_by_registrationId"];
         options?: never;
         head?: never;
         patch?: never;
@@ -3078,6 +3438,74 @@ export interface paths {
         get?: never;
         put?: never;
         post: operations["post_api_v1_organization_people_by_id_invitations_by_invitationId_revoke"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/commerce/payment-attempts/{attemptId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description نشست معتبر و مجوز جاری لازم است. سفارش شخصی فقط برای خریدار و سفارش سازمانی برای Manager سازمانِ Workspace جاری مجاز است. مبلغ ریال و شرایط از سفارش frozen می‌آیند. ProviderReference شناسهٔ trackId است و SettlementReference مرجع refNumber. وضعیت Order، PaymentAttempt و Fulfillment مستقل‌اند. Recovery فقط شناسهٔ تلاش را می‌پذیرد؛ Retry تسویه یا تحویل تکراری نمی‌سازد. تاریخچه حداکثر ۱۰۰ رخداد اخیر است و حذف نمی‌شود. */
+        get: operations["get_api_v1_commerce_payment_attempts_by_attemptId"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/commerce/payment-attempts/{attemptId}/verify": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** @description نشست معتبر و مجوز جاری لازم است. سفارش شخصی فقط برای خریدار و سفارش سازمانی برای Manager سازمانِ Workspace جاری مجاز است. مبلغ ریال و شرایط از سفارش frozen می‌آیند. ProviderReference شناسهٔ trackId است و SettlementReference مرجع refNumber. وضعیت Order، PaymentAttempt و Fulfillment مستقل‌اند. Recovery فقط شناسهٔ تلاش را می‌پذیرد؛ Retry تسویه یا تحویل تکراری نمی‌سازد. تاریخچه حداکثر ۱۰۰ رخداد اخیر است و حذف نمی‌شود. */
+        post: operations["post_api_v1_commerce_payment_attempts_by_attemptId_verify"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/commerce/orders/{orderId}/receipt": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description نشست معتبر و مجوز جاری لازم است. سفارش شخصی فقط برای خریدار و سفارش سازمانی برای Manager سازمانِ Workspace جاری مجاز است. مبلغ ریال و شرایط از سفارش frozen می‌آیند. ProviderReference شناسهٔ trackId است و SettlementReference مرجع refNumber. وضعیت Order، PaymentAttempt و Fulfillment مستقل‌اند. Recovery فقط شناسهٔ تلاش را می‌پذیرد؛ Retry تسویه یا تحویل تکراری نمی‌سازد. تاریخچه حداکثر ۱۰۰ رخداد اخیر است و حذف نمی‌شود. */
+        get: operations["get_api_v1_commerce_orders_by_orderId_receipt"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/commerce/personal/orders/{orderId}/receipt": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description نشست معتبر و مجوز جاری لازم است. سفارش شخصی فقط برای خریدار و سفارش سازمانی برای Manager سازمانِ Workspace جاری مجاز است. مبلغ ریال و شرایط از سفارش frozen می‌آیند. ProviderReference شناسهٔ trackId است و SettlementReference مرجع refNumber. وضعیت Order، PaymentAttempt و Fulfillment مستقل‌اند. Recovery فقط شناسهٔ تلاش را می‌پذیرد؛ Retry تسویه یا تحویل تکراری نمی‌سازد. تاریخچه حداکثر ۱۰۰ رخداد اخیر است و حذف نمی‌شود. */
+        get: operations["get_api_v1_commerce_personal_orders_by_orderId_receipt"];
+        put?: never;
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -4996,16 +5424,28 @@ export interface components {
             /** Format: int32 */
             number: number;
         };
-        AiRoleInsightResponse: {
+        SendAiChatCommand: {
+            message: string;
+            /** Format: uuid */
+            conversationId: string | null;
+            selectedSourceIds?: string[] | null;
+            /** Format: uuid */
+            operationId?: string | null;
+        };
+        AiChatResult: {
             requestId: string;
             correlationId: string | null;
-            summary: string;
-            strengths: components["schemas"]["AiInsight"][];
-            attentionAreas: unknown[];
+            conversationId: string | null;
+            answer: components["schemas"]["AiMessage"];
+            insights: components["schemas"]["AiInsight"][];
             risks: unknown[];
             recommendations: components["schemas"]["AiRecommendation"][];
             sources: components["schemas"]["AiSourceReference"][];
-            metadata: components["schemas"]["AiResponseMetadata"];
+        };
+        AiMessage: {
+            text: string;
+            /** @default fa */
+            language: string;
         };
         AiInsight: {
             type: string;
@@ -5027,10 +5467,141 @@ export interface components {
             type: string;
             id: string;
         };
+        AiStudentAnalysisResponse: {
+            requestId: string;
+            correlationId: string | null;
+            summary: string;
+            strengths: components["schemas"]["AiInsight"][];
+            weaknesses: unknown[];
+            risks: unknown[];
+            recommendations: components["schemas"]["AiRecommendation"][];
+            sources: components["schemas"]["AiSourceReference"][];
+            metadata: components["schemas"]["AiResponseMetadata"];
+        };
         AiResponseMetadata: {
             modelAlias: string;
             /** Format: int32 */
             processingTimeMs: number;
+        };
+        CreateStudyPlanCommand: {
+            goals: string[];
+            /** Format: int32 */
+            availableMinutes: number | null;
+            notes: string | null;
+            selectedSourceIds?: string[] | null;
+            /** Format: uuid */
+            operationId?: string | null;
+        };
+        AiStudyPlanResponse: {
+            requestId: string;
+            correlationId: string | null;
+            summary: string;
+            priorities: string[];
+            planItems: components["schemas"]["AiPlanItem"][];
+            recommendations: components["schemas"]["AiRecommendation"][];
+            sources: components["schemas"]["AiSourceReference"][];
+            metadata: components["schemas"]["AiResponseMetadata"];
+        };
+        AiPlanItem: {
+            title: string;
+            reason: string;
+            priority: components["schemas"]["AiSeverity"];
+            /** Format: int32 */
+            estimatedMinutes: number | null;
+        };
+        ExplainHomeworkCommand: {
+            question: string;
+            selectedSourceIds?: string[] | null;
+            /** Format: uuid */
+            operationId?: string | null;
+        };
+        AiHomeworkExplanationResponse: {
+            requestId: string;
+            correlationId: string | null;
+            explanation: string;
+            steps: string[];
+            hints: string[];
+            recommendations: components["schemas"]["AiRecommendation"][];
+            sources: components["schemas"]["AiSourceReference"][];
+            metadata: components["schemas"]["AiResponseMetadata"];
+        };
+        AiExamPreparationResponse: {
+            requestId: string;
+            correlationId: string | null;
+            summary: string;
+            priorityTopics: string[];
+            preparationSteps: string[];
+            risks: components["schemas"]["AiInsight"][];
+            recommendations: components["schemas"]["AiRecommendation"][];
+            sources: components["schemas"]["AiSourceReference"][];
+            metadata: components["schemas"]["AiResponseMetadata"];
+        };
+        AiParentChildSummaryResponse: {
+            requestId: string;
+            correlationId: string | null;
+            academicSummary: string;
+            progress: components["schemas"]["AiProgress"];
+            attentionAreas: components["schemas"]["AiAttentionArea"][];
+            upcomingItems: components["schemas"]["AiUpcomingItem"][];
+            risks: components["schemas"]["AiInsight"][];
+            recommendations: components["schemas"]["AiRecommendation"][];
+            sources: components["schemas"]["AiSourceReference"][];
+            metadata: components["schemas"]["AiResponseMetadata"];
+        };
+        AiProgress: {
+            trend: string;
+            description: string;
+        };
+        AiAttentionArea: {
+            title: string;
+            description: string;
+            severity: components["schemas"]["AiSeverity"];
+            entityType: string | null;
+            entityId: string | null;
+        };
+        AiUpcomingItem: {
+            type: string;
+            id: string;
+            title: string;
+            date: string | null;
+        };
+        AiRoleInsightResponse: {
+            requestId: string;
+            correlationId: string | null;
+            summary: string;
+            strengths: components["schemas"]["AiInsight"][];
+            attentionAreas: unknown[];
+            risks: unknown[];
+            recommendations: components["schemas"]["AiRecommendation"][];
+            sources: components["schemas"]["AiSourceReference"][];
+            metadata: components["schemas"]["AiResponseMetadata"];
+        };
+        SuggestTeacherActivitiesCommand: {
+            objective: string;
+            /** Format: int32 */
+            availableMinutes: number | null;
+            materials: string[];
+            notes: string | null;
+            selectedSourceIds?: string[] | null;
+            /** Format: uuid */
+            operationId?: string | null;
+        };
+        AiActivitySuggestionsResponse: {
+            requestId: string;
+            correlationId: string | null;
+            summary: string;
+            activities: components["schemas"]["AiTeachingActivity"][];
+            recommendations: components["schemas"]["AiRecommendation"][];
+            sources: components["schemas"]["AiSourceReference"][];
+            metadata: components["schemas"]["AiResponseMetadata"];
+        };
+        AiTeachingActivity: {
+            title: string;
+            objective: string;
+            reason: string;
+            steps: string[];
+            /** Format: int32 */
+            estimatedMinutes: number | null;
         };
         CreateAssignmentDraftCommand: {
             /** @description محدودیت طول پس از Trim اعمال می‌شود؛ فیلد اجباری نباید فقط whitespace باشد. */
@@ -5609,6 +6180,14 @@ export interface components {
             createdAtUtc: string;
             /** Format: date-time */
             completedAtUtc: string | null;
+            settlementReference?: string | null;
+            failureCode?: string | null;
+            /** Format: date-time */
+            callbackReceivedAtUtc?: string | null;
+            /** Format: date-time */
+            providerPaidAtUtc?: string | null;
+            /** Format: date-time */
+            verifiedAtUtc?: string | null;
         };
         /** @enum {string} */
         PaymentAttemptStatus: "Created" | "Initiating" | "PendingVerification" | "Succeeded" | "Failed" | "Unknown";
@@ -8134,6 +8713,99 @@ export interface components {
             invitationId: string;
             status: components["schemas"]["InvitationStatus"];
         };
+        KnowledgeMutationCommand: {
+            /** Format: uuid */
+            clientOperationId: string;
+            expectedVersion: string;
+            reason: string;
+            payer?: components["schemas"]["NullableOfAiPayerSelection"];
+        };
+        KnowledgeProcessingStatus: {
+            /** Format: uuid */
+            sourceId: string;
+            /** Format: int32 */
+            version: number;
+            /** @enum {string} */
+            state: "NotIngested" | "Queued" | "Extracting" | "OCR" | "Normalizing" | "Chunking" | "Embedding" | "Indexing" | "Ready" | "ExtractFailed" | "OcrFailed" | "ChunkFailed" | "EmbeddingFailed" | "IndexFailed" | "Superseded" | "Deleted" | "ReindexRequired";
+            /** Format: date-time */
+            updatedAtUtc: string;
+            /**
+             * Format: date-time
+             * @default null
+             */
+            readyAtUtc: string | null;
+            /** @default null */
+            failureCode: string | null;
+            /** @default false */
+            retryable: boolean;
+        };
+        KnowledgeQueryCommand: {
+            /** Format: uuid */
+            clientOperationId: string;
+            query: string;
+            sources: components["schemas"]["KnowledgeSourceVersion"][];
+            /**
+             * Format: int32
+             * @default 8
+             */
+            maxResults: number;
+            /** @default false */
+            includeQuotePreview: boolean;
+            /** @default fa */
+            language: string;
+            payer?: components["schemas"]["NullableOfAiPayerSelection"];
+        };
+        KnowledgeSourceVersion: {
+            /** Format: uuid */
+            sourceId: string;
+            /** Format: int32 */
+            version: number;
+        };
+        KnowledgeRetrieveResponse: {
+            requestId: string;
+            correlationId: string;
+            /** @enum {string} */
+            status: "Ok" | "Empty";
+            results: components["schemas"]["KnowledgeRetrieveResult"][];
+        };
+        KnowledgeRetrieveResult: {
+            /** Format: uuid */
+            sourceId: string;
+            /** Format: int32 */
+            version: number;
+            /** Format: int32 */
+            rank: number;
+            chunkId: string;
+            text: string;
+            citation: components["schemas"]["KnowledgeCitation"];
+        };
+        KnowledgeCitation: {
+            /** Format: uuid */
+            sourceId: string;
+            /** Format: int32 */
+            version: number;
+            chunkId: string;
+            title: string;
+            /** Format: int32 */
+            pageStart: number | null;
+            /** Format: int32 */
+            pageEnd: number | null;
+            sectionTitle: string | null;
+            quotePreview: string | null;
+        };
+        KnowledgeRagResponse: {
+            requestId: string;
+            correlationId: string;
+            /** @enum {string} */
+            status: "Ok" | "InsufficientEvidence";
+            answer: string;
+            claims: components["schemas"]["KnowledgeRagClaim"][];
+            citations: unknown[];
+        };
+        KnowledgeRagClaim: {
+            text: string;
+            citations: components["schemas"]["KnowledgeCitation"][];
+        };
         ReportMessageCommand: {
             /** Format: uuid */
             clientReportId: string;
@@ -8243,6 +8915,48 @@ export interface components {
         WebPushClientConfiguration: {
             isConfigured: boolean;
             vapidPublicKey: string | null;
+        };
+        PushDevicePageResult: {
+            items: components["schemas"]["PushDeviceListItem"][];
+            /** Format: int32 */
+            page: number;
+            /** Format: int32 */
+            pageSize: number;
+            /** Format: int32 */
+            totalCount: number;
+        };
+        PushDeviceListItem: {
+            /** Format: uuid */
+            id: string;
+            platform: components["schemas"]["PushDevicePlatform"];
+            /** Format: date-time */
+            createdAtUtc: string;
+            /** Format: date-time */
+            lastSeenAtUtc: string;
+            /** Format: date-time */
+            revokedAtUtc: string | null;
+            isActive: boolean;
+            version: string;
+        };
+        /** @enum {string} */
+        PushDevicePlatform: "Android" | "Ios" | "Web";
+        RegisterWebPushCommand: {
+            endpoint: string;
+            p256dh: string;
+            auth: string;
+            /** @default null */
+            expectedVersion: string | null;
+        };
+        PushDeviceRegistrationResult: {
+            /** Format: uuid */
+            id: string;
+            platform: components["schemas"]["PushDevicePlatform"];
+            /** Format: date-time */
+            createdAtUtc: string;
+            /** Format: date-time */
+            lastSeenAtUtc: string;
+            /** @default null */
+            version: string | null;
         };
         NotificationPreferenceItem: {
             scope: components["schemas"]["NotificationPreferenceScope"];
@@ -8554,6 +9268,60 @@ export interface components {
             rowVersion: string;
             /** @default false */
             replayed: boolean;
+        };
+        PaymentAttemptDetailsDto: {
+            order: components["schemas"]["OrderDto"];
+            paymentAttempt: components["schemas"]["PaymentAttemptDto"];
+            history: components["schemas"]["PaymentHistoryDto"][];
+        };
+        PaymentHistoryDto: {
+            /** Format: uuid */
+            eventId: string;
+            type: components["schemas"]["PaymentAttemptEventType"];
+            /** Format: date-time */
+            occurredAtUtc: string;
+            /** Format: int32 */
+            providerResult: number | null;
+            /** Format: int32 */
+            providerStatus: number | null;
+            errorCode: string | null;
+            correlationId: string | null;
+        };
+        /** @enum {string} */
+        PaymentAttemptEventType: "Created" | "InitiationStarted" | "InitiationCompleted" | "CallbackReceived" | "VerificationCompleted" | "InquiryCompleted" | "SettlementReplayed" | "InitiationUncertain";
+        VerifyPaymentResult: {
+            status: components["schemas"]["PaymentVerificationStatus"];
+            order: components["schemas"]["OrderDto"];
+            paymentAttempt: components["schemas"]["PaymentAttemptDto"];
+        };
+        /** @enum {string} */
+        PaymentVerificationStatus: "Settled" | "AlreadySettled" | "Failed" | "Unknown" | "AmountMismatch" | "CurrencyMismatch" | "ReferenceConflict";
+        PaymentReceiptDto: {
+            /** Format: uuid */
+            orderId: string;
+            /** Format: uuid */
+            purchaserUserId: string;
+            /** Format: uuid */
+            organizationId: string | null;
+            /** Format: uuid */
+            planVersionId: string;
+            productTitle: string | null;
+            /** Format: double */
+            amount: number;
+            currency: string;
+            /** Format: date-time */
+            paidAtUtc: string;
+            fulfillmentState: components["schemas"]["OrderFulfillmentState"];
+            provider: string | null;
+            providerReference: string | null;
+            settlementReference: string | null;
+            /** Format: date-time */
+            providerPaidAtUtc: string | null;
+            purpose: components["schemas"]["CommercialOrderPurpose2"];
+            /** Format: date-time */
+            billingAnchorUtc: string | null;
+            /** Format: int32 */
+            billingPeriodIndex: number;
         };
         PeopleSearchPageResult: {
             items: components["schemas"]["MessagingPublicProfileResult"][];
@@ -10591,6 +11359,376 @@ export interface operations {
             };
         };
     };
+    post_api_v1_ai_chat: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description شناسهٔ ثابت intent برای Retry؛ در صورت وجود OperationId در body باید یکسان باشد. حذف Header برای هر درخواست شناسهٔ تازه می‌سازد. */
+                "X-AI-Operation-Id"?: string;
+                /** @description پیش‌فرض سازمان جاری؛ Individual یا FreeTrial فقط با انتخاب صریح و بدون تغییر مجوز داده. fallback خودکار وجود ندارد. */
+                "X-AI-Payer"?: "Organization" | "Individual" | "FreeTrial";
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SendAiChatCommand"];
+                "text/json": components["schemas"]["SendAiChatCommand"];
+                "application/*+json": components["schemas"]["SendAiChatCommand"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    /** @description شناسهٔ intent پذیرفته‌شده؛ کلید پیگیری است، نه credential یا مجوز. */
+                    "X-AI-Operation-Id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": components["schemas"]["AiChatResult"];
+                    "application/json": components["schemas"]["AiChatResult"];
+                    "text/json": components["schemas"]["AiChatResult"];
+                };
+            };
+            /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description Conflict عملیات/سهمیه؛ AI_OPERATION_ALREADY_COMPLETED / IN_PROGRESS / OUTCOME_UNKNOWN / PREVIOUSLY_FAILED. پاسخ خصوصی AI cache نمی‌شود و Provider دوباره صدا زده نمی‌شود. */
+            409: {
+                headers: {
+                    /** @description شناسهٔ intent پذیرفته‌شده؛ کلید پیگیری است، نه credential یا مجوز. */
+                    "X-AI-Operation-Id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+        };
+    };
+    post_api_v1_ai_students_analyze: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description شناسهٔ ثابت intent برای Retry؛ در صورت وجود OperationId در body باید یکسان باشد. حذف Header برای هر درخواست شناسهٔ تازه می‌سازد. */
+                "X-AI-Operation-Id"?: string;
+                /** @description پیش‌فرض سازمان جاری؛ Individual یا FreeTrial فقط با انتخاب صریح و بدون تغییر مجوز داده. fallback خودکار وجود ندارد. */
+                "X-AI-Payer"?: "Organization" | "Individual" | "FreeTrial";
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    /** @description شناسهٔ intent پذیرفته‌شده؛ کلید پیگیری است، نه credential یا مجوز. */
+                    "X-AI-Operation-Id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": components["schemas"]["AiStudentAnalysisResponse"];
+                    "application/json": components["schemas"]["AiStudentAnalysisResponse"];
+                    "text/json": components["schemas"]["AiStudentAnalysisResponse"];
+                };
+            };
+            /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description Conflict عملیات/سهمیه؛ AI_OPERATION_ALREADY_COMPLETED / IN_PROGRESS / OUTCOME_UNKNOWN / PREVIOUSLY_FAILED. پاسخ خصوصی AI cache نمی‌شود و Provider دوباره صدا زده نمی‌شود. */
+            409: {
+                headers: {
+                    /** @description شناسهٔ intent پذیرفته‌شده؛ کلید پیگیری است، نه credential یا مجوز. */
+                    "X-AI-Operation-Id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+        };
+    };
+    post_api_v1_ai_study_plan: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description شناسهٔ ثابت intent برای Retry؛ در صورت وجود OperationId در body باید یکسان باشد. حذف Header برای هر درخواست شناسهٔ تازه می‌سازد. */
+                "X-AI-Operation-Id"?: string;
+                /** @description پیش‌فرض سازمان جاری؛ Individual یا FreeTrial فقط با انتخاب صریح و بدون تغییر مجوز داده. fallback خودکار وجود ندارد. */
+                "X-AI-Payer"?: "Organization" | "Individual" | "FreeTrial";
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateStudyPlanCommand"];
+                "text/json": components["schemas"]["CreateStudyPlanCommand"];
+                "application/*+json": components["schemas"]["CreateStudyPlanCommand"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    /** @description شناسهٔ intent پذیرفته‌شده؛ کلید پیگیری است، نه credential یا مجوز. */
+                    "X-AI-Operation-Id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": components["schemas"]["AiStudyPlanResponse"];
+                    "application/json": components["schemas"]["AiStudyPlanResponse"];
+                    "text/json": components["schemas"]["AiStudyPlanResponse"];
+                };
+            };
+            /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description Conflict عملیات/سهمیه؛ AI_OPERATION_ALREADY_COMPLETED / IN_PROGRESS / OUTCOME_UNKNOWN / PREVIOUSLY_FAILED. پاسخ خصوصی AI cache نمی‌شود و Provider دوباره صدا زده نمی‌شود. */
+            409: {
+                headers: {
+                    /** @description شناسهٔ intent پذیرفته‌شده؛ کلید پیگیری است، نه credential یا مجوز. */
+                    "X-AI-Operation-Id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+        };
+    };
+    post_api_v1_ai_homeworks_by_assignmentId_explain: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description شناسهٔ ثابت intent برای Retry؛ در صورت وجود OperationId در body باید یکسان باشد. حذف Header برای هر درخواست شناسهٔ تازه می‌سازد. */
+                "X-AI-Operation-Id"?: string;
+                /** @description پیش‌فرض سازمان جاری؛ Individual یا FreeTrial فقط با انتخاب صریح و بدون تغییر مجوز داده. fallback خودکار وجود ندارد. */
+                "X-AI-Payer"?: "Organization" | "Individual" | "FreeTrial";
+            };
+            path: {
+                assignmentId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ExplainHomeworkCommand"];
+                "text/json": components["schemas"]["ExplainHomeworkCommand"];
+                "application/*+json": components["schemas"]["ExplainHomeworkCommand"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    /** @description شناسهٔ intent پذیرفته‌شده؛ کلید پیگیری است، نه credential یا مجوز. */
+                    "X-AI-Operation-Id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": components["schemas"]["AiHomeworkExplanationResponse"];
+                    "application/json": components["schemas"]["AiHomeworkExplanationResponse"];
+                    "text/json": components["schemas"]["AiHomeworkExplanationResponse"];
+                };
+            };
+            /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description Conflict عملیات/سهمیه؛ AI_OPERATION_ALREADY_COMPLETED / IN_PROGRESS / OUTCOME_UNKNOWN / PREVIOUSLY_FAILED. پاسخ خصوصی AI cache نمی‌شود و Provider دوباره صدا زده نمی‌شود. */
+            409: {
+                headers: {
+                    /** @description شناسهٔ intent پذیرفته‌شده؛ کلید پیگیری است، نه credential یا مجوز. */
+                    "X-AI-Operation-Id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+        };
+    };
+    post_api_v1_ai_exams_by_examId_prepare: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description شناسهٔ ثابت intent برای Retry؛ در صورت وجود OperationId در body باید یکسان باشد. حذف Header برای هر درخواست شناسهٔ تازه می‌سازد. */
+                "X-AI-Operation-Id"?: string;
+                /** @description پیش‌فرض سازمان جاری؛ Individual یا FreeTrial فقط با انتخاب صریح و بدون تغییر مجوز داده. fallback خودکار وجود ندارد. */
+                "X-AI-Payer"?: "Organization" | "Individual" | "FreeTrial";
+            };
+            path: {
+                examId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    /** @description شناسهٔ intent پذیرفته‌شده؛ کلید پیگیری است، نه credential یا مجوز. */
+                    "X-AI-Operation-Id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": components["schemas"]["AiExamPreparationResponse"];
+                    "application/json": components["schemas"]["AiExamPreparationResponse"];
+                    "text/json": components["schemas"]["AiExamPreparationResponse"];
+                };
+            };
+            /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description Conflict عملیات/سهمیه؛ AI_OPERATION_ALREADY_COMPLETED / IN_PROGRESS / OUTCOME_UNKNOWN / PREVIOUSLY_FAILED. پاسخ خصوصی AI cache نمی‌شود و Provider دوباره صدا زده نمی‌شود. */
+            409: {
+                headers: {
+                    /** @description شناسهٔ intent پذیرفته‌شده؛ کلید پیگیری است، نه credential یا مجوز. */
+                    "X-AI-Operation-Id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+        };
+    };
+    post_api_v1_ai_parents_child_summary: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description شناسهٔ ثابت intent برای Retry؛ در صورت وجود OperationId در body باید یکسان باشد. حذف Header برای هر درخواست شناسهٔ تازه می‌سازد. */
+                "X-AI-Operation-Id"?: string;
+                /** @description پیش‌فرض سازمان جاری؛ Individual یا FreeTrial فقط با انتخاب صریح و بدون تغییر مجوز داده. fallback خودکار وجود ندارد. */
+                "X-AI-Payer"?: "Organization" | "Individual" | "FreeTrial";
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    /** @description شناسهٔ intent پذیرفته‌شده؛ کلید پیگیری است، نه credential یا مجوز. */
+                    "X-AI-Operation-Id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": components["schemas"]["AiParentChildSummaryResponse"];
+                    "application/json": components["schemas"]["AiParentChildSummaryResponse"];
+                    "text/json": components["schemas"]["AiParentChildSummaryResponse"];
+                };
+            };
+            /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description Conflict عملیات/سهمیه؛ AI_OPERATION_ALREADY_COMPLETED / IN_PROGRESS / OUTCOME_UNKNOWN / PREVIOUSLY_FAILED. پاسخ خصوصی AI cache نمی‌شود و Provider دوباره صدا زده نمی‌شود. */
+            409: {
+                headers: {
+                    /** @description شناسهٔ intent پذیرفته‌شده؛ کلید پیگیری است، نه credential یا مجوز. */
+                    "X-AI-Operation-Id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+        };
+    };
     post_api_v1_ai_teachers_classes_by_classId_summary: {
         parameters: {
             query?: never;
@@ -10602,6 +11740,312 @@ export interface operations {
             };
             path: {
                 classId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    /** @description شناسهٔ intent پذیرفته‌شده؛ کلید پیگیری است، نه credential یا مجوز. */
+                    "X-AI-Operation-Id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": components["schemas"]["AiRoleInsightResponse"];
+                    "application/json": components["schemas"]["AiRoleInsightResponse"];
+                    "text/json": components["schemas"]["AiRoleInsightResponse"];
+                };
+            };
+            /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description Conflict عملیات/سهمیه؛ AI_OPERATION_ALREADY_COMPLETED / IN_PROGRESS / OUTCOME_UNKNOWN / PREVIOUSLY_FAILED. پاسخ خصوصی AI cache نمی‌شود و Provider دوباره صدا زده نمی‌شود. */
+            409: {
+                headers: {
+                    /** @description شناسهٔ intent پذیرفته‌شده؛ کلید پیگیری است، نه credential یا مجوز. */
+                    "X-AI-Operation-Id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+        };
+    };
+    post_api_v1_ai_teachers_classes_by_classId_students_by_studentId_insight: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description شناسهٔ ثابت intent برای Retry؛ در صورت وجود OperationId در body باید یکسان باشد. حذف Header برای هر درخواست شناسهٔ تازه می‌سازد. */
+                "X-AI-Operation-Id"?: string;
+                /** @description پیش‌فرض سازمان جاری؛ Individual یا FreeTrial فقط با انتخاب صریح و بدون تغییر مجوز داده. fallback خودکار وجود ندارد. */
+                "X-AI-Payer"?: "Organization" | "Individual" | "FreeTrial";
+            };
+            path: {
+                classId: string;
+                studentId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    /** @description شناسهٔ intent پذیرفته‌شده؛ کلید پیگیری است، نه credential یا مجوز. */
+                    "X-AI-Operation-Id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": components["schemas"]["AiRoleInsightResponse"];
+                    "application/json": components["schemas"]["AiRoleInsightResponse"];
+                    "text/json": components["schemas"]["AiRoleInsightResponse"];
+                };
+            };
+            /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description Conflict عملیات/سهمیه؛ AI_OPERATION_ALREADY_COMPLETED / IN_PROGRESS / OUTCOME_UNKNOWN / PREVIOUSLY_FAILED. پاسخ خصوصی AI cache نمی‌شود و Provider دوباره صدا زده نمی‌شود. */
+            409: {
+                headers: {
+                    /** @description شناسهٔ intent پذیرفته‌شده؛ کلید پیگیری است، نه credential یا مجوز. */
+                    "X-AI-Operation-Id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+        };
+    };
+    post_api_v1_ai_teachers_classes_by_classId_activity_suggestions: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description شناسهٔ ثابت intent برای Retry؛ در صورت وجود OperationId در body باید یکسان باشد. حذف Header برای هر درخواست شناسهٔ تازه می‌سازد. */
+                "X-AI-Operation-Id"?: string;
+                /** @description پیش‌فرض سازمان جاری؛ Individual یا FreeTrial فقط با انتخاب صریح و بدون تغییر مجوز داده. fallback خودکار وجود ندارد. */
+                "X-AI-Payer"?: "Organization" | "Individual" | "FreeTrial";
+            };
+            path: {
+                classId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SuggestTeacherActivitiesCommand"];
+                "text/json": components["schemas"]["SuggestTeacherActivitiesCommand"];
+                "application/*+json": components["schemas"]["SuggestTeacherActivitiesCommand"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    /** @description شناسهٔ intent پذیرفته‌شده؛ کلید پیگیری است، نه credential یا مجوز. */
+                    "X-AI-Operation-Id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": components["schemas"]["AiActivitySuggestionsResponse"];
+                    "application/json": components["schemas"]["AiActivitySuggestionsResponse"];
+                    "text/json": components["schemas"]["AiActivitySuggestionsResponse"];
+                };
+            };
+            /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description Conflict عملیات/سهمیه؛ AI_OPERATION_ALREADY_COMPLETED / IN_PROGRESS / OUTCOME_UNKNOWN / PREVIOUSLY_FAILED. پاسخ خصوصی AI cache نمی‌شود و Provider دوباره صدا زده نمی‌شود. */
+            409: {
+                headers: {
+                    /** @description شناسهٔ intent پذیرفته‌شده؛ کلید پیگیری است، نه credential یا مجوز. */
+                    "X-AI-Operation-Id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+        };
+    };
+    post_api_v1_ai_managers_school_summary: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description شناسهٔ ثابت intent برای Retry؛ در صورت وجود OperationId در body باید یکسان باشد. حذف Header برای هر درخواست شناسهٔ تازه می‌سازد. */
+                "X-AI-Operation-Id"?: string;
+                /** @description پیش‌فرض سازمان جاری؛ Individual یا FreeTrial فقط با انتخاب صریح و بدون تغییر مجوز داده. fallback خودکار وجود ندارد. */
+                "X-AI-Payer"?: "Organization" | "Individual" | "FreeTrial";
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    /** @description شناسهٔ intent پذیرفته‌شده؛ کلید پیگیری است، نه credential یا مجوز. */
+                    "X-AI-Operation-Id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": components["schemas"]["AiRoleInsightResponse"];
+                    "application/json": components["schemas"]["AiRoleInsightResponse"];
+                    "text/json": components["schemas"]["AiRoleInsightResponse"];
+                };
+            };
+            /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description Conflict عملیات/سهمیه؛ AI_OPERATION_ALREADY_COMPLETED / IN_PROGRESS / OUTCOME_UNKNOWN / PREVIOUSLY_FAILED. پاسخ خصوصی AI cache نمی‌شود و Provider دوباره صدا زده نمی‌شود. */
+            409: {
+                headers: {
+                    /** @description شناسهٔ intent پذیرفته‌شده؛ کلید پیگیری است، نه credential یا مجوز. */
+                    "X-AI-Operation-Id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+        };
+    };
+    post_api_v1_ai_managers_classes_by_classId_insight: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description شناسهٔ ثابت intent برای Retry؛ در صورت وجود OperationId در body باید یکسان باشد. حذف Header برای هر درخواست شناسهٔ تازه می‌سازد. */
+                "X-AI-Operation-Id"?: string;
+                /** @description پیش‌فرض سازمان جاری؛ Individual یا FreeTrial فقط با انتخاب صریح و بدون تغییر مجوز داده. fallback خودکار وجود ندارد. */
+                "X-AI-Payer"?: "Organization" | "Individual" | "FreeTrial";
+            };
+            path: {
+                classId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    /** @description شناسهٔ intent پذیرفته‌شده؛ کلید پیگیری است، نه credential یا مجوز. */
+                    "X-AI-Operation-Id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": components["schemas"]["AiRoleInsightResponse"];
+                    "application/json": components["schemas"]["AiRoleInsightResponse"];
+                    "text/json": components["schemas"]["AiRoleInsightResponse"];
+                };
+            };
+            /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description Conflict عملیات/سهمیه؛ AI_OPERATION_ALREADY_COMPLETED / IN_PROGRESS / OUTCOME_UNKNOWN / PREVIOUSLY_FAILED. پاسخ خصوصی AI cache نمی‌شود و Provider دوباره صدا زده نمی‌شود. */
+            409: {
+                headers: {
+                    /** @description شناسهٔ intent پذیرفته‌شده؛ کلید پیگیری است، نه credential یا مجوز. */
+                    "X-AI-Operation-Id"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+        };
+    };
+    post_api_v1_ai_managers_classes_by_classId_students_by_studentId_insight: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description شناسهٔ ثابت intent برای Retry؛ در صورت وجود OperationId در body باید یکسان باشد. حذف Header برای هر درخواست شناسهٔ تازه می‌سازد. */
+                "X-AI-Operation-Id"?: string;
+                /** @description پیش‌فرض سازمان جاری؛ Individual یا FreeTrial فقط با انتخاب صریح و بدون تغییر مجوز داده. fallback خودکار وجود ندارد. */
+                "X-AI-Payer"?: "Organization" | "Individual" | "FreeTrial";
+            };
+            path: {
+                classId: string;
+                studentId: string;
             };
             cookie?: never;
         };
@@ -14350,6 +15794,15 @@ export interface operations {
                     "text/json": components["schemas"]["ManagerCommerceSummaryDto"];
                 };
             };
+            /** @description PAYMENT_INVALID، PAYMENT_REFERENCE_INVALID */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
             /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
             401: {
                 headers: {
@@ -14361,6 +15814,33 @@ export interface operations {
             };
             /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
             403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description PAYMENT_ATTEMPT_NOT_FOUND، ORDER_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description PAYMENT_PENDING_VERIFICATION، PAYMENT_REFERENCE_CONFLICT، ORDER_NOT_PAYABLE، PAYMENT_IDEMPOTENCY_CONFLICT، ORDER_IDEMPOTENCY_CONFLICT */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description PAYMENT_PROVIDER_UNAVAILABLE */
+            503: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -14392,6 +15872,15 @@ export interface operations {
                     "text/json": components["schemas"]["OrderListResult"];
                 };
             };
+            /** @description PAYMENT_INVALID، PAYMENT_REFERENCE_INVALID */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
             /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
             401: {
                 headers: {
@@ -14403,6 +15892,33 @@ export interface operations {
             };
             /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
             403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description PAYMENT_ATTEMPT_NOT_FOUND، ORDER_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description PAYMENT_PENDING_VERIFICATION، PAYMENT_REFERENCE_CONFLICT، ORDER_NOT_PAYABLE، PAYMENT_IDEMPOTENCY_CONFLICT، ORDER_IDEMPOTENCY_CONFLICT */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description PAYMENT_PROVIDER_UNAVAILABLE */
+            503: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -14449,6 +15965,15 @@ export interface operations {
                     "text/json": components["schemas"]["CreateOrderResult"];
                 };
             };
+            /** @description PAYMENT_INVALID، PAYMENT_REFERENCE_INVALID */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
             /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
             401: {
                 headers: {
@@ -14460,6 +15985,42 @@ export interface operations {
             };
             /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
             403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description PAYMENT_ATTEMPT_NOT_FOUND، ORDER_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description PAYMENT_PENDING_VERIFICATION، PAYMENT_REFERENCE_CONFLICT، ORDER_NOT_PAYABLE، PAYMENT_IDEMPOTENCY_CONFLICT، ORDER_IDEMPOTENCY_CONFLICT */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description PAYMENT_RATE_LIMITED */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description PAYMENT_PROVIDER_UNAVAILABLE */
+            503: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -14508,6 +16069,15 @@ export interface operations {
                     "text/json": components["schemas"]["InitiatePaymentResult"];
                 };
             };
+            /** @description PAYMENT_INVALID، PAYMENT_REFERENCE_INVALID */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
             /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
             401: {
                 headers: {
@@ -14519,6 +16089,42 @@ export interface operations {
             };
             /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
             403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description PAYMENT_ATTEMPT_NOT_FOUND، ORDER_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description PAYMENT_PENDING_VERIFICATION، PAYMENT_REFERENCE_CONFLICT، ORDER_NOT_PAYABLE، PAYMENT_IDEMPOTENCY_CONFLICT، ORDER_IDEMPOTENCY_CONFLICT */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description PAYMENT_RATE_LIMITED */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description PAYMENT_PROVIDER_UNAVAILABLE */
+            503: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -14550,6 +16156,15 @@ export interface operations {
                     "text/json": components["schemas"]["OrderDto"];
                 };
             };
+            /** @description PAYMENT_INVALID، PAYMENT_REFERENCE_INVALID */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
             /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
             401: {
                 headers: {
@@ -14561,6 +16176,33 @@ export interface operations {
             };
             /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
             403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description PAYMENT_ATTEMPT_NOT_FOUND، ORDER_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description PAYMENT_PENDING_VERIFICATION، PAYMENT_REFERENCE_CONFLICT، ORDER_NOT_PAYABLE، PAYMENT_IDEMPOTENCY_CONFLICT، ORDER_IDEMPOTENCY_CONFLICT */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description PAYMENT_PROVIDER_UNAVAILABLE */
+            503: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -14596,6 +16238,15 @@ export interface operations {
                     "text/json": components["schemas"]["CommercialQuoteDto"];
                 };
             };
+            /** @description PAYMENT_INVALID، PAYMENT_REFERENCE_INVALID */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
             /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
             401: {
                 headers: {
@@ -14607,6 +16258,42 @@ export interface operations {
             };
             /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
             403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description PAYMENT_ATTEMPT_NOT_FOUND، ORDER_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description PAYMENT_PENDING_VERIFICATION، PAYMENT_REFERENCE_CONFLICT، ORDER_NOT_PAYABLE، PAYMENT_IDEMPOTENCY_CONFLICT، ORDER_IDEMPOTENCY_CONFLICT */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description PAYMENT_RATE_LIMITED */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description PAYMENT_PROVIDER_UNAVAILABLE */
+            503: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -14642,6 +16329,15 @@ export interface operations {
                     "text/json": components["schemas"]["CommercialQuoteDto"];
                 };
             };
+            /** @description PAYMENT_INVALID، PAYMENT_REFERENCE_INVALID */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
             /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
             401: {
                 headers: {
@@ -14653,6 +16349,42 @@ export interface operations {
             };
             /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
             403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description PAYMENT_ATTEMPT_NOT_FOUND، ORDER_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description PAYMENT_PENDING_VERIFICATION، PAYMENT_REFERENCE_CONFLICT، ORDER_NOT_PAYABLE، PAYMENT_IDEMPOTENCY_CONFLICT، ORDER_IDEMPOTENCY_CONFLICT */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description PAYMENT_RATE_LIMITED */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description PAYMENT_PROVIDER_UNAVAILABLE */
+            503: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -14684,6 +16416,15 @@ export interface operations {
                     "text/json": components["schemas"]["CommercialPlanDto"][];
                 };
             };
+            /** @description PAYMENT_INVALID، PAYMENT_REFERENCE_INVALID */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
             /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
             401: {
                 headers: {
@@ -14695,6 +16436,33 @@ export interface operations {
             };
             /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
             403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description PAYMENT_ATTEMPT_NOT_FOUND، ORDER_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description PAYMENT_PENDING_VERIFICATION، PAYMENT_REFERENCE_CONFLICT، ORDER_NOT_PAYABLE، PAYMENT_IDEMPOTENCY_CONFLICT، ORDER_IDEMPOTENCY_CONFLICT */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description PAYMENT_PROVIDER_UNAVAILABLE */
+            503: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -14724,6 +16492,15 @@ export interface operations {
                     "text/json": components["schemas"]["CommercialSummaryDto"];
                 };
             };
+            /** @description PAYMENT_INVALID، PAYMENT_REFERENCE_INVALID */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
             /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
             401: {
                 headers: {
@@ -14735,6 +16512,33 @@ export interface operations {
             };
             /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
             403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description PAYMENT_ATTEMPT_NOT_FOUND، ORDER_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description PAYMENT_PENDING_VERIFICATION، PAYMENT_REFERENCE_CONFLICT، ORDER_NOT_PAYABLE، PAYMENT_IDEMPOTENCY_CONFLICT، ORDER_IDEMPOTENCY_CONFLICT */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description PAYMENT_PROVIDER_UNAVAILABLE */
+            503: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -14764,6 +16568,15 @@ export interface operations {
                     "text/json": components["schemas"]["CommercialSummaryDto"];
                 };
             };
+            /** @description PAYMENT_INVALID، PAYMENT_REFERENCE_INVALID */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
             /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
             401: {
                 headers: {
@@ -14775,6 +16588,33 @@ export interface operations {
             };
             /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
             403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description PAYMENT_ATTEMPT_NOT_FOUND، ORDER_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description PAYMENT_PENDING_VERIFICATION، PAYMENT_REFERENCE_CONFLICT، ORDER_NOT_PAYABLE، PAYMENT_IDEMPOTENCY_CONFLICT، ORDER_IDEMPOTENCY_CONFLICT */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description PAYMENT_PROVIDER_UNAVAILABLE */
+            503: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -14810,6 +16650,15 @@ export interface operations {
                     "text/json": components["schemas"]["AiQuotaPreflightDto"];
                 };
             };
+            /** @description PAYMENT_INVALID، PAYMENT_REFERENCE_INVALID */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
             /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
             401: {
                 headers: {
@@ -14821,6 +16670,42 @@ export interface operations {
             };
             /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
             403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description PAYMENT_ATTEMPT_NOT_FOUND، ORDER_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description PAYMENT_PENDING_VERIFICATION، PAYMENT_REFERENCE_CONFLICT، ORDER_NOT_PAYABLE، PAYMENT_IDEMPOTENCY_CONFLICT، ORDER_IDEMPOTENCY_CONFLICT */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description PAYMENT_RATE_LIMITED */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description PAYMENT_PROVIDER_UNAVAILABLE */
+            503: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -14852,6 +16737,15 @@ export interface operations {
                     "text/json": components["schemas"]["OrderListResult"];
                 };
             };
+            /** @description PAYMENT_INVALID، PAYMENT_REFERENCE_INVALID */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
             /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
             401: {
                 headers: {
@@ -14863,6 +16757,33 @@ export interface operations {
             };
             /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
             403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description PAYMENT_ATTEMPT_NOT_FOUND، ORDER_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description PAYMENT_PENDING_VERIFICATION، PAYMENT_REFERENCE_CONFLICT، ORDER_NOT_PAYABLE، PAYMENT_IDEMPOTENCY_CONFLICT، ORDER_IDEMPOTENCY_CONFLICT */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description PAYMENT_PROVIDER_UNAVAILABLE */
+            503: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -14898,6 +16819,15 @@ export interface operations {
                     "text/json": components["schemas"]["CreateOrderResult"];
                 };
             };
+            /** @description PAYMENT_INVALID، PAYMENT_REFERENCE_INVALID */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
             /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
             401: {
                 headers: {
@@ -14909,6 +16839,42 @@ export interface operations {
             };
             /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
             403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description PAYMENT_ATTEMPT_NOT_FOUND، ORDER_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description PAYMENT_PENDING_VERIFICATION، PAYMENT_REFERENCE_CONFLICT، ORDER_NOT_PAYABLE، PAYMENT_IDEMPOTENCY_CONFLICT، ORDER_IDEMPOTENCY_CONFLICT */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description PAYMENT_RATE_LIMITED */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description PAYMENT_PROVIDER_UNAVAILABLE */
+            503: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -14940,6 +16906,15 @@ export interface operations {
                     "text/json": components["schemas"]["OrderDto"];
                 };
             };
+            /** @description PAYMENT_INVALID، PAYMENT_REFERENCE_INVALID */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
             /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
             401: {
                 headers: {
@@ -14951,6 +16926,33 @@ export interface operations {
             };
             /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
             403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description PAYMENT_ATTEMPT_NOT_FOUND، ORDER_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description PAYMENT_PENDING_VERIFICATION، PAYMENT_REFERENCE_CONFLICT، ORDER_NOT_PAYABLE، PAYMENT_IDEMPOTENCY_CONFLICT، ORDER_IDEMPOTENCY_CONFLICT */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description PAYMENT_PROVIDER_UNAVAILABLE */
+            503: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -14988,6 +16990,15 @@ export interface operations {
                     "text/json": components["schemas"]["InitiatePaymentResult"];
                 };
             };
+            /** @description PAYMENT_INVALID، PAYMENT_REFERENCE_INVALID */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
             /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
             401: {
                 headers: {
@@ -14999,6 +17010,42 @@ export interface operations {
             };
             /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
             403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description PAYMENT_ATTEMPT_NOT_FOUND، ORDER_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description PAYMENT_PENDING_VERIFICATION، PAYMENT_REFERENCE_CONFLICT، ORDER_NOT_PAYABLE، PAYMENT_IDEMPOTENCY_CONFLICT، ORDER_IDEMPOTENCY_CONFLICT */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description PAYMENT_RATE_LIMITED */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description PAYMENT_PROVIDER_UNAVAILABLE */
+            503: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -15034,6 +17081,15 @@ export interface operations {
                     "text/json": components["schemas"]["CommercialSummaryDto"];
                 };
             };
+            /** @description PAYMENT_INVALID، PAYMENT_REFERENCE_INVALID */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
             /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
             401: {
                 headers: {
@@ -15045,6 +17101,42 @@ export interface operations {
             };
             /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
             403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description PAYMENT_ATTEMPT_NOT_FOUND، ORDER_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description PAYMENT_PENDING_VERIFICATION، PAYMENT_REFERENCE_CONFLICT، ORDER_NOT_PAYABLE، PAYMENT_IDEMPOTENCY_CONFLICT، ORDER_IDEMPOTENCY_CONFLICT */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description PAYMENT_RATE_LIMITED */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description PAYMENT_PROVIDER_UNAVAILABLE */
+            503: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -15080,6 +17172,15 @@ export interface operations {
                     "text/json": components["schemas"]["CommercialSummaryDto"];
                 };
             };
+            /** @description PAYMENT_INVALID، PAYMENT_REFERENCE_INVALID */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
             /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
             401: {
                 headers: {
@@ -15091,6 +17192,42 @@ export interface operations {
             };
             /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
             403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description PAYMENT_ATTEMPT_NOT_FOUND، ORDER_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description PAYMENT_PENDING_VERIFICATION، PAYMENT_REFERENCE_CONFLICT، ORDER_NOT_PAYABLE، PAYMENT_IDEMPOTENCY_CONFLICT، ORDER_IDEMPOTENCY_CONFLICT */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description PAYMENT_RATE_LIMITED */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description PAYMENT_PROVIDER_UNAVAILABLE */
+            503: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -25384,6 +27521,791 @@ export interface operations {
             };
         };
     };
+    post_api_v1_sources_by_sourceId_versions_by_version_knowledge_ingest: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                sourceId: string;
+                version: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["KnowledgeMutationCommand"];
+                "text/json": components["schemas"]["KnowledgeMutationCommand"];
+                "application/*+json": components["schemas"]["KnowledgeMutationCommand"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": components["schemas"]["KnowledgeProcessingStatus"];
+                    "application/json": components["schemas"]["KnowledgeProcessingStatus"];
+                    "text/json": components["schemas"]["KnowledgeProcessingStatus"];
+                };
+            };
+            /** @description Accepted */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": components["schemas"]["KnowledgeProcessingStatus"];
+                    "application/json": components["schemas"]["KnowledgeProcessingStatus"];
+                    "text/json": components["schemas"]["KnowledgeProcessingStatus"];
+                };
+            };
+            /** @description نشست نامعتبر. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description مجوز مدیریت منبع یا Entitlement تجاری وجود ندارد. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description منبع ناموجود یا خارج از دسترسی جاری؛ concealment. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description نسخه/intent/وضعیت پردازش یا سهمیه ناسازگار است. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description قرارداد Knowledge یا Query معتبر نیست. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description محدودیت درخواست حساب. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description پاسخ یا Citation معتبر و grounded نیست. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description Feature یا dependency آماده نیست. */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description مهلت HTTP یا polling تمام شده است؛ retry خودکار وجود ندارد. */
+            504: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+        };
+    };
+    get_api_v1_sources_by_sourceId_versions_by_version_knowledge_status: {
+        parameters: {
+            query?: {
+                wait?: boolean;
+            };
+            header?: never;
+            path: {
+                sourceId: string;
+                version: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": components["schemas"]["KnowledgeProcessingStatus"];
+                    "application/json": components["schemas"]["KnowledgeProcessingStatus"];
+                    "text/json": components["schemas"]["KnowledgeProcessingStatus"];
+                };
+            };
+            /** @description نشست نامعتبر. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description مجوز مدیریت منبع یا Entitlement تجاری وجود ندارد. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description منبع ناموجود یا خارج از دسترسی جاری؛ concealment. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description نسخه/intent/وضعیت پردازش یا سهمیه ناسازگار است. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description قرارداد Knowledge یا Query معتبر نیست. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description محدودیت درخواست حساب. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description پاسخ یا Citation معتبر و grounded نیست. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description Feature یا dependency آماده نیست. */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description مهلت HTTP یا polling تمام شده است؛ retry خودکار وجود ندارد. */
+            504: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+        };
+    };
+    post_api_v1_sources_by_sourceId_versions_by_version_knowledge_delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                sourceId: string;
+                version: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["KnowledgeMutationCommand"];
+                "text/json": components["schemas"]["KnowledgeMutationCommand"];
+                "application/*+json": components["schemas"]["KnowledgeMutationCommand"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": components["schemas"]["KnowledgeProcessingStatus"];
+                    "application/json": components["schemas"]["KnowledgeProcessingStatus"];
+                    "text/json": components["schemas"]["KnowledgeProcessingStatus"];
+                };
+            };
+            /** @description نشست نامعتبر. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description مجوز مدیریت منبع یا Entitlement تجاری وجود ندارد. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description منبع ناموجود یا خارج از دسترسی جاری؛ concealment. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description نسخه/intent/وضعیت پردازش یا سهمیه ناسازگار است. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description قرارداد Knowledge یا Query معتبر نیست. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description محدودیت درخواست حساب. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description پاسخ یا Citation معتبر و grounded نیست. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description Feature یا dependency آماده نیست. */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description مهلت HTTP یا polling تمام شده است؛ retry خودکار وجود ندارد. */
+            504: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+        };
+    };
+    post_api_v1_sources_by_sourceId_versions_by_version_knowledge_supersede: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                sourceId: string;
+                version: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["KnowledgeMutationCommand"];
+                "text/json": components["schemas"]["KnowledgeMutationCommand"];
+                "application/*+json": components["schemas"]["KnowledgeMutationCommand"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": components["schemas"]["KnowledgeProcessingStatus"];
+                    "application/json": components["schemas"]["KnowledgeProcessingStatus"];
+                    "text/json": components["schemas"]["KnowledgeProcessingStatus"];
+                };
+            };
+            /** @description نشست نامعتبر. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description مجوز مدیریت منبع یا Entitlement تجاری وجود ندارد. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description منبع ناموجود یا خارج از دسترسی جاری؛ concealment. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description نسخه/intent/وضعیت پردازش یا سهمیه ناسازگار است. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description قرارداد Knowledge یا Query معتبر نیست. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description محدودیت درخواست حساب. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description پاسخ یا Citation معتبر و grounded نیست. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description Feature یا dependency آماده نیست. */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description مهلت HTTP یا polling تمام شده است؛ retry خودکار وجود ندارد. */
+            504: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+        };
+    };
+    post_api_v1_sources_by_sourceId_versions_by_version_knowledge_reindex: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                sourceId: string;
+                version: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["KnowledgeMutationCommand"];
+                "text/json": components["schemas"]["KnowledgeMutationCommand"];
+                "application/*+json": components["schemas"]["KnowledgeMutationCommand"];
+            };
+        };
+        responses: {
+            /** @description Accepted */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": components["schemas"]["KnowledgeProcessingStatus"];
+                    "application/json": components["schemas"]["KnowledgeProcessingStatus"];
+                    "text/json": components["schemas"]["KnowledgeProcessingStatus"];
+                };
+            };
+            /** @description نشست نامعتبر. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description مجوز مدیریت منبع یا Entitlement تجاری وجود ندارد. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description منبع ناموجود یا خارج از دسترسی جاری؛ concealment. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description نسخه/intent/وضعیت پردازش یا سهمیه ناسازگار است. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description قرارداد Knowledge یا Query معتبر نیست. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description محدودیت درخواست حساب. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description پاسخ یا Citation معتبر و grounded نیست. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description Feature یا dependency آماده نیست. */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description مهلت HTTP یا polling تمام شده است؛ retry خودکار وجود ندارد. */
+            504: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+        };
+    };
+    post_api_v1_ai_knowledge_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["KnowledgeQueryCommand"];
+                "text/json": components["schemas"]["KnowledgeQueryCommand"];
+                "application/*+json": components["schemas"]["KnowledgeQueryCommand"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": components["schemas"]["KnowledgeRetrieveResponse"];
+                    "application/json": components["schemas"]["KnowledgeRetrieveResponse"];
+                    "text/json": components["schemas"]["KnowledgeRetrieveResponse"];
+                };
+            };
+            /** @description نشست نامعتبر. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description مجوز مدیریت منبع یا Entitlement تجاری وجود ندارد. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description منبع ناموجود یا خارج از دسترسی جاری؛ concealment. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description نسخه/intent/وضعیت پردازش یا سهمیه ناسازگار است. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description قرارداد Knowledge یا Query معتبر نیست. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description محدودیت درخواست حساب. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description پاسخ یا Citation معتبر و grounded نیست. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description Feature یا dependency آماده نیست. */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description مهلت HTTP یا polling تمام شده است؛ retry خودکار وجود ندارد. */
+            504: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+        };
+    };
+    post_api_v1_ai_knowledge_rag_answer: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["KnowledgeQueryCommand"];
+                "text/json": components["schemas"]["KnowledgeQueryCommand"];
+                "application/*+json": components["schemas"]["KnowledgeQueryCommand"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": components["schemas"]["KnowledgeRagResponse"];
+                    "application/json": components["schemas"]["KnowledgeRagResponse"];
+                    "text/json": components["schemas"]["KnowledgeRagResponse"];
+                };
+            };
+            /** @description نشست نامعتبر. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description مجوز مدیریت منبع یا Entitlement تجاری وجود ندارد. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description منبع ناموجود یا خارج از دسترسی جاری؛ concealment. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description نسخه/intent/وضعیت پردازش یا سهمیه ناسازگار است. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description قرارداد Knowledge یا Query معتبر نیست. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description محدودیت درخواست حساب. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description پاسخ یا Citation معتبر و grounded نیست. */
+            502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description Feature یا dependency آماده نیست. */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description مهلت HTTP یا polling تمام شده است؛ retry خودکار وجود ندارد. */
+            504: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+        };
+    };
     post_api_v1_conversations_by_conversationId_messages_by_messageId_reports: {
         parameters: {
             query?: never;
@@ -25797,6 +28719,170 @@ export interface operations {
                     "application/json": components["schemas"]["WebPushClientConfiguration"];
                     "text/json": components["schemas"]["WebPushClientConfiguration"];
                 };
+            };
+            /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+        };
+    };
+    get_api_v1_notifications_devices: {
+        parameters: {
+            query?: {
+                page?: number;
+                pageSize?: number;
+                includeRevoked?: boolean;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": components["schemas"]["PushDevicePageResult"];
+                    "application/json": components["schemas"]["PushDevicePageResult"];
+                    "text/json": components["schemas"]["PushDevicePageResult"];
+                };
+            };
+            /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+        };
+    };
+    post_api_v1_notifications_devices_web_push: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RegisterWebPushCommand"];
+                "text/json": components["schemas"]["RegisterWebPushCommand"];
+                "application/*+json": components["schemas"]["RegisterWebPushCommand"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": components["schemas"]["PushDeviceRegistrationResult"];
+                    "application/json": components["schemas"]["PushDeviceRegistrationResult"];
+                    "text/json": components["schemas"]["PushDeviceRegistrationResult"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": components["schemas"]["ProblemDetails"];
+                    "application/json": components["schemas"]["ProblemDetails"];
+                    "text/json": components["schemas"]["ProblemDetails"];
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description Conflict */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": components["schemas"]["ProblemDetails"];
+                    "application/json": components["schemas"]["ProblemDetails"];
+                    "text/json": components["schemas"]["ProblemDetails"];
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description Service Unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": components["schemas"]["ProblemDetails"];
+                    "application/json": components["schemas"]["ProblemDetails"];
+                    "text/json": components["schemas"]["ProblemDetails"];
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+        };
+    };
+    delete_api_v1_notifications_devices_by_registrationId: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                registrationId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No Content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
             /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
             401: {
@@ -27017,6 +30103,327 @@ export interface operations {
             };
             /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
             403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+        };
+    };
+    get_api_v1_commerce_payment_attempts_by_attemptId: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                attemptId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": components["schemas"]["PaymentAttemptDetailsDto"];
+                    "application/json": components["schemas"]["PaymentAttemptDetailsDto"];
+                    "text/json": components["schemas"]["PaymentAttemptDetailsDto"];
+                };
+            };
+            /** @description PAYMENT_INVALID، PAYMENT_REFERENCE_INVALID */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description PAYMENT_ATTEMPT_NOT_FOUND، ORDER_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description PAYMENT_PENDING_VERIFICATION، PAYMENT_REFERENCE_CONFLICT، ORDER_NOT_PAYABLE، PAYMENT_IDEMPOTENCY_CONFLICT، ORDER_IDEMPOTENCY_CONFLICT */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description PAYMENT_PROVIDER_UNAVAILABLE */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+        };
+    };
+    post_api_v1_commerce_payment_attempts_by_attemptId_verify: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                attemptId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": components["schemas"]["VerifyPaymentResult"];
+                    "application/json": components["schemas"]["VerifyPaymentResult"];
+                    "text/json": components["schemas"]["VerifyPaymentResult"];
+                };
+            };
+            /** @description PAYMENT_INVALID، PAYMENT_REFERENCE_INVALID */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description PAYMENT_ATTEMPT_NOT_FOUND، ORDER_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description PAYMENT_PENDING_VERIFICATION، PAYMENT_REFERENCE_CONFLICT، ORDER_NOT_PAYABLE، PAYMENT_IDEMPOTENCY_CONFLICT، ORDER_IDEMPOTENCY_CONFLICT */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description PAYMENT_RATE_LIMITED */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description PAYMENT_PROVIDER_UNAVAILABLE */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+        };
+    };
+    get_api_v1_commerce_orders_by_orderId_receipt: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                orderId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": components["schemas"]["PaymentReceiptDto"];
+                    "application/json": components["schemas"]["PaymentReceiptDto"];
+                    "text/json": components["schemas"]["PaymentReceiptDto"];
+                };
+            };
+            /** @description PAYMENT_INVALID، PAYMENT_REFERENCE_INVALID */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description PAYMENT_ATTEMPT_NOT_FOUND، ORDER_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description PAYMENT_PENDING_VERIFICATION، PAYMENT_REFERENCE_CONFLICT، ORDER_NOT_PAYABLE، PAYMENT_IDEMPOTENCY_CONFLICT، ORDER_IDEMPOTENCY_CONFLICT */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description PAYMENT_PROVIDER_UNAVAILABLE */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+        };
+    };
+    get_api_v1_commerce_personal_orders_by_orderId_receipt: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                orderId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": components["schemas"]["PaymentReceiptDto"];
+                    "application/json": components["schemas"]["PaymentReceiptDto"];
+                    "text/json": components["schemas"]["PaymentReceiptDto"];
+                };
+            };
+            /** @description PAYMENT_INVALID، PAYMENT_REFERENCE_INVALID */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description PAYMENT_ATTEMPT_NOT_FOUND، ORDER_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description PAYMENT_PENDING_VERIFICATION، PAYMENT_REFERENCE_CONFLICT، ORDER_NOT_PAYABLE، PAYMENT_IDEMPOTENCY_CONFLICT، ORDER_IDEMPOTENCY_CONFLICT */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description PAYMENT_PROVIDER_UNAVAILABLE */
+            503: {
                 headers: {
                     [name: string]: unknown;
                 };

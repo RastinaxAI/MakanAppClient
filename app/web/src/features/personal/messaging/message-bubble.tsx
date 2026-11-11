@@ -1,4 +1,6 @@
 'use client';
+import { uiClass } from '@/components/v5/classes';
+
 import * as uiText from '@/content/fa';
 import * as Menu from '@radix-ui/react-dropdown-menu';
 import { Copy, MoreHorizontal, Reply, Forward, Bookmark, Flag, X } from 'lucide-react';
@@ -49,7 +51,7 @@ export function MessageBubble({
     <>
       <Menu.Root dir="rtl" open={open} onOpenChange={setOpen}>
         <article
-          className={`${s.bubble} ${own ? s.own : ''} ${sender ? s.feedMessage : ''}`}
+          className={uiClass(`${s.bubble} ${own ? s.own : ''} ${sender ? s.feedMessage : ''}`)}
           data-message-state="history"
           data-message-direction={own ? 'outgoing' : 'incoming'}
           onPointerDown={(event) => {
@@ -89,7 +91,7 @@ export function MessageBubble({
           <MessageBody sender={sender}>
             {children}
             {notice && (
-              <small className={s.copyNotice} role="status">
+              <small className={uiClass(s.copyNotice)} role="status">
                 {notice}
               </small>
             )}
@@ -98,7 +100,7 @@ export function MessageBubble({
             <Menu.Trigger asChild>
               <button
                 ref={trigger}
-                className={s.messageOptions}
+                className={uiClass(s.messageOptions)}
                 aria-label={uiText.text_712d44364071 + sequence}
               >
                 <MoreHorizontal size={17} />
@@ -110,13 +112,13 @@ export function MessageBubble({
           <div>
             {open && (
               <div
-                className={s.messageMenuBackdrop}
+                className={uiClass(s.messageMenuBackdrop)}
                 aria-hidden="true"
                 onPointerDown={() => setOpen(false)}
               />
             )}
             <Menu.Content
-              className={`dropdown ${t.theme} ${t.menu} mk-message-menu`}
+              className={uiClass(`dropdown ${t.theme} ${t.menu} mk-message-menu`)}
               sideOffset={6}
               align="end"
               onCloseAutoFocus={(event) => {
@@ -132,7 +134,7 @@ export function MessageBubble({
                 }
               }}
             >
-              <div className={s.messageMenuTitle}>{uiText.text_78ddf2493e4e}</div>
+              <div className={uiClass(s.messageMenuTitle)}>{uiText.text_78ddf2493e4e}</div>
               {onReply && (
                 <Menu.Item
                   onSelect={() => {
@@ -215,12 +217,12 @@ export function MessageBody({ sender, children }: { sender?: MessageAuthor; chil
         <ProfileAvatar
           photo={sender.profilePhoto}
           name={sender.displayName}
-          className={s.senderAvatar}
+          className={uiClass(s.senderAvatar)}
         />
       )}
-      <div className={s.messageContent}>
+      <div className={uiClass(s.messageContent)}>
         {sender && (
-          <strong className={s.messageSender} dir="auto">
+          <strong className={uiClass(s.messageSender)} dir="auto">
             {sender.displayName}
           </strong>
         )}

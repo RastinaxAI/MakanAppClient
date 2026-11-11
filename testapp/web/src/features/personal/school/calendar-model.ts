@@ -79,6 +79,13 @@ export function schoolWeekRange(anchor: string) {
     }),
   };
 }
+export function schoolDayRange(day: string) {
+  calendarDate(day);
+  const start = new Date(day + 'T00:00:00');
+  const after = new Date(start);
+  after.setDate(after.getDate() + 1);
+  return { fromUtc: start.toISOString(), toUtc: new Date(after.getTime() - 1).toISOString() };
+}
 export function localCalendarDay(time: string) {
   const date = new Date(time);
   if (!Number.isFinite(date.getTime())) return '';

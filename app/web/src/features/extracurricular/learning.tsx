@@ -1,5 +1,7 @@
 'use client';
-import '@/features/reference/bundles/features-extracurricular-learning';
+import { uiClass } from '@/components/v5/classes';
+
+import { buttonClass } from '@/components/ui/button';
 
 import Link from 'next/link';
 import { useState } from 'react';
@@ -22,9 +24,38 @@ import { ExamGradingQueue, ExamGradingPage } from '@/features/personal/school/ex
 import { AssessmentHistory, AssessmentResult } from '@/features/personal/school/assessment-results';
 import { Pager } from '@/features/personal/school/shared';
 import { StaticConnectedFrame } from './frame';
-import { academicCapabilities, classApi, classBase, type S } from './api-model';
+import {
+  academicCapabilities,
+  classApi,
+  classBase,
+  independentLearningReleased,
+  type S,
+} from './api-model';
+import { v5Product } from '@/content/fa';
+import { V4Note } from '@/components/v4/page';
 
 export function IndependentLearning({ classId, section }: { classId: string; section: string[] }) {
+  if (!independentLearningReleased)
+    return (
+      <StaticConnectedFrame
+        id="MK-82"
+        title={t.learning}
+        kind="status"
+        back={`${classBase}/classes/${classId}`}
+      >
+        <V4Note>{v5Product.independentLearningPending}</V4Note>
+        <Link
+          className={uiClass(buttonClass('btn secondary'))}
+          href={`${classBase}/classes/${classId}`}
+        >
+          {v5Product.backToClass}
+        </Link>
+      </StaticConnectedFrame>
+    );
+  return <ReleasedIndependentLearning classId={classId} section={section} />;
+}
+
+function ReleasedIndependentLearning({ classId, section }: { classId: string; section: string[] }) {
   const q = usePersonalApi<S['PersonalClassDto']>(`${classApi}/${classId}`, { poll: 10000 });
   const [area, id, stage, detail] = section;
   const capabilities = q.data ? academicCapabilities(q.data) : null;
@@ -45,11 +76,11 @@ export function IndependentLearning({ classId, section }: { classId: string; sec
     const base = `${classBase}/classes/${classId}`;
     if (area === 'learning')
       content = (
-        <div className="list">
-          <Link className="row" href={base + '/assignments'}>
+        <div className={uiClass('list')}>
+          <Link className={uiClass('row')} href={base + '/assignments'}>
             {t.assignments}
           </Link>
-          <Link className="row" href={base + '/exams'}>
+          <Link className={uiClass('row')} href={base + '/exams'}>
             {t.exams}
           </Link>
         </div>
@@ -147,7 +178,7 @@ function AcademicList({
   return (
     <>
       {canAuthor && (
-        <Link className="btn" href={base + '/new'}>
+        <Link className={uiClass(buttonClass('btn'))} href={base + '/new'}>
           {exam ? t.authorExams : t.authorAssignments}
         </Link>
       )}
@@ -158,7 +189,7 @@ function AcademicList({
       ) : (
         <>
           {q.data.items.map((v) => (
-            <Link className="card" key={v.id} href={base + '/' + v.id}>
+            <Link className={uiClass('card')} key={v.id} href={base + '/' + v.id}>
               <h3>{v.title}</h3>
               <p>{v.description}</p>
             </Link>

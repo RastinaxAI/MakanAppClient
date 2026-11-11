@@ -1,0 +1,8 @@
+{
+  "version": "5.0-blue",
+  "sourcePdfSha256": "17d6c09071c04745eea0d6efc4f2cf636eb973fc68fe1c96808620dac7c36cb4",
+  "scope": "Reference inventory only; route implementation and visual verification are recorded separately in docs/design/exact-v1/screen-route-matrix.csv.",
+  "scenarios": 528,
+  "clientScenarios": 482,
+  "separateOwnerScenarios": 46
+}

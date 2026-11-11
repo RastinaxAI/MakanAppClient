@@ -242,6 +242,17 @@ export function conversationDetailsRoute({ state, auth, url, req, body, send }) 
     );
   if (p.endsWith('/members') && req.method === 'GET') {
     const page = Number(url.searchParams.get('page') ?? 1);
+    if (state.exactV5Messaging) {
+      const pageSize = Math.max(1, Math.min(100, Number(url.searchParams.get('pageSize') ?? 30)));
+      return send(
+        make('ConversationParticipantPageResult', {
+          items: v.participants.slice((page - 1) * pageSize, page * pageSize),
+          page,
+          pageSize,
+          hasMore: page * pageSize < v.participants.length,
+        }),
+      );
+    }
     return send(
       make('ConversationParticipantPageResult', {
         items: v.participants.slice(page - 1, page),

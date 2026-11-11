@@ -30,7 +30,19 @@ export function messagingRoute({ state, url, body, auth, send, req }) {
     }
     return send(current);
   }
-  if (p === '/api/v1/messaging/blocks') return send([]);
+  if (p === '/api/v1/messaging/blocks' && req.method === 'GET')
+    return send(state.blocked.get(auth.user.id) ?? []);
+  const block = p.match(/^\/api\/v1\/messaging\/blocks\/([^/]+)$/);
+  if (block && req.method === 'DELETE') {
+    const rows = state.blocked.get(auth.user.id) ?? [];
+    if (!rows.some((item) => item.user.userId === block[1]))
+      return send({ code: 'BLOCK_NOT_FOUND' }, 404);
+    state.blocked.set(
+      auth.user.id,
+      rows.filter((item) => item.user.userId !== block[1]),
+    );
+    return send(null, 204);
+  }
   if (p === '/api/v1/people/search')
     return send(
       paged(
@@ -52,6 +64,10 @@ export function messagingRoute({ state, url, body, auth, send, req }) {
     return send(
       make('PeopleResolveResult', { isDiscoverable: !!u, profile: u ? profile(u) : null }),
     );
+  }
+  if (req.method === 'GET' && /^\/api\/v1\/people\/[^/]+$/.test(p)) {
+    const user = state.users.get(p.split('/').at(-1));
+    return user ? send(profile(user)) : send({ code: 'PERSON_NOT_FOUND' }, 404);
   }
   if (p === '/api/v1/contacts')
     return send(

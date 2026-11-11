@@ -1,0 +1,176 @@
+{
+  "createdAt": "2026-11-10T16:09:36.217652+00:00",
+  "milestone": "Real Next.js MVP for next-day review; full V5 work remains open",
+  "buildId": "UYOXSCXGRH2rRtwOKyleY",
+  "preview": "http://127.0.0.1:3130/personal/assistant",
+  "gallery": "http://127.0.0.1:3162/prototype-e5bd3ea-20261110/index.html",
+  "contract": {
+    "sourceCommitInDocument": "e5bd3ea",
+    "deploymentCommitVerified": false,
+    "paths": 403,
+    "operations": 454,
+    "clientOperations": 329,
+    "clientSchemas": 571,
+    "newClientOperations": 4,
+    "anonymousCallbackInClient": false,
+    "review": "docs/integration/e5bd3ea-contract-review.json"
+  },
+  "checks": {
+    "core": {
+      "buildId": "UYOXSCXGRH2rRtwOKyleY",
+      "passed": 124,
+      "failed": 0,
+      "skipped": 0,
+      "flaky": 0,
+      "report": "tmp/integration-e5bd3ea/core-eighth-results.json"
+    },
+    "payment": {
+      "buildId": "UYOXSCXGRH2rRtwOKyleY",
+      "passed": 11,
+      "failed": 0,
+      "skipped": 0,
+      "flaky": 0,
+      "report": "tmp/integration-e5bd3ea/payment-eighth-results.json"
+    },
+    "ordinaryProduction": {
+      "buildId": "UYOXSCXGRH2rRtwOKyleY",
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "flaky": 0,
+      "report": "test-results/production-results.json"
+    },
+    "unit": {
+      "passed": 489,
+      "failed": 0,
+      "report": "tmp/integration-e5bd3ea/unit-eighth-results.json"
+    },
+    "build": {
+      "status": "passed",
+      "log": "tmp/integration-e5bd3ea/build-eighth.log"
+    },
+    "typecheck": {
+      "status": "passed",
+      "log": "tmp/integration-e5bd3ea/typecheck-eighth.log"
+    },
+    "lint": {
+      "status": "passed",
+      "log": "tmp/integration-e5bd3ea/lint-eighth.log"
+    },
+    "format": {
+      "status": "passed",
+      "log": "tmp/integration-e5bd3ea/format-check-eighth.log"
+    },
+    "generated": {
+      "status": "passed",
+      "log": "tmp/integration-e5bd3ea/generated-check-eighth.log"
+    }
+  },
+  "browserUniquePassed": 135,
+  "ordinaryProductionPassed": 1,
+  "visual": {
+    "currentNativeFrames": 84,
+    "primaryScenarios": 14,
+    "themes": [
+      "light",
+      "dark"
+    ],
+    "sizes": [
+      [
+        390,
+        844
+      ],
+      [
+        834,
+        1112
+      ],
+      [
+        1440,
+        1000
+      ]
+    ],
+    "fontReady": true,
+    "renderErrors": 0,
+    "documentOverflow": 0,
+    "geometry": "docs/design/exact-v1/prototype-eighth-geometry.json",
+    "openGeometryComparisons": 12,
+    "openDetails": "12 parent list measurements compare an empty upcoming-session card to the reference populated schedule/learning list; state/data selectors must be aligned before acceptance. No product data was replaced.",
+    "documentedContentExceptions": 10,
+    "nativeReceiptFrames": 8,
+    "priorBuildBoundaries": {
+      "boundaries": {
+        "buildId": "R10wFnasi4t6NgoYnOgoS",
+        "captured": 88,
+        "overflow": 0,
+        "record": "output/review/exact-v1/prototype-e5bd3ea-sixth-boundaries/results.json",
+        "cssHashesEqualToCurrent": true,
+        "note": "Recorded on the stated earlier build; not recaptured or relabelled as current."
+      },
+      "largeText": {
+        "buildId": "R10wFnasi4t6NgoYnOgoS",
+        "captured": 88,
+        "overflow": 0,
+        "record": "output/review/exact-v1/prototype-e5bd3ea-sixth-large/results.json",
+        "cssHashesEqualToCurrent": true,
+        "note": "Recorded on the stated earlier build; not recaptured or relabelled as current."
+      }
+    },
+    "cascade": "docs/quality/CSS_CASCADE_PROTOTYPE_20261110.json",
+    "productionCss": "tmp/integration-e5bd3ea/production-css-eighth.json"
+  },
+  "cleanup": {
+    "thisStageFurtherFilesRemoved": 0,
+    "earlierFilesRemoved": 4,
+    "earlierBytes": 100018,
+    "manifest": "docs/quality/CSS_STATIC_CLEANUP_20261110.json",
+    "protected": "Secrets, local sessions, volumes, active build, owner app, V5 reference and valid tests retained."
+  },
+  "previousAttempt": {
+    "build": "R10wFnasi4t6NgoYnOgoS",
+    "passed": 116,
+    "failed": 4,
+    "report": "tmp/integration-e5bd3ea/browser-sixth-results.json",
+    "archiveReceipt": "tmp/integration-e5bd3ea/integration-sixth-failures-archive.json"
+  },
+  "liveReadOnly": {
+    "accountRole": "Student",
+    "personalSubscription": "NoSubscription",
+    "personalCatalog": "empty",
+    "aiSuccessVerified": false,
+    "bankEndToEndVerified": false,
+    "note": "Current UI read only; no OTP, message, upload, paid AI, bank purchase, permission, deployment or migration performed. Personal subscription is not evidence of current organization credit/provider state."
+  },
+  "remaining": [
+    "Full exact-state V5 acceptance and remaining geometry/fixture alignment, including parent upcoming data",
+    "36 proposed independent educational states remain gated; 46 owner states belong to the separate application",
+    "Current full 528-state acceptance, full browser suite and physical keyboard/device testing are not asserted",
+    "Server Provider/Merchant/HTTPS ClientReturnUrl and real bank E2E remain deployment dependencies",
+    "Successful live AI/source-ingest/RAG remains unverified; no fabricated answer or entitlement"
+  ],
+  "sourceHashManifest": "tmp/integration-e5bd3ea/build-eighth-source.json",
+  "deliveryReadOnlyChecks": {
+    "publicProductHttp": 200,
+    "galleryHttp": 200,
+    "galleryNativeImages": [
+      {
+        "width": 390,
+        "height": 844,
+        "loaded": true
+      },
+      {
+        "width": 390,
+        "height": 844,
+        "loaded": true
+      },
+      {
+        "width": 390,
+        "height": 844,
+        "loaded": true
+      }
+    ],
+    "liveAssistantLoaded": true,
+    "note": "Existing test session reused. No question or banking request submitted."
+  },
+  "cssOwnershipReport": "docs/maintenance/20261110-css-prototype.md",
+  "staticAudit": "docs/quality/STATIC_USAGE_20261110.json"
+}

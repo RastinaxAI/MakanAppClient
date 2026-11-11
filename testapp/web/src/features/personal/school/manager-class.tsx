@@ -1,4 +1,6 @@
 'use client';
+import { uiClass } from '@/components/v5/classes';
+
 import * as uiText from '@/content/fa';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
@@ -29,26 +31,18 @@ export function ManagerClass({ id }: { id: string }) {
   const params = useSearchParams(),
     requested = params.get('tab');
   const memberKind = params.get('member') === 'teachers' ? 'teachers' : 'learners';
-  const tab = tabs.find(([key]) => key === requested)?.[0] ?? 'members';
+  const tab =
+    requested === 'settings'
+      ? 'settings'
+      : (tabs.find(([key]) => key === requested)?.[0] ?? 'members');
   if (q.isPending) return <LoadingSkeleton />;
   if (q.isError) return <ErrorState error={q.error} onRetry={() => void q.refetch()} />;
   const item = q.data.find(
     (c) => c.id === id && c.organizationId === session.context.organizationId,
   );
   if (!item) return <ErrorState error={new ApiError(404)} />;
-  return (
-    <div className={s.stack}>
-      <PageBack href={base + '/classes'} />
-      <SchoolHeading
-        title={item.title}
-        description={uiText.format_3f95b308e154(
-          item.courseTitle,
-          item.academicPeriodTitle,
-          item.capacity.toLocaleString('fa-IR'),
-          label(item.status),
-        )}
-      />
-      <OfficialSpaces classId={id} />
+  if (tab === 'settings')
+    return (
       <ClassSettings
         key={item.id}
         item={item}
@@ -60,7 +54,24 @@ export function ManagerClass({ id }: { id: string }) {
           );
         }}
       />
-      <nav className={s.tabs} aria-label={uiText.text_51a19c9825e6}>
+    );
+  return (
+    <div className={uiClass(s.stack)}>
+      <PageBack href={base + '/classes'} />
+      <SchoolHeading
+        title={item.title}
+        description={uiText.format_3f95b308e154(
+          item.courseTitle,
+          item.academicPeriodTitle,
+          item.capacity.toLocaleString('fa-IR'),
+          label(item.status),
+        )}
+      />
+      <OfficialSpaces classId={id} />
+      <Button asChild variant="outline">
+        <Link href={`${base}/classes/${id}?tab=settings`}>{uiText.vnext.classSettings}</Link>
+      </Button>
+      <nav className={uiClass(s.tabs)} aria-label={uiText.text_51a19c9825e6}>
         <Link
           href={`${base}/classes/${id}?tab=members`}
           aria-current={tab === 'members' ? 'page' : undefined}
@@ -81,7 +92,7 @@ export function ManagerClass({ id }: { id: string }) {
         </Link>
       </nav>
       {['sessions', 'lessons', 'assessments'].includes(tab) && (
-        <nav className={s.tabs} aria-label={uiText.text_67d6351483d1}>
+        <nav className={uiClass(s.tabs)} aria-label={uiText.text_67d6351483d1}>
           {tabs
             .filter(([key]) => ['sessions', 'lessons', 'assessments'].includes(key))
             .map(([key, title]) => (
@@ -97,7 +108,7 @@ export function ManagerClass({ id }: { id: string }) {
       )}
       {tab === 'members' ? (
         <>
-          <nav className={s.memberSwitch} aria-label={uiText.text_63c576bd7637}>
+          <nav className={uiClass(s.memberSwitch)} aria-label={uiText.text_63c576bd7637}>
             <Link
               href={`${base}/classes/${id}?tab=members&member=learners`}
               aria-current={memberKind === 'learners' ? 'page' : undefined}

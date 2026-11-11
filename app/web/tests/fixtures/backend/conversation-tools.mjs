@@ -9,6 +9,13 @@ export function conversationToolsRoute({ state, auth, url, req, body, send }) {
     (m) => m.user.userId === auth.user.id && m.status === 'Active',
   );
   const writable = member?.role === 'Owner' && v.managementPolicy === 'UserManaged';
+  const override = state.release154?.capabilities?.[auth.user.id];
+  const permitted = (capability) =>
+    !!member &&
+    v.managementPolicy === 'UserManaged' &&
+    (override ? override[capability] === true : writable);
+  const canManageInvites = permitted('canManageInvites');
+  const canManageTopics = permitted('canManageTopics');
   const relevant =
     p.startsWith(base + '/invite-links') ||
     p.startsWith(base + '/topics') ||
@@ -74,7 +81,7 @@ export function conversationToolsRoute({ state, auth, url, req, body, send }) {
     );
   }
   if (p.startsWith('/api/v1/messaging/join-requests/')) {
-    if (!writable) return send({ code: 'FORBIDDEN' }, 403);
+    if (!canManageInvites) return send({ code: 'FORBIDDEN' }, 403);
     const parts = p.split('/'),
       row = state.qaJoinRequests.find((x) => x.id === parts.at(-2));
     if (!row) return send({ code: 'NOT_FOUND' }, 404);
@@ -102,10 +109,11 @@ export function conversationToolsRoute({ state, auth, url, req, body, send }) {
       make('ConversationTopicPageResult', {
         items: state.qaTopics,
         hasMore: false,
-        canManage: writable,
+        canManage: canManageTopics,
       }),
     );
-  if (!writable) return send({ code: 'FORBIDDEN' }, 403);
+  if (!(p.startsWith(base + '/topics') ? canManageTopics : canManageInvites))
+    return send({ code: 'FORBIDDEN' }, 403);
   if (p.endsWith('/join-requests'))
     return send(
       make('ConversationJoinRequestPageResult', { items: state.qaJoinRequests, hasMore: false }),

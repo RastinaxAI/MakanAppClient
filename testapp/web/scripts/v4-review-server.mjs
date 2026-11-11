@@ -5,16 +5,24 @@ import { tmpdir } from 'node:os';
 import { join, resolve, dirname, basename } from 'node:path';
 import { randomBytes } from 'node:crypto';
 import { fixtureBackend } from '../tests/fixtures/backend/server.mjs';
-const appPort = 3158,
-  backendPort = 3458,
+const appPort = Number(process.env.MAKAN_REVIEW_PORT || 3158),
+  backendPort = Number(process.env.MAKAN_FIXTURE_PORT || 3458),
+  mode = process.env.MAKAN_REVIEW_HOT === 'true' ? 'dev' : 'start',
   root = process.cwd();
+if (
+  ![appPort, backendPort].every(
+    (port) => Number.isInteger(port) && port >= 1024 && port <= 65535,
+  ) ||
+  appPort === backendPort
+)
+  throw Error('Invalid isolated review ports');
 const sessions = mkdtempSync(join(tmpdir(), 'makan-v4-review-'));
 const backend = await fixtureBackend(backendPort);
 const child = spawn(
   process.execPath,
   [
     join(root, 'node_modules/next/dist/bin/next'),
-    'start',
+    mode,
     '--hostname',
     '127.0.0.1',
     '--port',
@@ -51,4 +59,6 @@ child.on('exit', (code) => {
   stop();
   process.exitCode = code ?? 1;
 });
-console.log('V4 reference review :3158; isolated fixture :3458. Live backend disabled.');
+console.log(
+  `Product review :${appPort} (${mode}); isolated fixture :${backendPort}. Live backend disabled.`,
+);

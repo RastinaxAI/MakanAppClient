@@ -1,0 +1,782 @@
+{
+  "createdAt": "2026-11-10T16:10:36.524Z",
+  "scope": "/home/omidreza-bagheriyan/Desktop/MakanApp/testapp",
+  "mode": "static-read-only",
+  "coverage": [
+    "Next conventions including proxy/instrumentation and App Router entries",
+    "static imports, exports, literal dynamic imports, aliases and barrels",
+    "CSS url()/font and public URL strings retained as text inputs",
+    "service worker, manifests, configuration, npm scripts, Docker/Compose, tests and fixtures",
+    "documentation links are consumers, not necessarily runtime imports"
+  ],
+  "limitations": [
+    "Nonliteral imports and runtime data URLs are retained for manual review.",
+    "No file is deleted by this audit. Unclassified is not unused.",
+    "Private session directories, secret contents, installed dependency trees and active build output are not traversed."
+  ],
+  "groups": {
+    "protected-private": {
+      "files": 4,
+      "bytes": 575
+    },
+    "configuration-launcher": {
+      "files": 32,
+      "bytes": 176751
+    },
+    "active-build-preserve": {
+      "files": 1,
+      "bytes": 0
+    },
+    "runtime": {
+      "files": 378,
+      "bytes": 2686462
+    },
+    "contract-codegen": {
+      "files": 5,
+      "bytes": 5673460
+    },
+    "design-reference": {
+      "files": 54,
+      "bytes": 56084589
+    },
+    "documentation-evidence": {
+      "files": 511,
+      "bytes": 75785842
+    },
+    "installed-dependency": {
+      "files": 1,
+      "bytes": 0
+    },
+    "visual-evidence-preserve": {
+      "files": 27095,
+      "bytes": 1170753306
+    },
+    "asset": {
+      "files": 17,
+      "bytes": 2494431
+    },
+    "tool": {
+      "files": 84,
+      "bytes": 866837
+    },
+    "unclassified-preserve": {
+      "files": 107,
+      "bytes": 6864591
+    },
+    "test-fixture": {
+      "files": 231,
+      "bytes": 1543037
+    },
+    "working-evidence-review-before-removal": {
+      "files": 2812,
+      "bytes": 63385938
+    }
+  },
+  "candidates": [
+    {
+      "path": "web/src/design/v5-author.css",
+      "bytes": null,
+      "sha256": null,
+      "importedBy": [],
+      "mentions": [
+        {
+          "path": "web/docs/design/exact-v1/session-native-build70-history.json",
+          "kind": "documentation-evidence"
+        },
+        {
+          "path": "web/docs/design/exact-v1/session-native.json",
+          "kind": "documentation-evidence"
+        },
+        {
+          "path": "web/docs/prompts/20261110-css-diagnosis.json",
+          "kind": "documentation-evidence"
+        },
+        {
+          "path": "web/docs/prompts/MakanApp_PDF_Implementation_And_Static_Cleanup_FA.txt",
+          "kind": "documentation-evidence"
+        },
+        {
+          "path": "web/docs/quality/CSS_STATIC_CLEANUP_20261110.json",
+          "kind": "documentation-evidence"
+        },
+        {
+          "path": "web/docs/quality/STATIC_USAGE_20261110.json",
+          "kind": "documentation-evidence"
+        },
+        {
+          "path": "web/scripts/audit-static-usage.mjs",
+          "kind": "tool"
+        },
+        {
+          "path": "web/tests/unit/v5-design.test.ts",
+          "kind": "test-fixture"
+        }
+      ]
+    },
+    {
+      "path": "web/src/design/v5-product.css",
+      "bytes": null,
+      "sha256": null,
+      "importedBy": [],
+      "mentions": [
+        {
+          "path": "web/docs/design/exact-v1/changed-files.json",
+          "kind": "documentation-evidence"
+        },
+        {
+          "path": "web/docs/design/exact-v1/exam-native.json",
+          "kind": "documentation-evidence"
+        },
+        {
+          "path": "web/docs/integration/20261110-assistant-mobile-repair.md",
+          "kind": "documentation-evidence"
+        },
+        {
+          "path": "web/docs/maintenance/20261110-delivery.md",
+          "kind": "documentation-evidence"
+        },
+        {
+          "path": "web/docs/prompts/MakanApp_PDF_Implementation_And_Static_Cleanup_FA.txt",
+          "kind": "documentation-evidence"
+        },
+        {
+          "path": "web/docs/quality/ASSISTANT_MOBILE_REPAIR_20261110.json",
+          "kind": "documentation-evidence"
+        },
+        {
+          "path": "web/docs/quality/CSS_STATIC_CLEANUP_20261110.json",
+          "kind": "documentation-evidence"
+        },
+        {
+          "path": "web/docs/quality/EXACT_V5_20261107_CHECKS.json",
+          "kind": "documentation-evidence"
+        },
+        {
+          "path": "web/docs/quality/STATIC_USAGE_20261110.json",
+          "kind": "documentation-evidence"
+        },
+        {
+          "path": "web/scripts/audit-static-usage.mjs",
+          "kind": "tool"
+        },
+        {
+          "path": "web/tests/unit/v5-design.test.ts",
+          "kind": "test-fixture"
+        }
+      ]
+    },
+    {
+      "path": "web/scripts/build-v5-product-styles.mjs",
+      "bytes": null,
+      "sha256": null,
+      "importedBy": [],
+      "mentions": [
+        {
+          "path": "web/docs/design/exact-v1/session-native-build70-history.json",
+          "kind": "documentation-evidence"
+        },
+        {
+          "path": "web/docs/design/exact-v1/session-native.json",
+          "kind": "documentation-evidence"
+        },
+        {
+          "path": "web/docs/quality/CSS_STATIC_CLEANUP_20261110.json",
+          "kind": "documentation-evidence"
+        },
+        {
+          "path": "web/docs/quality/STATIC_USAGE_20261110.json",
+          "kind": "documentation-evidence"
+        },
+        {
+          "path": "web/scripts/audit-static-usage.mjs",
+          "kind": "tool"
+        }
+      ]
+    },
+    {
+      "path": "web/postcss.config.mjs",
+      "bytes": null,
+      "sha256": null,
+      "importedBy": [],
+      "mentions": [
+        {
+          "path": "web/docs/CLIENT_RECOVERY.json",
+          "kind": "documentation-evidence"
+        },
+        {
+          "path": "web/docs/quality/CSS_STATIC_CLEANUP_20261110.json",
+          "kind": "documentation-evidence"
+        },
+        {
+          "path": "web/docs/quality/FINAL_RESULTS.json",
+          "kind": "documentation-evidence"
+        },
+        {
+          "path": "web/docs/quality/PROJECT_CLEANUP_20261106.json",
+          "kind": "documentation-evidence"
+        },
+        {
+          "path": "web/docs/quality/STATIC_USAGE_20261110.json",
+          "kind": "documentation-evidence"
+        },
+        {
+          "path": "web/docs/quality/test-attempts/first-clean-checkout.json",
+          "kind": "documentation-evidence"
+        },
+        {
+          "path": "web/scripts/audit-static-usage.mjs",
+          "kind": "tool"
+        }
+      ]
+    }
+  ],
+  "nonliteralImports": [
+    {
+      "from": "web/scripts/build-public-brand.mjs",
+      "line": 8,
+      "kind": "nonliteral-import-review"
+    }
+  ],
+  "detailedInventory": {
+    "path": "docs/quality/STATIC_USAGE_20261110.inventory.json.gz",
+    "sha256": "0313d47d3e093a62de48b1db8884b4849447f4e0c61d0accecd6f7929fb29d52",
+    "bytes": 318813
+  },
+  "unclassifiedRetained": [
+    {
+      "path": "web/test-results/assistant-theme/assistant-dark-1440.png",
+      "category": "unclassified-preserve",
+      "bytes": 74404
+    },
+    {
+      "path": "web/test-results/assistant-theme/assistant-dark-390.png",
+      "category": "unclassified-preserve",
+      "bytes": 23433
+    },
+    {
+      "path": "web/test-results/assistant-theme/assistant-dark-834.png",
+      "category": "unclassified-preserve",
+      "bytes": 58616
+    },
+    {
+      "path": "web/test-results/assistant-theme/chat-dark-1440.png",
+      "category": "unclassified-preserve",
+      "bytes": 106036
+    },
+    {
+      "path": "web/test-results/assistant-theme/chat-dark-390.png",
+      "category": "unclassified-preserve",
+      "bytes": 45200
+    },
+    {
+      "path": "web/test-results/assistant-theme/chat-dark-834.png",
+      "category": "unclassified-preserve",
+      "bytes": 78565
+    },
+    {
+      "path": "web/test-results/assistant-theme/education-dark-1440.png",
+      "category": "unclassified-preserve",
+      "bytes": 81481
+    },
+    {
+      "path": "web/test-results/assistant-theme/education-dark-390.png",
+      "category": "unclassified-preserve",
+      "bytes": 45738
+    },
+    {
+      "path": "web/test-results/assistant-theme/education-dark-834.png",
+      "category": "unclassified-preserve",
+      "bytes": 66046
+    },
+    {
+      "path": "web/test-results/assistant-theme/profile-dark-1440.png",
+      "category": "unclassified-preserve",
+      "bytes": 95863
+    },
+    {
+      "path": "web/test-results/assistant-theme/profile-dark-390.png",
+      "category": "unclassified-preserve",
+      "bytes": 49678
+    },
+    {
+      "path": "web/test-results/assistant-theme/profile-dark-834.png",
+      "category": "unclassified-preserve",
+      "bytes": 80755
+    },
+    {
+      "path": "web/test-results/manager-workspace/class-1440.png",
+      "category": "unclassified-preserve",
+      "bytes": 83704
+    },
+    {
+      "path": "web/test-results/manager-workspace/class-390.png",
+      "category": "unclassified-preserve",
+      "bytes": 50322
+    },
+    {
+      "path": "web/test-results/manager-workspace/class-834.png",
+      "category": "unclassified-preserve",
+      "bytes": 64877
+    },
+    {
+      "path": "web/test-results/manager-workspace/class-controls-1440.png",
+      "category": "unclassified-preserve",
+      "bytes": 83704
+    },
+    {
+      "path": "web/test-results/manager-workspace/class-controls-390.png",
+      "category": "unclassified-preserve",
+      "bytes": 50322
+    },
+    {
+      "path": "web/test-results/manager-workspace/class-controls-834.png",
+      "category": "unclassified-preserve",
+      "bytes": 64877
+    },
+    {
+      "path": "web/test-results/manager-workspace/dashboard-1440.png",
+      "category": "unclassified-preserve",
+      "bytes": 104733
+    },
+    {
+      "path": "web/test-results/manager-workspace/dashboard-390.png",
+      "category": "unclassified-preserve",
+      "bytes": 59031
+    },
+    {
+      "path": "web/test-results/manager-workspace/dashboard-834.png",
+      "category": "unclassified-preserve",
+      "bytes": 87339
+    },
+    {
+      "path": "web/test-results/navigation-experience/assistant-1440.png",
+      "category": "unclassified-preserve",
+      "bytes": 72099
+    },
+    {
+      "path": "web/test-results/navigation-experience/assistant-390.png",
+      "category": "unclassified-preserve",
+      "bytes": 22600
+    },
+    {
+      "path": "web/test-results/navigation-experience/assistant-834.png",
+      "category": "unclassified-preserve",
+      "bytes": 56680
+    },
+    {
+      "path": "web/test-results/navigation-experience/pwa-offer-390.png",
+      "category": "unclassified-preserve",
+      "bytes": 55484
+    },
+    {
+      "path": "web/test-results/preferences-weekly/preferences-1440.png",
+      "category": "unclassified-preserve",
+      "bytes": 85481
+    },
+    {
+      "path": "web/test-results/preferences-weekly/preferences-320.png",
+      "category": "unclassified-preserve",
+      "bytes": 40568
+    },
+    {
+      "path": "web/test-results/preferences-weekly/preferences-390.png",
+      "category": "unclassified-preserve",
+      "bytes": 41289
+    },
+    {
+      "path": "web/test-results/preferences-weekly/preferences-834.png",
+      "category": "unclassified-preserve",
+      "bytes": 68921
+    },
+    {
+      "path": "web/test-results/preferences-weekly/preferences-dark-390.png",
+      "category": "unclassified-preserve",
+      "bytes": 42553
+    },
+    {
+      "path": "web/test-results/preferences-weekly/weekly-1440.png",
+      "category": "unclassified-preserve",
+      "bytes": 98829
+    },
+    {
+      "path": "web/test-results/preferences-weekly/weekly-320.png",
+      "category": "unclassified-preserve",
+      "bytes": 46602
+    },
+    {
+      "path": "web/test-results/preferences-weekly/weekly-390.png",
+      "category": "unclassified-preserve",
+      "bytes": 49201
+    },
+    {
+      "path": "web/test-results/preferences-weekly/weekly-834.png",
+      "category": "unclassified-preserve",
+      "bytes": 87140
+    },
+    {
+      "path": "web/test-results/production/studio-runtime-ordinary-ru-ca224-s-sample-sources-or-answers/ordinary-assistant.png",
+      "category": "unclassified-preserve",
+      "bytes": 106992
+    },
+    {
+      "path": "web/test-results/production/studio-runtime-ordinary-ru-ca224-s-sample-sources-or-answers/trace.zip",
+      "category": "unclassified-preserve",
+      "bytes": 433882
+    },
+    {
+      "path": "web/test-results/production-results.json",
+      "category": "unclassified-preserve",
+      "bytes": 3890
+    },
+    {
+      "path": "web/test-results/profile-school-files/message-menu-mobile.png",
+      "category": "unclassified-preserve",
+      "bytes": 42491
+    },
+    {
+      "path": "web/test-results/profile-school-files/profile-1440.png",
+      "category": "unclassified-preserve",
+      "bytes": 86079
+    },
+    {
+      "path": "web/test-results/profile-school-files/profile-390.png",
+      "category": "unclassified-preserve",
+      "bytes": 44487
+    },
+    {
+      "path": "web/test-results/profile-school-files/profile-834.png",
+      "category": "unclassified-preserve",
+      "bytes": 67815
+    },
+    {
+      "path": "web/test-results/profile-school-files/profile-identity-mobile.png",
+      "category": "unclassified-preserve",
+      "bytes": 39365
+    },
+    {
+      "path": "web/test-results/profile-school-files/profile-logout-mobile.png",
+      "category": "unclassified-preserve",
+      "bytes": 39303
+    },
+    {
+      "path": "web/test-results/profile-school-files/receipt-mobile.png",
+      "category": "unclassified-preserve",
+      "bytes": 26404
+    },
+    {
+      "path": "web/test-results/profile-school-files/school-search.png",
+      "category": "unclassified-preserve",
+      "bytes": 56734
+    },
+    {
+      "path": "web/test-results/reference-match/A01-actual-1440.png",
+      "category": "unclassified-preserve",
+      "bytes": 29257
+    },
+    {
+      "path": "web/test-results/reference-match/A01-actual-390.png",
+      "category": "unclassified-preserve",
+      "bytes": 23182
+    },
+    {
+      "path": "web/test-results/reference-match/A01-actual-834.png",
+      "category": "unclassified-preserve",
+      "bytes": 27349
+    },
+    {
+      "path": "web/test-results/reference-match/A04-actual-1440.png",
+      "category": "unclassified-preserve",
+      "bytes": 55315
+    },
+    {
+      "path": "web/test-results/reference-match/A04-actual-390.png",
+      "category": "unclassified-preserve",
+      "bytes": 21894
+    },
+    {
+      "path": "web/test-results/reference-match/A04-actual-834.png",
+      "category": "unclassified-preserve",
+      "bytes": 41619
+    },
+    {
+      "path": "web/test-results/reference-match/C01-actual-1440.png",
+      "category": "unclassified-preserve",
+      "bytes": 102786
+    },
+    {
+      "path": "web/test-results/reference-match/C01-actual-390.png",
+      "category": "unclassified-preserve",
+      "bytes": 29439
+    },
+    {
+      "path": "web/test-results/reference-match/C01-actual-834.png",
+      "category": "unclassified-preserve",
+      "bytes": 75356
+    },
+    {
+      "path": "web/test-results/reference-match/C03-actual-1440.png",
+      "category": "unclassified-preserve",
+      "bytes": 102786
+    },
+    {
+      "path": "web/test-results/reference-match/C03-actual-390.png",
+      "category": "unclassified-preserve",
+      "bytes": 43277
+    },
+    {
+      "path": "web/test-results/reference-match/C03-actual-834.png",
+      "category": "unclassified-preserve",
+      "bytes": 75356
+    },
+    {
+      "path": "web/test-results/reference-match/M01-actual-1440.png",
+      "category": "unclassified-preserve",
+      "bytes": 102816
+    },
+    {
+      "path": "web/test-results/reference-match/M01-actual-390.png",
+      "category": "unclassified-preserve",
+      "bytes": 59437
+    },
+    {
+      "path": "web/test-results/reference-match/M01-actual-834.png",
+      "category": "unclassified-preserve",
+      "bytes": 87910
+    },
+    {
+      "path": "web/test-results/reference-match/P02-actual-1440.png",
+      "category": "unclassified-preserve",
+      "bytes": 92014
+    },
+    {
+      "path": "web/test-results/reference-match/P02-actual-390.png",
+      "category": "unclassified-preserve",
+      "bytes": 50556
+    },
+    {
+      "path": "web/test-results/reference-match/P02-actual-834.png",
+      "category": "unclassified-preserve",
+      "bytes": 77418
+    },
+    {
+      "path": "web/test-results/reference-match/S01-actual-1440.png",
+      "category": "unclassified-preserve",
+      "bytes": 79624
+    },
+    {
+      "path": "web/test-results/reference-match/S01-actual-390.png",
+      "category": "unclassified-preserve",
+      "bytes": 44394
+    },
+    {
+      "path": "web/test-results/reference-match/S01-actual-834.png",
+      "category": "unclassified-preserve",
+      "bytes": 64375
+    },
+    {
+      "path": "web/test-results/reference-match/S13-actual-1440.png",
+      "category": "unclassified-preserve",
+      "bytes": 92838
+    },
+    {
+      "path": "web/test-results/reference-match/S13-actual-390.png",
+      "category": "unclassified-preserve",
+      "bytes": 42865
+    },
+    {
+      "path": "web/test-results/reference-match/S13-actual-834.png",
+      "category": "unclassified-preserve",
+      "bytes": 61306
+    },
+    {
+      "path": "web/test-results/reference-match/T02-actual-1440.png",
+      "category": "unclassified-preserve",
+      "bytes": 83425
+    },
+    {
+      "path": "web/test-results/reference-match/T02-actual-390.png",
+      "category": "unclassified-preserve",
+      "bytes": 33738
+    },
+    {
+      "path": "web/test-results/reference-match/T02-actual-834.png",
+      "category": "unclassified-preserve",
+      "bytes": 44982
+    },
+    {
+      "path": "web/test-results/reference-match/T03-actual-1440.png",
+      "category": "unclassified-preserve",
+      "bytes": 85312
+    },
+    {
+      "path": "web/test-results/reference-match/T03-actual-390.png",
+      "category": "unclassified-preserve",
+      "bytes": 36465
+    },
+    {
+      "path": "web/test-results/reference-match/T03-actual-834.png",
+      "category": "unclassified-preserve",
+      "bytes": 48478
+    },
+    {
+      "path": "web/test-results/reference-match/T05-actual-1440.png",
+      "category": "unclassified-preserve",
+      "bytes": 60802
+    },
+    {
+      "path": "web/test-results/reference-match/T05-actual-390.png",
+      "category": "unclassified-preserve",
+      "bytes": 19728
+    },
+    {
+      "path": "web/test-results/reference-match/T05-actual-834.png",
+      "category": "unclassified-preserve",
+      "bytes": 31176
+    },
+    {
+      "path": "web/test-results/reference-match/U01-actual-1440.png",
+      "category": "unclassified-preserve",
+      "bytes": 84378
+    },
+    {
+      "path": "web/test-results/reference-match/U01-actual-390.png",
+      "category": "unclassified-preserve",
+      "bytes": 37531
+    },
+    {
+      "path": "web/test-results/reference-match/U01-actual-834.png",
+      "category": "unclassified-preserve",
+      "bytes": 70167
+    },
+    {
+      "path": "web/test-results/reference-match/W01-actual-1440.png",
+      "category": "unclassified-preserve",
+      "bytes": 50782
+    },
+    {
+      "path": "web/test-results/reference-match/W01-actual-390.png",
+      "category": "unclassified-preserve",
+      "bytes": 43394
+    },
+    {
+      "path": "web/test-results/reference-match/W01-actual-834.png",
+      "category": "unclassified-preserve",
+      "bytes": 48381
+    },
+    {
+      "path": "web/test-results/reference-match/geometry.json",
+      "category": "unclassified-preserve",
+      "bytes": 542
+    },
+    {
+      "path": "web/test-results/school-redesign/class-mobile.png",
+      "category": "unclassified-preserve",
+      "bytes": 49316
+    },
+    {
+      "path": "web/test-results/school-redesign/invitations-mobile.png",
+      "category": "unclassified-preserve",
+      "bytes": 44374
+    },
+    {
+      "path": "web/test-results/school-redesign/overview-1440.png",
+      "category": "unclassified-preserve",
+      "bytes": 96888
+    },
+    {
+      "path": "web/test-results/school-redesign/overview-390.png",
+      "category": "unclassified-preserve",
+      "bytes": 54273
+    },
+    {
+      "path": "web/test-results/school-redesign/overview-834.png",
+      "category": "unclassified-preserve",
+      "bytes": 80054
+    },
+    {
+      "path": "web/test-results/school-redesign/profile-edit-1440.png",
+      "category": "unclassified-preserve",
+      "bytes": 79726
+    },
+    {
+      "path": "web/test-results/school-redesign/profile-edit-390.png",
+      "category": "unclassified-preserve",
+      "bytes": 32812
+    },
+    {
+      "path": "web/test-results/school-redesign/profile-edit-834.png",
+      "category": "unclassified-preserve",
+      "bytes": 44316
+    },
+    {
+      "path": "web/test-results/school-redesign/profile-footer-mobile.png",
+      "category": "unclassified-preserve",
+      "bytes": 32812
+    },
+    {
+      "path": "web/test-results/school-redesign/weekly-mobile.png",
+      "category": "unclassified-preserve",
+      "bytes": 39824
+    },
+    {
+      "path": "web/test-results/screenshots/education-1440.png",
+      "category": "unclassified-preserve",
+      "bytes": 83701
+    },
+    {
+      "path": "web/test-results/screenshots/education-390.png",
+      "category": "unclassified-preserve",
+      "bytes": 44777
+    },
+    {
+      "path": "web/test-results/screenshots/education-834.png",
+      "category": "unclassified-preserve",
+      "bytes": 65752
+    },
+    {
+      "path": "web/test-results/screenshots/manager-desktop-1024.png",
+      "category": "unclassified-preserve",
+      "bytes": 65612
+    },
+    {
+      "path": "web/test-results/workspace-child-attachments/parent-1440.png",
+      "category": "unclassified-preserve",
+      "bytes": 70297
+    },
+    {
+      "path": "web/test-results/workspace-child-attachments/parent-390.png",
+      "category": "unclassified-preserve",
+      "bytes": 29424
+    },
+    {
+      "path": "web/test-results/workspace-child-attachments/parent-834.png",
+      "category": "unclassified-preserve",
+      "bytes": 55240
+    },
+    {
+      "path": "web/test-results/workspace-child-attachments/teacher-files-1440.png",
+      "category": "unclassified-preserve",
+      "bytes": 74808
+    },
+    {
+      "path": "web/test-results/workspace-child-attachments/teacher-files-390.png",
+      "category": "unclassified-preserve",
+      "bytes": 29561
+    },
+    {
+      "path": "web/test-results/workspace-child-attachments/teacher-files-834.png",
+      "category": "unclassified-preserve",
+      "bytes": 40217
+    },
+    {
+      "path": "web/test-results/workspace-child-attachments/teacher-received-files.png",
+      "category": "unclassified-preserve",
+      "bytes": 71356
+    },
+    {
+      "path": "web/tsconfig.tsbuildinfo",
+      "category": "unclassified-preserve",
+      "bytes": 247388
+    }
+  ]
+}

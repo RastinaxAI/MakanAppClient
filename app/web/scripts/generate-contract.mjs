@@ -60,6 +60,51 @@ const filtered = { ...source, paths, components: { ...source.components, schemas
 await fs.mkdir('src/generated/api', { recursive: true });
 await emit('src/generated/api/schema.d.ts', astToString(await openapiTS(filtered)));
 await emit('src/generated/api/contract.json', JSON.stringify({ schemas, operations }));
+
+// Generate only the contracts used to restore/validate commands and display responses
+// in the browser. This is a transitive subset of the same server snapshot, never a
+// second hand-written API definition or a replacement for BFF authorization.
+const browserOperations = operations.filter(
+  (operation) =>
+    operation.path.startsWith('/api/v1/ai/') ||
+    (operation.method === 'GET' &&
+      (operation.path === '/api/v1/me/messaging-status' ||
+        /^\/api\/v1\/conversations\/\{[^}]+\}\/messages$/.test(operation.path))),
+);
+const browserSchemas = {};
+function visitBrowser(value) {
+  if (!value || typeof value !== 'object') return;
+  if (value.$ref?.startsWith('#/components/schemas/')) {
+    const name = value.$ref.split('/').pop();
+    if (!browserSchemas[name]) {
+      if (!schemas[name]) throw Error('Missing browser schema: ' + name);
+      browserSchemas[name] = schemas[name];
+      visitBrowser(schemas[name]);
+    }
+  }
+  for (const child of Object.values(value)) visitBrowser(child);
+}
+visitBrowser(browserOperations);
+for (const name of [
+  'ProfilePhotoResult2',
+  'FileAssetResult',
+  'CreateManagedConversationCommand',
+  'CreateEducationalSourceCommand',
+  'KnowledgeMutationCommand',
+  'CreateOrderCommand',
+  'InitiatePaymentCommand',
+  'OrderDto',
+  'PaymentAttemptDetailsDto',
+  'VerifyPaymentResult',
+  'InitiatePaymentResult',
+  'PaymentReceiptDto',
+])
+  visitBrowser({ $ref: '#/components/schemas/' + name });
+await emit(
+  'src/generated/api/browser-contract.json',
+  JSON.stringify({ schemas: browserSchemas, operations }),
+);
+
 const rows = operations.map(
   (o) =>
     '| `' +

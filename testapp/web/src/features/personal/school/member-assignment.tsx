@@ -1,15 +1,23 @@
 'use client';
+import { Select as NativeSelect, Input as NativeInput } from '@/components/ui/input';
+
+import { uiClass } from '@/components/v5/classes';
+
 import * as uiText from '@/content/fa';
 import { useEffect, useRef, useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
-import { Button } from '@/components/ui/button';
-import { ErrorState, EmptyState, LoadingSkeleton } from '@/components/ui/states';
+import { Button, buttonClass } from '@/components/ui/button';
+import { ErrorState, EmptyState, LoadingSkeleton, label } from '@/components/ui/states';
+import { V5Scene } from '@/components/v5/scene';
 import { useUnsavedChanges } from '@/components/hooks/use-unsaved-changes';
 import type { components } from '@/generated/api/schema';
 import { ApiError } from '@/lib/api/errors';
 import { usePersonal, usePersonalApi } from '../provider';
 import { schoolQuery, SchoolSearch } from './directory';
 import { Field, Pager } from './shared';
+import { useAcademicScope } from './academic-scope';
+import { useClassRosterSummary } from './manager-class-summary';
+import Link from 'next/link';
 import s from './member-assignment.module.css';
 type S = components['schemas'];
 type Pick = {
@@ -28,6 +36,15 @@ export function ClassMemberAssignment({
   const teacher = kind === 'teachers',
     { session, call } = usePersonal(),
     cache = useQueryClient();
+  const { base } = useAcademicScope();
+  const classes = usePersonalApi<S['ClassResult'][]>('/api/v1/academic/classes');
+  const classroom = classes.data?.find(
+    (item) => item.id === classId && item.organizationId === session.context.organizationId,
+  );
+  const summary = useClassRosterSummary(
+    { id: classId, organizationId: classroom?.organizationId ?? '' },
+    !teacher && !!classroom,
+  );
   const [page, setPage] = useState(1),
     [search, setSearch] = useState(''),
     [source, setSource] = useState('members');
@@ -56,11 +73,13 @@ export function ClassMemberAssignment({
       ? (people.data?.items.map((p) => ({
           id: p.id,
           name: p.displayName || p.firstName + ' ' + p.lastName,
+          detail: label(p.status),
           disabled: p.status !== 'Active',
         })) ?? [])
       : (members.data?.items.map((m) => ({
           id: teacher ? m.membershipId : m.organizationPersonId,
           name: m.displayName,
+          detail: m.username ? '@' + m.username : label(m.membershipStatus),
           disabled:
             m.membershipStatus !== 'Active' ||
             !m.activeRoles.includes(teacher ? 'Teacher' : 'Student') ||
@@ -130,109 +149,22 @@ export function ClassMemberAssignment({
     }
   }
   return (
-    <div className={s.layout}>
-      <section className={s.selection}>
-        <h2>{teacher ? uiText.text_988a9f3a30f5 : uiText.text_e66b1190c86c}</h2>
-        <p>{uiText.text_e00915ec36cf}</p>
-        {!teacher && (
-          <Field label={uiText.text_b4adb9469c50}>
-            <select
-              disabled={busy}
-              value={source}
-              onChange={(e) => {
-                setSource(e.target.value);
-                setPage(1);
-                setSearch('');
-              }}
-            >
-              <option value="members">{uiText.text_e896842afe7b}</option>
-              <option value="records">{uiText.text_e40bbfa529e7}</option>
-            </select>
-          </Field>
-        )}
-        <SchoolSearch
-          key={source}
-          label={teacher ? uiText.text_120de68a4876 : uiText.text_65ede2372929}
-          disabled={busy}
-          onSearch={(v) => {
-            setSearch(v);
-            setPage(1);
-          }}
-        />
-        {q.isPending ? (
-          <LoadingSkeleton />
-        ) : q.isError ? (
-          <ErrorState error={q.error} onRetry={() => void q.refetch()} />
-        ) : (
-          <>
-            {candidates.length ? (
-              <ul className={s.list}>
-                {candidates.map((p, i) => (
-                  <li key={p.id ?? i}>
-                    <label>
-                      <input
-                        type="checkbox"
-                        aria-label={uiText.text_89e9053371c8 + p.name}
-                        disabled={
-                          busy || p.disabled || !!(p.id && selected[p.id]?.state === 'done')
-                        }
-                        checked={!!(p.id && selected[p.id])}
-                        onChange={(e) => {
-                          if (!p.id) return;
-                          const id = p.id;
-                          if (e.target.checked) update({ id, name: p.name, state: 'selected' });
-                          else
-                            setSelected((old) => {
-                              const next = { ...old };
-                              delete next[id];
-                              return next;
-                            });
-                        }}
-                      />
-                      <span>
-                        <strong>{p.name}</strong>
-                        {p.disabled && <small>{uiText.text_b3d6c9493f41}</small>}
-                      </span>
-                    </label>
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <EmptyState title={uiText.text_a7752b98a99b} />
-            )}
-            <Pager
-              page={page}
-              total={q.data!.totalCount}
-              size={q.data!.pageSize}
-              onChange={(v) => {
-                if (!busy) setPage(v);
-              }}
-            />
-          </>
-        )}
-      </section>
-      <aside className={s.summary} aria-label={uiText.text_e6abca191b09}>
-        <h2>
-          {choices.length.toLocaleString('fa-IR')}
-          {uiText.text_cd049afa6984}
-        </h2>
-        <p>{uiText.text_2747228563a9}</p>
-        {choices.map((p) => (
-          <div className={s.result} key={p.id}>
-            <strong>{p.name}</strong>
-            <span role="status">
-              {p.state === 'done'
-                ? uiText.text_26906f613c15
-                : p.state === 'sending'
-                  ? uiText.text_b5ef00b1806f
-                  : p.state === 'error'
-                    ? uiText.text_a9562ef9a9c5
-                    : uiText.text_d8d6fdf5ca72}
-            </span>
-            {p.state === 'error' && <ErrorState error={p.error} />}
-          </div>
-        ))}
-        <Button disabled={busy || !pending.length} onClick={() => void submit()}>
+    <V5Scene
+      id={teacher ? 'MK-102' : 'MK-99'}
+      title={teacher ? uiText.v5Product.assignTeacher : uiText.v5Product.chooseLearner}
+      back={`${base}/classes/${classId}`}
+      kind="list"
+      summary={
+        q.isSuccess
+          ? candidates.slice(0, 3).map((person) => ({ label: person.name, value: person.detail }))
+          : []
+      }
+      onSubmit={(event) => {
+        event.preventDefault();
+        void submit();
+      }}
+      actions={
+        <Button type="submit" disabled={busy || !pending.length} aria-busy={busy}>
           {busy
             ? uiText.text_b48606a1eeac
             : pending.some((p) => p.state === 'error')
@@ -241,7 +173,144 @@ export function ClassMemberAssignment({
                 pending.length.toLocaleString('fa-IR') +
                 uiText.text_a91a0317a5d6}
         </Button>
-      </aside>
-    </div>
+      }
+      menu={
+        <div className={uiClass('stack')}>
+          {!teacher && (
+            <Field label={uiText.text_b4adb9469c50}>
+              <NativeSelect
+                disabled={busy}
+                value={source}
+                onChange={(e) => {
+                  setSource(e.target.value);
+                  setPage(1);
+                  setSearch('');
+                }}
+              >
+                <option value="members">{uiText.text_e896842afe7b}</option>
+                <option value="records">{uiText.text_e40bbfa529e7}</option>
+              </NativeSelect>
+            </Field>
+          )}
+          <Link
+            href={`${base}/classes/${classId}`}
+            className={uiClass(buttonClass('button button-outline'))}
+          >
+            {uiText.common_back}
+          </Link>
+        </div>
+      }
+    >
+      <div className={uiClass(s.layout)}>
+        <section className={uiClass(s.selection)}>
+          <SchoolSearch
+            key={source}
+            embedded
+            variant="bar"
+            label={teacher ? uiText.text_120de68a4876 : uiText.text_65ede2372929}
+            disabled={busy}
+            onSearch={(v) => {
+              setSearch(v);
+              setPage(1);
+            }}
+          />
+          {q.isPending ? (
+            <LoadingSkeleton />
+          ) : q.isError ? (
+            <ErrorState error={q.error} onRetry={() => void q.refetch()} />
+          ) : (
+            <>
+              {candidates.length ? (
+                <ul className={uiClass(s.list)} data-candidate-list>
+                  {candidates.map((p, i) => (
+                    <li key={p.id ?? i}>
+                      <label data-kind={kind}>
+                        <NativeInput
+                          type="checkbox"
+                          aria-label={uiText.text_89e9053371c8 + p.name}
+                          disabled={
+                            busy || p.disabled || !!(p.id && selected[p.id]?.state === 'done')
+                          }
+                          checked={!!(p.id && selected[p.id])}
+                          onChange={(e) => {
+                            if (!p.id) return;
+                            const id = p.id;
+                            if (e.target.checked) update({ id, name: p.name, state: 'selected' });
+                            else
+                              setSelected((old) => {
+                                const next = { ...old };
+                                delete next[id];
+                                return next;
+                              });
+                          }}
+                        />
+                        <span>
+                          <strong>{p.name}</strong>
+                          <small>{p.detail}</small>
+                          {p.disabled && <small>{uiText.text_b3d6c9493f41}</small>}
+                        </span>
+                      </label>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <EmptyState title={uiText.text_a7752b98a99b} />
+              )}
+              {(page > 1 || q.data!.totalCount > q.data!.pageSize) && (
+                <Pager
+                  page={page}
+                  total={q.data!.totalCount}
+                  size={q.data!.pageSize}
+                  onChange={(v) => {
+                    if (!busy) setPage(v);
+                  }}
+                />
+              )}
+            </>
+          )}
+        </section>
+        {!teacher && classroom && (
+          <dl className={uiClass('v5-summary')}>
+            <div>
+              <dt>{uiText.text_36167d33608a}</dt>
+              <dd>{classroom.title}</dd>
+            </div>
+            <div>
+              <dt>{uiText.v5Product.freeCapacity}</dt>
+              <dd>
+                {summary.enrolled === undefined
+                  ? '—'
+                  : Math.max(0, classroom.capacity - summary.enrolled).toLocaleString('fa-IR')}
+              </dd>
+            </div>
+          </dl>
+        )}
+        <p className={uiClass(s.policy)}>{uiText.text_e00915ec36cf}</p>
+        {choices.length > 0 && (
+          <aside className={uiClass(s.summary)} aria-label={uiText.text_e6abca191b09}>
+            <h2>
+              {choices.length.toLocaleString('fa-IR')}
+              {uiText.text_cd049afa6984}
+            </h2>
+            <p>{uiText.text_2747228563a9}</p>
+            {choices.map((p) => (
+              <div className={uiClass(s.result)} key={p.id}>
+                <strong>{p.name}</strong>
+                <span role="status">
+                  {p.state === 'done'
+                    ? uiText.text_26906f613c15
+                    : p.state === 'sending'
+                      ? uiText.text_b5ef00b1806f
+                      : p.state === 'error'
+                        ? uiText.text_a9562ef9a9c5
+                        : uiText.text_d8d6fdf5ca72}
+                </span>
+                {p.state === 'error' && <ErrorState error={p.error} />}
+              </div>
+            ))}
+          </aside>
+        )}
+      </div>
+    </V5Scene>
   );
 }

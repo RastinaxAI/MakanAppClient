@@ -1,0 +1,69 @@
+/* Shared button variants. Width belongs to the surrounding action layout. */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-width: 0;
+  max-width: 100%;
+  min-height: 48px;
+  width: auto;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  padding: 10px 18px;
+  font: inherit;
+  font-size: calc(15px * var(--text-scale, 1));
+  font-weight: 700;
+  line-height: 1.6;
+  text-align: center;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  transition: background 0.15s;
+  box-shadow: none;
+}
+.primary {
+  background: var(--primary-button);
+  color: var(--on-primary);
+}
+.primary:hover {
+  background: var(--primary-hover);
+}
+.outline {
+  border-color: var(--control-border);
+  background: var(--surface);
+  color: var(--primary);
+}
+.ghost {
+  background: transparent;
+  color: var(--muted);
+}
+.outline:hover,
+.ghost:hover {
+  background: var(--soft);
+}
+.danger {
+  background: var(--danger-button);
+  color: var(--on-danger);
+}
+.sm {
+  min-height: 44px;
+  padding: 8px 14px;
+  font-size: calc(13px * var(--text-scale, 1));
+}
+.icon {
+  flex: none;
+  min-width: 44px;
+  width: 44px;
+  height: 44px;
+  min-height: 44px;
+  padding: 10px;
+}
+.legacy svg {
+  width: 19px;
+  height: 19px;
+}
+.legacy:disabled {
+  background: var(--surface2);
+  color: var(--muted);
+  border-color: var(--line);
+}

@@ -1,6 +1,8 @@
 import { id, ids, make, classRow } from './state.mjs';
 import { seedManagerCase } from './manager-case.mjs';
 import { schoolRoute } from './school.mjs';
+import { createECDH } from 'node:crypto';
+const fixturePushPublicKey = createECDH('prime256v1').generateKeys().toString('base64url');
 const version = (n) => Buffer.from(String(n).padStart(8, '0')).toString('base64');
 const flag = (value, wanted) =>
   String(value ?? '')
@@ -59,6 +61,20 @@ export function seedVnext(state, options = {}) {
     }),
   );
   m.classes = [{ ...classRow(), version: version(1) }];
+  if (options.exactV5) {
+    state.design = true;
+    Object.assign(m.classes[0], { title: 'ریاضی دهم · گروه الف', capacity: 24 });
+    m.learners = Array.from({ length: 24 }, (_, index) =>
+      make('ClassLearnerResult', {
+        classId: m.classes[0].id,
+        enrollmentId: id(20100 + index),
+        learnerOrganizationPersonId: id(20200 + index),
+        displayName: 'دانش‌آموز آزمایشی ' + (index + 1),
+        status: 'Active',
+        version: version(1),
+      }),
+    );
+  }
   m.relations[0].guardianDisplayName = 'والد امن سازمانی';
   m.relations[0].learnerDisplayName = 'فرزند امن سازمانی';
   const invitations = Array.from({ length: 33 }, (_, i) =>
@@ -104,7 +120,12 @@ export function vnextRoute(ctx) {
     auth.context.workspaceType === 'Organization' && auth.context.activeRole === 'Manager';
   const fail = (code, status = 409) => send({ code }, status);
   if (p === '/api/v1/notifications/devices/web-push/configuration')
-    return send(make('WebPushClientConfiguration', { isConfigured: false, vapidPublicKey: null }));
+    return send(
+      make('WebPushClientConfiguration', {
+        isConfigured: state.webPushConfigured === true,
+        vapidPublicKey: state.webPushConfigured === true ? fixturePushPublicKey : null,
+      }),
+    );
   if (p === '/api/v1/organization/invitations') {
     if (!manager) return fail('MANAGER_ROLE_REQUIRED', 403);
     let rows =

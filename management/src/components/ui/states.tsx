@@ -99,6 +99,11 @@ const statuses: Record<string, string> = {
   Healthy: 'سالم',
   Degraded: 'نیازمند بررسی',
   Unhealthy: 'اختلال',
+  Configured: 'پیکربندی‌شده',
+  NotConfigured: 'پیکربندی نشده',
+  Available: 'در دسترس',
+  Unavailable: 'در دسترس نیست',
+  Unknown: 'نامشخص',
   Individual: 'فردی',
   Gregorian: 'میلادی',
   Persian: 'شمسی',
@@ -145,6 +150,14 @@ const statuses: Record<string, string> = {
   Revoked: 'لغوشده',
   Expired: 'منقضی',
   Paid: 'پرداخت‌شده',
+  Created: 'ایجادشده',
+  Initiating: 'در حال آغاز',
+  PendingVerification: 'در انتظار تأیید پرداخت',
+  Succeeded: 'موفق',
+  NotStarted: 'شروع نشده',
+  SubscriptionActivationPending: 'در انتظار فعال‌سازی اشتراک',
+  SubscriptionActivated: 'اشتراک فعال شده',
+  ProvisioningPending: 'در انتظار راه‌اندازی',
   Failed: 'ناموفق',
   Open: 'باز',
   InReview: 'در حال بررسی',
@@ -179,13 +192,34 @@ export function StatusBadge({ value }: { value: unknown }) {
     'Resolved',
     'Present',
     'Healthy',
+    'Succeeded',
+    'SubscriptionActivated',
   ].includes(text)
     ? 'success'
-    : ['Suspended', 'Failed', 'Revoked', 'Cancelled', 'Absent', 'Unhealthy'].includes(text)
+    : [
+          'Suspended',
+          'Failed',
+          'Revoked',
+          'Cancelled',
+          'Absent',
+          'Unhealthy',
+          'Unavailable',
+        ].includes(text)
       ? 'danger'
-      : ['Pending', 'NeedsAttention', 'Open', 'InReview', 'Requested', 'Late', 'Degraded'].includes(
-            text,
-          )
+      : [
+            'Pending',
+            'NeedsAttention',
+            'Open',
+            'InReview',
+            'Requested',
+            'Late',
+            'Degraded',
+            'NotConfigured',
+            'Initiating',
+            'PendingVerification',
+            'SubscriptionActivationPending',
+            'ProvisioningPending',
+          ].includes(text)
         ? 'warning'
         : 'neutral';
   return (

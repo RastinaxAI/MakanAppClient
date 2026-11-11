@@ -1,30 +1,19 @@
 'use client';
+import { Input as NativeInput } from '@/components/ui/input';
+
+import { uiClass } from '@/components/v5/classes';
+
 import * as uiText from '@/content/fa';
-import { useId, useRef } from 'react';
-import {
-  Paperclip,
-  Upload,
-  FileText,
-  FileImage,
-  CheckCircle2,
-  Clock3,
-  Trash2,
-  X,
-} from 'lucide-react';
+import { useContext, useId, useMemo, useRef, type ReactNode } from 'react';
+import { Upload, FileText, FileImage, Clock3, Trash2, X } from 'lucide-react';
+import { SceneMenuClose, useSceneMenuTools } from '@/components/v5/form-actions';
 import { Button } from '@/components/ui/button';
 import { ErrorState } from '@/components/ui/states';
-import type { components } from '@/generated/api/schema';
 import type { TransferProgress } from '@/lib/api/file-transfer';
 import { formatFileSize } from '../messaging/media-model';
 import s from './lesson-attachments.module.css';
-type S = components['schemas'];
-export type EditorAttachment = {
-  id: string;
-  name: string;
-  sizeBytes?: number;
-  contentType?: string;
-  status?: S['FileAssetStatus'];
-};
+import type { EditorAttachment, PendingLessonAttachment } from './lesson-draft';
+export type { EditorAttachment } from './lesson-draft';
 export function LessonAttachmentEditor({
   assets,
   pending,
@@ -37,74 +26,128 @@ export function LessonAttachmentEditor({
   onCancel,
   onCheck,
   onDismiss,
+  readOnly = false,
+  inMenu = false,
+  menuControls,
+  pickerLabel = uiText.v5Lessons.addAttachment,
+  pickerHint = uiText.v5Lessons.fileHint,
+  fileInputLabel = uiText.text_ab79179420ee,
+  regionLabel = uiText.text_968ea718e159,
 }: {
   assets: EditorAttachment[];
-  pending?: S['FileAssetResult'];
-  uploading: boolean;
-  disabled: boolean;
+  pending?: PendingLessonAttachment;
+  uploading?: boolean;
+  disabled?: boolean;
   progress?: TransferProgress;
   error?: unknown;
-  onPick: (file: File) => void;
-  onRemove: (id: string) => void;
-  onCancel: () => void;
-  onCheck: () => void;
-  onDismiss: () => void;
+  onPick?: (file: File) => void;
+  onRemove?: (id: string) => void;
+  onCancel?: () => void;
+  onCheck?: () => void;
+  onDismiss?: () => void;
+  readOnly?: boolean;
+  inMenu?: boolean;
+  menuControls?: ReactNode;
+  pickerLabel?: string;
+  pickerHint?: string;
+  fileInputLabel?: string;
+  regionLabel?: string;
 }) {
   const input = useRef<HTMLInputElement>(null),
     id = useId();
+  const closeMenu = useContext(SceneMenuClose);
+  const tools = useMemo(
+    () => (
+      <>
+        {menuControls}
+        {!readOnly && onPick && (
+          <Button
+            type="button"
+            variant="outline"
+            disabled={disabled || uploading || !!pending}
+            onClick={() => {
+              input.current?.click();
+              closeMenu?.();
+            }}
+          >
+            {pickerLabel}
+          </Button>
+        )}
+        {!readOnly &&
+          onRemove &&
+          assets.map((asset) => (
+            <Button
+              key={asset.id}
+              type="button"
+              variant="ghost"
+              disabled={disabled || uploading}
+              onClick={() => {
+                onRemove(asset.id);
+                closeMenu?.();
+              }}
+            >
+              <Trash2 size={18} aria-hidden="true" />
+              {uiText.text_d3f1f47d3218 + asset.name}
+            </Button>
+          ))}
+      </>
+    ),
+    [
+      menuControls,
+      readOnly,
+      onPick,
+      onRemove,
+      assets,
+      disabled,
+      uploading,
+      pending,
+      closeMenu,
+      pickerLabel,
+    ],
+  );
+  useSceneMenuTools(tools, inMenu && !readOnly);
   const percent = progress?.total
     ? Math.min(100, Math.round((progress.loaded / progress.total) * 100))
     : null;
   return (
-    <section className={s.panel} aria-label={uiText.text_968ea718e159} aria-busy={uploading}>
-      <header className={s.heading}>
-        <span className={s.icon}>
-          <Paperclip size={22} />
-        </span>
-        <div>
-          <h2>{uiText.text_968ea718e159}</h2>
-          <p>{uiText.text_35b7da5aa84f}</p>
-        </div>
-        <span className={s.count}>
-          {assets.length.toLocaleString('fa-IR')}
-          {uiText.text_8db870221ba1}
-        </span>
-      </header>
-      <div className={s.picker}>
-        <Upload size={27} />
-        <div>
-          <strong>{uiText.text_42c335b87f14}</strong>
-          <p id={id}>{uiText.text_1efc73ab12b4}</p>
-        </div>
-        <Button
+    <section className={uiClass(s.panel)} aria-label={regionLabel} aria-busy={uploading}>
+      {!readOnly && onPick && (!inMenu || !assets.length) && (
+        <button
           type="button"
-          variant="outline"
+          className={uiClass(`upload ${s.picker}`)}
+          aria-label={pickerLabel}
+          aria-describedby={id}
           disabled={disabled || uploading || !!pending}
           onClick={() => input.current?.click()}
         >
-          <Upload size={18} />
-          {uiText.text_eef3e6a8a691}
-        </Button>
-        <input
+          <Upload size={26} aria-hidden="true" />
+          <b>{pickerLabel}</b>
+          <span id={id} className={uiClass(s.hint)}>
+            {pickerHint}
+          </span>
+        </button>
+      )}
+      {!readOnly && onPick && (
+        <NativeInput
           ref={input}
           type="file"
-          className={s.fileInput}
+          className={uiClass(s.fileInput)}
           tabIndex={-1}
           disabled={disabled || uploading || !!pending}
-          aria-label={uiText.text_ab79179420ee}
+          aria-label={fileInputLabel}
           aria-describedby={id}
           onChange={(ev) => {
             const file = ev.target.files?.[0];
             ev.target.value = '';
-            if (file) onPick(file);
+            if (file) onPick?.(file);
           }}
         />
-      </div>
+      )}
       {!!assets.length && (
-        <ul className={s.list}>
+        <ul className={uiClass(s.list)}>
           {assets.map((asset) => (
-            <li key={asset.id}>
-              <span className={s.fileIcon}>
+            <li key={asset.id} className={uiClass('file')}>
+              <span className={uiClass(`doc-icon ${s.fileIcon}`)}>
                 {asset.contentType?.startsWith('image/') ? (
                   <FileImage size={22} />
                 ) : (
@@ -112,7 +155,7 @@ export function LessonAttachmentEditor({
                 )}
               </span>
               <div>
-                <strong dir="auto">{asset.name}</strong>
+                <h4 dir="auto">{asset.name}</h4>
                 <small>
                   {asset.sizeBytes === undefined
                     ? uiText.text_fbfd46e53247
@@ -120,23 +163,24 @@ export function LessonAttachmentEditor({
                   {asset.status === 'Ready' ? uiText.text_1bf987f717ef : ''}
                 </small>
               </div>
-              {asset.status === 'Ready' && <CheckCircle2 size={18} className={s.ready} />}
-              <Button
-                type="button"
-                variant="ghost"
-                size="icon"
-                disabled={disabled || uploading}
-                aria-label={uiText.text_d3f1f47d3218 + asset.name}
-                onClick={() => onRemove(asset.id)}
-              >
-                <Trash2 size={18} />
-              </Button>
+              {!readOnly && !inMenu && onRemove && (
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon"
+                  disabled={disabled || uploading}
+                  aria-label={uiText.text_d3f1f47d3218 + asset.name}
+                  onClick={() => onRemove(asset.id)}
+                >
+                  <Trash2 size={18} />
+                </Button>
+              )}
             </li>
           ))}
         </ul>
       )}
       {uploading && (
-        <div className={s.progress} role="status">
+        <div className={uiClass(s.progress)} role="status">
           <div>
             <strong>
               {progress?.phase === 'processing'
@@ -159,14 +203,14 @@ export function LessonAttachmentEditor({
         </div>
       )}
       {pending && (
-        <div className={s.pending}>
+        <div className={uiClass(s.pending)}>
           <Clock3 size={21} />
           <div>
             <strong dir="auto">{pending.originalFileName}</strong>
             <p role="status">
               {pending.status === 'Pending' ? uiText.text_ab2b2b678ccc : uiText.text_c93466e60cc4}
             </p>
-            <div className={s.actions}>
+            <div className={uiClass(s.actions)}>
               {pending.status === 'Pending' && (
                 <Button
                   type="button"

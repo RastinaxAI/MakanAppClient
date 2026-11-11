@@ -1,3 +1,4 @@
+import { reviewPath } from './review-output';
 import { test, expect, login, schoolSections, fixture } from './test';
 import { mkdir } from 'node:fs/promises';
 const base = '/personal/education';
@@ -9,7 +10,7 @@ test('members and records retain the same selected school destination and naviga
 }) => {
   await request.post(fixture + '/__test__/directory-case');
   await login(context, 'Manager');
-  await mkdir('output/review/manager-navigation', { recursive: true });
+  await mkdir(reviewPath('output/review/manager-navigation'), { recursive: true });
   for (const width of [390, 834, 1440]) {
     await page.setViewportSize({ width, height: 1000 });
     await page.goto(base + '/members');
@@ -33,13 +34,17 @@ test('members and records retain the same selected school destination and naviga
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(
       true,
     );
-    await page.screenshot({ path: `output/review/manager-navigation/records-${width}.png` });
+    await page.screenshot({
+      path: reviewPath(`output/review/manager-navigation/records-${width}.png`),
+    });
     await sections.getByRole('link', { name: 'اعضای آموزشگاه', exact: true }).click();
     await expect(page).toHaveURL(base + '/members');
     await expect(
       sections.getByRole('link', { name: 'اعضای آموزشگاه', exact: true }),
     ).toHaveAttribute('aria-current', 'page');
-    await page.screenshot({ path: `output/review/manager-navigation/members-${width}.png` });
+    await page.screenshot({
+      path: reviewPath(`output/review/manager-navigation/members-${width}.png`),
+    });
   }
 });
 
@@ -50,9 +55,9 @@ test('manager actions and report choices remain clear, reachable and responsive'
 }) => {
   await request.post(fixture + '/__test__/manager-case');
   await login(context, 'Manager');
-  await mkdir('output/review/manager-navigation', { recursive: true });
+  await mkdir(reviewPath('output/review/manager-navigation'), { recursive: true });
   for (const [path, title, action, href] of [
-    ['classes', 'کلاس‌های آموزشگاه', 'ایجاد کلاس', '/classes/new'],
+    ['classes', 'مدیریت کلاس‌های آموزشگاه', 'کلاس تازه', '/classes/new'],
     ['guardians', 'والدین و دسترسی فرزندان', 'افزودن رابطهٔ والد و فرزند', '/guardians/new'],
     ['invitations', 'مدیریت دعوت‌های آموزشگاه', 'دعوت والد برای دانش‌آموز', '/guardians/new'],
     ['reports', 'گزارش‌های آموزشگاه', 'کارکرد معلمان', '/reports?kind=teacher-workload'],
@@ -61,7 +66,6 @@ test('manager actions and report choices remain clear, reachable and responsive'
     await expect(page.getByRole('heading', { name: title, exact: true })).toBeVisible();
     const link = page.getByRole('link', { name: action, exact: true });
     await expect(link).toHaveAttribute('href', base + href);
-    await expect(link.locator('svg').first()).toBeVisible();
     for (const width of [320, 390, 834, 1440]) {
       await page.setViewportSize({ width, height: 1000 });
       await link.scrollIntoViewIfNeeded();
@@ -72,7 +76,9 @@ test('manager actions and report choices remain clear, reachable and responsive'
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(
         true,
       );
-      await page.screenshot({ path: `output/review/manager-navigation/${path}-${width}.png` });
+      await page.screenshot({
+        path: reviewPath(`output/review/manager-navigation/${path}-${width}.png`),
+      });
     }
   }
   const reports = page.getByRole('navigation', { name: 'نوع گزارش مدیر', exact: true });

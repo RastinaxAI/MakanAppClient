@@ -95,9 +95,13 @@ export function sourcesRoute({ state, auth, url, req, body, res, send }) {
       return send({ code: 'SOURCE_ACCESS_DENIED' }, 403);
     return send({
       authorized: true,
-      retrievalAvailable: false,
+      retrievalAvailable:
+        state.aiIntegration?.enabled === true && sources.every((row) => row.aiReady),
       selectedCount: sources.length,
-      errorCode: 'AI_SOURCE_RETRIEVAL_NOT_AVAILABLE',
+      errorCode:
+        state.aiIntegration?.enabled === true && sources.every((row) => row.aiReady)
+          ? null
+          : 'AI_SOURCE_RETRIEVAL_NOT_AVAILABLE',
       commercialStatus: 'NotConsumed',
       versions: sources.map((row) => ({ sourceId: row.sourceId, number: row.revision })),
     });

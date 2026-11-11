@@ -1,4 +1,5 @@
 import { describe, it, expect } from 'vitest';
+import { readFileSync } from 'node:fs';
 import { operationFor, validator, contract } from '@/lib/api/contract';
 const uuid = '00000000-0000-4000-8000-000000000001';
 describe('Live schema contracts', () => {
@@ -177,5 +178,20 @@ describe('Live schema contracts', () => {
   });
   it('contains no removed MFA operations', () => {
     expect(operationFor('GET', '/api/admin/v1/mfa')).toBeUndefined();
+  });
+  it('keeps the live Knowledge routes outside the executable admin contract', () => {
+    const snapshot = JSON.parse(
+      readFileSync(new URL('../../contracts/openapi.json', import.meta.url), 'utf8'),
+    );
+    const paths = Object.keys(snapshot.paths).filter(
+      (path) => path.startsWith('/api/v1/') && path.includes('/knowledge/'),
+    );
+    expect(paths.length).toBeGreaterThan(0);
+    for (const path of paths) {
+      const concrete = path.replace('{sourceId}', uuid).replace('{version}', '1');
+      for (const method of Object.keys(snapshot.paths[path]))
+        expect(operationFor(method.toUpperCase(), concrete)).toBeUndefined();
+    }
+    expect(Object.keys(contract.schemas).some((name) => name.startsWith('Knowledge'))).toBe(false);
   });
 });

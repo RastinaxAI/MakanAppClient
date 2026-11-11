@@ -1,0 +1,51 @@
+.filter {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 44px;
+  min-width: 44px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--muted);
+  font-size: calc(13px * var(--text-scale, 1));
+  cursor: pointer;
+}
+.filter input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+.filter[data-active='true'] {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--soft);
+}
+.filter:has(input:focus-visible) {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+.title {
+  font-size: calc(16px * var(--text-scale, 1));
+  font-weight: 700;
+}
+.time {
+  font-size: calc(11px * var(--text-scale, 1));
+  color: var(--muted);
+}
+.actions {
+  display: flex;
+  align-items: center;
+  flex: none;
+  gap: 2px;
+}
+@media (max-width: 767px) {
+  .actions {
+    flex-direction: column;
+  }
+}

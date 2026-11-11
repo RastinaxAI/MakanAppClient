@@ -13,12 +13,12 @@
   flex-wrap: wrap;
 }
 .heading h1 {
-  font-size: 26px;
+  font-size: calc(26px * var(--text-scale, 1));
   line-height: 1.7;
 }
 .heading p,
 .hint {
-  font-size: 12px;
+  font-size: calc(12px * var(--text-scale, 1));
   color: var(--muted);
   line-height: 1.9;
 }
@@ -32,7 +32,7 @@
   gap: 16px;
 }
 .panel h2 {
-  font-size: 18px;
+  font-size: calc(18px * var(--text-scale, 1));
 }
 .grid {
   display: grid;
@@ -53,10 +53,15 @@
   gap: 12px;
   flex-wrap: wrap;
 }
+.paymentAttempt {
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+}
 .field {
   display: grid;
   gap: 8px;
-  font-size: 13px;
+  font-size: calc(13px * var(--text-scale, 1));
 }
 .field input,
 .field select {
@@ -71,7 +76,7 @@
   display: flex;
   justify-content: space-between;
   gap: 18px;
-  font-size: 13px;
+  font-size: calc(13px * var(--text-scale, 1));
   line-height: 1.9;
 }
 .detail dt {
@@ -82,7 +87,7 @@
   overflow-wrap: anywhere;
 }
 .price {
-  font-size: 24px;
+  font-size: calc(24px * var(--text-scale, 1));
   color: var(--primary);
   font-weight: 750;
 }
@@ -101,7 +106,7 @@
   gap: 10px;
 }
 .status {
-  font-size: 13px;
+  font-size: calc(13px * var(--text-scale, 1));
   color: var(--primary);
   background: var(--primary-soft);
   padding: 8px 12px;
@@ -116,10 +121,10 @@
   gap: 8px;
 }
 .quota h3 {
-  font-size: 14px;
+  font-size: calc(14px * var(--text-scale, 1));
 }
 .quota p {
-  font-size: 12px;
+  font-size: calc(12px * var(--text-scale, 1));
   color: var(--muted);
   line-height: 1.9;
 }
@@ -131,7 +136,7 @@
   gap: 16px;
 }
 .meta {
-  font-size: 12px;
+  font-size: calc(12px * var(--text-scale, 1));
   color: var(--muted);
   line-height: 1.9;
   overflow-wrap: anywhere;
@@ -144,7 +149,7 @@
     padding: 18px;
   }
   .heading h1 {
-    font-size: 23px;
+    font-size: calc(23px * var(--text-scale, 1));
   }
   .detail > div {
     flex-wrap: wrap;

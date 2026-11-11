@@ -1,3 +1,5 @@
+import { selectParentChild } from './parent-controls';
+import { captureExactState } from './exact-state-capture';
 import { test, expect, login, fixture, ids, origin } from './test';
 const root = '/personal/education',
   attempt = '00000000-0000-4000-8000-000000000007',
@@ -10,7 +12,7 @@ test('background session checks do not cancel a foreground child selection', asy
   await request.post(fixture + '/__test__/design');
   await login(context, 'Parent');
   await page.goto(root);
-  await expect(page.getByRole('combobox', { name: 'انتخاب فرزند', exact: true })).toBeVisible();
+  await expect(page.locator('[data-v5-scene="MK-116"]')).toBeVisible();
   await page.waitForResponse(
     (r) => r.url().includes('/realtime/changes?') && new URL(r.url()).searchParams.has('cursor'),
   );
@@ -29,9 +31,7 @@ test('background session checks do not cancel a foreground child selection', asy
     await route.continue();
   });
   try {
-    await page
-      .getByRole('combobox', { name: 'انتخاب فرزند', exact: true })
-      .selectOption('00000000-0000-4000-8000-000000000501');
+    await selectParentChild(page, '00000000-0000-4000-8000-000000000501');
     await started;
     await page.evaluate(() => document.dispatchEvent(new Event('visibilitychange')));
     expect(foregroundRequests).toBe(1);
@@ -192,11 +192,17 @@ test('personal commerce shows unknown usage honestly and an order never activate
     .getByRole('combobox', { name: 'پلن', exact: true })
     .selectOption({ label: 'پلن آزمون محلی · ۱۰۰ تومان' });
   await page.getByRole('button', { name: 'دریافت برآورد هزینه', exact: true }).click();
+  await captureExactState(page, ['MK-383']);
+
   await page.getByRole('button', { name: 'ساخت سفارش در انتظار پرداخت', exact: true }).click();
+  await captureExactState(page, ['MK-454']);
+
   await page.getByRole('dialog').getByRole('button', { name: 'ثبت سفارش', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'سفارش ثبت شد', exact: true })).toBeVisible();
   await expect(page.getByText('بدون اشتراک', { exact: true })).toBeVisible();
   await expect(page.getByText(/وضعیت: در انتظار پرداخت/)).toBeVisible();
+  await captureExactState(page, ['MK-384']);
+
   await page.goto('/personal/subscription?scope=organization');
   await expect(page.getByRole('main').getByRole('alert')).toContainText('دسترسی محدود');
 });

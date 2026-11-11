@@ -35,9 +35,12 @@ const files = [
   'docs/SERVER.md',
   'docs/DEVELOPMENT.md',
   'docs/LIBRARY.md',
+  'docs/FINANCE.md',
   'docs/INTEGRATION-154c437.md',
   'docs/INTEGRATION-80c2e61.md',
   'docs/INTEGRATION-VNEXT.md',
+  'docs/INTEGRATION-6f8edf8.md',
+  'docs/INTEGRATION-e5bd3ea.md',
   'docs/PERSONAL-CLASSES.md',
 ];
 async function collect(directory) {

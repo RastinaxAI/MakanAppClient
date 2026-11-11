@@ -1,0 +1,57 @@
+{
+  "updatedAt": "2026-11-09T11:20:58.178209+00:00",
+  "buildId": "yZYQ46rh1RWd0Htax3z4P",
+  "cases": [
+    "period-create",
+    "session-create"
+  ],
+  "changes": [
+    "Native real draft summary, reference labels, compact datetime only in explicit forms.",
+    "Wrong-organization period create acknowledgment rejected.",
+    "Shared field gap7 and responsive workflow gap follow design CSS."
+  ],
+  "browser": {
+    "status": "passed_in_3_independent_serial_batches",
+    "passed": 80,
+    "files": 15,
+    "failed": 0,
+    "skipped": 0,
+    "flaky": 0,
+    "receipts": "tmp/exact-v1/browser-sixtyfirst-receipts.json",
+    "sameCompiledBuild": true,
+    "scope": "Targeted regression; not all 347 current browser tests."
+  },
+  "visual": {
+    "captured": 24,
+    "verified": 24,
+    "errors": 0,
+    "overflow": 0,
+    "archive": "output/review/exact-v1/after-sixtyfirst-forms",
+    "fourFormUnreviewedAtLeast4": 0,
+    "booleanInventory": "Actual/reference MK142 labels/types/checked states match, including required readiness checkbox and late switch."
+  },
+  "responsive": {
+    "boundaryConfigurations": 44,
+    "largeTextConfigurations": 44,
+    "families": 4,
+    "widths": [
+      320,
+      360,
+      390,
+      430,
+      768,
+      834,
+      1024,
+      1194,
+      1280,
+      1440,
+      1920
+    ],
+    "theme": "light",
+    "errors": 0,
+    "overflow": 0,
+    "pngDimensionsVerified": true,
+    "receipts": "tmp/exact-v1/responsive-sixtyfirst-forms-receipts.json"
+  },
+  "limitations": "Evidence covers these seeded states; full58 evidence remains separate and other matrix states are unfinished."
+}

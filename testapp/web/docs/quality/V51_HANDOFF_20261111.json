@@ -1,0 +1,656 @@
+{
+  "createdAtUtc": "2026-11-10T22:48:04.443545+00:00",
+  "startedAtUtc": "2026-11-10T20:57:50Z",
+  "previewBuildId": "GBYineBMWr9ww3mJGTI0t",
+  "previousBuildId": "M2TRK4sxgygtqKnwXh0DD",
+  "standalone": {
+    "archive": "/home/omidreza-bagheriyan/Desktop/MakanApp-cleanup-backup-2026-11-11/v51/MakanApp-V5.1-Next-standalone-20261111.tar.gz",
+    "sha256": "fe0b093bfd1f4f5922477fdcfe120d2df0d87db0708b9878507ad5cee43ea6f1",
+    "bytes": 18477052,
+    "standaloneBuildId": "L5kI9_a3UwjYZJah0THYq",
+    "files": 2457,
+    "runtimeBytes": 57938425,
+    "secretEnvIncluded": false,
+    "designReferenceIncluded": false,
+    "qaIncluded": false,
+    "dockerExecuted": false,
+    "priorArtifactArchived": "/home/omidreza-bagheriyan/Desktop/MakanApp-cleanup-backup-2026-11-11/v51/MakanApp-V5.1-Next-standalone-20261111-build7.tar.gz"
+  },
+  "sourceChanges": [
+    {
+      "path": "src/components/ui/button.module.css",
+      "beforeBytes": 1348,
+      "afterBytes": 1348,
+      "beforeSha256": "0bce821564428b6a9d02365a8ad49f14840c3395ee48e34fa7383a86ba4e09d3",
+      "afterSha256": "45f1bbb629079b9fed5b11a5eb97e4de0bf66b499c8fbcb11effb6cce735ae9b"
+    },
+    {
+      "path": "src/components/ui/dialog.module.css",
+      "beforeBytes": 6865,
+      "afterBytes": 6942,
+      "beforeSha256": "ffe2bcafa3384c6790eba9ba99e5e82d82e1a1b842018df822437114458776a8",
+      "afterSha256": "a3aef28973bd337426ff70aae14d7ad083293f7265205d51ee7bbbee8f80d3bc"
+    },
+    {
+      "path": "src/components/ui/field.module.css",
+      "beforeBytes": 6719,
+      "afterBytes": 6715,
+      "beforeSha256": "ebdbfa2dad3acf62110deb05bef914825e47cf6d09e9098a5f0bb96e8ebe377d",
+      "afterSha256": "6cea3a9bd20c4b754ef389a30bfe53b75af1426403d60477a286e5de381a38c8"
+    },
+    {
+      "path": "src/components/v4/page.tsx",
+      "beforeBytes": 6154,
+      "afterBytes": 6696,
+      "beforeSha256": "2afef63159d4aeeffd9bce6f8e6e45b3367812437fb1cd64cfc5a422400966f2",
+      "afterSha256": "4abfbdcbdce7d3985e3d32be3815fe184aafdc32d82678996fd6c76359534751"
+    },
+    {
+      "path": "src/components/v5/form-actions.tsx",
+      "beforeBytes": 1762,
+      "afterBytes": 2729,
+      "beforeSha256": "ba412c18112a4e84a69909a89c4f2ace20e5bc6fe7b73821b81b267668830c73",
+      "afterSha256": "05e763ad8785e2a6a78fd427ee5a086e627c05ad8972b9450efffc0065a3ec4e"
+    },
+    {
+      "path": "src/components/v5/foundations.module.css",
+      "beforeBytes": 49378,
+      "afterBytes": 48790,
+      "beforeSha256": "2d6240d7146986f65da8190593ed11c0d8011fe9b73bba2309f2fe038301b485",
+      "afterSha256": "8ae37c2d9ef0778ae39ea4be3ed5dea9f83551ee598ac3ea3d76998db151ce08"
+    },
+    {
+      "path": "src/components/v5/frame.module.css",
+      "beforeBytes": 5656,
+      "afterBytes": 7145,
+      "beforeSha256": "3f067ba5a130ac4a2f4424761a52274a66d9b000d22591a7705134f195aa1dc9",
+      "afterSha256": "80cb8d8a8d57b27377492b9bf3b8435145f079ed3f12796b10d56cc8aa722846"
+    },
+    {
+      "path": "src/components/v5/scene.module.css",
+      "beforeBytes": 3271,
+      "afterBytes": 4684,
+      "beforeSha256": "08a62755d637313387185835b03e28688fe465fde93c3c98f0718a8dc14d346b",
+      "afterSha256": "88fb5b8a44db6ca215c45c4cf9b58772c7de8287b3d9109b350802f9465d8920"
+    },
+    {
+      "path": "src/components/v5/scene.tsx",
+      "beforeBytes": 8317,
+      "afterBytes": 9545,
+      "beforeSha256": "7fe2d86026b4ac15c73fda2078bc626ce23099956758f4206c6f48fde80b2b94",
+      "afterSha256": "6639b8c8a1b0566747b0f18298564958710d74d73a7b04b77b0d98e56a9c2fd4"
+    },
+    {
+      "path": "src/content/fa.ts",
+      "beforeBytes": 664663,
+      "afterBytes": 666632,
+      "beforeSha256": "a0cb2f498bfbd1b6291d5d9bac989af30fc339370d5ed2989a683fc7587655fd",
+      "afterSha256": "537453c743d937a455ac711262aeb4cc076ae519b9033faaee8ee5ac9678f639"
+    },
+    {
+      "path": "src/design/tokens.css",
+      "beforeBytes": 3540,
+      "afterBytes": 3540,
+      "beforeSha256": "37a01afc5bd67020d153e1db6566a2a26a8659872a1752bfc2ebd9941986449f",
+      "afterSha256": "a9d289d5d7ac2e72fb1cbf9ebc81f2f31ea48652adb6fb3541eefed3ffa082f6"
+    },
+    {
+      "path": "src/features/auth/login.module.css",
+      "beforeBytes": 3102,
+      "afterBytes": 3246,
+      "beforeSha256": "e62d160701160a2a706bb1cb561bb47806c1607aa85f2502a52cad2e3b1a71db",
+      "afterSha256": "eb500800002e72f722335f1f5e2145b502f799ee9f8153ee8e79901701515ac9"
+    },
+    {
+      "path": "src/features/auth/login.tsx",
+      "beforeBytes": 14898,
+      "afterBytes": 15503,
+      "beforeSha256": "767f05bcaa2f30c5e374ab4e88d4c3bc5f2e38ffd7042689cc7b8105234d32d9",
+      "afterSha256": "289c5567cddf4f7e62189b1803f7d9d025b019e3a07bf01550d2830ffcc4f129"
+    },
+    {
+      "path": "src/features/extracurricular/api-model.ts",
+      "beforeBytes": 2254,
+      "afterBytes": 2395,
+      "beforeSha256": "d07d52613ac48c126bab0aa7183c6bcd868b6ee5630c513aec4b9756445a132d",
+      "afterSha256": "70af1d6c7178f7e80b34efbbff686d6ca0b7557078953d74834ac951878aa881"
+    },
+    {
+      "path": "src/features/extracurricular/class-management.tsx",
+      "beforeBytes": 36792,
+      "afterBytes": 36946,
+      "beforeSha256": "3af11db48f1c8c7d4a5080d5883b480652cc6386062797c740d6e99b10a9c849",
+      "afterSha256": "5de6bf7e3b913275270343bafe6797ad6f58272712cc6dbee8692a198afff267"
+    },
+    {
+      "path": "src/features/extracurricular/connected.module.css",
+      "beforeBytes": 1776,
+      "afterBytes": 2230,
+      "beforeSha256": "5ba57d418f643ca818e53f96e1dc7f15539039abc7eea45ae259a6b268ea0629",
+      "afterSha256": "1d1b826a420977565055050a2eabce4a7d60ef0348c44dee8eb7a48a0abffbd7"
+    },
+    {
+      "path": "src/features/extracurricular/connected.tsx",
+      "beforeBytes": 24453,
+      "afterBytes": 29671,
+      "beforeSha256": "0a63b709a0b1a67e6b7f9ebf1db9a0606119b7ac820633378ce731b89cc20f91",
+      "afterSha256": "08a1a2b105eaf6c65b5a6a44f1d07e69e205d8610bcf8ccaa516786f98131b71"
+    },
+    {
+      "path": "src/features/extracurricular/formation-wizard.module.css",
+      "beforeBytes": 1850,
+      "afterBytes": 1747,
+      "beforeSha256": "44f10e5621a47f5fb4a1ef683f06f18a3ebbaac00ae341bb30d1729e6947ff69",
+      "afterSha256": "630d994c0058d9998e73cec7681a2128ae9abc895cc366117451278ad36503a8"
+    },
+    {
+      "path": "src/features/extracurricular/learning.tsx",
+      "beforeBytes": 6949,
+      "afterBytes": 7748,
+      "beforeSha256": "1672b8b99cbaf80a2e2882985e058aedbb165dfab31fd5a98a301e39df92353d",
+      "afterSha256": "f13b2cdc984875d04e31b19792310ef3c81e285b57d7901c47d3f5442a28a4c5"
+    },
+    {
+      "path": "src/features/personal/assistant/result.tsx",
+      "beforeBytes": 6250,
+      "afterBytes": 6489,
+      "beforeSha256": "a46276038b6292f4f177154c481f74a5212ebb98324e5afbff0cfe6ca3d6873e",
+      "afterSha256": "76bc3ddb9920b42f639141aafbb40ab5a38671a7252768f0cd5a1b0bfdbcceb1"
+    },
+    {
+      "path": "src/features/personal/commerce.tsx",
+      "beforeBytes": 17052,
+      "afterBytes": 17489,
+      "beforeSha256": "61e68cbe4f99a7df37114ed9650bc5ba5c2dd84c8944cd5cf13fb27d38f4b33d",
+      "afterSha256": "31a3a6cd8a650eb5431eb6ed5d77e07701b3d7194582edf3bdeb5ca8707e30e7"
+    },
+    {
+      "path": "src/features/personal/messaging/conversation-room.tsx",
+      "beforeBytes": 38537,
+      "afterBytes": 39582,
+      "beforeSha256": "550a02a628851ee0cc4a4b37c621e69393e5dec314c1bb8d412cc944c9fd10ca",
+      "afterSha256": "6e5cdcc7463f2ac6f9d1eeda7ec04b0ca49033ca67014599a7ebf6afeaf2111a"
+    },
+    {
+      "path": "src/features/personal/messaging/inbox.module.css",
+      "beforeBytes": 4610,
+      "afterBytes": 3917,
+      "beforeSha256": "b2d9d3fc1f325e3f33d326ae9f7b059420daf133b63b1d1aaff95c0f3b44833a",
+      "afterSha256": "5c17fdb7a92a785a755975b65cca3e934213bc177621174313f2c681509b9cd6"
+    },
+    {
+      "path": "src/features/personal/messaging/messenger.module.css",
+      "beforeBytes": 24533,
+      "afterBytes": 24666,
+      "beforeSha256": "45f6b2e0d9c1456e6ee49219cee88233c49b7b67dcf73770defe6f08bb21022a",
+      "afterSha256": "bb1e4ce671b316de2f88d2d3762bdd8810990277c715418982b4d842dd367394"
+    },
+    {
+      "path": "src/features/personal/messaging/messenger.tsx",
+      "beforeBytes": 17114,
+      "afterBytes": 16803,
+      "beforeSha256": "33aae74029bc79b9aaf4b24b5b86e5a498b19ed0754eed2d725804f8086f7fef",
+      "afterSha256": "ff9df15f88f257495e043ea52e6ca7bee14fbd98ee0e3197e657fd531aa38e3a"
+    },
+    {
+      "path": "src/features/personal/shell.module.css",
+      "beforeBytes": 7339,
+      "afterBytes": 7389,
+      "beforeSha256": "d75eeec75013ea0f23e34f3a2d11d2ecf65f4c772f1f3a4359f8beeda3b88aaf",
+      "afterSha256": "68898cdbd7f78a82d01ca1978d761a472b3ee7c54dd61b657576861bad96537a"
+    },
+    {
+      "path": "src/features/personal/shell.tsx",
+      "beforeBytes": 17142,
+      "afterBytes": 16896,
+      "beforeSha256": "920666db1ab719c7ea9762bfac1fbab187078e0f1520cff57279c96108c3307c",
+      "afterSha256": "054ed02f609dbd20978d649f3c6305a65d75960b7df3307234cf53439219ec02"
+    },
+    {
+      "path": "src/features/reference/assistant.module.css",
+      "beforeBytes": 1964,
+      "afterBytes": 2317,
+      "beforeSha256": "b279ea9cd5de14ffcadd89c343bcd70ccd7e334b6f73c9ad9edf067348979e54",
+      "afterSha256": "7af67300779b226f5e2d2e6ea01fce5c41efe305e8ea4e86fc40f7083a63253b"
+    },
+    {
+      "path": "src/features/reference/connected-assistant.tsx",
+      "beforeBytes": 18415,
+      "afterBytes": 20581,
+      "beforeSha256": "8bcfcde61be7ecc3bdcb1983e9aa89bbce2f4273bbdd9da9813458555909d4ee",
+      "afterSha256": "774376c32a54ac50db332067d07a6bf5180ad7f2b703da076270b544a7fdf18c"
+    },
+    {
+      "path": "src/features/reference/connected-profile.tsx",
+      "beforeBytes": 6966,
+      "afterBytes": 7154,
+      "beforeSha256": "32b311f4eaed3464129fa150b8a75e99ce7e4275c11806bdff49d961f10f3561",
+      "afterSha256": "756745478036a089f31ff86d5bdc52c90a95f7b2eb8328b7c8e1bb9ef1943e60"
+    },
+    {
+      "path": "tests/browser/assistant-recovery.spec.ts",
+      "beforeBytes": 6697,
+      "afterBytes": 6757,
+      "beforeSha256": "5aefbeb6c1ad722f45f37ba8f3a047d27ddf080f09aca2db637fbd9c9197306c",
+      "afterSha256": "eb5958e75e3b121418c68b9e9aae01cf15b7d9f3e7f58ad9c7e272c6eae4fa90"
+    },
+    {
+      "path": "tests/browser/assistant-theme.spec.ts",
+      "beforeBytes": 4653,
+      "afterBytes": 4795,
+      "beforeSha256": "a3ab2386e04dafccea34a997e7bcf6758e09a65bfd9b57106df6fbcf6f3c3c1c",
+      "afterSha256": "8c7443e2e39c286adf0755db91364905a06316865b8f3ef63dd9a0ce7f9a045e"
+    },
+    {
+      "path": "tests/browser/exact-formation-native.spec.ts",
+      "beforeBytes": 4176,
+      "afterBytes": 7012,
+      "beforeSha256": "3465d671d437a67df82633c13f80a1c5a91612bc75e19399b5bc03fd227988f9",
+      "afterSha256": "a858701b22db1045206fe668caed78e5045d38ef5e8e2009c4f0e1359ad8efd6"
+    },
+    {
+      "path": "tests/browser/payment-recovery.spec.ts",
+      "beforeBytes": 13201,
+      "afterBytes": 13359,
+      "beforeSha256": "0654244ed583c2be861f34c0e7ebb9444220c6cd15c30d7e3e8d289f497ac2d4",
+      "afterSha256": "6061365e0d75b554d245749f88c63ab1c802ddd7aaae723fe36829ea454f5542"
+    },
+    {
+      "path": "tests/browser/release-80c.spec.ts",
+      "beforeBytes": 18640,
+      "afterBytes": 20314,
+      "beforeSha256": "bb14c5e5a7ebcc765f408dad5658e1780e836b158a18b7ec0e0a229055e312c5",
+      "afterSha256": "41a4b2db07a52b91d6e19ac7cada4555ed54f38540379a5159938f9e53c77605"
+    },
+    {
+      "path": "tests/browser/sign-in-layout.spec.ts",
+      "beforeBytes": 6998,
+      "afterBytes": 6891,
+      "beforeSha256": "3f1a9ded08432e9b11dcaa1de01d10878c9c53b6ce4aaf2efae0559e9b6bbc2b",
+      "afterSha256": "03b813562da325b98600af8e624cc81ce6605f7ffb83f9c9c6e9705bd7b16f2d"
+    },
+    {
+      "path": "scripts/build-design.mjs",
+      "beforeBytes": 3249,
+      "afterBytes": 3271,
+      "beforeSha256": "9d55c2f6ff98e265b4eff83ba4a07c3922409ff2928bfb63fb369b713dd9b48b",
+      "afterSha256": "ab0108b8facc0024dc7f431f504d77e31b7e0b65f7c1b738ab69981c2c10b428"
+    },
+    {
+      "path": "design/tokens.json",
+      "beforeBytes": 2421,
+      "afterBytes": 2419,
+      "beforeSha256": "d0753b4d2af6c260ad43012bc07645b70eb71a4101bf5b4e6e0fc06e35e70974",
+      "afterSha256": "885b608b9d6bda265db45d93cfcbd91f3a571c0af7fee5f6f537d58794013733"
+    }
+  ],
+  "checks": {
+    "build": "Next production Turbopack + TypeScript passed",
+    "standaloneBuild": "Next production webpack standalone passed",
+    "unit": {
+      "files": 73,
+      "passed": 494,
+      "failed": 0
+    },
+    "lint": "313 source boundaries; no cycles or unused declarations",
+    "format": "All matched source/test/tool files pass Prettier",
+    "generated": "329 client operations; 571 server schemas; 84 browser schema closure; zero platform owner operations",
+    "browser": {
+      "startTime": "2026-11-10T22:39:42.631Z",
+      "duration": 165939.04499999998,
+      "expected": 68,
+      "skipped": 5,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "standaloneSmoke": {
+      "runtime": "ordinary standalone webpack build; declared isolated fixture backend; no live backend mutations",
+      "checks": [
+        {
+          "name": "ordinary challenge",
+          "pass": true
+        },
+        {
+          "name": "ordinary verification",
+          "pass": true
+        },
+        {
+          "name": "no overflow 390",
+          "pass": true
+        },
+        {
+          "name": "font 390",
+          "pass": true
+        },
+        {
+          "name": "ordinary UI without fixture indicator 390",
+          "pass": true
+        },
+        {
+          "name": "five destinations 390",
+          "pass": true
+        },
+        {
+          "name": "no overflow 834",
+          "pass": true
+        },
+        {
+          "name": "font 834",
+          "pass": true
+        },
+        {
+          "name": "ordinary UI without fixture indicator 834",
+          "pass": true
+        },
+        {
+          "name": "five destinations 834",
+          "pass": true
+        },
+        {
+          "name": "no overflow 1440",
+          "pass": true
+        },
+        {
+          "name": "font 1440",
+          "pass": true
+        },
+        {
+          "name": "ordinary UI without fixture indicator 1440",
+          "pass": true
+        },
+        {
+          "name": "five destinations 1440",
+          "pass": true
+        },
+        {
+          "name": "desktop context is 280",
+          "pass": true
+        },
+        {
+          "name": "proposal off in ordinary runtime",
+          "pass": true
+        },
+        {
+          "name": "owner API closed",
+          "pass": true
+        },
+        {
+          "name": "provider callback closed",
+          "pass": true
+        },
+        {
+          "name": "no page errors",
+          "pass": true
+        }
+      ]
+    },
+    "nativeImages": 78,
+    "beforeImages": 24,
+    "afterImages": 24,
+    "referenceImages": 54,
+    "boundaryChecks": 224,
+    "boundaryFailures": 0,
+    "nativeOverflowOrPageErrors": 0,
+    "cascadeRecords": 36,
+    "galleryIntegrity": {
+      "errors": [],
+      "missing": [],
+      "nativeOptions": 78,
+      "comparisonSelections": 24
+    }
+  },
+  "performance": {
+    "rawJsChunkBytes": 2790709,
+    "baselineRawJsChunkBytes": 2748654,
+    "measurement": "Sum of all generated JS chunks on disk, not a page transfer size or network benchmark.",
+    "newRuntimeDependencies": 0
+  },
+  "coverage": {
+    "totalRows": 568,
+    "rowsWithCurrentImages": 29,
+    "implementationStatuses": {
+      "shared_visual_components_updated_individual_state_not_revalidated": 445,
+      "superseded_audience_fields_removed_step_url_aliases_details": 1,
+      "proposal_disabled": 37,
+      "separate_owner_application_preserved": 48,
+      "public_welcome_only_sales_landing_contract_pending": 1,
+      "implemented": 24,
+      "implemented_three_steps": 1,
+      "implemented_create_then_submit_with_reconciliation": 1,
+      "implemented_permission_guarded_dialog": 1,
+      "implemented_server_roles_and_capabilities": 1,
+      "implemented_archive_confirmation": 1,
+      "implemented_live_response_required_not_fabricated": 1,
+      "implemented_personal_subscription_owner_guard": 1,
+      "implemented_published_catalog_only": 1,
+      "implemented_frozen_order_intent": 1,
+      "implemented_same_attempt_recovery": 1,
+      "implemented_server_receipt": 1,
+      "implemented_stale_version_retains_draft": 1
+    },
+    "note": "Implemented means an existing product route/component supplies the state; it is not proof every row was exercised or matched pixel-for-pixel. Owner/proposal/contract gaps remain explicit."
+  },
+  "live": {
+    "observedAtUtc": "2026-11-10T22:14:27.269Z",
+    "backend": "http://94.184.32.84:8090",
+    "roles": [
+      {
+        "role": "Student",
+        "authentication": 200,
+        "workspace": 200,
+        "inbox": {
+          "httpStatus": 200,
+          "count": 4
+        },
+        "school": {
+          "httpStatus": 200
+        },
+        "personal": {
+          "httpStatus": 200,
+          "state": "NoSubscription",
+          "hasVerifiedCommercialContract": false,
+          "migrationStatus": "NotApplicable"
+        },
+        "organization": {
+          "httpStatus": 403
+        },
+        "preflights": [
+          {
+            "payer": "Organization",
+            "httpStatus": 200,
+            "allowed": false,
+            "errorCode": "SUBSCRIPTION_INACTIVE",
+            "remaining": 0
+          },
+          {
+            "payer": "Individual",
+            "httpStatus": 200,
+            "allowed": false,
+            "errorCode": "SUBSCRIPTION_INACTIVE",
+            "remaining": 0
+          },
+          {
+            "payer": "FreeTrial",
+            "httpStatus": 200,
+            "allowed": true,
+            "remaining": 3
+          }
+        ],
+        "aiHttpStatus": 200,
+        "aiAnswerValidation": "Nested answer.text was not inspected by this API checker; its answerPresent=false was a checker shape error, not evidence of an empty server answer.",
+        "profileValidation": "GET /api/v1/me is validated by the login BFF. The diagnostic /me/profile URL was invalid and is excluded from product failure counts."
+      },
+      {
+        "role": "Teacher",
+        "authentication": 200,
+        "workspace": 200,
+        "inbox": {
+          "httpStatus": 200,
+          "count": 3
+        },
+        "school": {
+          "httpStatus": 200
+        },
+        "personal": {
+          "httpStatus": 200,
+          "state": "NoSubscription",
+          "hasVerifiedCommercialContract": false,
+          "migrationStatus": "NotApplicable"
+        },
+        "organization": {
+          "httpStatus": 403
+        },
+        "preflights": [
+          {
+            "payer": "Organization",
+            "httpStatus": 200,
+            "allowed": false,
+            "errorCode": "SUBSCRIPTION_INACTIVE",
+            "remaining": 0
+          },
+          {
+            "payer": "Individual",
+            "httpStatus": 200,
+            "allowed": false,
+            "errorCode": "SUBSCRIPTION_INACTIVE",
+            "remaining": 0
+          },
+          {
+            "payer": "FreeTrial",
+            "httpStatus": 200,
+            "allowed": true,
+            "remaining": 3
+          }
+        ],
+        "aiHttpStatus": 200,
+        "aiAnswerValidation": "Nested answer.text was not inspected by this API checker; its answerPresent=false was a checker shape error, not evidence of an empty server answer.",
+        "profileValidation": "GET /api/v1/me is validated by the login BFF. The diagnostic /me/profile URL was invalid and is excluded from product failure counts."
+      },
+      {
+        "role": "Parent",
+        "authentication": 200,
+        "workspace": 200,
+        "inbox": {
+          "httpStatus": 200,
+          "count": 0
+        },
+        "school": {
+          "httpStatus": 200
+        },
+        "personal": {
+          "httpStatus": 200,
+          "state": "NoSubscription",
+          "hasVerifiedCommercialContract": false,
+          "migrationStatus": "NotApplicable"
+        },
+        "organization": {
+          "httpStatus": 403
+        },
+        "preflights": [
+          {
+            "payer": "Organization",
+            "httpStatus": 200,
+            "allowed": false,
+            "errorCode": "SUBSCRIPTION_INACTIVE",
+            "remaining": 0
+          },
+          {
+            "payer": "Individual",
+            "httpStatus": 200,
+            "allowed": false,
+            "errorCode": "SUBSCRIPTION_INACTIVE",
+            "remaining": 0
+          },
+          {
+            "payer": "FreeTrial",
+            "httpStatus": 200,
+            "allowed": true,
+            "remaining": 3
+          }
+        ],
+        "aiHttpStatus": 200,
+        "aiAnswerValidation": "Nested answer.text was not inspected by this API checker; its answerPresent=false was a checker shape error, not evidence of an empty server answer.",
+        "profileValidation": "GET /api/v1/me is validated by the login BFF. The diagnostic /me/profile URL was invalid and is excluded from product failure counts."
+      },
+      {
+        "role": "Manager",
+        "authentication": 200,
+        "workspace": 200,
+        "inbox": {
+          "httpStatus": 200,
+          "count": 1
+        },
+        "school": {
+          "httpStatus": 200
+        },
+        "personal": {
+          "httpStatus": 200,
+          "state": "NoSubscription",
+          "hasVerifiedCommercialContract": false,
+          "migrationStatus": "NotApplicable"
+        },
+        "organization": {
+          "httpStatus": 200,
+          "state": "NoSubscription",
+          "hasVerifiedCommercialContract": false,
+          "migrationStatus": "AwaitingValidContract"
+        },
+        "preflights": [
+          {
+            "payer": "Organization",
+            "httpStatus": 200,
+            "allowed": false,
+            "errorCode": "SUBSCRIPTION_INACTIVE",
+            "remaining": 0
+          },
+          {
+            "payer": "Individual",
+            "httpStatus": 200,
+            "allowed": false,
+            "errorCode": "SUBSCRIPTION_INACTIVE",
+            "remaining": 0
+          },
+          {
+            "payer": "FreeTrial",
+            "httpStatus": 200,
+            "allowed": true,
+            "remaining": 3
+          }
+        ],
+        "aiHttpStatus": 200,
+        "aiAnswerValidation": "Nested answer.text was not inspected by this API checker; its answerPresent=false was a checker shape error, not evidence of an empty server answer.",
+        "profileValidation": "GET /api/v1/me is validated by the login BFF. The diagnostic /me/profile URL was invalid and is excluded from product failure counts."
+      }
+    ],
+    "studentUi": {
+      "role": "Student",
+      "payer": "FreeTrial",
+      "attempts": 1,
+      "buildId": "Mh3kINRytoWaFj9kyQy5U",
+      "httpStatus": 200,
+      "answerPresent": true,
+      "answerLength": 147,
+      "keys": [
+        "requestId",
+        "correlationId",
+        "conversationId",
+        "answer",
+        "insights",
+        "risks",
+        "recommendations",
+        "sources"
+      ]
+    },
+    "mutations": "Five explicitly authorized test AI calls total: two Student, one each other role. No live messages, invitations, purchases, school/profile writes, or role changes this stage.",
+    "paidOrganization": "NoSubscription; AwaitingValidContract; no verified commercial contract. FreeTrial success does not prove paid organizational service.",
+    "ingestRag": "Not newly written or end-to-end verified against live backend."
+  },
+  "limits": [
+    "All 568 states were not individually exercised or visually accepted.",
+    "Reference sample persons/counts/subscriptions are not injected into normal runtime.",
+    "Organizational paid AI remains blocked by current backend subscription response.",
+    "Live source ingest/RAG, real payment/provider callback and deployment Docker were not run.",
+    "Family shared billing, commercial landing contracts, owner administration and native IAP are not invented or activated.",
+    "Existing dirty workspace changes were preserved; no rollback of unrelated user work."
+  ]
+}

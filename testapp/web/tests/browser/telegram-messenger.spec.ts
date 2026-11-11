@@ -1,4 +1,6 @@
+import { reviewPath } from './review-output';
 import { test, expect, login, fixture, ids, origin } from './test';
+import { captureExactState } from './exact-state-capture';
 import { mkdir, readFile } from 'node:fs/promises';
 
 for (const theme of ['light', 'dark']) {
@@ -19,6 +21,7 @@ for (const theme of ['light', 'dark']) {
       await page.goto('/personal/messages');
       const inbox = page.getByLabel('فهرست گفتگوها', { exact: true });
       await expect(inbox.getByText('مریم رضایی', { exact: true })).toBeVisible();
+      if (theme === 'light' && width === 390) await captureExactState(page, ['MK-51']);
       // The previous UI hid the unread number as a seven-pixel dot.
       const badge = inbox.getByLabel('۲ پیام خوانده‌نشده', { exact: true });
       await expect(badge).toHaveText('۲');
@@ -37,10 +40,10 @@ for (const theme of ['light', 'dark']) {
       ]);
       await page.keyboard.press('Escape');
       await expect(compose).toBeFocused();
-      await mkdir('output/review/telegram-messenger', { recursive: true });
+      await mkdir(reviewPath('output/review/telegram-messenger'), { recursive: true });
       await page.evaluate(() => document.fonts.ready);
       await page.screenshot({
-        path: `output/review/telegram-messenger/inbox-${theme}-${width}.png`,
+        path: reviewPath(`output/review/telegram-messenger/inbox-${theme}-${width}.png`),
       });
       await inbox.getByRole('link').filter({ hasText: 'مریم رضایی' }).click();
       const input = page.getByRole('textbox', { name: 'متن پیام', exact: true });
@@ -50,6 +53,7 @@ for (const theme of ['light', 'dark']) {
       const incoming = page.locator('[data-message-direction="incoming"]').first();
       await expect(outgoing).toBeVisible();
       await expect(incoming).toBeVisible();
+      if (theme === 'light' && width === 390) await captureExactState(page, ['MK-36']);
       const ownBox = await outgoing.boundingBox(),
         peerBox = await incoming.boundingBox();
       expect(ownBox!.x).toBeLessThan(peerBox!.x); // RTL: your messages remain on the left.
@@ -66,13 +70,20 @@ for (const theme of ['light', 'dark']) {
         true,
       );
       await page.screenshot({
-        path: `output/review/telegram-messenger/chat-${theme}-${width}.png`,
+        path: reviewPath(`output/review/telegram-messenger/chat-${theme}-${width}.png`),
       });
       await page.getByRole('button', { name: 'گزینه‌های گفتگو', exact: true }).click();
       await expect(
         page.getByRole('menuitem', { name: 'اطلاعات گفتگو', exact: true }),
       ).toBeVisible();
       await expect(page.getByRole('menuitem', { name: 'رسانه و فایل', exact: true })).toBeVisible();
+      if (theme === 'light' && width === 390)
+        await captureExactState(page, ['MK-254'], '', {
+          prepareViewport: async (view) => {
+            if (!(await view.getByRole('menu').isVisible()))
+              await view.getByRole('button', { name: 'گزینه‌های گفتگو', exact: true }).click();
+          },
+        });
       await page.keyboard.press('Escape');
       await page.getByRole('button', { name: 'افزودن پیوست', exact: true }).click();
       await expect(page.getByRole('menuitem')).toHaveText([
@@ -81,8 +92,15 @@ for (const theme of ['light', 'dark']) {
         'ویدئو از گالری',
         'فایل از دستگاه',
       ]);
+      if (theme === 'light' && width === 390)
+        await captureExactState(page, ['MK-236'], '', {
+          prepareViewport: async (view) => {
+            if (!(await view.getByRole('menu').isVisible()))
+              await view.getByRole('button', { name: 'افزودن پیوست', exact: true }).click();
+          },
+        });
       await page.screenshot({
-        path: `output/review/telegram-messenger/attachments-${theme}-${width}.png`,
+        path: reviewPath(`output/review/telegram-messenger/attachments-${theme}-${width}.png`),
       });
       await page.keyboard.press('Escape');
       await expect(page.getByRole('button', { name: 'افزودن پیوست', exact: true })).toBeFocused();
@@ -122,6 +140,7 @@ test('chat survives live resizing and attachment failure retains both file and c
   const dialog = page.getByRole('dialog', { name: 'ارسال پیوست', exact: true });
   await expect(dialog).toBeVisible();
   await expect(dialog.getByRole('textbox')).toHaveValue('توضیح حفظ‌شدهٔ فایل');
+  await captureExactState(page, ['MK-237']);
   expect(
     await dialog
       .getByRole('button', { name: 'ارسال ۱ پیوست', exact: true })
@@ -134,7 +153,9 @@ test('chat survives live resizing and attachment failure retains both file and c
   await expect(dialog.getByRole('alert')).toBeVisible();
   await expect(dialog.getByText('برگه.pdf', { exact: true })).toBeVisible();
   await expect(dialog.getByRole('textbox')).toHaveValue('توضیح حفظ‌شدهٔ فایل');
-  await page.screenshot({ path: 'output/review/telegram-messenger/upload-error-mobile.png' });
+  await page.screenshot({
+    path: reviewPath('output/review/telegram-messenger/upload-error-mobile.png'),
+  });
   await page.keyboard.press('Escape');
   await expect(page.getByRole('button', { name: 'افزودن پیوست' })).toBeFocused();
   await expect(input).toHaveValue('توضیح حفظ‌شدهٔ فایل');
@@ -151,9 +172,24 @@ test('message context menu replies to the selected message and returns focus to 
   await page.goto('/personal/messages/' + ids.chat);
   await page.locator('[data-message-direction="incoming"]').first().click({ button: 'right' });
   await expect(page.getByRole('menuitem', { name: 'کپی متن', exact: true })).toBeVisible();
+  await captureExactState(
+    page,
+    ['MK-37', 'RX-020'],
+    'Actual pointer menu; the same trigger is also exercised with touch below.',
+    {
+      prepareViewport: async (view) => {
+        if (!(await view.getByRole('menu').isVisible()))
+          await view
+            .locator('[data-message-direction="incoming"]')
+            .first()
+            .click({ button: 'right' });
+      },
+    },
+  );
   await page.getByRole('menuitem', { name: 'پاسخ به پیام', exact: true }).click();
   await expect(page.getByRole('textbox', { name: 'متن پیام', exact: true })).toBeFocused();
   await expect(page.getByRole('button', { name: 'لغو پاسخ', exact: true })).toBeVisible();
+  await captureExactState(page, ['MK-227']);
   await page.getByRole('button', { name: 'لغو پاسخ', exact: true }).click();
   await expect(page.getByRole('button', { name: 'لغو پاسخ', exact: true })).toHaveCount(0);
   const bubble = page.locator('[data-message-direction="incoming"]').first();
@@ -178,10 +214,10 @@ test('messenger directory, creation and settings pages remain usable above navig
     }, theme);
     for (const [path, name] of [
       ['/personal/contacts', 'مخاطبین شما'],
-      ['/personal/messages/new?kind=groups', 'ایجاد گروه'],
-      ['/personal/messages/new?kind=channels', 'ایجاد کانال'],
-      ['/personal/settings/privacy', 'حریم ارتباط'],
-      ['/personal/settings/blocked', 'حساب‌های مسدودشده'],
+      ['/personal/messages/new?kind=groups', 'ساخت گروه'],
+      ['/personal/messages/new?kind=channels', 'ساخت کانال'],
+      ['/personal/settings/privacy', 'حریم خصوصی'],
+      ['/personal/settings/blocked', 'افراد مسدودشده'],
     ]) {
       await page.goto(path);
       await expect(page.getByRole('heading', { name, exact: true, level: 1 })).toBeVisible();
@@ -195,7 +231,7 @@ test('messenger directory, creation and settings pages remain usable above navig
       else if (path.endsWith('/contacts'))
         await expect(page.getByText('مریم رضایی', { exact: true }).first()).toBeVisible();
       else if (path.endsWith('/privacy'))
-        await expect(page.getByLabel('دریافت پیام مستقیم', { exact: true })).toBeVisible();
+        await expect(page.getByTestId('privacy-directMessagesAudience')).toBeVisible();
       else await expect(page.getByText('حساب مسدودشده‌ای ندارید', { exact: true })).toBeVisible();
       for (const width of [390, 834, 1440]) {
         await page.setViewportSize({ width, height: 900 });
@@ -203,7 +239,9 @@ test('messenger directory, creation and settings pages remain usable above navig
           true,
         );
         await page.screenshot({
-          path: `output/review/telegram-messenger/${path.includes('kind=groups') ? 'new-group' : path.includes('kind=channels') ? 'new-channel' : path.split('/').pop()}-${theme}-${width}.png`,
+          path: reviewPath(
+            `output/review/telegram-messenger/${path.includes('kind=groups') ? 'new-group' : path.includes('kind=channels') ? 'new-channel' : path.split('/').pop()}-${theme}-${width}.png`,
+          ),
         });
       }
     }

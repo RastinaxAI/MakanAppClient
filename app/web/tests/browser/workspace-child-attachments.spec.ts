@@ -1,3 +1,5 @@
+import { v5Lessons as lessons } from '../../src/content/fa';
+import { selectParentChild, openParentChildren, parentChildButton } from './parent-controls';
 import { test, expect, login, fixture, ids } from './test';
 import { mkdir } from 'node:fs/promises';
 
@@ -65,28 +67,30 @@ test('Parent chooses a child in a selector; switching hides previous content and
   });
   await login(context, 'Parent');
   await page.goto('/personal');
-  const select = page.getByRole('combobox', { name: 'انتخاب فرزند', exact: true });
-  await expect(select).toHaveValue('');
-  await expect(select.getByRole('option', { name: 'فرزند آموزشگاه دیگر' })).toHaveCount(0);
-  await select.selectOption(sara);
+  await expect(page.locator('[data-v5-scene="MK-116"]')).toBeVisible();
+  await expect(page.getByText('فرزند آموزشگاه دیگر', { exact: true })).toHaveCount(0);
+  await selectParentChild(page, sara);
   await expect(page.getByRole('heading', { name: 'سارا احمدی', exact: true })).toBeVisible();
+  await openParentChildren(page);
+  const selected = parentChildButton(page, sara);
+  const target = parentChildButton(page, ali);
   await request.post(fixture + '/__test__/fault', {
     data: { path: `/children/${ali}/select`, method: 'POST', delay: 1200, status: 503 },
   });
-  await select.selectOption(ali);
-  await expect(select).toBeDisabled();
+  await target.click();
+  await expect(target).toBeDisabled();
   await expect(page.getByRole('heading', { name: 'سارا احمدی', exact: true })).toHaveCount(0);
   await expect(
     page
       .getByRole('alert')
       .filter({ has: page.getByRole('heading', { name: 'اطلاعات دریافت نشد', exact: true }) }),
   ).toBeVisible();
-  await expect(select).toHaveValue(sara);
-  await expect(page.getByRole('heading', { name: 'سارا احمدی', exact: true })).toBeVisible();
-  await select.selectOption(ali);
+  await expect(selected).toHaveAttribute('aria-pressed', 'true');
+  const unchanged = await (await context.request.get('/api/client/session')).json();
+  expect(unchanged.context.subjectOrganizationPersonId).toBe(sara);
+  await target.click();
   await expect(page.getByRole('heading', { name: 'علی احمدی', exact: true })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'سارا احمدی', exact: true })).toHaveCount(0);
-  await expect(select).toHaveValue(ali);
   await mkdir('test-results/workspace-child-attachments', { recursive: true });
   for (const width of [390, 834, 1440]) {
     await page.setViewportSize({ width, height: 900 });
@@ -107,7 +111,7 @@ test('Teacher manages ready attachments, retains them after failure, checks Pend
 }) => {
   await login(context, 'Teacher');
   await page.goto(`/personal/education/classes/${ids.class}/lessons/new`);
-  await page.getByLabel('عنوان درس و جزوه', { exact: true }).fill('درس با پیوست‌های آماده');
+  await page.getByLabel(lessons.title, { exact: true }).fill('درس با پیوست‌های آماده');
   const picker = page.getByLabel('پیوست درس', { exact: true });
   const panel = page.getByRole('region', { name: 'پیوست‌های درس', exact: true });
   const file = (name: string) => ({
@@ -115,9 +119,9 @@ test('Teacher manages ready attachments, retains them after failure, checks Pend
     mimeType: 'application/pdf',
     buffer: Buffer.from('%PDF-1.7 test lesson\n%%EOF'),
   });
-  const save = page.getByRole('button', { name: 'ذخیرهٔ پیش‌نویس', exact: true });
+  const save = page.getByRole('button', { name: lessons.save, exact: true });
   const chooser = page.waitForEvent('filechooser');
-  await panel.getByRole('button', { name: 'انتخاب فایل', exact: true }).click();
+  await panel.getByRole('button', { name: lessons.addAttachment, exact: true }).click();
   await (await chooser).setFiles(file('lesson.pdf'));
   await expect(panel.getByText('lesson.pdf', { exact: true })).toBeVisible();
   await expect(panel.getByText(/آمادهٔ ذخیره/)).toBeVisible();

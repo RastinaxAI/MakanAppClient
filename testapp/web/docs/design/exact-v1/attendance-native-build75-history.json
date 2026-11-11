@@ -1,0 +1,101 @@
+{
+  "updatedAt": "2026-11-09T17:08:35.568171+00:00",
+  "taskComplete": false,
+  "buildId": "k3fjyT7x5jy9wSFEs3ABN",
+  "status": "native17_and_related_checks_passed;one_preexisting_parent_route_expectation_open",
+  "scenarios": [
+    "MK-128",
+    "MK-129",
+    "MK-130",
+    "RX-009",
+    "RX-010"
+  ],
+  "partial": [
+    "MK-444"
+  ],
+  "sourceHashes": {
+    "src/features/personal/school/attendance-model.ts": "d1383dbcf23ac32bacbe70e20ab56332bb227e4e3e6bc2d004d868daa5c6f5ef",
+    "src/features/personal/school/attendance-roster.ts": "c3fab5ee8214b4bc85430961bba1c3382c1812cd1d31a0efef313df3992d3058",
+    "src/features/personal/school/session-attendance.tsx": "1beb0c5752a6bd3a7300b8fbf3466314279e8e7fad9e5e9ac6a136ae93b13f3e",
+    "src/features/personal/school/student-attendance.tsx": "60b7ff62d58551d53f231d0fd8dc88d8bf09b72868d06cbbcc58c4a9087ef17e",
+    "src/features/personal/school/session-page.tsx": "e261a1b836a700d6c4413774a21ed1feb6f8b8128ed65f91081969e37b3fbd0c",
+    "src/features/personal/school/session-actions.tsx": "0895adf4e85ca5752bbcd5c9ba8f3f17a43f0315a0fd3e6332b50b49b3efa904",
+    "src/features/personal/school/learning-reports.tsx": "a6d7178c4b40ff19994734b9c370100894ea8088c8819d763768cd6bcad59cae",
+    "src/components/v4/page.tsx": "c7a19e6090c48ede65d289a05ff6b270ef31d4221936ba3079a3d65bec1ef0be",
+    "src/components/ui/states.tsx": "d63d7da47eab705f0a6cd9304a9cbb130f737944eeecd2172d19632a9f911d1d",
+    "src/content/fa.ts": "a5804a318f9ac7b04ad7d42116fe970dc1bacd4a546e36ec09866023b652e407",
+    "tests/fixtures/attendance-reference.mjs": "af25ffffaea8b39fe117587bcc59158233be2e9fd7ad3ebac9db338147f5d718",
+    "tests/fixtures/attendance-reference.d.mts": "6ae66e7eb635aeb8b19046c238967a5d0aa6eee6e4e0e20a867bfb3b74422e2f",
+    "tests/fixtures/backend/manager-case.mjs": "71849173c2cae91cdc530efdf8afad0ffafcb3ea9be2af49a30cf778ecf07f9a",
+    "tests/fixtures/backend/learning-reports.mjs": "d5bacb4e3456d93a8b18b5be7b17c422f700d1ddb13f0fdda4f3632158be5d78",
+    "tests/fixtures/backend/server.mjs": "d7bed11141dc1fb4969b128614855ddc3cd976719d785c1edd1e69a40c6e2ec6",
+    "tests/browser/exact-attendance-native.spec.ts": "1697e4023ce3ea15dcbae2bceb1b19ce8775660d70eaee7cf03315dd4c14d2ff",
+    "scripts/exact-v5-cases.mjs": "319ee4b2169916cee3355fc7278b22ef829aca343241d4ed6ae4b859cdf88b33",
+    "scripts/review-exact-v5.mjs": "162a436f43a672e3e55d5a49963a8baf6ab6c75c8b28267a115e4d2518daea50",
+    "scripts/measure-exact-v5.mjs": "133f6c51ed66da72d8f2e8217e71ddc859d1fa59bf2dd78ece37aa8241781ff1",
+    "scripts/audit-exact-v5.py": "1fa86ca5fd20cf1635693aba828845959dfc4f62f3cba19841e2b5ddb872b833"
+  },
+  "behavior": [
+    "Only existing organization GET session/attendance, PUT initial attendance, PATCH per attendance ID with reason/version and Student own-report GET.",
+    "Names bind both enrollment and organization-person IDs from the authorized class roster, including actual pagination. No Teacher identity/name is guessed or fetched for Student.",
+    "Account/context/session/per-row drafts remain after filtering, responsive changes, theme, reload, conflicts and partial writes. Unfinished row forms are isolated across sessions.",
+    "Only matching HTTP200 acknowledgments clear confirmed rows. 202, foreign IDs/status/old version and lost acknowledgments require explicit read/review; successful earlier rows are not retried after a later failure.",
+    "Reason-only corrections are reviewed explicitly; current matching status after an uncertain response is an explicit local draft discard, without a success claim or repeat write.",
+    "Student summaries come from the real report response. No recorder role is inferred."
+  ],
+  "checks": {
+    "unit": 517,
+    "unitFiles": 72,
+    "typecheck": true,
+    "lintModules": 356,
+    "cycles": 0,
+    "nativeBrowser": 17,
+    "otherCompletedBrowser": 75,
+    "additionalPartialBatch": {
+      "passed": 8,
+      "failed": 1,
+      "notRun": 15,
+      "cause": "Parent assignment author URL is dispatched to the readonly parent child/class workspace before AssignmentFormPage role guard; old unscoped alert assertion had hidden this mismatch. No author controls or writes were granted. Dispatcher correction is pending."
+    },
+    "browserReceipts": "tmp/exact-v1/browser-seventyfifth-receipts.json",
+    "main": 24,
+    "boundaries": 44,
+    "large200": 44,
+    "shortLarge400": 44,
+    "renderErrors": 0,
+    "horizontalOverflow": 0,
+    "responsiveReceipts": "tmp/exact-v1/responsive-seventyfifth-attendance-receipts.json",
+    "geometry": "18MK128/129/130 configurations including hero/search/list/avatar/badge/choices/stats have0unreviewed rectangles>=4CSSpx. SixMK444 configurations retain54open metric/control flags; they are not waived as matched."
+  },
+  "differences": [
+    "MK444 bulk explanation has no field in RecordAttendanceCommand in both active/full OpenAPI (entries only). The source variant also omits MK128 search/policy and uses a different save caption. No fake field, payload packing or padding is introduced.",
+    "Reference MK129 uses a sample first name. The roster DTO supplies displayName only; the product uses the bound full display name. The reference test render declares that title-data preparation explicitly; original PDF/assets are not changed.",
+    "The static source displays an enabled group save action. The product retains validation and disables it when no local attendance change is pending; this action-state difference is not a geometry match claim.",
+    "Actual school role captions and returned account data are retained. Pixel-perfect text/color/state parity is not claimed by the rectangle check.",
+    "The three ordinary reference radio choices are offered; a returned or saved Excused status remains representable without silently dropping it."
+  ],
+  "evidence": {
+    "before": "output/review/exact-v1/before-seventyfourth-attendance (compiled73 legacy UI)",
+    "diagnostic74": "output/review/exact-v1/after-seventyfourth-attendance",
+    "reference": "output/review/exact-v1/reference-seventyfifth-attendance",
+    "after": "output/review/exact-v1/after-seventyfifth-attendance",
+    "boundaries": "output/review/exact-v1/after-boundaries-seventyfifth-attendance",
+    "large": "output/review/exact-v1/after-large-seventyfifth-attendance",
+    "shortLarge": "output/review/exact-v1/after-short-large-seventyfifth-attendance"
+  },
+  "testQualityCorrection": {
+    "failedAttempts": [
+      "tmp/exact-v1/browser-seventyfourth-batch01-results.json",
+      "tmp/exact-v1/browser-seventyfifth-batch01-results.json"
+    ],
+    "finding": "The hidden Next route announcer has role=alert and a1px box. Generic page alert assertions matched it before any attendance GET. The error test now holds GET failure until explicit retry and10test files exclude the announcer using the existing repository pattern. Product announcement accessibility is unchanged.",
+    "relatedFiles": "tmp/exact-v1/route-announcer-selector-files.json"
+  },
+  "live": "Signed-in Student navigation to reports?kind=attendance shows access-limited UI. Cause/HTTP status is not inferred; no live author or report mutation was tested. See live-review-2026-11-09.json.",
+  "next": [
+    "Correct Parent assignment-author dispatch ordering (same existing role guard as intended); rerun the failed24-test related batch.",
+    "Student own-history previous-page control must stay reachable after report count shrink; add real paginated fixture/recovery coverage.",
+    "Add partial/duplicate bulk initial acknowledgment coverage.",
+    "Continue the unfinished matrix states, including notification device integration."
+  ]
+}

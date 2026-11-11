@@ -56,6 +56,9 @@ function reset() {
       'platform.personal_classes.academic_permissions.manage',
       'platform.moderation.review',
       'platform.moderation.enforce',
+      'platform.operations.read',
+      'platform.notifications.read',
+      'platform.finance.read',
     ],
     platformUserId: ids.user,
     reads: [],
@@ -87,6 +90,25 @@ function reset() {
     sourceScope: 'Library',
     sourcePublished: false,
     sourceCanDownload: true,
+    sourceVisibility: 'Hidden',
+    financeOrder: null,
+    sourceAiReady: false,
+    sourceAiReadiness: null,
+    sourceAiUnavailableReason: null,
+    sourceCanUseForAi: false,
+    operationDependencies: [{ name: 'SQL', status: 'Healthy', detail: 'اتصال برقرار است' }],
+    aiIntegrationStatus: 'Configured',
+    notificationOperations: {
+      pendingCount: 0,
+      processingCount: 0,
+      deferredCount: 0,
+      failedCount: 0,
+      oldestQueuedAgeSeconds: null,
+      pushProviderAvailability: 'NotConfigured',
+      smsProviderAvailability: 'Available',
+      recentFailures: [],
+    },
+    jobOperations: { counts: [], oldestPendingAtUtc: null, queues: [] },
     librarySources: [],
     personalVersion: 'AAAAAAAAAAE=',
     membershipVersion: 'AAAAAAAAAAI=',
@@ -323,6 +345,15 @@ export function createMockBackend() {
       return send(201, named('FileAssetResult', { id: ids.user, status: 'Ready' }));
     if (!op) return send(404, { status: 404 });
     let result = sample(op.response);
+    if (op.path === '/api/admin/v1/operations/health')
+      result = named('PlatformSystemHealth', {
+        dependencies: state.operationDependencies,
+        aiIntegrationStatus: state.aiIntegrationStatus,
+        notifications: state.notificationOperations,
+        jobs: state.jobOperations,
+      });
+    if (op.path === '/api/admin/v1/operations/notifications') result = state.notificationOperations;
+    if (op.path === '/api/admin/v1/operations/jobs') result = state.jobOperations;
     const personalRequest = () =>
       named('PersonalClassRequestDto', {
         id: ids.user,
@@ -490,8 +521,11 @@ export function createMockBackend() {
         title: 'راهنمای کتابخانه',
         publicationStatus: state.sourcePublished ? 'Published' : 'Draft',
         status: 'Active',
-        visibility: 'Hidden',
+        visibility: state.sourceVisibility,
         revision: 1,
+        aiReady: state.sourceAiReady,
+        aiReadiness: state.sourceAiReadiness,
+        aiUnavailableReason: state.sourceAiUnavailableReason,
         capabilities: {
           canRead: true,
           canWrite: !state.sourcePublished,
@@ -500,7 +534,7 @@ export function createMockBackend() {
           canArchive: true,
           canDownload: state.sourceCanDownload,
           canChangeVisibility: true,
-          canUseForAi: false,
+          canUseForAi: state.sourceCanUseForAi,
         },
         file: {
           fileAssetId: ids.user,
@@ -869,10 +903,30 @@ export function createMockBackend() {
       });
     }
     if (op.path === '/api/admin/v1/commerce/history/{targetId}') result = state.commercialHistory;
-    if (op.path === '/api/admin/v1/finance/orders')
-      result = named('PlatformOrderPage', {
-        items: [named('PlatformOrderItem', { orderId: ids.user, organization: null })],
-      });
+    if (op.path.startsWith('/api/admin/v1/finance/orders')) {
+      const order =
+        state.financeOrder ??
+        named('PlatformOrderItem', {
+          orderId: ids.user,
+          organization: null,
+          amount: 250000,
+          currency: 'Irr',
+          fulfillmentState: 'NotStarted',
+        });
+      const items =
+        !url.searchParams.get('status') || order.status === url.searchParams.get('status')
+          ? [order]
+          : [];
+      result = op.path.endsWith('/{orderId}')
+        ? order
+        : named('PlatformOrderPage', {
+            items,
+            page: Number(url.searchParams.get('page') ?? 1),
+            pageSize: Number(url.searchParams.get('pageSize') ?? 30),
+            totalCount: items.length,
+            reconciliationAvailability: 'Unavailable',
+          });
+    }
     if (op.path === '/api/v1/auth/sessions')
       result = [named('UserSessionResult', { id: ids.user, deviceName: 'مرورگر آزمایشی' })];
     if (op.path === '/api/v1/academic/classes')

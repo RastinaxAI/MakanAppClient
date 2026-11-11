@@ -1,3 +1,4 @@
+import { reviewPath } from './review-output';
 import { test, expect, login, fixture } from './test';
 import { mkdir } from 'node:fs/promises';
 
@@ -7,7 +8,7 @@ test.use({
 });
 
 const id = '00000000-0000-4000-8000-000000000950';
-const output = 'output/review/telegram-reference';
+const output = reviewPath('output/review/telegram-reference');
 for (const theme of ['light', 'dark']) {
   for (const type of ['Group', 'Channel']) {
     test(`${type} ${theme}: reference message rows retain identity, reply focus and draft through resizing`, async ({

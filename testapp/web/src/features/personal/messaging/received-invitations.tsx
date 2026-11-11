@@ -1,4 +1,6 @@
 'use client';
+import { uiClass } from '@/components/v5/classes';
+
 import { useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useQueryClient } from '@tanstack/react-query';
@@ -19,7 +21,7 @@ import s from './received-invitations.module.css';
 type Invitation = components['schemas']['ConversationInvitationResult'];
 const path = '/api/v1/messaging/invitations';
 
-export function ReceivedMessagingInvitations() {
+export function ReceivedMessagingInvitations({ hideEmpty = false }: { hideEmpty?: boolean } = {}) {
   const { session, call } = usePersonal(),
     cache = useQueryClient(),
     router = useRouter();
@@ -55,14 +57,16 @@ export function ReceivedMessagingInvitations() {
       lock.current = false;
     }
   }
+  if (hideEmpty && invitations.isSuccess && !pending.length && busy === null && !declined && !error)
+    return null;
   return (
-    <details className={s.panel} data-messaging-invitations>
+    <details className={uiClass(s.panel)} data-messaging-invitations>
       <summary>
         <MailCheck size={19} aria-hidden="true" />
         <span>{t.title}</span>
         {invitations.data && <b>{number(pending.length)}</b>}
       </summary>
-      <div className={s.body}>
+      <div className={uiClass(s.body)}>
         <p>{t.explanation}</p>
         {invitations.isPending ? (
           <LoadingSkeleton />
@@ -78,7 +82,7 @@ export function ReceivedMessagingInvitations() {
                 {t.expires} {date(item.expiresAtUtc, true)}
               </p>
               {invitationCanBeAnswered(item, session.user.id) ? (
-                <div className={s.actions}>
+                <div className={uiClass(s.actions)}>
                   <Button
                     type="button"
                     disabled={busy !== null}

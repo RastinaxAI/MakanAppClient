@@ -1,3 +1,5 @@
+import { reviewPath } from './review-output';
+import { captureExactState } from './exact-state-capture';
 import { test, expect, login, fixture, origin } from './test';
 import { mkdir } from 'node:fs/promises';
 const group = '00000000-0000-4000-8000-000000000950';
@@ -12,20 +14,28 @@ for (const kind of ['groups', 'channels'])
     await page.goto('/personal/messages/new?kind=' + kind);
     const label = kind === 'groups' ? 'گروه' : 'کانال';
     await page.getByLabel('نام ' + label, { exact: true }).fill('گفتگوی جدید آزمون');
-    await page.getByLabel('توضیحات (اختیاری)', { exact: true }).fill('توضیحات حفظ‌شده');
+    await page
+      .getByLabel(kind === 'groups' ? 'توضیح اختیاری' : 'شرح اختیاری', { exact: true })
+      .fill('توضیحات حفظ‌شده');
     await expect(page.getByRole('heading', { name: 'اعضای اولیه از مخاطبین' })).toHaveCount(0);
     let state = await (await request.get(fixture + '/__test__/state')).json();
     expect(
       state.requests.filter((r: { path: string }) => r.path === '/api/v1/contacts'),
     ).toHaveLength(0);
-    await page.getByRole('button', { name: 'انتخاب مخاطبین', exact: true }).click();
+    await page.getByRole('button', { name: 'انتخاب افراد', exact: true }).click();
     await expect(page).toHaveURL(/step=members/);
+    await captureExactState(
+      page,
+      [kind === 'groups' ? 'MK-189' : 'MK-192'],
+      'actual group/channel selection step',
+    );
+
     await page.getByRole('checkbox').first().check();
     await page.reload();
     await expect(page.getByRole('checkbox').first()).toBeChecked();
     await page.getByRole('button', { name: 'ویرایش', exact: true }).click();
     await expect(page.getByLabel('نام ' + label, { exact: true })).toHaveValue('گفتگوی جدید آزمون');
-    await page.getByRole('button', { name: 'انتخاب مخاطبین', exact: true }).click();
+    await page.getByRole('button', { name: 'انتخاب افراد', exact: true }).click();
     state = await (await request.get(fixture + '/__test__/state')).json();
     expect(
       state.requests.filter(
@@ -57,7 +67,7 @@ test('unknown creation failure retries the identical operation after reload, wit
   await login(context, 'Student', false);
   await page.goto('/personal/messages/new?kind=groups');
   await page.getByLabel('نام گروه', { exact: true }).fill('بازیابی درخواست');
-  await page.getByRole('button', { name: 'انتخاب مخاطبین', exact: true }).click();
+  await page.getByRole('button', { name: 'انتخاب افراد', exact: true }).click();
   await request.post(fixture + '/__test__/fault', {
     data: { path: '/groups', method: 'POST', status: 503 },
   });
@@ -91,13 +101,17 @@ test('owner edits information, adds a contact, changes administrator role and re
   await request.post(fixture + '/__test__/fault', {
     data: { path: '/info', method: 'PATCH', status: 503 },
   });
-  await page.getByRole('button', { name: 'ذخیرهٔ اطلاعات', exact: true }).click();
+  await page.getByRole('button', { name: 'ذخیره اطلاعات گروه', exact: true }).click();
   await expect(page.getByRole('main').getByRole('alert')).toBeVisible();
   await expect(page.getByLabel('نام گروه', { exact: true })).toHaveValue('نام تازهٔ گفتگو');
-  await page.getByRole('button', { name: 'ذخیرهٔ اطلاعات', exact: true }).click();
+  await page.getByRole('button', { name: 'ذخیره اطلاعات گروه', exact: true }).click();
   await expect(page.getByRole('status')).toContainText('اطلاعات گفتگو ذخیره شد.');
-  await page.getByRole('link', { name: 'اعضا و مدیران', exact: true }).click();
-  await page.getByRole('button', { name: 'افزودن عضو', exact: true }).click();
+  await page
+    .getByRole('banner')
+    .getByRole('button', { name: 'گزینه‌های بیشتر', exact: true })
+    .click();
+  await page.getByRole('dialog').getByRole('link', { name: 'اعضا و مدیران', exact: true }).click();
+  await page.getByRole('button', { name: 'دعوت فرد', exact: true }).click();
   let dialog = page.getByRole('dialog');
   await dialog.getByLabel('جستجوی عضو جدید').fill('Parent');
   await dialog.getByRole('button', { name: 'جستجو', exact: true }).click();
@@ -109,16 +123,22 @@ test('owner edits information, adds a contact, changes administrator role and re
   await expect(dialog.getByRole('alert')).toBeVisible();
   await dialog.getByRole('button', { name: 'افزودن', exact: true }).click();
   await expect(dialog).toHaveCount(0);
-  await expect(page.getByRole('button', { name: 'افزودن عضو', exact: true })).toBeFocused();
+  await expect(page.getByRole('button', { name: 'دعوت فرد', exact: true })).toBeFocused();
   await page.getByRole('button', { name: 'صفحهٔ بعد', exact: true }).click();
   await page.getByRole('button', { name: 'مدیریت عضو آزمایشی دوم', exact: true }).click();
   dialog = page.getByRole('dialog');
   await dialog.getByRole('button', { name: 'ارتقا به مدیر', exact: true }).click();
+  await captureExactState(page, ['MK-207']);
+
   await dialog.getByRole('button', { name: 'تأیید تغییر', exact: true }).click();
   await expect(dialog).toHaveCount(0);
-  await expect(page.getByText(/عضو فعال · مدیر/)).toBeVisible();
+  await expect(
+    page.locator('.v5-list .v5-row').filter({ hasText: 'عضو آزمایشی دوم' }),
+  ).toContainText('مدیر گفتگو');
   await page.getByRole('button', { name: 'مدیریت عضو آزمایشی دوم', exact: true }).click();
   await page.getByRole('dialog').getByRole('button', { name: 'حذف از گفتگو', exact: true }).click();
+  await captureExactState(page, ['MK-208']);
+
   await page.getByRole('dialog').getByRole('button', { name: 'تأیید تغییر', exact: true }).click();
   await expect(page.getByRole('dialog')).toHaveCount(0);
   await expect(page.getByText(/حذف‌شده/)).toBeVisible();
@@ -132,7 +152,7 @@ test('school Teacher cannot mutate another conversation owner data, including th
   await request.post(fixture + '/__test__/conversation-details', { data: {} });
   const session = await login(context, 'Teacher');
   await page.goto(base + '/members');
-  await expect(page.getByRole('button', { name: 'افزودن عضو', exact: true })).toHaveCount(0);
+  await expect(page.getByRole('button', { name: 'دعوت فرد', exact: true })).toHaveCount(0);
   const response = await context.request.patch(
     origin + '/api/client/backend/api/v1/conversations/' + group + '/info',
     {
@@ -142,7 +162,9 @@ test('school Teacher cannot mutate another conversation owner data, including th
   );
   expect(response.status()).toBe(403);
   await page.goto(base + '/edit');
-  await expect(page.getByRole('button', { name: 'ذخیرهٔ اطلاعات', exact: true })).toHaveCount(0);
+  await expect(page.getByRole('button', { name: 'ذخیره اطلاعات گروه', exact: true })).toHaveCount(
+    0,
+  );
 });
 
 test('unified inbox includes direct and official conversations without a personal-school switch in three layouts', async ({
@@ -158,7 +180,7 @@ test('unified inbox includes direct and official conversations without a persona
   await expect(list.getByText('دانشجوی آزمایشی', { exact: true })).toBeVisible();
   await expect(list.getByText('گروه کلاس ریاضی', { exact: true })).toBeVisible();
   await expect(page.getByRole('navigation', { name: 'فضای گفتگوها', exact: true })).toHaveCount(0);
-  await mkdir('output/review/messenger-management', { recursive: true });
+  await mkdir(reviewPath('output/review/messenger-management'), { recursive: true });
   for (const [width, height] of [
     [390, 844],
     [834, 1194],
@@ -168,7 +190,9 @@ test('unified inbox includes direct and official conversations without a persona
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(
       true,
     );
-    await page.screenshot({ path: `output/review/messenger-management/inbox-${width}.png` });
+    await page.screenshot({
+      path: reviewPath(`output/review/messenger-management/inbox-${width}.png`),
+    });
   }
   const state = await (await request.get(fixture + '/__test__/state')).json();
   const reads = state.requests.filter(
@@ -215,7 +239,7 @@ test('creation and member management remain usable in both themes across mobile 
   request,
 }) => {
   await login(context, 'Student', false);
-  await mkdir('output/review/messenger-management', { recursive: true });
+  await mkdir(reviewPath('output/review/messenger-management'), { recursive: true });
   for (const theme of ['light', 'dark']) {
     await page.addInitScript((v) => localStorage.setItem('makan-theme', v), theme);
     for (const kind of ['groups', 'channels']) {
@@ -235,10 +259,10 @@ test('creation and member management remain usable in both themes across mobile 
         const formBox = await page.getByRole('main').locator('form').boundingBox();
         expect(formBox!.width).toBeGreaterThanOrEqual(width >= 834 ? 600 : 300);
         await page.screenshot({
-          path: `output/review/messenger-management/${kind}-info-${theme}-${width}.png`,
+          path: reviewPath(`output/review/messenger-management/${kind}-info-${theme}-${width}.png`),
         });
       }
-      await page.getByRole('button', { name: 'انتخاب مخاطبین', exact: true }).click();
+      await page.getByRole('button', { name: 'انتخاب افراد', exact: true }).click();
       await expect(page.getByRole('checkbox').first()).toBeVisible();
       for (const [width, height] of [
         [390, 844],
@@ -250,13 +274,17 @@ test('creation and member management remain usable in both themes across mobile 
           true,
         );
         await page.screenshot({
-          path: `output/review/messenger-management/${kind}-contacts-${theme}-${width}.png`,
+          path: reviewPath(
+            `output/review/messenger-management/${kind}-contacts-${theme}-${width}.png`,
+          ),
         });
       }
     }
     await request.post(fixture + '/__test__/conversation-details', { data: {} });
     await page.goto(base + '/members');
-    await page.getByRole('button', { name: 'صفحهٔ بعد', exact: true }).click();
+    if (theme === 'light')
+      await page.getByRole('button', { name: 'صفحهٔ بعد', exact: true }).click();
+    else await expect(page.getByRole('button', { name: 'صفحهٔ بعد', exact: true })).toBeDisabled();
     await page.getByRole('button', { name: 'مدیریت عضو آزمایشی دوم', exact: true }).click();
     for (const [width, height] of [
       [390, 844],
@@ -269,7 +297,7 @@ test('creation and member management remain usable in both themes across mobile 
         true,
       );
       await page.screenshot({
-        path: `output/review/messenger-management/member-dialog-${theme}-${width}.png`,
+        path: reviewPath(`output/review/messenger-management/member-dialog-${theme}-${width}.png`),
       });
     }
     await page.keyboard.press('Escape');
@@ -287,7 +315,7 @@ test('a definitive invitation-required rejection preserves the draft and reopens
   await login(context, 'Student', false);
   await page.goto('/personal/messages/new?kind=groups');
   await page.getByLabel('نام گروه', { exact: true }).fill('گروه نیازمند دعوت');
-  await page.getByRole('button', { name: 'انتخاب مخاطبین', exact: true }).click();
+  await page.getByRole('button', { name: 'انتخاب افراد', exact: true }).click();
   await page.getByRole('checkbox').first().check();
   await request.post(fixture + '/__test__/fault', {
     data: {

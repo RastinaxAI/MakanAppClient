@@ -1,0 +1,921 @@
+{
+  "recordedAt": "2026-11-10T19:34:28.467807+00:00",
+  "status": "V9 bounded delivery; representative UI validated, full atlas parity remains incomplete",
+  "buildId": "M2TRK4sxgygtqKnwXh0DD",
+  "standaloneBuildId": "rj779zL-af5AXQ5kiomNv",
+  "preview": "http://127.0.0.1:3130/enter",
+  "gallery": "http://127.0.0.1:3162/v9-20261110/index.html",
+  "referencePdf": "/home/omidreza-bagheriyan/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an/outputs/MakanApp_Server_Aligned_UI_UX_FA_v9.pdf",
+  "checks": {
+    "normalBuild": "passed",
+    "standaloneWebpackBuild": "passed",
+    "typecheck": "passed in both builds",
+    "lint": "313 source boundaries, no cycles",
+    "format": "passed; final CSS formatted with Prettier",
+    "generated": "329 client operations, 571 server schemas, 84 browser schemas; zero owner operations",
+    "unit": {
+      "passed": 494,
+      "failed": 0,
+      "scope": "After notification behavior fix; subsequent source changes are CSS only."
+    },
+    "browserInitial": {
+      "buildId": "yPLv9G_G7U5f4IYKRlzOE",
+      "startTime": "2026-11-10T18:57:54.785Z",
+      "duration": 360573.349,
+      "expected": 137,
+      "skipped": 0,
+      "unexpected": 4,
+      "flaky": 0,
+      "failures": "3 obsolete/ambiguous selectors corrected; 1 notification uncertainty remount bug fixed; traces preserved."
+    },
+    "browserBehaviorRecheck": {
+      "buildId": "HOXhwkq72SENoAejIx-B9",
+      "startTime": "2026-11-10T19:07:11.404Z",
+      "duration": 106023.105,
+      "expected": 44,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "browserFinalLayout": {
+      "buildId": "M2TRK4sxgygtqKnwXh0DD",
+      "startTime": "2026-11-10T19:31:33.718Z",
+      "duration": 104499.841,
+      "expected": 26,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "ordinaryProduction": {
+      "startTime": "2026-11-10T19:31:37.233Z",
+      "duration": 8501.778,
+      "expected": 1,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "standaloneChecks": 20
+  },
+  "screens": {
+    "nativeLight": 24,
+    "reference": 51,
+    "additionalBoundaryRoleThemeAuthStates": 240,
+    "boundaryWidths": [
+      320,
+      360,
+      390,
+      430,
+      768,
+      834,
+      1024,
+      1194,
+      1280,
+      1440,
+      1920
+    ],
+    "documentOverflow": 0,
+    "pageErrors": 0,
+    "reading": "normal and 200 percent; reduced height/safe-area and focus tests in browser receipts"
+  },
+  "geometry": {
+    "chrome": "/home/omidreza-bagheriyan/Desktop/MakanApp-cleanup-backup-2026-11-10/v9-review/chrome-comparison-shipment.json",
+    "matchedRules": "/home/omidreza-bagheriyan/Desktop/MakanApp-cleanup-backup-2026-11-10/v9-review/geometry-shipment/results.json",
+    "managerMeasuredAfterCorrection": {
+      "buildId": "M2TRK4sxgygtqKnwXh0DD",
+      "scope": "SCH-15 same reference titles and descriptions; actual counts and authorized linked-spaces component preserved separately.",
+      "rows": [
+        {
+          "width": 390,
+          "height": 844,
+          "actual": {
+            "card": {
+              "x": 16,
+              "y": 376.375,
+              "width": 358,
+              "height": 304.953125
+            },
+            "rows": [
+              {
+                "x": 35,
+                "y": 436.265625,
+                "width": 320,
+                "height": 74.6875
+              },
+              {
+                "x": 35,
+                "y": 510.953125,
+                "width": 320,
+                "height": 75.6875
+              },
+              {
+                "x": 35,
+                "y": 586.640625,
+                "width": 320,
+                "height": 75.6875
+              }
+            ],
+            "title": {
+              "x": 35,
+              "y": 395.375,
+              "width": 320,
+              "height": 28.890625
+            }
+          },
+          "reference": {
+            "card": {
+              "x": 16,
+              "y": 376.375,
+              "width": 358,
+              "height": 304.953125
+            },
+            "rows": [
+              {
+                "x": 35,
+                "y": 436.265625,
+                "width": 320,
+                "height": 75.6875
+              },
+              {
+                "x": 35,
+                "y": 511.953125,
+                "width": 320,
+                "height": 75.6875
+              },
+              {
+                "x": 35,
+                "y": 587.640625,
+                "width": 320,
+                "height": 74.6875
+              }
+            ],
+            "title": {
+              "x": 35,
+              "y": 395.375,
+              "width": 320,
+              "height": 28.890625
+            }
+          },
+          "deltas": {
+            "card": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0
+            },
+            "rowHeights": [
+              -1,
+              0,
+              1
+            ]
+          }
+        },
+        {
+          "width": 834,
+          "height": 1112,
+          "actual": {
+            "card": {
+              "x": 22,
+              "y": 425.5625,
+              "width": 714,
+              "height": 339.484375
+            },
+            "rows": [
+              {
+                "x": 45,
+                "y": 493.15625,
+                "width": 668,
+                "height": 82.296875
+              },
+              {
+                "x": 45,
+                "y": 575.453125,
+                "width": 668,
+                "height": 83.296875
+              },
+              {
+                "x": 45,
+                "y": 658.75,
+                "width": 668,
+                "height": 83.296875
+              }
+            ],
+            "title": {
+              "x": 45,
+              "y": 448.5625,
+              "width": 668,
+              "height": 30.59375
+            }
+          },
+          "reference": {
+            "card": {
+              "x": 22,
+              "y": 425.5625,
+              "width": 714,
+              "height": 339.484375
+            },
+            "rows": [
+              {
+                "x": 45,
+                "y": 493.15625,
+                "width": 668,
+                "height": 83.296875
+              },
+              {
+                "x": 45,
+                "y": 576.453125,
+                "width": 668,
+                "height": 83.296875
+              },
+              {
+                "x": 45,
+                "y": 659.75,
+                "width": 668,
+                "height": 82.296875
+              }
+            ],
+            "title": {
+              "x": 45,
+              "y": 448.5625,
+              "width": 668,
+              "height": 30.59375
+            }
+          },
+          "deltas": {
+            "card": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0
+            },
+            "rowHeights": [
+              -1,
+              0,
+              1
+            ]
+          }
+        },
+        {
+          "width": 1440,
+          "height": 1000,
+          "actual": {
+            "card": {
+              "x": 36,
+              "y": 273.78125,
+              "width": 1160,
+              "height": 339.484375
+            },
+            "rows": [
+              {
+                "x": 59,
+                "y": 341.375,
+                "width": 1114,
+                "height": 82.296875
+              },
+              {
+                "x": 59,
+                "y": 423.671875,
+                "width": 1114,
+                "height": 83.296875
+              },
+              {
+                "x": 59,
+                "y": 506.96875,
+                "width": 1114,
+                "height": 83.296875
+              }
+            ],
+            "title": {
+              "x": 59,
+              "y": 296.78125,
+              "width": 1114,
+              "height": 30.59375
+            }
+          },
+          "reference": {
+            "card": {
+              "x": 36,
+              "y": 273.78125,
+              "width": 1160,
+              "height": 339.484375
+            },
+            "rows": [
+              {
+                "x": 59,
+                "y": 341.375,
+                "width": 1114,
+                "height": 83.296875
+              },
+              {
+                "x": 59,
+                "y": 424.671875,
+                "width": 1114,
+                "height": 83.296875
+              },
+              {
+                "x": 59,
+                "y": 507.96875,
+                "width": 1114,
+                "height": 82.296875
+              }
+            ],
+            "title": {
+              "x": 59,
+              "y": 296.78125,
+              "width": 1114,
+              "height": 30.59375
+            }
+          },
+          "deltas": {
+            "card": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0
+            },
+            "rowHeights": [
+              -1,
+              0,
+              1
+            ]
+          }
+        }
+      ]
+    },
+    "scope": "Only measured properties and rectangles; no full pixel-perfect claim."
+  },
+  "performance": {
+    "before": {
+      "buildId": "6EwbCZA0BGzGg6GRjuElc",
+      "jsRaw": 2977893,
+      "jsGzip": 826795,
+      "cssRaw": 265316
+    },
+    "after": {
+      "buildId": "M2TRK4sxgygtqKnwXh0DD",
+      "jsFiles": 89,
+      "jsRaw": 2748654,
+      "jsGzip": 802108,
+      "cssRaw": 263449,
+      "scope": "sum of emitted Turbopack chunks with the same compiler as baseline, not a page download or an internet performance score",
+      "rawJsReduction": 229239,
+      "rawJsReductionPercent": 7.7
+    },
+    "mechanism": "Shared contract validator plus generated browser schema closure; all operation metadata and full BFF schema validation retained; SignalR loaded on demand; font preload; no new dependencies.",
+    "perRouteLocalMeasurements": [
+      {
+        "name": "school",
+        "jsRequests": 19,
+        "jsDecoded": 985691,
+        "jsTransferred": 297676,
+        "cssDecoded": 228962,
+        "documentTtfb": 24.200000002980232,
+        "localOnly": true
+      },
+      {
+        "name": "extra",
+        "jsRequests": 22,
+        "jsDecoded": 1170283,
+        "jsTransferred": 348080,
+        "cssDecoded": 230513,
+        "documentTtfb": 20,
+        "localOnly": true
+      },
+      {
+        "name": "request",
+        "jsRequests": 22,
+        "jsDecoded": 1170283,
+        "jsTransferred": 348080,
+        "cssDecoded": 230513,
+        "documentTtfb": 36.5,
+        "localOnly": true
+      },
+      {
+        "name": "assistant",
+        "jsRequests": 17,
+        "jsDecoded": 1164062,
+        "jsTransferred": 318603,
+        "cssDecoded": 228962,
+        "documentTtfb": 20.399999998509884,
+        "localOnly": true
+      },
+      {
+        "name": "profile",
+        "jsRequests": 15,
+        "jsDecoded": 871063,
+        "jsTransferred": 262673,
+        "cssDecoded": 228962,
+        "documentTtfb": 25.5,
+        "localOnly": true
+      },
+      {
+        "name": "messages",
+        "jsRequests": 19,
+        "jsDecoded": 1298898,
+        "jsTransferred": 360225,
+        "cssDecoded": 250309,
+        "documentTtfb": 18.600000001490116,
+        "localOnly": true
+      },
+      {
+        "name": "subscription",
+        "jsRequests": 16,
+        "jsDecoded": 1142641,
+        "jsTransferred": 311463,
+        "cssDecoded": 231358,
+        "documentTtfb": 16.900000005960464,
+        "localOnly": true
+      },
+      {
+        "name": "appearance",
+        "jsRequests": 15,
+        "jsDecoded": 868247,
+        "jsTransferred": 261857,
+        "cssDecoded": 229074,
+        "documentTtfb": 16.100000001490116,
+        "localOnly": true
+      }
+    ]
+  },
+  "artifact": {
+    "archive": "/home/omidreza-bagheriyan/Desktop/MakanApp-cleanup-backup-2026-11-10/MakanApp-V9-Next-standalone-20261110.tar.gz",
+    "bytes": 18483414,
+    "sha256": "3f69a0214a660a9642b2362f393074bad32a2b286cf73f9dc269d264c2a308b2",
+    "runtimeBytes": 58034207,
+    "buildId": "rj779zL-af5AXQ5kiomNv",
+    "productBuildId": "M2TRK4sxgygtqKnwXh0DD",
+    "secretsOrSessions": 0,
+    "actualTestNode": "24.21.0",
+    "packageEngine": ">=22",
+    "dockerDaemonVerified": false,
+    "remoteDeployed": false
+  },
+  "evidenceDirectory": "/home/omidreza-bagheriyan/Desktop/MakanApp-cleanup-backup-2026-11-10/v9-review",
+  "cleanupManifest": "/home/omidreza-bagheriyan/Desktop/MakanApp/testapp/web/docs/quality/CSS_STATIC_CLEANUP_20261110.json",
+  "changedFiles": {
+    "method": "Compared actual pre-V9 external backup with current files; does not attribute preexisting Git changes to this turn.",
+    "changed": [
+      {
+        "path": "src/content/fa.ts",
+        "beforeBytes": 660878,
+        "afterBytes": 664663
+      },
+      {
+        "path": "src/design/tokens.css",
+        "beforeBytes": 3540,
+        "afterBytes": 3540
+      },
+      {
+        "path": "src/features/reference/connected-school.tsx",
+        "beforeBytes": 1262,
+        "afterBytes": 2929
+      },
+      {
+        "path": "src/features/reference/assistant.module.css",
+        "beforeBytes": 1925,
+        "afterBytes": 1964
+      },
+      {
+        "path": "src/features/reference/connected-profile.tsx",
+        "beforeBytes": 5819,
+        "afterBytes": 6966
+      },
+      {
+        "path": "src/features/reference/connected-assistant.tsx",
+        "beforeBytes": 18396,
+        "afterBytes": 18415
+      },
+      {
+        "path": "src/features/reference/school.module.css",
+        "beforeBytes": 934,
+        "afterBytes": 1271
+      },
+      {
+        "path": "src/features/extracurricular/connected.tsx",
+        "beforeBytes": 28976,
+        "afterBytes": 24453
+      },
+      {
+        "path": "src/features/extracurricular/model.ts",
+        "beforeBytes": 6714,
+        "afterBytes": 6577
+      },
+      {
+        "path": "src/features/extracurricular/connected.module.css",
+        "beforeBytes": 744,
+        "afterBytes": 1776
+      },
+      {
+        "path": "src/features/extracurricular/formation-wizard.module.css",
+        "beforeBytes": 1474,
+        "afterBytes": 1850
+      },
+      {
+        "path": "src/features/pwa/pwa.module.css",
+        "beforeBytes": 1986,
+        "afterBytes": 555
+      },
+      {
+        "path": "src/features/pwa/provider.tsx",
+        "beforeBytes": 4352,
+        "afterBytes": 3095
+      },
+      {
+        "path": "src/features/personal/school-portal.tsx",
+        "beforeBytes": 21178,
+        "afterBytes": 20198
+      },
+      {
+        "path": "src/features/personal/shell.tsx",
+        "beforeBytes": 16789,
+        "afterBytes": 17142
+      },
+      {
+        "path": "src/features/personal/school/parent-workspace.tsx",
+        "beforeBytes": 11617,
+        "afterBytes": 11627
+      },
+      {
+        "path": "src/features/personal/school/dashboard-layout.module.css",
+        "beforeBytes": 980,
+        "afterBytes": 2004
+      },
+      {
+        "path": "src/features/personal/school/feed.tsx",
+        "beforeBytes": 11313,
+        "afterBytes": 9280
+      },
+      {
+        "path": "src/features/personal/school/manager-home.tsx",
+        "beforeBytes": 4620,
+        "afterBytes": 3183
+      },
+      {
+        "path": "src/features/personal/commerce.tsx",
+        "beforeBytes": 16361,
+        "afterBytes": 17052
+      },
+      {
+        "path": "src/features/personal/notification-settings.tsx",
+        "beforeBytes": 18399,
+        "afterBytes": 18718
+      },
+      {
+        "path": "src/features/personal/messaging/inbox.module.css",
+        "beforeBytes": 3624,
+        "afterBytes": 4610
+      },
+      {
+        "path": "src/features/personal/messaging/live.tsx",
+        "beforeBytes": 7513,
+        "afterBytes": 8093
+      },
+      {
+        "path": "src/features/personal/messaging/conversation-room.tsx",
+        "beforeBytes": 38967,
+        "afterBytes": 38537
+      },
+      {
+        "path": "src/features/personal/messaging/media.module.css",
+        "beforeBytes": 7762,
+        "afterBytes": 7627
+      },
+      {
+        "path": "src/features/personal/messaging/messenger.tsx",
+        "beforeBytes": 16660,
+        "afterBytes": 17114
+      },
+      {
+        "path": "src/features/personal/messaging/messenger.module.css",
+        "beforeBytes": 24852,
+        "afterBytes": 24533
+      },
+      {
+        "path": "src/features/personal/shell.module.css",
+        "beforeBytes": 7482,
+        "afterBytes": 7339
+      },
+      {
+        "path": "src/features/auth/login.module.css",
+        "beforeBytes": 3568,
+        "afterBytes": 3102
+      },
+      {
+        "path": "src/features/auth/login.tsx",
+        "beforeBytes": 15123,
+        "afterBytes": 14898
+      },
+      {
+        "path": "src/app/layout.tsx",
+        "beforeBytes": 2292,
+        "afterBytes": 2475
+      },
+      {
+        "path": "src/app/api/client/files/[[...path]]/route.ts",
+        "beforeBytes": 10742,
+        "afterBytes": 10748
+      },
+      {
+        "path": "src/app/api/client/source-files/[[...path]]/route.ts",
+        "beforeBytes": 8068,
+        "afterBytes": 8074
+      },
+      {
+        "path": "src/app/api/client/submission-files/[[...path]]/route.ts",
+        "beforeBytes": 11352,
+        "afterBytes": 11358
+      },
+      {
+        "path": "src/app/api/client/school-files/[[...path]]/route.ts",
+        "beforeBytes": 9569,
+        "afterBytes": 9575
+      },
+      {
+        "path": "src/app/api/client/report-exports/[jobId]/content/route.ts",
+        "beforeBytes": 4685,
+        "afterBytes": 4691
+      },
+      {
+        "path": "src/app/api/client/backend/[...path]/route.ts",
+        "beforeBytes": 6983,
+        "afterBytes": 6930
+      },
+      {
+        "path": "src/app/api/client/exam-files/[[...path]]/route.ts",
+        "beforeBytes": 11568,
+        "afterBytes": 11574
+      },
+      {
+        "path": "src/app/api/client/profile-media/[[...path]]/route.ts",
+        "beforeBytes": 6746,
+        "afterBytes": 6752
+      },
+      {
+        "path": "src/lib/api/contract.ts",
+        "beforeBytes": 5145,
+        "afterBytes": 351
+      },
+      {
+        "path": "src/lib/api/client-contract.ts",
+        "beforeBytes": 332,
+        "afterBytes": 455
+      },
+      {
+        "path": "src/components/ui/field.module.css",
+        "beforeBytes": 6718,
+        "afterBytes": 6719
+      },
+      {
+        "path": "src/components/ui/dialog.module.css",
+        "beforeBytes": 7174,
+        "afterBytes": 6865
+      },
+      {
+        "path": "src/components/ui/button.module.css",
+        "beforeBytes": 1348,
+        "afterBytes": 1348
+      },
+      {
+        "path": "src/components/v5/frame.module.css",
+        "beforeBytes": 11886,
+        "afterBytes": 5656
+      },
+      {
+        "path": "src/components/v5/scene.module.css",
+        "beforeBytes": 5165,
+        "afterBytes": 3271
+      },
+      {
+        "path": "src/components/v5/foundations.module.css",
+        "beforeBytes": 48527,
+        "afterBytes": 49378
+      },
+      {
+        "path": "src/components/v5/scene.tsx",
+        "beforeBytes": 12504,
+        "afterBytes": 8317
+      },
+      {
+        "path": "src/components/navigation/app-navigation.module.css",
+        "beforeBytes": 3478,
+        "afterBytes": 3486
+      },
+      {
+        "path": "tests/unit/client-contract.test.ts",
+        "beforeBytes": 1982,
+        "afterBytes": 2537
+      },
+      {
+        "path": "tests/browser/payment-recovery.spec.ts",
+        "beforeBytes": 12189,
+        "afterBytes": 13201
+      },
+      {
+        "path": "tests/browser/sign-in-layout.spec.ts",
+        "beforeBytes": 6737,
+        "afterBytes": 6998
+      },
+      {
+        "path": "tests/browser/exact-v5.spec.ts",
+        "beforeBytes": 10188,
+        "afterBytes": 10231
+      },
+      {
+        "path": "tests/browser/navigation-experience.spec.ts",
+        "beforeBytes": 10562,
+        "afterBytes": 8649
+      },
+      {
+        "path": "tests/browser/mobile-shell-repair.spec.ts",
+        "beforeBytes": 3274,
+        "afterBytes": 3305
+      },
+      {
+        "path": "tests/browser/exact-notification-devices.spec.ts",
+        "beforeBytes": 35421,
+        "afterBytes": 35439
+      },
+      {
+        "path": "tests/browser/test.ts",
+        "beforeBytes": 6921,
+        "afterBytes": 6517
+      },
+      {
+        "path": "tests/browser/assistant-credit-preview.spec.ts",
+        "beforeBytes": 4023,
+        "afterBytes": 4602
+      },
+      {
+        "path": "tests/browser/exact-formation-native.spec.ts",
+        "beforeBytes": 4670,
+        "afterBytes": 4176
+      },
+      {
+        "path": "tests/browser/exact-common-states.spec.ts",
+        "beforeBytes": 6210,
+        "afterBytes": 6254
+      },
+      {
+        "path": "scripts/generate-contract.mjs",
+        "beforeBytes": 3559,
+        "afterBytes": 5129
+      },
+      {
+        "path": "scripts/build-design.mjs",
+        "beforeBytes": 3271,
+        "afterBytes": 3249
+      },
+      {
+        "path": "design/tokens.json",
+        "beforeBytes": 2410,
+        "afterBytes": 2421
+      },
+      {
+        "path": "docs/PROGRESS.md",
+        "beforeBytes": 423010,
+        "afterBytes": 428017
+      }
+    ],
+    "removed": [
+      {
+        "path": "src/features/pwa/promotion.tsx",
+        "bytes": 2077,
+        "sha256": "66c9ed32076ce2666c97aa7106d8d51e3fdc55c6d132232bf8c18515d1b4e74f"
+      },
+      {
+        "path": "src/features/pwa/install-preferences.ts",
+        "bytes": 270,
+        "sha256": "1b7191297eb7874d31b7ef558dc0b99208b2ad542960734a4216c9846d9c2400"
+      }
+    ],
+    "newRuntimeOrToolFiles": [
+      {
+        "path": "src/lib/api/schema-validator.ts",
+        "bytes": 5629
+      },
+      {
+        "path": "src/generated/api/browser-contract.json",
+        "bytes": 148749
+      }
+    ],
+    "updatedDocumentation": [
+      "docs/PROGRESS.md",
+      "docs/deployment.md",
+      "docs/design/exact-v1/IMPLEMENTATION_REVIEW_FA.md",
+      "docs/design/exact-v1/screen-route-matrix.csv",
+      "docs/design/exact-v1/screen-route-matrix.json",
+      "docs/quality/CSS_RECONSTRUCTION_CHECKPOINT_20261110.json",
+      "docs/quality/CSS_STATIC_CLEANUP_20261110.json",
+      "docs/quality/CSS_CASCADE_PROTOTYPE_20261110.json"
+    ]
+  },
+  "limitations": [
+    "All 100 V9 patterns and all 528 historical states were not individually revalidated. Existing route/API/product gaps remain in the matrix; a related canonical pattern is not proof of a control contract.",
+    "The authorized API data and state differ from atlas samples. Empty source/class/order lists, actual role/count/metric labels and existing linked school group controls were preserved; no sample people, paid credit or AI success was inserted.",
+    "Auth retains its existing back/help controls and one terms/help action. Manager invitation action opens the existing invitation hub. Their text-dependent sizes are explicit differences, not pixel-perfect claims.",
+    "No new live OTP, message, invitation, purchase, subscription/permission change, ingest or AI generation was performed in this V9 turn. Prior 8090 subscription/provider findings remain historical evidence, not a new successful AI check.",
+    "Docker daemon is unavailable; the standalone Node runtime was tested independently with a declared isolated backend, without fixture flags. No remote deployment or physical keyboard/push/camera/native-store verification is claimed.",
+    "Owner application, secrets, real session files and Docker volumes are preserved. Retired root Vite is not restored. Proposed independent assessment features and public APIs without a contract were not enabled."
+  ],
+  "previousCheckpoint": {
+    "createdAt": "2026-11-10T13:32:15.145859+00:00",
+    "status": "Stopped at the user-requested checkpoint; implementation remains incomplete",
+    "buildId": "iPYyp6YLgOzgdhxkgpmQV",
+    "preview": "http://127.0.0.1:3130",
+    "changes": [
+      "Root atlas CSS replaced by component/feature CSS Modules and shared tokens",
+      "Native controls, buttons, dialogs, cards and tabs have explicit style ownership",
+      "Effective Tailwind utilities and reset migrated; direct Tailwind/PostCSS/tailwind-merge removed with lockfile",
+      "Large-text dialog overflow restored; invitation panel retains confirmed feedback while invalidating",
+      "Shared radio choice style moved to shared primitives; OTP flow aligned without reducing 44px hit area"
+    ],
+    "checks": {
+      "build": "passed",
+      "unit": {
+        "total": 484,
+        "passed": 484,
+        "failed": 0
+      },
+      "browserCurrent": {
+        "passed": 47,
+        "interrupted": 1,
+        "notRun": 20,
+        "unexpected": 0,
+        "reason": "Explicit user request to stop now. The interrupted invitation test is not a passed result.",
+        "report": "tmp/css-reconstruction/browser-fifth-results.json"
+      },
+      "browserPrevious": {
+        "build": "1PLf-uiqi2MuDjlXBQrhd",
+        "passed": 507,
+        "failed": 6,
+        "total": 513,
+        "report": "tmp/css-reconstruction/browser-all-fourth-results.json"
+      },
+      "typecheck": {
+        "log": "tmp/css-reconstruction/typecheck-fifth.log",
+        "tail": "\n> makan-client@0.1.0 typecheck\n> tsc --noEmit\n\n",
+        "status": "passed"
+      },
+      "lint": {
+        "log": "tmp/css-reconstruction/lint-fifth-final.log",
+        "tail": "\n> makan-client@0.1.0 lint\n> node scripts/check-source.mjs\n\nChecked unused declarations and 312 source module boundaries; no cycles.\n",
+        "status": "passed",
+        "boundaryCount": 312
+      },
+      "generated": {
+        "log": "tmp/css-reconstruction/generated-fifth.log",
+        "tail": "\n> makan-client@0.1.0 generated:check\n> node scripts/check-generated.mjs\n\nGenerated 325 client-only operations and 568 schemas; no platform-admin paths.\n{\"mode\":\"verified\",\"version\":\"5.0-blue\",\"sourcePdfSha256\":\"17d6c09071c04745eea0d6efc4f2cf636eb973fc68fe1c96808620dac7c36cb4\",\"scope\":\"Reference inventory only; route implementation and visual verification are recorded separately in docs/design/exact-v1/screen-route-matrix.csv.\",\"scenarios\":528,\"clientScenarios\":482,\"separateOwnerScenarios\":46}\n",
+        "status": "passed"
+      },
+      "format": {
+        "log": "tmp/css-reconstruction/format-check-fifth-final.log",
+        "tail": "\n> makan-client@0.1.0 format:check\n> prettier --check src tests/browser tests/production tests/unit tests/fixtures scripts design/tokens.json *.ts *.mts package.json\n\nChecking formatting...\nAll matched files use Prettier code style!\n",
+        "status": "passed"
+      }
+    },
+    "visual": {
+      "currentCaptureRows": 109,
+      "currentCaptured": 108,
+      "currentStateVerified": 90,
+      "primaryMismatch": 18,
+      "planned": 852,
+      "completed": false,
+      "gallery": "output/review/css-reconstruction-checkpoint-20261110/index.html",
+      "beforeReferenceAfterPairs": 30,
+      "priorBuildCapture": {
+        "build": "1PLf-uiqi2MuDjlXBQrhd",
+        "main": 852,
+        "boundary": 88,
+        "largeText": 88
+      },
+      "unresolvedPreviousGeometry": 724,
+      "note": "Prior build evidence is retained under its actual build. 18 current captures have a primary-ID mismatch and cannot substantiate matching state parity. No full V5 acceptance."
+    },
+    "cleanup": {
+      "manifest": "docs/quality/CSS_STATIC_CLEANUP_20261110.json",
+      "removedFiles": 4,
+      "bytes": 100018,
+      "directDependencies": 3,
+      "npmPackages": 17,
+      "staticAudit": "docs/quality/STATIC_USAGE_20261110.json"
+    },
+    "sourceCheckpoint": {
+      "archive": "/home/omidreza-bagheriyan/Desktop/MakanApp-cleanup-backup-2026-11-10/css-reconstruction/build-fifth-source.tar.gz",
+      "sha256": "fabac484e10edfd8e3d1207dd49a7aa79b8ade198d5bafeea7190b4f2d39b8a0",
+      "hashManifest": "tmp/css-reconstruction/build-fifth-source.json"
+    },
+    "remaining": [
+      "Review geometry differences with semantically matched controls, data and focus; radio paint cannot be compared to entire hit row",
+      "Resolve primary reference ID reuse in class-request, proposal-gated exam editor and large-text classes capture preparation",
+      "Complete current-build attendance/privacy/appearance and invitation-feedback verification",
+      "Finish the 528-row exact-state mapping; 46 owner states are separate and 36 independent education proposals stay gated",
+      "Complete current-build boundaries, 200% text and short height; full browser rerun and ordinary production smoke",
+      "Produce final cascade/source-line/computed report and complete visual acceptance; no claim of pixel perfect",
+      "Real AI success remains unverified; last recorded authorized run was blocked by inactive subscription, no server result fabricated"
+    ],
+    "previewReadOnlyCheck": {
+      "url": "http://127.0.0.1:3130/enter",
+      "status": 200,
+      "note": "Public route read only; no OTP or mutation performed."
+    }
+  }
+}

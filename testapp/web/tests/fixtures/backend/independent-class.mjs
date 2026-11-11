@@ -1,5 +1,5 @@
 import { randomUUID } from 'node:crypto';
-import { make, id } from './state.mjs';
+import { make, id, userFor } from './state.mjs';
 const cid = id(1800),
   rid = id(1801),
   mid = id(1802),
@@ -103,6 +103,57 @@ export function seedIndependent(state, options = {}) {
     evaluation: null,
     grade: null,
   };
+  if (options.exactV5Members) {
+    state.independent.class.title = 'کارگاه داستان‌نویسی';
+    state.independent.members = [
+      [1802, 199, 'Manager', 'سارا', 'احمدی'],
+      [1808, 102, 'Teacher', 'مریم', 'رضایی'],
+      [1809, 101, 'Learner', 'ریحانه', 'زمانی'],
+    ].map(([membership, user, localRoles, firstName, lastName]) => {
+      Object.assign(userFor(state, '09120000' + user).user, {
+        firstName,
+        lastName,
+        displayName: firstName + ' ' + lastName,
+      });
+      return make('PersonalClassMembershipDto', {
+        id: id(membership),
+        userId: id(user),
+        localRoles,
+        delegatedCapabilities: 'None',
+        status: 'Active',
+        version: version(1),
+      });
+    });
+  }
+  if (options.exactV5MemberDetail) {
+    const member = state.independent.members.find((row) => row.userId === id(102));
+    member.localRoles = 'Learner, Teacher';
+    member.joinedAtUtc = '2026-10-26T08:00:00Z';
+    state.independent.grants.push(
+      make('PersonalClassAcademicPermissionDto', {
+        id: id(1820),
+        personalClassId: cid,
+        membershipId: member.id,
+        capabilities: 'AuthorAssignments, Grade',
+        parentGrantId: null,
+        isEffective: true,
+        createdAtUtc: '2026-10-26T08:00:00Z',
+        revokedAtUtc: null,
+        version: version(1),
+      }),
+    );
+    for (let index = 0; index < (options.memberGrantPrefixCount ?? 0); index++)
+      state.independent.grants.unshift(
+        make('PersonalClassAcademicPermissionDto', {
+          id: id(20000 + index),
+          personalClassId: cid,
+          membershipId: id(30000 + index),
+          capabilities: 'None',
+          isEffective: false,
+          version: version(1),
+        }),
+      );
+  }
   if (options.invitation)
     state.independent.invitations.push(
       make('PersonalClassInvitationDto', {
@@ -145,6 +196,72 @@ export function seedIndependent(state, options = {}) {
       });
       state.independent.requests.set(r.id, r);
     }
+  if (options.formationProgress) {
+    const progress = options.formationProgress;
+    state.independent.requests.set(
+      rid,
+      make('PersonalClassRequestDto', {
+        id: rid,
+        requesterUserId: id(199),
+        details: {
+          title: 'کارگاه داستان‌نویسی',
+          purpose: 'تمرین نوشتن و گفتگوی گروهی',
+          description: null,
+          suggestedCapacity: 20,
+          suggestedManagerUserId: id(199),
+          suggestedTeacherUserId: null,
+        },
+        status: 'Approved',
+        version: version(1),
+        createdClassId: cid,
+        finalManagerUserId: id(199),
+        capabilities: {
+          canEdit: false,
+          canSubmit: false,
+          canCancel: false,
+          canRespondToChanges: false,
+        },
+        progress,
+      }),
+    );
+  }
+  if (options.join) {
+    userFor(state, '09120000103');
+    state.independent.joins.push(
+      make('PersonalClassJoinDto', {
+        id: id(1811),
+        personalClassId: cid,
+        userId: id(103),
+        status: 'Pending',
+        version: version(1),
+      }),
+    );
+  }
+  if (options.needsChanges)
+    state.independent.requests.set(
+      rid,
+      make('PersonalClassRequestDto', {
+        id: rid,
+        requesterUserId: id(199),
+        details: {
+          title: 'درخواست نیازمند بررسی',
+          purpose: 'تمرین گروهی نوشتن',
+          description: 'پیش‌نویس کلاس برای بررسی چیدمان',
+          suggestedCapacity: 20,
+          suggestedManagerUserId: null,
+          suggestedTeacherUserId: null,
+        },
+        status: 'NeedsChanges',
+        version: version(1),
+        decisionReason: 'هدف و ظرفیت پیشنهادی را دقیق‌تر بنویسید.',
+        capabilities: {
+          canEdit: true,
+          canSubmit: true,
+          canCancel: true,
+          canRespondToChanges: true,
+        },
+      }),
+    );
   return { classId: cid, requestId: rid, assignmentId: aid, examId: eid };
 }
 export function independentRoute({ state, url, body, auth, req, res, send }) {
@@ -270,11 +387,27 @@ export function independentRoute({ state, url, body, auth, req, res, send }) {
           conversationId: id(950),
           state: 'Ready',
           capabilities: { canRead: true, canSend: true, canManage: true },
+          official: make('OfficialSpaceMetadata', {
+            sourceKind: 'PersonalClass',
+            sourceId: cid,
+            organizationId: null,
+            purpose: 'Group',
+            displayLabel: 'گروه کلاس مستقل آزمایشی',
+            version: version(1),
+          }),
         }),
         channel: make('OfficialSpaceEndpointResult', {
           conversationId: id(950),
           state: 'Pending',
           capabilities: { canRead: false, canSend: false, canManage: false },
+          official: make('OfficialSpaceMetadata', {
+            sourceKind: 'PersonalClass',
+            sourceId: cid,
+            organizationId: null,
+            purpose: 'Channel',
+            displayLabel: 'کانال کلاس مستقل آزمایشی',
+            version: version(1),
+          }),
         }),
       }),
     );
@@ -340,9 +473,14 @@ export function independentRoute({ state, url, body, auth, req, res, send }) {
     if (!member) return fail('NOT_FOUND', 404);
     if (!expected(member)) return fail('VERSION_CONFLICT');
     if (m === 'DELETE') {
+      if (!x.class.capabilities.canManageMembers) return fail('FORBIDDEN', 403);
       member.status = 'Ended';
+      member.endedAtUtc = new Date().toISOString();
+      member.endReason = body.reason;
+      bump(member);
       return send(null, 204);
     }
+    if (!x.class.capabilities.canManageRoles) return fail('FORBIDDEN', 403);
     Object.assign(member, {
       localRoles: body.roles,
       delegatedCapabilities: body.delegatedCapabilities,

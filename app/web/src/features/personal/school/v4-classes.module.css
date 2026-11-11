@@ -1,13 +1,69 @@
-.page {
+.page,
+.managerBody {
   min-width: 0;
   width: 100%;
 }
-.desktop {
+.mobileClassFooter {
   display: none;
 }
-.allSizesList,
-.mobileList {
-  min-width: 0;
+@media (max-width: 767px) {
+  .learnerList :global(.v5-list) {
+    display: grid;
+    gap: 16px;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    overflow: visible;
+  }
+  .learnerList :global(.v5-row) {
+    display: grid;
+    grid-template-columns: 40px minmax(0, 1fr) auto;
+    align-items: start;
+    gap: 12px;
+    padding: 16px;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    background: var(--surface);
+  }
+  .learnerList :global(.v5-row-copy) {
+    display: contents;
+  }
+  .learnerList :global(.v5-row .v5-row-copy > strong) {
+    grid-column: 2;
+    font-size: calc(17px * var(--text-scale, 1));
+    line-height: 1.7;
+  }
+  .learnerList :global(.v5-row .v5-row-copy > small) {
+    display: flex;
+    flex-direction: column;
+    grid-column: 1/-1;
+    gap: 12px;
+    font-size: calc(13px * var(--text-scale, 1));
+  }
+  .learnerList :global(.v5-row) > .badge {
+    grid-column: 3;
+    grid-row: 1;
+  }
+  .learnerList :global(.v5-row) > svg {
+    display: none;
+  }
+  .mobileClassFooter {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 6px;
+    min-height: 44px;
+    padding-top: 12px;
+    border-top: 1px solid var(--line);
+    color: var(--accent);
+    font-size: calc(14px * var(--text-scale, 1));
+    font-weight: 700;
+  }
+}
+.managerBody {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
 }
 .badge {
   display: inline-flex;
@@ -16,150 +72,194 @@
   border-radius: 6px;
   background: var(--primary-soft);
   color: var(--primary);
-  font-size: 10px;
-  white-space: nowrap;
+  font-size: calc(10px * var(--text-scale, 1));
+  overflow-wrap: anywhere;
 }
-@media (min-width: 1200px) {
-  .mobileList {
-    display: none;
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+.metrics > div {
+  min-width: 0;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+  padding: 15px;
+  text-align: center;
+}
+.metrics b {
+  display: block;
+  font-size: calc(28px * var(--text-scale, 1));
+  line-height: 1.5;
+  font-weight: 700;
+}
+.metrics small {
+  font-size: calc(13px * var(--text-scale, 1));
+  color: var(--muted);
+}
+.details {
+  margin: 0;
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--surface);
+}
+.details > div,
+.cardDetails > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 0;
+  font-size: calc(13px * var(--text-scale, 1));
+}
+.details > div + div,
+.cardDetails > div + div {
+  border-top: 1px solid var(--border);
+}
+.details dt,
+.cardDetails dt {
+  color: var(--muted);
+}
+.details dd,
+.cardDetails dd {
+  font-weight: 650;
+  margin: 0;
+  text-align: end;
+  overflow-wrap: anywhere;
+  min-width: 0;
+}
+.details dd {
+  font-size: calc(14px * var(--text-scale, 1));
+  font-weight: 500;
+}
+.tableWrap {
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--surface);
+}
+.tableWrap table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  font-size: calc(14px * var(--text-scale, 1));
+}
+.tableWrap th {
+  font-size: calc(12px * var(--text-scale, 1));
+  font-weight: 500;
+  color: var(--muted);
+  background: var(--surface2);
+  text-align: start;
+  padding: 13px 12px;
+  overflow-wrap: anywhere;
+}
+.tableWrap td {
+  padding: 16px 12px;
+  border-top: 1px solid var(--border);
+  line-height: 1.85;
+  overflow-wrap: anywhere;
+}
+.tableWrap td:first-child {
+  padding-block: 7px;
+}
+.tableWrap tr[data-selected='true'] {
+  background: var(--primary-soft);
+}
+.titleCell {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  gap: 4px;
+}
+.titleCell button,
+.select {
+  border: 0;
+  background: none;
+  padding: 0;
+  color: inherit;
+  font: inherit;
+  min-height: 44px;
+  min-width: 0;
+  text-align: start;
+  cursor: pointer;
+  overflow-wrap: anywhere;
+}
+.titleCell button {
+  flex: 1;
+}
+.open {
+  flex: none;
+  display: grid;
+  place-items: center;
+  min-width: 44px;
+  min-height: 44px;
+  color: var(--primary);
+}
+.mobileCards {
+  display: none;
+}
+.cardDetails {
+  margin: 0;
+}
+.openCard {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  background: var(--soft);
+  color: var(--primary);
+  border-radius: 9px;
+  margin-top: 12px;
+  font-size: calc(13px * var(--text-scale, 1));
+  padding: 8px 12px;
+}
+@media (min-width: 768px) and (max-width: 1199px) {
+  .managerBody {
+    gap: 16px;
   }
-  .desktop {
-    display: grid;
-    gap: 20px;
-  }
-  .metrics {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 8px;
-  }
-  .metrics > div {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 96px;
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    background: var(--surface);
-    padding: 12px;
-  }
-  .metrics b {
-    font-size: 26px;
-    line-height: 1.7;
-    font-weight: 800;
-  }
-  .metrics small {
-    font-size: 11px;
-    color: var(--muted);
-    margin-top: 6px;
-  }
-  .split {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) 280px;
-    gap: 20px;
-    align-items: start;
-  }
-  .tableColumn {
-    grid-column: 1;
-    grid-row: 1;
-  }
-  .context {
-    grid-column: 2;
-    grid-row: 1;
-  }
-  .context {
-    min-width: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-  .context > section {
-    margin-bottom: -12px;
-  }
+}
+@media (max-width: 767px) {
   .details {
-    margin: 0;
-    padding: 8px 14px;
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    background: var(--surface);
+    padding: 16px;
   }
   .details > div {
-    display: flex;
-    justify-content: space-between;
-    gap: 12px;
-    padding: 10px 0;
-    font-size: 12px;
-  }
-  .details > div + div {
-    border-top: 1px solid var(--border);
-  }
-  .details dt {
-    color: var(--muted);
+    font-size: calc(12px * var(--text-scale, 1));
   }
   .details dd {
-    font-weight: 650;
-    margin: 0;
-    text-align: end;
+    font-size: calc(13px * var(--text-scale, 1));
   }
-  .tableColumn {
-    min-width: 0;
+  .managerBody {
+    gap: 14px;
   }
   .tableWrap {
-    border: 1px solid var(--border);
-    border-radius: 16px 16px 0 0;
-    overflow: auto;
-    background: var(--surface);
+    display: none;
   }
-  .tableWrap table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 12px;
-  }
-  .tableWrap th {
-    font-size: 11px;
-    font-weight: 500;
-    color: var(--muted);
-    background: var(--soft);
-    text-align: start;
-    padding: 14px 12px;
-  }
-  .tableWrap td {
-    padding: 10px 12px;
-    border-top: 1px solid var(--border);
-    line-height: 1.8;
-  }
-  .tableWrap td:first-child {
-    position: relative;
-    padding-inline-end: 30px;
-  }
-  .tableWrap tr[data-selected='true'] {
-    background: var(--primary-soft);
-  }
-  .tableWrap td button {
-    border: 0;
-    background: none;
-    padding: 0;
-    color: inherit;
-    font: inherit;
-    min-height: 44px;
-    text-align: start;
-    cursor: pointer;
-  }
-  .open {
-    position: absolute;
-    inset-inline-end: 4px;
-    top: 50%;
-    transform: translateY(-50%);
+  .mobileCards {
     display: grid;
-    place-items: center;
-    min-width: 32px;
-    min-height: 44px;
-    color: var(--primary);
+    gap: 12px;
   }
-  .tableColumn > div + div {
-    border-radius: 0 0 16px 16px;
+}
+@media (max-width: 359px) {
+  .metrics {
+    gap: 6px;
   }
-  .allSizesList {
-    max-width: 900px;
+  .metrics > div {
+    padding: 10px 6px;
   }
+  .metrics b {
+    font-size: calc(24px * var(--text-scale, 1));
+  }
+  .metrics small {
+    font-size: calc(11px * var(--text-scale, 1));
+  }
+}
+:global(:root[data-reading='large']) .metrics {
+  grid-template-columns: minmax(0, 1fr);
+}
+:global(:root[data-reading='large']) .tableWrap {
+  display: none;
+}
+:global(:root[data-reading='large']) .mobileCards {
+  display: grid;
+  gap: 12px;
 }

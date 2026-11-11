@@ -4,6 +4,20 @@ import { id, make } from './state.mjs';
 export function seedMessagingRepair(state, body) {
   state.messagingRepair = body;
   state.messagingInvitations = [];
+  if (body.blocked)
+    state.blocked.set(
+      id(102),
+      [
+        [104, 'امیر نادری'],
+        [101, 'حساب نمونه'],
+      ].map(([user, displayName], index) =>
+        make('BlockedUserResult', {
+          blockId: id(5200 + index),
+          user: make('SafeMessagingIdentityResult', { userId: id(user), displayName }),
+          version: '1',
+        }),
+      ),
+    );
   if (body.privacy)
     state.privacy.set(
       id(102),

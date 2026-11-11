@@ -1,0 +1,36 @@
+{
+  "reason": "The obsolete test rendered 130 V2 atlas screens, not product routes. Current V5 reference and real product browser checks are retained.",
+  "backupOutsideWorkspace": "/home/omidreza-bagheriyan/Desktop/MakanApp-cleanup-backup-2026-11-10/retired-v2-browser-reference.zip",
+  "files": [
+    {
+      "path": "tests/browser/design-reference.spec.ts",
+      "bytes": 2145,
+      "sha256": "08d0076bbfdb50603bbb8bf0faa85c7c052c3d7e5b41ad1c7cf7b2c6851800c8"
+    },
+    {
+      "path": "output/design/U01-comparison-mobile.png",
+      "bytes": 77347,
+      "sha256": "4775f3c9fdcdb39a0b0cbe61d753a0c144cd3adbc5d1ae5a5a00b043ffb75e11"
+    },
+    {
+      "path": "output/design/S01-comparison-mobile.png",
+      "bytes": 100250,
+      "sha256": "83e4ca2eb84e9398d68012fe378e757ba9394f1e226c2b8bc1ad56e5b2dc3eae"
+    },
+    {
+      "path": "output/design/assistant-dark-mobile.png",
+      "bytes": 66439,
+      "sha256": "254a64c71443ba64eb02b77c89ec458220991861097b1f97fe8a3a475cbcee8f"
+    },
+    {
+      "path": "output/design/makan-responsive-prototype.html",
+      "bytes": 324984,
+      "sha256": "5e97a4c7acb0d21d0c86eaaf2583a53642a461d722fa80bb9e1749cb56e737e7"
+    },
+    {
+      "path": "output/design/client-reference-contact.png",
+      "bytes": 433906,
+      "sha256": "79c84d167b2b061686b9452b0a99ee3909ab7d5f772713f22d21e8d7ef2663fb"
+    }
+  ]
+}

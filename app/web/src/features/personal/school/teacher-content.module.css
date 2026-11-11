@@ -1,0 +1,32 @@
+.kinds {
+  display: flex;
+  flex-wrap: wrap;
+  min-width: 0;
+  padding-inline: 2px;
+  border-radius: 12px;
+  background: var(--surface2);
+}
+.kinds button,
+.kinds a {
+  display: grid;
+  place-items: center;
+  flex: 1;
+  min-width: 0;
+  min-height: 44px;
+  padding: 4px 10px;
+  border-block: 4px solid transparent;
+  border-inline: 2px solid transparent;
+  border-radius: 12px;
+  color: var(--muted);
+  background: transparent;
+  font: inherit;
+  font-size: calc(14px * var(--text-scale, 1));
+  overflow-wrap: anywhere;
+}
+.kinds button[aria-pressed='true'],
+.kinds a[aria-current='page'] {
+  background: var(--surface);
+  background-clip: padding-box;
+  color: var(--text);
+  font-weight: 700;
+}

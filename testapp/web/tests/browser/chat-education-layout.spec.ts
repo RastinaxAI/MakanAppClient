@@ -1,7 +1,8 @@
+import { reviewPath } from './review-output';
 import { test, expect, login, schoolSections, fixture, ids } from './test';
 import { mkdir } from 'node:fs/promises';
 
-const output = 'output/review/chat-education-layout';
+const output = reviewPath('output/review/chat-education-layout');
 const sizes = [
   [320, 780],
   [390, 844],
@@ -15,7 +16,7 @@ for (const theme of ['light', 'dark']) {
     ['fa', 'استاد محمدرضا ناظری — آموزشگاه زبان و برنامه‌نویسی ماکان'],
     ['en', 'Development Teacher — Advanced Programming and Mathematics'],
   ]) {
-    test(`chat header ${theme} ${language}: avatar stays beside the title and controls never overlap`, async ({
+    test(`chat header ${theme} ${language}: V5 title and controls remain readable without overlap`, async ({
       page,
       context,
       request,
@@ -35,20 +36,18 @@ for (const theme of ['light', 'dark']) {
         await page.setViewportSize({ width, height });
         await page.evaluate(() => document.fonts.ready);
         const geometry = await identity.evaluate((el) => {
-          const avatar = el.querySelector(':scope > span')!.getBoundingClientRect();
           const title = el.querySelector('h2')!.getBoundingClientRect();
           const box = el.getBoundingClientRect();
-          return { avatar: avatar.toJSON(), title: title.toJSON(), box: box.toJSON() };
+          return { title: title.toJSON(), box: box.toJSON() };
         });
-        expect(geometry.avatar.x).toBeGreaterThanOrEqual(geometry.title.right);
-        expect(geometry.avatar.x - geometry.title.right).toBeLessThanOrEqual(12);
+        expect(geometry.title.x).toBeGreaterThanOrEqual(geometry.box.x);
+        expect(geometry.title.right).toBeLessThanOrEqual(geometry.box.right);
         expect(geometry.title.width).toBeGreaterThan(90);
         expect(geometry.box.height).toBeGreaterThanOrEqual(44);
         const menu = header.getByRole('button', { name: 'گزینه‌های گفتگو', exact: true });
         const menuBox = (await menu.boundingBox())!;
         expect(menuBox.width).toBeGreaterThanOrEqual(44);
         expect(menuBox.x + menuBox.width).toBeLessThanOrEqual(geometry.box.x);
-        expect(geometry.avatar.width).toBeGreaterThanOrEqual(40);
         if (width < 768) {
           const back = header.getByRole('link', { name: 'بازگشت به فهرست گفتگوها', exact: true });
           const backBox = (await back.boundingBox())!;
@@ -72,7 +71,7 @@ for (const theme of ['light', 'dark']) {
   }
 }
 
-test('dark inbox uses neutral surfaces, readable previews, underlined filters and an accessible compose button', async ({
+test('dark V5 inbox keeps readable previews, chip filters and an accessible header compose button', async ({
   page,
   context,
   request,
@@ -83,10 +82,14 @@ test('dark inbox uses neutral surfaces, readable previews, underlined filters an
   await page.goto('/personal/messages');
   const inbox = page.getByLabel('فهرست گفتگوها', { exact: true });
   await expect(inbox.getByText('مریم رضایی', { exact: true })).toBeVisible();
-  expect(await inbox.evaluate((el) => getComputedStyle(el).backgroundColor)).toBe(
-    'rgb(16, 26, 43)',
-  );
   const contrast = await inbox.evaluate((el) => {
+    const background = (element: Element) => {
+      for (let node: Element | null = element; node; node = node.parentElement) {
+        const value = getComputedStyle(node).backgroundColor;
+        if (value !== 'rgba(0, 0, 0, 0)' && value !== 'transparent') return value;
+      }
+      throw new Error('No opaque rendered surface for contrast measurement');
+    };
     const luminance = (rgb: string) => {
       const [r, g, b] = rgb
         .match(/\d+/g)!
@@ -106,7 +109,7 @@ test('dark inbox uses neutral surfaces, readable previews, underlined filters an
     )!;
     const badge = el.querySelector('b[aria-label]')!;
     return {
-      preview: ratio(getComputedStyle(preview).color, getComputedStyle(el).backgroundColor),
+      preview: ratio(getComputedStyle(preview).color, background(preview)),
       badge: ratio(getComputedStyle(badge).color, getComputedStyle(badge).backgroundColor),
     };
   });
@@ -120,7 +123,9 @@ test('dark inbox uses neutral surfaces, readable previews, underlined filters an
   );
   for (const [width, height] of sizes) {
     await page.setViewportSize({ width, height });
-    const compose = inbox.getByRole('button', { name: 'ایجاد گفت‌وگو یا مخاطب', exact: true });
+    const compose = page
+      .getByRole('banner')
+      .getByRole('button', { name: 'ایجاد گفت‌وگو یا مخاطب', exact: true });
     const box = (await compose.boundingBox())!;
     expect(box.width).toBeGreaterThanOrEqual(44);
     expect(box.height).toBeGreaterThanOrEqual(44);

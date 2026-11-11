@@ -1,0 +1,9 @@
+{
+  "date": "2026-11-07",
+  "archive": "/home/omidreza-bagheriyan/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an/outputs/MakanApp_Exact_UI_Implementation_Pack_FA_v1.zip",
+  "archiveSha256": "4dc26d4d39533ecac14f61314a52b187ff44db76a2d95d0900f1ea711e941c59",
+  "reference": "design/reference-v5/MakanApp_Responsive_Design_v5",
+  "allReferenceFilesIdentical": true,
+  "pdfSha256": "17d6c09071c04745eea0d6efc4f2cf636eb973fc68fe1c96808620dac7c36cb4",
+  "attachedSkill": "Appllama Expo/React Native reference; not a request to migrate the existing Next.js app"
+}

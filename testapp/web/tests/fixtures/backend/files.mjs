@@ -62,12 +62,23 @@ export async function filesRoute({ state, req, res, url, bytes, auth, send }) {
     state.conversationDetail.participants.some(
       (member) => member.status === 'Active' && member.user.userId === auth.user.id,
     );
+  const assignmentAttachment = [...(state.createdAssignments?.values() ?? [])].some(
+    (row) =>
+      row.organizationId === auth.context.organizationId &&
+      row.classId === ids.class &&
+      row.attachmentFileIds?.includes(id) &&
+      (['Teacher', 'Manager'].includes(auth.context.activeRole) ||
+        (row.status === 'Published' &&
+          auth.context.activeRole === 'Student' &&
+          auth.user.id === fixtureId(101))),
+  );
   if (
     !file ||
     (file.asset.uploadedByUserId !== auth.user.id &&
       !evaluationAttachment &&
       !directAttachment &&
-      !conversationPhoto)
+      !conversationPhoto &&
+      !assignmentAttachment)
   )
     return send({ code: 'FILE_NOT_FOUND' }, 404);
   if (url.pathname.endsWith('/content')) {

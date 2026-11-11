@@ -1,13 +1,33 @@
 'use client';
+import { Select as NativeSelect } from '@/components/ui/input';
+
+import { uiClass } from '@/components/v5/classes';
+
 import * as uiText from '@/content/fa';
 import Link from 'next/link';
-import { useState, type ReactNode } from 'react';
+import { useRef, useState, type ReactNode } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { CalendarCheck, ClipboardCheck, GraduationCap, ChartNoAxesCombined } from 'lucide-react';
+import { useViewState } from '@/components/hooks/use-view-state';
+import { contextSignature } from '@/lib/client-surface';
+import { ApiError } from '@/lib/api/errors';
+import {
+  CalendarCheck,
+  ClipboardCheck,
+  GraduationCap,
+  ChartNoAxesCombined,
+  Download,
+} from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import {
+  ReportExportDialog,
+  ReportExportStatus,
+  validExportId,
+  type ManagerExportType,
+} from './report-export';
 import { EmptyState, ErrorState, LoadingSkeleton, label } from '@/components/ui/states';
 import type { components } from '@/generated/api/schema';
 import { date } from '@/lib/formatting';
-import { usePersonalApi } from '../provider';
+import { usePersonal, usePersonalApi } from '../provider';
 import { base, Card, Field, Pager } from './shared';
 import { V5Scene } from '@/components/v5/scene';
 import { vnext as t } from '@/content/fa';
@@ -23,10 +43,33 @@ const reports = [
 ] as const;
 type Kind = (typeof reports)[number][0];
 export function ManagerReports() {
-  const requested = useSearchParams().get('kind');
+  const { session } = usePersonal();
+  const params = useSearchParams();
+  const requested = params.get('kind');
+  const exportId = params.get('export');
   const kind = reports.find(([key]) => key === requested)?.[0] ?? 'teacher-workload';
-  const [classId, setClassId] = useState('');
+  const [classId, setClassId] = useViewState(
+    session.user.id + ':' + contextSignature(session.context) + ':manager-reports:class',
+    '',
+    (value): value is string => typeof value === 'string',
+  );
+  const [exportOpen, setExportOpen] = useState(false);
+  const exportTrigger = useRef<HTMLElement | null>(null);
+  const exportTypes: Partial<Record<Kind, ManagerExportType>> = {
+    'teacher-workload': 'ManagerTeacherWorkload',
+    attendance: 'ManagerAttendance',
+    assessments: 'ManagerAssessments',
+    enrollments: 'ManagerEnrollments',
+  };
+  const exportType = exportTypes[kind];
+  const exportBack = base + '/reports?kind=' + kind;
   const classes = usePersonalApi<S['ClassResult'][]>('/api/v1/academic/classes');
+  if (exportId)
+    return validExportId(exportId) ? (
+      <ReportExportStatus jobId={exportId} back={exportBack} />
+    ) : (
+      <ErrorState error={new ApiError(404)} />
+    );
   return (
     <V5Scene
       id="MK-467"
@@ -36,9 +79,23 @@ export function ManagerReports() {
       kind="list"
       moreLabel={uiText.text_589d5004f227}
       onMore={() => window.dispatchEvent(new Event('makan:education-sections'))}
+      actions={
+        exportType && (
+          <Button
+            data-report-export-trigger
+            onClick={(event) => {
+              exportTrigger.current = event.currentTarget;
+              setExportOpen(true);
+            }}
+          >
+            <Download size={18} />
+            {uiText.reportExport.configure}
+          </Button>
+        )
+      }
     >
-      <div className={s.stack}>
-        <nav className={s.reportTabs} aria-label={uiText.text_cbdfdaa8e710}>
+      <div className={uiClass(s.stack)}>
+        <nav className={uiClass(s.reportTabs)} aria-label={uiText.text_cbdfdaa8e710}>
           {reports.map(([key, title, Icon]) => (
             <Link
               key={key}
@@ -54,7 +111,7 @@ export function ManagerReports() {
           <ErrorState error={classes.error} onRetry={() => void classes.refetch()} />
         ) : (
           <Field label={uiText.text_437fb367adf5}>
-            <select
+            <NativeSelect
               value={classId}
               disabled={classes.isPending}
               onChange={(e) => setClassId(e.target.value)}
@@ -65,7 +122,7 @@ export function ManagerReports() {
                   {c.title}
                 </option>
               ))}
-            </select>
+            </NativeSelect>
           </Field>
         )}
         {kind === 'content-activities' ? (
@@ -74,6 +131,16 @@ export function ManagerReports() {
           <ReportData key={kind + classId} kind={kind} classId={classId} />
         )}
       </div>
+      {exportType && (
+        <ReportExportDialog
+          open={exportOpen}
+          onOpenChange={setExportOpen}
+          initialType={exportType}
+          classId={classId}
+          returnFocus={exportTrigger}
+          back={exportBack}
+        />
+      )}
     </V5Scene>
   );
 }
@@ -89,7 +156,7 @@ function ReportTable<T>({
   cells: (row: T) => ReactNode[];
 }) {
   return items.length ? (
-    <div className={s.tableWrap}>
+    <div className={uiClass(s.tableWrap)}>
       <table>
         <thead>
           <tr>
@@ -133,7 +200,7 @@ export function ReportData({ kind, classId = '' }: { kind: Kind; classId?: strin
   );
   return (
     <Card title={reports.find(([key]) => key === kind)![1]}>
-      <p className={s.updated}>
+      <p className={uiClass(s.updated)}>
         {uiText.text_25ae6cfe3ea0}
         {date(q.data.dataAsOfUtc, true)}
       </p>
@@ -246,7 +313,7 @@ export function ClassPerformance({ id }: { id: string }) {
   const d = q.data;
   return (
     <Card title={uiText.text_599bb8087251}>
-      <dl className={s.metrics}>
+      <dl className={uiClass(s.metrics)}>
         {[
           [uiText.text_8192485568dd, d.activeLearnerCount],
           [uiText.text_ab3e7cbab1a8, d.assignmentReleasedResultCount],
@@ -270,7 +337,7 @@ export function ClassPerformance({ id }: { id: string }) {
           </div>
         ))}
       </dl>
-      <p className={s.updated}>
+      <p className={uiClass(s.updated)}>
         {uiText.text_9ac2d07cb58e}
         {date(d.dataAsOfUtc, true)}
       </p>

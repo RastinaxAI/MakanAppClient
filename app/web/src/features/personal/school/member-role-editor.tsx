@@ -1,4 +1,8 @@
 'use client';
+import { Select as NativeSelect, Textarea as NativeTextarea } from '@/components/ui/input';
+
+import { uiClass } from '@/components/v5/classes';
+
 import * as uiText from '@/content/fa';
 import { useState } from 'react';
 import { vnext as t } from '@/content/fa';
@@ -46,24 +50,24 @@ export function MemberRoleEditor({
   if (session.context.activeRole !== 'Manager') return null;
   return (
     <Card title={t.manageRoles + ' · ' + member.displayName}>
-      <p className={s.hint}>{t.roleHint}</p>
+      <p className={uiClass(s.hint)}>{t.roleHint}</p>
       <p>
         {baseline.activeRoles.map(label).join(' / ')}
         {uiText.text_588da4105320}
         {label(baseline.membershipStatus)}
       </p>
-      <fieldset className={s.form} disabled={command.busy || refreshing}>
+      <fieldset className={uiClass(s.form)} disabled={command.busy || refreshing}>
         <Field label={t.roleAction}>
-          <select value={action} onChange={(e) => setAction(e.target.value as Action)}>
+          <NativeSelect value={action} onChange={(e) => setAction(e.target.value as Action)}>
             <option value="grant">{t.grantRole}</option>
             <option value="change">{t.changeRole}</option>
             <option value="end-role">{t.endRole}</option>
             <option value="end-membership">{t.endMembership}</option>
-          </select>
+          </NativeSelect>
         </Field>
         {needsRole && (
           <Field label={t.activeRole}>
-            <select value={assignmentId} onChange={(e) => setAssignmentId(e.target.value)}>
+            <NativeSelect value={assignmentId} onChange={(e) => setAssignmentId(e.target.value)}>
               {baseline.roleAssignments
                 .filter((r) => r.status === 'Active')
                 .map((r) => (
@@ -71,22 +75,25 @@ export function MemberRoleEditor({
                     {label(r.role)}
                   </option>
                 ))}
-            </select>
+            </NativeSelect>
           </Field>
         )}
         {(action === 'grant' || action === 'change') && (
           <Field label={t.newRole}>
-            <select value={role} onChange={(e) => setRole(e.target.value as S['OrganizationRole'])}>
+            <NativeSelect
+              value={role}
+              onChange={(e) => setRole(e.target.value as S['OrganizationRole'])}
+            >
               {(['Student', 'Teacher', 'Parent', 'Manager'] as const).map((r) => (
                 <option key={r} value={r}>
                   {label(r)}
                 </option>
               ))}
-            </select>
+            </NativeSelect>
           </Field>
         )}
         <Field label={t.reason}>
-          <textarea
+          <NativeTextarea
             required
             maxLength={500}
             value={reason}
@@ -96,12 +103,33 @@ export function MemberRoleEditor({
       </fieldset>
       {command.feedback}
       {!!error && <ErrorState error={error} />}
-      <div className={s.row}>
+      <div className={uiClass(s.row)}>
         <ConfirmAction
           trigger={t.confirmMutation}
           confirm={t.confirmMutation}
-          title={t.confirmMutation}
+          title={
+            action === 'end-role'
+              ? t.endRole + ' · ' + label(assignment?.role ?? role)
+              : t.confirmMutation
+          }
           description={t.confirmRole}
+          feedback={
+            action === 'end-role' ? (
+              <>
+                <p>{baseline.displayName}</p>
+                <dl className={uiClass('v5-dialog-summary')}>
+                  <div>
+                    <dt>{t.activeRole}</dt>
+                    <dd>{label(assignment?.role ?? role)}</dd>
+                  </div>
+                  <div>
+                    <dt>{t.reason}</dt>
+                    <dd>{reason}</dd>
+                  </div>
+                </dl>
+              </>
+            ) : undefined
+          }
           disabled={!valid || command.busy || refreshing}
           destructive={action.startsWith('end')}
           onConfirm={async () => {

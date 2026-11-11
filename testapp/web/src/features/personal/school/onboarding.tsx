@@ -1,4 +1,12 @@
 'use client';
+import {
+  Select as NativeSelect,
+  Input as NativeInput,
+  Textarea as NativeTextarea,
+} from '@/components/ui/input';
+
+import { uiClass } from '@/components/v5/classes';
+
 import * as uiText from '@/content/fa';
 import { Button } from '@/components/ui/button';
 import { ConfirmAction } from '@/components/ui/confirm-action';
@@ -30,7 +38,7 @@ export function GuardianInvitationForm() {
   const command = useSchoolCommand();
   if (receipt)
     return (
-      <div className={s.receipt}>
+      <div className={uiClass(s.receipt)}>
         <h2>{receipt.status === 'Pending' ? uiText.text_de5049310272 : label(receipt.status)}</h2>
         <p>{uiText.text_395ddde85cb3}</p>
         <p>
@@ -59,7 +67,7 @@ export function GuardianInvitationForm() {
     );
   return (
     <>
-      <p className={s.hint}>{uiText.text_05259033e1e7}</p>
+      <p className={uiClass(s.hint)}>{uiText.text_05259033e1e7}</p>
       <SchoolSearch
         label={uiText.text_e989f79e0442}
         disabled={a.busy || !!frozen}
@@ -76,7 +84,7 @@ export function GuardianInvitationForm() {
       ) : (
         <>
           <Field label={uiText.text_b9c23f90e92a}>
-            <select
+            <NativeSelect
               disabled={a.busy || !!frozen}
               value={learner}
               onChange={(e) => setLearner(e.target.value)}
@@ -87,7 +95,7 @@ export function GuardianInvitationForm() {
                   {p.displayName || [p.firstName, p.lastName].join(' ')}
                 </option>
               ))}
-            </select>
+            </NativeSelect>
           </Field>
           <Pager
             page={page}
@@ -121,7 +129,7 @@ export function GuardianInvitationForm() {
       >
         <fieldset disabled={a.busy || !!frozen}>
           <Field label={uiText.text_bebe8d1190be}>
-            <select
+            <NativeSelect
               value={mode}
               onChange={(e) => {
                 setMode(e.target.value);
@@ -130,10 +138,10 @@ export function GuardianInvitationForm() {
             >
               <option value="username">{uiText.text_173fec6019a6}</option>
               <option value="phone">{uiText.text_d7429b08c9cf}</option>
-            </select>
+            </NativeSelect>
           </Field>
           <Field label={mode === 'phone' ? uiText.text_efca55591503 : uiText.text_ac3aaa5781dc}>
-            <input
+            <NativeInput
               dir="ltr"
               required
               value={target}
@@ -144,9 +152,9 @@ export function GuardianInvitationForm() {
           <Field label={uiText.text_41ffba3860cf}>
             <JalaliDateInput withTime required value={expires} onValueChange={setExpires} />
           </Field>
-          <p className={s.hint}>{uiText.text_1bab9e2567d6}</p>
+          <p className={uiClass(s.hint)}>{uiText.text_1bab9e2567d6}</p>
           <Field label={uiText.text_fcd23a2b1bd3}>
-            <textarea
+            <NativeTextarea
               required
               rows={3}
               value={reason}

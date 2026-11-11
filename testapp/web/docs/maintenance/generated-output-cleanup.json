@@ -1,0 +1,2277 @@
+{
+  "date": "2026-11-10",
+  "category": "regenerable-output",
+  "removedBytes": 11528425347,
+  "removedFiles": 83218,
+  "records": [
+    {
+      "path": "tmp/exact-v1/traces-seventysixth-batch02",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 26273656,
+      "files": 26
+    },
+    {
+      "path": "tmp/exact-v1/traces-fiftieth-batch02",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 37023013,
+      "files": 22
+    },
+    {
+      "path": "tmp/exact-v1/traces-fortyeighth-batch02",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 32355485,
+      "files": 652
+    },
+    {
+      "path": "tmp/exact-v1/traces-twentyeighth-batch01",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 37616803,
+      "files": 31
+    },
+    {
+      "path": "tmp/exact-v1/traces-fortyeighth-batch03",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 26144710,
+      "files": 17
+    },
+    {
+      "path": "tmp/exact-v1/traces-fortyfifth-batch09",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 25138072,
+      "files": 18
+    },
+    {
+      "path": "tmp/exact-v1/traces-thirtythird-batch05",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 52814327,
+      "files": 40
+    },
+    {
+      "path": "tmp/exact-v1/traces-fortyfifth-batch02",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 34317150,
+      "files": 39
+    },
+    {
+      "path": "tmp/exact-v1/traces-sixtyfifth-full-batch15",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 50300978,
+      "files": 40
+    },
+    {
+      "path": "tmp/exact-v1/traces-thirtythird-batch04",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 58684123,
+      "files": 45
+    },
+    {
+      "path": "tmp/exact-v1/traces-seventyfirst-batch01",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 26531101,
+      "files": 19
+    },
+    {
+      "path": "tmp/exact-v1/traces-sixtyfirst-batch02",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 45377638,
+      "files": 31
+    },
+    {
+      "path": "tmp/exact-v1/traces-fortysixth-batch01",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 8004208,
+      "files": 4
+    },
+    {
+      "path": "tmp/exact-v1/traces-sixtythird-batch01",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 9420586,
+      "files": 10
+    },
+    {
+      "path": "tmp/exact-v1/traces-thirtysixth-batch09",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 26387109,
+      "files": 18
+    },
+    {
+      "path": "tmp/exact-v1/traces-fortyfifth-batch08",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 50207561,
+      "files": 40
+    },
+    {
+      "path": "tmp/exact-v1/traces-thirtieth-new-second",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 6295194,
+      "files": 8
+    },
+    {
+      "path": "tmp/exact-v1/traces-sixtyfirst-batch01",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 13659870,
+      "files": 12
+    },
+    {
+      "path": "tmp/exact-v1/traces-seventyninth-batch02",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 54835225,
+      "files": 44
+    },
+    {
+      "path": "tmp/exact-v1/traces-seventieth-batch02",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 36056902,
+      "files": 31
+    },
+    {
+      "path": "tmp/exact-v1/traces-fortyseventh-batch01",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 9418546,
+      "files": 10
+    },
+    {
+      "path": "tmp/exact-v1/traces-thirtysecond-common-first",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 4818037,
+      "files": 7
+    },
+    {
+      "path": "tmp/exact-v1/traces-seventyeighth-batch02",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 19203726,
+      "files": 26
+    },
+    {
+      "path": "tmp/exact-v1/traces-seventythird-full-batch12",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 39823387,
+      "files": 43
+    },
+    {
+      "path": "tmp/exact-v1/traces-thirtysixth-batch01",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 35204033,
+      "files": 29
+    },
+    {
+      "path": "tmp/exact-v1/traces-seventyfifth-batch01",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 3629176,
+      "files": 172
+    },
+    {
+      "path": "tmp/exact-v1/traces-fortyninth-batch01",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 23617332,
+      "files": 491
+    },
+    {
+      "path": "tmp/exact-v1/traces-fiftysecond-batch02",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 27932127,
+      "files": 18
+    },
+    {
+      "path": "tmp/exact-v1/traces-fiftythird-batch01",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 21890331,
+      "files": 17
+    },
+    {
+      "path": "tmp/exact-v1/traces-sixtyseventh-batch02",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 77876059,
+      "files": 49
+    },
+    {
+      "path": "tmp/exact-v1/traces-twentyfifth-selector-rerun",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 933612,
+      "files": 2
+    },
+    {
+      "path": "tmp/exact-v1/traces-seventythird-full-batch10",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 32747215,
+      "files": 32
+    },
+    {
+      "path": "tmp/exact-v1/traces-thirtieth-new-first",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 5841310,
+      "files": 8
+    },
+    {
+      "path": "tmp/exact-v1/traces-thirtythird-batch06",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 35571420,
+      "files": 35
+    },
+    {
+      "path": "tmp/exact-v1/traces-seventythird-full-batch13",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 42096312,
+      "files": 33
+    },
+    {
+      "path": "tmp/exact-v1/traces-sixtyseventh-batch03",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 2029954,
+      "files": 57
+    },
+    {
+      "path": "tmp/exact-v1/traces-sixtyninth-batch01",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 3569589,
+      "files": 84
+    },
+    {
+      "path": "tmp/exact-v1/traces-twentyninth-batch02",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 39350958,
+      "files": 39
+    },
+    {
+      "path": "tmp/exact-v1/traces-thirtieth-related",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 40514196,
+      "files": 41
+    },
+    {
+      "path": "tmp/exact-v1/traces-seventyfourth-batch01",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 3716835,
+      "files": 174
+    },
+    {
+      "path": "tmp/exact-v1/traces-fortysecond-batch10",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 11648602,
+      "files": 10
+    },
+    {
+      "path": "tmp/exact-v1/traces-eightythird-related",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 18369323,
+      "files": 15
+    },
+    {
+      "path": "tmp/exact-v1/traces-eightysecond-members",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 17623142,
+      "files": 20
+    },
+    {
+      "path": "tmp/exact-v1/traces-eightyfirst-platform",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 351589,
+      "files": 2
+    },
+    {
+      "path": "tmp/exact-v1/traces-eightieth-batch01",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 67313216,
+      "files": 1371
+    },
+    {
+      "path": "tmp/exact-v1/traces-seventysecond-long-red",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 1931289,
+      "files": 53
+    },
+    {
+      "path": "tmp/exact-v1/traces-thirtythird-batch07",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 40048795,
+      "files": 43
+    },
+    {
+      "path": "tmp/exact-v1/traces-fiftieth-batch01",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 27563325,
+      "files": 18
+    },
+    {
+      "path": "tmp/exact-v1/traces-fiftyseventh-full-batch11",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 3696429,
+      "files": 88
+    },
+    {
+      "path": "tmp/exact-v1/traces-twentysixth-rerun",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 8845823,
+      "files": 4
+    },
+    {
+      "path": "tmp/exact-v1/traces-fiftyeighth-full-batch07",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 40140012,
+      "files": 43
+    },
+    {
+      "path": "tmp/exact-v1/traces-twentyfifth-targeted",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 29773474,
+      "files": 24
+    },
+    {
+      "path": "tmp/exact-v1/traces-thirtysixth-batch08",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 50350868,
+      "files": 40
+    },
+    {
+      "path": "tmp/exact-v1/traces-fiftyeighth-full-batch04",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 62472459,
+      "files": 45
+    },
+    {
+      "path": "tmp/exact-v1/traces-thirtysixth-batch07",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 40925145,
+      "files": 43
+    },
+    {
+      "path": "tmp/exact-v1/traces-fiftyeighth-full-batch10",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 11868586,
+      "files": 10
+    },
+    {
+      "path": "tmp/exact-v1/traces-seventyfifth-batch06",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 28292639,
+      "files": 635
+    },
+    {
+      "path": "tmp/exact-v1/traces-eightyfirst-batch01",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 27634353,
+      "files": 34
+    },
+    {
+      "path": "tmp/exact-v1/traces-fiftyfirst-batch01",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 21062097,
+      "files": 17
+    },
+    {
+      "path": "tmp/exact-v1/traces-sixtythird-batch02",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 60550190,
+      "files": 33
+    },
+    {
+      "path": "tmp/exact-v1/traces-sixtyeighth-batch01",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 16310535,
+      "files": 26
+    },
+    {
+      "path": "tmp/exact-v1/traces-twentyninth-batch01",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 40514106,
+      "files": 29
+    },
+    {
+      "path": "tmp/exact-v1/traces-thirtyeighth-parent-batch01",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 4425680,
+      "files": 10
+    },
+    {
+      "path": "tmp/exact-v1/traces-fiftyfourth-batch01",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 32319811,
+      "files": 23
+    },
+    {
+      "path": "tmp/exact-v1/traces-sixtyfifth-full-batch03",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 44936924,
+      "files": 34
+    },
+    {
+      "path": "tmp/exact-v1/traces-sixtyfifth-full-batch12",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 6432960,
+      "files": 150
+    },
+    {
+      "path": "tmp/exact-v1/traces-twentyfourth-targeted",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 21764145,
+      "files": 16
+    },
+    {
+      "path": "tmp/exact-v1/traces-fiftyeighth-full-batch09",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 26294696,
+      "files": 18
+    },
+    {
+      "path": "tmp/exact-v1/traces-seventyseventh-batch01",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 24706505,
+      "files": 512
+    },
+    {
+      "path": "tmp/exact-v1/traces-sixtyfifth-full-batch07",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 39644326,
+      "files": 43
+    },
+    {
+      "path": "tmp/exact-v1/traces-seventythird-full-batch07",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 32191844,
+      "files": 39
+    },
+    {
+      "path": "tmp/exact-v1/traces-twentyninth-batch08",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 54185828,
+      "files": 40
+    },
+    {
+      "path": "tmp/exact-v1/traces-seventieth-batch01",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 18497175,
+      "files": 388
+    },
+    {
+      "path": "tmp/exact-v1/traces-seventyfifth-batch05",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 47929914,
+      "files": 41
+    },
+    {
+      "path": "tmp/exact-v1/traces-twentyfourth-poll-rerun",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 613042,
+      "files": 2
+    },
+    {
+      "path": "tmp/exact-v1/traces-seventythird-full-batch06",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 35051070,
+      "files": 29
+    },
+    {
+      "path": "tmp/exact-v1/traces-sixtyfourth-batch02",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 58790028,
+      "files": 33
+    },
+    {
+      "path": "tmp/exact-v1/traces-sixtyfifth-full-batch14",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 26727152,
+      "files": 30
+    },
+    {
+      "path": "tmp/exact-v1/traces-seventyfifth-batch03",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 23008443,
+      "files": 15
+    },
+    {
+      "path": "tmp/exact-v1/traces-seventythird-full-batch14",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 25086737,
+      "files": 18
+    },
+    {
+      "path": "tmp/exact-v1/traces-sixtysecond-batch02",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 59479810,
+      "files": 33
+    },
+    {
+      "path": "tmp/exact-v1/traces-twentyninth-batch04",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 62334652,
+      "files": 45
+    },
+    {
+      "path": "tmp/exact-v1/traces-fortyfifth-batch10",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 11258519,
+      "files": 10
+    },
+    {
+      "path": "tmp/exact-v1/traces-fiftyfifth-batch01",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 32712721,
+      "files": 23
+    },
+    {
+      "path": "tmp/exact-v1/traces-thirtyfirst-rich-rerun",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 19511114,
+      "files": 12
+    },
+    {
+      "path": "tmp/exact-v1/traces-seventyfirst-batch02",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 35634373,
+      "files": 31
+    },
+    {
+      "path": "tmp/exact-v1/traces-fiftyninth-batch01",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 5408477,
+      "files": 210
+    },
+    {
+      "path": "tmp/exact-v1/traces-fortyfifth-batch04",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 60659432,
+      "files": 45
+    },
+    {
+      "path": "tmp/exact-v1/traces-sixtyfifth-full-batch02",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 32407041,
+      "files": 39
+    },
+    {
+      "path": "tmp/exact-v1/traces-fortyfifth-batch07",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 39794324,
+      "files": 43
+    },
+    {
+      "path": "tmp/exact-v1/traces-sixtieth-batch03",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 69156829,
+      "files": 40
+    },
+    {
+      "path": "tmp/exact-v1/traces-sixtyeighth-batch02",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 80018804,
+      "files": 49
+    },
+    {
+      "path": "tmp/exact-v1/traces-thirtyfirst-rich-first",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 23465844,
+      "files": 23
+    },
+    {
+      "path": "tmp/exact-v1/traces-fortythird-batch10",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 11195946,
+      "files": 10
+    },
+    {
+      "path": "tmp/exact-v1/traces-thirtysixth-batch04",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 59579751,
+      "files": 45
+    },
+    {
+      "path": "tmp/exact-v1/traces-seventyfirst-short-red",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 1875490,
+      "files": 58
+    },
+    {
+      "path": "tmp/exact-v1/traces-sixtieth-batch02",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 102486646,
+      "files": 2053
+    },
+    {
+      "path": "tmp/exact-v1/traces-thirtyfourth-batch01",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 35752413,
+      "files": 26
+    },
+    {
+      "path": "tmp/exact-v1/traces-fiftysixth-batch01",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 3492147,
+      "files": 76
+    },
+    {
+      "path": "tmp/exact-v1/traces-twentyseventh-interrupted",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 1035066450,
+      "files": 26377
+    },
+    {
+      "path": "tmp/exact-v1/traces-fiftyeighth-full-batch02",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 33863329,
+      "files": 39
+    },
+    {
+      "path": "tmp/exact-v1/traces-fiftysixth-batch04",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 2499066,
+      "files": 3
+    },
+    {
+      "path": "tmp/exact-v1/traces-thirtysixth-batch03",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 45512683,
+      "files": 34
+    },
+    {
+      "path": "tmp/exact-v1/traces-twentysecond-rerun",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 7761622,
+      "files": 7
+    },
+    {
+      "path": "tmp/exact-v1/traces-twentythird-targeted",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 55307130,
+      "files": 43
+    },
+    {
+      "path": "tmp/exact-v1/traces-thirtyfifth-batch01",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 37387020,
+      "files": 23
+    },
+    {
+      "path": "tmp/exact-v1/traces-seventyninth-batch01",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 22410720,
+      "files": 29
+    },
+    {
+      "path": "tmp/exact-v1/traces-fortyfifth-batch05",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 53606619,
+      "files": 40
+    },
+    {
+      "path": "tmp/exact-v1/traces-fiftyeighth-full-batch03",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 45628245,
+      "files": 34
+    },
+    {
+      "path": "tmp/exact-v1/traces-fiftyeighth-full-batch08",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 53132787,
+      "files": 40
+    },
+    {
+      "path": "tmp/exact-v1/traces-sixtyfifth-full-batch10",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 11143236,
+      "files": 10
+    },
+    {
+      "path": "tmp/exact-v1/traces-thirtythird-batch09",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 22452396,
+      "files": 14
+    },
+    {
+      "path": "tmp/exact-v1/traces-seventyninth-red-review",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 1571063,
+      "files": 7
+    },
+    {
+      "path": "tmp/exact-v1/traces-thirtyseventh-parent-batch01",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 1765160,
+      "files": 16
+    },
+    {
+      "path": "tmp/exact-v1/traces-sixtyseventh-batch01",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 45130959,
+      "files": 1090
+    },
+    {
+      "path": "tmp/exact-v1/traces-seventythird-full-batch11",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 35833336,
+      "files": 35
+    },
+    {
+      "path": "tmp/exact-v1/traces-fiftysecond-batch01",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 21577129,
+      "files": 17
+    },
+    {
+      "path": "tmp/exact-v1/traces-fortyfifth-batch03",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 46537556,
+      "files": 34
+    },
+    {
+      "path": "tmp/exact-v1/traces-seventyseventh-batch03",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 3687846,
+      "files": 164
+    },
+    {
+      "path": "tmp/exact-v1/traces-fortieth-parent-batch01",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 5719017,
+      "files": 8
+    },
+    {
+      "path": "tmp/exact-v1/traces-eightyfirst-batch02",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 7153016,
+      "files": 8
+    },
+    {
+      "path": "tmp/exact-v1/traces-fortyfirst-interrupted-batch02",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 14250266,
+      "files": 320
+    },
+    {
+      "path": "tmp/exact-v1/traces-thirtyninth-parent-batch01",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 5953613,
+      "files": 8
+    },
+    {
+      "path": "tmp/exact-v1/traces-seventysecond-batch01",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 27093010,
+      "files": 20
+    },
+    {
+      "path": "tmp/exact-v1/traces-sixtieth-batch04",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 11350964,
+      "files": 12
+    },
+    {
+      "path": "tmp/exact-v1/traces-thirtythird-batch03",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 46047980,
+      "files": 34
+    },
+    {
+      "path": "tmp/exact-v1/traces-fortyfirst-parent-batch04",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 30789568,
+      "files": 22
+    },
+    {
+      "path": "tmp/exact-v1/traces-thirtysixth-batch05",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 53233213,
+      "files": 40
+    },
+    {
+      "path": "tmp/exact-v1/traces-fiftyeighth-full-batch01",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 36726716,
+      "files": 29
+    },
+    {
+      "path": "tmp/exact-v1/traces-sixtyfifth-full-batch06",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 35804124,
+      "files": 35
+    },
+    {
+      "path": "tmp/exact-v1/traces-sixtysecond-batch01",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 9063617,
+      "files": 10
+    },
+    {
+      "path": "tmp/exact-v1/traces-sixtieth-batch01",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 14243131,
+      "files": 328
+    },
+    {
+      "path": "tmp/exact-v1/traces-seventysecond-batch02",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 35684960,
+      "files": 31
+    },
+    {
+      "path": "tmp/exact-v1/traces-fortyfifth-batch06",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 37405689,
+      "files": 35
+    },
+    {
+      "path": "tmp/exact-v1/traces-seventythird-full-batch04",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 29131836,
+      "files": 18
+    },
+    {
+      "path": "tmp/exact-v1/traces-seventythird-batch02",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 35834422,
+      "files": 31
+    },
+    {
+      "path": "tmp/exact-v1/traces-fiftyeighth-full-batch05",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 53177106,
+      "files": 40
+    },
+    {
+      "path": "tmp/exact-v1/traces-twentysixth-targeted",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 80011180,
+      "files": 63
+    },
+    {
+      "path": "tmp/exact-v1/traces-thirtythird-batch02",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 33440448,
+      "files": 39
+    },
+    {
+      "path": "tmp/exact-v1/traces-twentyeighth-selector-rerun",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 5922557,
+      "files": 5
+    },
+    {
+      "path": "tmp/exact-v1/traces-seventysixth-batch04",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 21592939,
+      "files": 21
+    },
+    {
+      "path": "tmp/exact-v1/traces-sixtyfifth-full-batch11",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 30098511,
+      "files": 20
+    },
+    {
+      "path": "tmp/exact-v1/traces-sixtyfifth-full-batch05",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 104072801,
+      "files": 2279
+    },
+    {
+      "path": "tmp/exact-v1/traces-seventythird-full-batch09",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 59462133,
+      "files": 45
+    },
+    {
+      "path": "tmp/exact-v1/traces-seventythird-batch01",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 27504536,
+      "files": 21
+    },
+    {
+      "path": "tmp/exact-v1/traces-twentyninth-batch06",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 39285906,
+      "files": 35
+    },
+    {
+      "path": "tmp/exact-v1/traces-sixtyfifth-full-batch01",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 34841602,
+      "files": 29
+    },
+    {
+      "path": "tmp/exact-v1/traces-fortyeighth-batch01",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 22255318,
+      "files": 457
+    },
+    {
+      "path": "tmp/exact-v1/traces-thirtysixth-batch02",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 32107943,
+      "files": 39
+    },
+    {
+      "path": "tmp/exact-v1/traces-seventyeighth-red-review",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 1931208,
+      "files": 7
+    },
+    {
+      "path": "tmp/exact-v1/traces-twentyninth-batch07",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 42263204,
+      "files": 43
+    },
+    {
+      "path": "tmp/exact-v1/traces-sixtyfifth-full-batch09",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 25375136,
+      "files": 18
+    },
+    {
+      "path": "tmp/exact-v1/traces-seventyeighth-batch01",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 2776215,
+      "files": 70
+    },
+    {
+      "path": "tmp/exact-v1/traces-eightieth-contract-review",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 2492433,
+      "files": 8
+    },
+    {
+      "path": "tmp/exact-v1/traces-sixtyfirst-batch03",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 69384331,
+      "files": 40
+    },
+    {
+      "path": "tmp/exact-v1/traces-fortyfirst-parent-batch01",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 5230591,
+      "files": 6
+    },
+    {
+      "path": "tmp/exact-v1/traces-fiftyeighth-full-batch11",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 32758084,
+      "files": 20
+    },
+    {
+      "path": "tmp/exact-v1/traces-thirtythird-batch01",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 34867109,
+      "files": 29
+    },
+    {
+      "path": "tmp/exact-v1/traces-seventysixth-batch01",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 3626956,
+      "files": 170
+    },
+    {
+      "path": "tmp/exact-v1/traces-twentyninth-batch03",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 48217699,
+      "files": 34
+    },
+    {
+      "path": "tmp/exact-v1/traces-sixtyfourth-batch01",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 36334242,
+      "files": 809
+    },
+    {
+      "path": "tmp/exact-v1/traces-fiftyfifth-batch02",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 28623705,
+      "files": 18
+    },
+    {
+      "path": "tmp/exact-v1/traces-eightythird-members",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 18115710,
+      "files": 20
+    },
+    {
+      "path": "tmp/exact-v1/traces-thirtyeighth-parent-batch02",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 5775556,
+      "files": 8
+    },
+    {
+      "path": "tmp/exact-v1/traces-fortyfifth-batch01",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 36570594,
+      "files": 29
+    },
+    {
+      "path": "tmp/exact-v1/traces-sixtysixth-batch01",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 15235300,
+      "files": 333
+    },
+    {
+      "path": "tmp/exact-v1/traces-seventythird-full-batch03",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 16135102,
+      "files": 26
+    },
+    {
+      "path": "tmp/exact-v1/traces-seventyfifth-batch04",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 18928384,
+      "files": 18
+    },
+    {
+      "path": "tmp/exact-v1/traces-sixtyfifth-full-batch13",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 62336849,
+      "files": 1368
+    },
+    {
+      "path": "tmp/exact-v1/traces-seventythird-full-batch05",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 11013380,
+      "files": 10
+    },
+    {
+      "path": "tmp/exact-v1/traces-seventythird-full-batch08",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 44773276,
+      "files": 34
+    },
+    {
+      "path": "tmp/exact-v1/traces-seventyfifth-batch02",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 28643456,
+      "files": 22
+    },
+    {
+      "path": "tmp/exact-v1/traces-thirtysixth-batch06",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 36225263,
+      "files": 35
+    },
+    {
+      "path": "tmp/exact-v1/traces-seventyninth-batch03",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 1365548,
+      "files": 4
+    },
+    {
+      "path": "tmp/exact-v1/traces-fiftyeighth-full-batch06",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 37161152,
+      "files": 35
+    },
+    {
+      "path": "tmp/exact-v1/traces-sixtyfifth-full-batch04",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 59806922,
+      "files": 45
+    },
+    {
+      "path": "tmp/exact-v1/traces-sixtyfifth-full-batch08",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 50162181,
+      "files": 40
+    },
+    {
+      "path": "tmp/exact-v1/traces-seventieth-batch03",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 25376347,
+      "files": 18
+    },
+    {
+      "path": "tmp/exact-v1/traces-seventysixth-batch03",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 40230647,
+      "files": 27
+    },
+    {
+      "path": "tmp/exact-v1/traces-seventyseventh-batch02",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 28421878,
+      "files": 584
+    },
+    {
+      "path": "tmp/exact-v1/traces-twentyninth-batch05",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 60072368,
+      "files": 40
+    },
+    {
+      "path": "tmp/exact-v1/traces-thirtythird-batch08",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 51835414,
+      "files": 40
+    },
+    {
+      "path": "output/review/exact-v1/traces-twentysecond-targeted",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 127778438,
+      "files": 90
+    },
+    {
+      "path": "output/review/exact-v1/traces-twelfth",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 58131627,
+      "files": 37
+    },
+    {
+      "path": "output/review/exact-v1/traces-twentyfifth-full",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 370756196,
+      "files": 298
+    },
+    {
+      "path": "output/review/exact-v1/traces-twentyfirst-three-fixes",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 2997207,
+      "files": 4
+    },
+    {
+      "path": "output/review/exact-v1/traces-eleventh",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 22865030,
+      "files": 20
+    },
+    {
+      "path": "output/review/exact-v1/traces-tenth",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 178366130,
+      "files": 130
+    },
+    {
+      "path": "output/review/exact-v1/traces-ninth",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 167431344,
+      "files": 125
+    },
+    {
+      "path": "output/review/exact-v1/traces-fourth",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 286361141,
+      "files": 290
+    },
+    {
+      "path": "output/review/exact-v1/traces-twentieth-full",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 341950706,
+      "files": 301
+    },
+    {
+      "path": "output/review/exact-v1/traces-eighth",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 173050131,
+      "files": 131
+    },
+    {
+      "path": "output/review/exact-v1/traces-twentyfirst-full",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 359166225,
+      "files": 296
+    },
+    {
+      "path": "output/review/exact-v1/traces-sixth",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 301450841,
+      "files": 275
+    },
+    {
+      "path": "output/review/exact-v1/traces-roster",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 936986,
+      "files": 2
+    },
+    {
+      "path": "output/review/exact-v1/traces-source-controls",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 3750246,
+      "files": 3
+    },
+    {
+      "path": "output/review/exact-v1/traces-fourteenth",
+      "reason": "Superseded generated browser traces; JSON results retained",
+      "bytes": 42243216,
+      "files": 36
+    },
+    {
+      "path": "test-results",
+      "reason": "Regenerable stale QA/package output; current 6f8edf8 evidence kept separately",
+      "bytes": 277269943,
+      "files": 309
+    },
+    {
+      "path": "output/review/exact-v1/gallery-assets",
+      "reason": "Regenerable stale QA/package output; current 6f8edf8 evidence kept separately",
+      "bytes": 450074694,
+      "files": 7416
+    },
+    {
+      "path": "output/delivery",
+      "reason": "Regenerable stale QA/package output; current 6f8edf8 evidence kept separately",
+      "bytes": 86164615,
+      "files": 3
+    },
+    {
+      "path": "output/review/exact-v1/after-thirtyeighth-parent",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 1467627,
+      "files": 24
+    },
+    {
+      "path": "output/review/exact-v1/after-twentyeighth-priority",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 4762553,
+      "files": 90
+    },
+    {
+      "path": "output/review/exact-v1/after-sixtythird-exam",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 518461,
+      "files": 12
+    },
+    {
+      "path": "output/review/exact-v1/after-twentyninth-final",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 34744558,
+      "files": 642
+    },
+    {
+      "path": "output/review/exact-v1/after-large-seventieth-session",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 4298513,
+      "files": 44
+    },
+    {
+      "path": "output/review/exact-v1/after-fiftyseventh-forms",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 2132625,
+      "files": 42
+    },
+    {
+      "path": "output/review/exact-v1/after-sixth",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 32140668,
+      "files": 594
+    },
+    {
+      "path": "output/review/exact-v1/reference-seventieth-session",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 1470861,
+      "files": 24
+    },
+    {
+      "path": "output/review/exact-v1/after-seventyfirst-session",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 1501393,
+      "files": 24
+    },
+    {
+      "path": "output/review/exact-v1/after-thirtysixth-first",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 35939052,
+      "files": 654
+    },
+    {
+      "path": "output/review/exact-v1/after-large-fiftyeighth-forms",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 32666810,
+      "files": 374
+    },
+    {
+      "path": "output/review/exact-v1/after-fortysecond-parent-notification-first",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 1792416,
+      "files": 30
+    },
+    {
+      "path": "output/review/exact-v1/after-fortyeighth-rules",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 1055968,
+      "files": 18
+    },
+    {
+      "path": "output/review/exact-v1/after-large-twentieth",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 12432537,
+      "files": 143
+    },
+    {
+      "path": "output/review/exact-v1/after-twentyseventh",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 34162235,
+      "files": 636
+    },
+    {
+      "path": "output/review/exact-v1/after-short-large",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 6546837,
+      "files": 143
+    },
+    {
+      "path": "output/review/exact-v1/after-boundaries-sixtyeighth-question-serial2",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 2126025,
+      "files": 44
+    },
+    {
+      "path": "output/review/exact-v1/after-large-fiftyfifth-forms",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 6055018,
+      "files": 66
+    },
+    {
+      "path": "output/review/exact-v1/after-boundaries-fortyfifth",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 15721361,
+      "files": 308
+    },
+    {
+      "path": "output/review/exact-v1/after-large-fiftieth-rules",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 3052640,
+      "files": 33
+    },
+    {
+      "path": "output/review/exact-v1/after-boundaries-fiftyeighth-forms",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 19332076,
+      "files": 374
+    },
+    {
+      "path": "output/review/exact-v1/after-short-large-seventyfifth-attendance",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 1826266,
+      "files": 44
+    },
+    {
+      "path": "output/review/exact-v1/browser",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 20306147,
+      "files": 308
+    },
+    {
+      "path": "output/review/exact-v1/before-sixtyninth-session",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 1349640,
+      "files": 24
+    },
+    {
+      "path": "output/review/exact-v1/after-boundaries-seventythird-session",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 2702616,
+      "files": 44
+    },
+    {
+      "path": "output/review/exact-v1/after-large-seventysecond-session",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 4286693,
+      "files": 44
+    },
+    {
+      "path": "output/review/exact-v1/after-twentyfourth",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 33709582,
+      "files": 624
+    },
+    {
+      "path": "output/review/exact-v1/reference-seventyeighth-notifications",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 1485692,
+      "files": 30
+    },
+    {
+      "path": "output/review/exact-v1/after-twentieth",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 33192300,
+      "files": 618
+    },
+    {
+      "path": "output/review/exact-v1/after-sixtyeighth-question",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 1208444,
+      "files": 24
+    },
+    {
+      "path": "output/review/exact-v1/reduced-height",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 191107,
+      "files": 6
+    },
+    {
+      "path": "output/review/exact-v1/short-probe-seventyfirst",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 76177,
+      "files": 3
+    },
+    {
+      "path": "output/review/exact-v1/after-large-seventyfirst-session",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 4286690,
+      "files": 44
+    },
+    {
+      "path": "output/review/exact-v1/after-seventeenth",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 32808998,
+      "files": 612
+    },
+    {
+      "path": "output/review/exact-v1/after-boundaries-sixtyeighth-question-first",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 1127910,
+      "files": 29
+    },
+    {
+      "path": "output/review/exact-v1/after-boundaries-seventieth-session",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 2722839,
+      "files": 44
+    },
+    {
+      "path": "output/review/exact-v1/after-twentysecond",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 33213731,
+      "files": 618
+    },
+    {
+      "path": "output/review/exact-v1/after-eighth",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 23685256,
+      "files": 419
+    },
+    {
+      "path": "output/review/exact-v1/before-sixtyfourth-question",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 343219,
+      "files": 6
+    },
+    {
+      "path": "output/review/exact-v1/states-native-twentyfirst",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 104946042,
+      "files": 1668
+    },
+    {
+      "path": "output/review/exact-v1/before-thirtyfourth-invite-form",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 378825,
+      "files": 6
+    },
+    {
+      "path": "output/review/exact-v1/after-seventyfifth-attendance",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 1434796,
+      "files": 24
+    },
+    {
+      "path": "output/review/exact-v1/after-fiftysixth-dates",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 1309771,
+      "files": 24
+    },
+    {
+      "path": "output/review/exact-v1/after-fiftyeighth",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 38677953,
+      "files": 702
+    },
+    {
+      "path": "output/review/exact-v1/after-large-fiftysecond-forms",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 3939608,
+      "files": 44
+    },
+    {
+      "path": "output/review/exact-v1/after-seventyfourth-attendance",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 1112299,
+      "files": 18
+    },
+    {
+      "path": "output/review/exact-v1/after-thirtyeighth-parent-first",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 1154518,
+      "files": 18
+    },
+    {
+      "path": "output/review/exact-v1/after-boundaries-sixtyeighth-question-serial-incomplete",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 1224557,
+      "files": 31
+    },
+    {
+      "path": "output/review/exact-v1/before-browser",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 1894810,
+      "files": 29
+    },
+    {
+      "path": "output/review/exact-v1/browser-sixth",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 1807753,
+      "files": 26
+    },
+    {
+      "path": "output/review/exact-v1/before-sixtysixth-question",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 867336,
+      "files": 12
+    },
+    {
+      "path": "output/review/exact-v1/after-sixtysixth-question",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 1208340,
+      "files": 24
+    },
+    {
+      "path": "output/review/exact-v1/author-route-guard",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 95992,
+      "files": 2
+    },
+    {
+      "path": "output/review/exact-v1/after-short-large-seventythird-session",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 2164463,
+      "files": 44
+    },
+    {
+      "path": "output/review/exact-v1/after-seventyninth-short-large400-notifications",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 2556108,
+      "files": 55
+    },
+    {
+      "path": "output/review/exact-v1/after-boundaries",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 34127517,
+      "files": 649
+    },
+    {
+      "path": "output/review/exact-v1/after-large-thirtythird",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 21138118,
+      "files": 253
+    },
+    {
+      "path": "output/review/exact-v1/reference-sixtysecond-exam",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 495508,
+      "files": 12
+    },
+    {
+      "path": "output/review/exact-v1/short-probe-seventysecond",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 96069,
+      "files": 3
+    },
+    {
+      "path": "output/review/exact-v1/reference-sixtyninth-session",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 1470861,
+      "files": 24
+    },
+    {
+      "path": "output/review/exact-v1/after-boundaries-twentyfifth",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 7800776,
+      "files": 143
+    },
+    {
+      "path": "output/review/exact-v1/before-fiftyfirst-lesson",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 399984,
+      "files": 6
+    },
+    {
+      "path": "output/review/exact-v1/before-fiftyninth-forms",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 1225588,
+      "files": 24
+    },
+    {
+      "path": "output/review/exact-v1/after-thirtyninth-parent",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 1452271,
+      "files": 24
+    },
+    {
+      "path": "output/review/exact-v1/after-seventysixth-main",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 2588786,
+      "files": 48
+    },
+    {
+      "path": "output/review/exact-v1/after-large-seventythird-session",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 4270667,
+      "files": 44
+    },
+    {
+      "path": "output/review/exact-v1/reference-sixtyfourth-question",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 399685,
+      "files": 6
+    },
+    {
+      "path": "output/review/exact-v1/after-fiftyfifth-forms",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 2045989,
+      "files": 36
+    },
+    {
+      "path": "output/review/exact-v1/after-sixtyninth-session",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 1521049,
+      "files": 24
+    },
+    {
+      "path": "output/review/exact-v1/after-fortyfifth",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 37388599,
+      "files": 678
+    },
+    {
+      "path": "output/review/exact-v1/states-native",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 343043946,
+      "files": 5484
+    },
+    {
+      "path": "output/review/exact-v1/after-fiftythird-forms",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 1333278,
+      "files": 24
+    },
+    {
+      "path": "output/review/exact-v1/after-sixtysecond-exam",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 521719,
+      "files": 12
+    },
+    {
+      "path": "output/review/exact-v1/browser-fourth",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 1867714,
+      "files": 31
+    },
+    {
+      "path": "output/review/exact-v1/after-thirtyfifth-priority",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 5279765,
+      "files": 102
+    },
+    {
+      "path": "output/review/exact-v1/after-twentysixth-targeted",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 3576967,
+      "files": 72
+    },
+    {
+      "path": "output/review/exact-v1/after-large-sixtyeighth-question-serial2",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 3625339,
+      "files": 44
+    },
+    {
+      "path": "output/review/exact-v1/reference-sixtysixth-question",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 664064,
+      "files": 12
+    },
+    {
+      "path": "output/review/exact-v1/after-seventyninth-boundaries-notifications",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 2751378,
+      "files": 55
+    },
+    {
+      "path": "output/review/exact-v1/after-fiftyfirst-lesson",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 296023,
+      "files": 6
+    },
+    {
+      "path": "output/review/exact-v1/after-boundaries-sixtyseventh-question",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 2125971,
+      "files": 44
+    },
+    {
+      "path": "output/review/exact-v1/after-sixtyfirst-forms",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 1073801,
+      "files": 24
+    },
+    {
+      "path": "output/review/exact-v1/after-thirtieth",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 1578297,
+      "files": 36
+    },
+    {
+      "path": "output/review/exact-v1/browser-tenth",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 328833,
+      "files": 7
+    },
+    {
+      "path": "output/review/exact-v1/after-seventyninth-main-notifications",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 1550205,
+      "files": 30
+    },
+    {
+      "path": "output/review/exact-v1/after-fortyfirst-parent",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 1452443,
+      "files": 24
+    },
+    {
+      "path": "output/review/exact-v1/after-boundaries-twentieth",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 7839018,
+      "files": 143
+    },
+    {
+      "path": "output/review/exact-v1/reference-seventyfourth-attendance",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 1097563,
+      "files": 18
+    },
+    {
+      "path": "output/review/exact-v1/after-large-thirtysixth",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 21211285,
+      "files": 253
+    },
+    {
+      "path": "output/review/exact-v1/before-fortysecond-notifications",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 363582,
+      "files": 6
+    },
+    {
+      "path": "output/review/exact-v1/before-sixtysecond-exam",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 726423,
+      "files": 12
+    },
+    {
+      "path": "output/review/exact-v1/after-seventythird-session",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 1501393,
+      "files": 24
+    },
+    {
+      "path": "output/review/exact-v1/after-boundaries-seventysecond-session",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 2702581,
+      "files": 44
+    },
+    {
+      "path": "output/review/exact-v1/after-fortythird-parent-notification",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 1743625,
+      "files": 30
+    },
+    {
+      "path": "output/review/exact-v1/after-thirtythird",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 34963569,
+      "files": 642
+    },
+    {
+      "path": "output/review/exact-v1/before-seventyfifth-attendance-note",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 326956,
+      "files": 6
+    },
+    {
+      "path": "output/review/exact-v1/before-sixtyninth-session-first",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 284152,
+      "files": 6
+    },
+    {
+      "path": "output/review/exact-v1/before-thirtyseventh-parent-exact",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 1462505,
+      "files": 24
+    },
+    {
+      "path": "output/review/exact-v1/after-large-fiftythird-forms",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 3940683,
+      "files": 44
+    },
+    {
+      "path": "output/review/exact-v1/browser-fifth",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 652892,
+      "files": 11
+    },
+    {
+      "path": "output/review/exact-v1/states-native-tenth",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 16221428,
+      "files": 258
+    },
+    {
+      "path": "output/review/exact-v1/after-boundaries-fiftythird-forms",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 2353669,
+      "files": 44
+    },
+    {
+      "path": "output/review/exact-v1/after-thirtyfirst-rich",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 2060383,
+      "files": 42
+    },
+    {
+      "path": "output/review/exact-v1/after-sixtieth-forms",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 1081142,
+      "files": 24
+    },
+    {
+      "path": "output/review/exact-v1/states-before-final",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 5750559,
+      "files": 83
+    },
+    {
+      "path": "output/review/exact-v1/after-eightyfirst-main-notifications",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 1550205,
+      "files": 30
+    },
+    {
+      "path": "output/review/exact-v1/after-fiftieth-rules",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 1039630,
+      "files": 18
+    },
+    {
+      "path": "output/review/exact-v1/after-boundaries-thirtysixth",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 12688923,
+      "files": 253
+    },
+    {
+      "path": "output/review/exact-v1/states-native-eighth",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 15871772,
+      "files": 252
+    },
+    {
+      "path": "output/review/exact-v1/browser-before-final",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 2890904,
+      "files": 42
+    },
+    {
+      "path": "output/review/exact-v1/after-boundaries-sixtythird-exam",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 889990,
+      "files": 22
+    },
+    {
+      "path": "output/review/exact-v1/before-seventyfourth-attendance",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 984973,
+      "files": 18
+    },
+    {
+      "path": "output/review/exact-v1/after-twentyfirst",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 33293733,
+      "files": 618
+    },
+    {
+      "path": "output/review/exact-v1/after-seventyseventh-notifications",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 1632425,
+      "files": 30
+    },
+    {
+      "path": "output/review/exact-v1/parent-before-thirtysixth",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 289462,
+      "files": 6
+    },
+    {
+      "path": "output/review/exact-v1/after-fiftyninth-forms",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 1083178,
+      "files": 24
+    },
+    {
+      "path": "output/review/exact-v1/after-sixtyfourth-exam",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 974758,
+      "files": 18
+    },
+    {
+      "path": "output/review/exact-v1/after-boundaries-fiftieth-rules",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 1845639,
+      "files": 33
+    },
+    {
+      "path": "output/review/exact-v1/after-boundaries-thirtieth",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 13435239,
+      "files": 253
+    },
+    {
+      "path": "output/review/exact-v1/after-fiftyfourth-forms",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 2039509,
+      "files": 36
+    },
+    {
+      "path": "output/review/exact-v1/after-large-seventyfifth-attendance",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 4336285,
+      "files": 44
+    },
+    {
+      "path": "output/review/exact-v1/after-boundaries-fiftysecond-forms",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 2357119,
+      "files": 44
+    },
+    {
+      "path": "output/review/exact-v1/after-eightieth-main-notifications",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 1550205,
+      "files": 30
+    },
+    {
+      "path": "output/review/exact-v1/after-seventyninth-large200-notifications",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 4848564,
+      "files": 55
+    },
+    {
+      "path": "output/review/exact-v1/after-seventieth-session",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 1512390,
+      "files": 24
+    },
+    {
+      "path": "output/review/exact-v1/browser-ninth",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 709415,
+      "files": 14
+    },
+    {
+      "path": "output/review/exact-v1/after-large-sixtythird-exam",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 1551903,
+      "files": 22
+    },
+    {
+      "path": "output/review/exact-v1/before-fiftysixth-dates-initial",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 559959,
+      "files": 12
+    },
+    {
+      "path": "output/review/exact-v1/reference-seventyseventh-notifications",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 1485832,
+      "files": 30
+    },
+    {
+      "path": "output/review/exact-v1/after-boundaries-seventyfifth-attendance",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 2558439,
+      "files": 44
+    },
+    {
+      "path": "output/review/exact-v1/states-native-ninth",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 16218467,
+      "files": 258
+    },
+    {
+      "path": "output/review/exact-v1/reference-eightysecond-members",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 2644083,
+      "files": 42
+    },
+    {
+      "path": "output/review/exact-v1/after-twentyninth",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 34664112,
+      "files": 642
+    },
+    {
+      "path": "output/review/exact-v1/states-native-fifth",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 3846616,
+      "files": 60
+    },
+    {
+      "path": "output/review/exact-v1/short-probe-seventythird",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 96069,
+      "files": 3
+    },
+    {
+      "path": "output/review/exact-v1/after-large-fortyfifth",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 26609825,
+      "files": 308
+    },
+    {
+      "path": "output/review/exact-v1/after-fiftyeighth-forms",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 2570274,
+      "files": 48
+    },
+    {
+      "path": "output/review/exact-v1/after-thirtysixth",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 36071289,
+      "files": 654
+    },
+    {
+      "path": "output/review/exact-v1/after-thirtysecond-first",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 1810544,
+      "files": 42
+    },
+    {
+      "path": "output/review/exact-v1/browser-eighth",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 1661011,
+      "files": 29
+    },
+    {
+      "path": "output/review/exact-v1/after-fortyseventh-rules-initial",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 276005,
+      "files": 6
+    },
+    {
+      "path": "output/review/exact-v1/after-fortyninth-rules",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 1040432,
+      "files": 18
+    },
+    {
+      "path": "output/review/exact-v1/after-large-sixtyfirst-forms",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 3281743,
+      "files": 44
+    },
+    {
+      "path": "output/review/exact-v1/after-sixtyeighth-question-first",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 1140186,
+      "files": 23
+    },
+    {
+      "path": "output/review/exact-v1/after-large",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 57607905,
+      "files": 649
+    },
+    {
+      "path": "output/review/exact-v1/after-seventyeighth-notifications",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 1550205,
+      "files": 30
+    },
+    {
+      "path": "output/review/exact-v1/after-boundaries-thirtythird",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 12667650,
+      "files": 253
+    },
+    {
+      "path": "output/review/exact-v1/reference-seventyfifth-attendance",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 1383001,
+      "files": 24
+    },
+    {
+      "path": "output/review/exact-v1/after-large-sixtyseventh-question",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 3625154,
+      "files": 44
+    },
+    {
+      "path": "output/review/exact-v1/after-large-thirtieth",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 17536612,
+      "files": 209
+    },
+    {
+      "path": "output/review/exact-v1/after-boundaries-fiftyfifth-forms",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 3641277,
+      "files": 66
+    },
+    {
+      "path": "output/review/exact-v1/before-fiftysixth-dates",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 1319818,
+      "files": 24
+    },
+    {
+      "path": "output/review/exact-v1/after-boundaries-sixtyfirst-forms",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 1852966,
+      "files": 44
+    },
+    {
+      "path": "output/review/exact-v1/before-fiftyfourth-lesson",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 765610,
+      "files": 12
+    },
+    {
+      "path": "output/review/exact-v1/before-fortyseventh-rules",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 1093886,
+      "files": 18
+    },
+    {
+      "path": "output/review/exact-v1/after-seventysecond-session",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 1501395,
+      "files": 24
+    },
+    {
+      "path": "output/review/exact-v1/after-large-sixtyfifth-exam",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 2685250,
+      "files": 33
+    },
+    {
+      "path": "output/review/exact-v1/after-short-large-seventysecond-session",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 2164508,
+      "files": 44
+    },
+    {
+      "path": "output/review/exact-v1/overview",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 6221178,
+      "files": 26
+    },
+    {
+      "path": "output/review/exact-v1/after-fiftysecond-forms",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 1335543,
+      "files": 24
+    },
+    {
+      "path": "output/review/exact-v1/long-probe-seventythird",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 181928,
+      "files": 3
+    },
+    {
+      "path": "output/review/exact-v1/after-short-large-seventyfirst-session",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 2055147,
+      "files": 44
+    },
+    {
+      "path": "output/review/exact-v1/after-boundaries-sixtyfifth-exam",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 1751173,
+      "files": 33
+    },
+    {
+      "path": "output/review/exact-v1/long-probe-seventysecond",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 167652,
+      "files": 3
+    },
+    {
+      "path": "output/review/exact-v1/after-sixtyfifth-exam",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 991060,
+      "files": 18
+    },
+    {
+      "path": "output/review/exact-v1/states-native-sixth",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 16140287,
+      "files": 258
+    },
+    {
+      "path": "output/review/exact-v1/after-boundaries-seventyfirst-session",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 2702580,
+      "files": 44
+    },
+    {
+      "path": "output/review/exact-v1/after-sixtyseventh-question",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 1208407,
+      "files": 24
+    },
+    {
+      "path": "output/review/exact-v1/before-thirtyseventh-parent",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 1446002,
+      "files": 24
+    },
+    {
+      "path": "output/review/exact-v1/after-thirtyfourth-priority",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 2645442,
+      "files": 54
+    },
+    {
+      "path": "output/review/exact-v1/before-seventyseventh-notifications",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 923230,
+      "files": 30
+    },
+    {
+      "path": "output/review/exact-v1/after-ninth",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 32450451,
+      "files": 600
+    },
+    {
+      "path": "output/review/exact-v1/after-large-twentyfifth",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 12423189,
+      "files": 143
+    },
+    {
+      "path": "output/review/exact-v1/after-tenth",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 32450707,
+      "files": 600
+    },
+    {
+      "path": "output/review/exact-v1/after-eightysecond-members",
+      "reason": "Superseded generated media only; manifests retained",
+      "bytes": 2792425,
+      "files": 42
+    },
+    {
+      "path": "output/review/exact-v1/index.html",
+      "reason": "Old generated gallery index",
+      "bytes": 8372,
+      "files": 1
+    },
+    {
+      "path": "output/review/exact-v1/gallery-data.json",
+      "reason": "Old generated gallery index",
+      "bytes": 28944994,
+      "files": 1
+    }
+  ],
+  "preserved": [
+    "Current V5 PDF/editable reference",
+    "Current integration receipts and screenshots",
+    "All JSON/CSV/log evidence outside removed trace directories",
+    "Representative before/after/reference images",
+    "Application source, dependencies, secrets and sessions"
+  ]
+}

@@ -141,18 +141,16 @@ export function validateClassDraft(
 ) {
   const errors: Partial<Record<keyof ClassDraft, string>> = {};
   if (step === 'details' || step === 'review') {
-    if (draft.title.trim().length < 3 || draft.title.trim().length > 120)
-      errors.title = uiText.text_f1187b8fb0df;
-    if (draft.description.trim().length < 30) errors.description = uiText.text_d9aff55e47e0;
-    if (!draft.subject.trim()) errors.subject = uiText.text_80f4d9ca1657;
+    if (!draft.title.trim() || draft.title.trim().length > 200)
+      errors.title = uiText.serverAlignedUi.requestNameError;
+    if (!draft.subject.trim() || draft.subject.trim().length > 2000)
+      errors.subject = uiText.serverAlignedUi.requestPurposeError;
+    if (draft.description.trim().length > 4000)
+      errors.description = uiText.serverAlignedUi.requestDescriptionError;
   }
-  if (step === 'audience' || step === 'review') {
+  if (step === 'details' || step === 'audience' || step === 'review') {
     const capacity = Number(normalizeClassNumber(draft.capacity));
     if (!Number.isSafeInteger(capacity) || capacity < 1) errors.capacity = uiText.text_4f914334ef4d;
-    if (!draft.level.trim()) errors.level = uiText.text_793067d287e1;
-    if (!draft.admission.trim()) errors.admission = uiText.text_31abf2eac258;
-    if (!draft.allowInvites || !draft.allowRequests)
-      errors.allowRequests = uiText.text_688356a6c572;
   }
   if ((step === 'management' || step === 'review') && !draft.managerUserId)
     errors.managerUserId = uiText.text_6edbc574bccb;

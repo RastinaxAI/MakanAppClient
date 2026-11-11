@@ -1,4 +1,5 @@
 import { afterEach, describe, it, expect, vi } from 'vitest';
+import { readFileSync } from 'node:fs';
 import { serverConfig } from '@/lib/server/config';
 import { hasVerifiedPermission } from '@/lib/permissions';
 import { contract } from '@/lib/api/contract';
@@ -44,5 +45,26 @@ describe('Supplied backend controller policies', () => {
         'POST /api/admin/v1/provisioning',
       ),
     ).toBe(false);
+  });
+  it('detects drift from explicit platform policies in the current OpenAPI snapshot', () => {
+    const snapshot = JSON.parse(
+      readFileSync(new URL('../../contracts/openapi.json', import.meta.url), 'utf8'),
+    );
+    let checked = 0;
+    for (const operation of contract.operations) {
+      if (!operation.path.startsWith('/api/admin/') || operation.path === '/api/admin/v1/me')
+        continue;
+      const declared =
+        snapshot.paths[operation.path]?.[operation.method.toLowerCase()]?.[
+          'x-platform-permissions'
+        ];
+      if (!Array.isArray(declared)) continue;
+      const key = operation.method + ' ' + operation.path;
+      const bound = (bindings as Record<string, string | string[]>)[key];
+      const required = typeof bound === 'string' ? [bound] : bound;
+      expect(required?.slice().sort(), key).toEqual([...declared].sort());
+      checked++;
+    }
+    expect(checked).toBeGreaterThan(0);
   });
 });

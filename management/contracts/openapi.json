@@ -11220,6 +11220,7 @@
         "tags": [
           "Commerce"
         ],
+        "description": "\nنشست معتبر و مجوز جاری لازم است. سفارش شخصی فقط برای خریدار و سفارش سازمانی برای Manager سازمانِ Workspace جاری مجاز است. مبلغ ریال و شرایط از سفارش frozen می‌آیند. ProviderReference شناسهٔ trackId است و SettlementReference مرجع refNumber. وضعیت Order، PaymentAttempt و Fulfillment مستقل‌اند. Recovery فقط شناسهٔ تلاش را می‌پذیرد؛ Retry تسویه یا تحویل تکراری نمی‌سازد. تاریخچه حداکثر ۱۰۰ رخداد اخیر است و حذف نمی‌شود.",
         "operationId": "get_api_v1_commerce_summary",
         "responses": {
           "200": {
@@ -11238,6 +11239,16 @@
               "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ManagerCommerceSummaryDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "PAYMENT_INVALID، PAYMENT_REFERENCE_INVALID",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
                 }
               }
             }
@@ -11267,6 +11278,36 @@
             "x-error-codes": [
               "AUTH_FORBIDDEN"
             ]
+          },
+          "404": {
+            "description": "PAYMENT_ATTEMPT_NOT_FOUND، ORDER_NOT_FOUND",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "PAYMENT_PENDING_VERIFICATION، PAYMENT_REFERENCE_CONFLICT، ORDER_NOT_PAYABLE، PAYMENT_IDEMPOTENCY_CONFLICT، ORDER_IDEMPOTENCY_CONFLICT",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "PAYMENT_PROVIDER_UNAVAILABLE",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
           }
         },
         "security": [
@@ -11282,6 +11323,7 @@
         "tags": [
           "Commerce"
         ],
+        "description": "\nنشست معتبر و مجوز جاری لازم است. سفارش شخصی فقط برای خریدار و سفارش سازمانی برای Manager سازمانِ Workspace جاری مجاز است. مبلغ ریال و شرایط از سفارش frozen می‌آیند. ProviderReference شناسهٔ trackId است و SettlementReference مرجع refNumber. وضعیت Order، PaymentAttempt و Fulfillment مستقل‌اند. Recovery فقط شناسهٔ تلاش را می‌پذیرد؛ Retry تسویه یا تحویل تکراری نمی‌سازد. تاریخچه حداکثر ۱۰۰ رخداد اخیر است و حذف نمی‌شود.",
         "operationId": "post_api_v1_commerce_orders",
         "requestBody": {
           "content": {
@@ -11344,6 +11386,16 @@
               }
             }
           },
+          "400": {
+            "description": "PAYMENT_INVALID، PAYMENT_REFERENCE_INVALID",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
           "401": {
             "description": "ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات.",
             "content": {
@@ -11369,6 +11421,46 @@
             "x-error-codes": [
               "AUTH_FORBIDDEN"
             ]
+          },
+          "404": {
+            "description": "PAYMENT_ATTEMPT_NOT_FOUND، ORDER_NOT_FOUND",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "PAYMENT_PENDING_VERIFICATION، PAYMENT_REFERENCE_CONFLICT، ORDER_NOT_PAYABLE، PAYMENT_IDEMPOTENCY_CONFLICT، ORDER_IDEMPOTENCY_CONFLICT",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "PAYMENT_RATE_LIMITED",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "PAYMENT_PROVIDER_UNAVAILABLE",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
           }
         },
         "security": [
@@ -11382,6 +11474,7 @@
         "tags": [
           "Commerce"
         ],
+        "description": "\nنشست معتبر و مجوز جاری لازم است. سفارش شخصی فقط برای خریدار و سفارش سازمانی برای Manager سازمانِ Workspace جاری مجاز است. مبلغ ریال و شرایط از سفارش frozen می‌آیند. ProviderReference شناسهٔ trackId است و SettlementReference مرجع refNumber. وضعیت Order، PaymentAttempt و Fulfillment مستقل‌اند. Recovery فقط شناسهٔ تلاش را می‌پذیرد؛ Retry تسویه یا تحویل تکراری نمی‌سازد. تاریخچه حداکثر ۱۰۰ رخداد اخیر است و حذف نمی‌شود.",
         "operationId": "get_api_v1_commerce_orders",
         "parameters": [
           {
@@ -11415,6 +11508,16 @@
               }
             }
           },
+          "400": {
+            "description": "PAYMENT_INVALID، PAYMENT_REFERENCE_INVALID",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
           "401": {
             "description": "ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات.",
             "content": {
@@ -11440,6 +11543,36 @@
             "x-error-codes": [
               "AUTH_FORBIDDEN"
             ]
+          },
+          "404": {
+            "description": "PAYMENT_ATTEMPT_NOT_FOUND، ORDER_NOT_FOUND",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "PAYMENT_PENDING_VERIFICATION، PAYMENT_REFERENCE_CONFLICT، ORDER_NOT_PAYABLE، PAYMENT_IDEMPOTENCY_CONFLICT، ORDER_IDEMPOTENCY_CONFLICT",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "PAYMENT_PROVIDER_UNAVAILABLE",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
           }
         },
         "security": [
@@ -11455,6 +11588,7 @@
         "tags": [
           "Commerce"
         ],
+        "description": "\nنشست معتبر و مجوز جاری لازم است. سفارش شخصی فقط برای خریدار و سفارش سازمانی برای Manager سازمانِ Workspace جاری مجاز است. مبلغ ریال و شرایط از سفارش frozen می‌آیند. ProviderReference شناسهٔ trackId است و SettlementReference مرجع refNumber. وضعیت Order، PaymentAttempt و Fulfillment مستقل‌اند. Recovery فقط شناسهٔ تلاش را می‌پذیرد؛ Retry تسویه یا تحویل تکراری نمی‌سازد. تاریخچه حداکثر ۱۰۰ رخداد اخیر است و حذف نمی‌شود.",
         "operationId": "post_api_v1_commerce_orders_by_orderId_payments",
         "parameters": [
           {
@@ -11528,6 +11662,16 @@
               }
             }
           },
+          "400": {
+            "description": "PAYMENT_INVALID، PAYMENT_REFERENCE_INVALID",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
           "401": {
             "description": "ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات.",
             "content": {
@@ -11553,6 +11697,46 @@
             "x-error-codes": [
               "AUTH_FORBIDDEN"
             ]
+          },
+          "404": {
+            "description": "PAYMENT_ATTEMPT_NOT_FOUND، ORDER_NOT_FOUND",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "PAYMENT_PENDING_VERIFICATION، PAYMENT_REFERENCE_CONFLICT، ORDER_NOT_PAYABLE، PAYMENT_IDEMPOTENCY_CONFLICT، ORDER_IDEMPOTENCY_CONFLICT",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "PAYMENT_RATE_LIMITED",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "PAYMENT_PROVIDER_UNAVAILABLE",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
           }
         },
         "security": [
@@ -11568,6 +11752,7 @@
         "tags": [
           "Commerce"
         ],
+        "description": "\nنشست معتبر و مجوز جاری لازم است. سفارش شخصی فقط برای خریدار و سفارش سازمانی برای Manager سازمانِ Workspace جاری مجاز است. مبلغ ریال و شرایط از سفارش frozen می‌آیند. ProviderReference شناسهٔ trackId است و SettlementReference مرجع refNumber. وضعیت Order، PaymentAttempt و Fulfillment مستقل‌اند. Recovery فقط شناسهٔ تلاش را می‌پذیرد؛ Retry تسویه یا تحویل تکراری نمی‌سازد. تاریخچه حداکثر ۱۰۰ رخداد اخیر است و حذف نمی‌شود.",
         "operationId": "get_api_v1_commerce_orders_by_orderId",
         "parameters": [
           {
@@ -11601,6 +11786,16 @@
               }
             }
           },
+          "400": {
+            "description": "PAYMENT_INVALID، PAYMENT_REFERENCE_INVALID",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
           "401": {
             "description": "ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات.",
             "content": {
@@ -11626,6 +11821,36 @@
             "x-error-codes": [
               "AUTH_FORBIDDEN"
             ]
+          },
+          "404": {
+            "description": "PAYMENT_ATTEMPT_NOT_FOUND، ORDER_NOT_FOUND",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "PAYMENT_PENDING_VERIFICATION، PAYMENT_REFERENCE_CONFLICT، ORDER_NOT_PAYABLE، PAYMENT_IDEMPOTENCY_CONFLICT، ORDER_IDEMPOTENCY_CONFLICT",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "PAYMENT_PROVIDER_UNAVAILABLE",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
           }
         },
         "security": [
@@ -11641,6 +11866,7 @@
         "tags": [
           "CommercialSubscriptions"
         ],
+        "description": "\nنشست معتبر و مجوز جاری لازم است. سفارش شخصی فقط برای خریدار و سفارش سازمانی برای Manager سازمانِ Workspace جاری مجاز است. مبلغ ریال و شرایط از سفارش frozen می‌آیند. ProviderReference شناسهٔ trackId است و SettlementReference مرجع refNumber. وضعیت Order، PaymentAttempt و Fulfillment مستقل‌اند. Recovery فقط شناسهٔ تلاش را می‌پذیرد؛ Retry تسویه یا تحویل تکراری نمی‌سازد. تاریخچه حداکثر ۱۰۰ رخداد اخیر است و حذف نمی‌شود.",
         "operationId": "post_api_v1_commerce_personal_quote",
         "requestBody": {
           "content": {
@@ -11683,6 +11909,16 @@
               }
             }
           },
+          "400": {
+            "description": "PAYMENT_INVALID، PAYMENT_REFERENCE_INVALID",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
           "401": {
             "description": "ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات.",
             "content": {
@@ -11708,6 +11944,46 @@
             "x-error-codes": [
               "AUTH_FORBIDDEN"
             ]
+          },
+          "404": {
+            "description": "PAYMENT_ATTEMPT_NOT_FOUND، ORDER_NOT_FOUND",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "PAYMENT_PENDING_VERIFICATION، PAYMENT_REFERENCE_CONFLICT، ORDER_NOT_PAYABLE، PAYMENT_IDEMPOTENCY_CONFLICT، ORDER_IDEMPOTENCY_CONFLICT",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "PAYMENT_RATE_LIMITED",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "PAYMENT_PROVIDER_UNAVAILABLE",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
           }
         },
         "security": [
@@ -11723,6 +11999,7 @@
         "tags": [
           "CommercialSubscriptions"
         ],
+        "description": "\nنشست معتبر و مجوز جاری لازم است. سفارش شخصی فقط برای خریدار و سفارش سازمانی برای Manager سازمانِ Workspace جاری مجاز است. مبلغ ریال و شرایط از سفارش frozen می‌آیند. ProviderReference شناسهٔ trackId است و SettlementReference مرجع refNumber. وضعیت Order، PaymentAttempt و Fulfillment مستقل‌اند. Recovery فقط شناسهٔ تلاش را می‌پذیرد؛ Retry تسویه یا تحویل تکراری نمی‌سازد. تاریخچه حداکثر ۱۰۰ رخداد اخیر است و حذف نمی‌شود.",
         "operationId": "post_api_v1_commerce_organization_quote",
         "requestBody": {
           "content": {
@@ -11765,6 +12042,16 @@
               }
             }
           },
+          "400": {
+            "description": "PAYMENT_INVALID، PAYMENT_REFERENCE_INVALID",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
           "401": {
             "description": "ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات.",
             "content": {
@@ -11790,6 +12077,46 @@
             "x-error-codes": [
               "AUTH_FORBIDDEN"
             ]
+          },
+          "404": {
+            "description": "PAYMENT_ATTEMPT_NOT_FOUND، ORDER_NOT_FOUND",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "PAYMENT_PENDING_VERIFICATION، PAYMENT_REFERENCE_CONFLICT، ORDER_NOT_PAYABLE، PAYMENT_IDEMPOTENCY_CONFLICT، ORDER_IDEMPOTENCY_CONFLICT",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "PAYMENT_RATE_LIMITED",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "PAYMENT_PROVIDER_UNAVAILABLE",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
           }
         },
         "security": [
@@ -11805,6 +12132,7 @@
         "tags": [
           "CommercialSubscriptions"
         ],
+        "description": "\nنشست معتبر و مجوز جاری لازم است. سفارش شخصی فقط برای خریدار و سفارش سازمانی برای Manager سازمانِ Workspace جاری مجاز است. مبلغ ریال و شرایط از سفارش frozen می‌آیند. ProviderReference شناسهٔ trackId است و SettlementReference مرجع refNumber. وضعیت Order، PaymentAttempt و Fulfillment مستقل‌اند. Recovery فقط شناسهٔ تلاش را می‌پذیرد؛ Retry تسویه یا تحویل تکراری نمی‌سازد. تاریخچه حداکثر ۱۰۰ رخداد اخیر است و حذف نمی‌شود.",
         "operationId": "get_api_v1_commerce_catalog",
         "parameters": [
           {
@@ -11845,6 +12173,16 @@
               }
             }
           },
+          "400": {
+            "description": "PAYMENT_INVALID، PAYMENT_REFERENCE_INVALID",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
           "401": {
             "description": "ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات.",
             "content": {
@@ -11870,6 +12208,36 @@
             "x-error-codes": [
               "AUTH_FORBIDDEN"
             ]
+          },
+          "404": {
+            "description": "PAYMENT_ATTEMPT_NOT_FOUND، ORDER_NOT_FOUND",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "PAYMENT_PENDING_VERIFICATION، PAYMENT_REFERENCE_CONFLICT، ORDER_NOT_PAYABLE، PAYMENT_IDEMPOTENCY_CONFLICT، ORDER_IDEMPOTENCY_CONFLICT",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "PAYMENT_PROVIDER_UNAVAILABLE",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
           }
         },
         "security": [
@@ -11885,6 +12253,7 @@
         "tags": [
           "CommercialSubscriptions"
         ],
+        "description": "\nنشست معتبر و مجوز جاری لازم است. سفارش شخصی فقط برای خریدار و سفارش سازمانی برای Manager سازمانِ Workspace جاری مجاز است. مبلغ ریال و شرایط از سفارش frozen می‌آیند. ProviderReference شناسهٔ trackId است و SettlementReference مرجع refNumber. وضعیت Order، PaymentAttempt و Fulfillment مستقل‌اند. Recovery فقط شناسهٔ تلاش را می‌پذیرد؛ Retry تسویه یا تحویل تکراری نمی‌سازد. تاریخچه حداکثر ۱۰۰ رخداد اخیر است و حذف نمی‌شود.",
         "operationId": "get_api_v1_commerce_personal_subscription",
         "responses": {
           "200": {
@@ -11907,64 +12276,12 @@
               }
             }
           },
-          "401": {
-            "description": "ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات.",
+          "400": {
+            "description": "PAYMENT_INVALID، PAYMENT_REFERENCE_INVALID",
             "content": {
               "application/problem+json": {
                 "schema": {
                   "$ref": "#/components/schemas/MakanProblemDetails"
-                }
-              }
-            },
-            "x-error-codes": [
-              "AUTH_REQUIRED"
-            ]
-          },
-          "403": {
-            "description": "ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات.",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/MakanProblemDetails"
-                }
-              }
-            },
-            "x-error-codes": [
-              "AUTH_FORBIDDEN"
-            ]
-          }
-        },
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
-        "x-authentication": "bearer-session"
-      }
-    },
-    "/api/v1/commerce/organization/subscription": {
-      "get": {
-        "tags": [
-          "CommercialSubscriptions"
-        ],
-        "operationId": "get_api_v1_commerce_organization_subscription",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/CommercialSummaryDto"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CommercialSummaryDto"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CommercialSummaryDto"
                 }
               }
             }
@@ -11994,6 +12311,139 @@
             "x-error-codes": [
               "AUTH_FORBIDDEN"
             ]
+          },
+          "404": {
+            "description": "PAYMENT_ATTEMPT_NOT_FOUND، ORDER_NOT_FOUND",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "PAYMENT_PENDING_VERIFICATION، PAYMENT_REFERENCE_CONFLICT، ORDER_NOT_PAYABLE، PAYMENT_IDEMPOTENCY_CONFLICT، ORDER_IDEMPOTENCY_CONFLICT",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "PAYMENT_PROVIDER_UNAVAILABLE",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "x-authentication": "bearer-session"
+      }
+    },
+    "/api/v1/commerce/organization/subscription": {
+      "get": {
+        "tags": [
+          "CommercialSubscriptions"
+        ],
+        "description": "\nنشست معتبر و مجوز جاری لازم است. سفارش شخصی فقط برای خریدار و سفارش سازمانی برای Manager سازمانِ Workspace جاری مجاز است. مبلغ ریال و شرایط از سفارش frozen می‌آیند. ProviderReference شناسهٔ trackId است و SettlementReference مرجع refNumber. وضعیت Order، PaymentAttempt و Fulfillment مستقل‌اند. Recovery فقط شناسهٔ تلاش را می‌پذیرد؛ Retry تسویه یا تحویل تکراری نمی‌سازد. تاریخچه حداکثر ۱۰۰ رخداد اخیر است و حذف نمی‌شود.",
+        "operationId": "get_api_v1_commerce_organization_subscription",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommercialSummaryDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommercialSummaryDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommercialSummaryDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "PAYMENT_INVALID، PAYMENT_REFERENCE_INVALID",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            },
+            "x-error-codes": [
+              "AUTH_REQUIRED"
+            ]
+          },
+          "403": {
+            "description": "ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            },
+            "x-error-codes": [
+              "AUTH_FORBIDDEN"
+            ]
+          },
+          "404": {
+            "description": "PAYMENT_ATTEMPT_NOT_FOUND، ORDER_NOT_FOUND",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "PAYMENT_PENDING_VERIFICATION، PAYMENT_REFERENCE_CONFLICT، ORDER_NOT_PAYABLE، PAYMENT_IDEMPOTENCY_CONFLICT، ORDER_IDEMPOTENCY_CONFLICT",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "PAYMENT_PROVIDER_UNAVAILABLE",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
           }
         },
         "security": [
@@ -12009,6 +12459,7 @@
         "tags": [
           "CommercialSubscriptions"
         ],
+        "description": "\nنشست معتبر و مجوز جاری لازم است. سفارش شخصی فقط برای خریدار و سفارش سازمانی برای Manager سازمانِ Workspace جاری مجاز است. مبلغ ریال و شرایط از سفارش frozen می‌آیند. ProviderReference شناسهٔ trackId است و SettlementReference مرجع refNumber. وضعیت Order، PaymentAttempt و Fulfillment مستقل‌اند. Recovery فقط شناسهٔ تلاش را می‌پذیرد؛ Retry تسویه یا تحویل تکراری نمی‌سازد. تاریخچه حداکثر ۱۰۰ رخداد اخیر است و حذف نمی‌شود.",
         "operationId": "post_api_v1_commerce_ai_simple_text_preflight",
         "requestBody": {
           "content": {
@@ -12051,6 +12502,16 @@
               }
             }
           },
+          "400": {
+            "description": "PAYMENT_INVALID، PAYMENT_REFERENCE_INVALID",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
           "401": {
             "description": "ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات.",
             "content": {
@@ -12076,6 +12537,46 @@
             "x-error-codes": [
               "AUTH_FORBIDDEN"
             ]
+          },
+          "404": {
+            "description": "PAYMENT_ATTEMPT_NOT_FOUND، ORDER_NOT_FOUND",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "PAYMENT_PENDING_VERIFICATION، PAYMENT_REFERENCE_CONFLICT، ORDER_NOT_PAYABLE، PAYMENT_IDEMPOTENCY_CONFLICT، ORDER_IDEMPOTENCY_CONFLICT",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "PAYMENT_RATE_LIMITED",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "PAYMENT_PROVIDER_UNAVAILABLE",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
           }
         },
         "security": [
@@ -12091,6 +12592,7 @@
         "tags": [
           "CommercialSubscriptions"
         ],
+        "description": "\nنشست معتبر و مجوز جاری لازم است. سفارش شخصی فقط برای خریدار و سفارش سازمانی برای Manager سازمانِ Workspace جاری مجاز است. مبلغ ریال و شرایط از سفارش frozen می‌آیند. ProviderReference شناسهٔ trackId است و SettlementReference مرجع refNumber. وضعیت Order، PaymentAttempt و Fulfillment مستقل‌اند. Recovery فقط شناسهٔ تلاش را می‌پذیرد؛ Retry تسویه یا تحویل تکراری نمی‌سازد. تاریخچه حداکثر ۱۰۰ رخداد اخیر است و حذف نمی‌شود.",
         "operationId": "post_api_v1_commerce_personal_orders",
         "requestBody": {
           "content": {
@@ -12133,6 +12635,16 @@
               }
             }
           },
+          "400": {
+            "description": "PAYMENT_INVALID، PAYMENT_REFERENCE_INVALID",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
           "401": {
             "description": "ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات.",
             "content": {
@@ -12158,6 +12670,46 @@
             "x-error-codes": [
               "AUTH_FORBIDDEN"
             ]
+          },
+          "404": {
+            "description": "PAYMENT_ATTEMPT_NOT_FOUND، ORDER_NOT_FOUND",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "PAYMENT_PENDING_VERIFICATION، PAYMENT_REFERENCE_CONFLICT، ORDER_NOT_PAYABLE، PAYMENT_IDEMPOTENCY_CONFLICT، ORDER_IDEMPOTENCY_CONFLICT",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "PAYMENT_RATE_LIMITED",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "PAYMENT_PROVIDER_UNAVAILABLE",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
           }
         },
         "security": [
@@ -12171,6 +12723,7 @@
         "tags": [
           "CommercialSubscriptions"
         ],
+        "description": "\nنشست معتبر و مجوز جاری لازم است. سفارش شخصی فقط برای خریدار و سفارش سازمانی برای Manager سازمانِ Workspace جاری مجاز است. مبلغ ریال و شرایط از سفارش frozen می‌آیند. ProviderReference شناسهٔ trackId است و SettlementReference مرجع refNumber. وضعیت Order، PaymentAttempt و Fulfillment مستقل‌اند. Recovery فقط شناسهٔ تلاش را می‌پذیرد؛ Retry تسویه یا تحویل تکراری نمی‌سازد. تاریخچه حداکثر ۱۰۰ رخداد اخیر است و حذف نمی‌شود.",
         "operationId": "get_api_v1_commerce_personal_orders",
         "parameters": [
           {
@@ -12204,6 +12757,16 @@
               }
             }
           },
+          "400": {
+            "description": "PAYMENT_INVALID، PAYMENT_REFERENCE_INVALID",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
           "401": {
             "description": "ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات.",
             "content": {
@@ -12229,6 +12792,36 @@
             "x-error-codes": [
               "AUTH_FORBIDDEN"
             ]
+          },
+          "404": {
+            "description": "PAYMENT_ATTEMPT_NOT_FOUND، ORDER_NOT_FOUND",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "PAYMENT_PENDING_VERIFICATION، PAYMENT_REFERENCE_CONFLICT، ORDER_NOT_PAYABLE، PAYMENT_IDEMPOTENCY_CONFLICT، ORDER_IDEMPOTENCY_CONFLICT",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "PAYMENT_PROVIDER_UNAVAILABLE",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
           }
         },
         "security": [
@@ -12244,6 +12837,7 @@
         "tags": [
           "CommercialSubscriptions"
         ],
+        "description": "\nنشست معتبر و مجوز جاری لازم است. سفارش شخصی فقط برای خریدار و سفارش سازمانی برای Manager سازمانِ Workspace جاری مجاز است. مبلغ ریال و شرایط از سفارش frozen می‌آیند. ProviderReference شناسهٔ trackId است و SettlementReference مرجع refNumber. وضعیت Order، PaymentAttempt و Fulfillment مستقل‌اند. Recovery فقط شناسهٔ تلاش را می‌پذیرد؛ Retry تسویه یا تحویل تکراری نمی‌سازد. تاریخچه حداکثر ۱۰۰ رخداد اخیر است و حذف نمی‌شود.",
         "operationId": "get_api_v1_commerce_personal_orders_by_orderId",
         "parameters": [
           {
@@ -12277,6 +12871,16 @@
               }
             }
           },
+          "400": {
+            "description": "PAYMENT_INVALID، PAYMENT_REFERENCE_INVALID",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
           "401": {
             "description": "ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات.",
             "content": {
@@ -12302,6 +12906,36 @@
             "x-error-codes": [
               "AUTH_FORBIDDEN"
             ]
+          },
+          "404": {
+            "description": "PAYMENT_ATTEMPT_NOT_FOUND، ORDER_NOT_FOUND",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "PAYMENT_PENDING_VERIFICATION، PAYMENT_REFERENCE_CONFLICT، ORDER_NOT_PAYABLE، PAYMENT_IDEMPOTENCY_CONFLICT، ORDER_IDEMPOTENCY_CONFLICT",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "PAYMENT_PROVIDER_UNAVAILABLE",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
           }
         },
         "security": [
@@ -12317,6 +12951,7 @@
         "tags": [
           "CommercialSubscriptions"
         ],
+        "description": "\nنشست معتبر و مجوز جاری لازم است. سفارش شخصی فقط برای خریدار و سفارش سازمانی برای Manager سازمانِ Workspace جاری مجاز است. مبلغ ریال و شرایط از سفارش frozen می‌آیند. ProviderReference شناسهٔ trackId است و SettlementReference مرجع refNumber. وضعیت Order، PaymentAttempt و Fulfillment مستقل‌اند. Recovery فقط شناسهٔ تلاش را می‌پذیرد؛ Retry تسویه یا تحویل تکراری نمی‌سازد. تاریخچه حداکثر ۱۰۰ رخداد اخیر است و حذف نمی‌شود.",
         "operationId": "post_api_v1_commerce_personal_orders_by_orderId_payments",
         "parameters": [
           {
@@ -12370,6 +13005,16 @@
               }
             }
           },
+          "400": {
+            "description": "PAYMENT_INVALID، PAYMENT_REFERENCE_INVALID",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
           "401": {
             "description": "ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات.",
             "content": {
@@ -12395,6 +13040,46 @@
             "x-error-codes": [
               "AUTH_FORBIDDEN"
             ]
+          },
+          "404": {
+            "description": "PAYMENT_ATTEMPT_NOT_FOUND، ORDER_NOT_FOUND",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "PAYMENT_PENDING_VERIFICATION، PAYMENT_REFERENCE_CONFLICT، ORDER_NOT_PAYABLE، PAYMENT_IDEMPOTENCY_CONFLICT، ORDER_IDEMPOTENCY_CONFLICT",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "PAYMENT_RATE_LIMITED",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "PAYMENT_PROVIDER_UNAVAILABLE",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
           }
         },
         "security": [
@@ -12410,6 +13095,7 @@
         "tags": [
           "CommercialSubscriptions"
         ],
+        "description": "\nنشست معتبر و مجوز جاری لازم است. سفارش شخصی فقط برای خریدار و سفارش سازمانی برای Manager سازمانِ Workspace جاری مجاز است. مبلغ ریال و شرایط از سفارش frozen می‌آیند. ProviderReference شناسهٔ trackId است و SettlementReference مرجع refNumber. وضعیت Order، PaymentAttempt و Fulfillment مستقل‌اند. Recovery فقط شناسهٔ تلاش را می‌پذیرد؛ Retry تسویه یا تحویل تکراری نمی‌سازد. تاریخچه حداکثر ۱۰۰ رخداد اخیر است و حذف نمی‌شود.",
         "operationId": "post_api_v1_commerce_personal_subscription_downgrade",
         "requestBody": {
           "content": {
@@ -12452,6 +13138,16 @@
               }
             }
           },
+          "400": {
+            "description": "PAYMENT_INVALID، PAYMENT_REFERENCE_INVALID",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
           "401": {
             "description": "ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات.",
             "content": {
@@ -12477,6 +13173,46 @@
             "x-error-codes": [
               "AUTH_FORBIDDEN"
             ]
+          },
+          "404": {
+            "description": "PAYMENT_ATTEMPT_NOT_FOUND، ORDER_NOT_FOUND",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "PAYMENT_PENDING_VERIFICATION، PAYMENT_REFERENCE_CONFLICT، ORDER_NOT_PAYABLE، PAYMENT_IDEMPOTENCY_CONFLICT، ORDER_IDEMPOTENCY_CONFLICT",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "PAYMENT_RATE_LIMITED",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "PAYMENT_PROVIDER_UNAVAILABLE",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
           }
         },
         "security": [
@@ -12492,6 +13228,7 @@
         "tags": [
           "CommercialSubscriptions"
         ],
+        "description": "\nنشست معتبر و مجوز جاری لازم است. سفارش شخصی فقط برای خریدار و سفارش سازمانی برای Manager سازمانِ Workspace جاری مجاز است. مبلغ ریال و شرایط از سفارش frozen می‌آیند. ProviderReference شناسهٔ trackId است و SettlementReference مرجع refNumber. وضعیت Order، PaymentAttempt و Fulfillment مستقل‌اند. Recovery فقط شناسهٔ تلاش را می‌پذیرد؛ Retry تسویه یا تحویل تکراری نمی‌سازد. تاریخچه حداکثر ۱۰۰ رخداد اخیر است و حذف نمی‌شود.",
         "operationId": "post_api_v1_commerce_organization_subscription_downgrade",
         "requestBody": {
           "content": {
@@ -12534,6 +13271,16 @@
               }
             }
           },
+          "400": {
+            "description": "PAYMENT_INVALID، PAYMENT_REFERENCE_INVALID",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
           "401": {
             "description": "ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات.",
             "content": {
@@ -12559,6 +13306,46 @@
             "x-error-codes": [
               "AUTH_FORBIDDEN"
             ]
+          },
+          "404": {
+            "description": "PAYMENT_ATTEMPT_NOT_FOUND، ORDER_NOT_FOUND",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "PAYMENT_PENDING_VERIFICATION، PAYMENT_REFERENCE_CONFLICT، ORDER_NOT_PAYABLE، PAYMENT_IDEMPOTENCY_CONFLICT، ORDER_IDEMPOTENCY_CONFLICT",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "PAYMENT_RATE_LIMITED",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "PAYMENT_PROVIDER_UNAVAILABLE",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
           }
         },
         "security": [
@@ -17028,16 +17815,7 @@
             "name": "Filter",
             "in": "query",
             "schema": {
-              "enum": [
-                "All",
-                "Direct",
-                "Group",
-                "Channel",
-                "Unread",
-                "Archived",
-                "Saved"
-              ],
-              "type": "string"
+              "$ref": "#/components/schemas/ConversationListFilter"
             }
           },
           {
@@ -17727,17 +18505,7 @@
             "name": "filter",
             "in": "query",
             "schema": {
-              "enum": [
-                "All",
-                "Direct",
-                "Group",
-                "Channel",
-                "Unread",
-                "Archived",
-                "Saved"
-              ],
-              "type": "string",
-              "default": "All"
+              "$ref": "#/components/schemas/ConversationListFilter2"
             }
           },
           {
@@ -17854,8 +18622,8 @@
         "tags": [
           "Conversations"
         ],
-        "summary": "Summary مجاز گفتگو مستقل از صفحه و فیلتر Inbox",
-        "description": "Direct، Saved، Group و Channel مجاز را با DTO موجود Inbox می‌خواند؛ archive مانع deep-link نیست. نشست، workspace جاری و participant فعال همچنان الزامی‌اند. شناسهٔ نامجاز یا context متفاوت 404 می‌گیرد. این مسیر مجوز مدیریت گروه یا ارسال پیام جدید ایجاد نمی‌کند.",
+        "summary": "Summary مجاز گفتگو مستقل از Workspace انتخاب‌شده و صفحهٔ Inbox",
+        "description": "BE-404-A: همان DTO و مجوز جاری Global Inbox حساب برای Direct، Saved، Group و Channel استفاده می‌شود؛ archive مانع deep-link نیست. نشست معتبر، حساب و participant فعال و برای سازمان، عضویت و نقش جاری همان سازمان و مجوز منبع رسمی الزامی‌اند. شناسهٔ حدسی، عضویت پایان‌یافته یا منبع نامجاز 404 می‌گیرد. انتخاب Workspace دیگر مجوز تازه‌ای ایجاد نمی‌کند و این مسیر Workspace را عوض نمی‌کند. تاریخچه، ارسال، فایل، Hub، اعضا، تنظیمات و مدیریت همچنان بافت و مجوز کامل خود را می‌خواهند. پاسخ no-store است.",
         "operationId": "get_api_v1_conversations_by_conversationId_summary",
         "parameters": [
           {
@@ -23984,12 +24752,7 @@
             "name": "classKind",
             "in": "query",
             "schema": {
-              "enum": [
-                "OrganizationClass",
-                "PersonalClass"
-              ],
-              "type": "string",
-              "default": "OrganizationClass"
+              "$ref": "#/components/schemas/AcademicClassKind2"
             }
           },
           {
@@ -40887,6 +41650,1184 @@
         "x-authentication": "bearer-session"
       }
     },
+    "/api/v1/sources/{sourceId}/versions/{version}/knowledge/ingest": {
+      "post": {
+        "tags": [
+          "KnowledgeIntegration"
+        ],
+        "description": "نشست فعال، Context و SourceVersion دقیق در Backend بازبینی می‌شوند؛ Library بسته است. Feature Gate باید فعال باشد. ClientOperationId در body کلید intent است؛ Headerهای Operation/Payer مسیر Business AI برای این API استفاده نمی‌شوند. RAG از سهمیهٔ SimpleText موجود استفاده می‌کند؛ replay تکمیل‌شده409 است و پاسخ خصوصی ذخیره نمی‌شود. Citation مجوز نیست؛ پس از پاسخ نیز دسترسی دوباره بررسی می‌شود. Ingest و lifecycle به writer و ExpectedVersion جاری نیاز دارند.",
+        "operationId": "post_api_v1_sources_by_sourceId_versions_by_version_knowledge_ingest",
+        "parameters": [
+          {
+            "name": "sourceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "version",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/KnowledgeMutationCommand"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/KnowledgeMutationCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/KnowledgeMutationCommand"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/KnowledgeProcessingStatus"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/KnowledgeProcessingStatus"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/KnowledgeProcessingStatus"
+                }
+              }
+            }
+          },
+          "202": {
+            "description": "Accepted",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/KnowledgeProcessingStatus"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/KnowledgeProcessingStatus"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/KnowledgeProcessingStatus"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "نشست نامعتبر.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            },
+            "x-error-codes": [
+              "AUTH_REQUIRED"
+            ]
+          },
+          "403": {
+            "description": "مجوز مدیریت منبع یا Entitlement تجاری وجود ندارد.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            },
+            "x-error-codes": [
+              "AUTH_FORBIDDEN"
+            ]
+          },
+          "404": {
+            "description": "منبع ناموجود یا خارج از دسترسی جاری؛ concealment.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "نسخه/intent/وضعیت پردازش یا سهمیه ناسازگار است.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "قرارداد Knowledge یا Query معتبر نیست.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "محدودیت درخواست حساب.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "502": {
+            "description": "پاسخ یا Citation معتبر و grounded نیست.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Feature یا dependency آماده نیست.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "مهلت HTTP یا polling تمام شده است؛ retry خودکار وجود ندارد.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "x-authentication": "bearer-session"
+      }
+    },
+    "/api/v1/sources/{sourceId}/versions/{version}/knowledge/status": {
+      "get": {
+        "tags": [
+          "KnowledgeIntegration"
+        ],
+        "description": "نشست فعال، Context و SourceVersion دقیق در Backend بازبینی می‌شوند؛ Library بسته است. Feature Gate باید فعال باشد. ClientOperationId در body کلید intent است؛ Headerهای Operation/Payer مسیر Business AI برای این API استفاده نمی‌شوند. RAG از سهمیهٔ SimpleText موجود استفاده می‌کند؛ replay تکمیل‌شده409 است و پاسخ خصوصی ذخیره نمی‌شود. Citation مجوز نیست؛ پس از پاسخ نیز دسترسی دوباره بررسی می‌شود. Ingest و lifecycle به writer و ExpectedVersion جاری نیاز دارند.",
+        "operationId": "get_api_v1_sources_by_sourceId_versions_by_version_knowledge_status",
+        "parameters": [
+          {
+            "name": "sourceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "version",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "wait",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/KnowledgeProcessingStatus"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/KnowledgeProcessingStatus"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/KnowledgeProcessingStatus"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "نشست نامعتبر.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            },
+            "x-error-codes": [
+              "AUTH_REQUIRED"
+            ]
+          },
+          "403": {
+            "description": "مجوز مدیریت منبع یا Entitlement تجاری وجود ندارد.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            },
+            "x-error-codes": [
+              "AUTH_FORBIDDEN"
+            ]
+          },
+          "404": {
+            "description": "منبع ناموجود یا خارج از دسترسی جاری؛ concealment.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "نسخه/intent/وضعیت پردازش یا سهمیه ناسازگار است.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "قرارداد Knowledge یا Query معتبر نیست.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "محدودیت درخواست حساب.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "502": {
+            "description": "پاسخ یا Citation معتبر و grounded نیست.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Feature یا dependency آماده نیست.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "مهلت HTTP یا polling تمام شده است؛ retry خودکار وجود ندارد.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "x-authentication": "bearer-session"
+      }
+    },
+    "/api/v1/sources/{sourceId}/versions/{version}/knowledge/delete": {
+      "post": {
+        "tags": [
+          "KnowledgeIntegration"
+        ],
+        "description": "نشست فعال، Context و SourceVersion دقیق در Backend بازبینی می‌شوند؛ Library بسته است. Feature Gate باید فعال باشد. ClientOperationId در body کلید intent است؛ Headerهای Operation/Payer مسیر Business AI برای این API استفاده نمی‌شوند. RAG از سهمیهٔ SimpleText موجود استفاده می‌کند؛ replay تکمیل‌شده409 است و پاسخ خصوصی ذخیره نمی‌شود. Citation مجوز نیست؛ پس از پاسخ نیز دسترسی دوباره بررسی می‌شود. Ingest و lifecycle به writer و ExpectedVersion جاری نیاز دارند.",
+        "operationId": "post_api_v1_sources_by_sourceId_versions_by_version_knowledge_delete",
+        "parameters": [
+          {
+            "name": "sourceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "version",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/KnowledgeMutationCommand"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/KnowledgeMutationCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/KnowledgeMutationCommand"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/KnowledgeProcessingStatus"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/KnowledgeProcessingStatus"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/KnowledgeProcessingStatus"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "نشست نامعتبر.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            },
+            "x-error-codes": [
+              "AUTH_REQUIRED"
+            ]
+          },
+          "403": {
+            "description": "مجوز مدیریت منبع یا Entitlement تجاری وجود ندارد.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            },
+            "x-error-codes": [
+              "AUTH_FORBIDDEN"
+            ]
+          },
+          "404": {
+            "description": "منبع ناموجود یا خارج از دسترسی جاری؛ concealment.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "نسخه/intent/وضعیت پردازش یا سهمیه ناسازگار است.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "قرارداد Knowledge یا Query معتبر نیست.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "محدودیت درخواست حساب.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "502": {
+            "description": "پاسخ یا Citation معتبر و grounded نیست.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Feature یا dependency آماده نیست.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "مهلت HTTP یا polling تمام شده است؛ retry خودکار وجود ندارد.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "x-authentication": "bearer-session"
+      }
+    },
+    "/api/v1/sources/{sourceId}/versions/{version}/knowledge/supersede": {
+      "post": {
+        "tags": [
+          "KnowledgeIntegration"
+        ],
+        "description": "نشست فعال، Context و SourceVersion دقیق در Backend بازبینی می‌شوند؛ Library بسته است. Feature Gate باید فعال باشد. ClientOperationId در body کلید intent است؛ Headerهای Operation/Payer مسیر Business AI برای این API استفاده نمی‌شوند. RAG از سهمیهٔ SimpleText موجود استفاده می‌کند؛ replay تکمیل‌شده409 است و پاسخ خصوصی ذخیره نمی‌شود. Citation مجوز نیست؛ پس از پاسخ نیز دسترسی دوباره بررسی می‌شود. Ingest و lifecycle به writer و ExpectedVersion جاری نیاز دارند.",
+        "operationId": "post_api_v1_sources_by_sourceId_versions_by_version_knowledge_supersede",
+        "parameters": [
+          {
+            "name": "sourceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "version",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/KnowledgeMutationCommand"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/KnowledgeMutationCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/KnowledgeMutationCommand"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/KnowledgeProcessingStatus"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/KnowledgeProcessingStatus"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/KnowledgeProcessingStatus"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "نشست نامعتبر.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            },
+            "x-error-codes": [
+              "AUTH_REQUIRED"
+            ]
+          },
+          "403": {
+            "description": "مجوز مدیریت منبع یا Entitlement تجاری وجود ندارد.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            },
+            "x-error-codes": [
+              "AUTH_FORBIDDEN"
+            ]
+          },
+          "404": {
+            "description": "منبع ناموجود یا خارج از دسترسی جاری؛ concealment.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "نسخه/intent/وضعیت پردازش یا سهمیه ناسازگار است.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "قرارداد Knowledge یا Query معتبر نیست.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "محدودیت درخواست حساب.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "502": {
+            "description": "پاسخ یا Citation معتبر و grounded نیست.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Feature یا dependency آماده نیست.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "مهلت HTTP یا polling تمام شده است؛ retry خودکار وجود ندارد.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "x-authentication": "bearer-session"
+      }
+    },
+    "/api/v1/sources/{sourceId}/versions/{version}/knowledge/reindex": {
+      "post": {
+        "tags": [
+          "KnowledgeIntegration"
+        ],
+        "description": "نشست فعال، Context و SourceVersion دقیق در Backend بازبینی می‌شوند؛ Library بسته است. Feature Gate باید فعال باشد. ClientOperationId در body کلید intent است؛ Headerهای Operation/Payer مسیر Business AI برای این API استفاده نمی‌شوند. RAG از سهمیهٔ SimpleText موجود استفاده می‌کند؛ replay تکمیل‌شده409 است و پاسخ خصوصی ذخیره نمی‌شود. Citation مجوز نیست؛ پس از پاسخ نیز دسترسی دوباره بررسی می‌شود. Ingest و lifecycle به writer و ExpectedVersion جاری نیاز دارند.",
+        "operationId": "post_api_v1_sources_by_sourceId_versions_by_version_knowledge_reindex",
+        "parameters": [
+          {
+            "name": "sourceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "version",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/KnowledgeMutationCommand"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/KnowledgeMutationCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/KnowledgeMutationCommand"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "description": "Accepted",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/KnowledgeProcessingStatus"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/KnowledgeProcessingStatus"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/KnowledgeProcessingStatus"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "نشست نامعتبر.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            },
+            "x-error-codes": [
+              "AUTH_REQUIRED"
+            ]
+          },
+          "403": {
+            "description": "مجوز مدیریت منبع یا Entitlement تجاری وجود ندارد.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            },
+            "x-error-codes": [
+              "AUTH_FORBIDDEN"
+            ]
+          },
+          "404": {
+            "description": "منبع ناموجود یا خارج از دسترسی جاری؛ concealment.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "نسخه/intent/وضعیت پردازش یا سهمیه ناسازگار است.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "قرارداد Knowledge یا Query معتبر نیست.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "محدودیت درخواست حساب.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "502": {
+            "description": "پاسخ یا Citation معتبر و grounded نیست.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Feature یا dependency آماده نیست.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "مهلت HTTP یا polling تمام شده است؛ retry خودکار وجود ندارد.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "x-authentication": "bearer-session"
+      }
+    },
+    "/api/v1/ai/knowledge/retrieve": {
+      "post": {
+        "tags": [
+          "KnowledgeIntegration"
+        ],
+        "description": "نشست فعال، Context و SourceVersion دقیق در Backend بازبینی می‌شوند؛ Library بسته است. Feature Gate باید فعال باشد. ClientOperationId در body کلید intent است؛ Headerهای Operation/Payer مسیر Business AI برای این API استفاده نمی‌شوند. RAG از سهمیهٔ SimpleText موجود استفاده می‌کند؛ replay تکمیل‌شده409 است و پاسخ خصوصی ذخیره نمی‌شود. Citation مجوز نیست؛ پس از پاسخ نیز دسترسی دوباره بررسی می‌شود. Ingest و lifecycle به writer و ExpectedVersion جاری نیاز دارند.",
+        "operationId": "post_api_v1_ai_knowledge_retrieve",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/KnowledgeQueryCommand"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/KnowledgeQueryCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/KnowledgeQueryCommand"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/KnowledgeRetrieveResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/KnowledgeRetrieveResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/KnowledgeRetrieveResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "نشست نامعتبر.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            },
+            "x-error-codes": [
+              "AUTH_REQUIRED"
+            ]
+          },
+          "403": {
+            "description": "مجوز مدیریت منبع یا Entitlement تجاری وجود ندارد.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            },
+            "x-error-codes": [
+              "AUTH_FORBIDDEN"
+            ]
+          },
+          "404": {
+            "description": "منبع ناموجود یا خارج از دسترسی جاری؛ concealment.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "نسخه/intent/وضعیت پردازش یا سهمیه ناسازگار است.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "قرارداد Knowledge یا Query معتبر نیست.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "محدودیت درخواست حساب.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "502": {
+            "description": "پاسخ یا Citation معتبر و grounded نیست.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Feature یا dependency آماده نیست.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "مهلت HTTP یا polling تمام شده است؛ retry خودکار وجود ندارد.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "x-authentication": "bearer-session"
+      }
+    },
+    "/api/v1/ai/knowledge/rag/answer": {
+      "post": {
+        "tags": [
+          "KnowledgeIntegration"
+        ],
+        "description": "نشست فعال، Context و SourceVersion دقیق در Backend بازبینی می‌شوند؛ Library بسته است. Feature Gate باید فعال باشد. ClientOperationId در body کلید intent است؛ Headerهای Operation/Payer مسیر Business AI برای این API استفاده نمی‌شوند. RAG از سهمیهٔ SimpleText موجود استفاده می‌کند؛ replay تکمیل‌شده409 است و پاسخ خصوصی ذخیره نمی‌شود. Citation مجوز نیست؛ پس از پاسخ نیز دسترسی دوباره بررسی می‌شود. Ingest و lifecycle به writer و ExpectedVersion جاری نیاز دارند.",
+        "operationId": "post_api_v1_ai_knowledge_rag_answer",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/KnowledgeQueryCommand"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/KnowledgeQueryCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/KnowledgeQueryCommand"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/KnowledgeRagResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/KnowledgeRagResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/KnowledgeRagResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "نشست نامعتبر.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            },
+            "x-error-codes": [
+              "AUTH_REQUIRED"
+            ]
+          },
+          "403": {
+            "description": "مجوز مدیریت منبع یا Entitlement تجاری وجود ندارد.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            },
+            "x-error-codes": [
+              "AUTH_FORBIDDEN"
+            ]
+          },
+          "404": {
+            "description": "منبع ناموجود یا خارج از دسترسی جاری؛ concealment.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "نسخه/intent/وضعیت پردازش یا سهمیه ناسازگار است.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "قرارداد Knowledge یا Query معتبر نیست.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "محدودیت درخواست حساب.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "502": {
+            "description": "پاسخ یا Citation معتبر و grounded نیست.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Feature یا dependency آماده نیست.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "مهلت HTTP یا polling تمام شده است؛ retry خودکار وجود ندارد.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "x-authentication": "bearer-session"
+      }
+    },
     "/api/v1/conversations/{conversationId}/messages/{messageId}/reports": {
       "post": {
         "tags": [
@@ -44597,6 +46538,472 @@
             "x-error-codes": [
               "AUTH_FORBIDDEN"
             ]
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "x-authentication": "bearer-session"
+      }
+    },
+    "/api/v1/commerce/payment-attempts/{attemptId}": {
+      "get": {
+        "tags": [
+          "PaymentRecovery"
+        ],
+        "description": "\nنشست معتبر و مجوز جاری لازم است. سفارش شخصی فقط برای خریدار و سفارش سازمانی برای Manager سازمانِ Workspace جاری مجاز است. مبلغ ریال و شرایط از سفارش frozen می‌آیند. ProviderReference شناسهٔ trackId است و SettlementReference مرجع refNumber. وضعیت Order، PaymentAttempt و Fulfillment مستقل‌اند. Recovery فقط شناسهٔ تلاش را می‌پذیرد؛ Retry تسویه یا تحویل تکراری نمی‌سازد. تاریخچه حداکثر ۱۰۰ رخداد اخیر است و حذف نمی‌شود.",
+        "operationId": "get_api_v1_commerce_payment_attempts_by_attemptId",
+        "parameters": [
+          {
+            "name": "attemptId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaymentAttemptDetailsDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaymentAttemptDetailsDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaymentAttemptDetailsDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "PAYMENT_INVALID، PAYMENT_REFERENCE_INVALID",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            },
+            "x-error-codes": [
+              "AUTH_REQUIRED"
+            ]
+          },
+          "403": {
+            "description": "ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            },
+            "x-error-codes": [
+              "AUTH_FORBIDDEN"
+            ]
+          },
+          "404": {
+            "description": "PAYMENT_ATTEMPT_NOT_FOUND، ORDER_NOT_FOUND",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "PAYMENT_PENDING_VERIFICATION، PAYMENT_REFERENCE_CONFLICT، ORDER_NOT_PAYABLE، PAYMENT_IDEMPOTENCY_CONFLICT، ORDER_IDEMPOTENCY_CONFLICT",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "PAYMENT_PROVIDER_UNAVAILABLE",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "x-authentication": "bearer-session"
+      }
+    },
+    "/api/v1/commerce/payment-attempts/{attemptId}/verify": {
+      "post": {
+        "tags": [
+          "PaymentRecovery"
+        ],
+        "description": "\nنشست معتبر و مجوز جاری لازم است. سفارش شخصی فقط برای خریدار و سفارش سازمانی برای Manager سازمانِ Workspace جاری مجاز است. مبلغ ریال و شرایط از سفارش frozen می‌آیند. ProviderReference شناسهٔ trackId است و SettlementReference مرجع refNumber. وضعیت Order، PaymentAttempt و Fulfillment مستقل‌اند. Recovery فقط شناسهٔ تلاش را می‌پذیرد؛ Retry تسویه یا تحویل تکراری نمی‌سازد. تاریخچه حداکثر ۱۰۰ رخداد اخیر است و حذف نمی‌شود.",
+        "operationId": "post_api_v1_commerce_payment_attempts_by_attemptId_verify",
+        "parameters": [
+          {
+            "name": "attemptId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/VerifyPaymentResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VerifyPaymentResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VerifyPaymentResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "PAYMENT_INVALID، PAYMENT_REFERENCE_INVALID",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            },
+            "x-error-codes": [
+              "AUTH_REQUIRED"
+            ]
+          },
+          "403": {
+            "description": "ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            },
+            "x-error-codes": [
+              "AUTH_FORBIDDEN"
+            ]
+          },
+          "404": {
+            "description": "PAYMENT_ATTEMPT_NOT_FOUND، ORDER_NOT_FOUND",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "PAYMENT_PENDING_VERIFICATION، PAYMENT_REFERENCE_CONFLICT، ORDER_NOT_PAYABLE، PAYMENT_IDEMPOTENCY_CONFLICT، ORDER_IDEMPOTENCY_CONFLICT",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "PAYMENT_RATE_LIMITED",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "PAYMENT_PROVIDER_UNAVAILABLE",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "x-authentication": "bearer-session"
+      }
+    },
+    "/api/v1/commerce/orders/{orderId}/receipt": {
+      "get": {
+        "tags": [
+          "PaymentRecovery"
+        ],
+        "description": "\nنشست معتبر و مجوز جاری لازم است. سفارش شخصی فقط برای خریدار و سفارش سازمانی برای Manager سازمانِ Workspace جاری مجاز است. مبلغ ریال و شرایط از سفارش frozen می‌آیند. ProviderReference شناسهٔ trackId است و SettlementReference مرجع refNumber. وضعیت Order، PaymentAttempt و Fulfillment مستقل‌اند. Recovery فقط شناسهٔ تلاش را می‌پذیرد؛ Retry تسویه یا تحویل تکراری نمی‌سازد. تاریخچه حداکثر ۱۰۰ رخداد اخیر است و حذف نمی‌شود.",
+        "operationId": "get_api_v1_commerce_orders_by_orderId_receipt",
+        "parameters": [
+          {
+            "name": "orderId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaymentReceiptDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaymentReceiptDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaymentReceiptDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "PAYMENT_INVALID، PAYMENT_REFERENCE_INVALID",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            },
+            "x-error-codes": [
+              "AUTH_REQUIRED"
+            ]
+          },
+          "403": {
+            "description": "ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            },
+            "x-error-codes": [
+              "AUTH_FORBIDDEN"
+            ]
+          },
+          "404": {
+            "description": "PAYMENT_ATTEMPT_NOT_FOUND، ORDER_NOT_FOUND",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "PAYMENT_PENDING_VERIFICATION، PAYMENT_REFERENCE_CONFLICT، ORDER_NOT_PAYABLE، PAYMENT_IDEMPOTENCY_CONFLICT، ORDER_IDEMPOTENCY_CONFLICT",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "PAYMENT_PROVIDER_UNAVAILABLE",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "x-authentication": "bearer-session"
+      }
+    },
+    "/api/v1/commerce/personal/orders/{orderId}/receipt": {
+      "get": {
+        "tags": [
+          "PaymentRecovery"
+        ],
+        "description": "\nنشست معتبر و مجوز جاری لازم است. سفارش شخصی فقط برای خریدار و سفارش سازمانی برای Manager سازمانِ Workspace جاری مجاز است. مبلغ ریال و شرایط از سفارش frozen می‌آیند. ProviderReference شناسهٔ trackId است و SettlementReference مرجع refNumber. وضعیت Order، PaymentAttempt و Fulfillment مستقل‌اند. Recovery فقط شناسهٔ تلاش را می‌پذیرد؛ Retry تسویه یا تحویل تکراری نمی‌سازد. تاریخچه حداکثر ۱۰۰ رخداد اخیر است و حذف نمی‌شود.",
+        "operationId": "get_api_v1_commerce_personal_orders_by_orderId_receipt",
+        "parameters": [
+          {
+            "name": "orderId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaymentReceiptDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaymentReceiptDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaymentReceiptDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "PAYMENT_INVALID، PAYMENT_REFERENCE_INVALID",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            },
+            "x-error-codes": [
+              "AUTH_REQUIRED"
+            ]
+          },
+          "403": {
+            "description": "ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            },
+            "x-error-codes": [
+              "AUTH_FORBIDDEN"
+            ]
+          },
+          "404": {
+            "description": "PAYMENT_ATTEMPT_NOT_FOUND، ORDER_NOT_FOUND",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "PAYMENT_PENDING_VERIFICATION، PAYMENT_REFERENCE_CONFLICT، ORDER_NOT_PAYABLE، PAYMENT_IDEMPOTENCY_CONFLICT، ORDER_IDEMPOTENCY_CONFLICT",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "PAYMENT_PROVIDER_UNAVAILABLE",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
           }
         },
         "security": [
@@ -78405,6 +80812,122 @@
         ],
         "x-authentication": "bearer-session"
       }
+    },
+    "/api/integrations/v1/commerce/payments/zibal/callback": {
+      "get": {
+        "tags": [
+          "ZibalCallback"
+        ],
+        "summary": "بازگشت زیبال و بررسی معتبر پرداخت",
+        "description": "\nCallback عمومی GET فقط محرک Verify سمت سرور است؛ success/status مجوز تسویه نیستند. orderId شناسهٔ N-format تلاش پرداخت است. حتی callback لغو بررسی می‌شود. پاسخ 303 فقط شناسه‌ها را به ClientReturnUrl ثابت و allowlisted برمی‌گرداند؛ کلاینت باید API وضعیتِ دارای نشست را بخواند.",
+        "operationId": "get_api_integrations_v1_commerce_payments_zibal_callback",
+        "parameters": [
+          {
+            "name": "orderId",
+            "in": "query",
+            "description": "شناسهٔ PaymentAttempt با ۳۲ نویسهٔ N-format؛ Order.Id نیست.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "trackId",
+            "in": "query",
+            "description": "Int64 مثبت به‌شکل رشتهٔ ده‌دهی؛ با تلاش ثبت‌شده تطبیق داده می‌شود.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "success",
+            "in": "query",
+            "description": "فقط 0 یا 1؛ hint غیرقابل اعتماد.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "وضعیت گزارش‌شدهٔ callback؛ اثبات پرداخت نیست.",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "303": {
+            "description": "بازگشت به آدرس ثابت؛ بدون ادعای موفقیت پرداخت.",
+            "headers": {
+              "Location": {
+                "description": "آدرس allowlisted با orderId و paymentAttemptId",
+                "schema": {
+                  "type": "string",
+                  "format": "uri"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "PAYMENT_INVALID، PAYMENT_REFERENCE_INVALID",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "PAYMENT_ATTEMPT_NOT_FOUND، ORDER_NOT_FOUND",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "PAYMENT_PENDING_VERIFICATION، PAYMENT_REFERENCE_CONFLICT، ORDER_NOT_PAYABLE، PAYMENT_IDEMPOTENCY_CONFLICT، ORDER_IDEMPOTENCY_CONFLICT",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "PAYMENT_RATE_LIMITED",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "PAYMENT_PROVIDER_UNAVAILABLE",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakanProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {}
+        ],
+        "x-authentication": "anonymous"
+      }
     }
   },
   "components": {
@@ -78720,6 +81243,14 @@
           "PersonalClass"
         ],
         "type": "string"
+      },
+      "AcademicClassKind2": {
+        "enum": [
+          "OrganizationClass",
+          "PersonalClass"
+        ],
+        "type": "string",
+        "default": "OrganizationClass"
       },
       "AcademicClassRefDto": {
         "required": [
@@ -82522,6 +85053,31 @@
           "Expired"
         ],
         "type": "string"
+      },
+      "ConversationListFilter": {
+        "enum": [
+          "All",
+          "Direct",
+          "Group",
+          "Channel",
+          "Unread",
+          "Archived",
+          "Saved"
+        ],
+        "type": "string"
+      },
+      "ConversationListFilter2": {
+        "enum": [
+          "All",
+          "Direct",
+          "Group",
+          "Channel",
+          "Unread",
+          "Archived",
+          "Saved"
+        ],
+        "type": "string",
+        "default": "All"
       },
       "ConversationManagementPolicy": {
         "enum": [
@@ -87522,6 +90078,320 @@
           }
         }
       },
+      "KnowledgeCitation": {
+        "required": [
+          "sourceId",
+          "version",
+          "chunkId",
+          "title",
+          "pageStart",
+          "pageEnd",
+          "sectionTitle",
+          "quotePreview"
+        ],
+        "type": "object",
+        "properties": {
+          "sourceId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "version": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "chunkId": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "pageStart": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "pageEnd": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "sectionTitle": {
+            "type": "string",
+            "nullable": true
+          },
+          "quotePreview": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "KnowledgeMutationCommand": {
+        "required": [
+          "clientOperationId",
+          "expectedVersion",
+          "reason"
+        ],
+        "type": "object",
+        "properties": {
+          "clientOperationId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "expectedVersion": {
+            "type": "string"
+          },
+          "reason": {
+            "type": "string"
+          },
+          "payer": {
+            "$ref": "#/components/schemas/NullableOfAiPayerSelection"
+          }
+        }
+      },
+      "KnowledgeProcessingStatus": {
+        "required": [
+          "sourceId",
+          "version",
+          "state",
+          "updatedAtUtc"
+        ],
+        "type": "object",
+        "properties": {
+          "sourceId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "version": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "state": {
+            "enum": [
+              "NotIngested",
+              "Queued",
+              "Extracting",
+              "OCR",
+              "Normalizing",
+              "Chunking",
+              "Embedding",
+              "Indexing",
+              "Ready",
+              "ExtractFailed",
+              "OcrFailed",
+              "ChunkFailed",
+              "EmbeddingFailed",
+              "IndexFailed",
+              "Superseded",
+              "Deleted",
+              "ReindexRequired"
+            ],
+            "type": "string"
+          },
+          "updatedAtUtc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "readyAtUtc": {
+            "type": "string",
+            "format": "date-time",
+            "default": null,
+            "nullable": true
+          },
+          "failureCode": {
+            "type": "string",
+            "default": null,
+            "nullable": true
+          },
+          "retryable": {
+            "type": "boolean",
+            "default": false
+          }
+        }
+      },
+      "KnowledgeQueryCommand": {
+        "required": [
+          "clientOperationId",
+          "query",
+          "sources"
+        ],
+        "type": "object",
+        "properties": {
+          "clientOperationId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "query": {
+            "maxLength": 4000,
+            "minLength": 1,
+            "type": "string"
+          },
+          "sources": {
+            "maxItems": 32,
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/KnowledgeSourceVersion"
+            }
+          },
+          "maxResults": {
+            "maximum": 20,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32",
+            "default": 8
+          },
+          "includeQuotePreview": {
+            "type": "boolean",
+            "default": false
+          },
+          "language": {
+            "type": "string",
+            "default": "fa"
+          },
+          "payer": {
+            "$ref": "#/components/schemas/NullableOfAiPayerSelection"
+          }
+        }
+      },
+      "KnowledgeRagClaim": {
+        "required": [
+          "text",
+          "citations"
+        ],
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string"
+          },
+          "citations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/KnowledgeCitation"
+            }
+          }
+        }
+      },
+      "KnowledgeRagResponse": {
+        "required": [
+          "requestId",
+          "correlationId",
+          "status",
+          "answer",
+          "claims",
+          "citations"
+        ],
+        "type": "object",
+        "properties": {
+          "requestId": {
+            "type": "string"
+          },
+          "correlationId": {
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "Ok",
+              "InsufficientEvidence"
+            ],
+            "type": "string"
+          },
+          "answer": {
+            "type": "string"
+          },
+          "claims": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/KnowledgeRagClaim"
+            }
+          },
+          "citations": {
+            "type": "array",
+            "items": {}
+          }
+        }
+      },
+      "KnowledgeRetrieveResponse": {
+        "required": [
+          "requestId",
+          "correlationId",
+          "status",
+          "results"
+        ],
+        "type": "object",
+        "properties": {
+          "requestId": {
+            "type": "string"
+          },
+          "correlationId": {
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "Ok",
+              "Empty"
+            ],
+            "type": "string"
+          },
+          "results": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/KnowledgeRetrieveResult"
+            }
+          }
+        }
+      },
+      "KnowledgeRetrieveResult": {
+        "required": [
+          "sourceId",
+          "version",
+          "rank",
+          "chunkId",
+          "text",
+          "citation"
+        ],
+        "type": "object",
+        "properties": {
+          "sourceId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "version": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "rank": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "chunkId": {
+            "type": "string"
+          },
+          "text": {
+            "type": "string"
+          },
+          "citation": {
+            "$ref": "#/components/schemas/KnowledgeCitation"
+          }
+        }
+      },
+      "KnowledgeSourceVersion": {
+        "required": [
+          "sourceId",
+          "version"
+        ],
+        "type": "object",
+        "properties": {
+          "sourceId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "version": {
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
       "LessonAttachmentResult": {
         "required": [
           "fileAssetId",
@@ -90362,6 +93232,28 @@
           }
         }
       },
+      "PaymentAttemptDetailsDto": {
+        "required": [
+          "order",
+          "paymentAttempt",
+          "history"
+        ],
+        "type": "object",
+        "properties": {
+          "order": {
+            "$ref": "#/components/schemas/OrderDto"
+          },
+          "paymentAttempt": {
+            "$ref": "#/components/schemas/PaymentAttemptDto"
+          },
+          "history": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PaymentHistoryDto"
+            }
+          }
+        }
+      },
       "PaymentAttemptDto": {
         "required": [
           "paymentAttemptId",
@@ -90409,8 +93301,44 @@
             "type": "string",
             "format": "date-time",
             "nullable": true
+          },
+          "settlementReference": {
+            "type": "string",
+            "nullable": true
+          },
+          "failureCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "callbackReceivedAtUtc": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "providerPaidAtUtc": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "verifiedAtUtc": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
           }
         }
+      },
+      "PaymentAttemptEventType": {
+        "enum": [
+          "Created",
+          "InitiationStarted",
+          "InitiationCompleted",
+          "CallbackReceived",
+          "VerificationCompleted",
+          "InquiryCompleted",
+          "SettlementReplayed",
+          "InitiationUncertain"
+        ],
+        "type": "string"
       },
       "PaymentAttemptStatus": {
         "enum": [
@@ -90420,6 +93348,148 @@
           "Succeeded",
           "Failed",
           "Unknown"
+        ],
+        "type": "string"
+      },
+      "PaymentHistoryDto": {
+        "required": [
+          "eventId",
+          "type",
+          "occurredAtUtc",
+          "providerResult",
+          "providerStatus",
+          "errorCode",
+          "correlationId"
+        ],
+        "type": "object",
+        "properties": {
+          "eventId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "type": {
+            "$ref": "#/components/schemas/PaymentAttemptEventType"
+          },
+          "occurredAtUtc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "providerResult": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "providerStatus": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "errorCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "correlationId": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "PaymentReceiptDto": {
+        "required": [
+          "orderId",
+          "purchaserUserId",
+          "organizationId",
+          "planVersionId",
+          "productTitle",
+          "amount",
+          "currency",
+          "paidAtUtc",
+          "fulfillmentState",
+          "provider",
+          "providerReference",
+          "settlementReference",
+          "providerPaidAtUtc",
+          "purpose",
+          "billingAnchorUtc",
+          "billingPeriodIndex"
+        ],
+        "type": "object",
+        "properties": {
+          "orderId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "purchaserUserId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "organizationId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "planVersionId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "productTitle": {
+            "type": "string",
+            "nullable": true
+          },
+          "amount": {
+            "type": "number",
+            "format": "double"
+          },
+          "currency": {
+            "type": "string"
+          },
+          "paidAtUtc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "fulfillmentState": {
+            "$ref": "#/components/schemas/OrderFulfillmentState"
+          },
+          "provider": {
+            "type": "string",
+            "nullable": true
+          },
+          "providerReference": {
+            "type": "string",
+            "nullable": true
+          },
+          "settlementReference": {
+            "type": "string",
+            "nullable": true
+          },
+          "providerPaidAtUtc": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "purpose": {
+            "$ref": "#/components/schemas/CommercialOrderPurpose2"
+          },
+          "billingAnchorUtc": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "billingPeriodIndex": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "PaymentVerificationStatus": {
+        "enum": [
+          "Settled",
+          "AlreadySettled",
+          "Failed",
+          "Unknown",
+          "AmountMismatch",
+          "CurrencyMismatch",
+          "ReferenceConflict"
         ],
         "type": "string"
       },
@@ -93041,6 +96111,9 @@
           },
           "payment": {
             "$ref": "#/components/schemas/PlatformPaymentItem"
+          },
+          "fulfillmentState": {
+            "$ref": "#/components/schemas/OrderFulfillmentState"
           }
         }
       },
@@ -93411,6 +96484,15 @@
           "failureCode": {
             "type": "string",
             "nullable": true
+          },
+          "maskedSettlementReference": {
+            "type": "string",
+            "nullable": true
+          },
+          "callbackReceivedAtUtc": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
           }
         }
       },
@@ -93450,6 +96532,15 @@
           "paidAtUtc": {
             "type": "string",
             "format": "date-time"
+          },
+          "maskedSettlementReference": {
+            "type": "string",
+            "nullable": true
+          },
+          "providerPaidAtUtc": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
           }
         },
         "nullable": true
@@ -100355,6 +103446,25 @@
           }
         }
       },
+      "VerifyPaymentResult": {
+        "required": [
+          "status",
+          "order",
+          "paymentAttempt"
+        ],
+        "type": "object",
+        "properties": {
+          "status": {
+            "$ref": "#/components/schemas/PaymentVerificationStatus"
+          },
+          "order": {
+            "$ref": "#/components/schemas/OrderDto"
+          },
+          "paymentAttempt": {
+            "$ref": "#/components/schemas/PaymentAttemptDto"
+          }
+        }
+      },
       "VoteConversationPollCommand": {
         "required": [
           "optionNumbers"
@@ -100590,6 +103700,9 @@
       "name": "Invitations"
     },
     {
+      "name": "KnowledgeIntegration"
+    },
+    {
       "name": "MessageReports"
     },
     {
@@ -100627,6 +103740,9 @@
     },
     {
       "name": "OrganizationPeople"
+    },
+    {
+      "name": "PaymentRecovery"
     },
     {
       "name": "People"
@@ -100738,10 +103854,13 @@
     },
     {
       "name": "Workspaces"
+    },
+    {
+      "name": "ZibalCallback"
     }
   ],
   "x-makan-snapshot": {
-    "date": "2026-11-05",
+    "date": "2026-11-10",
     "origin": "http://94.184.32.84:8090"
   }
 }

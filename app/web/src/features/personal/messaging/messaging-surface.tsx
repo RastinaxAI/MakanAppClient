@@ -1,3 +1,4 @@
+import { uiClass } from '@/components/v5/classes';
 import type { ReactNode } from 'react';
 import t from './messaging-theme.module.css';
 
@@ -5,12 +6,17 @@ import t from './messaging-theme.module.css';
 export function MessagingSurface({
   children,
   className = '',
+  full = false,
 }: {
   children: ReactNode;
   className?: string;
+  full?: boolean;
 }) {
   return (
-    <div className={`${t.theme} ${t.page} ${className}`} data-messaging-surface>
+    <div
+      className={uiClass(`${t.theme} ${full ? '' : t.page} ${className}`)}
+      data-messaging-surface
+    >
       {children}
     </div>
   );

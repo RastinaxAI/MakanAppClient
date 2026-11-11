@@ -1,0 +1,435 @@
+{
+  "reviewDate": "2026-11-10",
+  "timezone": "Asia/Tehran",
+  "createdAt": "2026-11-10T03:32:20.739788+00:00",
+  "backend": "http://94.184.32.84:8090",
+  "clientOrigin": "http://127.0.0.1:3131",
+  "clientRuntime": "Real Next.js development runtime with independent cookie; no fixture or atlas runtime",
+  "credentialsRecorded": false,
+  "sourceBaseProductionBuild": "u0qJCx7QXBy7KRHVFgtAV",
+  "cases": [
+    {
+      "accountLabel": "Student",
+      "auth": [
+        {
+          "operation": "challenge",
+          "status": 202
+        },
+        {
+          "operation": "verify",
+          "status": 200
+        },
+        {
+          "operation": "logout",
+          "status": 204
+        }
+      ],
+      "personalSubscription": {
+        "httpStatuses": [],
+        "observedUI": "بدون اشتراک",
+        "observationSource": "Authenticated production UI on 3130; HTTP status not captured in the temporary 3131 log."
+      },
+      "sourceUpload": {
+        "status": 201,
+        "uiState": "Ready",
+        "uploads": 1,
+        "declaredSyntheticNonpersonalContent": true
+      },
+      "sourceRegistration": {
+        "operation": "/api/v1/sources",
+        "status": 409,
+        "code": "SUBSCRIPTION_INACTIVE",
+        "attempts": 1,
+        "sourceCreated": false,
+        "scope": "Personal"
+      },
+      "personalChat": {
+        "operation": "/api/v1/ai/chat",
+        "status": 403,
+        "code": "AI_CONTEXT_NOT_ALLOWED",
+        "quotaPreflightStatus": 200,
+        "payer": "FreeTrial",
+        "attempts": 1,
+        "answerAccepted": false
+      },
+      "organizationChat": {
+        "operation": "/api/v1/ai/chat",
+        "status": 503,
+        "code": "AI_SERVICE_UNAVAILABLE",
+        "quotaPreflightStatus": 200,
+        "payer": "FreeTrial",
+        "attempts": 1,
+        "answerAccepted": false,
+        "selectedMembershipVerifiedInUI": true,
+        "selectedRole": "Student"
+      }
+    },
+    {
+      "accountLabel": "Teacher",
+      "auth": [
+        {
+          "operation": "challenge",
+          "status": 202
+        },
+        {
+          "operation": "verify",
+          "status": 200
+        },
+        {
+          "operation": "logout",
+          "status": 204
+        }
+      ],
+      "personalSubscription": {
+        "httpStatuses": [
+          200
+        ],
+        "observedUI": "بدون اشتراک",
+        "observationSource": "Authenticated UI and temporary-runtime request status log."
+      },
+      "sourceUpload": {
+        "status": 201,
+        "uiState": "Ready",
+        "uploads": 1,
+        "declaredSyntheticNonpersonalContent": true
+      },
+      "sourceRegistration": {
+        "operation": "/api/v1/sources",
+        "status": 409,
+        "code": "SUBSCRIPTION_INACTIVE",
+        "attempts": 1,
+        "sourceCreated": false,
+        "scope": "Personal"
+      },
+      "personalChat": {
+        "operation": "/api/v1/ai/chat",
+        "status": 403,
+        "code": "AI_CONTEXT_NOT_ALLOWED",
+        "quotaPreflightStatus": 200,
+        "payer": "FreeTrial",
+        "attempts": 1,
+        "answerAccepted": false
+      },
+      "organizationChat": {
+        "operation": "/api/v1/ai/chat",
+        "status": 503,
+        "code": "AI_SERVICE_UNAVAILABLE",
+        "quotaPreflightStatus": 200,
+        "payer": "FreeTrial",
+        "attempts": 1,
+        "answerAccepted": false,
+        "selectedMembershipVerifiedInUI": true,
+        "selectedRole": "Teacher"
+      }
+    },
+    {
+      "accountLabel": "Parent",
+      "auth": [
+        {
+          "operation": "challenge",
+          "status": 202
+        },
+        {
+          "operation": "verify",
+          "status": 200
+        },
+        {
+          "operation": "logout",
+          "status": 204
+        }
+      ],
+      "personalSubscription": {
+        "httpStatuses": [
+          200
+        ],
+        "observedUI": "بدون اشتراک",
+        "observationSource": "Authenticated UI and temporary-runtime request status log."
+      },
+      "sourceUpload": {
+        "status": 201,
+        "uiState": "Ready",
+        "uploads": 1,
+        "declaredSyntheticNonpersonalContent": true
+      },
+      "sourceRegistration": {
+        "operation": "/api/v1/sources",
+        "status": 409,
+        "code": "SUBSCRIPTION_INACTIVE",
+        "attempts": 1,
+        "sourceCreated": false,
+        "scope": "Personal"
+      },
+      "personalChat": {
+        "operation": "/api/v1/ai/chat",
+        "status": 403,
+        "code": "AI_CONTEXT_NOT_ALLOWED",
+        "quotaPreflightStatus": 200,
+        "payer": "FreeTrial",
+        "attempts": 1,
+        "answerAccepted": false
+      },
+      "organizationChat": {
+        "operation": "/api/v1/ai/chat",
+        "status": 503,
+        "code": "AI_SERVICE_UNAVAILABLE",
+        "quotaPreflightStatus": 200,
+        "payer": "FreeTrial",
+        "attempts": 1,
+        "answerAccepted": false,
+        "selectedMembershipVerifiedInUI": true,
+        "selectedRole": "Parent"
+      }
+    },
+    {
+      "accountLabel": "Manager",
+      "auth": [
+        {
+          "operation": "challenge",
+          "status": 202
+        },
+        {
+          "operation": "verify",
+          "status": 200
+        },
+        {
+          "operation": "logout",
+          "status": 204
+        }
+      ],
+      "personalSubscription": {
+        "httpStatuses": [
+          200
+        ],
+        "observedUI": "بدون اشتراک",
+        "observationSource": "Authenticated UI and temporary-runtime request status log."
+      },
+      "sourceUpload": {
+        "status": 201,
+        "uiState": "Ready",
+        "uploads": 1,
+        "declaredSyntheticNonpersonalContent": true
+      },
+      "sourceRegistration": {
+        "operation": "/api/v1/sources",
+        "status": 409,
+        "code": "SUBSCRIPTION_INACTIVE",
+        "attempts": 1,
+        "sourceCreated": false,
+        "scope": "Personal"
+      },
+      "personalChat": {
+        "operation": "/api/v1/ai/chat",
+        "status": 403,
+        "code": "AI_CONTEXT_NOT_ALLOWED",
+        "quotaPreflightStatus": 200,
+        "payer": "FreeTrial",
+        "attempts": 1,
+        "answerAccepted": false
+      },
+      "organizationChat": {
+        "operation": "/api/v1/ai/chat",
+        "status": 503,
+        "code": "AI_SERVICE_UNAVAILABLE",
+        "quotaPreflightStatus": 200,
+        "payer": "FreeTrial",
+        "attempts": 1,
+        "answerAccepted": false,
+        "selectedMembershipVerifiedInUI": true,
+        "selectedRole": "Manager"
+      }
+    }
+  ],
+  "organizationSubscription": {
+    "accountLabel": "Manager",
+    "selectedRole": "Manager",
+    "observedUI": "بدون اشتراک",
+    "catalogUI": "پلنی برای خرید عرضه نشده است",
+    "screenshot": "output/review/integration-6f8edf8/four-roles/Manager-organization-subscription.jpg",
+    "httpStatuses": [
+      200
+    ]
+  },
+  "uploadsThisRun": 4,
+  "sourceRegistrationsAccepted": 0,
+  "answersAccepted": 0,
+  "realRagVerified": false,
+  "intentPolicy": "One request per account/context, explicit FreeTrial, no automatic payer fallback or POST retry.",
+  "testAssets": "Acknowledged synthetic Test uploads remain unattached after source-create rejection; no server deletion attempted.",
+  "notPerformed": [
+    "Source create success, version/publication and Knowledge ingestion",
+    "Retrieval/RAG with live citations",
+    "Role-specific business AI endpoints beyond common Chat",
+    "Purchase, entitlement mutation or permission bypass",
+    "Public deployment or full PDF parity verification"
+  ],
+  "logoutFix": {
+    "rawLiveRecheck": {
+      "role": "Manager",
+      "phoneFormVisible": true,
+      "expiryDialogCount": 0,
+      "dismissalAttempted": false,
+      "source": "Raw UI logout; no conditional dialog closing"
+    },
+    "recheckAuth": [
+      {
+        "operation": "challenge",
+        "status": 202
+      },
+      {
+        "operation": "verify",
+        "status": 200
+      },
+      {
+        "operation": "logout",
+        "status": 204
+      },
+      {
+        "operation": "challenge",
+        "status": 202
+      },
+      {
+        "operation": "verify",
+        "status": 200
+      },
+      {
+        "operation": "logout",
+        "status": 204
+      }
+    ],
+    "preliminaryProbeExcluded": true,
+    "excludedReason": "The generic helper could dismiss the expiry dialog; its first probe was not accepted as proof. The raw probe never attempted dismissal.",
+    "originalStudentSessionPreserved": true,
+    "originalPendingStudentRequestPreservedAfterProductionRestart": true
+  },
+  "screenshots": [
+    {
+      "path": "output/review/integration-6f8edf8/four-roles/Manager-Organization-assistant.jpg",
+      "sha256": "79756aab961866eac0a96d098a6f3e362959063d1451e1f9bf8f28ff768da5a4",
+      "syntheticFixture": false,
+      "excludedFromVerification": false
+    },
+    {
+      "path": "output/review/integration-6f8edf8/four-roles/Manager-Personal-assistant.jpg",
+      "sha256": "6c8bccffe8eedf0b2d358af633b105280f09d72bd156318baaa5aa0df7eb7635",
+      "syntheticFixture": false,
+      "excludedFromVerification": false
+    },
+    {
+      "path": "output/review/integration-6f8edf8/four-roles/Manager-organization-subscription.jpg",
+      "sha256": "eecb5c0e2e819ebab4c29afd440a0b392844d4b0ddd964c70dbf669b09fa8b7e",
+      "syntheticFixture": false,
+      "excludedFromVerification": false
+    },
+    {
+      "path": "output/review/integration-6f8edf8/four-roles/Manager-personal-subscription.jpg",
+      "sha256": "0cfe8bf383a7774a959f04165ec575bd7e1eced5852aae8935eb90be98e7ca20",
+      "syntheticFixture": false,
+      "excludedFromVerification": false
+    },
+    {
+      "path": "output/review/integration-6f8edf8/four-roles/Manager-source-result.jpg",
+      "sha256": "d51ee49dd0718724d4bb716f343b8e30ba550f29c5c13633661f8647762df39f",
+      "syntheticFixture": false,
+      "excludedFromVerification": false
+    },
+    {
+      "path": "output/review/integration-6f8edf8/four-roles/Parent-Organization-assistant.jpg",
+      "sha256": "12b88e53be9fa3cc69627ffa7a3519a7a62630724bd67b7ed00115573ace7935",
+      "syntheticFixture": false,
+      "excludedFromVerification": false
+    },
+    {
+      "path": "output/review/integration-6f8edf8/four-roles/Parent-Personal-assistant.jpg",
+      "sha256": "bf5eff09ede56c451fac77a87efc5ff945aa1afeddfce41f35f4a88fb497a2c3",
+      "syntheticFixture": false,
+      "excludedFromVerification": false
+    },
+    {
+      "path": "output/review/integration-6f8edf8/four-roles/Parent-personal-subscription.jpg",
+      "sha256": "90d09fa869124d8840187559ad806d9c4bba5952592f48582ff6afb6df0a2ef8",
+      "syntheticFixture": false,
+      "excludedFromVerification": false
+    },
+    {
+      "path": "output/review/integration-6f8edf8/four-roles/Parent-source-result.jpg",
+      "sha256": "62b1fc53d21db4ed7aeb779a9d90f079e856474d2a91db760d3f36913433703c",
+      "syntheticFixture": false,
+      "excludedFromVerification": false
+    },
+    {
+      "path": "output/review/integration-6f8edf8/four-roles/Student-Organization-assistant.jpg",
+      "sha256": "95046f41675fa15f67ffb59c8c4d78570907ed7de67d6f47c6e839ac236bcd61",
+      "syntheticFixture": false,
+      "excludedFromVerification": false
+    },
+    {
+      "path": "output/review/integration-6f8edf8/four-roles/Student-personal-assistant.jpg",
+      "sha256": "b599306e2adc817acb7db582426318983084a232a3f41241c763c42cc76a2d64",
+      "syntheticFixture": false,
+      "excludedFromVerification": false
+    },
+    {
+      "path": "output/review/integration-6f8edf8/four-roles/Student-personal-subscription.jpg",
+      "sha256": "eabb9de843790ee033f237b36263b2ac4b58ef015d7b027152a96d200260e252",
+      "syntheticFixture": false,
+      "excludedFromVerification": false
+    },
+    {
+      "path": "output/review/integration-6f8edf8/four-roles/Student-source-result.jpg",
+      "sha256": "995b2249772a8f269a8afa2af91df2dfa33aa274063d75fb4fda2eebd800a964",
+      "syntheticFixture": false,
+      "excludedFromVerification": false
+    },
+    {
+      "path": "output/review/integration-6f8edf8/four-roles/Teacher-Organization-assistant.jpg",
+      "sha256": "b81f06e82055fe3b7f182e3d2d050c46e355cf409653972768525dc6643b8e09",
+      "syntheticFixture": false,
+      "excludedFromVerification": false
+    },
+    {
+      "path": "output/review/integration-6f8edf8/four-roles/Teacher-Personal-assistant.jpg",
+      "sha256": "f868c0ce027efb0176d555cbe5312a76c9528957e12753a9987626ed9887c421",
+      "syntheticFixture": false,
+      "excludedFromVerification": false
+    },
+    {
+      "path": "output/review/integration-6f8edf8/four-roles/Teacher-personal-subscription.jpg",
+      "sha256": "ec56c755e3613c28027d500ccff6c24da5c7757784bfa333ee5298ca1f0dab4e",
+      "syntheticFixture": false,
+      "excludedFromVerification": false
+    },
+    {
+      "path": "output/review/integration-6f8edf8/four-roles/Teacher-source-result.jpg",
+      "sha256": "d4beea8d63f871473b51d653eb3ad1b7f3c6059d4a6718d318c62b8d0a1cf6be",
+      "syntheticFixture": false,
+      "excludedFromVerification": false
+    },
+    {
+      "path": "output/review/integration-6f8edf8/four-roles/explicit-logout-after-excluded.jpg",
+      "sha256": "d0bf97064d1f0feee93c57bafb23bf54d6c26d1f6f74df7ac55edc37c289b840",
+      "syntheticFixture": false,
+      "excludedFromVerification": true
+    },
+    {
+      "path": "output/review/integration-6f8edf8/four-roles/explicit-logout-after.jpg",
+      "sha256": "d0bf97064d1f0feee93c57bafb23bf54d6c26d1f6f74df7ac55edc37c289b840",
+      "syntheticFixture": false,
+      "excludedFromVerification": false
+    },
+    {
+      "path": "output/review/integration-6f8edf8/four-roles/explicit-logout-resume-before.jpg",
+      "sha256": "d30330764501807015e185489da8a3ad9385adda47236dbb477744f8c83e06c7",
+      "syntheticFixture": false,
+      "excludedFromVerification": false
+    },
+    {
+      "path": "output/review/integration-6f8edf8/four-roles/original-Student-preserved-after-auth-fix.jpg",
+      "sha256": "2c9eca2568f993f76e58a110a9123ee0a05ad1968bbbae755c31684d33cc696a",
+      "syntheticFixture": false,
+      "excludedFromVerification": false
+    }
+  ],
+  "uiReceipt": "output/review/integration-6f8edf8/four-roles/ui-results.json",
+  "operatorReceipt": "tmp/current-review/four-role-stages.json",
+  "report": "docs/integration/20261110-four-role-live.md"
+}

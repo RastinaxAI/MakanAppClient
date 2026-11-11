@@ -1,4 +1,8 @@
 'use client';
+import { Input as NativeInput } from '@/components/ui/input';
+
+import { uiClass } from '@/components/v5/classes';
+
 import * as uiText from '@/content/fa';
 import { useState } from 'react';
 import {
@@ -40,9 +44,9 @@ export function InvitationsPage() {
     [filter, setFilter] = useState('all');
   const rows = q.data?.filter((i) => filter === 'all' || invitationStatus(i) === filter);
   return (
-    <div className={s.page}>
-      <header className={s.pageHeader}>
-        <span className={s.pageIcon} aria-hidden="true">
+    <div className={uiClass(s.page)}>
+      <header className={uiClass(s.pageHeader)}>
+        <span className={uiClass(s.pageIcon)} aria-hidden="true">
           <MailOpen size={24} />
         </span>
         <div>
@@ -60,8 +64,8 @@ export function InvitationsPage() {
           <RefreshCw size={18} />
         </Button>
       </header>
-      <section className={s.panel} aria-label={uiText.text_ae57af37bd8e}>
-        <nav className={s.filters} aria-label={uiText.text_d153e2c3035c}>
+      <section className={uiClass(s.panel)} aria-label={uiText.text_ae57af37bd8e}>
+        <nav className={uiClass(s.filters)} aria-label={uiText.text_d153e2c3035c}>
           {filters.map(([key, title]) => (
             <button
               type="button"
@@ -71,7 +75,7 @@ export function InvitationsPage() {
             >
               <span>{title}</span>
               {q.isSuccess && (
-                <span className={s.count} aria-hidden="true">
+                <span className={uiClass(s.count)} aria-hidden="true">
                   {number(
                     q.data.filter((i) => key === 'all' || invitationStatus(i) === key).length,
                   )}
@@ -80,8 +84,8 @@ export function InvitationsPage() {
             </button>
           ))}
         </nav>
-        <div className={s.results}>
-          <div className={s.resultsHeading}>
+        <div className={uiClass(s.results)}>
+          <div className={uiClass(s.resultsHeading)}>
             <h2>
               {filter === 'all'
                 ? uiText.text_d4b0fea5ef5e
@@ -99,14 +103,14 @@ export function InvitationsPage() {
           ) : q.isError ? (
             <ErrorState error={q.error} onRetry={() => void q.refetch()} />
           ) : rows?.length ? (
-            <div className={s.list}>
+            <div className={uiClass(s.list)}>
               {rows.map((i) => (
                 <InvitationCard key={i.id} invitation={i} />
               ))}
             </div>
           ) : (
-            <div className={s.empty}>
-              <span className={s.emptyIcon} aria-hidden="true">
+            <div className={uiClass(s.empty)}>
+              <span className={uiClass(s.emptyIcon)} aria-hidden="true">
                 <MailOpen size={32} strokeWidth={1.5} />
               </span>
               <h3>{emptyTitles[filter]}</h3>
@@ -130,9 +134,9 @@ function InvitationCard({ invitation: i }: { invitation: S['InvitationResult'] }
     expired = status === 'Expired';
   const pending = i.status === 'Pending' && Number.isFinite(Date.parse(i.expiresAtUtc)) && !expired;
   return (
-    <article className={s.card} aria-label={uiText.text_e287db188fec + i.organizationName}>
+    <article className={uiClass(s.card)} aria-label={uiText.text_e287db188fec + i.organizationName}>
       <header>
-        <span className={s.icon}>
+        <span className={uiClass(s.icon)}>
           <Building2 size={23} />
         </span>
         <div>
@@ -142,19 +146,19 @@ function InvitationCard({ invitation: i }: { invitation: S['InvitationResult'] }
             {i.guardianLearnerDisplayName ? uiText.text_d4add45dd348 : uiText.text_fbf138fe1b5a}
           </p>
         </div>
-        <span className={s.status} data-status={status}>
+        <span className={uiClass(s.status)} data-status={status}>
           {label(status)}
         </span>
       </header>
-      <div className={s.overview}>
-        <div className={s.role}>
+      <div className={uiClass(s.overview)}>
+        <div className={uiClass(s.role)}>
           <Mail size={18} />
           <span>
             {uiText.text_7749ac890d07}
             <strong>{label(i.role)}</strong>
           </span>
         </div>
-        <div className={s.deadline}>
+        <div className={uiClass(s.deadline)}>
           <CalendarDays size={17} />
           <span>
             {uiText.text_36a9f930995b}
@@ -163,18 +167,18 @@ function InvitationCard({ invitation: i }: { invitation: S['InvitationResult'] }
         </div>
       </div>
       {i.guardianLearnerDisplayName && (
-        <p className={s.person}>
+        <p className={uiClass(s.person)}>
           {uiText.text_9a8ff9e33a79}
           <strong>{i.guardianLearnerDisplayName}</strong>
         </p>
       )}
       {i.organizationPersonDisplayName && (
-        <p className={s.person}>
+        <p className={uiClass(s.person)}>
           {uiText.text_fe34977f1c1d}
           <strong>{i.organizationPersonDisplayName}</strong>
         </p>
       )}
-      <details className={s.details}>
+      <details className={uiClass(s.details)}>
         <summary>
           {uiText.text_fc6edfd5cebe}
           <ChevronDown size={17} />
@@ -201,10 +205,10 @@ function InvitationCard({ invitation: i }: { invitation: S['InvitationResult'] }
         {i.requiresGuardianConsent && <p>{uiText.text_7c074caf8735}</p>}
       </details>
       {pending && (
-        <div className={s.response}>
+        <div className={uiClass(s.response)}>
           {i.requiresPersonLinkConsent && (
             <label>
-              <input
+              <NativeInput
                 type="checkbox"
                 checked={personConsent}
                 onChange={(e) => setPersonConsent(e.target.checked)}
@@ -215,7 +219,7 @@ function InvitationCard({ invitation: i }: { invitation: S['InvitationResult'] }
           )}
           {i.requiresGuardianConsent && (
             <label>
-              <input
+              <NativeInput
                 type="checkbox"
                 checked={guardianConsent}
                 onChange={(e) => setGuardianConsent(e.target.checked)}
@@ -224,7 +228,7 @@ function InvitationCard({ invitation: i }: { invitation: S['InvitationResult'] }
               {uiText.text_0cd10f957b27}
             </label>
           )}
-          <div className={s.actions}>
+          <div className={uiClass(s.actions)}>
             <Button
               disabled={
                 a.busy ||

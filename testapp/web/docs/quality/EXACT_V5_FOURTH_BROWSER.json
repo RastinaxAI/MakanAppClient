@@ -1,0 +1,78 @@
+{
+  "stats": {
+    "startTime": "2026-11-07T08:04:22.868Z",
+    "duration": 1242467.035,
+    "expected": 249,
+    "skipped": 0,
+    "unexpected": 11,
+    "flaky": 0
+  },
+  "failures": [
+    {
+      "file": "assessment-evaluation.spec.ts",
+      "title": "student and parent cannot open author data; unpublished results and unrelated attachments do not masquerade as success",
+      "status": "failed",
+      "error": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText('ابتدا فرزند را انتخاب کنید')\nExpected: visible\nError: strict mode violation: getByText('ابتدا فرزند را انتخاب کنید') resolved to 2 elements:\n    1) <h3>ابتدا فرزند را انتخاب کنید</h3> aka getByRole('heading', { name: 'ابتدا فرزند را انتخاب کنید' })\n    2) <b>ابتدا فرزند را انتخاب کنید</b> aka locator('b')\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for getByText('ابتدا فرزند را انتخاب کنید')\u001b[22m\n\n\n  170 |   await expect(page.getByText('پاسخ کامل دانش‌آموز برای ارزیابی')).toHaveCount(0);\n  171 |   await page.goto(submission + '/result');\n> 172 |   await expect(page.getByText('ابتدا فرزند را انتخاب کنید')).toBeVisible();\n      |                                                              ^\n  173 |   const state = await (await request.get(fixture + '/__test__/state')).json();\n  174 |   expect(state.requests.some((r: { path: string }) => r.path.endsWith('/guardian-result'))).toBe(\n  175 |     false,\n    at /home/omidreza-bagheriyan/Desktop/MakanApp/testapp/web/tests/browser/assessment-evaluation.spec.ts:172:62"
+    },
+    {
+      "file": "chat-education-layout.spec.ts",
+      "title": "chat header light fa: avatar stays beside the title and controls never overlap",
+      "status": "failed",
+      "error": "Error: locator.evaluate: TypeError: Cannot read properties of null (reading 'getBoundingClientRect')\n    at eval (eval at evaluate (:290:30), <anonymous>:2:59)\n    at UtilityScript.evaluate (<anonymous>:292:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)\n    at eval (eval at evaluate (:290:30), <anonymous>:2:59)\n    at UtilityScript.evaluate (<anonymous>:292:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)\n    at /home/omidreza-bagheriyan/Desktop/MakanApp/testapp/web/tests/browser/chat-education-layout.spec.ts:37:41"
+    },
+    {
+      "file": "chat-education-layout.spec.ts",
+      "title": "chat header light en: avatar stays beside the title and controls never overlap",
+      "status": "failed",
+      "error": "Error: locator.evaluate: TypeError: Cannot read properties of null (reading 'getBoundingClientRect')\n    at eval (eval at evaluate (:290:30), <anonymous>:2:59)\n    at UtilityScript.evaluate (<anonymous>:292:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)\n    at eval (eval at evaluate (:290:30), <anonymous>:2:59)\n    at UtilityScript.evaluate (<anonymous>:292:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)\n    at /home/omidreza-bagheriyan/Desktop/MakanApp/testapp/web/tests/browser/chat-education-layout.spec.ts:37:41"
+    },
+    {
+      "file": "chat-education-layout.spec.ts",
+      "title": "chat header dark fa: avatar stays beside the title and controls never overlap",
+      "status": "failed",
+      "error": "Error: locator.evaluate: TypeError: Cannot read properties of null (reading 'getBoundingClientRect')\n    at eval (eval at evaluate (:290:30), <anonymous>:2:59)\n    at UtilityScript.evaluate (<anonymous>:292:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)\n    at eval (eval at evaluate (:290:30), <anonymous>:2:59)\n    at UtilityScript.evaluate (<anonymous>:292:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)\n    at /home/omidreza-bagheriyan/Desktop/MakanApp/testapp/web/tests/browser/chat-education-layout.spec.ts:37:41"
+    },
+    {
+      "file": "chat-education-layout.spec.ts",
+      "title": "chat header dark en: avatar stays beside the title and controls never overlap",
+      "status": "failed",
+      "error": "Error: locator.evaluate: TypeError: Cannot read properties of null (reading 'getBoundingClientRect')\n    at eval (eval at evaluate (:290:30), <anonymous>:2:59)\n    at UtilityScript.evaluate (<anonymous>:292:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)\n    at eval (eval at evaluate (:290:30), <anonymous>:2:59)\n    at UtilityScript.evaluate (<anonymous>:292:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)\n    at /home/omidreza-bagheriyan/Desktop/MakanApp/testapp/web/tests/browser/chat-education-layout.spec.ts:37:41"
+    },
+    {
+      "file": "manager-workspace.spec.ts",
+      "title": "Manager has a dedicated workspace and reports; other roles cannot enter manager reports",
+      "status": "failed",
+      "error": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('main').getByRole('alert')\nExpected substring: \u001b[32m\"دسترسی محدود\"\u001b[39m\nTimeout: 15000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('main').getByRole('alert')\u001b[22m\n\n\n   97 |       const p = await other.newPage();\n   98 |       await p.goto(base + '/reports');\n>  99 |       await expect(p.getByRole('main').getByRole('alert')).toContainText('دسترسی محدود');\n      |                                                            ^\n  100 |       expect(\n  101 |         (\n  102 |           await other.request.get(\n    at /home/omidreza-bagheriyan/Desktop/MakanApp/testapp/web/tests/browser/manager-workspace.spec.ts:99:60"
+    },
+    {
+      "file": "reference-v2-layout.spec.ts",
+      "title": "V5 education destinations preserve contextual navigation and use the full reading area",
+      "status": "timedOut",
+      "error": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m\nError: locator.click: Test timeout of 60000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'بخش‌های آموزشگاه', exact: true }).filter({ visible: true })\u001b[22m\n\u001b[2m    - locator resolved to <button aria-label=\"بخش‌های آموزشگاه\" class=\"button button-ghost button-icon\">…</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    76 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is not visible\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\n\n   at test.ts:15\n\n  13 |       .getByRole('button', { name: 'بخش‌های آموزشگاه', exact: true })\n  14 |       .filter({ visible: true })\n> 15 |       .click();\n     |        ^\n  16 |   await expect(nav).toBeVisible();\n  17 |   return nav;\n  18 | }\n    at schoolSections (/home/omidreza-bagheriyan/Desktop/MakanApp/testapp/web/tests/browser/test.ts:15:8)\n    at /home/omidreza-bagheriyan/Desktop/MakanApp/testapp/web/tests/browser/reference-v2-layout.spec.ts:39:19"
+    },
+    {
+      "file": "school-redesign.spec.ts",
+      "title": "V4 profile edit has labelled readable fields and a safe footer at all screen sizes",
+      "status": "failed",
+      "error": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m18\u001b[39m\nReceived:    \u001b[31m12\u001b[39m\n\n  26 |     expect(box.y + box.height).toBeLessThanOrEqual(height - 12);\n  27 |     if (width < 1200)\n> 28 |       expect(height - box.y - box.height).toBeGreaterThanOrEqual(width < 768 ? 18 : 12);\n     |                                           ^\n  29 |     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(\n  30 |       true,\n  31 |     );\n    at /home/omidreza-bagheriyan/Desktop/MakanApp/testapp/web/tests/browser/school-redesign.spec.ts:28:43"
+    },
+    {
+      "file": "school-redesign.spec.ts",
+      "title": "school has four destinations, three nearest items and a separate class page with URL-backed sections",
+      "status": "failed",
+      "error": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('navigation', { name: 'بخش‌های آموزشگاه', exact: true }).getByRole('link')\nTimeout: 15000ms\n\u001b[32m- Expected  - 0\u001b[39m\n\u001b[31m+ Received  + 1\u001b[39m\n\n\u001b[2m  Array [\u001b[22m\n\u001b[2m    \"امروز\",\u001b[22m\n\u001b[2m    \"کلاس‌ها\",\u001b[22m\n\u001b[2m    \"برنامه\",\u001b[22m\n\u001b[2m    \"دعوت‌ها\",\u001b[22m\n\u001b[31m+   \"گزارش‌ها و پیشرفت\",\u001b[39m\n\u001b[2m  ]\u001b[22m\n\nCall log:\n\u001b[2m  - Expect \"toHaveText\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('navigation', { name: 'بخش‌های آموزشگاه', exact: true }).getByRole('link')\u001b[22m\n\u001b[2m    19 × locator resolved to 5 elements\u001b[22m\n\n\n  80 |   await page.goto('/personal/education');\n  81 |   const nav = await schoolSections(page);\n> 82 |   await expect(nav.getByRole('link')).toHaveText(['امروز', 'کلاس‌ها', 'برنامه', 'دعوت‌ها']);\n     |                                       ^\n  83 |   await page.keyboard.press('Escape');\n  84 |   for (const [name, title] of [\n  85 |     ['نزدیک‌ترین جلسه', 'جلسهٔ نزدیک'],\n    at /home/omidreza-bagheriyan/Desktop/MakanApp/testapp/web/tests/browser/school-redesign.spec.ts:82:39"
+    },
+    {
+      "file": "sign-in-layout.spec.ts",
+      "title": "phone and OTP enforce exact lengths, normalize Persian digits and reject oversized paste",
+      "status": "failed",
+      "error": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveAttribute\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByRole('textbox', { name: 'کد ورود', exact: true })\nExpected: \u001b[32m\"\u001b[7mtru\u001b[27me\"\u001b[39m\nReceived: \u001b[31m\"\u001b[7mfals\u001b[27me\"\u001b[39m\nTimeout:  15000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveAttribute\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('textbox', { name: 'کد ورود', exact: true })\u001b[22m\n\u001b[2m    19 × locator resolved to <input dir=\"ltr\" type=\"text\" name=\"code\" id=\"otp-code\" maxlength=\"6\" minlength=\"6\" value=\"12345\" pattern=\"[0-9]{6}\" inputmode=\"numeric\" aria-invalid=\"false\" autocomplete=\"one-time-code\" aria-describedby=\"identifier-hint\"/>\u001b[22m\n\u001b[2m       - unexpected value \"false\"\u001b[22m\n\n\n  44 |   await otp.fill('12345');\n  45 |   await expect(page.getByRole('button', { name: 'تأیید و ورود', exact: true })).toBeDisabled();\n> 46 |   await expect(otp).toHaveAttribute('aria-invalid', 'true');\n     |                     ^\n  47 |   await otp.fill('');\n  48 |   await otp.evaluate((node) => {\n  49 |     const data = new DataTransfer();\n    at /home/omidreza-bagheriyan/Desktop/MakanApp/testapp/web/tests/browser/sign-in-layout.spec.ts:46:21"
+    },
+    {
+      "file": "v4-design.spec.ts",
+      "title": "V4 publication tools respect server capabilities and provide a usable gap below the mobile action",
+      "status": "failed",
+      "error": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m826\u001b[39m\nReceived:    \u001b[31m832\u001b[39m\n\n  177 |   const box = await button.boundingBox();\n  178 |   expect(box).not.toBeNull();\n> 179 |   expect(box!.y + box!.height).toBeLessThanOrEqual(826);\n      |                                ^\n  180 |   expect(844 - box!.y - box!.height).toBeLessThanOrEqual(24);\n  181 |   await expect(page.locator('[data-app-navigation]:visible')).toHaveCount(0);\n  182 |   const question = await page.getByLabel(t.question, { exact: true }).boundingBox();\n    at /home/omidreza-bagheriyan/Desktop/MakanApp/testapp/web/tests/browser/v4-design.spec.ts:179:32"
+    }
+  ]
+}

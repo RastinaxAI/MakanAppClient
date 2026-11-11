@@ -1,15 +1,98 @@
 // Isolated V4 browser fixture; no real accounts, services or production mutations.
-import { make, id } from './state.mjs';
+import { make, id, userFor } from './state.mjs';
 import { seedConversationDetails } from './conversation-details.mjs';
 import { randomUUID } from 'node:crypto';
 export function seedRichMessaging(state, body = {}) {
-  seedConversationDetails(state, {});
+  seedConversationDetails(state, { type: body.type });
+  if (body.adminCapabilities)
+    state.release154 = {
+      ...state.release154,
+      capabilities: { ...state.release154?.capabilities, [id(102)]: body.adminCapabilities },
+    };
+  if (body.referenceInvites)
+    state.qaInviteLinks = [0, 1].map((index) => ({
+      link: make('InviteLinkResult', {
+        id: id(5500 + index),
+        conversationId: state.conversationDetail.conversationId,
+        createdByUserId: id(101),
+        expiresAtUtc: new Date(Date.now() + (index ? -1 : 48) * 3600000).toISOString(),
+        maximumUses: index ? 20 : 10,
+        usedCount: index ? 4 : 3,
+        requiresApproval: !index,
+        revokedAtUtc: null,
+        version: '1',
+      }),
+      token: randomUUID(),
+    }));
   state.conversationDetail.title = 'گفتگوی بررسی V4';
   state.conversationMessages = [];
+  if (body.exactV5) {
+    state.exactV5Messaging = true;
+    const channel = state.conversationDetail.type === 'Channel';
+    state.conversationDetail.title = channel ? 'اطلاعیه‌های آفتاب' : 'باشگاه کتاب‌خوانی';
+    if (body.editPending) state.conversationDetail.title += ' · پیش از ویرایش';
+    state.conversationDetail.description = channel
+      ? 'خبرها و برنامه‌های رسمی آموزشگاه'
+      : 'گفتگو درباره کتاب و تجربه مطالعه';
+    state.conversationDetail.participants = [
+      [101, 'سارا', 'احمدی', 'sara.ahmadi', 'Owner'],
+      [102, 'مریم', 'رضایی', 'maryam.rezaei', 'Admin'],
+      [104, 'امیر', 'نادری', 'amir.naderi', 'Member'],
+    ].map(([user, firstName, lastName, username, role], index) => {
+      const displayName = firstName + ' ' + lastName;
+      Object.assign(state.users.get(id(user)), { firstName, lastName, displayName, username });
+      return make('ConversationParticipantResult', {
+        participantId: id(960 + index),
+        user: make('SafeMessagingIdentityResult', { userId: id(user), displayName, username }),
+        role,
+        status: 'Active',
+        version: '1',
+      });
+    });
+  }
+  if (body.referenceJoinRequests)
+    state.qaJoinRequests = [
+      [103, 'ریحانه', 'زمانی'],
+      [199, 'علی', 'کریمی'],
+    ].map(([user, firstName, lastName], index) => {
+      Object.assign(userFor(state, '09120000' + user).user, {
+        firstName,
+        lastName,
+        displayName: firstName + ' ' + lastName,
+      });
+      return make('ConversationJoinRequestResult2', {
+        id: id(5520 + index),
+        conversationId: state.conversationDetail.conversationId,
+        userId: id(user),
+        status: 'Pending',
+        createdAtUtc: '2026-11-05T06:' + (index ? '55' : '50') + ':00.000Z',
+        expiresAtUtc: '2099-12-01T12:00:00.000Z',
+        version: 'join-reference-1',
+      });
+    });
   state.richMessaging = {
     polls: new Map(),
     checklists: new Map(),
-    scheduled: [],
+    scheduled: body.referenceScheduled
+      ? [
+          ['یادآوری جلسه فردا', '2026-11-11T06:30:00.000Z'],
+          ['جزوه هفته بعد', '2026-11-12T04:30:00.000Z'],
+        ].map(([text, scheduledAtUtc], index) =>
+          make('ScheduledMessageResult', {
+            id: id(5600 + index),
+            conversationId: state.conversationDetail.conversationId,
+            clientMessageId: id(5610 + index),
+            status: 'Scheduled',
+            scheduledAtUtc,
+            createdAtUtc: '2026-11-07T08:00:00.000Z',
+            completedAtUtc: null,
+            dispatchedMessageId: null,
+            lastFailureCode: null,
+            content: make('ScheduledMessageContent', { kind: 'Text', text }),
+            version: 'schedule-reference-1',
+          }),
+        )
+      : [],
     intents: new Map(),
     folders: [
       make('ChatFolderResult', {

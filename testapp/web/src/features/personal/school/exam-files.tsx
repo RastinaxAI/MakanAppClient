@@ -1,4 +1,8 @@
 'use client';
+import { Input as NativeInput } from '@/components/ui/input';
+
+import { uiClass } from '@/components/v5/classes';
+
 import { useAcademicScope } from './academic-scope';
 import * as uiText from '@/content/fa';
 import { useEffect, useRef, useState } from 'react';
@@ -29,7 +33,7 @@ export function ExamFileDownload({
   const controller = useRef<AbortController | null>(null);
   useEffect(() => () => controller.current?.abort(), []);
   return (
-    <div className={s.file}>
+    <div className={uiClass(s.file)}>
       <Paperclip size={19} />
       <div>
         <strong dir="auto">{file.originalFileName}</strong>
@@ -203,7 +207,7 @@ export function ExamAnswerFiles({
   }
   if (!policy?.attachmentsAllowed && !files.length) return null;
   return (
-    <section className={s.panel} aria-label={uiText.text_b439b4e56bb0}>
+    <section className={uiClass(s.panel)} aria-label={uiText.text_b439b4e56bb0}>
       <h3>{uiText.text_b7504f07794e}</h3>
       {policy?.attachmentsAllowed && (
         <>
@@ -218,7 +222,7 @@ export function ExamAnswerFiles({
               ? uiText.text_03708fe63973 + formatFileSize(policy.maximumTotalBytes)
               : ''}
           </p>
-          <input
+          <NativeInput
             hidden
             ref={input}
             type="file"
@@ -293,7 +297,7 @@ export function ExamAnswerFiles({
         </div>
       )}
       {pending && (
-        <div className={s.pending}>
+        <div className={uiClass(s.pending)}>
           <strong dir="auto">{pending.originalFileName}</strong>
           <p>
             {rejected

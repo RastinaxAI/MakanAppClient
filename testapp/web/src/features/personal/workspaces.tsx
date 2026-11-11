@@ -1,4 +1,6 @@
 'use client';
+import { uiClass } from '@/components/v5/classes';
+
 import * as uiText from '@/content/fa';
 import type { components } from '@/generated/api/schema';
 import { usePersonalApi } from './provider';
@@ -16,7 +18,7 @@ export function WorkspaceVisibilityNotice({
   snapshot?: components['schemas']['WorkspaceSnapshotResult'];
 }) {
   return snapshot?.personalWorkspaceVisible === null ? (
-    <p className={s.muted} role="status">
+    <p className={uiClass(s.muted)} role="status">
       {uiText.text_2c65dfd06215}
     </p>
   ) : null;

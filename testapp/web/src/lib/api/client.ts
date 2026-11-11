@@ -4,11 +4,13 @@ export type ContextGuard = {
   onContextChanged?: () => void;
   isCurrent?: () => boolean;
 };
+export type ApiRequestInit = RequestInit & { expectedStatus?: number };
 export async function request<T>(
   path: string,
-  init: RequestInit = {},
+  init: ApiRequestInit = {},
   guard?: ContextGuard,
 ): Promise<T> {
+  const { expectedStatus, ...options } = init;
   const ensureCurrent = () => {
     if (guard?.isCurrent && !guard.isCurrent())
       throw new DOMException('The request belongs to an earlier account or context.', 'AbortError');
@@ -17,13 +19,13 @@ export async function request<T>(
   let response: Response;
   try {
     response = await fetch(path, {
-      ...init,
+      ...options,
       cache: 'no-store',
       credentials: 'same-origin',
       headers: {
-        ...(init.body ? { 'Content-Type': 'application/json' } : {}),
+        ...(options.body ? { 'Content-Type': 'application/json' } : {}),
         ...(guard ? { 'X-Makan-Context': guard.revision } : {}),
-        ...init.headers,
+        ...options.headers,
       },
     });
   } catch (error) {
@@ -44,6 +46,8 @@ export async function request<T>(
       window.dispatchEvent(new Event('makan:expired'));
     throw new ApiError(response.status, p);
   }
+  if (expectedStatus !== undefined && response.status !== expectedStatus)
+    throw new ApiError(502, { code: 'CONTRACT_MISMATCH' });
   if (response.status === 204) return undefined as T;
   if (response.status === 202 && !response.headers.get('Content-Type')) return undefined as T;
   let result: unknown;

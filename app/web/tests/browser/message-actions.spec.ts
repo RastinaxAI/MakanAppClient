@@ -1,3 +1,4 @@
+import { captureExactState } from './exact-state-capture';
 import { test, expect, login, fixture, ids } from './test';
 async function message(page: import('@playwright/test').Page) {
   await page.goto('/personal/messages/' + ids.chat);
@@ -45,6 +46,8 @@ test('report preserves reason and description after failure and retries the same
   const dialog = page.getByRole('dialog');
   await page.getByLabel('دلیل گزارش', { exact: true }).selectOption('Spam');
   await page.getByLabel('توضیح گزارش', { exact: true }).fill('توضیح نگهداری‌شده در خطا');
+  await captureExactState(page, ['MK-260']);
+
   await request.post(fixture + '/__test__/fault', {
     data: { path: '/reports', method: 'POST', status: 503 },
   });
@@ -54,6 +57,8 @@ test('report preserves reason and description after failure and retries the same
   );
   await dialog.getByRole('button', { name: 'پیگیری همین درخواست', exact: true }).click();
   await expect(bubble).toContainText('گزارش برای بررسی ثبت شد.');
+  await captureExactState(page, ['MK-261']);
+
   const state = await (await request.get(fixture + '/__test__/state')).json();
   const reports = state.requests.filter((r: { path: string }) => r.path.endsWith('/reports'));
   expect(reports).toHaveLength(2);

@@ -1,73 +1,297 @@
 'use client';
+import { Input as NativeInput } from '@/components/ui/input';
+
+import { uiClass } from '@/components/v5/classes';
+
 import * as uiText from '@/content/fa';
 import { Button } from '@/components/ui/button';
 import { ConfirmAction } from '@/components/ui/confirm-action';
 import { EmptyState, ErrorState, label, LoadingSkeleton } from '@/components/ui/states';
 import type { components } from '@/generated/api/schema';
-import { Plus, UserRoundPlus } from 'lucide-react';
+import { UserRoundPlus, School } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
-import { usePersonalApi } from '../provider';
+import { usePersonal, usePersonalApi } from '../provider';
+import { useViewState } from '@/components/hooks/use-view-state';
+import { contextSignature } from '@/lib/client-surface';
+import { number } from '@/lib/formatting';
+import { ApiError } from '@/lib/api/errors';
+import { localCalendarDay, schoolDayRange } from './calendar-model';
+import { V5Scene } from '@/components/v5/scene';
 import { ClassRoster, SchoolSearch } from './directory';
 import { MemberDirectory } from './member-directory';
-import { ManagerClassCards, V4ClassList } from './manager-class-cards';
+import { ManagerClassCards, ManagerClassContext, V4ClassList } from './manager-class-cards';
 import { ManagerPageHeader } from './manager-page-header';
 import s from './school.module.css';
 import managerStyle from './manager-workspace.module.css';
-import {
-  base,
-  Card,
-  Field,
-  Pager,
-  SchoolHeading,
-  Status,
-  useSchoolAction,
-  useSchoolCommand,
-} from './shared';
+import contentStyle from './teacher-content.module.css';
+import { base, Card, Field, Pager, Status, useSchoolAction, useSchoolCommand } from './shared';
 type S = components['schemas'];
 export function Classes({ manage }: { manage: boolean }) {
-  const Heading = manage ? ManagerPageHeader : SchoolHeading;
-  const [search, setSearch] = useState('');
+  const { session } = usePersonal();
+  const teacher = !manage && session.context.activeRole === 'Teacher';
+  const memory = session.user.id + ':' + contextSignature(session.context) + ':classes:';
+  const [search, setSearch] = useViewState(
+    memory + 'search',
+    '',
+    (v): v is string => typeof v === 'string',
+  );
+  const [selectedId, setSelectedId] = useViewState(
+    memory + 'selected',
+    '',
+    (v): v is string => typeof v === 'string',
+  );
   const q = usePersonalApi<S['ClassResult'][]>('/api/v1/academic/classes');
-  return (
-    <div className={manage ? managerStyle.stack : undefined}>
-      <Heading
-        title={uiText.text_6d784fcb7c9a}
-        description={manage ? uiText.text_aa9247a0d79f : uiText.text_d5743b840e90}
-        action={
-          manage &&
+  const statistics = usePersonalApi<S['ManagerDashboardDto']>('/api/v1/dashboards/manager', {
+    enabled: manage,
+  });
+  const teacherStats = usePersonalApi<S['TeacherDashboardDto']>('/api/v1/dashboards/teacher', {
+    enabled: teacher,
+  });
+  const today = schoolDayRange(localCalendarDay(new Date().toISOString()));
+  const sessions = usePersonalApi<S['SessionResult'][]>(
+    '/api/v1/academic/schedule?' + new URLSearchParams(today),
+    { enabled: teacher, poll: teacher ? 60000 : undefined },
+  );
+  const [activeOnly, setActiveOnly] = useViewState(
+    memory + 'active-only',
+    true,
+    (value): value is boolean => typeof value === 'boolean',
+  );
+  const items =
+    q.data?.filter(
+      (c) =>
+        [c.title, c.courseTitle, c.academicPeriodTitle].some((v) => v.includes(search)) &&
+        (manage || teacher || !activeOnly || c.status === 'Active'),
+    ) ?? [];
+  const selected = items.find((c) => c.id === selectedId) ?? items[0];
+  if (q.data?.some((item) => item.organizationId !== session.context.organizationId))
+    return <ErrorState error={new ApiError(502, { code: 'CONTRACT_MISMATCH' })} />;
+  const staleAvailable =
+    q.isError && q.data && q.error instanceof ApiError && q.error.status >= 500;
+  if (manage)
+    return (
+      <V5Scene
+        id="MK-455"
+        title={uiText.v5Product.manageClasses}
+        back={base}
+        deep={false}
+        layout="table"
+        moreLabel={uiText.text_589d5004f227}
+        onMore={() => window.dispatchEvent(new Event('makan:education-sections'))}
+        context={<ManagerClassContext item={selected} />}
+        actions={
           q.data && (
             <Button asChild>
-              <Link href={base + '/classes/new'}>
-                <Plus size={19} />
-                {uiText.text_34aeac5f09b4}
-              </Link>
+              <Link href={base + '/classes/new'}>{uiText.text_fc6eddd72380}</Link>
             </Button>
           )
         }
-      />
-      {manage && <SchoolSearch label={uiText.text_3fce236a7ccd} onSearch={setSearch} />}
+      >
+        {q.isPending ? (
+          <LoadingSkeleton />
+        ) : q.isError && !staleAvailable ? (
+          <ErrorState error={q.error} onRetry={() => void q.refetch()} />
+        ) : (
+          <>
+            {staleAvailable && (
+              <ErrorState
+                error={q.error}
+                staleDataAt={new Date(q.dataUpdatedAt).toISOString()}
+                busy={q.isFetching}
+                onRetry={() => void q.refetch()}
+              />
+            )}
+            <ManagerClassCards
+              items={items}
+              counts={statistics.data?.operationalCounts}
+              selectedId={selectedId}
+              onSelect={setSelectedId}
+              search={
+                <SchoolSearch
+                  variant="bar"
+                  label={uiText.text_3fce236a7ccd}
+                  initialValue={search}
+                  onSearch={setSearch}
+                />
+              }
+            />
+          </>
+        )}
+      </V5Scene>
+    );
+  if (!teacher && q.isPending)
+    return (
+      <V5Scene
+        id="MK-419"
+        title={uiText.text_dd3d2b04ab97}
+        back={base}
+        onMore={() => window.dispatchEvent(new Event('makan:education-sections'))}
+        moreLabel={uiText.text_589d5004f227}
+      >
+        <SchoolSearch
+          variant="bar"
+          label={uiText.text_3fce236a7ccd}
+          initialValue={search}
+          onSearch={setSearch}
+        />
+        <LoadingSkeleton variant="cards" />
+      </V5Scene>
+    );
+  if (q.isSuccess && q.data.length === 0)
+    return (
+      <V5Scene
+        id="MK-422"
+        title={uiText.text_f8b9003a2e77}
+        back={base}
+        onMore={() => window.dispatchEvent(new Event('makan:education-sections'))}
+        moreLabel={uiText.text_589d5004f227}
+      >
+        <EmptyState
+          variant="v5"
+          icon={<School />}
+          title={uiText.text_da4ec17decdd}
+          description={uiText.text_844f0342e624}
+        />
+        <Button asChild variant="outline">
+          <Link href={base + '/invitations'}>{uiText.text_b70ec4ed1525}</Link>
+        </Button>
+      </V5Scene>
+    );
+  return (
+    <V5Scene
+      id={teacher ? 'MK-87' : 'MK-86'}
+      title={teacher ? uiText.v5Product.teachingClasses : uiText.text_7c61d113156b}
+      summary={items.slice(0, 3).map((item) => ({
+        label: item.title,
+        value: [item.courseTitle, item.academicPeriodTitle, label(item.status)]
+          .filter(Boolean)
+          .join(' · '),
+      }))}
+      back={base}
+      onMore={() => window.dispatchEvent(new Event('makan:education-sections'))}
+      moreLabel={uiText.text_589d5004f227}
+    >
+      {teacher ? (
+        <>
+          <nav
+            className={uiClass(contentStyle.kinds)}
+            aria-label={uiText.v5Product.teachingDestinations}
+          >
+            <Link href={base + '/classes'} aria-current="page">
+              {uiText.text_e7b1ccd0bda3}
+            </Link>
+            <Link href={base + '/content'}>{uiText.text_f4044f423956}</Link>
+          </nav>
+          <div
+            className={uiClass('stats')}
+            data-teacher-statistics
+            aria-busy={teacherStats.isPending || sessions.isPending}
+          >
+            {[
+              [q.isSuccess ? q.data.length : undefined, uiText.text_e7b1ccd0bda3],
+              [
+                teacherStats.isSuccess &&
+                teacherStats.data.organizationId === session.context.organizationId
+                  ? teacherStats.data.assignmentGradingQueue.awaitingEvaluationCount
+                  : undefined,
+                uiText.v5Product.teacherNewAnswers,
+              ],
+              [
+                sessions.isSuccess &&
+                q.isSuccess &&
+                sessions.data.every(
+                  (item) => item.organizationId === session.context.organizationId,
+                )
+                  ? sessions.data.filter(
+                      (item) =>
+                        item.status !== 'Cancelled' &&
+                        q.data.some((classroom) => classroom.id === item.classId),
+                    ).length
+                  : undefined,
+                uiText.v5Product.teacherTodaySessions,
+              ],
+            ].map(([count, title]) => (
+              <div className={uiClass('stat')} key={title}>
+                <b
+                  aria-label={count === undefined ? uiText.v5Product.summaryUnavailable : undefined}
+                >
+                  {count === undefined ? '—' : number(Number(count))}
+                </b>
+                <span>{title}</span>
+              </div>
+            ))}
+          </div>
+        </>
+      ) : (
+        <>
+          <SchoolSearch
+            variant="bar"
+            label={uiText.text_3fce236a7ccd}
+            initialValue={search}
+            onSearch={setSearch}
+          />
+          <div
+            className={uiClass('chips')}
+            role="group"
+            aria-label={uiText.v5Product.classStatusFilter}
+          >
+            <button
+              type="button"
+              className={uiClass('chip ' + (activeOnly ? 'on' : ''))}
+              aria-pressed={activeOnly}
+              onClick={() => setActiveOnly(true)}
+            >
+              {uiText.text_a3fa2a3ffcb9}
+            </button>
+            <button
+              type="button"
+              className={uiClass('chip ' + (!activeOnly ? 'on' : ''))}
+              aria-pressed={!activeOnly}
+              onClick={() => setActiveOnly(false)}
+            >
+              {uiText.vnext.all}
+            </button>
+          </div>
+        </>
+      )}
       {q.isPending ? (
-        <LoadingSkeleton />
+        <LoadingSkeleton variant="cards" />
       ) : q.isError ? (
         <ErrorState error={q.error} onRetry={() => void q.refetch()} />
-      ) : manage && q.data.length ? (
-        <ManagerClassCards
-          items={q.data.filter((c) =>
-            [c.title, c.courseTitle, c.academicPeriodTitle].some((v) => v.includes(search)),
-          )}
+      ) : items.length ? (
+        <V4ClassList
+          id={teacher ? 'MK-87' : 'MK-86'}
+          items={items}
+          learners={
+            teacher &&
+            teacherStats.isSuccess &&
+            teacherStats.data.organizationId === session.context.organizationId
+              ? new Map(
+                  teacherStats.data.assignedClasses.map((item) => [
+                    item.classId,
+                    item.activeLearnerCount,
+                  ]),
+                )
+              : undefined
+          }
         />
-      ) : q.data.length ? (
-        <V4ClassList items={q.data} />
       ) : (
-        <Card>
+        <>
           <EmptyState
-            title={uiText.text_aca867e37332}
-            description={manage ? uiText.text_f2f08c07a3c0 : uiText.text_bc49db330f23}
+            variant="v5"
+            icon={<School />}
+            title={q.data?.length ? uiText.text_aca867e37332 : uiText.text_da4ec17decdd}
+            description={q.data?.length ? uiText.text_bc49db330f23 : uiText.text_844f0342e624}
           />
-        </Card>
+          {!q.data?.length && (
+            <Button asChild variant="outline">
+              <Link href={base + '/invitations'}>{uiText.text_b70ec4ed1525}</Link>
+            </Button>
+          )}
+        </>
       )}
-    </div>
+    </V5Scene>
   );
 }
 export { People } from './person-records';
@@ -111,8 +335,8 @@ export function Enrollments({ classId }: { classId?: string }) {
       ) : (
         <>
           {q.data.items.length ? (
-            <div className={s.tableWrap}>
-              <table className={s.table}>
+            <div className={uiClass(s.tableWrap)}>
+              <table className={uiClass(s.table)}>
                 <thead>
                   <tr>
                     <th>{uiText.text_fbd179d162db}</th>
@@ -148,7 +372,7 @@ export function Guardians() {
     `/api/v1/organization/guardian-relations?page=${page}&pageSize=30`,
   );
   return (
-    <div className={managerStyle.stack}>
+    <div className={uiClass(managerStyle.stack)}>
       <ManagerPageHeader
         title={uiText.text_836e8b88a455}
         description={uiText.text_a8f7d5d341fb}
@@ -169,7 +393,7 @@ export function Guardians() {
         <>
           <Card>
             {q.data.items.length ? (
-              <div className={s.editorList}>
+              <div className={uiClass(s.editorList)}>
                 {q.data.items.map((r) => (
                   <GuardianRow key={r.id} relation={r} />
                 ))}
@@ -192,14 +416,14 @@ function GuardianRow({ relation: r }: { relation: S['SchoolGuardianRelationDto']
   const command = useSchoolCommand();
   const [reason, setReason] = useState('');
   return (
-    <div className={s.question}>
+    <div className={uiClass(s.question)}>
       <h3>
         {r.learnerDisplayName ||
           person.data?.displayName ||
           [person.data?.firstName, person.data?.lastName].filter(Boolean).join(' ') ||
           uiText.text_b9c23f90e92a}
       </h3>
-      <p className={s.hint}>
+      <p className={uiClass(s.hint)}>
         {uiText.text_c9c2548db6d8}
         {r.guardianDisplayName || uiText.vnext.unnamedGuardian}
         {r.guardianUsername && (
@@ -228,7 +452,7 @@ function GuardianRow({ relation: r }: { relation: S['SchoolGuardianRelationDto']
       {['Active', 'Pending'].includes(r.status) && (
         <>
           <Field label={uiText.text_94eb9f878b58}>
-            <input value={reason} onChange={(e) => setReason(e.target.value)} />
+            <NativeInput value={reason} onChange={(e) => setReason(e.target.value)} />
           </Field>
           <ConfirmAction
             disabled={!reason.trim()}

@@ -20,6 +20,7 @@ import { serverConfig } from '@/lib/server/config';
 import { hasVerifiedPermission } from '@/lib/permissions';
 import { validPersonalClassCommand } from '@/lib/personal-class-policy';
 import { libraryActionAllowed, type LibrarySource } from '@/lib/library-policy';
+import type { components } from '@/generated/api/schema';
 export const runtime = 'nodejs';
 async function handler(request: Request, { params }: { params: Promise<{ path: string[] }> }) {
   if (request.method !== 'GET' && !checkOrigin(request)) return problem(403, 'ORIGIN_REJECTED');
@@ -192,7 +193,24 @@ async function handler(request: Request, { params }: { params: Promise<{ path: s
         const after = await readSession(id);
         if (after) await writeSession(id, { ...after, revision: randomUUID() });
       }
-      const result = await safeResponse(response, op.response);
+      const result = await safeResponse(
+        response,
+        op.response,
+        path === '/api/admin/v1/operations/health'
+          ? (schema) =>
+              validator(schema).transform((value) => {
+                const health = value as components['schemas']['PlatformSystemHealth'];
+                // Free-form dependency details can include physical storage paths.
+                return {
+                  ...health,
+                  dependencies: health.dependencies.map((dependency) => ({
+                    ...dependency,
+                    detail: '',
+                  })),
+                };
+              })
+          : validator,
+      );
       result.headers.set('X-Makan-Context', (await readSession(id))?.revision ?? '');
       return result;
     });

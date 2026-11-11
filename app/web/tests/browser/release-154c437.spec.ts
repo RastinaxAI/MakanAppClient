@@ -1,3 +1,5 @@
+import { reviewPath } from './review-output';
+import { captureExactState } from './exact-state-capture';
 import { test, expect, login, fixture, origin } from './test';
 import { mkdir } from 'node:fs/promises';
 const group = '00000000-0000-4000-8000-000000000950',
@@ -19,9 +21,12 @@ test('source upload waits for Ready, then retries one frozen create operation af
   await page.getByLabel('عنوان منبع', { exact: true }).fill('منبع ثبت پایدار');
   await page.getByLabel('دلیل ثبت', { exact: true }).fill('آزمون ثبت منبع');
   await page.getByLabel('فایل منبع', { exact: true }).setInputFiles(pdf);
+  await captureExactState(page, ['MK-359']);
   await request.post(fixture + '/__test__/next-file-status', { data: { status: 'Pending' } });
   await page.getByRole('button', { name: 'ثبت منبع', exact: true }).click();
   await expect(page.getByRole('main').getByRole('alert')).toContainText('فایل هنوز آماده نیست');
+  await captureExactState(page, ['MK-360']);
+
   let state = await (await request.get(fixture + '/__test__/state')).json();
   expect(
     state.requests.filter(
@@ -38,7 +43,12 @@ test('source upload waits for Ready, then retries one frozen create operation af
   await expect(page.getByLabel('عنوان منبع', { exact: true })).toHaveValue('منبع ثبت پایدار');
   await page.getByRole('button', { name: 'پیگیری ثبت منبع', exact: true }).click();
   await expect(page).toHaveURL(/\/resources\/[a-f0-9-]{36}$/);
-  await expect(page.getByText('هوش مصنوعی: آماده نیست', { exact: true })).toBeVisible();
+  await expect(page.locator('[data-source-readiness="2"]')).toContainText('آماده نیست');
+  await captureExactState(
+    page,
+    ['MK-357'],
+    'Real file/source/assistant readiness remain separate.',
+  );
   state = await (await request.get(fixture + '/__test__/state')).json();
   const creates = state.requests.filter(
     (r: { path: string; method: string }) => r.path === '/api/v1/sources' && r.method === 'POST',
@@ -57,7 +67,7 @@ test('source edit preserves text across opaque version conflict and explicitly a
   context,
 }) => {
   const session = await login(context, 'Student', false);
-  await page.goto('/personal/resources/' + source);
+  await page.goto('/personal/resources/' + source + '?view=versions');
   await page.getByLabel('عنوان پیش‌نویس', { exact: true }).fill('نوشتهٔ حفظ‌شده');
   await page.getByLabel('دلیل تغییر', { exact: true }).fill('بازبینی');
   const external = await context.request.patch(
@@ -93,11 +103,14 @@ test('source edit preserves text across opaque version conflict and explicitly a
   await page.getByRole('button', { name: 'ادامهٔ ویرایش با نسخهٔ جدید', exact: true }).click();
   await page.getByRole('button', { name: 'ذخیرهٔ پیش‌نویس', exact: true }).click();
   await expect(
-    page.getByRole('banner').getByRole('heading', { name: 'نوشتهٔ حفظ‌شده', exact: true }),
+    page.locator('[data-source-title]').filter({ hasText: 'نوشتهٔ حفظ‌شده' }),
   ).toBeVisible();
   await page.getByRole('button', { name: 'انتشار منبع', exact: true }).click();
+  await captureExactState(page, ['MK-362']);
+
   await page.getByRole('dialog').getByRole('button', { name: 'تأیید', exact: true }).click();
   await expect(page.getByText(/منتشرشده · فعال/)).toBeVisible();
+  await page.goto('/personal/resources/' + source + '?view=content');
   const download = page.waitForEvent('download');
   await page.getByRole('button', { name: 'دریافت فایل منبع', exact: true }).click();
   expect((await download).suggestedFilename()).toBe('sample.pdf');
@@ -108,9 +121,14 @@ test('Library stays metadata-only and forged binary transfer is denied', async (
 }) => {
   const session = await login(context, 'Student', false);
   await page.goto('/personal/resources');
-  await page.getByRole('combobox', { name: 'فضای منابع', exact: true }).selectOption('Library');
+  await page
+    .getByRole('radiogroup', { name: 'فضای منابع', exact: true })
+    .getByRole('radio', { name: 'کتابخانه', exact: true })
+    .check();
   await page.getByRole('link', { name: 'کتابخانهٔ عمومی آزمایشی', exact: true }).click();
   await expect(page.getByText('این صفحه فقط اطلاعات کتابخانه را نمایش می‌دهد.')).toBeVisible();
+  await captureExactState(page, ['MK-358']);
+
   await expect(page.getByRole('button', { name: 'دریافت فایل منبع', exact: true })).toHaveCount(0);
   await expect(page.getByLabel('عنوان پیش‌نویس', { exact: true })).toHaveCount(0);
   expect(
@@ -137,6 +155,7 @@ test('assistant preflight preserves real source selection when retrieval is unav
     exact: true,
   });
   await selected.check();
+  await captureExactState(page, ['MK-366']);
   await real.getByRole('button', { name: 'بررسی دسترسی منابع', exact: true }).click();
   await expect(real.getByRole('status')).toContainText(
     'بازیابی محتوای منابع برای هوش مصنوعی هنوز روی سرور فعال نیست',
@@ -164,7 +183,7 @@ test('independent edit permission does not grant settings, members or invitation
   await expect(page.getByRole('link', { name: 'اعضا و مدیران', exact: true })).toHaveCount(0);
   await expect(page.getByRole('link', { name: 'نوع گروه', exact: true })).toHaveCount(0);
   await page.getByLabel('نام گروه', { exact: true }).fill('ویرایش مجاز');
-  await page.getByRole('button', { name: 'ذخیرهٔ اطلاعات', exact: true }).click();
+  await page.getByRole('button', { name: 'ذخیره اطلاعات گروه', exact: true }).click();
   await expect(page.getByRole('status')).toContainText('اطلاعات گفتگو ذخیره شد.');
 });
 test('conversation photo uses Ready file and opaque version; retry preserves one upload', async ({
@@ -176,11 +195,23 @@ test('conversation photo uses Ready file and opaque version; retry preserves one
   await login(context, 'Student', false);
   await page.goto(`/personal/messages/${group}/edit`);
   await page
+    .getByRole('banner')
+    .getByRole('button', { name: 'گزینه‌های بیشتر', exact: true })
+    .click();
+  await page
+    .getByRole('dialog')
+    .getByRole('button', { name: /عکس گروه/ })
+    .click();
+  await page
     .getByLabel('انتخاب تصویر جدید', { exact: true })
     .setInputFiles({ name: 'photo.png', mimeType: 'image/png', buffer: png });
+  await expect(page.getByAltText('پیش‌نمایش عکس گفتگو')).toBeVisible();
+  await captureExactState(page, ['MK-196']);
   await request.post(fixture + '/__test__/next-file-status', { data: { status: 'Pending' } });
   await page.getByRole('button', { name: 'ثبت عکس گفتگو', exact: true }).click();
-  await expect(page.getByRole('main').getByRole('alert')).toContainText('عکس هنوز آماده نشده');
+  await expect(
+    page.getByRole('dialog', { name: 'عکس گروه', exact: true }).getByRole('alert'),
+  ).toContainText('عکس هنوز آماده نشده');
   await request.post(fixture + '/__test__/ready-files');
   await request.post(fixture + '/__test__/fault', {
     data: { path: '/photo', method: 'PUT', status: 412 },
@@ -214,7 +245,7 @@ test('initial invitations are pending rather than active membership and use serv
   await login(context, 'Student', false);
   await page.goto('/personal/messages/new?kind=groups');
   await page.getByLabel('نام گروه', { exact: true }).fill('دعوت در انتظار');
-  await page.getByRole('button', { name: 'انتخاب مخاطبین', exact: true }).click();
+  await page.getByRole('button', { name: 'انتخاب افراد', exact: true }).click();
   await page.getByRole('checkbox').first().check();
   await page.getByRole('button', { name: 'ساخت گروه', exact: true }).click();
   await expect(page.getByLabel('نتیجه اعضای اولیه', { exact: true })).toContainText(
@@ -235,7 +266,10 @@ for (const role of ['Student', 'Teacher', 'Manager'])
   }) => {
     await login(context, role);
     await page.goto('/personal/resources');
-    await page.getByRole('combobox', { name: 'فضای منابع', exact: true }).selectOption('Class');
+    await page
+      .getByRole('radiogroup', { name: 'فضای منابع', exact: true })
+      .getByRole('radio', { name: 'کلاس‌ها', exact: true })
+      .check();
     await page
       .getByRole('combobox', { name: 'کلاس منبع', exact: true })
       .selectOption('00000000-0000-4000-8000-000000000002');
@@ -250,14 +284,14 @@ for (const role of ['Student', 'Teacher', 'Manager'])
       await page.goBack();
     }
     if (role === 'Manager') {
-      await mkdir('output/review/release-154c437', { recursive: true });
+      await mkdir(reviewPath('output/review/release-154c437'), { recursive: true });
       for (const width of [390, 834, 1440]) {
         await page.setViewportSize({ width, height: 900 });
         expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(
           true,
         );
         await page.screenshot({
-          path: `output/review/release-154c437/sources-${width}.png`,
+          path: reviewPath(`output/review/release-154c437/sources-${width}.png`),
           fullPage: true,
         });
       }
@@ -307,7 +341,7 @@ test('source version conflict keeps its uploaded file and requires explicit revi
   request,
 }) => {
   const session = await login(context, 'Student', false);
-  await page.goto('/personal/resources/' + source);
+  await page.goto('/personal/resources/' + source + '?view=versions');
   const editor = page.getByRole('region', { name: 'نسخهٔ جدید منبع', exact: true });
   await editor.getByLabel('دلیل ثبت', { exact: true }).fill('نسخهٔ تازه');
   await editor.getByLabel('فایل منبع', { exact: true }).setInputFiles(pdf);

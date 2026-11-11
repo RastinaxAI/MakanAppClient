@@ -1,5 +1,7 @@
 'use client';
-import '@/features/reference/bundles/features-personal-school-submission-flow';
+import { Textarea as NativeTextarea } from '@/components/ui/input';
+
+import { uiClass } from '@/components/v5/classes';
 
 import * as uiText from '@/content/fa';
 import { useAcademicScope } from './academic-scope';
@@ -185,7 +187,7 @@ function SubmissionEditor({
         <SchoolHeading title={uiText.text_a92abd249599} />
         <Card>
           {confirmed ? (
-            <div className={s.receipt}>
+            <div className={uiClass(s.receipt)}>
               <h2>{uiText.text_db45f95e898b}</h2>
               <p>
                 {uiText.text_911bee269a92}
@@ -220,16 +222,16 @@ function SubmissionEditor({
       </>
     );
   return (
-    <div className={r.workspace} data-school-form data-submission-workspace>
-      <header className={r.heading}>
+    <div className={uiClass(r.workspace)} data-school-form data-submission-workspace>
+      <header className={uiClass(r.heading)}>
         <div>
-          <span className={r.eyebrow}>{uiText.text_d7be740f493d}</span>
+          <span className={uiClass(r.eyebrow)}>{uiText.text_d7be740f493d}</span>
           <h1>{stage === 'review' ? uiText.text_9e0ab9989a34 : uiText.text_8936687a1593}</h1>
-          <p className={r.muted}>{uiText.text_fdda4c37fb68}</p>
+          <p className={uiClass(r.muted)}>{uiText.text_fdda4c37fb68}</p>
         </div>
         <PageBack href={schoolRoutes.assignment(value.assignmentId)} />
       </header>
-      <ol className={r.steps} aria-label={uiText.text_f863f1753616}>
+      <ol className={uiClass(r.steps)} aria-label={uiText.text_f863f1753616}>
         {[uiText.text_08ca6c6d28a0, uiText.text_8315dc440d8b, uiText.text_db72fa383443].map(
           (title, i) => (
             <li
@@ -242,18 +244,18 @@ function SubmissionEditor({
           ),
         )}
       </ol>
-      <div className={r.layout}>
-        <div className={r.mainColumn}>
-          <section className={r.panel}>
-            <div className={r.panelTitle}>
+      <div className={uiClass(r.layout)}>
+        <div className={uiClass(r.mainColumn)}>
+          <section className={uiClass(r.panel)}>
+            <div className={uiClass(r.panelTitle)}>
               <FilePenLine size={22} />
               <h2>{stage === 'answer' ? uiText.text_303aed19e640 : uiText.text_de52acd1c81a}</h2>
             </div>
             {stage === 'answer' ? (
               <>
-                <div className={r.answerField}>
+                <div className={uiClass(r.answerField)}>
                   <Field label={uiText.text_e9579f397088}>
-                    <textarea
+                    <NativeTextarea
                       rows={10}
                       value={draft.text}
                       disabled={fileBusy || a.busy || !draft.ready || value.status !== 'Draft'}
@@ -265,7 +267,7 @@ function SubmissionEditor({
                 {draft.baseVersion !== value.rowVersion && (
                   <p role="alert">{uiText.text_268a03f27704}</p>
                 )}
-                <div className={r.editorBar} data-dirty={draft.dirty}>
+                <div className={uiClass(r.editorBar)} data-dirty={draft.dirty}>
                   <span>
                     {draft.dirty ? <Save size={15} /> : <CheckCircle2 size={15} />}
                     {draft.dirty ? uiText.text_384ce99126d0 : uiText.text_06746a73b060}
@@ -275,7 +277,7 @@ function SubmissionEditor({
                     {uiText.text_c3e146dab247}
                   </span>
                 </div>
-                <div className={r.actions}>
+                <div className={uiClass(r.actions)}>
                   <Button
                     variant="outline"
                     disabled={a.busy || fileBusy || !draft.ready || !draft.dirty}
@@ -305,7 +307,7 @@ function SubmissionEditor({
                     {uiText.text_2f5412466e47}
                   </Button>
                 </div>
-                <p className={s.hint}>
+                <p className={uiClass(s.hint)}>
                   {draft.dirty
                     ? uiText.text_9d50c961e634
                     : canReviewSubmission(value, draft.text, false)
@@ -315,11 +317,11 @@ function SubmissionEditor({
               </>
             ) : (
               <>
-                <p className={r.reviewText} dir="auto">
+                <p className={uiClass(r.reviewText)} dir="auto">
                   {value.answerText || uiText.text_c524c2bf4099}
                 </p>
-                <p className={s.hint}>{uiText.text_6f26079ce668}</p>
-                <div className={r.actions}>
+                <p className={uiClass(s.hint)}>{uiText.text_6f26079ce668}</p>
+                <div className={uiClass(r.actions)}>
                   <Button asChild variant="outline">
                     <Link href={schoolRoutes.answer(value.assignmentId) + query}>
                       {uiText.text_765ece4bf409}
@@ -353,7 +355,7 @@ function SubmissionEditor({
             }}
           />
         </div>
-        <aside className={r.sidebar} aria-label={uiText.text_a386b4b3f356}>
+        <aside className={uiClass(r.sidebar)} aria-label={uiText.text_a386b4b3f356}>
           <AssignmentBrief value={value} />
           <section>
             <h2>{uiText.text_7b00ccc5488b}</h2>
@@ -374,7 +376,7 @@ function SubmissionEditor({
                 <dd>{uiText.text_410c47c7f8b7}</dd>
               </div>
             </dl>
-            <p className={r.note}>{uiText.text_a432b50514c8}</p>
+            <p className={uiClass(r.note)}>{uiText.text_a432b50514c8}</p>
           </section>
         </aside>
       </div>
@@ -409,12 +411,12 @@ function AssignmentBrief({ value }: { value: S['SubmissionAttemptResult'] }) {
           {q.data.versionId === value.assignmentVersionId ? (
             <details>
               <summary>{uiText.text_1d3c268468ff}</summary>
-              <p className={r.instructions} dir="auto">
+              <p className={uiClass(r.instructions)} dir="auto">
                 {q.data.description}
               </p>
             </details>
           ) : (
-            <p className={r.muted}>{uiText.text_f5687ebf71ed}</p>
+            <p className={uiClass(r.muted)}>{uiText.text_f5687ebf71ed}</p>
           )}
         </>
       )}

@@ -12,15 +12,15 @@
   gap: 12px;
   min-height: 48px;
   padding: 10px 12px;
-  border-radius: 12px;
+  border-radius: 10px;
   text-decoration: none;
   color: var(--muted);
   min-width: 0;
   text-align: start;
-  font-size: 14px;
+  font-size: calc(14px * var(--text-scale, 1));
 }
 .item[aria-current='page'] {
-  background: var(--soft);
+  background: var(--primary-soft);
   color: var(--primary);
   font-weight: 700;
 }
@@ -32,13 +32,13 @@
   height: 24px;
 }
 .glyph svg {
-  width: 24px;
-  height: 24px;
+  width: 21px;
+  height: 21px;
   stroke-width: 1.8;
 }
 .label {
   min-width: 0;
-  font-size: 14px;
+  font-size: calc(14px * var(--text-scale, 1));
   line-height: 1.6;
   overflow-wrap: anywhere;
 }
@@ -52,14 +52,14 @@
 .sidebar {
   display: flex;
   flex-direction: column;
-  gap: 7px;
+  gap: 8px;
 }
 .dock,
 .adaptive {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   min-height: 74px;
-  height: calc(74px + env(safe-area-inset-bottom));
+  height: auto;
   background: var(--surface);
   border-top: 1px solid var(--border);
   padding: 6px 7px calc(8px + env(safe-area-inset-bottom));
@@ -77,8 +77,28 @@
 }
 .dock .label,
 .adaptive .label {
-  font-size: 10px;
+  font-size: calc(10px * var(--text-scale, 1));
   line-height: 1.4;
+}
+@media (max-width: 767px) {
+  :global(:root[data-reading='large']) .dock,
+  :global(:root[data-reading='large']) .adaptive {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 4px;
+  }
+  :global(:root[data-reading='large']) :is(.dock, .adaptive) .item {
+    grid-column: span 2;
+    min-height: 68px;
+    padding: 6px 4px;
+  }
+  :global(:root[data-reading='large']) :is(.dock, .adaptive) .item:nth-last-child(-n + 2) {
+    grid-column: span 3;
+  }
+  :global(:root[data-reading='large']) :is(.dock, .adaptive) .label {
+    white-space: normal;
+    overflow-wrap: normal;
+    line-height: 1.45;
+  }
 }
 .dock .glyph,
 .adaptive .glyph {
@@ -132,7 +152,7 @@
   .adaptive {
     width: 208px;
     padding: 90px 14px 20px;
-    gap: 7px;
+    gap: 8px;
   }
   .adaptive .item {
     flex-direction: row;
@@ -143,7 +163,7 @@
   }
   .adaptive .label {
     display: block;
-    font-size: 14px;
+    font-size: calc(14px * var(--text-scale, 1));
   }
   .adaptive .glyph {
     width: 24px;

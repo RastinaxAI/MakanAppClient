@@ -1,0 +1,1152 @@
+{
+  "createdAtUtc": "2026-11-10T22:48:04.443545+00:00",
+  "mode": "Static read-only dependency audit for deletion decisions; product build/tests were separate validation.",
+  "audit": {
+    "createdAt": "2026-11-10T22:31:59.978Z",
+    "scope": "/home/omidreza-bagheriyan/Desktop/MakanApp/testapp",
+    "mode": "static-read-only",
+    "coverage": [
+      "Next conventions including proxy/instrumentation and App Router entries",
+      "static imports, exports, literal dynamic imports, aliases and barrels",
+      "CSS url()/font and public URL strings retained as text inputs",
+      "service worker, manifests, configuration, npm scripts, Docker/Compose, tests and fixtures",
+      "documentation links are consumers, not necessarily runtime imports"
+    ],
+    "limitations": [
+      "Nonliteral imports and runtime data URLs are retained for manual review.",
+      "No file is deleted by this audit. Unclassified is not unused.",
+      "Private session directories, secret contents, installed dependency trees and active build output are not traversed."
+    ],
+    "groups": {
+      "protected-private": {
+        "files": 4,
+        "bytes": 575
+      },
+      "configuration-launcher": {
+        "files": 32,
+        "bytes": 177074
+      },
+      "active-build-preserve": {
+        "files": 1,
+        "bytes": 0
+      },
+      "runtime": {
+        "files": 377,
+        "bytes": 2693778
+      },
+      "contract-codegen": {
+        "files": 6,
+        "bytes": 5822209
+      },
+      "design-reference": {
+        "files": 54,
+        "bytes": 56084598
+      },
+      "documentation-evidence": {
+        "files": 517,
+        "bytes": 77702804
+      },
+      "installed-dependency": {
+        "files": 1,
+        "bytes": 0
+      },
+      "visual-evidence-preserve": {
+        "files": 27780,
+        "bytes": 1204303578
+      },
+      "symlink-preserve": {
+        "files": 1,
+        "bytes": 78
+      },
+      "asset": {
+        "files": 17,
+        "bytes": 2494431
+      },
+      "tool": {
+        "files": 84,
+        "bytes": 868407
+      },
+      "unclassified-preserve": {
+        "files": 117,
+        "bytes": 8091962
+      },
+      "test-fixture": {
+        "files": 233,
+        "bytes": 1556563
+      },
+      "working-evidence-review-before-removal": {
+        "files": 2879,
+        "bytes": 65878709
+      }
+    },
+    "candidates": [
+      {
+        "path": "web/src/design/v5-author.css",
+        "bytes": null,
+        "sha256": null,
+        "importedBy": [],
+        "mentions": [
+          {
+            "path": "web/docs/design/exact-v1/session-native-build70-history.json",
+            "kind": "documentation-evidence"
+          },
+          {
+            "path": "web/docs/design/exact-v1/session-native.json",
+            "kind": "documentation-evidence"
+          },
+          {
+            "path": "web/docs/prompts/20261110-css-diagnosis.json",
+            "kind": "documentation-evidence"
+          },
+          {
+            "path": "web/docs/prompts/MakanApp_PDF_Implementation_And_Static_Cleanup_FA.txt",
+            "kind": "documentation-evidence"
+          },
+          {
+            "path": "web/docs/quality/CSS_STATIC_CLEANUP_20261110.json",
+            "kind": "documentation-evidence"
+          },
+          {
+            "path": "web/docs/quality/STATIC_USAGE_20261110.json",
+            "kind": "documentation-evidence"
+          },
+          {
+            "path": "web/scripts/audit-static-usage.mjs",
+            "kind": "tool"
+          },
+          {
+            "path": "web/tests/unit/v5-design.test.ts",
+            "kind": "test-fixture"
+          }
+        ]
+      },
+      {
+        "path": "web/src/design/v5-product.css",
+        "bytes": null,
+        "sha256": null,
+        "importedBy": [],
+        "mentions": [
+          {
+            "path": "web/docs/design/exact-v1/changed-files.json",
+            "kind": "documentation-evidence"
+          },
+          {
+            "path": "web/docs/design/exact-v1/exam-native.json",
+            "kind": "documentation-evidence"
+          },
+          {
+            "path": "web/docs/integration/20261110-assistant-mobile-repair.md",
+            "kind": "documentation-evidence"
+          },
+          {
+            "path": "web/docs/maintenance/20261110-delivery.md",
+            "kind": "documentation-evidence"
+          },
+          {
+            "path": "web/docs/prompts/MakanApp_PDF_Implementation_And_Static_Cleanup_FA.txt",
+            "kind": "documentation-evidence"
+          },
+          {
+            "path": "web/docs/quality/ASSISTANT_MOBILE_REPAIR_20261110.json",
+            "kind": "documentation-evidence"
+          },
+          {
+            "path": "web/docs/quality/CSS_STATIC_CLEANUP_20261110.json",
+            "kind": "documentation-evidence"
+          },
+          {
+            "path": "web/docs/quality/EXACT_V5_20261107_CHECKS.json",
+            "kind": "documentation-evidence"
+          },
+          {
+            "path": "web/docs/quality/STATIC_USAGE_20261110.json",
+            "kind": "documentation-evidence"
+          },
+          {
+            "path": "web/scripts/audit-static-usage.mjs",
+            "kind": "tool"
+          },
+          {
+            "path": "web/tests/unit/v5-design.test.ts",
+            "kind": "test-fixture"
+          }
+        ]
+      },
+      {
+        "path": "web/scripts/build-v5-product-styles.mjs",
+        "bytes": null,
+        "sha256": null,
+        "importedBy": [],
+        "mentions": [
+          {
+            "path": "web/docs/design/exact-v1/session-native-build70-history.json",
+            "kind": "documentation-evidence"
+          },
+          {
+            "path": "web/docs/design/exact-v1/session-native.json",
+            "kind": "documentation-evidence"
+          },
+          {
+            "path": "web/docs/quality/CSS_STATIC_CLEANUP_20261110.json",
+            "kind": "documentation-evidence"
+          },
+          {
+            "path": "web/docs/quality/STATIC_USAGE_20261110.json",
+            "kind": "documentation-evidence"
+          },
+          {
+            "path": "web/scripts/audit-static-usage.mjs",
+            "kind": "tool"
+          }
+        ]
+      },
+      {
+        "path": "web/postcss.config.mjs",
+        "bytes": null,
+        "sha256": null,
+        "importedBy": [],
+        "mentions": [
+          {
+            "path": "web/docs/CLIENT_RECOVERY.json",
+            "kind": "documentation-evidence"
+          },
+          {
+            "path": "web/docs/quality/CSS_STATIC_CLEANUP_20261110.json",
+            "kind": "documentation-evidence"
+          },
+          {
+            "path": "web/docs/quality/FINAL_RESULTS.json",
+            "kind": "documentation-evidence"
+          },
+          {
+            "path": "web/docs/quality/PROJECT_CLEANUP_20261106.json",
+            "kind": "documentation-evidence"
+          },
+          {
+            "path": "web/docs/quality/STATIC_USAGE_20261110.json",
+            "kind": "documentation-evidence"
+          },
+          {
+            "path": "web/docs/quality/test-attempts/first-clean-checkout.json",
+            "kind": "documentation-evidence"
+          },
+          {
+            "path": "web/scripts/audit-static-usage.mjs",
+            "kind": "tool"
+          }
+        ]
+      }
+    ],
+    "nonliteralImports": [
+      {
+        "from": "web/scripts/build-public-brand.mjs",
+        "line": 8,
+        "kind": "nonliteral-import-review"
+      }
+    ],
+    "detailedInventory": {
+      "path": "/tmp/makan-v51-20261111/STATIC_USAGE.inventory.json.gz",
+      "sha256": "e179cb29daea8cd812b3228d392fdce7b553655b538f62061b6de1842a35d256",
+      "bytes": 324839
+    },
+    "unclassifiedRetained": [
+      {
+        "path": "web/test-results/assistant-theme/assistant-dark-1440.png",
+        "category": "unclassified-preserve",
+        "bytes": 90650
+      },
+      {
+        "path": "web/test-results/assistant-theme/assistant-dark-390.png",
+        "category": "unclassified-preserve",
+        "bytes": 48093
+      },
+      {
+        "path": "web/test-results/assistant-theme/assistant-dark-834.png",
+        "category": "unclassified-preserve",
+        "bytes": 74954
+      },
+      {
+        "path": "web/test-results/assistant-theme/chat-dark-1440.png",
+        "category": "unclassified-preserve",
+        "bytes": 94172
+      },
+      {
+        "path": "web/test-results/assistant-theme/chat-dark-390.png",
+        "category": "unclassified-preserve",
+        "bytes": 39268
+      },
+      {
+        "path": "web/test-results/assistant-theme/chat-dark-834.png",
+        "category": "unclassified-preserve",
+        "bytes": 67188
+      },
+      {
+        "path": "web/test-results/assistant-theme/education-dark-1440.png",
+        "category": "unclassified-preserve",
+        "bytes": 82455
+      },
+      {
+        "path": "web/test-results/assistant-theme/education-dark-390.png",
+        "category": "unclassified-preserve",
+        "bytes": 45964
+      },
+      {
+        "path": "web/test-results/assistant-theme/education-dark-834.png",
+        "category": "unclassified-preserve",
+        "bytes": 67955
+      },
+      {
+        "path": "web/test-results/assistant-theme/profile-dark-1440.png",
+        "category": "unclassified-preserve",
+        "bytes": 69425
+      },
+      {
+        "path": "web/test-results/assistant-theme/profile-dark-390.png",
+        "category": "unclassified-preserve",
+        "bytes": 42383
+      },
+      {
+        "path": "web/test-results/assistant-theme/profile-dark-834.png",
+        "category": "unclassified-preserve",
+        "bytes": 53774
+      },
+      {
+        "path": "web/test-results/browser/payment-recovery-a-rate-li-482a4-intent-on-an-explicit-click/error-context.md",
+        "category": "unclassified-preserve",
+        "bytes": 3599
+      },
+      {
+        "path": "web/test-results/browser/payment-recovery-a-rate-li-482a4-intent-on-an-explicit-click/test-failed-1.png",
+        "category": "unclassified-preserve",
+        "bytes": 58151
+      },
+      {
+        "path": "web/test-results/browser/payment-recovery-a-rate-li-482a4-intent-on-an-explicit-click/trace.zip",
+        "category": "unclassified-preserve",
+        "bytes": 392921
+      },
+      {
+        "path": "web/test-results/browser/payment-recovery-new-initi-2d6fa-annot-create-another-charge/error-context.md",
+        "category": "unclassified-preserve",
+        "bytes": 3599
+      },
+      {
+        "path": "web/test-results/browser/payment-recovery-new-initi-2d6fa-annot-create-another-charge/test-failed-1.png",
+        "category": "unclassified-preserve",
+        "bytes": 58151
+      },
+      {
+        "path": "web/test-results/browser/payment-recovery-new-initi-2d6fa-annot-create-another-charge/trace.zip",
+        "category": "unclassified-preserve",
+        "bytes": 408512
+      },
+      {
+        "path": "web/test-results/browser/payment-recovery-return-qu-db30d-t-without-creating-a-charge/error-context.md",
+        "category": "unclassified-preserve",
+        "bytes": 2548
+      },
+      {
+        "path": "web/test-results/browser/payment-recovery-return-qu-db30d-t-without-creating-a-charge/test-failed-1.png",
+        "category": "unclassified-preserve",
+        "bytes": 38125
+      },
+      {
+        "path": "web/test-results/browser/payment-recovery-return-qu-db30d-t-without-creating-a-charge/trace.zip",
+        "category": "unclassified-preserve",
+        "bytes": 334960
+      },
+      {
+        "path": "web/test-results/browser-results.json",
+        "category": "unclassified-preserve",
+        "bytes": 96541
+      },
+      {
+        "path": "web/test-results/manager-workspace/class-1440.png",
+        "category": "unclassified-preserve",
+        "bytes": 83704
+      },
+      {
+        "path": "web/test-results/manager-workspace/class-390.png",
+        "category": "unclassified-preserve",
+        "bytes": 50322
+      },
+      {
+        "path": "web/test-results/manager-workspace/class-834.png",
+        "category": "unclassified-preserve",
+        "bytes": 64877
+      },
+      {
+        "path": "web/test-results/manager-workspace/class-controls-1440.png",
+        "category": "unclassified-preserve",
+        "bytes": 83704
+      },
+      {
+        "path": "web/test-results/manager-workspace/class-controls-390.png",
+        "category": "unclassified-preserve",
+        "bytes": 50322
+      },
+      {
+        "path": "web/test-results/manager-workspace/class-controls-834.png",
+        "category": "unclassified-preserve",
+        "bytes": 64877
+      },
+      {
+        "path": "web/test-results/manager-workspace/dashboard-1440.png",
+        "category": "unclassified-preserve",
+        "bytes": 104733
+      },
+      {
+        "path": "web/test-results/manager-workspace/dashboard-390.png",
+        "category": "unclassified-preserve",
+        "bytes": 59031
+      },
+      {
+        "path": "web/test-results/manager-workspace/dashboard-834.png",
+        "category": "unclassified-preserve",
+        "bytes": 87339
+      },
+      {
+        "path": "web/test-results/navigation-experience/assistant-1440.png",
+        "category": "unclassified-preserve",
+        "bytes": 46027
+      },
+      {
+        "path": "web/test-results/navigation-experience/assistant-390.png",
+        "category": "unclassified-preserve",
+        "bytes": 27221
+      },
+      {
+        "path": "web/test-results/navigation-experience/assistant-834.png",
+        "category": "unclassified-preserve",
+        "bytes": 31031
+      },
+      {
+        "path": "web/test-results/navigation-experience/pwa-offer-390.png",
+        "category": "unclassified-preserve",
+        "bytes": 55528
+      },
+      {
+        "path": "web/test-results/preferences-weekly/preferences-1440.png",
+        "category": "unclassified-preserve",
+        "bytes": 85481
+      },
+      {
+        "path": "web/test-results/preferences-weekly/preferences-320.png",
+        "category": "unclassified-preserve",
+        "bytes": 40568
+      },
+      {
+        "path": "web/test-results/preferences-weekly/preferences-390.png",
+        "category": "unclassified-preserve",
+        "bytes": 41289
+      },
+      {
+        "path": "web/test-results/preferences-weekly/preferences-834.png",
+        "category": "unclassified-preserve",
+        "bytes": 68921
+      },
+      {
+        "path": "web/test-results/preferences-weekly/preferences-dark-390.png",
+        "category": "unclassified-preserve",
+        "bytes": 42553
+      },
+      {
+        "path": "web/test-results/preferences-weekly/weekly-1440.png",
+        "category": "unclassified-preserve",
+        "bytes": 98829
+      },
+      {
+        "path": "web/test-results/preferences-weekly/weekly-320.png",
+        "category": "unclassified-preserve",
+        "bytes": 46602
+      },
+      {
+        "path": "web/test-results/preferences-weekly/weekly-390.png",
+        "category": "unclassified-preserve",
+        "bytes": 49201
+      },
+      {
+        "path": "web/test-results/preferences-weekly/weekly-834.png",
+        "category": "unclassified-preserve",
+        "bytes": 87140
+      },
+      {
+        "path": "web/test-results/production/studio-runtime-ordinary-ru-ca224-s-sample-sources-or-answers/ordinary-assistant.png",
+        "category": "unclassified-preserve",
+        "bytes": 73615
+      },
+      {
+        "path": "web/test-results/production/studio-runtime-ordinary-ru-ca224-s-sample-sources-or-answers/trace.zip",
+        "category": "unclassified-preserve",
+        "bytes": 373885
+      },
+      {
+        "path": "web/test-results/production-results.json",
+        "category": "unclassified-preserve",
+        "bytes": 3890
+      },
+      {
+        "path": "web/test-results/profile-school-files/message-menu-mobile.png",
+        "category": "unclassified-preserve",
+        "bytes": 42491
+      },
+      {
+        "path": "web/test-results/profile-school-files/profile-1440.png",
+        "category": "unclassified-preserve",
+        "bytes": 86079
+      },
+      {
+        "path": "web/test-results/profile-school-files/profile-390.png",
+        "category": "unclassified-preserve",
+        "bytes": 44487
+      },
+      {
+        "path": "web/test-results/profile-school-files/profile-834.png",
+        "category": "unclassified-preserve",
+        "bytes": 67815
+      },
+      {
+        "path": "web/test-results/profile-school-files/profile-identity-mobile.png",
+        "category": "unclassified-preserve",
+        "bytes": 39365
+      },
+      {
+        "path": "web/test-results/profile-school-files/profile-logout-mobile.png",
+        "category": "unclassified-preserve",
+        "bytes": 39303
+      },
+      {
+        "path": "web/test-results/profile-school-files/receipt-mobile.png",
+        "category": "unclassified-preserve",
+        "bytes": 26404
+      },
+      {
+        "path": "web/test-results/profile-school-files/school-search.png",
+        "category": "unclassified-preserve",
+        "bytes": 56734
+      },
+      {
+        "path": "web/test-results/reference-match/A01-actual-1440.png",
+        "category": "unclassified-preserve",
+        "bytes": 29257
+      },
+      {
+        "path": "web/test-results/reference-match/A01-actual-390.png",
+        "category": "unclassified-preserve",
+        "bytes": 23182
+      },
+      {
+        "path": "web/test-results/reference-match/A01-actual-834.png",
+        "category": "unclassified-preserve",
+        "bytes": 27349
+      },
+      {
+        "path": "web/test-results/reference-match/A04-actual-1440.png",
+        "category": "unclassified-preserve",
+        "bytes": 55315
+      },
+      {
+        "path": "web/test-results/reference-match/A04-actual-390.png",
+        "category": "unclassified-preserve",
+        "bytes": 21894
+      },
+      {
+        "path": "web/test-results/reference-match/A04-actual-834.png",
+        "category": "unclassified-preserve",
+        "bytes": 41619
+      },
+      {
+        "path": "web/test-results/reference-match/C01-actual-1440.png",
+        "category": "unclassified-preserve",
+        "bytes": 102786
+      },
+      {
+        "path": "web/test-results/reference-match/C01-actual-390.png",
+        "category": "unclassified-preserve",
+        "bytes": 29439
+      },
+      {
+        "path": "web/test-results/reference-match/C01-actual-834.png",
+        "category": "unclassified-preserve",
+        "bytes": 75356
+      },
+      {
+        "path": "web/test-results/reference-match/C03-actual-1440.png",
+        "category": "unclassified-preserve",
+        "bytes": 102786
+      },
+      {
+        "path": "web/test-results/reference-match/C03-actual-390.png",
+        "category": "unclassified-preserve",
+        "bytes": 43277
+      },
+      {
+        "path": "web/test-results/reference-match/C03-actual-834.png",
+        "category": "unclassified-preserve",
+        "bytes": 75356
+      },
+      {
+        "path": "web/test-results/reference-match/M01-actual-1440.png",
+        "category": "unclassified-preserve",
+        "bytes": 102816
+      },
+      {
+        "path": "web/test-results/reference-match/M01-actual-390.png",
+        "category": "unclassified-preserve",
+        "bytes": 59437
+      },
+      {
+        "path": "web/test-results/reference-match/M01-actual-834.png",
+        "category": "unclassified-preserve",
+        "bytes": 87910
+      },
+      {
+        "path": "web/test-results/reference-match/P02-actual-1440.png",
+        "category": "unclassified-preserve",
+        "bytes": 92014
+      },
+      {
+        "path": "web/test-results/reference-match/P02-actual-390.png",
+        "category": "unclassified-preserve",
+        "bytes": 50556
+      },
+      {
+        "path": "web/test-results/reference-match/P02-actual-834.png",
+        "category": "unclassified-preserve",
+        "bytes": 77418
+      },
+      {
+        "path": "web/test-results/reference-match/S01-actual-1440.png",
+        "category": "unclassified-preserve",
+        "bytes": 79624
+      },
+      {
+        "path": "web/test-results/reference-match/S01-actual-390.png",
+        "category": "unclassified-preserve",
+        "bytes": 44394
+      },
+      {
+        "path": "web/test-results/reference-match/S01-actual-834.png",
+        "category": "unclassified-preserve",
+        "bytes": 64375
+      },
+      {
+        "path": "web/test-results/reference-match/S13-actual-1440.png",
+        "category": "unclassified-preserve",
+        "bytes": 92838
+      },
+      {
+        "path": "web/test-results/reference-match/S13-actual-390.png",
+        "category": "unclassified-preserve",
+        "bytes": 42865
+      },
+      {
+        "path": "web/test-results/reference-match/S13-actual-834.png",
+        "category": "unclassified-preserve",
+        "bytes": 61306
+      },
+      {
+        "path": "web/test-results/reference-match/T02-actual-1440.png",
+        "category": "unclassified-preserve",
+        "bytes": 83425
+      },
+      {
+        "path": "web/test-results/reference-match/T02-actual-390.png",
+        "category": "unclassified-preserve",
+        "bytes": 33738
+      },
+      {
+        "path": "web/test-results/reference-match/T02-actual-834.png",
+        "category": "unclassified-preserve",
+        "bytes": 44982
+      },
+      {
+        "path": "web/test-results/reference-match/T03-actual-1440.png",
+        "category": "unclassified-preserve",
+        "bytes": 85312
+      },
+      {
+        "path": "web/test-results/reference-match/T03-actual-390.png",
+        "category": "unclassified-preserve",
+        "bytes": 36465
+      },
+      {
+        "path": "web/test-results/reference-match/T03-actual-834.png",
+        "category": "unclassified-preserve",
+        "bytes": 48478
+      },
+      {
+        "path": "web/test-results/reference-match/T05-actual-1440.png",
+        "category": "unclassified-preserve",
+        "bytes": 60802
+      },
+      {
+        "path": "web/test-results/reference-match/T05-actual-390.png",
+        "category": "unclassified-preserve",
+        "bytes": 19728
+      },
+      {
+        "path": "web/test-results/reference-match/T05-actual-834.png",
+        "category": "unclassified-preserve",
+        "bytes": 31176
+      },
+      {
+        "path": "web/test-results/reference-match/U01-actual-1440.png",
+        "category": "unclassified-preserve",
+        "bytes": 84378
+      },
+      {
+        "path": "web/test-results/reference-match/U01-actual-390.png",
+        "category": "unclassified-preserve",
+        "bytes": 37531
+      },
+      {
+        "path": "web/test-results/reference-match/U01-actual-834.png",
+        "category": "unclassified-preserve",
+        "bytes": 70167
+      },
+      {
+        "path": "web/test-results/reference-match/W01-actual-1440.png",
+        "category": "unclassified-preserve",
+        "bytes": 50782
+      },
+      {
+        "path": "web/test-results/reference-match/W01-actual-390.png",
+        "category": "unclassified-preserve",
+        "bytes": 43394
+      },
+      {
+        "path": "web/test-results/reference-match/W01-actual-834.png",
+        "category": "unclassified-preserve",
+        "bytes": 48381
+      },
+      {
+        "path": "web/test-results/reference-match/geometry.json",
+        "category": "unclassified-preserve",
+        "bytes": 542
+      },
+      {
+        "path": "web/test-results/school-redesign/class-mobile.png",
+        "category": "unclassified-preserve",
+        "bytes": 49316
+      },
+      {
+        "path": "web/test-results/school-redesign/invitations-mobile.png",
+        "category": "unclassified-preserve",
+        "bytes": 44374
+      },
+      {
+        "path": "web/test-results/school-redesign/overview-1440.png",
+        "category": "unclassified-preserve",
+        "bytes": 96888
+      },
+      {
+        "path": "web/test-results/school-redesign/overview-390.png",
+        "category": "unclassified-preserve",
+        "bytes": 54273
+      },
+      {
+        "path": "web/test-results/school-redesign/overview-834.png",
+        "category": "unclassified-preserve",
+        "bytes": 80054
+      },
+      {
+        "path": "web/test-results/school-redesign/profile-edit-1440.png",
+        "category": "unclassified-preserve",
+        "bytes": 79726
+      },
+      {
+        "path": "web/test-results/school-redesign/profile-edit-390.png",
+        "category": "unclassified-preserve",
+        "bytes": 32812
+      },
+      {
+        "path": "web/test-results/school-redesign/profile-edit-834.png",
+        "category": "unclassified-preserve",
+        "bytes": 44316
+      },
+      {
+        "path": "web/test-results/school-redesign/profile-footer-mobile.png",
+        "category": "unclassified-preserve",
+        "bytes": 32812
+      },
+      {
+        "path": "web/test-results/school-redesign/weekly-mobile.png",
+        "category": "unclassified-preserve",
+        "bytes": 39824
+      },
+      {
+        "path": "web/test-results/screenshots/education-1440.png",
+        "category": "unclassified-preserve",
+        "bytes": 83701
+      },
+      {
+        "path": "web/test-results/screenshots/education-390.png",
+        "category": "unclassified-preserve",
+        "bytes": 44777
+      },
+      {
+        "path": "web/test-results/screenshots/education-834.png",
+        "category": "unclassified-preserve",
+        "bytes": 65752
+      },
+      {
+        "path": "web/test-results/screenshots/manager-desktop-1024.png",
+        "category": "unclassified-preserve",
+        "bytes": 65612
+      },
+      {
+        "path": "web/test-results/workspace-child-attachments/parent-1440.png",
+        "category": "unclassified-preserve",
+        "bytes": 70297
+      },
+      {
+        "path": "web/test-results/workspace-child-attachments/parent-390.png",
+        "category": "unclassified-preserve",
+        "bytes": 29424
+      },
+      {
+        "path": "web/test-results/workspace-child-attachments/parent-834.png",
+        "category": "unclassified-preserve",
+        "bytes": 55240
+      },
+      {
+        "path": "web/test-results/workspace-child-attachments/teacher-files-1440.png",
+        "category": "unclassified-preserve",
+        "bytes": 74808
+      },
+      {
+        "path": "web/test-results/workspace-child-attachments/teacher-files-390.png",
+        "category": "unclassified-preserve",
+        "bytes": 29561
+      },
+      {
+        "path": "web/test-results/workspace-child-attachments/teacher-files-834.png",
+        "category": "unclassified-preserve",
+        "bytes": 40217
+      },
+      {
+        "path": "web/test-results/workspace-child-attachments/teacher-received-files.png",
+        "category": "unclassified-preserve",
+        "bytes": 71356
+      },
+      {
+        "path": "web/tsconfig.tsbuildinfo",
+        "category": "unclassified-preserve",
+        "bytes": 247616
+      }
+    ]
+  },
+  "sourceBackup": {
+    "path": "/home/omidreza-bagheriyan/Desktop/MakanApp-cleanup-backup-2026-11-11/v51/before-v51-source.tar.gz",
+    "sha256": "2f02dd280f4f94a5f4faaf8946ea2e4f12047ab5a90b5413872e2373fd5f5a1c",
+    "recovery": "Extract only required paths into a temporary directory and review against current source. Never overwrite private env, sessions, or sibling applications."
+  },
+  "newRuntimeSourceFiles": 0,
+  "newDependencies": 0,
+  "deletedWholeFilesThisStage": [],
+  "removedCode": [
+    "Retired V9 login-card styling and duplicated login heading.",
+    "Unused inbox empty-conversation panel styling.",
+    "Replaced conflicting style ownership with component-specific V5 rules; breakpoint variants retained."
+  ],
+  "retained": [
+    "V5/V5.1 design references and source",
+    "Existing tests and fixture contracts, including five explicit future-release fixme tests",
+    "Unclassified root files, owner sibling, local env and session state",
+    "Required active production build output and existing evidence"
+  ],
+  "deploymentExclusions": {
+    "method": "Separate Next standalone artifact, not deleting source/documentation as a size optimization",
+    "archiveBytes": 18477052,
+    "excluded": [
+      "design references",
+      "QA evidence",
+      "source backup",
+      "private env files",
+      "local sessions",
+      "development tooling"
+    ]
+  },
+  "sourceChanges": [
+    {
+      "path": "src/components/ui/button.module.css",
+      "beforeBytes": 1348,
+      "afterBytes": 1348,
+      "beforeSha256": "0bce821564428b6a9d02365a8ad49f14840c3395ee48e34fa7383a86ba4e09d3",
+      "afterSha256": "45f1bbb629079b9fed5b11a5eb97e4de0bf66b499c8fbcb11effb6cce735ae9b"
+    },
+    {
+      "path": "src/components/ui/dialog.module.css",
+      "beforeBytes": 6865,
+      "afterBytes": 6942,
+      "beforeSha256": "ffe2bcafa3384c6790eba9ba99e5e82d82e1a1b842018df822437114458776a8",
+      "afterSha256": "a3aef28973bd337426ff70aae14d7ad083293f7265205d51ee7bbbee8f80d3bc"
+    },
+    {
+      "path": "src/components/ui/field.module.css",
+      "beforeBytes": 6719,
+      "afterBytes": 6715,
+      "beforeSha256": "ebdbfa2dad3acf62110deb05bef914825e47cf6d09e9098a5f0bb96e8ebe377d",
+      "afterSha256": "6cea3a9bd20c4b754ef389a30bfe53b75af1426403d60477a286e5de381a38c8"
+    },
+    {
+      "path": "src/components/v4/page.tsx",
+      "beforeBytes": 6154,
+      "afterBytes": 6696,
+      "beforeSha256": "2afef63159d4aeeffd9bce6f8e6e45b3367812437fb1cd64cfc5a422400966f2",
+      "afterSha256": "4abfbdcbdce7d3985e3d32be3815fe184aafdc32d82678996fd6c76359534751"
+    },
+    {
+      "path": "src/components/v5/form-actions.tsx",
+      "beforeBytes": 1762,
+      "afterBytes": 2729,
+      "beforeSha256": "ba412c18112a4e84a69909a89c4f2ace20e5bc6fe7b73821b81b267668830c73",
+      "afterSha256": "05e763ad8785e2a6a78fd427ee5a086e627c05ad8972b9450efffc0065a3ec4e"
+    },
+    {
+      "path": "src/components/v5/foundations.module.css",
+      "beforeBytes": 49378,
+      "afterBytes": 48790,
+      "beforeSha256": "2d6240d7146986f65da8190593ed11c0d8011fe9b73bba2309f2fe038301b485",
+      "afterSha256": "8ae37c2d9ef0778ae39ea4be3ed5dea9f83551ee598ac3ea3d76998db151ce08"
+    },
+    {
+      "path": "src/components/v5/frame.module.css",
+      "beforeBytes": 5656,
+      "afterBytes": 7145,
+      "beforeSha256": "3f067ba5a130ac4a2f4424761a52274a66d9b000d22591a7705134f195aa1dc9",
+      "afterSha256": "80cb8d8a8d57b27377492b9bf3b8435145f079ed3f12796b10d56cc8aa722846"
+    },
+    {
+      "path": "src/components/v5/scene.module.css",
+      "beforeBytes": 3271,
+      "afterBytes": 4684,
+      "beforeSha256": "08a62755d637313387185835b03e28688fe465fde93c3c98f0718a8dc14d346b",
+      "afterSha256": "88fb5b8a44db6ca215c45c4cf9b58772c7de8287b3d9109b350802f9465d8920"
+    },
+    {
+      "path": "src/components/v5/scene.tsx",
+      "beforeBytes": 8317,
+      "afterBytes": 9545,
+      "beforeSha256": "7fe2d86026b4ac15c73fda2078bc626ce23099956758f4206c6f48fde80b2b94",
+      "afterSha256": "6639b8c8a1b0566747b0f18298564958710d74d73a7b04b77b0d98e56a9c2fd4"
+    },
+    {
+      "path": "src/content/fa.ts",
+      "beforeBytes": 664663,
+      "afterBytes": 666632,
+      "beforeSha256": "a0cb2f498bfbd1b6291d5d9bac989af30fc339370d5ed2989a683fc7587655fd",
+      "afterSha256": "537453c743d937a455ac711262aeb4cc076ae519b9033faaee8ee5ac9678f639"
+    },
+    {
+      "path": "src/design/tokens.css",
+      "beforeBytes": 3540,
+      "afterBytes": 3540,
+      "beforeSha256": "37a01afc5bd67020d153e1db6566a2a26a8659872a1752bfc2ebd9941986449f",
+      "afterSha256": "a9d289d5d7ac2e72fb1cbf9ebc81f2f31ea48652adb6fb3541eefed3ffa082f6"
+    },
+    {
+      "path": "src/features/auth/login.module.css",
+      "beforeBytes": 3102,
+      "afterBytes": 3246,
+      "beforeSha256": "e62d160701160a2a706bb1cb561bb47806c1607aa85f2502a52cad2e3b1a71db",
+      "afterSha256": "eb500800002e72f722335f1f5e2145b502f799ee9f8153ee8e79901701515ac9"
+    },
+    {
+      "path": "src/features/auth/login.tsx",
+      "beforeBytes": 14898,
+      "afterBytes": 15503,
+      "beforeSha256": "767f05bcaa2f30c5e374ab4e88d4c3bc5f2e38ffd7042689cc7b8105234d32d9",
+      "afterSha256": "289c5567cddf4f7e62189b1803f7d9d025b019e3a07bf01550d2830ffcc4f129"
+    },
+    {
+      "path": "src/features/extracurricular/api-model.ts",
+      "beforeBytes": 2254,
+      "afterBytes": 2395,
+      "beforeSha256": "d07d52613ac48c126bab0aa7183c6bcd868b6ee5630c513aec4b9756445a132d",
+      "afterSha256": "70af1d6c7178f7e80b34efbbff686d6ca0b7557078953d74834ac951878aa881"
+    },
+    {
+      "path": "src/features/extracurricular/class-management.tsx",
+      "beforeBytes": 36792,
+      "afterBytes": 36946,
+      "beforeSha256": "3af11db48f1c8c7d4a5080d5883b480652cc6386062797c740d6e99b10a9c849",
+      "afterSha256": "5de6bf7e3b913275270343bafe6797ad6f58272712cc6dbee8692a198afff267"
+    },
+    {
+      "path": "src/features/extracurricular/connected.module.css",
+      "beforeBytes": 1776,
+      "afterBytes": 2230,
+      "beforeSha256": "5ba57d418f643ca818e53f96e1dc7f15539039abc7eea45ae259a6b268ea0629",
+      "afterSha256": "1d1b826a420977565055050a2eabce4a7d60ef0348c44dee8eb7a48a0abffbd7"
+    },
+    {
+      "path": "src/features/extracurricular/connected.tsx",
+      "beforeBytes": 24453,
+      "afterBytes": 29671,
+      "beforeSha256": "0a63b709a0b1a67e6b7f9ebf1db9a0606119b7ac820633378ce731b89cc20f91",
+      "afterSha256": "08a1a2b105eaf6c65b5a6a44f1d07e69e205d8610bcf8ccaa516786f98131b71"
+    },
+    {
+      "path": "src/features/extracurricular/formation-wizard.module.css",
+      "beforeBytes": 1850,
+      "afterBytes": 1747,
+      "beforeSha256": "44f10e5621a47f5fb4a1ef683f06f18a3ebbaac00ae341bb30d1729e6947ff69",
+      "afterSha256": "630d994c0058d9998e73cec7681a2128ae9abc895cc366117451278ad36503a8"
+    },
+    {
+      "path": "src/features/extracurricular/learning.tsx",
+      "beforeBytes": 6949,
+      "afterBytes": 7748,
+      "beforeSha256": "1672b8b99cbaf80a2e2882985e058aedbb165dfab31fd5a98a301e39df92353d",
+      "afterSha256": "f13b2cdc984875d04e31b19792310ef3c81e285b57d7901c47d3f5442a28a4c5"
+    },
+    {
+      "path": "src/features/personal/assistant/result.tsx",
+      "beforeBytes": 6250,
+      "afterBytes": 6489,
+      "beforeSha256": "a46276038b6292f4f177154c481f74a5212ebb98324e5afbff0cfe6ca3d6873e",
+      "afterSha256": "76bc3ddb9920b42f639141aafbb40ab5a38671a7252768f0cd5a1b0bfdbcceb1"
+    },
+    {
+      "path": "src/features/personal/commerce.tsx",
+      "beforeBytes": 17052,
+      "afterBytes": 17489,
+      "beforeSha256": "61e68cbe4f99a7df37114ed9650bc5ba5c2dd84c8944cd5cf13fb27d38f4b33d",
+      "afterSha256": "31a3a6cd8a650eb5431eb6ed5d77e07701b3d7194582edf3bdeb5ca8707e30e7"
+    },
+    {
+      "path": "src/features/personal/messaging/conversation-room.tsx",
+      "beforeBytes": 38537,
+      "afterBytes": 39582,
+      "beforeSha256": "550a02a628851ee0cc4a4b37c621e69393e5dec314c1bb8d412cc944c9fd10ca",
+      "afterSha256": "6e5cdcc7463f2ac6f9d1eeda7ec04b0ca49033ca67014599a7ebf6afeaf2111a"
+    },
+    {
+      "path": "src/features/personal/messaging/inbox.module.css",
+      "beforeBytes": 4610,
+      "afterBytes": 3917,
+      "beforeSha256": "b2d9d3fc1f325e3f33d326ae9f7b059420daf133b63b1d1aaff95c0f3b44833a",
+      "afterSha256": "5c17fdb7a92a785a755975b65cca3e934213bc177621174313f2c681509b9cd6"
+    },
+    {
+      "path": "src/features/personal/messaging/messenger.module.css",
+      "beforeBytes": 24533,
+      "afterBytes": 24666,
+      "beforeSha256": "45f6b2e0d9c1456e6ee49219cee88233c49b7b67dcf73770defe6f08bb21022a",
+      "afterSha256": "bb1e4ce671b316de2f88d2d3762bdd8810990277c715418982b4d842dd367394"
+    },
+    {
+      "path": "src/features/personal/messaging/messenger.tsx",
+      "beforeBytes": 17114,
+      "afterBytes": 16803,
+      "beforeSha256": "33aae74029bc79b9aaf4b24b5b86e5a498b19ed0754eed2d725804f8086f7fef",
+      "afterSha256": "ff9df15f88f257495e043ea52e6ca7bee14fbd98ee0e3197e657fd531aa38e3a"
+    },
+    {
+      "path": "src/features/personal/shell.module.css",
+      "beforeBytes": 7339,
+      "afterBytes": 7389,
+      "beforeSha256": "d75eeec75013ea0f23e34f3a2d11d2ecf65f4c772f1f3a4359f8beeda3b88aaf",
+      "afterSha256": "68898cdbd7f78a82d01ca1978d761a472b3ee7c54dd61b657576861bad96537a"
+    },
+    {
+      "path": "src/features/personal/shell.tsx",
+      "beforeBytes": 17142,
+      "afterBytes": 16896,
+      "beforeSha256": "920666db1ab719c7ea9762bfac1fbab187078e0f1520cff57279c96108c3307c",
+      "afterSha256": "054ed02f609dbd20978d649f3c6305a65d75960b7df3307234cf53439219ec02"
+    },
+    {
+      "path": "src/features/reference/assistant.module.css",
+      "beforeBytes": 1964,
+      "afterBytes": 2317,
+      "beforeSha256": "b279ea9cd5de14ffcadd89c343bcd70ccd7e334b6f73c9ad9edf067348979e54",
+      "afterSha256": "7af67300779b226f5e2d2e6ea01fce5c41efe305e8ea4e86fc40f7083a63253b"
+    },
+    {
+      "path": "src/features/reference/connected-assistant.tsx",
+      "beforeBytes": 18415,
+      "afterBytes": 20581,
+      "beforeSha256": "8bcfcde61be7ecc3bdcb1983e9aa89bbce2f4273bbdd9da9813458555909d4ee",
+      "afterSha256": "774376c32a54ac50db332067d07a6bf5180ad7f2b703da076270b544a7fdf18c"
+    },
+    {
+      "path": "src/features/reference/connected-profile.tsx",
+      "beforeBytes": 6966,
+      "afterBytes": 7154,
+      "beforeSha256": "32b311f4eaed3464129fa150b8a75e99ce7e4275c11806bdff49d961f10f3561",
+      "afterSha256": "756745478036a089f31ff86d5bdc52c90a95f7b2eb8328b7c8e1bb9ef1943e60"
+    },
+    {
+      "path": "tests/browser/assistant-recovery.spec.ts",
+      "beforeBytes": 6697,
+      "afterBytes": 6757,
+      "beforeSha256": "5aefbeb6c1ad722f45f37ba8f3a047d27ddf080f09aca2db637fbd9c9197306c",
+      "afterSha256": "eb5958e75e3b121418c68b9e9aae01cf15b7d9f3e7f58ad9c7e272c6eae4fa90"
+    },
+    {
+      "path": "tests/browser/assistant-theme.spec.ts",
+      "beforeBytes": 4653,
+      "afterBytes": 4795,
+      "beforeSha256": "a3ab2386e04dafccea34a997e7bcf6758e09a65bfd9b57106df6fbcf6f3c3c1c",
+      "afterSha256": "8c7443e2e39c286adf0755db91364905a06316865b8f3ef63dd9a0ce7f9a045e"
+    },
+    {
+      "path": "tests/browser/exact-formation-native.spec.ts",
+      "beforeBytes": 4176,
+      "afterBytes": 7012,
+      "beforeSha256": "3465d671d437a67df82633c13f80a1c5a91612bc75e19399b5bc03fd227988f9",
+      "afterSha256": "a858701b22db1045206fe668caed78e5045d38ef5e8e2009c4f0e1359ad8efd6"
+    },
+    {
+      "path": "tests/browser/payment-recovery.spec.ts",
+      "beforeBytes": 13201,
+      "afterBytes": 13359,
+      "beforeSha256": "0654244ed583c2be861f34c0e7ebb9444220c6cd15c30d7e3e8d289f497ac2d4",
+      "afterSha256": "6061365e0d75b554d245749f88c63ab1c802ddd7aaae723fe36829ea454f5542"
+    },
+    {
+      "path": "tests/browser/release-80c.spec.ts",
+      "beforeBytes": 18640,
+      "afterBytes": 20314,
+      "beforeSha256": "bb14c5e5a7ebcc765f408dad5658e1780e836b158a18b7ec0e0a229055e312c5",
+      "afterSha256": "41a4b2db07a52b91d6e19ac7cada4555ed54f38540379a5159938f9e53c77605"
+    },
+    {
+      "path": "tests/browser/sign-in-layout.spec.ts",
+      "beforeBytes": 6998,
+      "afterBytes": 6891,
+      "beforeSha256": "3f1a9ded08432e9b11dcaa1de01d10878c9c53b6ce4aaf2efae0559e9b6bbc2b",
+      "afterSha256": "03b813562da325b98600af8e624cc81ce6605f7ffb83f9c9c6e9705bd7b16f2d"
+    },
+    {
+      "path": "scripts/build-design.mjs",
+      "beforeBytes": 3249,
+      "afterBytes": 3271,
+      "beforeSha256": "9d55c2f6ff98e265b4eff83ba4a07c3922409ff2928bfb63fb369b713dd9b48b",
+      "afterSha256": "ab0108b8facc0024dc7f431f504d77e31b7e0b65f7c1b738ab69981c2c10b428"
+    },
+    {
+      "path": "design/tokens.json",
+      "beforeBytes": 2421,
+      "afterBytes": 2419,
+      "beforeSha256": "d0753b4d2af6c260ad43012bc07645b70eb71a4101bf5b4e6e0fc06e35e70974",
+      "afterSha256": "885b608b9d6bda265db45d93cfcbd91f3a571c0af7fee5f6f537d58794013733"
+    }
+  ],
+  "historicalDocumentationLinks": {
+    "action": "Unavailable historical evidence links changed to explicit plain references; no evidence or product source deleted.",
+    "paths": [
+      "test-server-404-20261029.json",
+      "login-diagnostic-20261029.json",
+      "integration-guide-live-qa.json",
+      "upgrade-contract-audit.json",
+      "backend-gaps.md",
+      "navigation-media-qa.json",
+      "school-live-qa.json",
+      "school-access-qa.json"
+    ]
+  }
+}

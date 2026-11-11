@@ -1,5 +1,5 @@
 import * as uiText from '@/content/fa';
-import { latinDigits } from './formatting';
+import { latinDigits, persianDigits } from './formatting';
 const dayMs = 86400000;
 const calendar = new Intl.DateTimeFormat('en-US-u-ca-persian-nu-latn', {
   year: 'numeric',
@@ -53,6 +53,20 @@ export function jalaliInputValue(value: string, withTime = false) {
   const jalali = toJalaliDate(date);
   if (!jalali) return '';
   return jalali + (withTime && time ? ' ' + time.slice(0, 5) : '');
+}
+/** Display a local calendar date without interpreting its optional wall time as UTC. */
+export function jalaliDisplayValue(value: string, withTime = false, compactTimeDate = false) {
+  const [date, time] = value.split('T');
+  if (!dateOnly(date)) return '';
+  const label = new Intl.DateTimeFormat('fa-IR-u-ca-persian', {
+    ...(!(withTime && compactTimeDate) ? { year: 'numeric' as const } : {}),
+    month: 'long',
+    day: 'numeric',
+    timeZone: 'UTC',
+  }).format(new Date(date + 'T12:00:00Z'));
+  return withTime && time
+    ? uiText.dateInputDateTime(label, persianDigits(time.slice(0, 5)))
+    : label;
 }
 export function parseJalaliInput(value: string, withTime = false): string | null {
   const normalized = latinDigits(value).trim().replace(/\s+/g, ' ');

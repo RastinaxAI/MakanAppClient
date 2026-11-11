@@ -1,0 +1,46 @@
+{
+  "date": "2026-11-07",
+  "initialBuild": {
+    "exitCode": 0,
+    "mode": "NEXT_STANDALONE=true next build --webpack"
+  },
+  "unit": {
+    "passed": 500,
+    "failed": 0,
+    "files": 70
+  },
+  "initialBrowser": {
+    "passed": 251,
+    "failed": [
+      {
+        "file": "exact-v5.spec.ts",
+        "title": "exact V5 messenger retains its draft across three panes, tablet split, mobile and theme changes",
+        "status": "failed",
+        "error": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-chat-context]')\nExpected: visible\nTimeout: 15000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-chat-context]')\u001b[22m\n"
+      },
+      {
+        "file": "manager-navigation.spec.ts",
+        "title": "manager actions and report choices remain clear, reachable and responsive",
+        "status": "failed",
+        "error": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('heading', { name: 'کلاس‌های آموزشگاه', exact: true })\nExpected: visible\nTimeout: 15000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 15000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('heading', { name: 'کلاس‌های آموزشگاه', exact: true })\u001b[22m\n"
+      },
+      {
+        "file": "reference-v2-layout.spec.ts",
+        "title": "V5 education destinations preserve contextual navigation and use the full reading area",
+        "status": "timedOut",
+        "error": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m"
+      },
+      {
+        "file": "vnext.spec.ts",
+        "title": "class edit retains intent through conflict until the new version is explicitly accepted",
+        "status": "timedOut",
+        "error": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m"
+      }
+    ],
+    "durationMs": 938665.366
+  },
+  "limitations": [
+    "Initial browser results precede the workflow follow-up and recorded fixes. Final rerun required.",
+    "No real OTP, messaging, invitations, payment or production deployment."
+  ]
+}

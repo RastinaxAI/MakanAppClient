@@ -1,4 +1,8 @@
 'use client';
+import { Input as NativeInput } from '@/components/ui/input';
+
+import { uiClass } from '@/components/v5/classes';
+
 import { useAcademicScope } from './academic-scope';
 import * as uiText from '@/content/fa';
 import { Button } from '@/components/ui/button';
@@ -184,10 +188,10 @@ export function SubmissionFiles({
   return (
     <Card title={uiText.text_802918533a64}>
       {editable && (
-        <label className={s.answerFilePicker}>
+        <label className={uiClass(s.answerFilePicker)}>
           <Paperclip size={19} />
           <span>{uiText.text_bd9a4d172538}</span>
-          <input
+          <NativeInput
             aria-label={uiText.text_35cb5e51737d}
             type="file"
             accept={submissionFileAccept}
@@ -200,12 +204,12 @@ export function SubmissionFiles({
           />
         </label>
       )}
-      {editable && disabled && <p className={s.hint}>{uiText.text_ac916da78819}</p>}
-      {!value.attachments.length && <p className={s.hint}>{uiText.text_4748e6b9891c}</p>}
+      {editable && disabled && <p className={uiClass(s.hint)}>{uiText.text_ac916da78819}</p>}
+      {!value.attachments.length && <p className={uiClass(s.hint)}>{uiText.text_4748e6b9891c}</p>}
       {value.attachments.map((file) => {
         const Icon = file.contentType === 'application/pdf' ? FileText : FileImage;
         return (
-          <div className={s.answerFileRow} key={file.fileAssetId}>
+          <div className={uiClass(s.answerFileRow)} key={file.fileAssetId}>
             <Icon size={22} />
             <span>
               <strong>{file.originalFileName}</strong>

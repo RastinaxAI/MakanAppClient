@@ -1,0 +1,79 @@
+{
+  "updatedAt": "2026-11-09T11:20:58.178209+00:00",
+  "buildId": "yZYQ46rh1RWd0Htax3z4P",
+  "completeTask": false,
+  "components": [
+    "src/features/personal/school/assignment-form.tsx",
+    "src/features/personal/school/assignment-files.tsx",
+    "src/features/personal/school/use-school-attachments.ts",
+    "src/features/personal/school/lesson-download.tsx",
+    "src/features/personal/school/lesson-attachments.tsx",
+    "src/features/personal/school/learning.tsx",
+    "src/app/api/client/school-files/[[...path]]/route.ts",
+    "src/lib/api/file-transfer.ts",
+    "tests/browser/exact-assignment-native.spec.ts",
+    "tests/browser/exact-school-form-drafts.spec.ts"
+  ],
+  "sourceSha256": {
+    "src/features/personal/school/assignment-form.tsx": "7c97cf37c21b9abc33df98b5c808a19671f9edbc8ecb79d29af7087682973f36",
+    "src/features/personal/school/assignment-files.tsx": "40d02b3c900920947075f36624bafc80ceccc4c0264b90dd4cf2633d91ddab47",
+    "src/features/personal/school/use-school-attachments.ts": "5c282da646877d26ef43204c952218a827737ce5b3169c7ff05a8bd8337f0868",
+    "src/features/personal/school/lesson-download.tsx": "7709b615aa5b318801439218eb75b910a8e13345fe2a23860dfd81d32d9e67b1",
+    "src/features/personal/school/lesson-attachments.tsx": "220d5e6a661dc606031217ef3e892b380e7ef7757aa755f2e67df25bdb69a7f9",
+    "src/features/personal/school/learning.tsx": "62ba75e0fd85721b0f8dd22edb5dffa11e57ade97ee1fd9cb56b3684ab2330d7",
+    "src/app/api/client/school-files/[[...path]]/route.ts": "14e814fa43ddce65854d60f1ca24e96ce64f0571a5c174fb8c081f4fb07bf7d1",
+    "src/lib/api/file-transfer.ts": "02df7356d38dbd30eec48bd7d420e7f58318df5e1ee9a70134aeaadd4d1d4753",
+    "tests/browser/exact-assignment-native.spec.ts": "e39494d9efdd328e23eafb76bba944d058a0794d701ca42ebde60c1cd08cca21",
+    "tests/browser/exact-school-form-drafts.spec.ts": "a54b7a6346d35c5c04d0d9597a5d01892b1f4ea28b2d9eaa28e82bf3f07cdebf"
+  },
+  "browser": {
+    "status": "passed_in_3_independent_serial_batches",
+    "passed": 80,
+    "files": 15,
+    "failed": 0,
+    "skipped": 0,
+    "flaky": 0,
+    "receipts": "tmp/exact-v1/browser-sixtyfirst-receipts.json",
+    "sameCompiledBuild": true,
+    "scope": "Targeted regression; not all 347 current browser tests."
+  },
+  "visual": {
+    "captured": 24,
+    "verified": 24,
+    "errors": 0,
+    "overflow": 0,
+    "archive": "output/review/exact-v1/after-sixtyfirst-forms",
+    "fourFormUnreviewedAtLeast4": 0,
+    "booleanInventory": "Actual/reference MK142 labels/types/checked states match, including required readiness checkbox and late switch."
+  },
+  "responsive": {
+    "boundaryConfigurations": 44,
+    "largeTextConfigurations": 44,
+    "families": 4,
+    "widths": [
+      320,
+      360,
+      390,
+      430,
+      768,
+      834,
+      1024,
+      1194,
+      1280,
+      1440,
+      1920
+    ],
+    "theme": "light",
+    "errors": 0,
+    "overflow": 0,
+    "pngDimensionsVerified": true,
+    "receipts": "tmp/exact-v1/responsive-sixtyfirst-forms-receipts.json"
+  },
+  "behavior": [
+    "Existing organization assignment command split into statement/rules; scoped drafts preserve real fields and file metadata.",
+    "Required explicit review binds user, context, class, statement, rules and file status. Direct form submission does not bypass it.",
+    "Existing assignment metadata authorizes each bound file read; Ready alone is not permission. Current content ACL remains authoritative.",
+    "Student/Parent authorship gates and independent proposal flow preserved. No create idempotency or automatic publication invented."
+  ],
+  "historicalRejection": "MK142 captures in59/60 that omitted the required checkbox are stateVerified=false; images and failing receipts retained."
+}

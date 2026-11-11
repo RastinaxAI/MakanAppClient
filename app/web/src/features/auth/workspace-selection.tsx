@@ -1,4 +1,6 @@
 'use client';
+import { uiClass } from '@/components/v5/classes';
+
 import * as uiText from '@/content/fa';
 import { useRef, useState } from 'react';
 import { ChevronLeft, UserRound, GraduationCap, LoaderCircle } from 'lucide-react';
@@ -54,7 +56,7 @@ export function WorkspaceSelection() {
       ) : !workspaces.length ? (
         <EmptyState title={uiText.text_1e8321671f3f} />
       ) : (
-        <div className="v5-space-choices" data-workspace-choices>
+        <div className={uiClass('v5-space-choices')} data-workspace-choices>
           {workspaces.map((w, index) => (
             <button
               key={`${w.membershipId}:${w.role}:${index}`}
@@ -62,7 +64,7 @@ export function WorkspaceSelection() {
               disabled={!!entering || !canEnterWorkspace(w)}
               onClick={() => void enter(w, `${w.membershipId}:${w.role}:${index}`)}
             >
-              <span className="tile-icon">
+              <span className={uiClass('tile-icon')}>
                 {w.workspaceType === 'Personal' ? (
                   <UserRound size={20} />
                 ) : (
@@ -77,7 +79,11 @@ export function WorkspaceSelection() {
                 {!canEnterWorkspace(w) && <small>{uiText.text_c7581e2c4ccf}</small>}
               </span>
               {entering === `${w.membershipId}:${w.role}:${index}` ? (
-                <LoaderCircle className="spinner" size={20} aria-label={uiText.text_d04bf8106c45} />
+                <LoaderCircle
+                  className={uiClass('spinner')}
+                  size={20}
+                  aria-label={uiText.text_d04bf8106c45}
+                />
               ) : (
                 <ChevronLeft size={18} />
               )}

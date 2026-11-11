@@ -1,0 +1,660 @@
+{
+  "recordedUtc": "2026-11-11T02:22:23.647089+00:00",
+  "buildId": "WVTp5Mmm1jrhfu2cga9Fo",
+  "baseline": {
+    "started": "2026-11-11T01:54:08.086147+00:00",
+    "buildId": "Lj1XDtp0iyp3PfXaZS43s",
+    "backup": "/home/omidreza-bagheriyan/Desktop/MakanApp-cleanup-backup-2026-11-11/v52-mobile/before-mobile-source.tar.gz",
+    "backupSha256": "694311c08cc5f95e8846b49d9f8605aa44f7202b3eae5e2a4df170299f07f265"
+  },
+  "runtime": {
+    "archive": "/home/omidreza-bagheriyan/Desktop/MakanApp-cleanup-backup-2026-11-11/v52-mobile/MakanApp-V5.2-Mobile-Fix-Next-standalone-20261111.tar.gz",
+    "bytes": 18365361,
+    "sha256": "b670b15e62392bd9d2724a98f1766f47a1482e40261660997fbe0abb84872589",
+    "buildId": "c4VOPHvl04TmoDfeVB5F9",
+    "files": 2455,
+    "runtimeBytes": 57996341,
+    "envIncluded": false,
+    "sessionsIncluded": false,
+    "qaOrReferenceIncluded": false,
+    "dockerExecuted": false,
+    "excludedToolOnlyAssets": [
+      "public/fonts/makan-reference/Vazirmatn-Bold.ttf",
+      "public/fonts/makan-reference/Vazirmatn-Regular.ttf"
+    ],
+    "assetExclusionReason": "Consumed by existing PDF tools; no runtime references. Source fonts and tools preserved."
+  },
+  "userEnvironment": "Narrow desktop browser; actual existing IAB page width 718px",
+  "cause": "Auth workspace had width:auto in a flex parent. Its child changed to percentage width on mobile while using inline-size containment, so the shrink-to-fit parent resolved to zero. Explicit mobile width:100% breaks that cycle.",
+  "before": {
+    "buildId": "HbJq-WZ7L6o9XAYPK2OWv",
+    "ordinaryRuntime": true,
+    "backend": "Declared loopback fixture; one local OTP challenge; no live backend calls",
+    "rows": [
+      {
+        "step": "phone",
+        "width": 320,
+        "height": 640,
+        "column": {
+          "x": 160,
+          "y": 118,
+          "width": 0,
+          "height": 748.09375
+        },
+        "body": {
+          "x": 160,
+          "y": 118,
+          "width": 0,
+          "height": 748.09375
+        },
+        "input": {
+          "x": 134,
+          "y": 454.4375,
+          "width": 26,
+          "height": 48.390625
+        },
+        "overflow": false
+      },
+      {
+        "step": "phone",
+        "width": 390,
+        "height": 844,
+        "column": {
+          "x": 195,
+          "y": 118,
+          "width": 0,
+          "height": 748.09375
+        },
+        "body": {
+          "x": 195,
+          "y": 118,
+          "width": 0,
+          "height": 748.09375
+        },
+        "input": {
+          "x": 169,
+          "y": 454.4375,
+          "width": 26,
+          "height": 48.390625
+        },
+        "overflow": false
+      },
+      {
+        "step": "phone",
+        "width": 718,
+        "height": 900,
+        "column": {
+          "x": 359,
+          "y": 118,
+          "width": 0,
+          "height": 748.09375
+        },
+        "body": {
+          "x": 359,
+          "y": 118,
+          "width": 0,
+          "height": 748.09375
+        },
+        "input": {
+          "x": 333,
+          "y": 454.4375,
+          "width": 26,
+          "height": 48.390625
+        },
+        "overflow": false
+      },
+      {
+        "step": "phone",
+        "width": 834,
+        "height": 1112,
+        "column": {
+          "x": 197,
+          "y": 465.125,
+          "width": 440,
+          "height": 197.234375
+        },
+        "body": {
+          "x": 197,
+          "y": 465.125,
+          "width": 440,
+          "height": 197.234375
+        },
+        "input": {
+          "x": 197,
+          "y": 544.46875,
+          "width": 440,
+          "height": 48.390625
+        },
+        "overflow": false
+      },
+      {
+        "step": "phone",
+        "width": 1440,
+        "height": 1000,
+        "column": {
+          "x": 500,
+          "y": 409.96875,
+          "width": 440,
+          "height": 197.234375
+        },
+        "body": {
+          "x": 500,
+          "y": 409.96875,
+          "width": 440,
+          "height": 197.234375
+        },
+        "input": {
+          "x": 500,
+          "y": 489.3125,
+          "width": 440,
+          "height": 48.390625
+        },
+        "overflow": false
+      },
+      {
+        "step": "otp",
+        "width": 320,
+        "height": 640,
+        "column": {
+          "x": 160,
+          "y": 118,
+          "width": 0,
+          "height": 678.1875
+        },
+        "body": {
+          "x": 160,
+          "y": 118,
+          "width": 0,
+          "height": 678.1875
+        },
+        "input": {
+          "x": 160,
+          "y": 277.71875,
+          "width": 26,
+          "height": 63
+        },
+        "overflow": false
+      },
+      {
+        "step": "otp",
+        "width": 390,
+        "height": 844,
+        "column": {
+          "x": 195,
+          "y": 118,
+          "width": 0,
+          "height": 678.1875
+        },
+        "body": {
+          "x": 195,
+          "y": 118,
+          "width": 0,
+          "height": 678.1875
+        },
+        "input": {
+          "x": 195,
+          "y": 277.71875,
+          "width": 26,
+          "height": 63
+        },
+        "overflow": false
+      },
+      {
+        "step": "otp",
+        "width": 718,
+        "height": 900,
+        "column": {
+          "x": 359,
+          "y": 118,
+          "width": 0,
+          "height": 678.1875
+        },
+        "body": {
+          "x": 359,
+          "y": 118,
+          "width": 0,
+          "height": 678.1875
+        },
+        "input": {
+          "x": 359,
+          "y": 277.71875,
+          "width": 26,
+          "height": 63
+        },
+        "overflow": false
+      },
+      {
+        "step": "otp",
+        "width": 834,
+        "height": 1112,
+        "column": {
+          "x": 197,
+          "y": 445.046875,
+          "width": 440,
+          "height": 237.375
+        },
+        "body": {
+          "x": 197,
+          "y": 445.046875,
+          "width": 440,
+          "height": 237.375
+        },
+        "input": {
+          "x": 197,
+          "y": 503.390625,
+          "width": 440,
+          "height": 63
+        },
+        "overflow": false
+      },
+      {
+        "step": "otp",
+        "width": 1440,
+        "height": 1000,
+        "column": {
+          "x": 500,
+          "y": 389.90625,
+          "width": 440,
+          "height": 237.375
+        },
+        "body": {
+          "x": 500,
+          "y": 389.90625,
+          "width": 440,
+          "height": 237.375
+        },
+        "input": {
+          "x": 500,
+          "y": 448.25,
+          "width": 440,
+          "height": 63
+        },
+        "overflow": false
+      }
+    ]
+  },
+  "after": {
+    "buildId": "c4VOPHvl04TmoDfeVB5F9",
+    "ordinaryRuntime": true,
+    "backend": "Declared loopback fixture; one local OTP challenge; no live backend calls",
+    "rows": [
+      {
+        "step": "phone",
+        "width": 320,
+        "height": 640,
+        "column": {
+          "x": 12,
+          "y": 118,
+          "width": 296,
+          "height": 197.234375
+        },
+        "body": {
+          "x": 12,
+          "y": 118,
+          "width": 296,
+          "height": 197.234375
+        },
+        "input": {
+          "x": 12,
+          "y": 197.34375,
+          "width": 296,
+          "height": 48.390625
+        },
+        "overflow": false
+      },
+      {
+        "step": "phone",
+        "width": 390,
+        "height": 844,
+        "column": {
+          "x": 16,
+          "y": 118,
+          "width": 358,
+          "height": 197.234375
+        },
+        "body": {
+          "x": 16,
+          "y": 118,
+          "width": 358,
+          "height": 197.234375
+        },
+        "input": {
+          "x": 16,
+          "y": 197.34375,
+          "width": 358,
+          "height": 48.390625
+        },
+        "overflow": false
+      },
+      {
+        "step": "phone",
+        "width": 718,
+        "height": 900,
+        "column": {
+          "x": 59,
+          "y": 118,
+          "width": 600,
+          "height": 197.234375
+        },
+        "body": {
+          "x": 59,
+          "y": 118,
+          "width": 600,
+          "height": 197.234375
+        },
+        "input": {
+          "x": 59,
+          "y": 197.34375,
+          "width": 600,
+          "height": 48.390625
+        },
+        "overflow": false
+      },
+      {
+        "step": "phone",
+        "width": 834,
+        "height": 1112,
+        "column": {
+          "x": 197,
+          "y": 465.125,
+          "width": 440,
+          "height": 197.234375
+        },
+        "body": {
+          "x": 197,
+          "y": 465.125,
+          "width": 440,
+          "height": 197.234375
+        },
+        "input": {
+          "x": 197,
+          "y": 544.46875,
+          "width": 440,
+          "height": 48.390625
+        },
+        "overflow": false
+      },
+      {
+        "step": "phone",
+        "width": 1440,
+        "height": 1000,
+        "column": {
+          "x": 500,
+          "y": 409.96875,
+          "width": 440,
+          "height": 197.234375
+        },
+        "body": {
+          "x": 500,
+          "y": 409.96875,
+          "width": 440,
+          "height": 197.234375
+        },
+        "input": {
+          "x": 500,
+          "y": 489.3125,
+          "width": 440,
+          "height": 48.390625
+        },
+        "overflow": false
+      },
+      {
+        "step": "otp",
+        "width": 320,
+        "height": 640,
+        "column": {
+          "x": 12,
+          "y": 118,
+          "width": 296,
+          "height": 263.96875
+        },
+        "body": {
+          "x": 12,
+          "y": 118,
+          "width": 296,
+          "height": 263.96875
+        },
+        "input": {
+          "x": 12,
+          "y": 176.34375,
+          "width": 296,
+          "height": 63
+        },
+        "overflow": false
+      },
+      {
+        "step": "otp",
+        "width": 390,
+        "height": 844,
+        "column": {
+          "x": 16,
+          "y": 118,
+          "width": 358,
+          "height": 263.96875
+        },
+        "body": {
+          "x": 16,
+          "y": 118,
+          "width": 358,
+          "height": 263.96875
+        },
+        "input": {
+          "x": 16,
+          "y": 176.34375,
+          "width": 358,
+          "height": 63
+        },
+        "overflow": false
+      },
+      {
+        "step": "otp",
+        "width": 718,
+        "height": 900,
+        "column": {
+          "x": 59,
+          "y": 118,
+          "width": 600,
+          "height": 237.375
+        },
+        "body": {
+          "x": 59,
+          "y": 118,
+          "width": 600,
+          "height": 237.375
+        },
+        "input": {
+          "x": 59,
+          "y": 176.34375,
+          "width": 600,
+          "height": 63
+        },
+        "overflow": false
+      },
+      {
+        "step": "otp",
+        "width": 834,
+        "height": 1112,
+        "column": {
+          "x": 197,
+          "y": 445.046875,
+          "width": 440,
+          "height": 237.375
+        },
+        "body": {
+          "x": 197,
+          "y": 445.046875,
+          "width": 440,
+          "height": 237.375
+        },
+        "input": {
+          "x": 197,
+          "y": 503.390625,
+          "width": 440,
+          "height": 63
+        },
+        "overflow": false
+      },
+      {
+        "step": "otp",
+        "width": 1440,
+        "height": 1000,
+        "column": {
+          "x": 500,
+          "y": 389.90625,
+          "width": 440,
+          "height": 237.375
+        },
+        "body": {
+          "x": 500,
+          "y": 389.90625,
+          "width": 440,
+          "height": 237.375
+        },
+        "input": {
+          "x": 500,
+          "y": 448.25,
+          "width": 440,
+          "height": 63
+        },
+        "overflow": false
+      }
+    ]
+  },
+  "actualIabEvidence": {
+    "beforeWidth": 718,
+    "beforeColumn": 0,
+    "afterWidth": 718,
+    "afterColumn": 600,
+    "afterInput": 600,
+    "originalOtpTabPreserved": true
+  },
+  "changes": [
+    {
+      "path": "src/components/v5/frame.module.css",
+      "beforeBytes": 7297,
+      "afterBytes": 7351,
+      "beforeSha256": "b6d15afa32d4806c37b04b021c2b9d83a4286d89da4413be9a7105c781ce3003",
+      "afterSha256": "bfc32091556dd78105aac4828b27e9df98754f390899ba2500ab4e45b4cfc239"
+    },
+    {
+      "path": "src/features/extracurricular/connected.module.css",
+      "beforeBytes": 2411,
+      "afterBytes": 2664,
+      "beforeSha256": "e74a80e144e8f4220252c903cdec6d21687c67238504b6f1e23926c7e03c0adb",
+      "afterSha256": "ca1b4a4c2c24eacda8febb94fcb5b8326cbb756fa09cc068cfe03eae957ce0f0"
+    },
+    {
+      "path": "src/features/extracurricular/connected.tsx",
+      "beforeBytes": 29708,
+      "afterBytes": 30030,
+      "beforeSha256": "e83b3dabcd98cf9d05a3f90e2970d4349416abdb9551c84585acb363bcfe6922",
+      "afterSha256": "b6127f9afd5a0185e5bc594d87bd4145e59724228148bfa327910bb44a677faf"
+    },
+    {
+      "path": "src/features/extracurricular/frame.tsx",
+      "beforeBytes": 2580,
+      "afterBytes": 2878,
+      "beforeSha256": "673fb401f420ce7d4a7e7f5da9d4c175a3122addbce633d82992f6e525112520",
+      "afterSha256": "80f2482467024a4acb599a88ae47b1492da7750c9aeaa4f8475863cfe7a94321"
+    },
+    {
+      "path": "src/features/personal/school/manager-class-cards.tsx",
+      "beforeBytes": 9408,
+      "afterBytes": 9697,
+      "beforeSha256": "e2519cedc98ad0b296ae6da9e46fb31a4f3c884304ba420847337bfc5d514b45",
+      "afterSha256": "ff87af461cd289408c74d12136d24c7930e1e1209566108c08716fe30a8a9306"
+    },
+    {
+      "path": "src/features/personal/school/v4-classes.module.css",
+      "beforeBytes": 3902,
+      "afterBytes": 5251,
+      "beforeSha256": "3f1a1666feb934dd2fff6faf2147c2233ecdceb3a72531c586b7e491b8828356",
+      "afterSha256": "7eba1d56d28d849606698602ca891148501ec14ec71be5967991304b238f9770"
+    },
+    {
+      "path": "tests/browser/sign-in-layout.spec.ts",
+      "beforeBytes": 6891,
+      "afterBytes": 8378,
+      "beforeSha256": "03b813562da325b98600af8e624cc81ce6605f7ffb83f9c9c6e9705bd7b16f2d",
+      "afterSha256": "91fe630c212ef6f25846cdf40e2fb3492f8c741e403230fc7ceab80f2d9adbc2"
+    },
+    {
+      "path": "tests/browser/v5-responsive.spec.ts",
+      "beforeBytes": 10519,
+      "afterBytes": 12290,
+      "beforeSha256": "f7b65f36ea668f73f34ebeefd226ff90e76916789c6cdf1e15b79a9f29d773bc",
+      "afterSha256": "67c1a8868c8affdcf580a6f2912e65443a24d11c69f93cf8675ff0ced2566aed"
+    }
+  ],
+  "newRuntimeFiles": 0,
+  "newDependencies": 0,
+  "checks": {
+    "productionBuild": "pass, including TypeScript",
+    "lint": "313 module boundaries, no cycles/unused declarations",
+    "format": "pass",
+    "generated": "329 operations, 571 server schemas, 84 browser closure, zero owner",
+    "unit": {
+      "passed": 494,
+      "files": 73
+    },
+    "browser": {
+      "startTime": "2026-11-11T02:16:31.949Z",
+      "duration": 60897.827000000005,
+      "expected": 22,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0,
+      "scope": "4 related browser spec files; full 110 suite from prior stage not attributed to this build"
+    },
+    "mobileFrames": 54,
+    "tabletDesktopFrames": 36,
+    "authBeforeAfterFrames": 20,
+    "ordinaryStandalone": {
+      "checks": 37,
+      "passed": 37
+    }
+  },
+  "tabletDesktopRegression": {
+    "frames": 36,
+    "samePNG": 33,
+    "geometryDifferencesAtLeast1px": [],
+    "pixelDifferences": [
+      {
+        "image": "school-light-1440.png",
+        "bbox": [
+          1413,
+          94,
+          1414,
+          95
+        ],
+        "differentPixels": 1
+      },
+      {
+        "image": "messages-light-1440.png",
+        "bbox": [
+          66,
+          313,
+          168,
+          325
+        ],
+        "differentPixels": 717
+      },
+      {
+        "image": "school-dark-834.png",
+        "bbox": [
+          694,
+          48,
+          730,
+          54
+        ],
+        "differentPixels": 23
+      }
+    ]
+  },
+  "liveBusinessCalls": 0,
+  "limitations": [
+    "No native iOS/Android keyboard claim; user reported desktop browser emulation, which was directly reproduced.",
+    "This hotfix does not resolve the separate family billing/public landing contract gaps or the prior R06/R08 action placement gaps.",
+    "No source files deleted, framework/dependency changes, actual OTP bulk sends, purchases, messages, invitations, or server deployment."
+  ]
+}

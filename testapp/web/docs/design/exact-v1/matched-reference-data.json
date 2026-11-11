@@ -1,0 +1,600 @@
+{
+  "scope": "Local isolated QA fixtures only. No atlas data is imported by the product runtime.",
+  "phone": {
+    "scenario": "MK-02",
+    "phone": "09120000101",
+    "focus": "none",
+    "fieldAndActionGeometryMatched": true,
+    "brandLogo": "Approved product asset retained after the heading text; build 26 checks whether the heading start now matches the reference."
+  },
+  "class-settings": {
+    "scenario": "MK-95",
+    "title": "ریاضی دهم · گروه الف",
+    "capacity": 30,
+    "reason": "افزایش ظرفیت با تأمین فضای کلاس",
+    "fixture": "vnext exactV5",
+    "differences": [
+      "Current authorized role/workspace labels",
+      "User-facing validation guidance retains existing meaning"
+    ]
+  },
+  "manager-classes": {
+    "scenario": "MK-455",
+    "fixture": "manager-case exactV5",
+    "classTitle": "ریاضی دهم · گروه الف",
+    "period": "پاییز ۱۴۰۵",
+    "capacity": 30,
+    "counts": {
+      "activeClassCount": 12,
+      "enrolledLearnerCount": 248,
+      "teacherCount": 18
+    },
+    "contractDifferences": [
+      "ClassResult lacks per-row teacher/enrollment fields. Existing roster endpoints supply them without inventing data or permissions. More than one teacher is shown with an additional-count suffix."
+    ],
+    "roster": {
+      "firstTeacher": "مریم رضایی",
+      "firstClassActiveEnrollments": 24,
+      "source": "Authorized per-class teachers/learners GET; Page=1, PageSize=1, status=Active; totalCount is authoritative.",
+      "loading": "Only selected class and rows approaching the viewport; cache scoped to user/context revision."
+    }
+  },
+  "direct-chat": {
+    "scenario": "MK-179",
+    "fixture": "design exactV5",
+    "messages": [
+      "برای تمرین فردا، سؤال دوم را هم بررسی کنید.",
+      "پاسخ را در بخش تکلیف کلاس تحویل دادم."
+    ],
+    "differences": [
+      "Date separator and current inbox controls are retained.",
+      "Reference file message and multi-conversation sample list are different from seeded text-only direct history."
+    ]
+  },
+  "independent-request": {
+    "scenario": "MK-58",
+    "fixture": "personal-class",
+    "differences": [
+      "The QA fixture fills native fields without submitting. MK-58 focuses the title and uses the focused-state hint/description; MK-13 is captured separately without focus, with its longer description and counter. Normal runtime retains user draft data.",
+      "The integrated creation DTO does not transmit audience/admission as named fields; local persistence is explicitly stated in the UI and tracked as a partial contract mapping."
+    ]
+  },
+  "exam-editor": {
+    "scenario": "MK-82",
+    "status": "product_pending",
+    "differences": [
+      "Reference is a proposed view. Existing capability-gated editor is retained without enabling rollout. It is not counted as a verified MK-82 implementation."
+    ]
+  },
+  "large-text": {
+    "scenario": "RX-004",
+    "fixture": "manager-case default with long names",
+    "reading": "200% actual text scale, no zoom/transform"
+  },
+  "otp": {
+    "scenario": "MK-03",
+    "code": "4719 (partial input, not submitted)",
+    "differences": [
+      "Actual six-digit validation keeps verification disabled with four digits. Source sample depicts an active action; server validation is preserved.",
+      "Heading now uses the approved verification-code wording; input accessible label remains compatible."
+    ]
+  },
+  "class-create": {
+    "scenario": "MK-92",
+    "fixture": "manager-case exactV5Catalog",
+    "preparation": "Real catalog dialogs select the two returned fixture records; user form is filled without submit.",
+    "values": {
+      "period": "پاییز ۱۴۰۵",
+      "course": "ریاضی",
+      "title": "ریاضی دهم · گروه الف",
+      "capacity": 30,
+      "activateImmediately": false
+    },
+    "normalRuntime": "Existing active-by-default behavior is preserved. Only the local review changes this checkbox to match the reference state."
+  },
+  "session-create": {
+    "scenario": "MK-122",
+    "fixture": "design",
+    "values": {
+      "title": "حل تمرین فصل دوم",
+      "startLocal": "1405/08/14 16:00",
+      "endLocal": "1405/08/14 17:00",
+      "timeZoneId": "Asia/Tehran",
+      "meetingUrl": "https://meet.example/class"
+    },
+    "preparation": "Typed through the existing Jalali date controls; no session is created."
+  },
+  "conversation-create": {
+    "scenarios": [
+      "MK-188",
+      "MK-191"
+    ],
+    "fixture": "design",
+    "preparation": "The real title and description controls are filled with the source sample. Creation is not submitted.",
+    "differences": [
+      "Authenticated identity and authorized personal scope come from the actual fixture session."
+    ]
+  },
+  "class-teachers": {
+    "scenario": "MK-101",
+    "fixture": "manager-case exactV5 exactV5TeacherRoster",
+    "classTitle": "ریاضی دهم",
+    "rows": [
+      "مریم رضایی",
+      "امیر نظری"
+    ],
+    "differences": [
+      "The existing assignment DTO has no primary/co-teacher distinction. UI does not invent the second-row co-teacher role depicted by the reference."
+    ]
+  },
+  "referenceDataAmbiguities": [
+    {
+      "scenario": "MK-356",
+      "finding": "The Personal scope is selected but sample rows include Personal/Class/Library together. The real UI preserves the selected authorized scope and returned row count; missing rows are not fabricated."
+    },
+    {
+      "scenario": "MK-169",
+      "finding": "The Lesson tab is selected while sample rows include assignment, exam and lesson. The real view preserves the selected kind and existing corresponding class endpoint rather than claiming that all three are lesson DTOs."
+    },
+    {
+      "scenario": "MK-340",
+      "finding": "Source describes following device text size. Existing product has an explicit 200% local preference and system reduced-motion preference; their truthful meanings are retained. The actual preference values also populate the context panel."
+    },
+    {
+      "scenario": "MK-87",
+      "finding": "Reference statistic says three classes while displaying two sample rows. The real view shows the returned list and its actual statistics. Context height depends on that returned count."
+    }
+  ],
+  "independent-members": {
+    "scenarios": [
+      "MK-305",
+      "MK-462"
+    ],
+    "fixture": "personal-class exactV5Members",
+    "profiles": [
+      "سارا احمدی",
+      "مریم رضایی",
+      "ریحانه زمانی"
+    ],
+    "preparation": "Existing membership DTOs and public-profile GET return synthetic identities; normal runtime still uses authorized API responses.",
+    "limitation": "Previous member captures blocked because fixture lacked the contracted profile GET; awaiting repeat after fixture correction."
+  },
+  "person-create": {
+    "scenario": "MK-105",
+    "preparation": "Native four fields filled without submitting; nested two-column grids removed.",
+    "values": {
+      "firstName": "ریحانه",
+      "lastName": "زمانی",
+      "displayName": "ریحانه زمانی",
+      "reason": "ثبت‌نام ترم پاییز"
+    },
+    "behavior": "Existing review step and server command retained; reference immediate-create wording is not used to bypass review."
+  },
+  "appearance": {
+    "scenario": "MK-339",
+    "differences": [
+      "Radio selection follows the persisted preference in each actual theme. Reference imagery must compare the same selection.",
+      "Reading settings remain reachable via Settings More; duplicated visible policy removed while its accessible description is retained."
+    ]
+  },
+  "report-config": {
+    "scenario": "MK-164",
+    "differences": [
+      "The currently integrated job accepts Csv only.",
+      "Range uses two real date-time controls rather than the source single sample text field.",
+      "Authorized organizational scope is enforced by service/BFF; the UI does not add a switch that could promise to bypass permissions.",
+      "The form is opened from the real report list; the source background depicts an already-created job. The background state differs and is not treated as a matched job-status view."
+    ]
+  },
+  "conversation-edit": {
+    "scenarios": [
+      "MK-195",
+      "MK-198"
+    ],
+    "status": "awaiting build 26 product capture",
+    "fixture": "rich-messaging exactV5 editPending",
+    "preparation": "The isolated service starts with an explicitly different earlier title. The native field is filled with the approved current sample title without submitting; Save is therefore legitimately enabled. No whitespace-only dirty flag or fake success is used.",
+    "values": {
+      "group": {
+        "title": "باشگاه کتاب‌خوانی",
+        "description": "گفتگو درباره کتاب و تجربه مطالعه"
+      },
+      "channel": {
+        "title": "اطلاعیه‌های آفتاب",
+        "description": "خبرها و برنامه‌های رسمی آموزشگاه"
+      }
+    }
+  },
+  "conversation-info": {
+    "scenarios": [
+      "MK-194",
+      "MK-197"
+    ],
+    "status": "awaiting build 26 product capture",
+    "fixture": "rich-messaging exactV5; channel-info type=Channel readOnly=true",
+    "differences": [
+      "Real effective capabilities determine each visible navigation/action.",
+      "The integrated DTO has no separate authoritative participant total; no source sample total is fabricated.",
+      "Context title describes the conversation area while the actual returned participant role is used in the header."
+    ],
+    "role": "Group information uses a local Admin; channel information uses a local Member. Counts are not inferred from the participants preview.",
+    "mediaRoleSource30": "Optional existing managed-conversation metadata supplies the current participant role. A metadata failure does not authorize management or block a separately successful media read."
+  },
+  "conversation-members": {
+    "scenarios": [
+      "MK-206",
+      "MK-461"
+    ],
+    "status": "awaiting build 26 product capture",
+    "fixture": "rich-messaging exactV5 returns three real fixture participants in the requested page size",
+    "members": [
+      "سارا احمدی",
+      "مریم رضایی",
+      "امیر نادری"
+    ],
+    "contract": "Current integrated GET members accepts page/pageSize only. Search/admin filtering is local to the received page and is explicitly qualified when multiple pages exist; no undocumented query parameter or unrestricted people lookup is used.",
+    "role": "Exact-reference main case now signs in the existing local Admin, with explicit fixture member/invite capabilities. MK-461 is no longer treated as the same member-list state.",
+    "scope": "Search/filter remains limited to the returned authorized page; no new server search parameter."
+  },
+  "welcome": {
+    "reference": "MK-01",
+    "viewport": "Native viewport only; no document frame or print scale.",
+    "brand": "Approved /brand/makan-logo-v2.webp is retained; the reference introductory book glyph is not treated as a replacement logo.",
+    "roleAmbiguity": "The public welcome route is reachable before authentication. The source renderer fallback account caption is not used as evidence of an active account.",
+    "source30": "Shared V5 list rows replace the old local row margins. The hero alignment, 36px title, 11px tagline and spacing follow the same source frame. Build/screenshots pending."
+  },
+  "conversation-invites": {
+    "reference": "MK-216",
+    "fixture": "Two registered InviteLinkResult records with active/expired states; tokens remain creation-only. No title/slug field is invented.",
+    "permissionModel": "The old fixture Owner-only rule disagreed with the explicit named capability. The corrected fixture honors the seeded capability plus active membership and UserManaged policy. Real backend delegation has not been verified by this UI QA.",
+    "preservedFailureEvidence": "output/review/exact-v1/after-twentyninth/ contains the original six denied Admin captures. A separate same-build follow-up succeeded after the fixture correction.",
+    "runtime": "Existing canManageInvites control predicate, endpoints and command payload remain unchanged."
+  },
+  "auth-resume": {
+    "scenario": "MK-437",
+    "route": "/enter after the existing provider receives 401",
+    "source": "Actual safe per-tab destination stored by the existing expiry path; no private page is shown. The dialog is lazy.",
+    "stateChecks": "Escape and invalid OTP retain path/query/fragment; successful verification consumes the destination once and performs a complete same-origin navigation through the server guard. Regression passed on build33.",
+    "notFaked": "No invitation-validation status is asserted for an ordinary expired reading/settings destination."
+  },
+  "rich-tools": {
+    "scenarios": [
+      "MK-242",
+      "MK-245",
+      "MK-248",
+      "MK-251",
+      "MK-252",
+      "MK-253"
+    ],
+    "actor": "Teacher profile in Personal workspace; active local Admin from ManagedConversationResult, with explicit fixture canPublish.",
+    "data": "Poll and checklist values are entered through real controls in QA. Scheduled GET returns two valid ScheduledMessageResult objects only in the explicit fixture.",
+    "quiz": "Four visible fields. The options field opens a real array editor; literal slash characters remain inside their option. Correct choice is a select with the actual option text. Native API array/number semantics are preserved.",
+    "scheduled": "Status comes from the returned DTO. Cancel keeps expectedVersion and no success is shown before acknowledgement.",
+    "liveSemantics": "Not verified. The old checklist fixture resets checks after definition PUT; UI follows its acknowledged response and does not send isChecked/stateVersion in the definition command."
+  },
+  "class-shared-states": {
+    "MK-419": "Actual existing academic classes GET held by a local browser route; three aria-hidden skeleton cards, one status announcement, no fake ClassResult. Distinct loading composition on the same route.",
+    "MK-422": "Authorized endpoint returned []; explicit native empty view and existing invitation destination. Filter no-match is a separate state.",
+    "MK-423": "Actual AccountInboxPageResult items=[]; no sample conversation.",
+    "MK-424": "Local extracurricular search with no match, preserved on reload; clearing it reveals the original authorized response."
+  },
+  "context-summary-34": {
+    "scenarios": [
+      "MK-242",
+      "MK-245"
+    ],
+    "change": "Page fields take priority over settings rows. Numeric select values resolve to the actual option text. Closed dialogs never supply underlying context fields.",
+    "data": "Real controlled form values; literal slash characters remain inside option array entries."
+  },
+  "independent-members-34": {
+    "scenarios": [
+      "MK-305",
+      "MK-449"
+    ],
+    "fixture": "personal-class exactV5Members",
+    "search": "Returned authorized membership page only; existing /people/{userId} reads validate matching profile userId, use the same user/revision cache keys, and never grant class permissions. Search memory is scoped by user, workspace context and independent class.",
+    "differences": [
+      "Local role/status comes from PersonalClassMembershipDto. Optional teacher status and delegated academic permissions are not inferred from the organizational Teacher profile or sample reference copy.",
+      "MK-449 has distinct actions/content and is not marked verified by a MK-305 screenshot."
+    ]
+  },
+  "invite-links-34": {
+    "scenarios": [
+      "MK-215",
+      "MK-216",
+      "MK-219",
+      "MK-220"
+    ],
+    "fixture": "rich-messaging exactV5 + explicit canManageInvites + referenceInvites/referenceJoinRequests",
+    "form": "Same CreateInviteLinkCommand: clientLinkId, expiresAtUtc, maximumUses, requiresApproval. Future absolute time uses existing Jalali/local-time input; visible timezone guidance is retained and its extra geometry tracked. No name/slug field invented.",
+    "list": "Native rows. Public token appears only from acknowledged creation, never reconstructed from link id; title samples in reference have no name field in InviteLinkResult.",
+    "requests": "Separate view on the existing route. Names use the existing permitted public profile operation with matching userId; unsupported identity reads retain a human fallback. Review retains the chosen DTO version across server failures, and checks result id, user and conversation before success.",
+    "unavailable": "MK-220 requester self-cancel is absent from this registered client surface. Manager rejection is a different action. This does not prove absence on the live server."
+  },
+  "reading-34": {
+    "scenario": "MK-340",
+    "change": "Native V5SwitchRow replaces legacy toggle rendering; local storage failure, 200% preference, reduced motion and save behavior remain.",
+    "semanticDifference": "Current product preference explicitly enables 200% text. It is not renamed to automatic device-size following, which would promise behavior this control does not provide."
+  },
+  "parent": {
+    "scenarios": [
+      "MK-09",
+      "MK-116",
+      "MK-117",
+      "MK-118"
+    ],
+    "fixture": "parent-case; explicitly selected active authorized child 501 in the current organization",
+    "names": {
+      "MK-09": "نازنین احمدی",
+      "MK-116/MK-117/MK-118": "نازنین موسوی"
+    },
+    "differences": [
+      "AuthorizedChildResult has only displayName, so headers retain the full returned name instead of inventing a first-name field.",
+      "The reference shows children from Aftab and Baran together. Current-context authorization restricts the native list to the active organization; a foreign child is excluded and requires its own authorized workspace.",
+      "DashboardSessionItem2 has no teacher name. The timeline uses its actual session title, time and calculated duration; no reference teacher is fabricated.",
+      "DashboardAttendanceSummary does not declare a calendar period. Counts are shown without claiming this month.",
+      "ParentDashboardDto has released assignment results and no latest-exam summary. The native home uses the actual released assignment title and score."
+    ],
+    "runtimeFailureEvidence": "tmp/exact-v1/parent-thirtyseventh-runtime-failure.json",
+    "build41Browser": "5/5 new targeted tests; related 21-test regression still pending final receipt",
+    "referenceRoleAmbiguity": "RX-018 inventory Teacher conflicts with guardian content; actual Parent role evidence is not claimed as exact reference role parity."
+  },
+  "notification-assignments": {
+    "scenario": "MK-346",
+    "context": "Personal account preferences, current user; device registration and browser permission are separate",
+    "fixture": "design, Student account with Personal workspace, no school selection",
+    "quietHours": {
+      "start": "22:00",
+      "end": "08:00",
+      "timeZoneId": "Asia/Tehran"
+    },
+    "differences": [
+      "Shared TimeInput displays Persian 24-hour text and retains required/range validation; canonical HH:mm:ss and existing seconds are preserved.",
+      "Shared TimeZoneInput shows تهران for Asia/Tehran; other explicitly edited IANA identifiers remain unchanged.",
+      "No notification device permission, registration, removal or live push is performed by visual capture."
+    ],
+    "beforeBuildId": "D04aYLWdcn5y7Yb-kYSbP",
+    "source42": "Completed native preference integration with scoped/versioned acknowledgment checks; four browser regressions pass again on build50."
+  },
+  "schedule-rules": {
+    "scenarios": [
+      "MK-131",
+      "MK-132",
+      "MK-133"
+    ],
+    "fixture": "vnext, Manager in the authorized Organization workspace",
+    "details": {
+      "day": "Monday",
+      "time": "16:00:00",
+      "duration": 60,
+      "zone": "Asia/Tehran",
+      "title": "حل تمرین ریاضی"
+    },
+    "range": {
+      "from": "2026-09-23",
+      "until": "2026-12-21",
+      "meetingUrl": null
+    },
+    "edit": {
+      "time": "17:00:00",
+      "applyFromDate": "2026-11-11"
+    },
+    "preservedContract": "Registered create POST and expectedRowVersion PATCH; no speculative rule GET or idempotency key. Acknowledged identity/version are kept with the scoped edit draft. A definitive 422 is used for failure/retry tests; this is not a claim that an ambiguous create retry is deduplicated.",
+    "differences": [
+      "The existing JalaliDateInput keeps an ASCII numeric editable value for the installed calendar parser; the reference shows Persian long-date text. Canonical dates and retained draft are equivalent, but this visible format difference remains open. It is not pixel parity.",
+      "Native weekday selection remains a real select; the static reference depicts a text field. Its control rectangle is measured with the same label.",
+      "An empty meeting URL shows the in-person hint as a placeholder and sends null; the reference sample text is never sent as a URL.",
+      "Authorized school/account identity and approved product logo are retained. The fixture badge appears only in the isolated QA runtime."
+    ],
+    "geometry": "18 native viewport comparisons; no unreviewed rectangle >=4 CSS px across the measured header, fields, navigation/context and dialog regions on build50. This does not waive the text-format difference."
+  },
+  "lessons": {
+    "scenarios": [
+      "MK-134",
+      "MK-135",
+      "MK-136"
+    ],
+    "fixtureOnly": true,
+    "source": "Real LessonForm/LessonDraftReview/LessonDownload using BFF, existing versioned DTOs and commands; same components as ordinary runtime. No atlas HTML or operational preview route.",
+    "matched": {
+      "title": "حل معادله درجه دوم",
+      "body": "دو روش تجزیه و فرمول را با مثال مقایسه می‌کنیم.",
+      "displayOrder": 3,
+      "classTitle": "ریاضی دهم",
+      "authorizedActiveLearners": 24,
+      "fileName": "جزوه فصل دوم.pdf",
+      "role": "Teacher",
+      "organization": "آموزشگاه آفتاب"
+    },
+    "dataPreparation": "Explicit exactV5Lesson/exactV5TeacherRoster flags on isolated manager-case. Lesson and PDF are created through the actual local UI/BFF. No real-service mutations.",
+    "differences": [
+      "The isolated PDF is46 bytes rather than an atlas sample size; actual size/Ready status are shown, never fabricated. Publication summary uses the actual ready-file count rather than the atlas sample caption.",
+      "Read-only draft review has an additional existing Edit action. Actual edit retains order/upload/removal in More, without changing commands or silently dropping controls.",
+      "The approved product brand/profile and actual active role remain. Reference profile surname and role/organization punctuation are not injected into normal data."
+    ],
+    "versionBehavior": "Create retains existing persisted resource-command identity; edit uses expectedVersion; publication freezes the reviewed id/org/class/version until valid matching Published ACK. No new endpoint, permission or invented publication idempotency claim.",
+    "downloads": "Existing authorized size-checked transfer, progress/cancel/error and filename retained in shared LessonDownload for review and published reader. Denied count read is omitted, not shown as zero."
+  },
+  "catalog-and-session-59": {
+    "status": "pending_source59_validation",
+    "scenarios": [
+      "MK-90",
+      "MK-122"
+    ],
+    "period": {
+      "title": "پاییز ۱۴۰۵",
+      "start": "2026-09-23",
+      "end": "2026-12-21",
+      "preparation": "Actual scoped draft fields; exactV5 manager fixture only. Dates entered in Jalali through the real input."
+    },
+    "session": "Existing real Teacher session title/time/link fixture. Native labels and explicitly compact resting date-time match the frame; numeric editor keeps full year and existing toUtc conversion.",
+    "limitations": "Authorized class/profile captions are retained; reference role punctuation is not fabricated.",
+    "verifiedBuild61": {
+      "buildId": "yZYQ46rh1RWd0Htax3z4P",
+      "visual": {
+        "captured": 24,
+        "verified": 24,
+        "errors": 0,
+        "overflow": 0,
+        "archive": "output/review/exact-v1/after-sixtyfirst-forms",
+        "fourFormUnreviewedAtLeast4": 0,
+        "booleanInventory": "Actual/reference MK142 labels/types/checked states match, including required readiness checkbox and late switch."
+      },
+      "responsive": {
+        "boundaryConfigurations": 44,
+        "largeTextConfigurations": 44,
+        "families": 4,
+        "widths": [
+          320,
+          360,
+          390,
+          430,
+          768,
+          834,
+          1024,
+          1194,
+          1280,
+          1440,
+          1920
+        ],
+        "theme": "light",
+        "errors": 0,
+        "overflow": 0,
+        "pngDimensionsVerified": true,
+        "receipts": "tmp/exact-v1/responsive-sixtyfirst-forms-receipts.json"
+      }
+    }
+  },
+  "assignment-59": {
+    "status": "Verified on build61: 80 targeted tests,24 main and44+44 responsive captures; required review control included.",
+    "scenarios": [
+      "MK-141",
+      "MK-142"
+    ],
+    "preparation": "Teacher organization fixture, real controlled draft, optional existing school-files upload and attachmentFileIds command field. No sample values in normal runtime.",
+    "contractEvidence": [
+      "CreateAssignmentDraftCommand.attachmentFileIds and UpdateAssignmentDraftCommand.attachmentFileIds exist in the active generated schema.",
+      "Existing school-files BFF authorizes Organization + Teacher/Manager + an active listed class for upload; metadata checks owner and organization. No new upload endpoint or authorization added.",
+      "Assignment-bound metadata/content reads use the existing school-files BFF and file transfer guard. Every read fetches the current readable AssignmentResult and checks attachment membership; content also checks current Ready metadata and the backend file-content ACL. Client guard keeps the exact GUID-scoped URL, rejects mixed queries and never adds an upload route for assignmentId."
+    ],
+    "behavior": "Independent-class proposal/rollout is unchanged. Organization assignment creation is separated into statement/rules with the same POST; valid matching Draft acknowledgment is required before navigating to the existing publication review. No publication or create-idempotency guarantee is invented. The reference readiness sentence is an explicit required user-review checkbox. It is not a backend recipient-count claim; its account/context/content signature changes when the statement, rules or file list changes.",
+    "differences": [
+      "Normal runtime starts with empty title, dates, attempts and score; atlas sample values are confined to explicit fixture preparation."
+    ]
+  },
+  "exam-create-native": {
+    "scenarios": [
+      "MK-150",
+      "MK-151"
+    ],
+    "fixture": "Teacher vnext exactV5; real draft values explicitly prepared only in QA",
+    "statement": {
+      "title": "مرور معادله",
+      "description": "چهار پرسش تستی و یک پرسش تشریحی",
+      "start": "۱۴۰۵/۰۸/۱۸ ۱۸:۰۰",
+      "end": "۱۴۰۵/۰۸/۱۸ ۲۰:۰۰"
+    },
+    "rules": {
+      "duration": 15,
+      "attempts": 1,
+      "score": 20,
+      "randomizationPolicy": "None"
+    },
+    "differences": [
+      "MK151 uses the placeholder مطابق تنظیم معتبر; runtime exposes the actual existing two enum choices as ترتیب ثابت and ترتیب تصادفی instead of pretending the placeholder is a saved policy.",
+      "Native duration has a separate noneditable minute unit; payload remains an int32. Invalid decimals/exponents are retained visibly and blocked, never stripped into a different integer.",
+      "Normal runtime defaults remain empty; independent/proposed exam flow and publication confirmation are preserved."
+    ],
+    "evidence62": {
+      "buildId": "Z7nDIkB_Ie3VvxP45Rl8I",
+      "newTestsPassed": 9,
+      "visual": "12 main captures; nested duration border pending63"
+    }
+  },
+  "exam-question-remove-65": {
+    "scenario": "MK-153",
+    "buildId": "mFq8lAOG3QD9VQKD5XWxR",
+    "context": "Organization Teacher, actual created draft and its third question. Deletion remains versioned and server-authorized.",
+    "differences": [
+      "The current native removal is available from the exam editor list; the reference backdrop is a selected question form. Its four missing backdrop controls remain open review candidates, not silently excluded.",
+      "ExamEditorQuestionDto has a prompt but no short question-title field. Metadata retains the actual prompt instead of inventing حل معادله.",
+      "This older fixture emits versionNumber0 for new exams. Runtime displays the returned value; the reference sample says1. Correct fixture preparation after the frozen full65 regression; do not hardcode1 in the UI."
+    ],
+    "geometry": "On65 the measured modal, heading, body, summary, actions and primary control are all below4 CSS px. This is not full-view parity."
+  },
+  "exam-question-native-68": {
+    "buildId": "JH53k-9RLWkxigrKbrEZP",
+    "scenarios": [
+      "MK-152",
+      "MK-153"
+    ],
+    "data": "Explicit isolated fixture creates the actual draft, versionNumber1 and three versioned questions. Native prompt,score,file policy and selected-question backdrop are compared at identical viewports/themes.",
+    "verified": "73targeted browser;24main;44boundary44large;zero unreviewed4px controls.",
+    "differences": [
+      "Actual stored prompt is shown instead of a nonexistent question short-title DTO.",
+      "Product logo,authorized role/workspace and fixture account identity remain real; atlas identities are sample data."
+    ]
+  },
+  "attendance": {
+    "scenarios": [
+      "MK-128",
+      "MK-129",
+      "MK-130",
+      "RX-009",
+      "RX-010"
+    ],
+    "fixture": "tests/fixtures/attendance-reference.mjs; manager-case exactV5Attendance",
+    "session": "حل تمرین فصل دوم;14Aban16–17Tehran;realDTOlinks/versions",
+    "learners": [
+      "نازنین موسوی",
+      "امیر نادری",
+      "مریم احمدی"
+    ],
+    "nameSource": "authorizedpaginatedclassroster;bindsenrollment+organizationperson IDs",
+    "recorded": [
+      "Present",
+      "Absent",
+      "Late"
+    ],
+    "studentReport": {
+      "items": 3,
+      "summary": [
+        2,
+        1,
+        0
+      ],
+      "recorderRole": "notprovided/notasserted"
+    },
+    "sourceDataPreparation": [
+      "MK129full display name instead of sample first name; originalPDF/assetsunchanged.",
+      "MK130referencecounts2/1/0andrecordedcaptionmatchdeclaredreturnedreport."
+    ],
+    "differences": [
+      "MK444bulk explanationunmapped;separatepartialtwo-rowvariant,notMK128alias.",
+      "NochangeSaveisdisabledbyrealvalidationalthoughstaticsourceshowsenabled.",
+      "Role/contexttextdifferencestrackedseparately,geometrydoesnotclaimfullpixelparity."
+    ],
+    "buildId": "gafgEXTW_-otUdm7CMP-1",
+    "evidence": "attendance-native.json"
+  },
+  "notification-devices": {
+    "fixture": "Declared loopback only. Main captures seed actual user Sara and one Android record, then register the mock browser through the real component/API flow before list/delete capture.",
+    "labelAdjustment": "The reference render clone changes sample phone Android wording to generic Android device in body, context and dialog. Original PDF/HTML/assets are not edited; the DTO has no phone form factor.",
+    "copy": "MK435 developer-facing instruction is implemented as human help copy and verified official help links. Document group breadcrumbs/atlas tools and device presentation are excluded from product per request.",
+    "brand": "Approved product Makan logo is preserved; the document illustration does not redefine the brand.",
+    "guideSources": [
+      {
+        "title": "Chrome official notification help",
+        "url": "https://support.google.com/chrome/answer/3220216"
+      },
+      {
+        "title": "Firefox official Web Push help",
+        "url": "https://support.mozilla.org/en-US/kb/push-notifications-firefox"
+      },
+      {
+        "title": "Safari Mac official Websites settings",
+        "url": "https://support.apple.com/guide/safari/ibrwe2159f50/mac"
+      }
+    ]
+  }
+}

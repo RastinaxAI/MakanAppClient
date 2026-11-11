@@ -1,10 +1,18 @@
 'use client';
+import {
+  Select as NativeSelect,
+  Input as NativeInput,
+  Textarea as NativeTextarea,
+} from '@/components/ui/input';
+
+import { uiClass } from '@/components/v5/classes';
+
 import * as uiText from '@/content/fa';
-import { Users, Megaphone, ArrowLeft, Check, Search } from 'lucide-react';
+import { Users, Megaphone, ArrowLeft, Search } from 'lucide-react';
 import { readCreationDraft, creationWasRejected } from './creation-draft';
-import { MessagingSurface } from './messaging-surface';
+import { V5Scene } from '@/components/v5/scene';
+import { V4Field } from '@/components/v4/page';
 import d from './directory.module.css';
-import { PageBack } from '@/components/navigation/page-back';
 import { Button } from '@/components/ui/button';
 import { EmptyState, ErrorState, LoadingSkeleton } from '@/components/ui/states';
 import type { components } from '@/generated/api/schema';
@@ -165,25 +173,69 @@ function CreateConversation({ kind }: { kind: 'groups' | 'channels' }) {
     }
   }
   return (
-    <MessagingSurface className={d.create}>
-      <div className={s.headingRow}>
-        <div className={s.heading}>
-          <span>
-            {uiText.text_a62512b0c13b}
-            {members ? uiText.text_bc9c03bb975e : uiText.text_62b67013987e}
-            {uiText.text_f4f45f3f86f8}
-          </span>
-          <h1>{group ? uiText.text_70c53f6a4727 : uiText.text_21579cd85bef}</h1>
-          <p>{members ? uiText.text_043cba85cfbc : uiText.text_ccfdb4dc6298}</p>
-        </div>
-        <PageBack href={members ? stepUrl : '/personal/messages'} />
-      </div>
+    <V5Scene
+      id={members ? (group ? 'MK-189' : 'MK-192') : group ? 'MK-188' : 'MK-191'}
+      title={
+        members
+          ? uiText.text_b462d2f2ea47
+          : group
+            ? uiText.v5Product.createGroup
+            : uiText.v5Product.createChannel
+      }
+      back={members ? stepUrl : '/personal/messages'}
+      kind={members ? 'list' : 'form'}
+      onSubmit={(event) => {
+        event.preventDefault();
+        if (!allowed || !storageReady) return;
+        if (members) void submit();
+        else if (title.trim() && chosenVisibility) router.push(stepUrl + '&step=members');
+      }}
+      menu={
+        group ? (
+          <V4Field label={uiText.text_d30d3aa840fa}>
+            <NativeSelect
+              value={history}
+              disabled={busy || !!frozen}
+              onChange={(e) => setHistory(e.target.value as typeof history)}
+            >
+              <option value="">{uiText.text_99f51b9ca3db}</option>
+              <option value="FullHistory">{uiText.text_079e2f4cd4d2}</option>
+              <option value="FromJoin">{uiText.text_c693180e811e}</option>
+            </NativeSelect>
+          </V4Field>
+        ) : undefined
+      }
+      actions={
+        status.isSuccess && allowed ? (
+          <Button
+            type="submit"
+            disabled={busy || !storageReady || !title.trim() || !chosenVisibility}
+            aria-busy={busy}
+          >
+            {busy ? (
+              uiText.text_25384e522776
+            ) : !members ? (
+              <>
+                {uiText.v5Product.selectPeople}
+                <ArrowLeft size={18} />
+              </>
+            ) : frozen ? (
+              uiText.text_6f96c570c24b
+            ) : group ? (
+              uiText.text_9c8e4fa37d9f
+            ) : (
+              uiText.text_67f771b12e76
+            )}
+          </Button>
+        ) : undefined
+      }
+    >
       {status.isPending ? (
         <LoadingSkeleton />
       ) : status.isError ? (
         <ErrorState error={status.error} onRetry={() => void status.refetch()} />
       ) : !allowed ? (
-        <section className={s.profileCard}>
+        <section className={uiClass(s.profileCard)}>
           <EmptyState
             title={uiText.text_3bd2ff842bd4}
             description={messagingNextLabels[status.data.nextAction]}
@@ -193,52 +245,34 @@ function CreateConversation({ kind }: { kind: 'groups' | 'channels' }) {
           </Button>
         </section>
       ) : (
-        <form
-          className={s.createForm}
-          onSubmit={(event) => {
-            event.preventDefault();
-            if (members) void submit();
-            else if (storageReady && title.trim() && chosenVisibility)
-              router.push(stepUrl + '&step=members');
-          }}
-        >
-          <ol className={d.steps} aria-label={uiText.text_e5abd525ad78}>
-            <li aria-current={!members ? 'step' : undefined}>
-              <span>{members ? <Check size={16} /> : uiText.text_62b67013987e}</span>
-              {uiText.text_5b40aa409c80}
-              {group ? uiText.text_774668d4acc7 : uiText.text_2db356b462dd}
-            </li>
-            <li aria-current={members ? 'step' : undefined}>
-              <span>{uiText.text_bc9c03bb975e}</span>
-              {uiText.text_c476c232b8e6}
-            </li>
-          </ol>
+        <>
           {!members && (
-            <section className={s.profileCard}>
-              <div className={d.createAvatar}>
-                {group ? <Users size={32} /> : <Megaphone size={32} />}
-              </div>
-              <label className={s.singleField}>
-                {group ? uiText.text_0e1567f71aa6 : uiText.text_e282736ca3cc}
-                <input
+            <fieldset className={uiClass(d.creationFields)}>
+              <V4Field label={group ? uiText.text_0e1567f71aa6 : uiText.text_e282736ca3cc}>
+                <NativeInput
                   required
                   value={title}
                   disabled={busy || !!frozen}
                   onChange={(e) => setTitle(e.target.value)}
                 />
-              </label>
-              <label className={s.singleField}>
-                {uiText.text_75e45482aebb}
-                <textarea
+              </V4Field>
+              <V4Field
+                label={
+                  group ? uiText.v5Product.groupDescription : uiText.v5Product.creationDescription
+                }
+              >
+                <NativeTextarea
                   rows={3}
                   value={description}
                   disabled={busy || !!frozen}
                   onChange={(e) => setDescription(e.target.value)}
                 />
-              </label>
-              <label className={s.singleField}>
-                {uiText.text_d09e4c6a2b5a}
-                <select
+              </V4Field>
+              <V4Field label={uiText.v5Product.creationContext}>
+                <NativeInput readOnly value={uiText.v5Product.personalContext} />
+              </V4Field>
+              <V4Field label={uiText.v5Product.visibility}>
+                <NativeSelect
                   required
                   value={chosenVisibility}
                   disabled={busy || !!frozen || privateOnly}
@@ -249,29 +283,15 @@ function CreateConversation({ kind }: { kind: 'groups' | 'channels' }) {
                   </option>
                   <option value="Private">{uiText.text_e205d3a7a33e}</option>
                   <option value="Public">{uiText.text_526e310df41f}</option>
-                </select>
-              </label>
-              {privateOnly && <p className={s.muted}>{uiText.text_20acc600bc80}</p>}
-              {group && (
-                <label className={s.singleField}>
-                  {uiText.text_d30d3aa840fa}
-                  <select
-                    value={history}
-                    disabled={busy || !!frozen}
-                    onChange={(e) => setHistory(e.target.value as typeof history)}
-                  >
-                    <option value="">{uiText.text_99f51b9ca3db}</option>
-                    <option value="FullHistory">{uiText.text_079e2f4cd4d2}</option>
-                    <option value="FromJoin">{uiText.text_c693180e811e}</option>
-                  </select>
-                </label>
-              )}
-            </section>
+                </NativeSelect>
+              </V4Field>
+              {privateOnly && <p className={uiClass(s.muted)}>{uiText.text_20acc600bc80}</p>}
+            </fieldset>
           )}
           {members && (
-            <section className={s.profileCard}>
-              <div className={d.creationSummary}>
-                <span className={d.smallAvatar}>
+            <section className={uiClass(d.memberSelection)}>
+              <div className={uiClass(d.creationSummary)}>
+                <span className={uiClass(d.smallAvatar)}>
                   {group ? <Users size={24} /> : <Megaphone size={24} />}
                 </span>
                 <div>
@@ -293,10 +313,9 @@ function CreateConversation({ kind }: { kind: 'groups' | 'channels' }) {
                   {uiText.text_d6aa12d559e9}
                 </Button>
               </div>
-              <h2>{uiText.text_b462d2f2ea47}</h2>
-              <div className={d.contactSearch}>
+              <div className={uiClass(d.contactSearch)}>
                 <Search size={18} />
-                <input
+                <NativeInput
                   aria-label={uiText.text_78c43fe4c4d4}
                   placeholder={uiText.text_671a1dcda1c2}
                   value={queryDraft}
@@ -320,7 +339,7 @@ function CreateConversation({ kind }: { kind: 'groups' | 'channels' }) {
                   {uiText.text_2a93eb7f06ce}
                 </Button>
               </div>
-              <p className={s.muted}>
+              <p className={uiClass(s.muted)}>
                 {number(selected.size)}
                 {uiText.text_903259a26e2b}
               </p>
@@ -334,12 +353,12 @@ function CreateConversation({ kind }: { kind: 'groups' | 'channels' }) {
                   description={uiText.text_93792447ba47}
                 />
               ) : (
-                <div className={s.spaceList}>
+                <div className={uiClass(s.spaceList)}>
                   {contacts.data.items
                     .filter((item) => item.contactUserId !== session.user.id)
                     .map((contact) => (
-                      <label className={s.selectContact} key={contact.contactUserId}>
-                        <input
+                      <label className={uiClass(s.selectContact)} key={contact.contactUserId}>
+                        <NativeInput
                           type="checkbox"
                           disabled={busy || !!frozen}
                           checked={selected.has(contact.contactUserId)}
@@ -365,56 +384,39 @@ function CreateConversation({ kind }: { kind: 'groups' | 'channels' }) {
                     ))}
                 </div>
               )}
-              <div className={s.actions}>
-                <Button
-                  type="button"
-                  variant="ghost"
-                  disabled={page <= 1 || contacts.isFetching}
-                  onClick={() => setPage(page - 1)}
-                >
-                  {uiText.text_88e65319d694}
-                </Button>
-                <Button
-                  type="button"
-                  variant="ghost"
-                  disabled={!contacts.data?.hasMore || contacts.isFetching}
-                  onClick={() => setPage(page + 1)}
-                >
-                  {uiText.text_12ca1a58c6ca}
-                </Button>
-              </div>
+              {(page > 1 || contacts.data?.hasMore) && (
+                <div className={uiClass(s.actions)}>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    disabled={page <= 1 || contacts.isFetching}
+                    onClick={() => setPage(page - 1)}
+                  >
+                    {uiText.text_88e65319d694}
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    disabled={!contacts.data?.hasMore || contacts.isFetching}
+                    onClick={() => setPage(page + 1)}
+                  >
+                    {uiText.text_12ca1a58c6ca}
+                  </Button>
+                </div>
+              )}
             </section>
           )}
           {!!error &&
             (error instanceof ApiError ? (
               <ErrorState error={error} />
             ) : (
-              <p className="field-error" role="alert">
+              <p className={uiClass('field-error')} role="alert">
                 {error instanceof Error ? error.message : uiText.text_ee786ae11865}
               </p>
             ))}
-          {frozen && <p className={s.muted}>{uiText.text_ca7549e86e0e}</p>}
-          <Button
-            type="submit"
-            disabled={busy || !storageReady || !title.trim() || !chosenVisibility}
-          >
-            {busy ? (
-              uiText.text_25384e522776
-            ) : !members ? (
-              <>
-                {uiText.text_9e8be562d436}
-                <ArrowLeft size={18} />
-              </>
-            ) : frozen ? (
-              uiText.text_6f96c570c24b
-            ) : group ? (
-              uiText.text_9c8e4fa37d9f
-            ) : (
-              uiText.text_67f771b12e76
-            )}
-          </Button>
-        </form>
+          {frozen && <p className={uiClass(s.muted)}>{uiText.text_ca7549e86e0e}</p>}
+        </>
       )}
-    </MessagingSurface>
+    </V5Scene>
   );
 }

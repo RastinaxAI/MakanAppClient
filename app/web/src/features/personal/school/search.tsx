@@ -1,4 +1,8 @@
 'use client';
+import { Input as NativeInput } from '@/components/ui/input';
+
+import { uiClass } from '@/components/v5/classes';
+
 import * as uiText from '@/content/fa';
 import { Button } from '@/components/ui/button';
 import { EmptyState, ErrorState, LoadingSkeleton } from '@/components/ui/states';
@@ -138,7 +142,7 @@ export function SchoolSearch() {
           }}
         >
           <Field label={uiText.text_cd5cdd750175}>
-            <input
+            <NativeInput
               autoFocus
               maxLength={100}
               value={draft}
@@ -151,7 +155,7 @@ export function SchoolSearch() {
           </Button>
         </form>
       </Card>
-      <nav className={s.tabs} aria-label={uiText.text_042fb068891a}>
+      <nav className={uiClass(s.tabs)} aria-label={uiText.text_042fb068891a}>
         {Object.entries(labels).map(([key, title]) => (
           <Link
             key={key}
@@ -170,7 +174,7 @@ export function SchoolSearch() {
         <ErrorState error={q.error} onRetry={() => void q.refetch()} />
       ) : (
         <>
-          {q.data.parent && <p className={s.hint}>{uiText.text_ecf4dfe1fb25}</p>}
+          {q.data.parent && <p className={uiClass(s.hint)}>{uiText.text_ecf4dfe1fb25}</p>}
           {!!q.data.issues.length && (
             <p role="alert">
               {uiText.text_408dd141549d}
@@ -180,7 +184,7 @@ export function SchoolSearch() {
             </p>
           )}
           {rows.length ? (
-            <div className={s.grid}>
+            <div className={uiClass(s.grid)}>
               {rows.map((row) => {
                 const Icon =
                   row.type === 'classes'
@@ -189,7 +193,7 @@ export function SchoolSearch() {
                       ? ClipboardList
                       : FileQuestion;
                 return (
-                  <Link className={s.classCard} key={row.type + row.id} href={row.href}>
+                  <Link className={uiClass(s.classCard)} key={row.type + row.id} href={row.href}>
                     <Icon size={22} />
                     <span>{labels[row.type]}</span>
                     <h2>{row.title}</h2>

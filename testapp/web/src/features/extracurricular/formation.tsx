@@ -1,17 +1,25 @@
 'use client';
-import '@/features/reference/bundles/features-extracurricular-formation';
+import {
+  Select as NativeSelect,
+  Input as NativeInput,
+  Textarea as NativeTextarea,
+} from '@/components/ui/input';
+
+import { uiClass } from '@/components/v5/classes';
 
 import * as uiText from '@/content/fa';
-import { useState } from 'react';
+import appearance from './formation.module.css';
+import { useState, type ReactNode } from 'react';
 import Link from 'next/link';
 import { integration80c as t } from '@/content/fa';
-import { Button } from '@/components/ui/button';
+import { Button, buttonClass } from '@/components/ui/button';
 import { ConfirmAction } from '@/components/ui/confirm-action';
 import { ErrorState, LoadingSkeleton, EmptyState } from '@/components/ui/states';
 import { usePersonalApi } from '@/features/personal/provider';
 import { Field, Pager } from '@/features/personal/school/shared';
 import { date } from '@/lib/formatting';
 import { useClassCommand } from './use-class-command';
+import { ApiError } from '@/lib/api/errors';
 import {
   classBase as base,
   requestApi as api,
@@ -20,6 +28,8 @@ import {
   type S,
 } from './api-model';
 import { StaticConnectedFrame } from './frame';
+import { V4List, V4Row, V4Note } from '@/components/v4/page';
+import { CheckCircle2, Clock3, AlertCircle, Users, MessagesSquare, Megaphone } from 'lucide-react';
 
 export function FormationList() {
   const [page, setPage] = useState(1),
@@ -31,7 +41,7 @@ export function FormationList() {
   return (
     <StaticConnectedFrame id="MK-12" title={t.requests}>
       <Field label={t.status}>
-        <select
+        <NativeSelect
           value={status}
           onChange={(e) => {
             setStatus(e.target.value);
@@ -52,7 +62,7 @@ export function FormationList() {
               {stateLabel(s)}
             </option>
           ))}
-        </select>
+        </NativeSelect>
       </Field>
       {q.isPending ? (
         <LoadingSkeleton />
@@ -62,8 +72,8 @@ export function FormationList() {
         <>
           {!q.data.items.length && <EmptyState title={t.noRequests} />}
           {q.data.items.map((r) => (
-            <Link className="card" key={r.id} href={`${base}/requests/${r.id}`}>
-              <span className="badge">{stateLabel(r.status)}</span>
+            <Link className={uiClass('card')} key={r.id} href={`${base}/requests/${r.id}`}>
+              <span className={uiClass('badge')}>{stateLabel(r.status)}</span>
               <h3>{r.details.title}</h3>
               <p>{r.details.purpose}</p>
               <small>{date(r.createdAtUtc, true)}</small>
@@ -72,7 +82,7 @@ export function FormationList() {
           <Pager page={page} total={q.data.totalCount} onChange={setPage} />
         </>
       )}
-      <Link className="btn" href={`${base}/requests/new`}>
+      <Link className={uiClass(buttonClass('btn'))} href={`${base}/requests/new`}>
         {t.requests}
       </Link>
     </StaticConnectedFrame>
@@ -87,6 +97,57 @@ export function FormationDetail({ id, editing }: { id: string; editing?: boolean
     `${api}/${id}/history?page=${page}&pageSize=30`,
   );
   const command = useClassCommand('request:' + id);
+  const showProgress =
+    !editing &&
+    q.isSuccess &&
+    q.data?.status === 'Approved' &&
+    !!q.data.createdClassId &&
+    !!q.data.progress;
+  const classroom = usePersonalApi<S['PersonalClassDto']>(
+    `/api/v1/personal-classes/${q.data?.createdClassId}`,
+    { enabled: showProgress },
+  );
+  const historyView = (
+    <section className={uiClass('card')}>
+      <h3>{t.history}</h3>
+      {history.isPending ? (
+        <LoadingSkeleton />
+      ) : history.isError ? (
+        <ErrorState error={history.error} onRetry={() => void history.refetch()} />
+      ) : (
+        <>
+          {!history.data.items.length && <EmptyState title={uiText.vnext.empty} />}
+          {history.data.items.map((item) => (
+            <div className={uiClass('row')} key={item.id}>
+              <div>
+                <p>{stateLabel(item.action)}</p>
+                <p>{item.reason}</p>
+                <small>{date(item.occurredAtUtc, true)}</small>
+              </div>
+            </div>
+          ))}
+          {(page > 1 || history.data.totalCount > history.data.pageSize) && (
+            <Pager page={page} total={history.data.totalCount} onChange={setPage} />
+          )}
+        </>
+      )}
+    </section>
+  );
+  if (showProgress && q.data)
+    return (
+      <FormationProgress
+        value={q.data}
+        classroom={classroom.data}
+        classError={
+          classroom.data && classroom.data.id !== q.data.createdClassId
+            ? new ApiError(502, { code: 'CONTRACT_MISMATCH' })
+            : classroom.error
+        }
+        retryClass={() => void classroom.refetch()}
+        history={historyView}
+        refresh={() => void q.refetch()}
+      />
+    );
   return (
     <StaticConnectedFrame
       id="MK-18"
@@ -99,8 +160,8 @@ export function FormationDetail({ id, editing }: { id: string; editing?: boolean
         <ErrorState error={q.error} onRetry={() => void q.refetch()} />
       ) : (
         <>
-          <div className="card">
-            <span className="badge">{stateLabel(q.data.status)}</span>
+          <div className={uiClass('card')}>
+            <span className={uiClass('badge')}>{stateLabel(q.data.status)}</span>
             <p>{q.data.details.purpose}</p>
             <p>{q.data.details.description}</p>
             {q.data.decisionReason && <p>{q.data.decisionReason}</p>}
@@ -110,14 +171,17 @@ export function FormationDetail({ id, editing }: { id: string; editing?: boolean
               {q.data.details.suggestedCapacity.toLocaleString('fa-IR')}
             </p>
             {q.data.createdClassId && (
-              <Link className="btn secondary" href={`${base}/classes/${q.data.createdClassId}`}>
+              <Link
+                className={uiClass(buttonClass('btn secondary'))}
+                href={`${base}/classes/${q.data.createdClassId}`}
+              >
                 {t.created}
               </Link>
             )}
             {q.data.progress && (
               <dl>
                 {Object.entries(q.data.progress).map(([key, value]) => (
-                  <div className="kv" key={key}>
+                  <div className={uiClass('kv')} key={key}>
                     <dt>
                       {
                         (
@@ -146,7 +210,10 @@ export function FormationDetail({ id, editing }: { id: string; editing?: boolean
             (editing ? (
               <RequestEdit value={q.data} />
             ) : (
-              <Link className="btn secondary" href={`${base}/requests/${id}/edit`}>
+              <Link
+                className={uiClass(buttonClass('btn secondary'))}
+                href={`${base}/requests/${id}/edit`}
+              >
                 {t.edit}
               </Link>
             ))}
@@ -176,27 +243,158 @@ export function FormationDetail({ id, editing }: { id: string; editing?: boolean
           {command.feedback}
         </>
       )}
-      <section className="card">
-        <h3>{t.history}</h3>
-        {history.isPending ? (
-          <LoadingSkeleton />
-        ) : history.isError ? (
-          <ErrorState error={history.error} onRetry={() => void history.refetch()} />
+      {historyView}
+    </StaticConnectedFrame>
+  );
+}
+function FormationProgress({
+  value,
+  classroom,
+  refresh,
+  classError,
+  retryClass,
+  history,
+}: {
+  value: S['PersonalClassRequestDto'];
+  classroom?: S['PersonalClassDto'];
+  refresh: () => void;
+  classError?: unknown;
+  retryClass: () => void;
+  history: ReactNode;
+}) {
+  const progress = value.progress!;
+  const validClass = !!classroom && classroom.id === value.createdClassId;
+  const ready =
+    ['Active', 'Ready'].includes(progress.classState) &&
+    progress.managerAccepted &&
+    progress.groupState === 'Ready' &&
+    progress.channelState === 'Ready';
+  const failed = [progress.classState, progress.groupState, progress.channelState].some((state) =>
+    ['Failed', 'Error'].includes(state),
+  );
+  const copy = uiText.v5Product;
+  const title = ready
+    ? copy.formationReady
+    : failed
+      ? copy.formationFailed
+      : copy.formationProgress;
+  const steps = [
+    {
+      key: 'class',
+      title: copy.formationClass,
+      state: progress.classState,
+      done: ['Active', 'Ready'].includes(progress.classState),
+    },
+    {
+      key: 'manager',
+      title: copy.formationManager,
+      state: progress.managerAccepted ? 'Accepted' : 'Pending',
+      done: progress.managerAccepted,
+    },
+    {
+      key: 'group',
+      title: copy.formationGroup,
+      state: progress.groupState,
+      done: progress.groupState === 'Ready',
+    },
+    {
+      key: 'channel',
+      title: copy.formationChannel,
+      state: progress.channelState,
+      done: progress.channelState === 'Ready',
+    },
+  ];
+  return (
+    <StaticConnectedFrame
+      id={ready ? 'MK-22' : failed ? 'MK-21' : 'MK-20'}
+      title={title}
+      subtitle={value.details.title}
+      back={base + '/requests'}
+      menu={history}
+      actions={
+        ready && validClass ? (
+          <Button asChild>
+            <Link href={`${base}/classes/${classroom.id}`}>{copy.openClass}</Link>
+          </Button>
         ) : (
-          <>
-            {history.data.items.map((item) => (
-              <div className="row" key={item.id}>
-                <div>
-                  <p>{stateLabel(item.action)}</p>
-                  <p>{item.reason}</p>
-                  <small>{date(item.occurredAtUtc, true)}</small>
-                </div>
-              </div>
-            ))}
-            <Pager page={page} total={history.data.totalCount} onChange={setPage} />
-          </>
+          <Button variant="outline" asChild>
+            <Link href={base + '/requests'}>{copy.backToRequests}</Link>
+          </Button>
+        )
+      }
+    >
+      <div
+        className={uiClass(
+          'v5-formation-status ' +
+            appearance['v5-formation-status'] +
+            ' ' +
+            (failed ? 'formation-warning' : ''),
         )}
-      </section>
+        data-formation-progress={ready ? 'Ready' : failed ? 'Failed' : 'Pending'}
+      >
+        <span className={uiClass('v5-status-symbol' + ' ' + appearance['v5-status-symbol'])}>
+          {ready ? <CheckCircle2 /> : failed ? <AlertCircle /> : <Users />}
+        </span>
+        <h2>
+          {ready
+            ? copy.formationReadyDescription
+            : failed
+              ? copy.formationFailedDescription
+              : copy.formationProgressDescription}
+        </h2>
+        <p>{value.details.title}</p>
+      </div>
+      <progress
+        className={uiClass('v5-formation-bar' + ' ' + appearance['v5-formation-bar'])}
+        max={steps.length}
+        value={steps.filter((step) => step.done).length}
+        aria-label={copy.formationProgress}
+      />
+      <ol className={uiClass('v5-formation-steps' + ' ' + appearance['v5-formation-steps'])}>
+        {steps.map((step) => (
+          <li key={step.key}>
+            <span aria-hidden="true">
+              {step.done ? (
+                <CheckCircle2 />
+              ) : ['Failed', 'Error'].includes(step.state) ? (
+                <AlertCircle />
+              ) : (
+                <Clock3 />
+              )}
+            </span>
+            <div>
+              <strong>{step.title}</strong>
+              <small>{stateLabel(step.state || 'Unknown')}</small>
+            </div>
+          </li>
+        ))}
+      </ol>
+      <V4Note>{copy.formationTracking}</V4Note>
+      {!!classError && <ErrorState error={classError} onRetry={retryClass} />}
+      {validClass && (
+        <V4List>
+          <V4Row
+            title={t.members}
+            icon={<Users />}
+            href={`${base}/classes/${classroom.id}/members`}
+          />
+          <V4Row
+            title={t.spaces}
+            icon={<MessagesSquare />}
+            href={`${base}/classes/${classroom.id}/setup`}
+          />
+          {classroom.capabilities?.canManageSpaces && (
+            <V4Row
+              title={copy.trackPreparation}
+              icon={<Megaphone />}
+              href={`${base}/classes/${classroom.id}/setup`}
+            />
+          )}
+        </V4List>
+      )}
+      <Button variant="outline" onClick={refresh}>
+        {t.refresh}
+      </Button>
     </StaticConnectedFrame>
   );
 }
@@ -207,7 +405,7 @@ function RequestEdit({ value }: { value: S['PersonalClassRequestDto'] }) {
   const stale = version !== value.version;
   return (
     <form
-      className="card stack"
+      className={uiClass('card stack')}
       onSubmit={async (e) => {
         e.preventDefault();
         if (stale || !validRequest(details)) return;
@@ -220,7 +418,7 @@ function RequestEdit({ value }: { value: S['PersonalClassRequestDto'] }) {
       }}
     >
       <Field label={t.title}>
-        <input
+        <NativeInput
           required
           maxLength={200}
           value={details.title}
@@ -228,7 +426,7 @@ function RequestEdit({ value }: { value: S['PersonalClassRequestDto'] }) {
         />
       </Field>
       <Field label={t.purpose}>
-        <textarea
+        <NativeTextarea
           required
           maxLength={2000}
           value={details.purpose}
@@ -236,14 +434,14 @@ function RequestEdit({ value }: { value: S['PersonalClassRequestDto'] }) {
         />
       </Field>
       <Field label={t.description}>
-        <textarea
+        <NativeTextarea
           maxLength={4000}
           value={details.description ?? ''}
           onChange={(e) => setDetails({ ...details, description: e.target.value || null })}
         />
       </Field>
       <Field label={t.capacity}>
-        <input
+        <NativeInput
           type="number"
           required
           min={1}

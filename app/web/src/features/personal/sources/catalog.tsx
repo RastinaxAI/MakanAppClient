@@ -1,15 +1,35 @@
 'use client';
-import '@/features/reference/bundles/features-personal-sources-catalog';
+import {
+  Input as NativeInput,
+  Select as NativeSelect,
+  Textarea as NativeTextarea,
+} from '@/components/ui/input';
+
+import { uiClass } from '@/components/v5/classes';
 
 import * as uiText from '@/content/fa';
+import { SourceKnowledge } from './knowledge';
 import Link from 'next/link';
-import { useEffect, useRef, useState, type ReactNode } from 'react';
-import { FileText, Search, Plus } from 'lucide-react';
-import { ReferenceScreen, referenceNodeKey } from '@/features/reference/screen';
+import {
+  useContext,
+  useEffect,
+  useId,
+  useMemo,
+  useRef,
+  useState,
+  type ReactNode,
+  type Ref,
+} from 'react';
+import { BookOpen, LibraryBig, Search, ChevronLeft, X, History, Eye } from 'lucide-react';
+import { ProductContext, V5Scene } from '@/components/v5/scene';
+import {
+  SceneMenuClose,
+  useSceneFormAction,
+  type SceneSummary,
+} from '@/components/v5/form-actions';
 import { useQueryClient } from '@tanstack/react-query';
-import { useRouter } from 'next/navigation';
-import { PageBack } from '@/components/navigation/page-back';
-import { Button } from '@/components/ui/button';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { Button, buttonClass } from '@/components/ui/button';
 import { ConfirmAction } from '@/components/ui/confirm-action';
 import { EmptyState, ErrorState, LoadingSkeleton } from '@/components/ui/states';
 import { useUnsavedChanges } from '@/components/hooks/use-unsaved-changes';
@@ -22,15 +42,37 @@ import { date, number } from '@/lib/formatting';
 import { usePersonal, usePersonalApi } from '../provider';
 import { sourceScopes, sourceDownloadable, sourceReadiness } from './model';
 import s from '../service-layout.module.css';
+import catalogStyle from './source-catalog.module.css';
 type S = components['schemas'];
 type Scope = S['EducationalSourceScope'];
 const base = '/personal/resources';
+function useSourceHeading(view: string) {
+  const heading = useRef<HTMLHeadingElement>(null);
+  useEffect(() => {
+    heading.current?.focus({ preventScroll: true });
+  }, [view]);
+  return heading;
+}
+function SourceMenuLink({ href, children }: { href: string; children: ReactNode }) {
+  const close = useContext(SceneMenuClose);
+  return (
+    <Link
+      className={uiClass(buttonClass('button button-outline'))}
+      href={href}
+      onClick={() => close?.()}
+    >
+      {children}
+    </Link>
+  );
+}
 export function SourceCatalog({
   upload = false,
   initialScope = 'Personal',
   initialClassId = '',
 }: { upload?: boolean; initialScope?: Scope; initialClassId?: string } = {}) {
   const router = useRouter();
+  const heading = useSourceHeading(upload ? 'upload' : 'catalog');
+  const searchInput = useRef<HTMLInputElement>(null);
   const { session } = usePersonal();
   const memory =
     'makan:draft:view:' +
@@ -95,6 +137,36 @@ export function SourceCatalog({
         ? item.fileReady && item.sourceReady
         : ['Pending', 'Queued', 'Processing'].includes(item.processingStatus)),
   );
+  const createAction = create && (scope !== 'Class' || !!classId) && (
+    <Button
+      onClick={() =>
+        router.push(
+          base +
+            '?' +
+            new URLSearchParams({ upload: '1', scope, ...(scope === 'Class' ? { classId } : {}) }),
+        )
+      }
+    >
+      {uiText.text_1d488a965baa}
+    </Button>
+  );
+  const readinessFilter = (
+    <div className={uiClass('chips')} role="group" aria-label={uiText.text_3043b5ecb0c3}>
+      {[uiText.text_15270886eadd, uiText.text_376e9c9561e2, uiText.text_68bfe264e2cf].map(
+        (name) => (
+          <button
+            type="button"
+            className={uiClass('chip ' + (readiness === name ? 'on' : ''))}
+            aria-pressed={readiness === name}
+            onClick={() => setReadiness(name)}
+            key={name}
+          >
+            {name}
+          </button>
+        ),
+      )}
+    </div>
+  );
   const content = (
     <>
       <ConnectionNotice
@@ -102,9 +174,34 @@ export function SourceCatalog({
         error={query.isError}
         onRetry={() => void query.refetch()}
       />
-      <label className="search">
+      <div
+        className={uiClass(catalogStyle.scopes)}
+        role="radiogroup"
+        aria-label={uiText.text_be51a88d392d}
+        data-source-scopes
+      >
+        {(Object.keys(sourceScopes) as Scope[])
+          .filter((value) => school || !['Class', 'Organization'].includes(value))
+          .map((value) => (
+            <label key={value}>
+              <NativeInput
+                type="radio"
+                name="source-scope"
+                value={value}
+                checked={scope === value}
+                onChange={() => {
+                  setScope(value);
+                  setPage(1);
+                }}
+              />
+              <span>{value === 'Class' ? uiText.text_e7b1ccd0bda3 : sourceScopes[value]}</span>
+            </label>
+          ))}
+      </div>
+      <div className={uiClass(catalogStyle.search)} role="search" data-source-search>
         <Search size={19} />
-        <input
+        <NativeInput
+          ref={searchInput}
           aria-label={uiText.text_c7ffe2197db2}
           placeholder={uiText.text_8cc9dcd7a18e}
           value={search}
@@ -114,34 +211,31 @@ export function SourceCatalog({
             setPage(1);
           }}
         />
-      </label>
-      <label className="field">
-        {uiText.text_be51a88d392d}
-        <select
-          value={scope}
-          onChange={(event) => {
-            setScope(event.target.value as Scope);
-            setPage(1);
-          }}
-        >
-          {(Object.keys(sourceScopes) as Scope[])
-            .filter((value) => school || !['Class', 'Organization'].includes(value))
-            .map((value) => (
-              <option key={value} value={value}>
-                {sourceScopes[value]}
-              </option>
-            ))}
-        </select>
-      </label>
+        {search && (
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon"
+            aria-label={uiText.text_35c84a68f506}
+            onClick={() => {
+              setSearch('');
+              setPage(1);
+              searchInput.current?.focus();
+            }}
+          >
+            <X size={19} />
+          </Button>
+        )}
+      </div>
       {scope === 'Class' &&
         (classes.isPending ? (
           <LoadingSkeleton />
         ) : classes.isError ? (
           <ErrorState error={classes.error} onRetry={() => void classes.refetch()} />
         ) : (
-          <label className="field">
+          <label className={uiClass('field')}>
             {uiText.text_dab8b743e1f2}
-            <select
+            <NativeSelect
               value={classId}
               onChange={(event) => {
                 setClass(event.target.value);
@@ -154,23 +248,10 @@ export function SourceCatalog({
                   {row.title}
                 </option>
               ))}
-            </select>
+            </NativeSelect>
           </label>
         ))}
-      {scope === 'Library' && <div className="alert">{uiText.text_5a1c9deed686}</div>}
-      <div className="chips" role="group" aria-label={uiText.text_3043b5ecb0c3}>
-        {[uiText.text_15270886eadd, uiText.text_376e9c9561e2, uiText.text_68bfe264e2cf].map(
-          (name) => (
-            <button
-              className={'chip ' + (readiness === name ? 'on' : '')}
-              onClick={() => setReadiness(name)}
-              key={name}
-            >
-              {name}
-            </button>
-          ),
-        )}
-      </div>
+      {scope === 'Library' && <div className={uiClass('alert')}>{uiText.text_5a1c9deed686}</div>}
       {scope === 'Class' && (!school || !classId) ? (
         <EmptyState title={uiText.text_3b83b26abcf0} />
       ) : query.isPending ? (
@@ -179,7 +260,7 @@ export function SourceCatalog({
         <ErrorState error={query.error} onRetry={() => void query.refetch()} />
       ) : (
         <>
-          <div className="list">
+          <div className={uiClass('list')} data-source-list>
             {!rows.length ? (
               <EmptyState title={search ? uiText.text_76263ba743f2 : uiText.text_d00189e07062} />
             ) : (
@@ -187,61 +268,54 @@ export function SourceCatalog({
                 <Link
                   href={base + '/' + source.sourceId}
                   aria-label={source.title}
-                  className="row mk-source-row"
+                  className={uiClass('row mk-source-row')}
                   key={source.sourceId}
                 >
-                  <span className="tile-icon">
-                    <FileText size={22} />
+                  <span className={uiClass('tile-icon')}>
+                    {source.scope === 'Library' ? <LibraryBig size={22} /> : <BookOpen size={22} />}
                   </span>
-                  <span className="grow">
+                  <span className={uiClass('grow')}>
                     <h4 dir="auto">{source.title}</h4>
-                    <SourceStatus source={source} />
+                    <p>{sourceSummary(source)}</p>
+                  </span>
+                  <span className={uiClass('chev')}>
+                    <ChevronLeft size={18} />
                   </span>
                 </Link>
               ))
             )}
           </div>
-          <div className="between">
-            <Button variant="ghost" disabled={page <= 1} onClick={() => setPage(page - 1)}>
-              {uiText.text_88e65319d694}
-            </Button>
-            <span className="tiny muted">
-              {uiText.text_2714496eef16}
-              {number(page)}
-            </span>
-            <Button
-              variant="ghost"
-              disabled={page * query.data!.pageSize >= query.data!.totalCount}
-              onClick={() => setPage(page + 1)}
-            >
-              {uiText.text_12ca1a58c6ca}
-            </Button>
-          </div>
+          {(page > 1 || query.data!.totalCount > query.data!.pageSize) && (
+            <div className={uiClass('between')}>
+              <Button variant="ghost" disabled={page <= 1} onClick={() => setPage(page - 1)}>
+                {uiText.text_88e65319d694}
+              </Button>
+              <span className={uiClass('tiny muted')}>
+                {uiText.text_2714496eef16}
+                {number(page)}
+              </span>
+              <Button
+                variant="ghost"
+                disabled={page * query.data!.pageSize >= query.data!.totalCount}
+                onClick={() => setPage(page + 1)}
+              >
+                {uiText.text_12ca1a58c6ca}
+              </Button>
+            </div>
+          )}
         </>
-      )}
-      <div className="spacer" />
-      {create && (scope !== 'Class' || !!classId) && (
-        <Button
-          onClick={() =>
-            router.push(
-              base +
-                '?' +
-                new URLSearchParams({
-                  upload: '1',
-                  scope,
-                  ...(scope === 'Class' ? { classId } : {}),
-                }),
-            )
-          }
-        >
-          <Plus size={19} />
-          {uiText.text_1d488a965baa}
-        </Button>
       )}
     </>
   );
   return (
-    <ReferenceSourceFrame id={upload ? 'MK-359' : 'MK-356'} scope={sourceScopes[scope]}>
+    <SourceFrame
+      headingRef={heading}
+      id={upload ? 'MK-359' : 'MK-356'}
+      scope={sourceScopes[scope]}
+      actions={upload ? undefined : createAction}
+      menu={upload ? undefined : readinessFilter}
+      context={upload ? undefined : <SourceListContext items={rows} />}
+    >
       {upload ? (
         create && (scope !== 'Class' || !!classId) ? (
           <SourceUpload
@@ -255,52 +329,126 @@ export function SourceCatalog({
       ) : (
         content
       )}
-    </ReferenceSourceFrame>
+    </SourceFrame>
   );
 }
-function ReferenceSourceFrame({
+function SourceFrame({
   id,
   scope,
   title,
   children,
+  actions,
+  menu,
+  context,
+  back,
+  summary,
+  headingRef,
 }: {
   id: string;
   scope?: string;
   title?: string;
   children: ReactNode;
+  actions?: ReactNode;
+  menu?: ReactNode;
+  context?: ReactNode;
+  back?: string;
+  summary?: SceneSummary;
+  headingRef?: Ref<HTMLHeadingElement>;
 }) {
-  const router = useRouter();
   return (
-    <ReferenceScreen
+    <V5Scene
+      headingRef={headingRef}
       id={id}
-      bindings={{
-        heading: {
-          title: title ?? (id === 'MK-357' ? uiText.text_8a52f7bc3f5c : undefined),
-          subtitle: scope ? uiText.text_638b8573191f + scope : uiText.text_b0226c6cf2bd,
-        },
-        onChange: () => {},
-        onAction: (control) =>
-          router.push(
-            control.label === uiText.common_back ? '/personal/resources' : '/personal/profile',
-          ),
-        replacements: {
-          [referenceNodeKey(id, 'app-body')!]: (
-            <div className="app-body">
-              <div className="mk-source-surface">{children}</div>
-            </div>
-          ),
-          ...(referenceNodeKey(id, 'fixed-actions')
-            ? { [referenceNodeKey(id, 'fixed-actions')!]: null }
-            : {}),
-        },
-      }}
-    />
+      title={
+        title ??
+        (id === 'MK-356'
+          ? uiText.text_28042640ff75
+          : id === 'MK-359'
+            ? uiText.text_fe2fa4ad990a
+            : uiText.text_8a52f7bc3f5c)
+      }
+      subtitle={scope && id !== 'MK-356' ? uiText.text_638b8573191f + scope : undefined}
+      back={back ?? (id === 'MK-356' ? '/personal/profile' : base)}
+      actions={actions}
+      menu={menu}
+      context={context}
+      summary={summary}
+    >
+      {children}
+    </V5Scene>
+  );
+}
+function sourceSummary(source: S['EducationalSourceResult']) {
+  return [
+    sourceScopes[source.scope],
+    source.scope === 'Library'
+      ? uiText.v5Product.libraryMetadata
+      : !source.fileReady
+        ? uiText.text_d099cfd756e0 + ': ' + uiText.text_f7b3cdaee0a4
+        : source.sourceReady
+          ? uiText.text_5d94e336834f
+          : uiText.text_58b53f9acd41,
+    ...(source.status !== 'Active'
+      ? [source.status === 'Archived' ? uiText.text_9defd77e1a5d : uiText.text_4e67bd8e3482]
+      : []),
+  ].join(' · ');
+}
+function sourceNavigation(source: S['EducationalSourceResult']) {
+  return [
+    {
+      key: 'content',
+      title: uiText.text_c861d4a9c39f,
+      detail: uiText.sourceWorkspace.contentHint,
+      icon: BookOpen,
+      allowed: source.capabilities.canRead,
+    },
+    {
+      key: 'versions',
+      title: uiText.text_e8300534d21f,
+      detail: uiText.sourceWorkspace.versionHint,
+      icon: History,
+      allowed:
+        source.capabilities.canWrite ||
+        source.capabilities.canCreateVersion ||
+        source.capabilities.canPublish ||
+        source.capabilities.canArchive,
+    },
+    {
+      key: 'visibility',
+      title: uiText.text_d90a435157c3,
+      detail: uiText.sourceWorkspace.visibilityHint,
+      icon: Eye,
+      allowed: source.capabilities.canChangeVisibility,
+    },
+  ].filter((item) => item.allowed);
+}
+function SourceListContext({ items }: { items: S['EducationalSourceResult'][] }) {
+  const place = useContext(ProductContext);
+  return (
+    <>
+      <div className={uiClass('context-tag')}>{uiText.v5Product.context}</div>
+      <h3>{place.title}</h3>
+      <p>{place.role}</p>
+      {items.slice(0, 3).map((source) => (
+        <Link
+          className={uiClass('context-item')}
+          href={base + '/' + source.sourceId}
+          key={source.sourceId}
+        >
+          <b>{source.title}</b>
+          <div className={uiClass('context-value')}>{sourceSummary(source)}</div>
+        </Link>
+      ))}
+      <div className={uiClass('context-item')}>
+        <p>{uiText.v5Product.contextBackPolicy}</p>
+      </div>
+    </>
   );
 }
 export function SourceStatus({ source }: { source: S['EducationalSourceResult'] }) {
   return (
     <>
-      <p className={s.meta}>
+      <p className={uiClass(s.meta)}>
         {sourceScopes[source.scope]}
         {uiText.text_78887da22764}{' '}
         {source.publicationStatus === 'Published'
@@ -315,9 +463,9 @@ export function SourceStatus({ source }: { source: S['EducationalSourceResult'] 
         {uiText.text_530d0a0f20e9}
         {number(source.revision)}
       </p>
-      <div className={s.row}>
+      <div className={uiClass(s.row)}>
         {sourceReadiness(source).map((item) => (
-          <span key={item.title} className={s.status}>
+          <span key={item.title} className={uiClass(s.status)}>
             {item.title}
             {uiText.text_45822f54a0d0}
             {item.ready ? uiText.text_376e9c9561e2 : uiText.text_f7b3cdaee0a4}
@@ -336,8 +484,9 @@ function SourceUpload({
   scope: Exclude<Scope, 'Library'>;
   classId: string | null;
   source?: S['EducationalSourceResult'];
-  onSaved?: (value: S['EducationalSourceResult']) => void;
+  onSaved?: (value: S['EducationalSourceResult']) => void | Promise<void>;
 }) {
+  const formId = useId();
   const { session, call, transfer } = usePersonal(),
     router = useRouter(),
     cache = useQueryClient();
@@ -429,6 +578,7 @@ function SourceUpload({
         source ? `/api/v1/sources/${source.sourceId}/versions` : '/api/v1/sources',
         {
           method: 'POST',
+          expectedStatus: 200,
           body: JSON.stringify(
             source
               ? {
@@ -445,16 +595,21 @@ function SourceUpload({
       if (
         value.scope !== scope ||
         value.classId !== classId ||
-        (source && value.sourceId !== source.sourceId)
+        value.file?.fileAssetId !== command.fileAssetId ||
+        (scope === 'Personal' && value.ownerUserId !== session.user.id) ||
+        (source &&
+          (value.sourceId !== source.sourceId ||
+            value.organizationId !== source.organizationId ||
+            value.ownerUserId !== source.ownerUserId))
       )
         throw new ApiError(502, { code: 'CONTRACT_MISMATCH' });
+      if (onSaved) await onSaved(value);
       setFile(undefined);
       setAsset(undefined);
       setFrozen(undefined);
       setVersionExpected(undefined);
       if (!source) sessionStorage.removeItem(key);
-      if (onSaved) onSaved(value);
-      else router.push(base + '/' + value.sourceId);
+      if (!onSaved) router.push(base + '/' + value.sourceId);
     } catch (e) {
       setError(e);
       if (source && e instanceof ApiError && e.status === 412)
@@ -475,43 +630,78 @@ function SourceUpload({
       setBusy(false);
     }
   }
+  const actionTitle = busy
+    ? uiText.text_b5ef00b1806f
+    : frozen
+      ? uiText.text_3f86e11c3190
+      : asset && asset.status !== 'Ready'
+        ? uiText.text_2ec5f09bb601
+        : source
+          ? uiText.text_6037c81e20c1
+          : uiText.text_914c38333ec6;
+  const unavailable = busy || !restored || (!frozen && (!file || !title.trim() || !reason.trim()));
+  const action = useMemo(
+    () => (
+      <Button form={formId} type="submit" disabled={unavailable} aria-busy={busy}>
+        {actionTitle}
+      </Button>
+    ),
+    [formId, unavailable, busy, actionTitle],
+  );
+  const actionPresented = useSceneFormAction(action, !source);
   return (
     <section
-      className={s.panel}
+      className={uiClass(source ? 'card ' + catalogStyle.panel : catalogStyle.upload)}
       aria-label={source ? uiText.text_6b5fcc9a7cd5 : uiText.text_1d488a965baa}
     >
-      <h2>{source ? uiText.text_6b5fcc9a7cd5 : uiText.text_1d488a965baa}</h2>
-      <p className={s.hint}>{uiText.text_b7e453cfcea7}</p>
-      <fieldset disabled={busy || !!frozen || !!versionExpected}>
-        <label className={s.field}>
-          {uiText.text_e3a6d4896346}
-          <input value={title} maxLength={200} onChange={(e) => setTitle(e.target.value)} />
-        </label>
-        <label className={s.field}>
-          {uiText.text_5e89fc890d9e}
-          <textarea
-            value={description}
-            maxLength={2000}
-            onChange={(e) => setDescription(e.target.value)}
-          />
-        </label>
-        <label className={s.field}>
-          {uiText.text_a69eb3885a5b}
-          <input
-            type="file"
-            onChange={(e) => {
-              setFile(e.target.files?.[0]);
-              setAsset(undefined);
-            }}
-          />
-        </label>
-        <label className={s.field}>
-          {uiText.text_dc267e54e1df}
-          <input value={reason} maxLength={500} onChange={(e) => setReason(e.target.value)} />
-        </label>
-      </fieldset>
+      {source && <h2>{uiText.text_6b5fcc9a7cd5}</h2>}
+      <p className={uiClass(s.hint)}>{uiText.text_b7e453cfcea7}</p>
+      <form
+        id={formId}
+        onSubmit={(event) => {
+          event.preventDefault();
+          void save();
+        }}
+      >
+        <fieldset disabled={busy || !!frozen || !!versionExpected}>
+          <label className={uiClass(s.field)}>
+            {uiText.text_e3a6d4896346}
+            <NativeInput value={title} maxLength={200} onChange={(e) => setTitle(e.target.value)} />
+          </label>
+          <label className={uiClass(s.field)}>
+            {uiText.text_be51a88d392d}
+            <NativeInput value={sourceScopes[scope]} readOnly />
+          </label>
+          <label className={uiClass(s.field)}>
+            {uiText.text_5e89fc890d9e}
+            <NativeTextarea
+              value={description}
+              maxLength={2000}
+              onChange={(e) => setDescription(e.target.value)}
+            />
+          </label>
+          <label className={uiClass(s.field)}>
+            {uiText.text_a69eb3885a5b}
+            <NativeInput
+              type="file"
+              onChange={(e) => {
+                setFile(e.target.files?.[0]);
+                setAsset(undefined);
+              }}
+            />
+          </label>
+          <label className={uiClass(s.field)}>
+            {uiText.text_dc267e54e1df}
+            <NativeInput
+              value={reason}
+              maxLength={500}
+              onChange={(e) => setReason(e.target.value)}
+            />
+          </label>
+        </fieldset>
+      </form>
       {asset && (
-        <p className={s.meta}>
+        <p className={uiClass(s.meta)}>
           {uiText.text_db42134fccc6}{' '}
           {asset.status === 'Ready'
             ? uiText.text_376e9c9561e2
@@ -520,10 +710,10 @@ function SourceUpload({
               : uiText.text_f7b3cdaee0a4}
         </p>
       )}
-      {frozen && <p className={s.hint}>{uiText.text_c83a7d86b4fd}</p>}
+      {frozen && <p className={uiClass(s.hint)}>{uiText.text_c83a7d86b4fd}</p>}
       {source && versionExpected && versionExpected !== source.version && (
         <>
-          <p className={s.hint}>{uiText.text_9cf6d41e477e}</p>
+          <p className={uiClass(s.hint)}>{uiText.text_9cf6d41e477e}</p>
           <ConfirmAction
             title={uiText.text_e3963cf48bc3}
             trigger={uiText.text_1ae4d3eba9ba}
@@ -537,31 +727,61 @@ function SourceUpload({
           />
         </>
       )}
-      <Button
-        disabled={busy || !restored || (!frozen && (!file || !title.trim() || !reason.trim()))}
-        onClick={() => void save()}
-      >
-        {busy
-          ? uiText.text_b5ef00b1806f
-          : frozen
-            ? uiText.text_3f86e11c3190
-            : asset && asset.status !== 'Ready'
-              ? uiText.text_2ec5f09bb601
-              : source
-                ? uiText.text_6037c81e20c1
-                : uiText.text_914c38333ec6}
-      </Button>
+      {!actionPresented && action}
       {!!error && <ErrorState error={error} />}
     </section>
   );
 }
 export function SourceDetail({ id }: { id: string }) {
+  const params = useSearchParams();
+  const raw = params.get('view');
+  const view = ['content', 'versions', 'visibility', 'knowledge'].includes(raw ?? '')
+    ? raw!
+    : 'overview';
+  const heading = useSourceHeading(view);
   const q = usePersonalApi<S['EducationalSourceResult']>('/api/v1/sources/' + id, { poll: 10000 });
+  const detail = base + '/' + id;
+  const titles: Record<string, string> = {
+    overview: uiText.text_4b761b981529,
+    content: uiText.text_c861d4a9c39f,
+    versions: uiText.text_e8300534d21f,
+    visibility: uiText.text_d90a435157c3,
+    knowledge: uiText.aiIntegration.knowledge,
+  };
   return (
-    <ReferenceSourceFrame
-      id="MK-357"
-      title={q.data?.title}
-      scope={q.data ? sourceScopes[q.data.scope] : undefined}
+    <SourceFrame
+      headingRef={heading}
+      id={
+        q.data?.scope === 'Library'
+          ? 'MK-358'
+          : view === 'knowledge'
+            ? 'MK-360'
+            : view === 'versions'
+              ? 'MK-361'
+              : 'MK-357'
+      }
+      title={
+        q.data?.scope === 'Library' && view === 'overview' ? uiText.text_4b76e7195c0f : titles[view]
+      }
+      back={view === 'overview' ? base : detail}
+      summary={
+        q.data && view === 'overview' && q.data.scope !== 'Library'
+          ? sourceNavigation(q.data).map((item) => ({ label: item.title, value: item.detail }))
+          : undefined
+      }
+      menu={
+        <div className={uiClass('stack')}>
+          <SourceMenuLink href={detail}>{uiText.text_4b761b981529}</SourceMenuLink>
+          {q.data?.scope !== 'Library' && (
+            <SourceMenuLink href={detail + '?view=knowledge'}>
+              {uiText.aiIntegration.knowledge}
+            </SourceMenuLink>
+          )}
+          <Button variant="outline" onClick={() => void q.refetch()}>
+            {uiText.text_3ac20a5871e1}
+          </Button>
+        </div>
+      }
     >
       {q.isPending ? (
         <LoadingSkeleton />
@@ -569,18 +789,31 @@ export function SourceDetail({ id }: { id: string }) {
         <ErrorState error={q.error} onRetry={() => void q.refetch()} />
       ) : q.data.sourceId !== id ? (
         <ErrorState error={new ApiError(502, { code: 'CONTRACT_MISMATCH' })} />
+      ) : !q.data.capabilities.canRead ||
+        (view === 'knowledge' && q.data.scope === 'Library') ||
+        (view === 'visibility' && !q.data.capabilities.canChangeVisibility) ||
+        (view === 'versions' &&
+          !(
+            q.data.capabilities.canWrite ||
+            q.data.capabilities.canCreateVersion ||
+            q.data.capabilities.canPublish ||
+            q.data.capabilities.canArchive
+          )) ? (
+        <ErrorState error={new ApiError(403)} />
       ) : (
-        <ResolvedSource key={id} source={q.data} refresh={() => void q.refetch()} />
+        <ResolvedSource key={id} source={q.data} view={view} refresh={() => void q.refetch()} />
       )}
-    </ReferenceSourceFrame>
+    </SourceFrame>
   );
 }
 function ResolvedSource({
   source,
   refresh,
+  view,
 }: {
   source: S['EducationalSourceResult'];
   refresh: () => void;
+  view: string;
 }) {
   const { call, transfer, session } = usePersonal(),
     cache = useQueryClient();
@@ -597,7 +830,14 @@ function ResolvedSource({
   useUnsavedChanges(dirty);
   useEffect(() => () => controller.current?.abort(), []);
   async function accept(value: S['EducationalSourceResult']) {
-    if (value.sourceId !== source.sourceId) throw new ApiError(502, { code: 'CONTRACT_MISMATCH' });
+    if (
+      value.sourceId !== source.sourceId ||
+      value.scope !== source.scope ||
+      value.ownerUserId !== source.ownerUserId ||
+      value.organizationId !== source.organizationId ||
+      value.classId !== source.classId
+    )
+      throw new ApiError(502, { code: 'CONTRACT_MISMATCH' });
     cache.setQueryData(
       ['personal', session.user.id, session.revision, '/api/v1/sources/' + source.sourceId],
       value,
@@ -621,9 +861,11 @@ function ResolvedSource({
     setError(undefined);
     setSuccess('');
     try {
-      await accept(
-        await call<S['EducationalSourceResult']>(`/api/v1/sources/${source.sourceId}/${action}`, {
+      const value = await call<S['EducationalSourceResult']>(
+        `/api/v1/sources/${source.sourceId}/${action}`,
+        {
           method: action === 'draft' ? 'PATCH' : action === 'visibility' ? 'PUT' : 'POST',
+          expectedStatus: 200,
           body: JSON.stringify({
             expectedVersion: baseline.current,
             reason: reason.trim(),
@@ -634,8 +876,20 @@ function ResolvedSource({
               ? { visibility: source.visibility === 'Public' ? 'Hidden' : 'Public' }
               : {}),
           }),
-        }),
+        },
       );
+      if (
+        value.currentVersion !== source.currentVersion ||
+        (action === 'publish' &&
+          (value.publicationStatus !== 'Published' ||
+            value.publishedVersion !== value.currentVersion)) ||
+        (action === 'archive' && value.status !== 'Archived') ||
+        (action === 'draft' && value.publicationStatus !== 'Draft') ||
+        (action === 'visibility' &&
+          value.visibility !== (source.visibility === 'Public' ? 'Hidden' : 'Public'))
+      )
+        throw new ApiError(502, { code: 'CONTRACT_MISMATCH' });
+      await accept(value);
       return true;
     } catch (e) {
       setError(e);
@@ -671,170 +925,238 @@ function ResolvedSource({
     }
   }
   return (
-    <div className={s.page}>
-      <header className={s.heading}>
-        <h1 dir="auto">{source.title}</h1>
-        <PageBack href={base} />
-      </header>
-      <section className={s.panel}>
-        <SourceStatus source={source} />
-        <p dir="auto">{source.description}</p>
-        <dl className={s.detail}>
-          <div>
-            <dt>{uiText.text_c1a1a454512d}</dt>
-            <dd>
-              {
-                {
-                  PendingValidation: uiText.text_e81c80fd6d5f,
-                  FileValidated: uiText.text_a94b0a08c898,
-                  ReviewRequired: uiText.text_93865396d0f0,
-                  Rejected: uiText.text_1d51178c62a6,
-                }[source.safetyStatus]
-              }
-            </dd>
-          </div>
-          <div>
-            <dt>{uiText.text_5eb3967bfb0e}</dt>
-            <dd>
-              {
-                {
-                  NotRequested: uiText.text_b215b3cdccd3,
-                  Pending: uiText.text_7f201a60b34b,
-                  Processing: uiText.text_68bfe264e2cf,
-                  Ready: uiText.text_376e9c9561e2,
-                  Failed: uiText.text_bbd429973d6e,
-                }[source.processingStatus]
-              }
-            </dd>
-          </div>
-          <div>
-            <dt>{uiText.text_a7659ef6327d}</dt>
-            <dd>{date(source.createdAtUtc)}</dd>
-          </div>
-          {source.file && (
-            <div>
-              <dt>{uiText.text_63298350bfb1}</dt>
-              <dd dir="auto">{source.file.originalFileName}</dd>
+    <div className={uiClass(catalogStyle.detail)}>
+      {view === 'overview' ? (
+        <>
+          <section className={uiClass('card hero')}>
+            <h2 data-source-title>{source.title}</h2>
+            <p>
+              {source.scope === 'Personal' ? uiText.text_f5c836497867 : sourceScopes[source.scope]}{' '}
+              · {uiText.aiIntegration.version} {number(source.currentVersion)}
+            </p>
+          </section>
+          <dl className={uiClass('card v4-meta ' + catalogStyle.readiness)}>
+            {sourceReadiness(source).map((item, index) => (
+              <div className={uiClass('kv')} data-source-readiness={index} key={item.title}>
+                <dt className={uiClass('key')}>
+                  {index === 2 ? uiText.navigation_assistant : item.title}
+                </dt>
+                <dd className={uiClass('val')}>
+                  {item.ready
+                    ? [
+                        sourceDownloadable(source)
+                          ? uiText.text_b731da1e2e04
+                          : uiText.text_376e9c9561e2,
+                        uiText.text_5d94e336834f,
+                        uiText.text_c17f0b65eb98,
+                      ][index]
+                    : uiText.text_f7b3cdaee0a4}
+                </dd>
+              </div>
+            ))}
+          </dl>
+          {source.scope === 'Library' ? (
+            <p className={uiClass('policy')}>{uiText.text_70050e6de11c}</p>
+          ) : (
+            <div className={uiClass('list')}>
+              {sourceNavigation(source).map((item) => (
+                <Link
+                  className={uiClass('row')}
+                  href={`${base}/${source.sourceId}?view=${item.key}`}
+                  key={item.key}
+                >
+                  <span className={uiClass('tile-icon')}>
+                    <item.icon size={22} />
+                  </span>
+                  <span className={uiClass('grow')}>
+                    <h4>{item.title}</h4>
+                    <p>{item.detail}</p>
+                  </span>
+                  <span className={uiClass('chev')}>
+                    <ChevronLeft size={18} />
+                  </span>
+                </Link>
+              ))}
             </div>
           )}
-        </dl>
-        {source.aiUnavailableReason && <p className={s.hint}>{uiText.text_059af5880dc1}</p>}
-        {sourceDownloadable(source) && (
-          <Button disabled={busy} onClick={() => void download()}>
-            {uiText.text_195904575930}
-          </Button>
-        )}
-        {source.scope === 'Library' && <p className={s.hint}>{uiText.text_70050e6de11c}</p>}
-        <Button variant="outline" onClick={refresh}>
-          {uiText.text_3ac20a5871e1}
-        </Button>
-      </section>
-      {(source.capabilities.canWrite ||
-        source.capabilities.canPublish ||
-        source.capabilities.canArchive ||
-        source.capabilities.canChangeVisibility) && (
-        <section className={s.panel}>
-          <h2>{uiText.text_8d637ce68405}</h2>
-          {source.capabilities.canWrite && (
-            <>
-              <label className={s.field}>
-                {uiText.text_4aed2158ed57}
-                <input
-                  value={title}
-                  maxLength={200}
-                  disabled={busy}
-                  onChange={(e) => setTitle(e.target.value)}
-                />
-              </label>
-              <label className={s.field}>
-                {uiText.text_3fb8ed5c09ec}
-                <textarea
-                  value={description}
-                  maxLength={2000}
-                  disabled={busy}
-                  onChange={(e) => setDescription(e.target.value)}
-                />
-              </label>
-            </>
-          )}
-          <label className={s.field}>
-            {uiText.text_3e94e3d48de6}
-            <input
-              value={reason}
-              maxLength={500}
-              disabled={busy}
-              onChange={(e) => setReason(e.target.value)}
-            />
-          </label>
-          {baseline.current !== source.version && (
-            <p className={s.hint}>{uiText.text_8cd1e858041b}</p>
-          )}
-          {baseline.current !== source.version && (
-            <Button
-              variant="outline"
-              onClick={() => {
-                baseline.current = source.version;
-                setSuccess(uiText.text_85d9aa97ab20);
-              }}
-            >
-              {uiText.text_3e6fbac4aaf0}
-            </Button>
-          )}
-          <div className={s.actions}>
-            {source.capabilities.canWrite && (
-              <Button
-                disabled={
-                  busy || !title.trim() || !reason.trim() || baseline.current !== source.version
-                }
-                onClick={() => void mutate('draft')}
-              >
-                {uiText.text_c7be60663550}
+        </>
+      ) : null}
+      {view === 'content' && (
+        <>
+          <section className={uiClass('card ' + catalogStyle.panel)}>
+            <h2 data-source-title>{source.title}</h2>
+            <SourceStatus source={source} />
+            <p dir="auto">{source.description}</p>
+            <dl className={uiClass(s.detail)}>
+              <div>
+                <dt>{uiText.text_c1a1a454512d}</dt>
+                <dd>
+                  {
+                    {
+                      PendingValidation: uiText.text_e81c80fd6d5f,
+                      FileValidated: uiText.text_a94b0a08c898,
+                      ReviewRequired: uiText.text_93865396d0f0,
+                      Rejected: uiText.text_1d51178c62a6,
+                    }[source.safetyStatus]
+                  }
+                </dd>
+              </div>
+              <div>
+                <dt>{uiText.text_5eb3967bfb0e}</dt>
+                <dd>
+                  {
+                    {
+                      NotRequested: uiText.text_b215b3cdccd3,
+                      Pending: uiText.text_7f201a60b34b,
+                      Processing: uiText.text_68bfe264e2cf,
+                      Ready: uiText.text_376e9c9561e2,
+                      Failed: uiText.text_bbd429973d6e,
+                    }[source.processingStatus]
+                  }
+                </dd>
+              </div>
+              <div>
+                <dt>{uiText.text_a7659ef6327d}</dt>
+                <dd>{date(source.createdAtUtc)}</dd>
+              </div>
+              {source.file && (
+                <div>
+                  <dt>{uiText.text_63298350bfb1}</dt>
+                  <dd dir="auto">{source.file.originalFileName}</dd>
+                </div>
+              )}
+            </dl>
+            {source.aiUnavailableReason && (
+              <p className={uiClass(s.hint)}>{uiText.text_059af5880dc1}</p>
+            )}
+            {sourceDownloadable(source) && (
+              <Button disabled={busy} onClick={() => void download()}>
+                {uiText.text_195904575930}
               </Button>
             )}
-            {source.capabilities.canPublish && (
-              <ConfirmAction
-                disabled={busy || dirty || !reason.trim() || baseline.current !== source.version}
-                trigger={uiText.text_e91f86d68e00}
-                title={uiText.text_e91f86d68e00}
-                description={uiText.text_fe1f0c9b6301}
-                onConfirm={() => mutate('publish')}
-              />
+            {source.scope === 'Library' && (
+              <p className={uiClass(s.hint)}>{uiText.text_70050e6de11c}</p>
             )}
-            {source.capabilities.canArchive && (
-              <ConfirmAction
-                destructive
-                disabled={busy || dirty || !reason.trim() || baseline.current !== source.version}
-                trigger={uiText.text_28962a621bca}
-                title={uiText.text_28962a621bca}
-                description={uiText.text_e5a46d20e71d}
-                onConfirm={() => mutate('archive')}
-              />
-            )}
-            {source.capabilities.canChangeVisibility && (
-              <ConfirmAction
-                disabled={busy || dirty || !reason.trim() || baseline.current !== source.version}
-                trigger={
-                  source.visibility === 'Public'
-                    ? uiText.text_25634673d188
-                    : uiText.text_113ab0e555a2
-                }
-                title={uiText.text_a1aa9c6ac26b}
-                description={uiText.text_7c12d530db7d}
-                onConfirm={() => mutate('visibility')}
-              />
-            )}
-          </div>
-        </section>
+            <Button variant="outline" onClick={refresh}>
+              {uiText.text_3ac20a5871e1}
+            </Button>
+          </section>
+        </>
       )}
-      {source.scope !== 'Library' && source.capabilities.canCreateVersion && (
-        <SourceUpload
-          key={source.sourceId}
-          source={source}
-          scope={source.scope}
-          classId={source.classId}
-          onSaved={(value) => void accept(value)}
-        />
+      {view === 'knowledge' && (
+        <SourceKnowledge key={source.sourceId + ':' + source.currentVersion} source={source} />
       )}
+      {['versions', 'visibility'].includes(view) &&
+        (source.capabilities.canWrite ||
+          source.capabilities.canPublish ||
+          source.capabilities.canArchive ||
+          source.capabilities.canChangeVisibility) && (
+          <section className={uiClass('card ' + catalogStyle.panel)}>
+            <h2 data-source-title>{source.title}</h2>
+            <SourceStatus source={source} />
+            <h2>{uiText.text_8d637ce68405}</h2>
+            {view === 'versions' && source.capabilities.canWrite && (
+              <>
+                <label className={uiClass(s.field)}>
+                  {uiText.text_4aed2158ed57}
+                  <NativeInput
+                    value={title}
+                    maxLength={200}
+                    disabled={busy}
+                    onChange={(e) => setTitle(e.target.value)}
+                  />
+                </label>
+                <label className={uiClass(s.field)}>
+                  {uiText.text_3fb8ed5c09ec}
+                  <NativeTextarea
+                    value={description}
+                    maxLength={2000}
+                    disabled={busy}
+                    onChange={(e) => setDescription(e.target.value)}
+                  />
+                </label>
+              </>
+            )}
+            <label className={uiClass(s.field)}>
+              {uiText.text_3e94e3d48de6}
+              <NativeInput
+                value={reason}
+                maxLength={500}
+                disabled={busy}
+                onChange={(e) => setReason(e.target.value)}
+              />
+            </label>
+            {baseline.current !== source.version && (
+              <p className={uiClass(s.hint)}>{uiText.text_8cd1e858041b}</p>
+            )}
+            {baseline.current !== source.version && (
+              <Button
+                variant="outline"
+                onClick={() => {
+                  baseline.current = source.version;
+                  setSuccess(uiText.text_85d9aa97ab20);
+                }}
+              >
+                {uiText.text_3e6fbac4aaf0}
+              </Button>
+            )}
+            <div className={uiClass(s.actions)}>
+              {view === 'versions' && source.capabilities.canWrite && (
+                <Button
+                  disabled={
+                    busy || !title.trim() || !reason.trim() || baseline.current !== source.version
+                  }
+                  onClick={() => void mutate('draft')}
+                >
+                  {uiText.text_c7be60663550}
+                </Button>
+              )}
+              {view === 'versions' && source.capabilities.canPublish && (
+                <ConfirmAction
+                  disabled={busy || dirty || !reason.trim() || baseline.current !== source.version}
+                  trigger={uiText.text_e91f86d68e00}
+                  title={uiText.text_e91f86d68e00}
+                  description={uiText.text_fe1f0c9b6301}
+                  onConfirm={() => mutate('publish')}
+                />
+              )}
+              {view === 'versions' && source.capabilities.canArchive && (
+                <ConfirmAction
+                  destructive
+                  disabled={busy || dirty || !reason.trim() || baseline.current !== source.version}
+                  trigger={uiText.text_28962a621bca}
+                  title={uiText.text_28962a621bca}
+                  description={uiText.text_e5a46d20e71d}
+                  onConfirm={() => mutate('archive')}
+                />
+              )}
+              {view === 'visibility' && source.capabilities.canChangeVisibility && (
+                <ConfirmAction
+                  disabled={busy || dirty || !reason.trim() || baseline.current !== source.version}
+                  trigger={
+                    source.visibility === 'Public'
+                      ? uiText.text_25634673d188
+                      : uiText.text_113ab0e555a2
+                  }
+                  title={uiText.text_a1aa9c6ac26b}
+                  description={uiText.text_7c12d530db7d}
+                  onConfirm={() => mutate('visibility')}
+                />
+              )}
+            </div>
+          </section>
+        )}
+      {view === 'versions' &&
+        source.scope !== 'Library' &&
+        source.capabilities.canCreateVersion && (
+          <SourceUpload
+            key={source.sourceId}
+            source={source}
+            scope={source.scope}
+            classId={source.classId}
+            onSaved={(value) => void accept(value)}
+          />
+        )}
       {!!success && <p role="status">{success}</p>}
       {!!error && <ErrorState error={error} />}
     </div>

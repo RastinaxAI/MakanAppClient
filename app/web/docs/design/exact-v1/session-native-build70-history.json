@@ -1,0 +1,79 @@
+{
+  "status": "build70_targeted_checks_complete_visual_contract_gap_and_redundant_date_icons_remain",
+  "taskComplete": false,
+  "scenarios": [
+    "MK-124",
+    "MK-125",
+    "MK-126",
+    "MK-127"
+  ],
+  "contract": [
+    "Existing GET/PATCH sessions/id; versioned POST cancel/complete; GET attendance. No new product endpoint.",
+    "Expected server200 and matching session/org/class/status/new version before success.",
+    "Explicit edit review retained; scoped draft requires explicit replacement after a server version change.",
+    "Completion count is the real authorized attendance snapshot. Required review binds to that snapshot; no zero fallback on errors."
+  ],
+  "differences": [
+    "SessionVersionCommand in active and full snapshot has only expectedRowVersion, with no cancellation reason. Reference reason field is not added to the request or falsely presented as persisted.",
+    "SessionResult and DashboardSessionItem lack a teacher identity/name. Student is not allowed to read the management teacher roster. Unknown teacher is displayed as an em dash.",
+    "The edit notice asks to review time/link; no unsupported notification-impact promise is made."
+  ],
+  "evidenceBefore": "output/review/exact-v1/before-sixtyninth-session (compiled68 legacy app,24matched fixture screenshots)",
+  "evidenceReference": "output/review/exact-v1/reference-sixtyninth-session (24internalviewport images)",
+  "pending": "Build69,10new+7existing first tests;30related;24main44boundary44large;measure and resolve actual layout differences.",
+  "buildId": "16shOS0Us3kD7NkaWZi6c",
+  "sourceHashes": {
+    "src/features/personal/school/session-page.tsx": "0565038c9bea0c8660299a4737636061b3744059d62696436024ff78a5c20343",
+    "src/features/personal/school/session-actions.tsx": "737b22f638d9cf10c5d1fd5b4511743a6a6c186523921b2126b36d12318d2a69",
+    "src/features/personal/school/session-time.ts": "828c9ecbec698fa9762f92201d24cf6310f2207f092be0e91fb587c646d41bbf",
+    "src/features/personal/school/workflow.tsx": "5fd0c1c264f26fd6bdf5009f7b667dd8fe8117b8c82026c7c4fdab32472b0f83",
+    "src/components/v5/scene.tsx": "73f9bfd213a958132fd24e7d42ad741d9edd7c3d168b6199780c95042315b446",
+    "src/components/ui/jalali-date-input.tsx": "86b3cc9daa0f2df874b873b116af2acb8b63e3d1cee08136162a8b21426e9c21",
+    "src/content/fa.ts": "3ff27a98448857ca1816d69d0acbd8bb810f444a409c348d1bdcdbbdd4965800",
+    "src/design/v5-author.css": "75cedb276d9710c32896007219f9ec69351e70f189d5a86c7500579e5baf7476",
+    "scripts/build-v5-product-styles.mjs": "be1cea239fe5fd59e0f1f12ad050f67b54f25a75eb0047f6f13d3af43fa9131a",
+    "scripts/review-exact-v5.mjs": "e09a523499cd4c1505ef2b9660e9edbeef596f2b05c0495667d5219924fd28a9",
+    "scripts/measure-exact-v5.mjs": "1ad6a0113efbd0634d508351c2be53b567e900515f972f27f9ab921f005183c2",
+    "tests/browser/exact-session-native.spec.ts": "6c83b192da55f6530f4eee08499a3fe3ff1df8a2c5ef668f4514b7caee611c5f",
+    "tests/browser/project-expansion.spec.ts": "228a8eb0ed3c767ed0938f2a12fc96e0ab787b0cebf4ba9261f8bd231f570b46",
+    "tests/fixtures/backend/attendance.mjs": "11103c949377d9d94d624ab1a8d9a983d7f688066ae5a557e4340a21c0dfcb65",
+    "tests/fixtures/backend/server.mjs": "7a151e1b975fd9f8e2fbb480f6b3d6b9ce6b932c3d301ca37a3f411e12ec2670",
+    "tests/fixtures/backend/workflows.mjs": "16a4a666be086f8193bfd1d7492d50f100e6a6cad95b344a742394939371be44",
+    "tests/fixtures/session-reference.mjs": "2bfc06924528fa5ac087f4cd2fc060a1ad91fa3c596da12596731dbb20931dde"
+  },
+  "checks": {
+    "unit": 517,
+    "unitFiles": 72,
+    "typecheck": true,
+    "lintModules": 352,
+    "cycles": 0,
+    "browser": {
+      "passed": 47,
+      "batches": [
+        "03",
+        "02"
+      ],
+      "firstFailedAttempt": "01:3pass1failure13notrun; final direct test read lacked requiredX-Makan-Context and got409. Added actual current revision; retry17passed. Product had already shownCompleted.",
+      "receipts": "tmp/exact-v1/browser-seventieth-receipts.json"
+    },
+    "main": {
+      "captured": 24,
+      "errors": 0,
+      "overflow": 0,
+      "archive": "output/review/exact-v1/after-seventieth-session"
+    },
+    "responsive": {
+      "boundary": 44,
+      "large200": 44,
+      "errors": 0,
+      "overflow": 0,
+      "pngDimensionsVerified": true,
+      "receipts": "tmp/exact-v1/responsive-seventieth-session-receipts.json"
+    },
+    "geometry": {
+      "matchedThreeStates": "MK124,125,127 all measuredrectangles/controlsin3sizes2themes below4CSSpx; teacherdataunknown is separate documentedlimitation.",
+      "cancel": "Sixunpaired textarea controls دلیللغو and32dependent y/height flags remain; onlyexpectedVersion isregistered. No fake field or geometrypadding added.",
+      "openVisual": "SharedJalaliDateInput adds a redundantcalendaricon not drawninreference. Existing wholeinput click andArrowDown alreadyopenpicker. Evaluate commonvariant for71 withoutlosing touch/keyboard."
+    }
+  }
+}

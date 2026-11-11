@@ -1,3 +1,5 @@
+import { v5Lessons as lessons } from '../../src/content/fa';
+import { captureExactState } from './exact-state-capture';
 import { test, expect, login, ids, fixture } from './test';
 test('Teacher uses independent lesson create, edit and review pages; Student reads only Published', async ({
   page,
@@ -7,14 +9,14 @@ test('Teacher uses independent lesson create, edit and review pages; Student rea
 }) => {
   await login(context, 'Teacher');
   await page.goto(`/personal/education/classes/${ids.class}/lessons/new`);
-  await page.getByLabel('عنوان درس و جزوه', { exact: true }).fill('جزوهٔ آزمایشی مستقل');
+  await page.getByLabel(lessons.title, { exact: true }).fill('جزوهٔ آزمایشی مستقل');
   await page.getByLabel('متن درس', { exact: true }).fill('متن درس نمونه برای بررسی ذخیره و انتشار');
-  await page.getByRole('button', { name: 'ذخیرهٔ پیش‌نویس', exact: true }).click();
+  await page.getByRole('button', { name: lessons.save, exact: true }).click();
   await expect(page).toHaveURL(/\/lessons\/.+\/review$/);
   const lessonId = page.url().split('/').at(-2)!;
-  await expect(
-    page.getByText('متن درس نمونه برای بررسی ذخیره و انتشار', { exact: true }),
-  ).toBeVisible();
+  await expect(page.getByLabel(lessons.editBody, { exact: true })).toHaveValue(
+    'متن درس نمونه برای بررسی ذخیره و انتشار',
+  );
   const student = await browser.newContext({ baseURL: 'http://127.0.0.1:3132' });
   const state = await login(student);
   const draft = await student.request.get(
@@ -23,16 +25,26 @@ test('Teacher uses independent lesson create, edit and review pages; Student rea
   );
   expect(draft.status()).toBe(404);
   await page.getByRole('link', { name: 'ویرایش پیش‌نویس', exact: true }).click();
-  await page.getByLabel('متن درس', { exact: true }).fill('متن ویرایش‌شده');
-  await page.getByRole('button', { name: 'ذخیرهٔ پیش‌نویس', exact: true }).click();
+  await page.getByLabel(lessons.editBody, { exact: true }).fill('متن ویرایش‌شده');
+  await captureExactState(page, ['MK-135']);
+  await page.getByRole('button', { name: lessons.review, exact: true }).click();
   await expect(page).toHaveURL(/\/review$/);
-  page.once('dialog', (d) => d.accept());
   await page.getByRole('button', { name: 'انتشار درس', exact: true }).click();
+  await page
+    .getByRole('dialog')
+    .getByRole('checkbox', { name: lessons.reviewed, exact: true })
+    .check();
+  await captureExactState(page, ['MK-136']);
+
+  await page.getByRole('dialog').getByRole('button', { name: 'انتشار درس', exact: true }).click();
   await expect(
     page.getByText('این درس منتشر شده است و ویرایش آن در این نسخه امکان‌پذیر نیست.', {
       exact: true,
     }),
   ).toBeVisible();
+  await expect(
+    page.getByRole('heading', { name: 'جزوهٔ آزمایشی مستقل', exact: true }),
+  ).toBeFocused();
   expect(
     (
       await student.request.get(`/api/client/backend/api/v1/academic/lessons/${lessonId}`, {

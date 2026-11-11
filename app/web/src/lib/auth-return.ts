@@ -42,3 +42,11 @@ export function takeBrowserAuthReturn() {
     return null;
   }
 }
+/** Inspect the existing expiry destination without consuming it before verification. */
+export function peekBrowserAuthReturn() {
+  try {
+    return safeAuthReturnPath(window.sessionStorage.getItem(key));
+  } catch {
+    return null;
+  }
+}

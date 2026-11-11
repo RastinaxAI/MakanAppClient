@@ -1,3 +1,4 @@
+import { reviewPath } from './review-output';
 import { test, expect, login, fixture } from './test';
 import { mkdir } from 'node:fs/promises';
 const base = '/personal/education';
@@ -20,7 +21,7 @@ test('member directory uses server filters, clear record actions and responsive 
     .filter({ has: page.getByText('معلم دوم', { exact: true }) });
   await expect(noRecord).toContainText('پرونده متصل نیست');
   await expect(noRecord.getByRole('link')).toHaveCount(0);
-  await mkdir('output/review/member-directory', { recursive: true });
+  await mkdir(reviewPath('output/review/member-directory'), { recursive: true });
   for (const width of [390, 834, 1440]) {
     await page.setViewportSize({ width, height: 1000 });
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(
@@ -36,7 +37,7 @@ test('member directory uses server filters, clear record actions and responsive 
       .getByRole('heading', { name: 'اعضای آموزشگاه', exact: true, level: 1 })
       .scrollIntoViewIfNeeded();
     await page.screenshot({
-      path: `output/review/member-directory/members-${width}.png`,
+      path: reviewPath(`output/review/member-directory/members-${width}.png`),
       fullPage: true,
     });
   }
@@ -68,7 +69,7 @@ test('member directory uses server filters, clear record actions and responsive 
       true,
     );
     await page.screenshot({
-      path: `output/review/member-directory/record-${width}.png`,
+      path: reviewPath(`output/review/member-directory/record-${width}.png`),
       fullPage: true,
     });
   }
@@ -137,7 +138,7 @@ test('person list and editor stay readable on all layouts and preserve a failed 
       true,
     );
     await page.screenshot({
-      path: `output/review/member-directory/editor-${width}.png`,
+      path: reviewPath(`output/review/member-directory/editor-${width}.png`),
       fullPage: true,
     });
   }
@@ -162,7 +163,7 @@ test('person list and editor stay readable on all layouts and preserve a failed 
       true,
     );
     await page.screenshot({
-      path: `output/review/member-directory/records-${width}.png`,
+      path: reviewPath(`output/review/member-directory/records-${width}.png`),
       fullPage: true,
     });
   }

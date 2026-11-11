@@ -1,0 +1,404 @@
+{
+  "reference": "V5.2 responsive delta, V5/V5.1 behavior, V7 flow",
+  "started_utc": "2026-11-10T23:50:23Z",
+  "recorded_utc": "2026-11-11T01:48:14.880269+00:00",
+  "build_id": "Lj1XDtp0iyp3PfXaZS43s",
+  "baseline_build_id": "GBYineBMWr9ww3mJGTI0t",
+  "zip_sha256": "cb3d6d25f434157376df09c67071db99f8ebaa25b816c64891cbcfaac9670a1a",
+  "runtime": {
+    "archive": "/home/omidreza-bagheriyan/Desktop/MakanApp-cleanup-backup-2026-11-11/v52/MakanApp-V5.2-Next-standalone-20261111.tar.gz",
+    "bytes": 18364590,
+    "sha256": "9dbebeced038483c5e69ac29c23b5aceefaf84d18d5ef66c6e8c22f633e5b858",
+    "buildId": "HbJq-WZ7L6o9XAYPK2OWv",
+    "files": 2455,
+    "runtimeBytes": 57992912,
+    "envIncluded": false,
+    "sessionsIncluded": false,
+    "qaOrReferenceIncluded": false,
+    "dockerExecuted": false,
+    "excludedToolOnlyAssets": [
+      "public/fonts/makan-reference/Vazirmatn-Bold.ttf",
+      "public/fonts/makan-reference/Vazirmatn-Regular.ttf"
+    ],
+    "assetExclusionReason": "Consumed by existing PDF tools; no runtime references. Source fonts and tools preserved."
+  },
+  "backup": {
+    "path": "/home/omidreza-bagheriyan/Desktop/MakanApp-cleanup-backup-2026-11-11/v52/before-v52-source.tar.gz",
+    "sha256": "4b7c2098111db44adfcdceb83bdfc24b31bb18a9df1f89668f935a23b62703fc",
+    "recovery": "Extract selected paths from this source-only archive into a separate directory, inspect the source patch, then restore only intended paths; never overwrite secrets/session volumes or unrelated dirty work."
+  },
+  "changes": [
+    {
+      "path": "src/app/globals.css",
+      "before_bytes": 2259,
+      "after_bytes": 2306,
+      "before_sha256": "25042ef687f3ff44ca3e6f94a47c897d7231f2427922f0f8edd884ad418d690a",
+      "after_sha256": "f8e1fa587ab234d9f1ee16b602b162313017da33659a78623e018b346d086b4e"
+    },
+    {
+      "path": "src/components/ui/dialog.module.css",
+      "before_bytes": 6942,
+      "after_bytes": 7239,
+      "before_sha256": "a3aef28973bd337426ff70aae14d7ad083293f7265205d51ee7bbbee8f80d3bc",
+      "after_sha256": "0594c88fdb5039241b11286c0830c4de0be4a78bfde8c867151a7f93242adbe4"
+    },
+    {
+      "path": "src/components/ui/field.module.css",
+      "before_bytes": 6715,
+      "after_bytes": 7670,
+      "before_sha256": "6cea3a9bd20c4b754ef389a30bfe53b75af1426403d60477a286e5de381a38c8",
+      "after_sha256": "43b8bb6fd115f9084c0f13440e0695f9e04e944a491d9c5089f462b2b62d26af"
+    },
+    {
+      "path": "src/components/ui/input.tsx",
+      "before_bytes": 834,
+      "after_bytes": 1917,
+      "before_sha256": "68f530c47a9856ef91faf7dbf24f1717ff5e05a6c028b503e295e5300e324a00",
+      "after_sha256": "4f2b2d7ae3725d9c88606ffa771692df36b3d6594dd7060608f0f0d4a9a9a097"
+    },
+    {
+      "path": "src/components/v5/foundations.module.css",
+      "before_bytes": 48790,
+      "after_bytes": 49047,
+      "before_sha256": "8ae37c2d9ef0778ae39ea4be3ed5dea9f83551ee598ac3ea3d76998db151ce08",
+      "after_sha256": "5a8699f9ac158b5fc25b8ff50698a5f74c803e7218b020535079559a1bea51b8"
+    },
+    {
+      "path": "src/components/v5/frame.module.css",
+      "before_bytes": 7145,
+      "after_bytes": 7297,
+      "before_sha256": "80cb8d8a8d57b27377492b9bf3b8435145f079ed3f12796b10d56cc8aa722846",
+      "after_sha256": "b6d15afa32d4806c37b04b021c2b9d83a4286d89da4413be9a7105c781ce3003"
+    },
+    {
+      "path": "src/components/v5/scene.module.css",
+      "before_bytes": 4684,
+      "after_bytes": 5229,
+      "before_sha256": "88fb5b8a44db6ca215c45c4cf9b58772c7de8287b3d9109b350802f9465d8920",
+      "after_sha256": "a90edcd4c242664dd6debe0784df3e3b683b51add3bed5e0e83a95f6286ebd90"
+    },
+    {
+      "path": "src/components/v5/scene.tsx",
+      "before_bytes": 9545,
+      "after_bytes": 11002,
+      "before_sha256": "6639b8c8a1b0566747b0f18298564958710d74d73a7b04b77b0d98e56a9c2fd4",
+      "after_sha256": "b32f0d437f14984e16c2446aaca3ec82e155eb44872637c971f12fcaa22a7886"
+    },
+    {
+      "path": "src/content/fa.ts",
+      "before_bytes": 666632,
+      "after_bytes": 667093,
+      "before_sha256": "537453c743d937a455ac711262aeb4cc076ae519b9033faaee8ee5ac9678f639",
+      "after_sha256": "3011ea80f44358ce0a49dc64ec12425cd4ea8cca70b0b3cad34e52bf26bd85fd"
+    },
+    {
+      "path": "src/design/tokens.css",
+      "before_bytes": 3540,
+      "after_bytes": 3804,
+      "before_sha256": "a9d289d5d7ac2e72fb1cbf9ebc81f2f31ea48652adb6fb3541eefed3ffa082f6",
+      "after_sha256": "217101b8c000a02142a25a69ed53efef7a0bec9b3b19faa05476c1fc7032efb9"
+    },
+    {
+      "path": "src/features/extracurricular/class-management.tsx",
+      "before_bytes": 36946,
+      "after_bytes": 38106,
+      "before_sha256": "5de6bf7e3b913275270343bafe6797ad6f58272712cc6dbee8692a198afff267",
+      "after_sha256": "aa99d47b83743cba79d92cef1b23d29760180e505f0bfdd4f83b3a658ac46c32"
+    },
+    {
+      "path": "src/features/extracurricular/connected.module.css",
+      "before_bytes": 2230,
+      "after_bytes": 2411,
+      "before_sha256": "1d1b826a420977565055050a2eabce4a7d60ef0348c44dee8eb7a48a0abffbd7",
+      "after_sha256": "e74a80e144e8f4220252c903cdec6d21687c67238504b6f1e23926c7e03c0adb"
+    },
+    {
+      "path": "src/features/extracurricular/connected.tsx",
+      "before_bytes": 29671,
+      "after_bytes": 29708,
+      "before_sha256": "08a1a2b105eaf6c65b5a6a44f1d07e69e205d8610bcf8ccaa516786f98131b71",
+      "after_sha256": "e83b3dabcd98cf9d05a3f90e2970d4349416abdb9551c84585acb363bcfe6922"
+    },
+    {
+      "path": "src/features/extracurricular/formation-wizard.module.css",
+      "before_bytes": 1747,
+      "after_bytes": 1960,
+      "before_sha256": "630d994c0058d9998e73cec7681a2128ae9abc895cc366117451278ad36503a8",
+      "after_sha256": "08ce88d2daf1c2213e3bf4e35d0fbdd4bdd4419bfd2e03f97f293315d2db2b0b"
+    },
+    {
+      "path": "src/features/personal/appearance.module.css",
+      "before_bytes": 133,
+      "after_bytes": 1054,
+      "before_sha256": "89384c42878b131300df9fe46dcf18f6b49ef1166ac36fb3350ee85c1a7710cb",
+      "after_sha256": "1b71f490864d12d046f4d96fc9ee92180c566166bbb2f0a841c8df416495302a"
+    },
+    {
+      "path": "src/features/personal/commerce.tsx",
+      "before_bytes": 17489,
+      "after_bytes": 17481,
+      "before_sha256": "31a3a6cd8a650eb5431eb6ed5d77e07701b3d7194582edf3bdeb5ca8707e30e7",
+      "after_sha256": "057c026243e862cd5f807243d7b5840a4a6fa853496220c20b1f3c832c423e28"
+    },
+    {
+      "path": "src/features/personal/messaging/conversation-room.tsx",
+      "before_bytes": 39582,
+      "after_bytes": 39257,
+      "before_sha256": "6e5cdcc7463f2ac6f9d1eeda7ec04b0ca49033ca67014599a7ebf6afeaf2111a",
+      "after_sha256": "270fa36c6588982f88881ffcc6d8d65ee320a45921c04c53809073c2298a9c42"
+    },
+    {
+      "path": "src/features/personal/messaging/inbox.module.css",
+      "before_bytes": 3917,
+      "after_bytes": 3411,
+      "before_sha256": "5c17fdb7a92a785a755975b65cca3e934213bc177621174313f2c681509b9cd6",
+      "after_sha256": "30dea8873a7edbf3eca5d850b386f727e3590e303b56f2a9c6e2a79295b47162"
+    },
+    {
+      "path": "src/features/personal/messaging/messaging-theme.module.css",
+      "before_bytes": 1766,
+      "after_bytes": 1841,
+      "before_sha256": "f50ac7f719ef6aeb533b7b309758dd5836b463a955b51644537f6a466570176c",
+      "after_sha256": "d52d4458d9a55e0723f6f1378cce8444942919f243e058cf8855683c6dbe6d65"
+    },
+    {
+      "path": "src/features/personal/messaging/messenger.module.css",
+      "before_bytes": 24666,
+      "after_bytes": 23374,
+      "before_sha256": "bb1e4ce671b316de2f88d2d3762bdd8810990277c715418982b4d842dd367394",
+      "after_sha256": "36d1faaa0a879b715795adefe927d529c136fc2d3077080e14ea94a57ff0a91a"
+    },
+    {
+      "path": "src/features/personal/messaging/messenger.tsx",
+      "before_bytes": 16803,
+      "after_bytes": 16851,
+      "before_sha256": "ff9df15f88f257495e043ea52e6ca7bee14fbd98ee0e3197e657fd531aa38e3a",
+      "after_sha256": "e0f650f9e9d62c04cc0a4369e3542ffd73229ebc748c3b0d96b5efd15005bdec"
+    },
+    {
+      "path": "src/features/personal/school/dashboard-layout.module.css",
+      "before_bytes": 2004,
+      "after_bytes": 5774,
+      "before_sha256": "6cc14f9f24e55bb70a2cfb4669a4a98d51a6c25bb7539eef3995326744cbcf0c",
+      "after_sha256": "39074d323254fc96e2341d3c0e19748bc47ec495a617f7db2b2cc38761b62730"
+    },
+    {
+      "path": "src/features/personal/school/directory.tsx",
+      "before_bytes": 16937,
+      "after_bytes": 17798,
+      "before_sha256": "29f429dad877d92bb9e80d9ffadae7284689e7674fe7b2fef06445572a580ab9",
+      "after_sha256": "027f554f3c19bd23e879c639390982f2f390428abe2581f24b1acc0aac766437"
+    },
+    {
+      "path": "src/features/personal/school/evaluation.module.css",
+      "before_bytes": 2929,
+      "after_bytes": 2941,
+      "before_sha256": "7ce0322d482cd28551a8e117f71026cfb993722093d77c5cf9ce1b58040d18a3",
+      "after_sha256": "9a6bd6316824c91b2dcfef35cdbb2bdc47f8589393b06a7cf1c52748558419c9"
+    },
+    {
+      "path": "src/features/personal/school/exam-reference.module.css",
+      "before_bytes": 8738,
+      "after_bytes": 8736,
+      "before_sha256": "28339398c3b65d2869f85d1d87132e8a5318eee6f96d96636d43eb6067aeed44",
+      "after_sha256": "5384cccca1819d093cac45c21e792db6ebb710ff94cd8c57febe047f18138c96"
+    },
+    {
+      "path": "src/features/personal/school/feed.tsx",
+      "before_bytes": 9280,
+      "after_bytes": 12062,
+      "before_sha256": "15ba476d42517258fc79235ff3517bc29d091eb186246f4c7617674bed0d4b4a",
+      "after_sha256": "b63c0894c9dabb890705a544e0973ed51a9e28210dad7ab22919a5986f9bedf5"
+    },
+    {
+      "path": "src/features/personal/school/lessons.tsx",
+      "before_bytes": 16652,
+      "after_bytes": 16738,
+      "before_sha256": "58952bcea3f9a69d1739505e59275a9e19f3f93201acde69dd73bee836d3fabb",
+      "after_sha256": "9a005734e92fcc3272b014b15ad1704a47fc3a239265ff9370103c94675fcb73"
+    },
+    {
+      "path": "src/features/personal/school/schedule.tsx",
+      "before_bytes": 12468,
+      "after_bytes": 12896,
+      "before_sha256": "bda08dd0b24778377e8f3b8367966b28688a17985a233ee6adbb86fc7e8277e7",
+      "after_sha256": "09bb41e0764a77635476114b729d2b5c67f95fbd1d3f5e905893ef8cd98eb026"
+    },
+    {
+      "path": "src/features/personal/school/school.module.css",
+      "before_bytes": 14970,
+      "after_bytes": 13683,
+      "before_sha256": "3d85bc514086321557f195c8b2b745e7b3673d2bb7eef23a77cb313b52f9fd8c",
+      "after_sha256": "27eecb305268423cfca46b9b57bf6663c58481c99736131ebd8d89df30f26534"
+    },
+    {
+      "path": "src/features/personal/school/session-attendance.tsx",
+      "before_bytes": 25452,
+      "after_bytes": 25351,
+      "before_sha256": "e2ab2ca9ac3bd6328be248cb1f8aace98c22ed8b47e11973b3eb594e23af3bad",
+      "after_sha256": "68105d8d5e06bfc376e62e3a3b77203329c1a4699aa3cd5493d9ba417edc2c44"
+    },
+    {
+      "path": "src/features/personal/settings.tsx",
+      "before_bytes": 5938,
+      "after_bytes": 6647,
+      "before_sha256": "0aed7bdb2caecfb888a001d2a0c73b521c7757368ddcee10208d96c8059d1dcf",
+      "after_sha256": "313c7bf753ee5dc0163b9b361a41784b10f1073e8202bedf81c4c2e42b63eec9"
+    },
+    {
+      "path": "src/features/personal/shell.module.css",
+      "before_bytes": 7389,
+      "after_bytes": 7469,
+      "before_sha256": "68898cdbd7f78a82d01ca1978d761a472b3ee7c54dd61b657576861bad96537a",
+      "after_sha256": "144dcfcbafb7ed36e459b8db48420d136727d20ab377cba70200413e64a1fe47"
+    },
+    {
+      "path": "src/features/personal/shell.tsx",
+      "before_bytes": 16896,
+      "after_bytes": 18127,
+      "before_sha256": "054ed02f609dbd20978d649f3c6305a65d75960b7df3307234cf53439219ec02",
+      "after_sha256": "f81afb71b985c611632ae4b613a75b5389e12dbcc9f132019530dec147e42398"
+    },
+    {
+      "path": "src/features/personal/theme.tsx",
+      "before_bytes": 2508,
+      "after_bytes": 2550,
+      "before_sha256": "2e1d1be59314c525793aaf31f4604339913d9736f88b3dfa3cf36ff6701a630f",
+      "after_sha256": "87641ad50cf653a5c3bac0239fa2e32abc8977e2bfc3d3e507ec3e9ede561403"
+    },
+    {
+      "path": "src/features/reference/assistant.module.css",
+      "before_bytes": 2317,
+      "after_bytes": 2795,
+      "before_sha256": "7af67300779b226f5e2d2e6ea01fce5c41efe305e8ea4e86fc40f7083a63253b",
+      "after_sha256": "2f3644f408039fc436fd30efd9366f1c40a77f7262cd0e20737fdda616fa67d0"
+    },
+    {
+      "path": "src/features/reference/connected-assistant.tsx",
+      "before_bytes": 20581,
+      "after_bytes": 20819,
+      "before_sha256": "774376c32a54ac50db332067d07a6bf5180ad7f2b703da076270b544a7fdf18c",
+      "after_sha256": "9f121a2932c7de64d9c886b3f171547623c31c40718488aaaac951cd86ad3dae"
+    },
+    {
+      "path": "src/features/reference/connected-school.tsx",
+      "before_bytes": 2929,
+      "after_bytes": 2270,
+      "before_sha256": "681bb8f3e1b2f1ebee37699b77b4f5ac6cd0e752b81c3b0f8beeede97c873ff9",
+      "after_sha256": "0f86ed9306075a9e0bf31ef0f96a9661855ae13b160a0e3e8d1ffa58fb915bea"
+    },
+    {
+      "path": "src/features/reference/school.module.css",
+      "before_bytes": 1271,
+      "after_bytes": 849,
+      "before_sha256": "0992a8fd944bf1152534282473b1f0c923d10350018ae5f0676e17852b136f62",
+      "after_sha256": "5959e58595a9b3eba99c54dee2fe56bdf6166fddb84cbf01376651f57bd43143"
+    },
+    {
+      "path": "design/tokens.json",
+      "before_bytes": 2419,
+      "after_bytes": 2799,
+      "before_sha256": "885b608b9d6bda265db45d93cfcbd91f3a571c0af7fee5f6f537d58794013733",
+      "after_sha256": "e46f6062873259924397735af2f8336ef5484b302f2a6473cb08df4edaed8654"
+    },
+    {
+      "path": "tests/browser/assistant-theme.spec.ts",
+      "before_bytes": 4795,
+      "after_bytes": 5796,
+      "before_sha256": "8c7443e2e39c286adf0755db91364905a06316865b8f3ef63dd9a0ce7f9a045e",
+      "after_sha256": "3ffdbf9be50be7b58e3e45ced3d3fa952f582581b0bd501479ecf6465241e684"
+    },
+    {
+      "path": "tests/browser/exact-class-members.spec.ts",
+      "before_bytes": 23999,
+      "after_bytes": 26916,
+      "before_sha256": "54448e5da6ecdbb4633a673d9e284a407bd6cd215f2e53106b4d3367741ef899",
+      "after_sha256": "7f93407d06cbbf2ab5a0ba9454ad94b7d41494064094a8983283f92b2c23a540"
+    },
+    {
+      "path": "tests/browser/v5-responsive.spec.ts",
+      "before_bytes": 2527,
+      "after_bytes": 10519,
+      "before_sha256": "27d0c34fff0d1339d5f5bf885385692e0ec9590ad8ff76cfa2abe7ed6574741d",
+      "after_sha256": "f7b65f36ea668f73f34ebeefd226ff90e76916789c6cdf1e15b79a9f29d773bc"
+    },
+    {
+      "path": "tests/fixtures/backend/independent-class.mjs",
+      "before_bytes": 25220,
+      "after_bytes": 26344,
+      "before_sha256": "47474728476242509a91d31d306c7d8f6c270078fb1940a67add5673f7bebb5b",
+      "after_sha256": "f264ba3073354aa28422fed5b08249b9091fa8492690c12a3e4793acc0188173"
+    }
+  ],
+  "new_runtime_files": 0,
+  "new_dependencies": 0,
+  "deleted_whole_source_files": 0,
+  "source_cleanup": "Replaced CSS rules removed from their owners; no additional unconsumed whole file proved. Two PDF-tool-only font files excluded from deployment, retained in source.",
+  "checks": {
+    "build": "pass; TypeScript included",
+    "lint": "313 boundaries; no cycles/unused boundary imports",
+    "format": "pass",
+    "generated": "329 operations, 571 server schemas, 84 browser closure, zero owner",
+    "unit": {
+      "passed": 494,
+      "files": 73,
+      "source_scope": "final source; all behavior and visual changes included"
+    },
+    "browser": {
+      "startTime": "2026-11-11T01:42:56.324Z",
+      "duration": 266987.022,
+      "expected": 110,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0,
+      "scope": "18 related browser spec files; not the entire repository browser suite"
+    },
+    "ordinary_standalone": {
+      "checks": 37,
+      "passed": 37
+    },
+    "boundaries": {
+      "checks": 224,
+      "failures": 0
+    },
+    "cascade": {
+      "build_id": "Lj1XDtp0iyp3PfXaZS43s",
+      "records": 57
+    },
+    "negative_fixture_race_recheck": {
+      "passed": 5,
+      "method": "Authorized DTO read before fixed mismatched response; no ignored route errors"
+    },
+    "gallery_review": {
+      "checks": 36,
+      "passed": 36
+    }
+  },
+  "images": {
+    "before": 72,
+    "after": 72,
+    "native": 78,
+    "states": 120,
+    "reference": 272
+  },
+  "coverage": {
+    "v52_rows": 34,
+    "v5_matrix_rows": 528,
+    "v5_v51_rows": 568,
+    "all_states_pixel_accepted": false
+  },
+  "live_backend": {
+    "origin": "http://94.184.32.84:8090",
+    "fresh_business_calls_this_turn": 0,
+    "current_ai_or_subscription_verified": false,
+    "previous_evidence": "docs/integration/20261110-live-delivery.md; historical V5.1 PROGRESS entry; no old image attributed to this build"
+  },
+  "limitations": [
+    "No all-state pixel-perfect claim. Data, counts, role, focus and capabilities differ from atlas examples.",
+    "R06/R08 keep inline actions in the native form rather than a fixed V5.2 scene footer; this remains a visual gap. R18/R19 now opt into the explicit desktop footer variant. Tablet header padding is 24px from the layout contract versus 20px in preview CSS; internal alignment is not declared pixel-identical.",
+    "Native iOS/Android keyboard, safe-area hardware, OS text scaling, push and external server deployment not executed. Reduced-height and visualViewport browser behavior checked.",
+    "R28 family shared billing and R33 full public sales landing require confirmed backend/product contracts; R34 owner app is protected and separate.",
+    "Independent-class assignment/exam release remains disabled; school academic features remain available under existing permissions.",
+    "No live AI, ingest, payment, invitation, message, profile edit or role mutation this turn. Prior paid-subscription blocker was not reclassified as a CSS issue."
+  ]
+}

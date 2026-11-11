@@ -1,8 +1,12 @@
 'use client';
+import { Input as NativeInput, Textarea as NativeTextarea } from '@/components/ui/input';
+
+import { uiClass } from '@/components/v5/classes';
+
 import * as uiText from '@/content/fa';
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
-import { Shield, UserMinus, UserPlus, MoreVertical, Search, Check } from 'lucide-react';
+import { Shield, UserMinus, ChevronLeft, Search } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { ConfirmAction } from '@/components/ui/confirm-action';
@@ -14,9 +18,18 @@ import { usePersonal, usePersonalApi } from '../provider';
 import c from './conversation-pages.module.css';
 import t from './messaging-theme.module.css';
 import { conversationCapability } from './management-policy';
-import { ConversationPhotoEditor } from './conversation-photo';
+import { ConversationEditorAction } from './conversation-action-slot';
+import { V4Field, V4Note } from '@/components/v4/page';
+import { useSceneContextSummary } from '@/components/v5/form-actions';
 type S = components['schemas'];
-export function ConversationInfoEditor({ value }: { value: S['ManagedConversationResult'] }) {
+export function ConversationInfoEditor({
+  value,
+  children,
+}: {
+  value: S['ManagedConversationResult'];
+  children?: ReactNode;
+}) {
+  const setSceneAction = useContext(ConversationEditorAction);
   const { session, call } = usePersonal(),
     cache = useQueryClient();
   const [baseline, setBaseline] = useState({
@@ -44,29 +57,48 @@ export function ConversationInfoEditor({ value }: { value: S['ManagedConversatio
       });
     }
   }, [value, dirty, baseline.version]);
-  if (!conversationCapability(value, 'canEditInfo'))
+  const canEdit = conversationCapability(value, 'canEditInfo');
+  const channel = value.type === 'Channel';
+  const nameLabel = channel
+    ? uiText.v5Product.channelEditorTitle
+    : uiText.v5Product.groupEditorTitle;
+  const descriptionLabel = channel
+    ? uiText.v5Product.channelEditorDescription
+    : uiText.v5Product.groupEditorDescription;
+  useSceneContextSummary([
+    { label: nameLabel, value: title },
+    { label: descriptionLabel, value: description },
+  ]);
+  const save = useMemo(
+    () =>
+      canEdit ? (
+        <Button
+          type="submit"
+          form="conversation-info-form"
+          disabled={busy || stale || !dirty || !title.trim()}
+          aria-busy={busy}
+        >
+          {channel ? uiText.v5Product.saveChannelInfo : uiText.v5Product.saveGroupInfo}
+        </Button>
+      ) : null,
+    [canEdit, busy, stale, dirty, title, channel],
+  );
+  useEffect(() => {
+    setSceneAction?.(save);
+    return () => setSceneAction?.(null);
+  }, [save, setSceneAction]);
+  if (!canEdit)
     return (
-      <section className={c.panel}>
+      <section className={uiClass(c.panel)}>
         <EmptyState title={uiText.text_db45e600c458} />
       </section>
     );
   return (
-    <section className={`${c.panel} ${c.editorPanel}`}>
-      <div className={c.editorHeading}>
-        <h2>{value.type === 'Channel' ? uiText.text_692d5f61506b : uiText.text_b3fb229e6d10}</h2>
-        <Button
-          type="submit"
-          form="conversation-info-form"
-          variant="ghost"
-          size="icon"
-          aria-label={uiText.text_6fa623053bf9}
-          disabled={busy || stale || !dirty || !title.trim()}
-        >
-          <Check size={27} />
-        </Button>
-      </div>
+    <section className={uiClass(c.nativeInfoEditor)}>
+      {!setSceneAction && save}
       <form
         id="conversation-info-form"
+        className={uiClass('v5-native-form')}
         onSubmit={async (ev) => {
           ev.preventDefault();
           if (lock.current || stale || !dirty || !title.trim()) return;
@@ -119,25 +151,19 @@ export function ConversationInfoEditor({ value }: { value: S['ManagedConversatio
           }
         }}
       >
-        <fieldset disabled={busy || stale} className={c.form}>
-          <ConversationPhotoEditor value={value} />
-          <div className={c.identityEditor}>
-            <label>
-              {uiText.text_b135dd6203d6}
-              {value.type === 'Channel' ? uiText.text_2db356b462dd : uiText.text_774668d4acc7}
-              <input
-                required
-                value={title}
-                onChange={(ev) => {
-                  setTitle(ev.target.value);
-                  setSuccess(false);
-                }}
-              />
-            </label>
-          </div>
-          <label>
-            {uiText.text_75e45482aebb}
-            <textarea
+        <fieldset disabled={busy || stale} className={uiClass('v5-native-fields')}>
+          <V4Field label={nameLabel}>
+            <NativeInput
+              required
+              value={title}
+              onChange={(ev) => {
+                setTitle(ev.target.value);
+                setSuccess(false);
+              }}
+            />
+          </V4Field>
+          <V4Field label={descriptionLabel}>
+            <NativeTextarea
               rows={3}
               value={description}
               onChange={(ev) => {
@@ -145,10 +171,14 @@ export function ConversationInfoEditor({ value }: { value: S['ManagedConversatio
                 setSuccess(false);
               }}
             />
-          </label>
+          </V4Field>
           {busy && <p role="status">{uiText.text_a143258455bb}</p>}
         </fieldset>
       </form>
+      {children}
+      <V4Note>
+        {channel ? uiText.v5Product.channelInfoPolicy : uiText.v5Product.groupInfoPolicy}
+      </V4Note>
       {stale && (
         <div role="alert">
           <p>{uiText.text_cb06ae591439}</p>
@@ -203,18 +233,24 @@ export function AddConversationMember({ value }: { value: S['ManagedConversation
       }}
     >
       <DialogTrigger asChild>
-        <Button>
-          <UserPlus size={18} />
-          {uiText.text_5a817834209d}
-        </Button>
+        <Button data-conversation-member-add>{uiText.v5Product.invitePerson}</Button>
       </DialogTrigger>
       <DialogContent
-        className={`${t.theme} ${t.dialog} ${c.detailDialog}`}
-        title={uiText.text_5a817834209d}
+        className={uiClass(`${t.theme}`)}
+        title={uiText.v5Product.invitePerson}
         description={uiText.text_1ac1bbc54827}
+        onCloseAutoFocus={(event) => {
+          const trigger = [
+            ...document.querySelectorAll<HTMLElement>('[data-conversation-member-add]'),
+          ].find((node) => node.getBoundingClientRect().height);
+          if (trigger) {
+            event.preventDefault();
+            trigger.focus();
+          }
+        }}
       >
         <form
-          className={c.search}
+          className={uiClass(c.search)}
           onSubmit={(ev) => {
             ev.preventDefault();
             setQ(draft.trim());
@@ -222,7 +258,7 @@ export function AddConversationMember({ value }: { value: S['ManagedConversation
           }}
         >
           <Search size={18} />
-          <input
+          <NativeInput
             aria-label={uiText.text_a6c3837b1064}
             placeholder={uiText.text_d14da946f17b}
             value={draft}
@@ -237,12 +273,14 @@ export function AddConversationMember({ value }: { value: S['ManagedConversation
         ) : contacts.isError ? (
           <ErrorState error={contacts.error} onRetry={() => void contacts.refetch()} />
         ) : (
-          <div className={c.memberPicker}>
+          <div className={uiClass(c.memberPicker)}>
             {contacts.data.items
               .filter((m) => m.contactUserId !== session.user.id)
               .map((m) => (
                 <article key={m.contactUserId}>
-                  <span className={c.avatar}>{(m.savedName || m.profile.displayName)[0]}</span>
+                  <span className={uiClass(c.avatar)}>
+                    {(m.savedName || m.profile.displayName)[0]}
+                  </span>
                   <strong>{m.savedName || m.profile.displayName}</strong>
                   <Button
                     size="sm"
@@ -281,7 +319,7 @@ export function AddConversationMember({ value }: { value: S['ManagedConversation
           </div>
         )}
         {!!error && <ErrorState error={error} />}
-        <div className={c.pager}>
+        <div className={uiClass(c.pager)}>
           <Button
             variant="ghost"
             disabled={busy || page === 1 || contacts.isFetching}
@@ -336,16 +374,21 @@ export function MemberManagement({
           variant="ghost"
           aria-label={uiText.text_aa46bc41d37e + member.user.displayName}
         >
-          <MoreVertical size={20} />
+          {member.role === 'Admin' ? (
+            <span className={uiClass('badge')}>{uiText.v5Product.conversationAdmin}</span>
+          ) : (
+            <ChevronLeft size={18} />
+          )}
         </Button>
       </DialogTrigger>
       <DialogContent
-        className={`${t.theme} ${t.dialog} ${c.detailDialog}`}
+        className={uiClass(`${t.theme}`)}
         title={uiText.text_aa46bc41d37e + member.user.displayName}
+        scenario={action === 'Remove' ? 'MK-208' : action ? 'MK-207' : undefined}
         description={uiText.text_eb33997cc70e}
       >
         {!action ? (
-          <div className={c.memberActions}>
+          <div className={uiClass(c.memberActions)}>
             {canManageAdmins && (
               <Button
                 variant="ghost"
@@ -356,7 +399,11 @@ export function MemberManagement({
               </Button>
             )}
             {canManageMembers && (
-              <Button variant="ghost" className={c.danger} onClick={() => setAction('Remove')}>
+              <Button
+                variant="ghost"
+                className={uiClass(c.danger)}
+                onClick={() => setAction('Remove')}
+              >
                 <UserMinus size={20} />
                 {uiText.text_464460abd037}
               </Button>
@@ -371,7 +418,7 @@ export function MemberManagement({
                   ? uiText.text_a849795e6bcd
                   : uiText.text_12513980880d}
             </p>
-            <div className={c.pager}>
+            <div className={uiClass(c.pager)}>
               <Button
                 variant="outline"
                 disabled={busy}

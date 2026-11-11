@@ -1,11 +1,14 @@
 'use client';
+import { uiClass } from '@/components/v5/classes';
+
 import { ErrorState, LoadingSkeleton } from '@/components/ui/states';
 import type { components } from '@/generated/api/schema';
 import { network } from '@/config/network';
-import { request, type ContextGuard } from '@/lib/api/client';
+import { request, type ContextGuard, type ApiRequestInit } from '@/lib/api/client';
 import { ApiError } from '@/lib/api/errors';
 import { fileTransfer, type TransferOptions } from '@/lib/api/file-transfer';
 import { clearDraftStorage } from '@/lib/draft-storage';
+import { checkPushDisplayAccount } from '@/lib/push-display';
 import type { ClientState } from '@/lib/server/client-session';
 import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
@@ -19,7 +22,11 @@ import {
   type ReactNode,
 } from 'react';
 import { MessagingLiveProvider } from './messaging/live';
-import { rememberBrowserAuthReturn, safeAuthReturnPath } from '@/lib/auth-return';
+import {
+  rememberBrowserAuthReturn,
+  safeAuthReturnPath,
+  takeBrowserAuthReturn,
+} from '@/lib/auth-return';
 import { ScrollMemoryProvider } from '@/components/navigation/scroll-memory';
 type WorkspaceDestination =
   | '/personal'
@@ -32,7 +39,7 @@ type ClientAccess = {
   session: ClientState;
   changing: boolean;
   reload: () => Promise<void>;
-  call: <T>(path: string, init?: RequestInit) => Promise<T>;
+  call: <T>(path: string, init?: ApiRequestInit) => Promise<T>;
   transfer: <T>(path: string, options: TransferOptions) => Promise<T>;
   selectWorkspace: (
     value: components['schemas']['SelectWorkspaceCommand'],
@@ -56,11 +63,13 @@ export function PersonalProvider({ children }: { children: ReactNode }) {
     [error, setError] = useState<unknown>(),
     [changing, setChanging] = useState(false);
   const generation = useRef(0),
+    loggingOut = useRef(false),
     loadAbort = useRef<AbortController | null>(null),
     loadMode = useRef<'foreground' | 'background' | null>(null),
     current = useRef<ClientState | null>(null);
   const reload = useCallback(
     async (quiet = false) => {
+      if (loggingOut.current) return;
       const previous = current.current;
       const background = quiet && previous !== null;
       // Realtime/visibility hints must not cancel a deliberate workspace/child
@@ -95,6 +104,7 @@ export function PersonalProvider({ children }: { children: ReactNode }) {
           cache.clear();
         }
         current.current = next;
+        checkPushDisplayAccount(next.user.id);
         setSession(next);
         setError(undefined);
       } catch (e) {
@@ -103,6 +113,7 @@ export function PersonalProvider({ children }: { children: ReactNode }) {
         setSession(null);
         cache.clear();
         if (e instanceof ApiError && e.status === 401) {
+          checkPushDisplayAccount(null);
           rememberBrowserAuthReturn();
           router.replace('/enter');
         } else setError(e);
@@ -123,6 +134,7 @@ export function PersonalProvider({ children }: { children: ReactNode }) {
       if (document.visibilityState === 'visible') void reload(true);
     };
     const expired = () => {
+      if (loggingOut.current) return;
       rememberBrowserAuthReturn();
       generation.current++;
       loadAbort.current?.abort();
@@ -151,7 +163,7 @@ export function PersonalProvider({ children }: { children: ReactNode }) {
     channel.close();
   }
   const renderedEpoch = generation.current;
-  async function call<T>(path: string, init: RequestInit = {}): Promise<T> {
+  async function call<T>(path: string, init: ApiRequestInit = {}): Promise<T> {
     const selected = session;
     if (!selected) throw new ApiError(401);
     if (current.current !== selected || renderedEpoch !== generation.current)
@@ -217,21 +229,30 @@ export function PersonalProvider({ children }: { children: ReactNode }) {
     return value;
   }
   async function logout() {
+    if (loggingOut.current) return;
+    loggingOut.current = true;
+    // Retire pending reads before the server ends the session. Their late 401s
+    // and our own session broadcast must not turn deliberate logout into expiry.
+    generation.current++;
+    loadAbort.current?.abort();
+    loadAbort.current = null;
+    loadMode.current = null;
     setChanging(true);
     try {
       await cache.cancelQueries();
       await request('/api/client/auth/logout', { method: 'POST' });
+      checkPushDisplayAccount(null);
+      takeBrowserAuthReturn();
       try {
         clearDraftStorage(sessionStorage);
       } catch {}
-      generation.current++;
-      loadAbort.current?.abort();
       current.current = null;
       setSession(null);
       cache.clear();
       broadcast();
       router.replace('/enter');
     } catch (e) {
+      loggingOut.current = false;
       setError(e);
     } finally {
       setChanging(false);
@@ -239,13 +260,13 @@ export function PersonalProvider({ children }: { children: ReactNode }) {
   }
   if (error)
     return (
-      <div className="bootstrap">
+      <div className={uiClass('bootstrap')}>
         <ErrorState error={error} onRetry={() => void reload()} />
       </div>
     );
   if (!session || changing)
     return (
-      <div className="bootstrap">
+      <div className={uiClass('bootstrap')}>
         <LoadingSkeleton />
       </div>
     );

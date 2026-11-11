@@ -1,0 +1,323 @@
+{
+  "date": "2026-11-10",
+  "finalBuildId": "7mzabErvwPNa9_wVNCIJw",
+  "backend": "http://94.184.32.84:8090",
+  "scope": "Real Next client only; no public deployment or owner app change.",
+  "build": {
+    "passed": true,
+    "typecheck": "Included in Next build",
+    "log": "tmp/assistant-repair-20261110/build-complete.log"
+  },
+  "lint": {
+    "passed": true,
+    "modules": 308,
+    "log": "tmp/assistant-repair-20261110/lint-complete.log"
+  },
+  "format": {
+    "passed": true,
+    "log": "tmp/assistant-repair-20261110/format-complete.log"
+  },
+  "unit": {
+    "passed": 484,
+    "total": 484,
+    "success": true,
+    "receipt": "tmp/assistant-repair-20261110/unit-complete-results.json",
+    "buildId": "7mzabErvwPNa9_wVNCIJw"
+  },
+  "browserPhases": [
+    {
+      "phase": "initial",
+      "buildId": "LBNeUJzQMTNje6DggQH8Q",
+      "stats": {
+        "startTime": "2026-11-10T09:20:06.384Z",
+        "duration": 201457.194,
+        "expected": 41,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "receipt": "tmp/assistant-repair-20261110/browser-initial-results.json",
+      "sha256": "c49df33ef97387c63fc2afe13db34b8e1723eddafbdf5bfef37c01b419b4a553"
+    },
+    {
+      "phase": "expanded-initial",
+      "buildId": "IT7uVrZEl3TsM_cNjl_Gb",
+      "stats": {
+        "startTime": "2026-11-10T09:37:55.075Z",
+        "duration": 427806.48000000004,
+        "expected": 76,
+        "skipped": 0,
+        "unexpected": 4,
+        "flaky": 0
+      },
+      "receipt": "tmp/assistant-repair-20261110/browser-expanded-initial-results.json",
+      "sha256": "35d624057d63504bdafbec1a3b72c9a429193ab1214119410d69749b65b0942c"
+    },
+    {
+      "phase": "delivery",
+      "buildId": "pdTuiFifH3iscoftrZJ1t",
+      "stats": {
+        "startTime": "2026-11-10T09:49:32.387Z",
+        "duration": 180263.035,
+        "expected": 32,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "receipt": "tmp/assistant-repair-20261110/browser-delivery-results.json",
+      "sha256": "008843e1b2c0c401dd081e81a617c803d1dabee2224f6ca620c4b37b55fc6f9f"
+    },
+    {
+      "phase": "messenger-geometry",
+      "buildId": "xMOKz8S-d9yJ0dsum0FE5",
+      "stats": {
+        "startTime": "2026-11-10T10:02:38.758Z",
+        "duration": 123598.488,
+        "expected": 22,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "receipt": "tmp/assistant-repair-20261110/browser-last-results.json",
+      "sha256": "16069d45f702ecc3b9380be6e480a69ab176d2181368d14e1fc812533f1e88ab"
+    },
+    {
+      "phase": "complete",
+      "buildId": "7mzabErvwPNa9_wVNCIJw",
+      "stats": {
+        "startTime": "2026-11-10T10:11:43.725Z",
+        "duration": 149623.479,
+        "expected": 24,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "receipt": "tmp/assistant-repair-20261110/browser-complete-results.json",
+      "sha256": "838dcf57f47956586e1483d4c2d2036848c834541927308566b213705298bb7b"
+    }
+  ],
+  "ordinaryProduction": {
+    "buildId": "7mzabErvwPNa9_wVNCIJw",
+    "stats": {
+      "startTime": "2026-11-10T10:15:24.367Z",
+      "duration": 8426.917,
+      "expected": 1,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "receipt": "tmp/assistant-repair-20261110/production-complete-results.json"
+  },
+  "generated": {
+    "operations": 325,
+    "schemas": 568,
+    "ownerOperations": 0,
+    "log": "tmp/assistant-repair-20261110/generated-delivery.log"
+  },
+  "runtime": {
+    "nextEntries": [
+      "src/app/(personal)/personal/ai/page.tsx",
+      "src/app/(personal)/personal/assistant/page.tsx",
+      "src/app/(personal)/personal/assistant/studio/page.tsx",
+      "src/app/(personal)/personal/classes/[id]/page.tsx",
+      "src/app/(personal)/personal/classes/new/page.tsx",
+      "src/app/(personal)/personal/classes/page.tsx",
+      "src/app/(personal)/personal/contacts/page.tsx",
+      "src/app/(personal)/personal/education/[...section]/page.tsx",
+      "src/app/(personal)/personal/education/page.tsx",
+      "src/app/(personal)/personal/extracurricular/[...section]/page.tsx",
+      "src/app/(personal)/personal/extracurricular/page.tsx",
+      "src/app/(personal)/personal/invitations/page.tsx",
+      "src/app/(personal)/personal/layout.tsx",
+      "src/app/(personal)/personal/messages/[id]/[section]/page.tsx",
+      "src/app/(personal)/personal/messages/[id]/page.tsx",
+      "src/app/(personal)/personal/messages/folders/page.tsx",
+      "src/app/(personal)/personal/messages/join/page.tsx",
+      "src/app/(personal)/personal/messages/new/page.tsx",
+      "src/app/(personal)/personal/messages/page.tsx",
+      "src/app/(personal)/personal/notifications/page.tsx",
+      "src/app/(personal)/personal/page.tsx",
+      "src/app/(personal)/personal/privacy/page.tsx",
+      "src/app/(personal)/personal/profile/details/page.tsx",
+      "src/app/(personal)/personal/profile/edit/page.tsx",
+      "src/app/(personal)/personal/profile/page.tsx",
+      "src/app/(personal)/personal/profile/preferences/page.tsx",
+      "src/app/(personal)/personal/resources/[id]/page.tsx",
+      "src/app/(personal)/personal/resources/page.tsx",
+      "src/app/(personal)/personal/settings/[section]/page.tsx",
+      "src/app/(personal)/personal/settings/appearance/page.tsx",
+      "src/app/(personal)/personal/settings/blocked/page.tsx",
+      "src/app/(personal)/personal/settings/devices/[[...device]]/page.tsx",
+      "src/app/(personal)/personal/settings/notifications/[[...category]]/page.tsx",
+      "src/app/(personal)/personal/settings/page.tsx",
+      "src/app/(personal)/personal/settings/privacy/page.tsx",
+      "src/app/(personal)/personal/settings/reading/page.tsx",
+      "src/app/(personal)/personal/subscription/page.tsx",
+      "src/app/(personal)/personal/workspaces/page.tsx",
+      "src/app/api/client/auth/[action]/route.ts",
+      "src/app/api/client/backend/[...path]/route.ts",
+      "src/app/api/client/exam-files/[[...path]]/route.ts",
+      "src/app/api/client/files/[[...path]]/route.ts",
+      "src/app/api/client/hub/[[...path]]/route.ts",
+      "src/app/api/client/profile-media/[[...path]]/route.ts",
+      "src/app/api/client/report-exports/[jobId]/content/route.ts",
+      "src/app/api/client/school-files/[[...path]]/route.ts",
+      "src/app/api/client/security/sessions/[[...action]]/route.ts",
+      "src/app/api/client/session/route.ts",
+      "src/app/api/client/source-files/[[...path]]/route.ts",
+      "src/app/api/client/submission-files/[[...path]]/route.ts",
+      "src/app/enter/page.tsx",
+      "src/app/error.tsx",
+      "src/app/layout.tsx",
+      "src/app/manifest.ts",
+      "src/app/not-found.tsx",
+      "src/app/page.tsx",
+      "src/app/welcome/page.tsx",
+      "src/proxy.ts"
+    ],
+    "sourceModules": 310,
+    "reachableSource": 309,
+    "unreachableCandidates": [],
+    "externalProjectInputs": [
+      "config/network.json",
+      "contracts/client-surface.json",
+      "design/tokens.json"
+    ]
+  },
+  "evidence": [
+    {
+      "folder": "output/review/exact-v1/repair-complete",
+      "builds": [
+        "7mzabErvwPNa9_wVNCIJw"
+      ],
+      "frames": 48,
+      "unverified": 0,
+      "overflow": 0,
+      "pageErrors": 0,
+      "receiptSha256": "b440183cf678c0c936f98ca9a47a84009df7fec2249207cec0dc386aec08a800"
+    },
+    {
+      "folder": "output/review/exact-v1/repair-complete-boundaries",
+      "builds": [
+        "7mzabErvwPNa9_wVNCIJw"
+      ],
+      "frames": 22,
+      "unverified": 0,
+      "overflow": 0,
+      "pageErrors": 0,
+      "receiptSha256": "c22d4df7003846d96296454b54aed508fb9e9a330e49989170442e9825f64e5c"
+    },
+    {
+      "folder": "output/review/exact-v1/repair-complete-large",
+      "builds": [
+        "7mzabErvwPNa9_wVNCIJw"
+      ],
+      "frames": 22,
+      "unverified": 0,
+      "overflow": 0,
+      "pageErrors": 0,
+      "receiptSha256": "a3c5894bd05531bc603282004439f4070311f1873c80b6b5fe4ad296d4a630de"
+    },
+    {
+      "folder": "output/review/exact-v1/repair-boundaries",
+      "builds": [
+        "pdTuiFifH3iscoftrZJ1t"
+      ],
+      "frames": 55,
+      "unverified": 0,
+      "overflow": 0,
+      "pageErrors": 0,
+      "receiptSha256": "58157252549d5aec45a21ad15e2cc04a1ca1c819bfb0363bf73e3fddc32f6564"
+    },
+    {
+      "folder": "output/review/exact-v1/repair-large",
+      "builds": [
+        "pdTuiFifH3iscoftrZJ1t"
+      ],
+      "frames": 55,
+      "unverified": 0,
+      "overflow": 0,
+      "pageErrors": 0,
+      "receiptSha256": "f364482ec415963dc32f1a09243c17e80c28977c90d811f21c1652d07292469b"
+    }
+  ],
+  "geometryReport": "docs/design/exact-v1/20261110-mobile-repair.json",
+  "changedFileHashes": {
+    "src/components/v5/scene.tsx": "9b332c18c5793d347afa7d9280434b6c4156c3f52e6548e88d0ca89b3d1d28a4",
+    "src/design/v5-product.css": "5380d3f812a5a93079b1334a21764b9a36f5bd14a961c0470458d13c2b4db6c6",
+    "src/content/fa.ts": "edb6f1f20f20878c0f79416d146b619c62b3e866eaa3d67354fb3963e47b3829",
+    "src/features/reference/connected-assistant.tsx": "2e440c18eaf53d302628ec89ab63039bde4daab3649f4c06c0417fa420152d83",
+    "src/features/personal/messaging/messenger.tsx": "c37506e6db3e59851b8c0a730110c9dd3c6fc812ef7dad0dfa4402f3f4246063",
+    "src/features/personal/messaging/inbox.module.css": "1674908be1d49499a5488ce343a0690c32c0cb2158ff4dbb6bcc7ddd6a9a909b",
+    "src/features/personal/messaging/received-invitations.tsx": "2792be3c4099792a5a3a47284e064f057747dd256a71f001fdef10969a6ae17e",
+    "src/features/personal/school/feed.tsx": "311d3869b1ce4ffab1efedebe3f96bb4a04bf8cfbf606df3258045e807224c4f",
+    "src/features/extracurricular/connected.tsx": "661b5bf2f989a384aa0fd17ea0f6e81b348950911a2e1658c7eeabaebcfd79fb",
+    "src/features/extracurricular/class-preview-spaces.tsx": "d31bd162bb83ae052ca20d95f5239bc075e916e9ae663448dfc5493ddd2e5409",
+    "tests/browser/assistant-recovery.spec.ts": "5aefbeb6c1ad722f45f37ba8f3a047d27ddf080f09aca2db637fbd9c9197306c",
+    "tests/browser/mobile-shell-repair.spec.ts": "c42e10f812360aff3d01f14d5239e2a9c79fa8745f22b7e28c2a8707738d962f",
+    "tests/browser/class-preview-spaces.spec.ts": "c05127b18beb41cee31ec56288f5344af022e4f0bdaa50a75d050c0bfa4c069a",
+    "tests/browser/exact-state-capture.ts": "ed6f90c83294d69b352b9c03a97a328613562161a72ae98e91fe121bbb25564d",
+    "tests/fixtures/backend/independent-class.mjs": "47474728476242509a91d31d306c7d8f6c270078fb1940a67add5673f7bebb5b",
+    "scripts/review-exact-v5.mjs": "25e90a128fc904b98eb41a8995f49c600e925fa0411567c7866042dfd77539e1",
+    "scripts/exact-v5-cases.mjs": "f920cc852bbf7bdc606def70500c65f9a86c32da88dbf53a55c8b346059e7834"
+  },
+  "live": {
+    "role": "Student",
+    "personalSubscription": "None, freshly read through UI",
+    "explicitPayer": "Organization",
+    "creditResult": "SUBSCRIPTION_INACTIVE shown by real UI; no accepted AI answer",
+    "recovery": "The same actual question became editable; no automatic resend",
+    "sourceUploadsThisPhase": 0,
+    "otpChallengesThisPhase": 0,
+    "purchases": 0,
+    "credentialsRecorded": false
+  },
+  "failureDisposition": {
+    "initialExpandedFailures": 4,
+    "fixtureFailures": 3,
+    "missingPanelAccessibleName": 1,
+    "allFourRetestedSuccessfully": true,
+    "artifacts": "tmp/assistant-repair-20261110/initial-failures.zip"
+  },
+  "limitations": [
+    "No full 528-state or pixel-perfect completion claim.",
+    "Reference and fixture counts, names and role data can differ; geometry findings preserve those differences.",
+    "Browser phase build IDs are distinct; no uninterrupted full-project green run on the final build is asserted.",
+    "Current live credit rejection prevents success verification of Chat, ingestion and RAG. Historical four-account results remain separate.",
+    "Physical keyboard/device behavior and all rare matrix states were not verified in this phase."
+  ],
+  "cleanup": {
+    "removedFiles": 819,
+    "removedBytes": 463404340,
+    "paths": [
+      {
+        "path": ".next/cache",
+        "files": 42,
+        "bytes": 117908060
+      },
+      {
+        "path": ".next/dev",
+        "files": 702,
+        "bytes": 318207389
+      },
+      {
+        "path": "test-results",
+        "files": 74,
+        "bytes": 27043014
+      },
+      {
+        "path": "playwright-report",
+        "files": 0,
+        "bytes": 0
+      },
+      {
+        "path": "tsconfig.tsbuildinfo",
+        "files": 1,
+        "bytes": 245877
+      }
+    ],
+    "productionBuildRetained": true,
+    "sessionsAndSecretsPreserved": true
+  },
+  "finalEvidenceHashesVerified": true
+}

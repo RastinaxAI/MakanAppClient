@@ -30,7 +30,7 @@ test('catalog preserves the query and scroll position after Back', async ({ page
   });
   expect(previous).toBeGreaterThan(0);
   await page.waitForTimeout(100);
-  await page.getByRole('button', { name: 'گزینه‌های بیشتر', exact: true }).click();
+  await page.getByRole('banner').getByRole('link', { name: 'بازگشت', exact: true }).click();
   await expect(page).toHaveURL(/\/personal\/profile$/);
   await page.goBack();
   await expect(page.getByLabel('جستجوی منابع', { exact: true })).toHaveValue('آزمایشی');

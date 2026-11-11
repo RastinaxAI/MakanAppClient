@@ -1,0 +1,45 @@
+/* Product styles: owned here; original V5 source remains read-only in design/reference-v5. */
+.v5-export-details {
+  margin: 0;
+}
+.v5-export-details > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: calc(14px * var(--text-scale, 1));
+}
+.v5-export-details dt {
+  color: var(--muted);
+}
+.v5-export-details dd {
+  margin: 0;
+  text-align: end;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.v5-export-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.v5-export-range {
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+.v5-export-range legend {
+  padding: 0;
+  margin-bottom: 7px;
+  font-size: calc(14px * var(--text-scale, 1));
+  font-weight: 600;
+}
+.v5-export-range > div {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+  gap: 12px;
+}
+.v5-export-policy {
+  margin: 18px 0 0;
+}

@@ -1,5 +1,5 @@
 {
-  "backendOrigin": "http://94.184.32.84:8090",
+  "backendOrigin": "http://94.184.32.84",
   "clientApiPrefix": "/api/client",
   "timeouts": {
     "upstream": 25000,

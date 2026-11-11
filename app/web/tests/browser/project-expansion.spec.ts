@@ -1,7 +1,9 @@
-import { test, expect, login, ids, fixture, origin } from './test';
+import { reviewPath } from './review-output';
+import { captureExactState } from './exact-state-capture';
+import { test, expect, login, ids, fixture, origin, chooseSchoolCatalog } from './test';
 import { mkdir } from 'node:fs/promises';
 const base = '/personal/education',
-  shots = 'output/review/project-expansion';
+  shots = reviewPath('output/review/project-expansion');
 
 test('Manager creates a class only after review; catalog search, failed submit and reload keep the draft', async ({
   page,
@@ -10,21 +12,29 @@ test('Manager creates a class only after review; catalog search, failed submit a
 }) => {
   await login(context, 'Manager');
   await page.goto(base + '/classes');
-  await page.getByRole('link', { name: 'ایجاد کلاس', exact: true }).click();
+  await page.getByRole('link', { name: 'کلاس تازه', exact: true }).click();
   await expect(page).toHaveURL(/classes\/new$/);
   await expect(page.getByRole('dialog')).toHaveCount(0);
-  await page.getByLabel('نام کلاس', { exact: true }).fill('کلاس مستقل جدید');
-  await page.getByLabel('ظرفیت کلاس', { exact: true }).fill('24');
-  await page.getByLabel('درس از کاتالوگ', { exact: true }).selectOption({ label: 'ریاضی' });
-  await page.getByLabel('دوره از کاتالوگ', { exact: true }).selectOption({ label: 'دورهٔ نمونه' });
-  await page.getByLabel('جستجوی کاتالوگ درس‌ها', { exact: true }).fill('ریاضی');
-  await page.getByLabel('جستجوی کاتالوگ درس‌ها', { exact: true }).press('Enter');
+  await page.getByLabel('عنوان کلاس', { exact: true }).fill('کلاس مستقل جدید');
+  await page.getByLabel('ظرفیت', { exact: true }).fill('24');
+  await chooseSchoolCatalog(page, 'درس', 'ریاضی');
+  await chooseSchoolCatalog(page, 'دوره', 'دورهٔ نمونه');
+  await page.getByLabel('درس کاتالوگ', { exact: true }).click();
+  const catalog = page.getByRole('dialog', { name: 'انتخاب درس', exact: true });
+  await catalog.getByLabel('جستجوی کاتالوگ درس‌ها', { exact: true }).fill('ریاضی');
+  await catalog.getByLabel('جستجوی کاتالوگ درس‌ها', { exact: true }).press('Enter');
+  await expect(catalog.getByRole('button', { name: 'انتخاب ریاضی', exact: true })).toBeVisible();
+  await captureExactState(page, ['MK-93']);
+  await page.keyboard.press('Escape');
+  await expect(page.getByLabel('درس کاتالوگ', { exact: true })).toBeFocused();
   await expect(page).not.toHaveURL(/step=review/);
   expect(await page.locator('form form').count()).toBe(0);
   page.once('dialog', (d) => d.accept());
   await page.reload();
-  await expect(page.getByLabel('نام کلاس', { exact: true })).toHaveValue('کلاس مستقل جدید');
-  await page.getByRole('button', { name: 'بازبینی اطلاعات', exact: true }).click();
+  await expect(page.getByLabel('عنوان کلاس', { exact: true })).toHaveValue('کلاس مستقل جدید');
+  await page.getByRole('button', { name: 'بازبینی کلاس', exact: true }).click();
+  await captureExactState(page, ['MK-94']);
+
   let state = await (await request.get(fixture + '/__test__/state')).json();
   expect(
     state.requests.filter(
@@ -38,7 +48,7 @@ test('Manager creates a class only after review; catalog search, failed submit a
   await page.getByRole('button', { name: 'تأیید و ثبت', exact: true }).click();
   await expect(page.getByRole('main').getByRole('alert')).toBeVisible();
   await page.getByRole('button', { name: 'بازگشت و ویرایش', exact: true }).click();
-  await expect(page.getByLabel('نام کلاس', { exact: true })).toHaveValue('کلاس مستقل جدید');
+  await expect(page.getByLabel('عنوان کلاس', { exact: true })).toHaveValue('کلاس مستقل جدید');
   await mkdir(shots, { recursive: true });
   for (const width of [390, 834, 1440]) {
     await page.setViewportSize({ width, height: 1000 });
@@ -47,7 +57,7 @@ test('Manager creates a class only after review; catalog search, failed submit a
     );
     await page.screenshot({ path: `${shots}/class-create-${width}.png` });
   }
-  await page.getByRole('button', { name: 'بازبینی اطلاعات', exact: true }).click();
+  await page.getByRole('button', { name: 'بازبینی کلاس', exact: true }).click();
   await page.getByRole('button', { name: 'تأیید و ثبت', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'کلاس ایجاد شد', exact: true })).toBeVisible();
 });
@@ -61,28 +71,54 @@ test('Teacher creates and edits a session on independent pages and cancellation 
   await page.goto(`${base}/classes/${ids.class}`);
   await page.getByRole('link', { name: 'ایجاد جلسه', exact: true }).click();
   await page.getByLabel('عنوان جلسه', { exact: true }).fill('جلسهٔ آزمایشی مستقل');
-  await page.getByLabel('شروع جلسه', { exact: true }).fill('1405/08/09 10:00');
-  await page.getByLabel('پایان جلسه', { exact: true }).fill('1405/08/09 11:00');
-  await page.getByRole('button', { name: 'بازبینی اطلاعات', exact: true }).click();
+  await page.getByLabel('شروع', { exact: true }).fill('1405/08/09 10:00');
+  await page.getByLabel('پایان', { exact: true }).fill('1405/08/09 11:00');
+  await captureExactState(page, ['MK-122']);
+
+  await page.getByRole('button', { name: 'بازبینی جلسه', exact: true }).click();
+  await captureExactState(page, ['MK-123']);
   await page.getByRole('button', { name: 'تأیید و ثبت', exact: true }).click();
   await expect(page).toHaveURL(/\/sessions\/[0-9a-f-]+$/);
-  await page.getByRole('link', { name: 'ویرایش جلسه', exact: true }).click();
-  await page.getByLabel('عنوان جلسه', { exact: true }).fill('جلسهٔ ویرایش‌شده');
-  await page.getByRole('button', { name: 'بازبینی اطلاعات', exact: true }).click();
+  await captureExactState(
+    page,
+    ['MK-456'],
+    'Teacher session detail after a valid fixture creation; this capture alone does not exercise attendance.',
+  );
+  await page
+    .getByRole('banner')
+    .getByRole('button', { name: 'گزینه‌های بیشتر', exact: true })
+    .click();
+  await page.getByRole('dialog').getByRole('link', { name: 'ویرایش جلسه', exact: true }).click();
+  await page.getByLabel('عنوان', { exact: true }).fill('جلسهٔ ویرایش‌شده');
+  await captureExactState(page, ['MK-125']);
+
+  await page.getByRole('button', { name: 'ذخیره ویرایش', exact: true }).click();
   await page.getByRole('button', { name: 'تأیید و ثبت', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'جلسهٔ ویرایش‌شده', exact: true })).toBeVisible();
-  await page.getByRole('button', { name: 'لغو جلسه', exact: true }).click();
+  await page
+    .getByRole('banner')
+    .getByRole('button', { name: 'گزینه‌های بیشتر', exact: true })
+    .click();
+  await page.getByRole('dialog').getByRole('button', { name: 'لغو جلسه', exact: true }).click();
   const dialog = page.getByRole('dialog', { name: 'لغو این جلسه؟', exact: true });
   await expect(dialog).toBeVisible();
+  await captureExactState(page, ['MK-126']);
+
   await request.post(fixture + '/__test__/fault', {
     data: { path: '/cancel', method: 'POST', status: 503 },
   });
-  await dialog.getByRole('button', { name: 'تأیید لغو جلسه', exact: true }).click();
+  await dialog.getByRole('button', { name: 'لغو جلسه', exact: true }).click();
   await expect(dialog.getByRole('alert')).toBeVisible();
   await expect(dialog).toBeVisible();
-  await dialog.getByRole('button', { name: 'تأیید لغو جلسه', exact: true }).click();
+  await dialog.getByRole('button', { name: 'لغو جلسه', exact: true }).click();
   await expect(dialog).toHaveCount(0);
-  await expect(page.getByRole('button', { name: 'لغو جلسه', exact: true })).toHaveCount(0);
+  await page
+    .getByRole('banner')
+    .getByRole('button', { name: 'گزینه‌های بیشتر', exact: true })
+    .click();
+  const remaining = page.getByRole('dialog', { name: 'گزینه‌های بیشتر', exact: true });
+  await expect(remaining.getByRole('button', { name: 'لغو جلسه', exact: true })).toHaveCount(0);
+  await expect(remaining.getByRole('link', { name: 'ویرایش جلسه', exact: true })).toHaveCount(0);
 });
 
 test('Teacher and Student cannot enter Manager creation pages and deep-link review cannot bypass validation', async ({
@@ -93,11 +129,9 @@ test('Teacher and Student cannot enter Manager creation pages and deep-link revi
   await login(context, 'Teacher');
   await page.goto(base + '/classes/new');
   await expect(page.getByRole('main').getByRole('alert')).toBeVisible();
-  await expect(page.getByLabel('نام کلاس')).toHaveCount(0);
-  await page.goto(`${base}/classes/${ids.class}/exams/new?step=review`);
-  await expect(
-    page.getByRole('button', { name: 'ایجاد پیش‌نویس آزمون', exact: true }),
-  ).toBeDisabled();
+  await expect(page.getByLabel('عنوان کلاس')).toHaveCount(0);
+  await page.goto(`${base}/classes/${ids.class}/exams/new?step=rules`);
+  await expect(page.getByRole('button', { name: 'ساخت پیش‌نویس', exact: true })).toBeDisabled();
   await login(context, 'Student');
   await page.goto(`${base}/classes/${ids.class}/sessions/new`);
   await expect(page.getByRole('main').getByRole('alert')).toBeVisible();
@@ -128,6 +162,7 @@ test('Manager person create/edit uses stable operations, server versions and aut
   await expect(page.getByRole('main').getByRole('alert')).toBeVisible();
   await page.getByRole('button', { name: 'تأیید و ثبت', exact: true }).click();
   await expect(page).toHaveURL(/\/people\/[0-9a-f-]+$/);
+  await captureExactState(page, ['MK-106']);
   await page.getByRole('link', { name: 'ویرایش پرونده', exact: true }).click();
   await page.getByLabel('نام', { exact: true }).fill('نام تازه');
   await page.getByLabel('دلیل ثبت یا تغییر پرونده', { exact: true }).fill('اصلاح نام');
@@ -149,29 +184,42 @@ test('exam author uses independent creation/question/review and a confirmation b
 }) => {
   await login(context, 'Teacher');
   await page.goto(`${base}/classes/${ids.class}/exams/new`);
-  await page.getByLabel('عنوان آزمون', { exact: true }).fill('آزمون مستقل');
-  await page.getByLabel('آغاز دسترسی', { exact: true }).fill('1405/08/09 09:00');
+  await page.getByLabel('عنوان', { exact: true }).fill('آزمون مستقل');
+  await page.getByLabel('شروع دسترسی', { exact: true }).fill('1405/08/09 09:00');
+  await page.getByLabel('شروع دسترسی', { exact: true }).blur();
   await page.getByLabel('پایان دسترسی', { exact: true }).fill('1405/08/10 09:00');
-  await page.getByLabel('مدت آزمون (دقیقه)', { exact: true }).fill('30');
-  await page.getByLabel('دفعات مجاز شرکت', { exact: true }).fill('2');
-  await page.getByLabel('نمرهٔ کل', { exact: true }).fill('30');
-  await page.getByRole('button', { name: 'بازبینی اطلاعات', exact: true }).click();
-  await page.getByRole('button', { name: 'ایجاد پیش‌نویس آزمون', exact: true }).click();
+  await page.getByLabel('پایان دسترسی', { exact: true }).blur();
+  await page.getByRole('button', { name: 'ادامه تنظیمات آزمون', exact: true }).click();
+  await page.getByLabel('مدت پاسخ', { exact: true }).fill('۳۰');
+  await page.getByLabel('حداکثر تلاش', { exact: true }).fill('۲');
+  await page.getByLabel('نمره کل', { exact: true }).fill('۳۰');
+  await captureExactState(
+    page,
+    ['MK-151'],
+    'Native rules use the same existing exam creation command.',
+  );
+  await page.getByRole('button', { name: 'ساخت پیش‌نویس', exact: true }).click();
   await expect(page).toHaveURL(/\/exams\/.+\/edit$/);
   await page.getByRole('link', { name: 'افزودن پرسش', exact: true }).click();
   await expect(page).toHaveURL(/\/questions\/new$/);
-  await page.getByLabel('متن پرسش', { exact: true }).fill('پرسش آزمایشی');
-  await page.getByLabel('نمرهٔ پرسش', { exact: true }).fill('30');
-  await page.getByRole('checkbox', { name: 'اجازهٔ ارسال فایل', exact: true }).check();
-  await page
+  await page.getByLabel('صورت سؤال', { exact: true }).fill('پرسش آزمایشی');
+  await page.getByLabel('بارم', { exact: true }).fill('۳۰');
+  await page.getByRole('switch', { name: 'پیوست پاسخ', exact: true }).check();
+  await page.getByLabel('سیاست فایل', { exact: true }).click();
+  const filePolicy = page.getByRole('dialog', { name: 'سیاست فایل', exact: true });
+  await filePolicy
     .getByRole('checkbox', { name: 'پاسخ متنی همراه فایل الزامی باشد', exact: true })
     .uncheck();
-  await page.getByLabel('حداکثر تعداد فایل (اختیاری)', { exact: true }).fill('2');
-  await page.getByLabel('حداکثر حجم مجموع فایل‌ها به مگابایت (اختیاری)', { exact: true }).fill('5');
+  await filePolicy.getByLabel('حداکثر تعداد فایل (اختیاری)', { exact: true }).fill('۲');
+  await filePolicy
+    .getByLabel('حداکثر حجم مجموع فایل‌ها به مگابایت (اختیاری)', { exact: true })
+    .fill('۵');
+  await filePolicy.getByRole('button', { name: 'انجام شد', exact: true }).click();
+  await captureExactState(page, ['MK-152']);
   const questionRequest = page.waitForRequest(
     (r) => r.method() === 'POST' && r.url().endsWith('/questions'),
   );
-  await page.getByRole('button', { name: 'ثبت پرسش', exact: true }).click();
+  await page.getByRole('button', { name: 'ذخیره پرسش', exact: true }).click();
   expect((await questionRequest).postDataJSON().attachmentPolicy).toEqual({
     attachmentsAllowed: true,
     textRequired: false,
@@ -181,6 +229,7 @@ test('exam author uses independent creation/question/review and a confirmation b
   });
   await expect(page).toHaveURL(/\/edit$/);
   await page.getByRole('link', { name: 'بازبینی و انتشار آزمون', exact: true }).click();
+  await captureExactState(page, ['MK-154']);
   await page.getByRole('button', { name: 'انتشار آزمون برای کلاس', exact: true }).click();
   await page
     .getByRole('dialog')
@@ -238,6 +287,8 @@ test('device revocation requires confirmation, preserves failure and is bound to
   await expect(page.getByText('دستگاه آزمایشی دوم', { exact: true })).toBeVisible();
   await page.getByRole('button', { name: 'پایان این نشست', exact: true }).click();
   const dialog = page.getByRole('dialog', { name: 'پایان نشست دستگاه؟', exact: true });
+  await expect(dialog).toBeVisible();
+  await captureExactState(page, ['MK-351']);
   // Fault by exact endpoint suffix, without relying on a session ID encoding.
   const sessions = await (
     await context.request.get(origin + '/api/client/security/sessions', {

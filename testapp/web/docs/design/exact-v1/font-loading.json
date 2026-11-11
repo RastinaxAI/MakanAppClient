@@ -1,0 +1,980 @@
+{
+  "capturedAt": "2026-11-09T05:39:25.986Z",
+  "method": "Read-only localhost font probe; declared preferred face, loaded status, weight checks, computed controls and actual font requests. No OTP or account login.",
+  "productBuildId": "-VIwcKevVTaboUxM6GsMA",
+  "allPassed": true,
+  "records": [
+    {
+      "source": "product",
+      "theme": "light",
+      "width": 390,
+      "height": 844,
+      "productBuildId": "-VIwcKevVTaboUxM6GsMA",
+      "family": "Vazirmatn, sans-serif",
+      "preferred": "Vazirmatn",
+      "faces": [
+        {
+          "family": "Vazirmatn Variable",
+          "weight": "100 900",
+          "status": "unloaded"
+        },
+        {
+          "family": "Vazirmatn Variable",
+          "weight": "100 900",
+          "status": "unloaded"
+        },
+        {
+          "family": "Vazirmatn Variable",
+          "weight": "100 900",
+          "status": "unloaded"
+        },
+        {
+          "family": "Makan Reference",
+          "weight": "100 900",
+          "status": "loaded"
+        },
+        {
+          "family": "Vazirmatn",
+          "weight": "100 900",
+          "status": "loaded"
+        }
+      ],
+      "declaredAndLoaded": true,
+      "weights": [
+        {
+          "weight": 400,
+          "loaded": true
+        },
+        {
+          "weight": 500,
+          "loaded": true
+        },
+        {
+          "weight": 600,
+          "loaded": true
+        },
+        {
+          "weight": 700,
+          "loaded": true
+        },
+        {
+          "weight": 750,
+          "loaded": true
+        },
+        {
+          "weight": 900,
+          "loaded": true
+        }
+      ],
+      "controls": [
+        {
+          "tag": "BUTTON",
+          "font": "Vazirmatn, sans-serif",
+          "size": "15px",
+          "weight": "700"
+        },
+        {
+          "tag": "H1",
+          "font": "Vazirmatn, sans-serif",
+          "size": "21px",
+          "weight": "750"
+        },
+        {
+          "tag": "INPUT",
+          "font": "Vazirmatn, sans-serif",
+          "size": "16px",
+          "weight": "400"
+        },
+        {
+          "tag": "BUTTON",
+          "font": "Vazirmatn, sans-serif",
+          "size": "11px",
+          "weight": "400"
+        },
+        {
+          "tag": "BUTTON",
+          "font": "Vazirmatn, sans-serif",
+          "size": "14px",
+          "weight": "700"
+        }
+      ],
+      "fontRequests": [
+        {
+          "path": "/fonts/makan-reference/Vazirmatn.ttf",
+          "bytes": 139275
+        }
+      ]
+    },
+    {
+      "source": "product",
+      "theme": "light",
+      "width": 834,
+      "height": 1112,
+      "productBuildId": "-VIwcKevVTaboUxM6GsMA",
+      "family": "Vazirmatn, sans-serif",
+      "preferred": "Vazirmatn",
+      "faces": [
+        {
+          "family": "Vazirmatn Variable",
+          "weight": "100 900",
+          "status": "unloaded"
+        },
+        {
+          "family": "Vazirmatn Variable",
+          "weight": "100 900",
+          "status": "unloaded"
+        },
+        {
+          "family": "Vazirmatn Variable",
+          "weight": "100 900",
+          "status": "unloaded"
+        },
+        {
+          "family": "Makan Reference",
+          "weight": "100 900",
+          "status": "loaded"
+        },
+        {
+          "family": "Vazirmatn",
+          "weight": "100 900",
+          "status": "loaded"
+        }
+      ],
+      "declaredAndLoaded": true,
+      "weights": [
+        {
+          "weight": 400,
+          "loaded": true
+        },
+        {
+          "weight": 500,
+          "loaded": true
+        },
+        {
+          "weight": 600,
+          "loaded": true
+        },
+        {
+          "weight": 700,
+          "loaded": true
+        },
+        {
+          "weight": 750,
+          "loaded": true
+        },
+        {
+          "weight": 900,
+          "loaded": true
+        }
+      ],
+      "controls": [
+        {
+          "tag": "H1",
+          "font": "Vazirmatn, sans-serif",
+          "size": "23px",
+          "weight": "750"
+        },
+        {
+          "tag": "INPUT",
+          "font": "Vazirmatn, sans-serif",
+          "size": "16px",
+          "weight": "400"
+        },
+        {
+          "tag": "BUTTON",
+          "font": "Vazirmatn, sans-serif",
+          "size": "11px",
+          "weight": "400"
+        },
+        {
+          "tag": "BUTTON",
+          "font": "Vazirmatn, sans-serif",
+          "size": "15px",
+          "weight": "700"
+        }
+      ],
+      "fontRequests": [
+        {
+          "path": "/fonts/makan-reference/Vazirmatn.ttf",
+          "bytes": 139275
+        }
+      ]
+    },
+    {
+      "source": "product",
+      "theme": "light",
+      "width": 1440,
+      "height": 1000,
+      "productBuildId": "-VIwcKevVTaboUxM6GsMA",
+      "family": "Vazirmatn, sans-serif",
+      "preferred": "Vazirmatn",
+      "faces": [
+        {
+          "family": "Vazirmatn Variable",
+          "weight": "100 900",
+          "status": "unloaded"
+        },
+        {
+          "family": "Vazirmatn Variable",
+          "weight": "100 900",
+          "status": "unloaded"
+        },
+        {
+          "family": "Vazirmatn Variable",
+          "weight": "100 900",
+          "status": "unloaded"
+        },
+        {
+          "family": "Makan Reference",
+          "weight": "100 900",
+          "status": "loaded"
+        },
+        {
+          "family": "Vazirmatn",
+          "weight": "100 900",
+          "status": "loaded"
+        }
+      ],
+      "declaredAndLoaded": true,
+      "weights": [
+        {
+          "weight": 400,
+          "loaded": true
+        },
+        {
+          "weight": 500,
+          "loaded": true
+        },
+        {
+          "weight": 600,
+          "loaded": true
+        },
+        {
+          "weight": 700,
+          "loaded": true
+        },
+        {
+          "weight": 750,
+          "loaded": true
+        },
+        {
+          "weight": 900,
+          "loaded": true
+        }
+      ],
+      "controls": [
+        {
+          "tag": "H1",
+          "font": "Vazirmatn, sans-serif",
+          "size": "24px",
+          "weight": "750"
+        },
+        {
+          "tag": "INPUT",
+          "font": "Vazirmatn, sans-serif",
+          "size": "16px",
+          "weight": "400"
+        },
+        {
+          "tag": "BUTTON",
+          "font": "Vazirmatn, sans-serif",
+          "size": "11px",
+          "weight": "400"
+        },
+        {
+          "tag": "BUTTON",
+          "font": "Vazirmatn, sans-serif",
+          "size": "15px",
+          "weight": "700"
+        }
+      ],
+      "fontRequests": [
+        {
+          "path": "/fonts/makan-reference/Vazirmatn.ttf",
+          "bytes": 139275
+        }
+      ]
+    },
+    {
+      "source": "product",
+      "theme": "dark",
+      "width": 390,
+      "height": 844,
+      "productBuildId": "-VIwcKevVTaboUxM6GsMA",
+      "family": "Vazirmatn, sans-serif",
+      "preferred": "Vazirmatn",
+      "faces": [
+        {
+          "family": "Vazirmatn Variable",
+          "weight": "100 900",
+          "status": "unloaded"
+        },
+        {
+          "family": "Vazirmatn Variable",
+          "weight": "100 900",
+          "status": "unloaded"
+        },
+        {
+          "family": "Vazirmatn Variable",
+          "weight": "100 900",
+          "status": "unloaded"
+        },
+        {
+          "family": "Makan Reference",
+          "weight": "100 900",
+          "status": "loaded"
+        },
+        {
+          "family": "Vazirmatn",
+          "weight": "100 900",
+          "status": "loaded"
+        }
+      ],
+      "declaredAndLoaded": true,
+      "weights": [
+        {
+          "weight": 400,
+          "loaded": true
+        },
+        {
+          "weight": 500,
+          "loaded": true
+        },
+        {
+          "weight": 600,
+          "loaded": true
+        },
+        {
+          "weight": 700,
+          "loaded": true
+        },
+        {
+          "weight": 750,
+          "loaded": true
+        },
+        {
+          "weight": 900,
+          "loaded": true
+        }
+      ],
+      "controls": [
+        {
+          "tag": "BUTTON",
+          "font": "Vazirmatn, sans-serif",
+          "size": "15px",
+          "weight": "700"
+        },
+        {
+          "tag": "H1",
+          "font": "Vazirmatn, sans-serif",
+          "size": "21px",
+          "weight": "750"
+        },
+        {
+          "tag": "INPUT",
+          "font": "Vazirmatn, sans-serif",
+          "size": "16px",
+          "weight": "400"
+        },
+        {
+          "tag": "BUTTON",
+          "font": "Vazirmatn, sans-serif",
+          "size": "11px",
+          "weight": "400"
+        },
+        {
+          "tag": "BUTTON",
+          "font": "Vazirmatn, sans-serif",
+          "size": "14px",
+          "weight": "700"
+        }
+      ],
+      "fontRequests": [
+        {
+          "path": "/fonts/makan-reference/Vazirmatn.ttf",
+          "bytes": 139275
+        }
+      ]
+    },
+    {
+      "source": "product",
+      "theme": "dark",
+      "width": 834,
+      "height": 1112,
+      "productBuildId": "-VIwcKevVTaboUxM6GsMA",
+      "family": "Vazirmatn, sans-serif",
+      "preferred": "Vazirmatn",
+      "faces": [
+        {
+          "family": "Vazirmatn Variable",
+          "weight": "100 900",
+          "status": "unloaded"
+        },
+        {
+          "family": "Vazirmatn Variable",
+          "weight": "100 900",
+          "status": "unloaded"
+        },
+        {
+          "family": "Vazirmatn Variable",
+          "weight": "100 900",
+          "status": "unloaded"
+        },
+        {
+          "family": "Makan Reference",
+          "weight": "100 900",
+          "status": "loaded"
+        },
+        {
+          "family": "Vazirmatn",
+          "weight": "100 900",
+          "status": "loaded"
+        }
+      ],
+      "declaredAndLoaded": true,
+      "weights": [
+        {
+          "weight": 400,
+          "loaded": true
+        },
+        {
+          "weight": 500,
+          "loaded": true
+        },
+        {
+          "weight": 600,
+          "loaded": true
+        },
+        {
+          "weight": 700,
+          "loaded": true
+        },
+        {
+          "weight": 750,
+          "loaded": true
+        },
+        {
+          "weight": 900,
+          "loaded": true
+        }
+      ],
+      "controls": [
+        {
+          "tag": "H1",
+          "font": "Vazirmatn, sans-serif",
+          "size": "23px",
+          "weight": "750"
+        },
+        {
+          "tag": "INPUT",
+          "font": "Vazirmatn, sans-serif",
+          "size": "16px",
+          "weight": "400"
+        },
+        {
+          "tag": "BUTTON",
+          "font": "Vazirmatn, sans-serif",
+          "size": "11px",
+          "weight": "400"
+        },
+        {
+          "tag": "BUTTON",
+          "font": "Vazirmatn, sans-serif",
+          "size": "15px",
+          "weight": "700"
+        }
+      ],
+      "fontRequests": [
+        {
+          "path": "/fonts/makan-reference/Vazirmatn.ttf",
+          "bytes": 139275
+        }
+      ]
+    },
+    {
+      "source": "product",
+      "theme": "dark",
+      "width": 1440,
+      "height": 1000,
+      "productBuildId": "-VIwcKevVTaboUxM6GsMA",
+      "family": "Vazirmatn, sans-serif",
+      "preferred": "Vazirmatn",
+      "faces": [
+        {
+          "family": "Vazirmatn Variable",
+          "weight": "100 900",
+          "status": "unloaded"
+        },
+        {
+          "family": "Vazirmatn Variable",
+          "weight": "100 900",
+          "status": "unloaded"
+        },
+        {
+          "family": "Vazirmatn Variable",
+          "weight": "100 900",
+          "status": "unloaded"
+        },
+        {
+          "family": "Makan Reference",
+          "weight": "100 900",
+          "status": "loaded"
+        },
+        {
+          "family": "Vazirmatn",
+          "weight": "100 900",
+          "status": "loaded"
+        }
+      ],
+      "declaredAndLoaded": true,
+      "weights": [
+        {
+          "weight": 400,
+          "loaded": true
+        },
+        {
+          "weight": 500,
+          "loaded": true
+        },
+        {
+          "weight": 600,
+          "loaded": true
+        },
+        {
+          "weight": 700,
+          "loaded": true
+        },
+        {
+          "weight": 750,
+          "loaded": true
+        },
+        {
+          "weight": 900,
+          "loaded": true
+        }
+      ],
+      "controls": [
+        {
+          "tag": "H1",
+          "font": "Vazirmatn, sans-serif",
+          "size": "24px",
+          "weight": "750"
+        },
+        {
+          "tag": "INPUT",
+          "font": "Vazirmatn, sans-serif",
+          "size": "16px",
+          "weight": "400"
+        },
+        {
+          "tag": "BUTTON",
+          "font": "Vazirmatn, sans-serif",
+          "size": "11px",
+          "weight": "400"
+        },
+        {
+          "tag": "BUTTON",
+          "font": "Vazirmatn, sans-serif",
+          "size": "15px",
+          "weight": "700"
+        }
+      ],
+      "fontRequests": [
+        {
+          "path": "/fonts/makan-reference/Vazirmatn.ttf",
+          "bytes": 139275
+        }
+      ]
+    },
+    {
+      "source": "reference",
+      "theme": "light",
+      "width": 390,
+      "height": 844,
+      "family": "Vazirmatn, sans-serif",
+      "preferred": "Vazirmatn",
+      "faces": [
+        {
+          "family": "Vazirmatn",
+          "weight": "100 900",
+          "status": "loaded"
+        }
+      ],
+      "declaredAndLoaded": true,
+      "weights": [
+        {
+          "weight": 400,
+          "loaded": true
+        },
+        {
+          "weight": 500,
+          "loaded": true
+        },
+        {
+          "weight": 600,
+          "loaded": true
+        },
+        {
+          "weight": 700,
+          "loaded": true
+        },
+        {
+          "weight": 750,
+          "loaded": true
+        },
+        {
+          "weight": 900,
+          "loaded": true
+        }
+      ],
+      "controls": [
+        {
+          "tag": "BUTTON",
+          "font": "Vazirmatn, sans-serif",
+          "size": "16px",
+          "weight": "400"
+        },
+        {
+          "tag": "H2",
+          "font": "Vazirmatn, sans-serif",
+          "size": "21px",
+          "weight": "750"
+        },
+        {
+          "tag": "INPUT",
+          "font": "Vazirmatn, sans-serif",
+          "size": "16px",
+          "weight": "400"
+        },
+        {
+          "tag": "BUTTON",
+          "font": "Vazirmatn, sans-serif",
+          "size": "14px",
+          "weight": "700"
+        }
+      ],
+      "fontRequests": []
+    },
+    {
+      "source": "reference",
+      "theme": "light",
+      "width": 834,
+      "height": 1112,
+      "family": "Vazirmatn, sans-serif",
+      "preferred": "Vazirmatn",
+      "faces": [
+        {
+          "family": "Vazirmatn",
+          "weight": "100 900",
+          "status": "loaded"
+        }
+      ],
+      "declaredAndLoaded": true,
+      "weights": [
+        {
+          "weight": 400,
+          "loaded": true
+        },
+        {
+          "weight": 500,
+          "loaded": true
+        },
+        {
+          "weight": 600,
+          "loaded": true
+        },
+        {
+          "weight": 700,
+          "loaded": true
+        },
+        {
+          "weight": 750,
+          "loaded": true
+        },
+        {
+          "weight": 900,
+          "loaded": true
+        }
+      ],
+      "controls": [
+        {
+          "tag": "H2",
+          "font": "Vazirmatn, sans-serif",
+          "size": "23px",
+          "weight": "750"
+        },
+        {
+          "tag": "INPUT",
+          "font": "Vazirmatn, sans-serif",
+          "size": "16px",
+          "weight": "400"
+        },
+        {
+          "tag": "BUTTON",
+          "font": "Vazirmatn, sans-serif",
+          "size": "15px",
+          "weight": "700"
+        }
+      ],
+      "fontRequests": []
+    },
+    {
+      "source": "reference",
+      "theme": "light",
+      "width": 1440,
+      "height": 1000,
+      "family": "Vazirmatn, sans-serif",
+      "preferred": "Vazirmatn",
+      "faces": [
+        {
+          "family": "Vazirmatn",
+          "weight": "100 900",
+          "status": "loaded"
+        }
+      ],
+      "declaredAndLoaded": true,
+      "weights": [
+        {
+          "weight": 400,
+          "loaded": true
+        },
+        {
+          "weight": 500,
+          "loaded": true
+        },
+        {
+          "weight": 600,
+          "loaded": true
+        },
+        {
+          "weight": 700,
+          "loaded": true
+        },
+        {
+          "weight": 750,
+          "loaded": true
+        },
+        {
+          "weight": 900,
+          "loaded": true
+        }
+      ],
+      "controls": [
+        {
+          "tag": "H2",
+          "font": "Vazirmatn, sans-serif",
+          "size": "24px",
+          "weight": "750"
+        },
+        {
+          "tag": "INPUT",
+          "font": "Vazirmatn, sans-serif",
+          "size": "16px",
+          "weight": "400"
+        },
+        {
+          "tag": "BUTTON",
+          "font": "Vazirmatn, sans-serif",
+          "size": "15px",
+          "weight": "700"
+        }
+      ],
+      "fontRequests": []
+    },
+    {
+      "source": "reference",
+      "theme": "dark",
+      "width": 390,
+      "height": 844,
+      "family": "Vazirmatn, sans-serif",
+      "preferred": "Vazirmatn",
+      "faces": [
+        {
+          "family": "Vazirmatn",
+          "weight": "100 900",
+          "status": "loaded"
+        }
+      ],
+      "declaredAndLoaded": true,
+      "weights": [
+        {
+          "weight": 400,
+          "loaded": true
+        },
+        {
+          "weight": 500,
+          "loaded": true
+        },
+        {
+          "weight": 600,
+          "loaded": true
+        },
+        {
+          "weight": 700,
+          "loaded": true
+        },
+        {
+          "weight": 750,
+          "loaded": true
+        },
+        {
+          "weight": 900,
+          "loaded": true
+        }
+      ],
+      "controls": [
+        {
+          "tag": "BUTTON",
+          "font": "Vazirmatn, sans-serif",
+          "size": "16px",
+          "weight": "400"
+        },
+        {
+          "tag": "H2",
+          "font": "Vazirmatn, sans-serif",
+          "size": "21px",
+          "weight": "750"
+        },
+        {
+          "tag": "INPUT",
+          "font": "Vazirmatn, sans-serif",
+          "size": "16px",
+          "weight": "400"
+        },
+        {
+          "tag": "BUTTON",
+          "font": "Vazirmatn, sans-serif",
+          "size": "14px",
+          "weight": "700"
+        }
+      ],
+      "fontRequests": []
+    },
+    {
+      "source": "reference",
+      "theme": "dark",
+      "width": 834,
+      "height": 1112,
+      "family": "Vazirmatn, sans-serif",
+      "preferred": "Vazirmatn",
+      "faces": [
+        {
+          "family": "Vazirmatn",
+          "weight": "100 900",
+          "status": "loaded"
+        }
+      ],
+      "declaredAndLoaded": true,
+      "weights": [
+        {
+          "weight": 400,
+          "loaded": true
+        },
+        {
+          "weight": 500,
+          "loaded": true
+        },
+        {
+          "weight": 600,
+          "loaded": true
+        },
+        {
+          "weight": 700,
+          "loaded": true
+        },
+        {
+          "weight": 750,
+          "loaded": true
+        },
+        {
+          "weight": 900,
+          "loaded": true
+        }
+      ],
+      "controls": [
+        {
+          "tag": "H2",
+          "font": "Vazirmatn, sans-serif",
+          "size": "23px",
+          "weight": "750"
+        },
+        {
+          "tag": "INPUT",
+          "font": "Vazirmatn, sans-serif",
+          "size": "16px",
+          "weight": "400"
+        },
+        {
+          "tag": "BUTTON",
+          "font": "Vazirmatn, sans-serif",
+          "size": "15px",
+          "weight": "700"
+        }
+      ],
+      "fontRequests": []
+    },
+    {
+      "source": "reference",
+      "theme": "dark",
+      "width": 1440,
+      "height": 1000,
+      "family": "Vazirmatn, sans-serif",
+      "preferred": "Vazirmatn",
+      "faces": [
+        {
+          "family": "Vazirmatn",
+          "weight": "100 900",
+          "status": "loaded"
+        }
+      ],
+      "declaredAndLoaded": true,
+      "weights": [
+        {
+          "weight": 400,
+          "loaded": true
+        },
+        {
+          "weight": 500,
+          "loaded": true
+        },
+        {
+          "weight": 600,
+          "loaded": true
+        },
+        {
+          "weight": 700,
+          "loaded": true
+        },
+        {
+          "weight": 750,
+          "loaded": true
+        },
+        {
+          "weight": 900,
+          "loaded": true
+        }
+      ],
+      "controls": [
+        {
+          "tag": "H2",
+          "font": "Vazirmatn, sans-serif",
+          "size": "24px",
+          "weight": "750"
+        },
+        {
+          "tag": "INPUT",
+          "font": "Vazirmatn, sans-serif",
+          "size": "16px",
+          "weight": "400"
+        },
+        {
+          "tag": "BUTTON",
+          "font": "Vazirmatn, sans-serif",
+          "size": "15px",
+          "weight": "700"
+        }
+      ],
+      "fontRequests": []
+    }
+  ]
+}

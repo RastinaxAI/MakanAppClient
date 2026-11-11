@@ -1,4 +1,6 @@
 'use client';
+import { uiClass } from '@/components/v5/classes';
+
 import * as uiText from '@/content/fa';
 import Link from 'next/link';
 import { PageBack } from '@/components/navigation/page-back';
@@ -38,7 +40,7 @@ export function ClassSectionNavigation({ id, members = false }: { id: string; me
     tab = visible.some(([key]) => key === requested) ? requested : 'sessions';
   return (
     <nav
-      className={`${s.classTabs} ${members ? s.classTabsMembers : ''}`}
+      className={uiClass(`${s.classTabs} ${members ? s.classTabsMembers : ''}`)}
       aria-label={uiText.text_3f6941f28393}
     >
       {visible.map(([key, title, Icon]) => (
@@ -73,10 +75,10 @@ export function ClassDetail({
   );
   if (!item) return <ErrorState error={new ApiError(404)} />;
   return (
-    <div className={s.classPage}>
+    <div className={uiClass(s.classPage)}>
       <PageBack href={`${base}/classes`} />
-      <header className={s.classHeading}>
-        <span className={s.courseIcon}>{item.courseTitle.slice(0, 1)}</span>
+      <header className={uiClass(s.classHeading)}>
+        <span className={uiClass(s.courseIcon)}>{item.courseTitle.slice(0, 1)}</span>
         <div>
           <p>{item.courseTitle}</p>
           <h1>{item.title}</h1>
@@ -85,7 +87,7 @@ export function ClassDetail({
       </header>
       <ClassSectionNavigation id={id} members={manager || teacher} />
       <OfficialSpaces classId={id} />
-      <section className={s.classContent} aria-label={uiText.text_951b90b58d3d}>
+      <section className={uiClass(s.classContent)} aria-label={uiText.text_951b90b58d3d}>
         {tab === 'members' ? (
           manager || teacher ? (
             <ClassMembersOverview classId={id} />
@@ -126,8 +128,8 @@ export function ParentClasses({ id }: { id?: string }) {
   );
   if (!id)
     return (
-      <div className={s.classPage}>
-        <header className={s.classHeading}>
+      <div className={uiClass(s.classPage)}>
+        <header className={uiClass(s.classHeading)}>
           <div>
             <h1>{uiText.text_ad3bf2c81977}</h1>
             <p>
@@ -137,7 +139,7 @@ export function ParentClasses({ id }: { id?: string }) {
           </div>
         </header>
         {classes.size ? (
-          <div className={s.classList}>
+          <div className={uiClass(s.classList)}>
             {[...classes].map(([key, title]) => (
               <Link href={`${base}/classes/${key}`} key={key}>
                 <h2>{title}</h2>
@@ -164,9 +166,9 @@ export function ParentClasses({ id }: { id?: string }) {
             .filter((x) => x.classId === id)
             .map((x) => ({ id: x.sessionId, title: x.title, time: x.startUtc }));
   return (
-    <div className={s.classPage}>
+    <div className={uiClass(s.classPage)}>
       <PageBack href={`${base}/classes`} />
-      <header className={s.classHeading}>
+      <header className={uiClass(s.classHeading)}>
         <div>
           <h1>{classes.get(id)}</h1>
           <p>{d.selectedLearner.displayName}</p>
@@ -176,7 +178,7 @@ export function ParentClasses({ id }: { id?: string }) {
       {tab === 'lessons' ? (
         <EmptyState title={uiText.text_2a9b0d8ae50f} />
       ) : rows.length ? (
-        <div className={s.parentItems}>
+        <div className={uiClass(s.parentItems)}>
           {rows.map((row) => (
             <article key={row.id}>
               <h2>{row.title}</h2>

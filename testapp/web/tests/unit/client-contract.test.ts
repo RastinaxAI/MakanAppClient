@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { clientContract, clientOperationFor, clientValidator } from '@/lib/api/client-contract';
-import { operationFor, validator } from '@/lib/api/contract';
+import { operationFor, validator, contract } from '@/lib/api/contract';
 import { isClientOperation } from '@/lib/client-surface';
 describe('client-only generated runtime', () => {
   it('includes each bounded operation in both registries without a platform-management surface', () => {
@@ -28,6 +28,17 @@ describe('client-only generated runtime', () => {
     expect(schema.safeParse(valid).success).toBe(true);
     expect(schema.safeParse({}).success).toBe(false);
     expect(schema.safeParse({ ...valid, nextAction: 'AgeIs18' }).success).toBe(false);
+  });
+  it('keeps every operation identical while shipping only referenced browser schemas', () => {
+    expect(clientContract.operations).toEqual(contract.operations);
+    expect(Object.keys(clientContract.schemas).length).toBeLessThan(
+      Object.keys(contract.schemas).length,
+    );
+    for (const [name, schema] of Object.entries(clientContract.schemas))
+      expect(schema).toEqual(contract.schemas[name]);
+    expect(
+      clientValidator({ $ref: '#/components/schemas/UnregisteredSchema' }).safeParse({}).success,
+    ).toBe(false);
   });
   it('keeps lazy schema caches separate across registries', () => {
     const input = { $ref: '#/components/schemas/Shared' };

@@ -1,4 +1,6 @@
 import { independentRoute, seedIndependent } from './independent-class.mjs';
+import { reportExportRoute, seedReportExports } from './report-exports.mjs';
+import { learningReportRoute } from './learning-reports.mjs';
 import { sourcesRoute, seedSources } from './sources.mjs';
 import { messageActionsRoute } from './message-actions.mjs';
 import { release154Route, enrichConversation } from './release-154.mjs';
@@ -9,6 +11,7 @@ import { authRoute } from './auth.mjs';
 import { messagingRoute } from './messaging.mjs';
 import { schoolRoute } from './school.mjs';
 import { workflowRoute } from './workflows.mjs';
+import { attendanceRoute } from './attendance.mjs';
 import { assessmentRoute, seedAssessments, seedAssignmentDraft } from './assessments.mjs';
 import { conversationDetailsRoute, seedConversationDetails } from './conversation-details.mjs';
 import { filesRoute } from './files.mjs';
@@ -21,6 +24,11 @@ import { seedVnext, vnextRoute } from './vnext.mjs';
 import { seedMessagingRepair, messagingInvitationsRoute } from './messaging-invitations.mjs';
 import { seedConversationContext, conversationContextRoute } from './conversation-context.mjs';
 import { seedRichMessaging, richMessagingRoute } from './rich-messaging.mjs';
+import { seedParentCase, parentCaseRoute } from './parent-case.mjs';
+import { assignmentDraftRoute } from './assignment-drafts.mjs';
+import { notificationDevicesRoute, seedNotificationDevices } from './notification-devices.mjs';
+import { aiIntegrationRoute, seedAiIntegration } from './ai.mjs';
+import { paymentRoute, seedPayments } from './payments.mjs';
 export function fixtureBackend(port = 3457) {
   let state = createState();
   const server = createServer(async (req, res) => {
@@ -49,6 +57,19 @@ export function fixtureBackend(port = 3457) {
         state = createState();
         return send({ reset: true });
       }
+      if (url.pathname === '/__test__/ai-integration') {
+        seedAiIntegration(state, body);
+        return send({ configured: true });
+      }
+      if (url.pathname === '/__test__/payments') return send(seedPayments(state, body));
+      if (url.pathname === '/__test__/notification-devices') {
+        seedNotificationDevices(state, body);
+        return send({ seeded: true });
+      }
+      if (url.pathname === '/__test__/report-exports') {
+        seedReportExports(state, body);
+        return send({ configured: true });
+      }
       if (url.pathname === '/__test__/vnext') {
         seedVnext(state, body);
         return send({ seeded: true });
@@ -76,7 +97,7 @@ export function fixtureBackend(port = 3457) {
         return send({ configured: true });
       }
       if (url.pathname === '/__test__/design') {
-        seedReferenceCase(state);
+        seedReferenceCase(state, body);
         return send({ seeded: true });
       }
       if (url.pathname === '/__test__/parent-children') {
@@ -84,6 +105,10 @@ export function fixtureBackend(port = 3457) {
           make('AuthorizedChildResult', { ...referenceChild(), ...row }),
         );
         return send({ configured: true });
+      }
+      if (url.pathname === '/__test__/parent-case') {
+        seedParentCase(state, body);
+        return send({ seeded: true });
       }
       if (url.pathname === '/__test__/personal-class') return send(seedIndependent(state, body));
       if (url.pathname === '/__test__/personal-class-revoke') {
@@ -109,7 +134,7 @@ export function fixtureBackend(port = 3457) {
         return send({ seeded: true });
       }
       if (url.pathname === '/__test__/manager-case') {
-        seedManagerCase(state);
+        seedManagerCase(state, body);
         return send({ seeded: true });
       }
       if (url.pathname === '/__test__/assignment-draft') {
@@ -130,12 +155,25 @@ export function fixtureBackend(port = 3457) {
         return send({ seeded: true });
       }
       if (url.pathname === '/__test__/education-case') {
+        if (body.studentAttendance) state.studentAttendance = body.studentAttendance;
         state.invitations = (body.invitations ?? []).map((row) =>
           make('InvitationResult', { organizationId: ids.org, ...row }),
         );
         state.schedule = (body.sessions ?? []).map((row) =>
           make('SessionResult', { organizationId: ids.org, ...row }),
         );
+        if (body.attendance)
+          state.attendance = new Map(
+            body.attendance.map((item) => [
+              item.sessionId,
+              {
+                entries: item.entries.map((entry) => make('AttendanceEntryResult', entry)),
+                revisions: (item.revisions ?? []).map((revision) =>
+                  make('AttendanceRevisionResult', revision),
+                ),
+              },
+            ]),
+          );
         for (const [role, data] of Object.entries(body.dashboards ?? {})) {
           if (data.nextSession) data.nextSession = make('DashboardSessionItem2', data.nextSession);
           if (data.nearestAssignmentDeadline)
@@ -164,6 +202,10 @@ export function fixtureBackend(port = 3457) {
         source.sourceReady = true;
         source.aiReady = true;
         source.aiUnavailableReason = null;
+        if (body.reference === true) {
+          source.title = 'راهنمای داستان‌نویسی';
+          source.revision = source.currentVersion = source.publishedVersion = 2;
+        }
         return send({ configured: true });
       }
       if (url.pathname === '/__test__/exam-policy') {
@@ -200,6 +242,14 @@ export function fixtureBackend(port = 3457) {
         path: url.pathname,
         query: Object.fromEntries(url.searchParams),
         body: url.pathname.includes('/auth/') ? undefined : body,
+        ...(url.pathname.startsWith('/api/v1/ai/')
+          ? {
+              aiHeaders: {
+                operationId: req.headers['x-ai-operation-id'],
+                payer: req.headers['x-ai-payer'],
+              },
+            }
+          : {}),
       });
       const fault = state.faults.find(
         (f) => url.pathname.endsWith(f.path) && (!f.method || f.method === req.method),
@@ -207,6 +257,8 @@ export function fixtureBackend(port = 3457) {
       if (fault) {
         state.faults.splice(state.faults.indexOf(fault), 1);
         if (fault.delay) await new Promise((r) => setTimeout(r, fault.delay));
+        if (Number.isInteger(fault.retryAfter) && fault.retryAfter > 0 && fault.retryAfter <= 3600)
+          res.setHeader('Retry-After', String(fault.retryAfter));
         if (fault.status)
           return send(
             { code: fault.code ?? 'FIXTURE_INJECTED_FAILURE', traceId: 'fixture-error' },
@@ -217,6 +269,12 @@ export function fixtureBackend(port = 3457) {
       if (authRoute(ctx)) return;
       if (!ctx.auth) return;
       currentAuth = ctx.auth;
+      if (aiIntegrationRoute(ctx)) return;
+      if (assignmentDraftRoute(ctx)) return;
+      if (notificationDevicesRoute(ctx)) return;
+      if (parentCaseRoute(ctx)) return;
+      if (reportExportRoute(ctx)) return;
+      if (learningReportRoute(ctx)) return;
       if (richMessagingRoute(ctx)) return;
       if (conversationContextRoute(ctx)) return;
       if (messagingInvitationsRoute(ctx)) return;
@@ -228,10 +286,12 @@ export function fixtureBackend(port = 3457) {
       if (release42Route(ctx)) return;
       if (replayRoute(ctx)) return;
       if (managerRoute(ctx)) return;
+      if (paymentRoute(ctx)) return;
       if (releaseRoute(ctx)) return;
       if (examAttachmentRoute(ctx)) return;
       if (assessmentRoute(ctx)) return;
       if (conversationDetailsRoute(ctx)) return;
+      if (attendanceRoute(ctx)) return;
       if (workflowRoute(ctx)) return;
       if (url.pathname === '/api/v1/invitations') return send(state.invitations);
       const invitationAction = /^\/api\/v1\/invitations\/([^/]+)\/(accept|decline)$/.exec(

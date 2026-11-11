@@ -1,0 +1,3392 @@
+{
+  "method": "Actual pure route guards plus installed Next page file inventory; no network, account or state is accessed.",
+  "guards": [
+    {
+      "source": "src/config/navigation.ts",
+      "sha256": "77504590ed71cd607e4123bd70956fb7cda0993b4ba03e42f61a381774399c72"
+    },
+    {
+      "source": "src/features/extracurricular/routes.ts",
+      "sha256": "bacabf71dc7365449fa7ae0d67f550abe4573a7c084b8b4ddb6b870ceeaafec5"
+    }
+  ],
+  "checked": 482,
+  "valid": 482,
+  "invalid": [],
+  "checks": [
+    {
+      "scenario": "MK-01",
+      "template": "/welcome",
+      "valid": true,
+      "source": "src/app/welcome/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-02",
+      "template": "/enter",
+      "valid": true,
+      "source": "src/app/enter/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-03",
+      "template": "/enter",
+      "valid": true,
+      "source": "src/app/enter/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-04",
+      "template": "/personal/education",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-05",
+      "template": "/personal/education/lessons/{lessonId}",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-06",
+      "template": "/personal/education/assignments/{assignmentId}/answer",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-07",
+      "template": "/personal/education",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-08",
+      "template": "/personal/education",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-09",
+      "template": "/personal/education",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-59",
+      "template": "/personal/education",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-83",
+      "template": "/personal/workspaces",
+      "valid": true,
+      "source": "src/app/(personal)/personal/workspaces/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-84",
+      "template": "/personal/workspaces",
+      "valid": true,
+      "source": "src/app/(personal)/personal/workspaces/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-85",
+      "template": "/personal/education/invitations",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-86",
+      "template": "/personal/education/classes",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-87",
+      "template": "/personal/education/classes",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-88",
+      "template": "/personal/education/classes/{classId}",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-89",
+      "template": "/personal/education/periods",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-90",
+      "template": "/personal/education/periods/new",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-91",
+      "template": "/personal/education/courses",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-92",
+      "template": "/personal/education/classes/new",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-93",
+      "template": "/personal/education/classes/new?step=details",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-94",
+      "template": "/personal/education/classes/new?step=review",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-95",
+      "template": "/personal/education/classes/{classId}?tab=settings",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-96",
+      "template": "/personal/education/classes/{classId}?tab=settings",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-97",
+      "template": "/personal/education/classes/{classId}?tab=settings",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-98",
+      "template": "/personal/education/classes/{classId}/members",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-99",
+      "template": "/personal/education/classes/{classId}/enrollments/new",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-100",
+      "template": "/personal/education/classes/{classId}/members",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-101",
+      "template": "/personal/education/classes/{classId}/members?member=teachers",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-102",
+      "template": "/personal/education/classes/{classId}/teachers/new",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-103",
+      "template": "/personal/education/classes/{classId}/members",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-104",
+      "template": "/personal/education/people",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-105",
+      "template": "/personal/education/people/new",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-106",
+      "template": "/personal/education/people/{personId}",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-107",
+      "template": "/personal/education/members",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-108",
+      "template": "/personal/education/members",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-109",
+      "template": "/personal/education/members",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-110",
+      "template": "/personal/education/invitations",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-111",
+      "template": "/personal/education/invitations",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-112",
+      "template": "/personal/education/invitations",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-113",
+      "template": "/personal/education/guardians",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-114",
+      "template": "/personal/education/guardians/new",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-115",
+      "template": "/personal/education/guardians",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-116",
+      "template": "/personal/education?view=children",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-117",
+      "template": "/personal/education?view=program",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-118",
+      "template": "/personal/education/assignments",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-119",
+      "template": "/personal/education/schedule",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-120",
+      "template": "/personal/education/schedule",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-121",
+      "template": "/personal/education/schedule",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-122",
+      "template": "/personal/education/classes/{classId}/sessions/new",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-123",
+      "template": "/personal/education/classes/{classId}/sessions/new",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-124",
+      "template": "/personal/education/sessions/{sessionId}",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-125",
+      "template": "/personal/education/sessions/{sessionId}/edit",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-126",
+      "template": "/personal/education/sessions/{sessionId}/edit",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-127",
+      "template": "/personal/education/sessions/{sessionId}/edit",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-128",
+      "template": "/personal/education/sessions/{sessionId}?view=attendance",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-129",
+      "template": "/personal/education/sessions/{sessionId}?view=attendance",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-130",
+      "template": "/personal/education/reports?kind=attendance",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-131",
+      "template": "/personal/education/classes/{classId}/schedule-rules/new",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-132",
+      "template": "/personal/education/classes/{classId}/schedule-rules/new?step=range",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-133",
+      "template": "/personal/education/classes/{classId}/schedule-rules/new?step=range",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-134",
+      "template": "/personal/education/classes/{classId}/lessons/new",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-135",
+      "template": "/personal/education/lessons/{lessonId}/edit",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-136",
+      "template": "/personal/education/lessons/{lessonId}/review",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-137",
+      "template": "/personal/education/classes/{classId}?tab=lessons",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-138",
+      "template": "/personal/education/lessons/{lessonId}",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-139",
+      "template": "/personal/education/lessons/{lessonId}",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-140",
+      "template": "/personal/education/assignments",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-141",
+      "template": "/personal/education/classes/{classId}/assignments/new",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-142",
+      "template": "/personal/education/classes/{classId}/assignments/new?step=rules",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-143",
+      "template": "/personal/education/assignments/{assignmentId}/answer",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-144",
+      "template": "/personal/education/assignments/{assignmentId}/history",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-145",
+      "template": "/personal/education/assignments/{assignmentId}/receipt",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-146",
+      "template": "/personal/education/evaluations",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-147",
+      "template": "/personal/education/submissions/{attemptId}/evaluate",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-148",
+      "template": "/personal/education/submissions/{attemptId}/evaluate",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-149",
+      "template": "/personal/education/exams",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-150",
+      "template": "/personal/education/classes/{classId}/exams/new",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-151",
+      "template": "/personal/education/classes/{classId}/exams/new?step=rules",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-152",
+      "template": "/personal/education/exams/{examId}/questions/new",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-153",
+      "template": "/personal/education/exams/{examId}/edit?question={questionId}",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-154",
+      "template": "/personal/education/exams/{examId}/review",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-155",
+      "template": "/personal/education/exams/{examId}",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-156",
+      "template": "/personal/education/exams/{examId}",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-157",
+      "template": "/personal/education/exams/{examId}",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-158",
+      "template": "/personal/education/exams/{examId}/grading",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-159",
+      "template": "/personal/education/exam-submissions/{attemptId}/grading",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-160",
+      "template": "/personal/education/exam-submissions/{attemptId}/grading",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-161",
+      "template": "/personal/education/reports",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-162",
+      "template": "/personal/education/reports",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-163",
+      "template": "/personal/education/reports",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-164",
+      "template": "/personal/education/reports",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-165",
+      "template": "/personal/education/reports?export={jobId}",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-166",
+      "template": "/personal/education/reports?export={jobId}",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-167",
+      "template": "/personal/education/classes/{classId}",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-168",
+      "template": "/personal/messages/{conversationId}",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-169",
+      "template": "/personal/education/content",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-443",
+      "template": "/personal/education/classes",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-455",
+      "template": "/personal/education/classes",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-456",
+      "template": "/personal/education/sessions/{sessionId}",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-457",
+      "template": "/personal/education/lessons/{lessonId}",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-458",
+      "template": "/personal/education/submissions/{attemptId}/evaluate",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-459",
+      "template": "/personal/education/exam-submissions/{attemptId}/grading",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-467",
+      "template": "/personal/education/reports",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "RX-009",
+      "template": "/personal/education/sessions/{sessionId}?view=attendance",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "RX-010",
+      "template": "/personal/education/sessions/{sessionId}?view=attendance",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "RX-011",
+      "template": "/personal/education/schedule",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "RX-012",
+      "template": "/personal/education/assignments/{assignmentId}/answer",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "RX-013",
+      "template": "/personal/education/assignments/{assignmentId}/answer",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "RX-014",
+      "template": "/personal/education/submissions/{attemptId}/evaluate",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "RX-015",
+      "template": "/personal/education/exams/{examId}",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "RX-016",
+      "template": "/personal/education/exams/{examId}",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "RX-017",
+      "template": "/personal/education/reports",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "RX-018",
+      "template": "/personal/education",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-35",
+      "template": "/personal/messages",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-36",
+      "template": "/personal/messages/{conversationId}",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-37",
+      "template": "/personal/messages/{conversationId}",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-51",
+      "template": "/personal/messages",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-170",
+      "template": "/personal/messages",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-171",
+      "template": "/personal/messages?filter=Unread",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-172",
+      "template": "/personal/messages?filter=Archived",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-173",
+      "template": "/personal/messages/folders",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-174",
+      "template": "/personal/messages/folders",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-175",
+      "template": "/personal/messages/folders",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-176",
+      "template": "/personal/contacts",
+      "valid": true,
+      "source": "src/app/(personal)/personal/contacts/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-177",
+      "template": "/personal/contacts",
+      "valid": true,
+      "source": "src/app/(personal)/personal/contacts/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-178",
+      "template": "/personal/contacts",
+      "valid": true,
+      "source": "src/app/(personal)/personal/contacts/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-179",
+      "template": "/personal/messages/{conversationId}",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-180",
+      "template": "/personal/messages/{conversationId}/info",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/[section]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-181",
+      "template": "/personal/contacts",
+      "valid": true,
+      "source": "src/app/(personal)/personal/contacts/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-182",
+      "template": "/personal/messages?filter=Saved",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-183",
+      "template": "/personal/messages?filter=Saved",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-184",
+      "template": "/personal/messages/{savedConversationId}",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-185",
+      "template": "/personal/messages?q={query}",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-186",
+      "template": "/personal/messages?q={query}",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-187",
+      "template": "/personal/messages?q={query}",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-188",
+      "template": "/personal/messages/new?kind=groups",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-189",
+      "template": "/personal/messages/new?kind=groups",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-190",
+      "template": "/personal/messages/{conversationId}",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-191",
+      "template": "/personal/messages/new?kind=channels",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-192",
+      "template": "/personal/messages/new?kind=channels",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-193",
+      "template": "/personal/messages/{conversationId}",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-194",
+      "template": "/personal/messages/{conversationId}/info",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/[section]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-195",
+      "template": "/personal/messages/{conversationId}/edit",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/[section]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-196",
+      "template": "/personal/messages/{conversationId}/edit",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/[section]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-197",
+      "template": "/personal/messages/{conversationId}/info",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/[section]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-198",
+      "template": "/personal/messages/{conversationId}/edit",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/[section]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-199",
+      "template": "/personal/messages/{conversationId}/members",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/[section]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-200",
+      "template": "/personal/messages/{conversationId}/settings",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/[section]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-201",
+      "template": "/personal/messages/{conversationId}/settings",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/[section]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-202",
+      "template": "/personal/messages/{conversationId}/settings",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/[section]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-203",
+      "template": "/personal/messages/{conversationId}/members",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/[section]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-204",
+      "template": "/personal/messages/{conversationId}/members",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/[section]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-205",
+      "template": "/personal/messages/{conversationId}/settings",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/[section]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-206",
+      "template": "/personal/messages/{conversationId}/members",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/[section]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-207",
+      "template": "/personal/messages/{conversationId}/members",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/[section]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-208",
+      "template": "/personal/messages/{conversationId}/members",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/[section]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-209",
+      "template": "/personal/messages/{conversationId}/members",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/[section]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-210",
+      "template": "/personal/messages/{conversationId}/members",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/[section]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-211",
+      "template": "/personal/messages/{conversationId}/members",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/[section]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-212",
+      "template": "/personal/messages/{conversationId}/invites",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/[section]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-213",
+      "template": "/personal/invitations",
+      "valid": true,
+      "source": "src/app/(personal)/personal/invitations/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-214",
+      "template": "/personal/invitations",
+      "valid": true,
+      "source": "src/app/(personal)/personal/invitations/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-215",
+      "template": "/personal/messages/{conversationId}/invites?view=new",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/[section]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-216",
+      "template": "/personal/messages/{conversationId}/invites",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/[section]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-217",
+      "template": "/personal/messages/{conversationId}/invites",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/[section]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-218",
+      "template": "/personal/messages/join",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-219",
+      "template": "/personal/messages/{conversationId}/invites?view=requests",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/[section]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-220",
+      "template": "/personal/messages/join",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-221",
+      "template": "/personal/messages/join",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-222",
+      "template": "/personal/messages/join",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-223",
+      "template": "/personal/settings/communication",
+      "valid": true,
+      "source": "src/app/(personal)/personal/settings/[section]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-224",
+      "template": "/personal/messages/{conversationId}/topics",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/[section]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-225",
+      "template": "/personal/messages/{conversationId}/topics",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/[section]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-226",
+      "template": "/personal/messages/{conversationId}/topics",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/[section]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-227",
+      "template": "/personal/messages/{conversationId}",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-228",
+      "template": "/personal/messages/{conversationId}",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-229",
+      "template": "/personal/messages/{conversationId}",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-230",
+      "template": "/personal/messages/{conversationId}",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-231",
+      "template": "/personal/messages/{conversationId}",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-232",
+      "template": "/personal/messages/{conversationId}",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-233",
+      "template": "/personal/messages/{conversationId}",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-234",
+      "template": "/personal/messages/{conversationId}",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-235",
+      "template": "/personal/messages/{conversationId}",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-236",
+      "template": "/personal/messages/{conversationId}",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-237",
+      "template": "/personal/messages/{conversationId}",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-238",
+      "template": "/personal/messages/{conversationId}",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-239",
+      "template": "/personal/messages/{conversationId}/media",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/[section]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-240",
+      "template": "/personal/messages/{conversationId}/media",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/[section]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-241",
+      "template": "/personal/messages/{conversationId}/media",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/[section]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-242",
+      "template": "/personal/messages/{conversationId}/poll-new",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/[section]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-243",
+      "template": "/personal/messages/{conversationId}",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-244",
+      "template": "/personal/messages/{conversationId}",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-245",
+      "template": "/personal/messages/{conversationId}/quiz-new",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/[section]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-246",
+      "template": "/personal/messages/{conversationId}",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-247",
+      "template": "/personal/messages/{conversationId}",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-248",
+      "template": "/personal/messages/{conversationId}/checklist-new",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/[section]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-249",
+      "template": "/personal/messages/{conversationId}",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-250",
+      "template": "/personal/messages/{conversationId}",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-251",
+      "template": "/personal/messages/{conversationId}/scheduled",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/[section]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-252",
+      "template": "/personal/messages/{conversationId}/scheduled",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/[section]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-253",
+      "template": "/personal/messages/{conversationId}/scheduled",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/[section]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-254",
+      "template": "/personal/messages/{conversationId}",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-255",
+      "template": "/personal/messages/{conversationId}",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-256",
+      "template": "/personal/messages/{conversationId}",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-257",
+      "template": "/personal/messages/{conversationId}/info",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/[section]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-258",
+      "template": "/personal/messages/{conversationId}/info",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/[section]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-259",
+      "template": "/personal/settings/privacy",
+      "valid": true,
+      "source": "src/app/(personal)/personal/settings/[section]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-260",
+      "template": "/personal/messages/{conversationId}",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-261",
+      "template": "/personal/messages/{conversationId}",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-262",
+      "template": "/personal/messages/{conversationId}",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-263",
+      "template": "/personal/messages/{conversationId}/members",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/[section]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-264",
+      "template": "/personal/messages/{conversationId}/members",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/[section]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-265",
+      "template": "/personal/messages/{conversationId}/members",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/[section]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-266",
+      "template": "/personal/messages/{conversationId}",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-267",
+      "template": "/personal/messages/{conversationId}",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-268",
+      "template": "/personal/messages/{conversationId}",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-269",
+      "template": "/personal/messages/{conversationId}",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-270",
+      "template": "/personal/messages/{conversationId}",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-271",
+      "template": "/personal/messages/{conversationId}",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-460",
+      "template": "/personal/messages",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-461",
+      "template": "/personal/messages/{conversationId}/settings",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/[section]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "RX-019",
+      "template": "/personal/messages/{conversationId}",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "RX-020",
+      "template": "/personal/messages/{conversationId}",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "RX-021",
+      "template": "/personal/messages/{conversationId}",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "RX-022",
+      "template": "/personal/messages/{conversationId}",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "RX-023",
+      "template": "/personal/messages/{conversationId}",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "RX-024",
+      "template": "/personal/messages/{conversationId}/media",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/[section]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "RX-025",
+      "template": "/personal/messages/{conversationId}",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "RX-026",
+      "template": "/personal/messages/{conversationId}?q={query}",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "RX-027",
+      "template": "/personal/messages/{conversationId}",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "RX-028",
+      "template": "/personal/messages/{conversationId}",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "RX-029",
+      "template": "/personal/messages/{conversationId}",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "RX-030",
+      "template": "/personal/messages/{conversationId}",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-10",
+      "template": "/personal/extracurricular",
+      "valid": true,
+      "source": "src/app/(personal)/personal/extracurricular/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-11",
+      "template": "/personal/extracurricular",
+      "valid": true,
+      "source": "src/app/(personal)/personal/extracurricular/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-12",
+      "template": "/personal/extracurricular/requests",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-13",
+      "template": "/personal/extracurricular/requests/new?step=details",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-14",
+      "template": "/personal/extracurricular/requests/new?step=audience",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-15",
+      "template": "/personal/extracurricular/requests/new?step=management",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-16",
+      "template": "/personal/extracurricular/requests/new?step=review",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-17",
+      "template": "/personal/extracurricular/requests/{requestId}",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-18",
+      "template": "/personal/extracurricular/requests/{requestId}/edit",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-20",
+      "template": "/personal/extracurricular/requests/{requestId}",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-21",
+      "template": "/personal/extracurricular/requests/{requestId}",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-22",
+      "template": "/personal/extracurricular/requests/{requestId}",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-23",
+      "template": "/personal/extracurricular/classes/{classId}",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-24",
+      "template": "/personal/extracurricular/classes/{classId}",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-25",
+      "template": "/personal/extracurricular/classes/{classId}",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-26",
+      "template": "/personal/extracurricular/classes/{classId}/invite",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-27",
+      "template": "/personal/extracurricular/invitations/{invitationId}",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-28",
+      "template": "/personal/extracurricular/join/{classId}",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-29",
+      "template": "/personal/extracurricular/classes/{classId}/requests",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-30",
+      "template": "/personal/extracurricular/classes/{classId}/members",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-31",
+      "template": "/personal/extracurricular/classes/{classId}/members/{memberId}",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-32",
+      "template": "/personal/messages/{conversationId}",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-33",
+      "template": "/personal/messages/{conversationId}",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-34",
+      "template": "/personal/messages/{conversationId}/info",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/[section]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-44",
+      "template": "/personal/extracurricular/classes/{classId}/learning",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-45",
+      "template": "/personal/extracurricular/classes/{classId}/assignments/{assignmentId}",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-46",
+      "template": "/personal/extracurricular/classes/{classId}/assignments/{assignmentId}/answer",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-60",
+      "template": "/personal/extracurricular/classes/{classId}/assignments/new",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-61",
+      "template": "/personal/extracurricular/classes/{classId}/assignments/{assignmentId}/publish-review",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-62",
+      "template": "/personal/extracurricular/classes/{classId}/assignments/{assignmentId}/evaluations",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-63",
+      "template": "/personal/extracurricular/classes/{classId}/assignments/{assignmentId}/receipt?attempt={attemptId}",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-64",
+      "template": "/personal/extracurricular/classes/{classId}/submissions/{attemptId}/evaluate",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-65",
+      "template": "/personal/extracurricular/classes/{classId}/submissions/{attemptId}/result",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-66",
+      "template": "/personal/extracurricular/classes/{classId}/exams",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-67",
+      "template": "/personal/extracurricular/classes/{classId}/exams/{examId}",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-68",
+      "template": "/personal/extracurricular/classes/{classId}/exams/{examId}",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-69",
+      "template": "/personal/extracurricular/classes/{classId}/exams/new",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-70",
+      "template": "/personal/extracurricular/classes/{classId}/exams/{examId}/edit",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-71",
+      "template": "/personal/extracurricular/classes/{classId}/exams/{examId}/review",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-72",
+      "template": "/personal/extracurricular/classes/{classId}/exams/{examId}",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-73",
+      "template": "/personal/extracurricular/classes/{classId}/exams/{examId}",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-74",
+      "template": "/personal/extracurricular/classes/{classId}/exam-submissions/{attemptId}/result",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-75",
+      "template": "/personal/extracurricular/classes/{classId}/exam-submissions/{attemptId}/grading",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-76",
+      "template": "/personal/extracurricular/classes/{classId}/exam-submissions/{attemptId}/grading",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-77",
+      "template": "/personal/extracurricular/classes/{classId}/exam-submissions/{attemptId}/result",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-78",
+      "template": "/personal/extracurricular/classes/{classId}/exams/{examId}",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-79",
+      "template": "/personal/extracurricular/classes/{classId}/assignments",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-80",
+      "template": "/personal/extracurricular/classes/{classId}/assignments",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-81",
+      "template": "/personal/extracurricular/classes/{classId}/learning",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-82",
+      "template": "/personal/extracurricular/classes/{classId}/exams/{examId}/edit",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-50",
+      "template": "/personal/extracurricular",
+      "valid": true,
+      "source": "src/app/(personal)/personal/extracurricular/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-53",
+      "template": "/personal/extracurricular",
+      "valid": true,
+      "source": "src/app/(personal)/personal/extracurricular/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-54",
+      "template": "/personal/extracurricular/classes/{classId}/members?search=بی‌نتیجه",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-55",
+      "template": "/personal/extracurricular/classes/{classId}/edit",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-56",
+      "template": "/personal/extracurricular/classes/{classId}/members",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-57",
+      "template": "/personal/extracurricular/classes/{classId}/members",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-58",
+      "template": "/personal/extracurricular/requests/new?step=details",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-272",
+      "template": "/personal/extracurricular/requests",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-273",
+      "template": "/personal/extracurricular/requests/{requestId}",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-274",
+      "template": "/personal/extracurricular/requests/{requestId}",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-275",
+      "template": "/personal/extracurricular/requests/new?step=details",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-276",
+      "template": "/personal/extracurricular/requests/new?step=details",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-277",
+      "template": "/personal/extracurricular/requests/new?step=details",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-278",
+      "template": "/personal/extracurricular/requests/new?step=management",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-279",
+      "template": "/personal/extracurricular/requests/new?step=management",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-280",
+      "template": "/personal/extracurricular/requests/new?step=management",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-281",
+      "template": "/personal/extracurricular/requests/new?step=review",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-282",
+      "template": "/personal/extracurricular/requests/{requestId}/edit",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-283",
+      "template": "/personal/extracurricular/requests/{requestId}/edit",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-289",
+      "template": "/personal/extracurricular/requests/{requestId}",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-290",
+      "template": "/personal/extracurricular/requests/{requestId}",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-291",
+      "template": "/personal/extracurricular/requests/{requestId}",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-292",
+      "template": "/personal/extracurricular/classes/{classId}/setup",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-293",
+      "template": "/personal/extracurricular/classes/{classId}/edit",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-294",
+      "template": "/personal/extracurricular/classes/{classId}/edit",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-295",
+      "template": "/personal/extracurricular/classes/{classId}/edit",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-296",
+      "template": "/personal/extracurricular/classes/{classId}/invite",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-297",
+      "template": "/personal/extracurricular/invitations",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-298",
+      "template": "/personal/extracurricular/invitations",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-299",
+      "template": "/personal/extracurricular/invitations",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-300",
+      "template": "/personal/extracurricular/classes/{classId}/invite",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-301",
+      "template": "/personal/extracurricular/invitations",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-302",
+      "template": "/personal/extracurricular/join/{classId}",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-303",
+      "template": "/personal/extracurricular/classes/{classId}/requests",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-304",
+      "template": "/personal/extracurricular/classes/{classId}/requests",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-305",
+      "template": "/personal/extracurricular/classes/{classId}/members",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-306",
+      "template": "/personal/extracurricular/classes/{classId}/members/{memberId}",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-307",
+      "template": "/personal/extracurricular/classes/{classId}/members/{memberId}",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-308",
+      "template": "/personal/extracurricular/classes/{classId}/members",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-309",
+      "template": "/personal/extracurricular/classes/{classId}/members/{memberId}",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-310",
+      "template": "/personal/extracurricular/classes/{classId}/members/{memberId}",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-311",
+      "template": "/personal/extracurricular/classes/{classId}/members",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-312",
+      "template": "/personal/extracurricular/classes/{classId}/members",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-313",
+      "template": "/personal/extracurricular/classes/{classId}/members",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-317",
+      "template": "/personal/extracurricular/requests/{requestId}",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-318",
+      "template": "/personal/extracurricular/classes/{classId}/info",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-319",
+      "template": "/personal/extracurricular/classes/{classId}/info",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-320",
+      "template": "/personal/extracurricular/classes/{classId}/archive",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-321",
+      "template": "/personal/extracurricular/classes/{classId}/archive",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-322",
+      "template": "/personal/extracurricular/classes/{classId}/archive",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-323",
+      "template": "/personal/extracurricular/classes/{classId}/learning",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-324",
+      "template": "/personal/extracurricular/classes/{classId}/learning",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-325",
+      "template": "/personal/extracurricular/classes/{classId}/learning",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-326",
+      "template": "/personal/extracurricular/classes/{classId}/assignments/{assignmentId}",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-327",
+      "template": "/personal/extracurricular/classes/{classId}/assignments/{assignmentId}/answer",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-328",
+      "template": "/personal/extracurricular/classes/{classId}/submissions/{attemptId}/evaluate",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-329",
+      "template": "/personal/extracurricular/classes/{classId}/exams/{examId}",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-330",
+      "template": "/personal/extracurricular/classes/{classId}/exams/{examId}",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-331",
+      "template": "/personal/extracurricular/classes/{classId}/exam-submissions/{attemptId}/result",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-462",
+      "template": "/personal/extracurricular/classes/{classId}/members",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "RX-031",
+      "template": "/personal/extracurricular/invitations",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "RX-032",
+      "template": "/personal/extracurricular/classes/{classId}/members",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "RX-033",
+      "template": "/personal/extracurricular/classes/{classId}/members",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "RX-034",
+      "template": "/personal/extracurricular/classes/{classId}/members",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "RX-035",
+      "template": "/personal/extracurricular/classes/{classId}/setup",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "RX-036",
+      "template": "/personal/extracurricular/classes/{classId}/setup",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "RX-037",
+      "template": "/personal/extracurricular/classes/{classId}/info",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "RX-038",
+      "template": "/personal/extracurricular/classes/{classId}/evaluations",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-38",
+      "template": "/personal/assistant",
+      "valid": true,
+      "source": "src/app/(personal)/personal/assistant/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-39",
+      "template": "/personal/assistant",
+      "valid": true,
+      "source": "src/app/(personal)/personal/assistant/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-40",
+      "template": "/personal/assistant",
+      "valid": true,
+      "source": "src/app/(personal)/personal/assistant/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-41",
+      "template": "/personal/resources",
+      "valid": true,
+      "source": "src/app/(personal)/personal/resources/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-42",
+      "template": "/personal/resources?upload=1",
+      "valid": true,
+      "source": "src/app/(personal)/personal/resources/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-43",
+      "template": "/personal/resources/{resourceId}",
+      "valid": true,
+      "source": "src/app/(personal)/personal/resources/[id]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-47",
+      "template": "/personal/profile",
+      "valid": true,
+      "source": "src/app/(personal)/personal/profile/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-48",
+      "template": "/personal/settings/devices",
+      "valid": true,
+      "source": "src/app/(personal)/personal/settings/[section]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-49",
+      "template": "/personal/settings/privacy",
+      "valid": true,
+      "source": "src/app/(personal)/personal/settings/[section]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-52",
+      "template": "/personal/assistant",
+      "valid": true,
+      "source": "src/app/(personal)/personal/assistant/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-332",
+      "template": "/enter",
+      "valid": true,
+      "source": "src/app/enter/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-333",
+      "template": "/enter",
+      "valid": true,
+      "source": "src/app/enter/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-334",
+      "template": "/enter",
+      "valid": true,
+      "source": "src/app/enter/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-335",
+      "template": "/personal/profile/edit",
+      "valid": true,
+      "source": "src/app/(personal)/personal/profile/edit/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-336",
+      "template": "/personal/profile/edit",
+      "valid": true,
+      "source": "src/app/(personal)/personal/profile/edit/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-337",
+      "template": "/personal/profile/edit",
+      "valid": true,
+      "source": "src/app/(personal)/personal/profile/edit/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-338",
+      "template": "/personal/settings",
+      "valid": true,
+      "source": "src/app/(personal)/personal/settings/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-339",
+      "template": "/personal/settings/appearance",
+      "valid": true,
+      "source": "src/app/(personal)/personal/settings/[section]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-340",
+      "template": "/personal/settings/reading",
+      "valid": true,
+      "source": "src/app/(personal)/personal/settings/[section]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-341",
+      "template": "/personal/settings/privacy",
+      "valid": true,
+      "source": "src/app/(personal)/personal/settings/[section]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-342",
+      "template": "/personal/settings/privacy",
+      "valid": true,
+      "source": "src/app/(personal)/personal/settings/[section]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-343",
+      "template": "/personal/settings/blocked",
+      "valid": true,
+      "source": "src/app/(personal)/personal/settings/[section]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-344",
+      "template": "/personal/notifications",
+      "valid": true,
+      "source": "src/app/(personal)/personal/notifications/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-345",
+      "template": "/personal/settings/notifications",
+      "valid": true,
+      "source": "src/app/(personal)/personal/settings/[section]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-346",
+      "template": "/personal/settings/notifications/Assignments",
+      "valid": true,
+      "source": "src/app/(personal)/personal/settings/notifications/[[...category]]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-347",
+      "template": "/personal/settings/notifications/device",
+      "valid": true,
+      "source": "src/app/(personal)/personal/settings/notifications/[[...category]]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-348",
+      "template": "/personal/settings/notifications/devices",
+      "valid": true,
+      "source": "src/app/(personal)/personal/settings/notifications/[[...category]]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-349",
+      "template": "/personal/settings/notifications/devices",
+      "valid": true,
+      "source": "src/app/(personal)/personal/settings/notifications/[[...category]]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-350",
+      "template": "/personal/settings/devices",
+      "valid": true,
+      "source": "src/app/(personal)/personal/settings/[section]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-351",
+      "template": "/personal/settings/devices",
+      "valid": true,
+      "source": "src/app/(personal)/personal/settings/[section]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-352",
+      "template": "/personal/settings/devices",
+      "valid": true,
+      "source": "src/app/(personal)/personal/settings/[section]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-353",
+      "template": "/personal/settings/communication",
+      "valid": true,
+      "source": "src/app/(personal)/personal/settings/[section]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-354",
+      "template": "/personal/settings/install",
+      "valid": true,
+      "source": "src/app/(personal)/personal/settings/[section]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-355",
+      "template": "/personal/settings/help",
+      "valid": true,
+      "source": "src/app/(personal)/personal/settings/[section]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-356",
+      "template": "/personal/resources",
+      "valid": true,
+      "source": "src/app/(personal)/personal/resources/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-357",
+      "template": "/personal/resources/{resourceId}",
+      "valid": true,
+      "source": "src/app/(personal)/personal/resources/[id]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-358",
+      "template": "/personal/resources?scope=Library",
+      "valid": true,
+      "source": "src/app/(personal)/personal/resources/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-359",
+      "template": "/personal/resources?upload=1",
+      "valid": true,
+      "source": "src/app/(personal)/personal/resources/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-360",
+      "template": "/personal/resources/{resourceId}",
+      "valid": true,
+      "source": "src/app/(personal)/personal/resources/[id]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-361",
+      "template": "/personal/resources/{resourceId}",
+      "valid": true,
+      "source": "src/app/(personal)/personal/resources/[id]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-362",
+      "template": "/personal/resources/{resourceId}",
+      "valid": true,
+      "source": "src/app/(personal)/personal/resources/[id]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-363",
+      "template": "/personal/resources/{resourceId}",
+      "valid": true,
+      "source": "src/app/(personal)/personal/resources/[id]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-364",
+      "template": "/personal/resources/{resourceId}",
+      "valid": true,
+      "source": "src/app/(personal)/personal/resources/[id]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-365",
+      "template": "/personal/assistant",
+      "valid": true,
+      "source": "src/app/(personal)/personal/assistant/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-366",
+      "template": "/personal/assistant",
+      "valid": true,
+      "source": "src/app/(personal)/personal/assistant/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-367",
+      "template": "/personal/assistant",
+      "valid": true,
+      "source": "src/app/(personal)/personal/assistant/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-368",
+      "template": "/personal/assistant",
+      "valid": true,
+      "source": "src/app/(personal)/personal/assistant/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-369",
+      "template": "/personal/assistant",
+      "valid": true,
+      "source": "src/app/(personal)/personal/assistant/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-370",
+      "template": "/personal/assistant",
+      "valid": true,
+      "source": "src/app/(personal)/personal/assistant/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-371",
+      "template": "/personal/assistant",
+      "valid": true,
+      "source": "src/app/(personal)/personal/assistant/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-372",
+      "template": "/personal/assistant",
+      "valid": true,
+      "source": "src/app/(personal)/personal/assistant/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-373",
+      "template": "/personal/assistant",
+      "valid": true,
+      "source": "src/app/(personal)/personal/assistant/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-374",
+      "template": "/personal/assistant",
+      "valid": true,
+      "source": "src/app/(personal)/personal/assistant/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-375",
+      "template": "/personal/assistant",
+      "valid": true,
+      "source": "src/app/(personal)/personal/assistant/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-376",
+      "template": "/personal/assistant",
+      "valid": true,
+      "source": "src/app/(personal)/personal/assistant/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-377",
+      "template": "/personal/assistant/studio",
+      "valid": true,
+      "source": "src/app/(personal)/personal/assistant/studio/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-378",
+      "template": "/personal/assistant/studio",
+      "valid": true,
+      "source": "src/app/(personal)/personal/assistant/studio/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-379",
+      "template": "/personal/assistant/studio",
+      "valid": true,
+      "source": "src/app/(personal)/personal/assistant/studio/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-380",
+      "template": "/personal/subscription",
+      "valid": true,
+      "source": "src/app/(personal)/personal/subscription/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-381",
+      "template": "/personal/subscription",
+      "valid": true,
+      "source": "src/app/(personal)/personal/subscription/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-382",
+      "template": "/personal/subscription",
+      "valid": true,
+      "source": "src/app/(personal)/personal/subscription/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-383",
+      "template": "/personal/subscription",
+      "valid": true,
+      "source": "src/app/(personal)/personal/subscription/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-384",
+      "template": "/personal/subscription",
+      "valid": true,
+      "source": "src/app/(personal)/personal/subscription/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-385",
+      "template": "/personal/subscription",
+      "valid": true,
+      "source": "src/app/(personal)/personal/subscription/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-386",
+      "template": "/personal/subscription",
+      "valid": true,
+      "source": "src/app/(personal)/personal/subscription/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-387",
+      "template": "/personal/subscription",
+      "valid": true,
+      "source": "src/app/(personal)/personal/subscription/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-388",
+      "template": "/personal/subscription",
+      "valid": true,
+      "source": "src/app/(personal)/personal/subscription/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-444",
+      "template": "/personal/education/sessions/{sessionId}?view=attendance",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-445",
+      "template": "/personal/education/lessons/{lessonId}",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-446",
+      "template": "/personal/messages/{conversationId}",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-447",
+      "template": "/personal/messages/{conversationId}/settings",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/[section]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-448",
+      "template": "/personal/messages/{conversationId}",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-449",
+      "template": "/personal/extracurricular/classes/{classId}/members",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-450",
+      "template": "/personal/extracurricular/classes/{classId}/members/{memberId}",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-451",
+      "template": "/personal/extracurricular/classes/{classId}/members",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-452",
+      "template": "/personal/resources",
+      "valid": true,
+      "source": "src/app/(personal)/personal/resources/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-453",
+      "template": "/personal/assistant",
+      "valid": true,
+      "source": "src/app/(personal)/personal/assistant/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-454",
+      "template": "/personal/subscription",
+      "valid": true,
+      "source": "src/app/(personal)/personal/subscription/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-465",
+      "template": "/personal/resources/{resourceId}",
+      "valid": true,
+      "source": "src/app/(personal)/personal/resources/[id]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-466",
+      "template": "/personal/assistant",
+      "valid": true,
+      "source": "src/app/(personal)/personal/assistant/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "RX-039",
+      "template": "/personal/settings/devices",
+      "valid": true,
+      "source": "src/app/(personal)/personal/settings/[section]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "RX-040",
+      "template": "/personal/settings/notifications/device?view=preferences",
+      "valid": true,
+      "source": "src/app/(personal)/personal/settings/notifications/[[...category]]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "RX-041",
+      "template": "/personal/settings/appearance",
+      "valid": true,
+      "source": "src/app/(personal)/personal/settings/[section]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "RX-042",
+      "template": "/personal/profile/edit",
+      "valid": true,
+      "source": "src/app/(personal)/personal/profile/edit/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "RX-043",
+      "template": "/personal/resources/{resourceId}",
+      "valid": true,
+      "source": "src/app/(personal)/personal/resources/[id]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "RX-044",
+      "template": "/personal/assistant",
+      "valid": true,
+      "source": "src/app/(personal)/personal/assistant/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-419",
+      "template": "/personal/education/classes",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-420",
+      "template": "/personal/messages/{conversationId}",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-421",
+      "template": "/personal/extracurricular/classes/{classId}/members",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-422",
+      "template": "/personal/education/classes",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-423",
+      "template": "/personal/messages",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-424",
+      "template": "/personal/extracurricular",
+      "valid": true,
+      "source": "src/app/(personal)/personal/extracurricular/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-425",
+      "template": "/personal/education/classes/new",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-426",
+      "template": "/personal/education/classes",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-427",
+      "template": "/personal/extracurricular/classes/{classId}",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-428",
+      "template": "/personal/education/classes/{classId}?tab=settings",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-429",
+      "template": "/personal/extracurricular/requests/new?step=review",
+      "valid": true,
+      "source": "src/features/extracurricular/routes.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-430",
+      "template": "/personal/education/classes/new",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-431",
+      "template": "/personal/education/sessions/{sessionId}/edit",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-432",
+      "template": "/personal/education/assignments/{assignmentId}/answer",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-433",
+      "template": "/personal/education/members",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-434",
+      "template": "/personal/education/assignments/{assignmentId}/answer",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-435",
+      "template": "/personal/settings/notifications/device",
+      "valid": true,
+      "source": "src/app/(personal)/personal/settings/notifications/[[...category]]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-436",
+      "template": "/personal/messages/{conversationId}",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-437",
+      "template": "/enter",
+      "valid": true,
+      "source": "src/app/enter/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-438",
+      "template": "/personal/messages/join",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-439",
+      "template": "/personal/messages/join",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-440",
+      "template": "/personal/settings/phone",
+      "valid": true,
+      "source": "src/app/(personal)/personal/settings/[section]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-441",
+      "template": "/personal/settings/delete-account",
+      "valid": true,
+      "source": "src/app/(personal)/personal/settings/[section]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "MK-442",
+      "template": "/personal/settings/support",
+      "valid": true,
+      "source": "src/app/(personal)/personal/settings/[section]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "RX-001",
+      "template": "/personal/education",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "RX-002",
+      "template": "/personal/education/search",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "RX-003",
+      "template": "/personal/education/classes/new",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "RX-004",
+      "template": "/personal/education/classes",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "RX-005",
+      "template": "/personal/profile/edit",
+      "valid": true,
+      "source": "src/app/(personal)/personal/profile/edit/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "RX-006",
+      "template": "/personal/workspaces",
+      "valid": true,
+      "source": "src/app/(personal)/personal/workspaces/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "RX-007",
+      "template": "/personal/education/classes",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "RX-008",
+      "template": "/personal/education/classes/new",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "RX-050",
+      "template": "/personal/resources?upload=1&scope=Personal",
+      "valid": true,
+      "source": "src/app/(personal)/personal/resources/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "RX-051",
+      "template": "/personal/education/classes/new",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "RX-052",
+      "template": "/personal/resources",
+      "valid": true,
+      "source": "src/app/(personal)/personal/resources/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "RX-053",
+      "template": "/personal/education/schedule",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "RX-054",
+      "template": "/personal/education/classes",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "RX-055",
+      "template": "/personal/education/members",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "RX-056",
+      "template": "/personal/education/schedule",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "RX-057",
+      "template": "/personal/education/classes/new",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "RX-058",
+      "template": "/personal/education/classes",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    },
+    {
+      "scenario": "RX-059",
+      "template": "/personal/messages/{conversationId}",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "RX-060",
+      "template": "/personal/messages/{conversationId}",
+      "valid": true,
+      "source": "src/app/(personal)/personal/messages/[id]/page.tsx",
+      "entryOnly": true
+    },
+    {
+      "scenario": "RX-061",
+      "template": "/personal/education/assignments/{assignmentId}/answer",
+      "valid": true,
+      "source": "src/config/navigation.ts",
+      "entryOnly": true
+    }
+  ]
+}

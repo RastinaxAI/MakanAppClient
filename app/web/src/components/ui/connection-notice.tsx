@@ -1,5 +1,8 @@
 'use client';
+import { uiClass } from '@/components/v5/classes';
+
 import * as uiText from '@/content/fa';
+import appearance from './connection-notice.module.css';
 import { useEffect, useState } from 'react';
 import { WifiOff, RefreshCw } from 'lucide-react';
 export function ConnectionNotice({
@@ -24,7 +27,7 @@ export function ConnectionNotice({
   }, []);
   if (online && !error) return null;
   return (
-    <div className="connection-notice" role="status">
+    <div className={uiClass('connection-notice ' + appearance.notice)} role="status">
       <WifiOff size={20} />
       <p>{cached ? uiText.text_6c3f309202ba : uiText.text_e295c9d4fa1a}</p>
       {onRetry && (

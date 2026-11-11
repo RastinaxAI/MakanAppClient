@@ -1,0 +1,1815 @@
+{
+  "recordedAt": "2026-11-10T17:11:31.329Z",
+  "backend": "http://94.184.32.84:8090",
+  "runtime": {
+    "framework": "Next.js",
+    "preview": "http://127.0.0.1:3130/personal/assistant",
+    "buildId": "6EwbCZA0BGzGg6GRjuElc",
+    "fixture": false,
+    "deployed": false,
+    "isolatedLiveOrigin": "http://127.0.0.1:3131",
+    "cookieIsolation": true,
+    "originalBrowserSessionPreserved": true
+  },
+  "organization": {
+    "name": "Makan Development Test School",
+    "id": "d3800000-0000-0000-0000-000000000001",
+    "latest": {
+      "time": "2026-11-10T17:10:44.247Z",
+      "status": 200,
+      "ownerId": "d3800000-0000-0000-0000-000000000001",
+      "state": "NoSubscription",
+      "subscriptionId": null,
+      "planVersionId": null,
+      "observedAtUtc": "2026-11-10T17:10:44.2011945Z",
+      "version": null,
+      "commercialControlEnabled": false,
+      "migrationStatus": "AwaitingValidContract",
+      "hasVerifiedCommercialContract": false,
+      "planCode": null,
+      "periodStartsAtUtc": null,
+      "periodEndsAtUtc": null,
+      "quotaCount": 0
+    }
+  },
+  "roles": [
+    {
+      "role": "Student",
+      "login": [
+        {
+          "path": "/api/client/auth/challenge",
+          "status": 202
+        },
+        {
+          "path": "/api/client/auth/verify",
+          "status": 200
+        }
+      ],
+      "context": {
+        "workspaceType": "Organization",
+        "activeRole": "Student",
+        "selectedAsRequested": true
+      },
+      "school": {
+        "dashboardStatus": 200,
+        "keys": [
+          "dataAsOfUtc",
+          "organizationId",
+          "audience",
+          "nextSession",
+          "nearestAssignmentDeadline",
+          "recentReleasedFeedback",
+          "upcomingExams",
+          "attendanceSummary",
+          "pendingAssignmentCount"
+        ],
+        "classesStatus": 200,
+        "classCount": 3
+      },
+      "profile": {
+        "status": 200,
+        "identityMatches": true,
+        "isProfileComplete": true
+      },
+      "profileRoundTrip": {
+        "role": "Student",
+        "school": [
+          {
+            "path": "/api/v1/academic/classes/a673db51-f459-4777-833c-fd35ad40ce68/lessons",
+            "method": "GET",
+            "status": 200,
+            "ms": 373,
+            "retryAfter": null
+          },
+          {
+            "path": "/api/v1/academic/classes/a673db51-f459-4777-833c-fd35ad40ce68/assignments",
+            "method": "GET",
+            "status": 200,
+            "ms": 362,
+            "retryAfter": null,
+            "count": 1
+          },
+          {
+            "path": "/api/v1/academic/exams",
+            "method": "GET",
+            "status": 200,
+            "ms": 347,
+            "retryAfter": null,
+            "shape": "array"
+          }
+        ],
+        "profileSave": {
+          "path": "/api/v1/me/profile",
+          "method": "PATCH",
+          "status": 200,
+          "ms": 244,
+          "retryAfter": null
+        },
+        "profileReadAfter": {
+          "path": "/api/v1/me",
+          "method": "GET",
+          "status": 200,
+          "ms": 109,
+          "retryAfter": null
+        },
+        "profilePreserved": true,
+        "profileAckIdentity": true
+      },
+      "inbox": {
+        "status": 200,
+        "shape": [
+          "items",
+          "nextCursor",
+          "hasMore"
+        ],
+        "count": 4
+      },
+      "initialQuota": [
+        {
+          "payer": "Organization",
+          "status": 200,
+          "allowed": false,
+          "requiresExplicitSelection": false,
+          "errorCode": "SUBSCRIPTION_INACTIVE",
+          "remaining": 0
+        },
+        {
+          "payer": "FreeTrial",
+          "status": 200,
+          "allowed": false,
+          "requiresExplicitSelection": false,
+          "errorCode": "QUOTA_EXCEEDED",
+          "remaining": 0
+        }
+      ],
+      "chat": {
+        "role": "Student",
+        "submitted": false,
+        "reason": "Fresh quota preflight denied; not bypassed"
+      }
+    },
+    {
+      "role": "Teacher",
+      "login": [
+        {
+          "path": "/api/client/auth/challenge",
+          "status": 202
+        },
+        {
+          "path": "/api/client/auth/verify",
+          "status": 200
+        }
+      ],
+      "context": {
+        "workspaceType": "Organization",
+        "activeRole": "Teacher",
+        "selectedAsRequested": true
+      },
+      "school": {
+        "dashboardStatus": 200,
+        "keys": [
+          "dataAsOfUtc",
+          "organizationId",
+          "audience",
+          "assignedClasses",
+          "upcomingSessions",
+          "attendancePending",
+          "assignmentGradingQueue",
+          "examGradingQueue"
+        ],
+        "classesStatus": 200,
+        "classCount": 3
+      },
+      "profile": {
+        "status": 200,
+        "identityMatches": true,
+        "isProfileComplete": true
+      },
+      "profileRoundTrip": {
+        "role": "Teacher",
+        "school": [
+          {
+            "path": "/api/v1/academic/classes/a673db51-f459-4777-833c-fd35ad40ce68/lessons",
+            "method": "GET",
+            "status": 200,
+            "ms": 190,
+            "retryAfter": null
+          },
+          {
+            "path": "/api/v1/academic/classes/a673db51-f459-4777-833c-fd35ad40ce68/assignments",
+            "method": "GET",
+            "status": 200,
+            "ms": 216,
+            "retryAfter": null,
+            "count": 2
+          },
+          {
+            "path": "/api/v1/academic/classes/a673db51-f459-4777-833c-fd35ad40ce68/learners",
+            "method": "GET",
+            "status": 200,
+            "ms": 308,
+            "retryAfter": null
+          },
+          {
+            "path": "/api/v1/academic/classes/a673db51-f459-4777-833c-fd35ad40ce68/teachers",
+            "method": "GET",
+            "status": 200,
+            "ms": 221,
+            "retryAfter": null
+          },
+          {
+            "path": "/api/v1/academic/exams/discovery",
+            "method": "GET",
+            "status": 200,
+            "ms": 369,
+            "retryAfter": null,
+            "shape": [
+              "items",
+              "page",
+              "pageSize",
+              "total",
+              "totalCount"
+            ]
+          }
+        ],
+        "profileSave": {
+          "path": "/api/v1/me/profile",
+          "method": "PATCH",
+          "status": 200,
+          "ms": 899,
+          "retryAfter": null
+        },
+        "profileReadAfter": {
+          "path": "/api/v1/me",
+          "method": "GET",
+          "status": 200,
+          "ms": 123,
+          "retryAfter": null
+        },
+        "profilePreserved": true,
+        "profileAckIdentity": true
+      },
+      "inbox": {
+        "status": 200,
+        "shape": [
+          "items",
+          "nextCursor",
+          "hasMore"
+        ],
+        "count": 3
+      },
+      "initialQuota": [
+        {
+          "payer": "Organization",
+          "status": 200,
+          "allowed": false,
+          "requiresExplicitSelection": false,
+          "errorCode": "SUBSCRIPTION_INACTIVE",
+          "remaining": 0
+        },
+        {
+          "payer": "FreeTrial",
+          "status": 200,
+          "allowed": true,
+          "requiresExplicitSelection": false,
+          "errorCode": null,
+          "remaining": 2
+        }
+      ],
+      "chat": {
+        "role": "Teacher",
+        "submitted": true,
+        "request": {
+          "path": "/api/v1/ai/chat",
+          "method": "POST",
+          "status": 200,
+          "ms": 7948,
+          "retryAfter": null
+        },
+        "responseKeys": [
+          "requestId",
+          "correlationId",
+          "conversationId",
+          "answer",
+          "insights",
+          "risks",
+          "recommendations",
+          "sources"
+        ],
+        "answerPresent": true,
+        "answerKeys": [
+          "text",
+          "language"
+        ],
+        "answerTextLength": 38,
+        "requestIdPresent": true,
+        "conversationIdentifier": {
+          "present": false,
+          "isGuid": false
+        }
+      }
+    },
+    {
+      "role": "Parent",
+      "login": [
+        {
+          "path": "/api/client/auth/challenge",
+          "status": 202
+        },
+        {
+          "path": "/api/client/auth/verify",
+          "status": 200
+        }
+      ],
+      "context": {
+        "workspaceType": "Organization",
+        "activeRole": "Parent",
+        "selectedAsRequested": true
+      },
+      "school": {
+        "dashboardStatus": 200,
+        "keys": [
+          "dataAsOfUtc",
+          "organizationId",
+          "audience",
+          "selectedLearner",
+          "upcomingSessions",
+          "assignments",
+          "releasedAssignmentResults",
+          "exams",
+          "attendanceSummary",
+          "attentionItemCount"
+        ]
+      },
+      "authorizedChildren": 2,
+      "profile": {
+        "status": 200,
+        "identityMatches": true,
+        "isProfileComplete": true
+      },
+      "profileRoundTrip": {
+        "role": "Parent",
+        "school": [
+          {
+            "path": "/api/v1/guardian/relations/d3740000-0000-0000-0000-000000000001",
+            "method": "GET",
+            "status": 200,
+            "ms": 143,
+            "retryAfter": null,
+            "shape": [
+              "relationId",
+              "learnerOrganizationPersonId",
+              "displayName",
+              "organizationId",
+              "organizationName",
+              "status",
+              "validFromUtc",
+              "createdAtUtc"
+            ]
+          },
+          {
+            "path": "/api/v1/reports/parent/attendance",
+            "method": "GET",
+            "status": 200,
+            "ms": 267,
+            "retryAfter": null,
+            "shape": [
+              "dataAsOfUtc",
+              "pageNumber",
+              "pageSize",
+              "totalCount",
+              "summary",
+              "items"
+            ]
+          }
+        ],
+        "profileSave": {
+          "path": "/api/v1/me/profile",
+          "method": "PATCH",
+          "status": 200,
+          "ms": 183,
+          "retryAfter": null
+        },
+        "profileReadAfter": {
+          "path": "/api/v1/me",
+          "method": "GET",
+          "status": 200,
+          "ms": 117,
+          "retryAfter": null
+        },
+        "profilePreserved": true,
+        "profileAckIdentity": true
+      },
+      "inbox": {
+        "status": 200,
+        "shape": [
+          "items",
+          "nextCursor",
+          "hasMore"
+        ],
+        "count": 0
+      },
+      "initialQuota": [
+        {
+          "payer": "Organization",
+          "status": 200,
+          "allowed": false,
+          "requiresExplicitSelection": false,
+          "errorCode": "SUBSCRIPTION_INACTIVE",
+          "remaining": 0
+        },
+        {
+          "payer": "FreeTrial",
+          "status": 200,
+          "allowed": true,
+          "requiresExplicitSelection": false,
+          "errorCode": null,
+          "remaining": 2
+        }
+      ],
+      "chat": {
+        "role": "Parent",
+        "submitted": true,
+        "request": {
+          "path": "/api/v1/ai/chat",
+          "method": "POST",
+          "status": 200,
+          "ms": 1479,
+          "retryAfter": null
+        },
+        "responseKeys": [
+          "requestId",
+          "correlationId",
+          "conversationId",
+          "answer",
+          "insights",
+          "risks",
+          "recommendations",
+          "sources"
+        ],
+        "answerPresent": true,
+        "answerKeys": [
+          "text",
+          "language"
+        ],
+        "answerTextLength": 38,
+        "requestIdPresent": true,
+        "conversationIdentifier": {
+          "present": false,
+          "isGuid": false
+        }
+      }
+    },
+    {
+      "role": "Manager",
+      "login": [
+        {
+          "path": "/api/client/auth/challenge",
+          "status": 202
+        },
+        {
+          "path": "/api/client/auth/verify",
+          "status": 200
+        }
+      ],
+      "context": {
+        "workspaceType": "Organization",
+        "activeRole": "Manager",
+        "selectedAsRequested": true
+      },
+      "school": {
+        "dashboardStatus": 200,
+        "keys": [
+          "dataAsOfUtc",
+          "organizationId",
+          "audience",
+          "operationalCounts",
+          "onboarding",
+          "upcomingSessions",
+          "sessionsMissingMeetingLink",
+          "attendancePending",
+          "pendingInvitationCount",
+          "assignmentGradingQueue",
+          "examGradingQueue"
+        ],
+        "classesStatus": 200,
+        "classCount": 4
+      },
+      "profile": {
+        "status": 200,
+        "identityMatches": true,
+        "isProfileComplete": true
+      },
+      "profileRoundTrip": {
+        "role": "Manager",
+        "school": [
+          {
+            "path": "/api/v1/academic/classes/a673db51-f459-4777-833c-fd35ad40ce68/lessons",
+            "method": "GET",
+            "status": 200,
+            "ms": 139,
+            "retryAfter": null
+          },
+          {
+            "path": "/api/v1/academic/classes/a673db51-f459-4777-833c-fd35ad40ce68/assignments",
+            "method": "GET",
+            "status": 200,
+            "ms": 122,
+            "retryAfter": null,
+            "count": 2
+          },
+          {
+            "path": "/api/v1/academic/classes/a673db51-f459-4777-833c-fd35ad40ce68/learners",
+            "method": "GET",
+            "status": 200,
+            "ms": 129,
+            "retryAfter": null
+          },
+          {
+            "path": "/api/v1/academic/classes/a673db51-f459-4777-833c-fd35ad40ce68/teachers",
+            "method": "GET",
+            "status": 200,
+            "ms": 131,
+            "retryAfter": null
+          },
+          {
+            "path": "/api/v1/academic/exams/discovery",
+            "method": "GET",
+            "status": 200,
+            "ms": 186,
+            "retryAfter": null,
+            "shape": [
+              "items",
+              "page",
+              "pageSize",
+              "total",
+              "totalCount"
+            ]
+          }
+        ],
+        "profileSave": {
+          "path": "/api/v1/me/profile",
+          "method": "PATCH",
+          "status": 200,
+          "ms": 179,
+          "retryAfter": null
+        },
+        "profileReadAfter": {
+          "path": "/api/v1/me",
+          "method": "GET",
+          "status": 200,
+          "ms": 155,
+          "retryAfter": null
+        },
+        "profilePreserved": true,
+        "profileAckIdentity": true
+      },
+      "inbox": {
+        "status": 200,
+        "shape": [
+          "items",
+          "nextCursor",
+          "hasMore"
+        ],
+        "count": 1
+      },
+      "initialQuota": [
+        {
+          "payer": "Organization",
+          "status": 200,
+          "allowed": false,
+          "requiresExplicitSelection": false,
+          "errorCode": "SUBSCRIPTION_INACTIVE",
+          "remaining": 0
+        },
+        {
+          "payer": "FreeTrial",
+          "status": 200,
+          "allowed": true,
+          "requiresExplicitSelection": false,
+          "errorCode": null,
+          "remaining": 2
+        }
+      ],
+      "chat": {
+        "role": "Manager",
+        "submitted": true,
+        "request": {
+          "path": "/api/v1/ai/chat",
+          "method": "POST",
+          "status": 200,
+          "ms": 1335,
+          "retryAfter": null
+        },
+        "responseKeys": [
+          "requestId",
+          "correlationId",
+          "conversationId",
+          "answer",
+          "insights",
+          "risks",
+          "recommendations",
+          "sources"
+        ],
+        "answerPresent": true,
+        "answerKeys": [
+          "text",
+          "language"
+        ],
+        "answerTextLength": 38,
+        "requestIdPresent": true,
+        "conversationIdentifier": {
+          "present": false,
+          "isGuid": false
+        }
+      }
+    }
+  ],
+  "assistantUi": {
+    "status": 200,
+    "requestIdPresent": true,
+    "answerVisible": true,
+    "payer": "FreeTrial",
+    "responseImage": "output/review/live-delivery-20261110/Teacher-live-answer.png",
+    "text": "حاصل ۱۷ بهعلاوهٔ ۲۶ برابر ۴۳ است."
+  },
+  "assistantUiBuild": "_SqLZ8zYGgbcgrpwzsO8r",
+  "chat": {
+    "createdAt": "2026-11-10T16:39:42.736Z",
+    "backend": "http://94.184.32.84:8090",
+    "sender": "Student",
+    "recipient": "Teacher",
+    "syntheticText": true,
+    "request": {
+      "path": "/api/v1/conversations/68f10dcc-d3f6-4c67-95b2-adb87576ab9e/messages",
+      "method": "POST",
+      "status": 200,
+      "ms": 732,
+      "retryAfter": null
+    },
+    "ackMatches": true,
+    "receiptStatus": "Sent",
+    "reads": [
+      {
+        "role": "Student",
+        "request": {
+          "path": "/api/v1/conversations/68f10dcc-d3f6-4c67-95b2-adb87576ab9e/messages",
+          "method": "GET",
+          "status": 200,
+          "ms": 486,
+          "retryAfter": null
+        },
+        "sentMessagePersisted": true,
+        "teacherReplyPersisted": true
+      },
+      {
+        "role": "Teacher",
+        "request": {
+          "path": "/api/v1/conversations/68f10dcc-d3f6-4c67-95b2-adb87576ab9e/messages",
+          "method": "GET",
+          "status": 200,
+          "ms": 134,
+          "retryAfter": null
+        },
+        "sentMessagePersisted": true,
+        "teacherReplyPersisted": true
+      }
+    ],
+    "liveUI": {
+      "receivedWithoutReload": true,
+      "teacherReplySentThroughUI": true,
+      "source": "Agent-controlled independent production tab 3131; real backend 8090. Only the two supplied test accounts."
+    }
+  },
+  "activation": {
+    "time": "2026-11-10T17:07:27.137Z",
+    "organization": {
+      "status": 200,
+      "state": "NoSubscription"
+    },
+    "roles": [
+      {
+        "role": "Student",
+        "status": 200,
+        "allowed": false,
+        "errorCode": "SUBSCRIPTION_INACTIVE",
+        "remaining": 0,
+        "payerMatches": true,
+        "ownerMatches": true
+      },
+      {
+        "role": "Teacher",
+        "status": 200,
+        "allowed": false,
+        "errorCode": "SUBSCRIPTION_INACTIVE",
+        "remaining": 0,
+        "payerMatches": true,
+        "ownerMatches": true
+      },
+      {
+        "role": "Parent",
+        "status": 200,
+        "allowed": false,
+        "errorCode": "SUBSCRIPTION_INACTIVE",
+        "remaining": 0,
+        "payerMatches": true,
+        "ownerMatches": true
+      },
+      {
+        "role": "Manager",
+        "status": 200,
+        "allowed": false,
+        "errorCode": "SUBSCRIPTION_INACTIVE",
+        "remaining": 0,
+        "payerMatches": true,
+        "ownerMatches": true
+      }
+    ]
+  },
+  "liveUi": {
+    "buildId": "6EwbCZA0BGzGg6GRjuElc",
+    "viewports": [
+      [
+        390,
+        844
+      ],
+      [
+        834,
+        1112
+      ],
+      [
+        1440,
+        1000
+      ]
+    ],
+    "theme": "light",
+    "frames": 48,
+    "passed": 48,
+    "rows": [
+      {
+        "role": "Student",
+        "path": "/personal/education",
+        "width": 390,
+        "height": 844,
+        "status": 200,
+        "primaryData": {
+          "path": "/api/v1/dashboards/student",
+          "status": 200
+        },
+        "heading": "آموزشگاه",
+        "overflow": false,
+        "alerts": [],
+        "fixture": false,
+        "pageErrors": 0,
+        "image": "output/review/live-delivery-20261110/final/Student-school-390.png",
+        "passed": true
+      },
+      {
+        "role": "Student",
+        "path": "/personal/profile",
+        "width": 390,
+        "height": 844,
+        "status": 200,
+        "primaryData": {
+          "path": "/api/v1/workspaces/snapshot",
+          "status": 200
+        },
+        "heading": "پروفایل",
+        "overflow": false,
+        "alerts": [],
+        "fixture": false,
+        "pageErrors": 0,
+        "image": "output/review/live-delivery-20261110/final/Student-profile-390.png",
+        "passed": true
+      },
+      {
+        "role": "Student",
+        "path": "/personal/messages",
+        "width": 390,
+        "height": 844,
+        "status": 200,
+        "primaryData": {
+          "path": "/api/v1/conversations/account",
+          "status": 200
+        },
+        "heading": "پیام‌ها",
+        "overflow": false,
+        "alerts": [],
+        "fixture": false,
+        "pageErrors": 0,
+        "image": "output/review/live-delivery-20261110/final/Student-chat-390.png",
+        "passed": true
+      },
+      {
+        "role": "Student",
+        "path": "/personal/assistant",
+        "width": 390,
+        "height": 844,
+        "status": 200,
+        "primaryData": {
+          "path": "/api/client/session",
+          "status": 200
+        },
+        "heading": "دستیار",
+        "overflow": false,
+        "alerts": [],
+        "fixture": false,
+        "pageErrors": 0,
+        "image": "output/review/live-delivery-20261110/final/Student-assistant-390.png",
+        "passed": true
+      },
+      {
+        "role": "Student",
+        "path": "/personal/education",
+        "width": 834,
+        "height": 1112,
+        "status": 200,
+        "primaryData": {
+          "path": "/api/v1/dashboards/student",
+          "status": 200
+        },
+        "heading": "آموزشگاه",
+        "overflow": false,
+        "alerts": [],
+        "fixture": false,
+        "pageErrors": 0,
+        "image": "output/review/live-delivery-20261110/final/Student-school-834.png",
+        "passed": true
+      },
+      {
+        "role": "Student",
+        "path": "/personal/profile",
+        "width": 834,
+        "height": 1112,
+        "status": 200,
+        "primaryData": {
+          "path": "/api/v1/workspaces/snapshot",
+          "status": 200
+        },
+        "heading": "پروفایل",
+        "overflow": false,
+        "alerts": [],
+        "fixture": false,
+        "pageErrors": 0,
+        "image": "output/review/live-delivery-20261110/final/Student-profile-834.png",
+        "passed": true
+      },
+      {
+        "role": "Student",
+        "path": "/personal/messages",
+        "width": 834,
+        "height": 1112,
+        "status": 200,
+        "primaryData": {
+          "path": "/api/v1/conversations/account",
+          "status": 200
+        },
+        "heading": "پیام‌ها",
+        "overflow": false,
+        "alerts": [],
+        "fixture": false,
+        "pageErrors": 0,
+        "image": "output/review/live-delivery-20261110/final/Student-chat-834.png",
+        "passed": true
+      },
+      {
+        "role": "Student",
+        "path": "/personal/assistant",
+        "width": 834,
+        "height": 1112,
+        "status": 200,
+        "primaryData": {
+          "path": "/api/client/session",
+          "status": 200
+        },
+        "heading": "دستیار",
+        "overflow": false,
+        "alerts": [],
+        "fixture": false,
+        "pageErrors": 0,
+        "image": "output/review/live-delivery-20261110/final/Student-assistant-834.png",
+        "passed": true
+      },
+      {
+        "role": "Student",
+        "path": "/personal/education",
+        "width": 1440,
+        "height": 1000,
+        "status": 200,
+        "primaryData": {
+          "path": "/api/v1/dashboards/student",
+          "status": 200
+        },
+        "heading": "آموزشگاه",
+        "overflow": false,
+        "alerts": [],
+        "fixture": false,
+        "pageErrors": 0,
+        "image": "output/review/live-delivery-20261110/final/Student-school-1440.png",
+        "passed": true
+      },
+      {
+        "role": "Student",
+        "path": "/personal/profile",
+        "width": 1440,
+        "height": 1000,
+        "status": 200,
+        "primaryData": {
+          "path": "/api/v1/workspaces/snapshot",
+          "status": 200
+        },
+        "heading": "پروفایل",
+        "overflow": false,
+        "alerts": [],
+        "fixture": false,
+        "pageErrors": 0,
+        "image": "output/review/live-delivery-20261110/final/Student-profile-1440.png",
+        "passed": true
+      },
+      {
+        "role": "Student",
+        "path": "/personal/messages",
+        "width": 1440,
+        "height": 1000,
+        "status": 200,
+        "primaryData": {
+          "path": "/api/v1/conversations/account",
+          "status": 200
+        },
+        "heading": "پیام‌ها",
+        "overflow": false,
+        "alerts": [],
+        "fixture": false,
+        "pageErrors": 0,
+        "image": "output/review/live-delivery-20261110/final/Student-chat-1440.png",
+        "passed": true
+      },
+      {
+        "role": "Student",
+        "path": "/personal/assistant",
+        "width": 1440,
+        "height": 1000,
+        "status": 200,
+        "primaryData": {
+          "path": "/api/client/session",
+          "status": 200
+        },
+        "heading": "دستیار",
+        "overflow": false,
+        "alerts": [],
+        "fixture": false,
+        "pageErrors": 0,
+        "image": "output/review/live-delivery-20261110/final/Student-assistant-1440.png",
+        "passed": true
+      },
+      {
+        "role": "Teacher",
+        "path": "/personal/education",
+        "width": 390,
+        "height": 844,
+        "status": 200,
+        "primaryData": {
+          "path": "/api/v1/dashboards/teacher",
+          "status": 200
+        },
+        "heading": "آموزشگاه",
+        "overflow": false,
+        "alerts": [],
+        "fixture": false,
+        "pageErrors": 0,
+        "image": "output/review/live-delivery-20261110/final/Teacher-school-390.png",
+        "passed": true
+      },
+      {
+        "role": "Teacher",
+        "path": "/personal/profile",
+        "width": 390,
+        "height": 844,
+        "status": 200,
+        "primaryData": {
+          "path": "/api/v1/workspaces/snapshot",
+          "status": 200
+        },
+        "heading": "پروفایل",
+        "overflow": false,
+        "alerts": [],
+        "fixture": false,
+        "pageErrors": 0,
+        "image": "output/review/live-delivery-20261110/final/Teacher-profile-390.png",
+        "passed": true
+      },
+      {
+        "role": "Teacher",
+        "path": "/personal/messages",
+        "width": 390,
+        "height": 844,
+        "status": 200,
+        "primaryData": {
+          "path": "/api/v1/conversations/account",
+          "status": 200
+        },
+        "heading": "پیام‌ها",
+        "overflow": false,
+        "alerts": [],
+        "fixture": false,
+        "pageErrors": 0,
+        "image": "output/review/live-delivery-20261110/final/Teacher-chat-390.png",
+        "passed": true
+      },
+      {
+        "role": "Teacher",
+        "path": "/personal/assistant",
+        "width": 390,
+        "height": 844,
+        "status": 200,
+        "primaryData": {
+          "path": "/api/client/session",
+          "status": 200
+        },
+        "heading": "دستیار",
+        "overflow": false,
+        "alerts": [],
+        "fixture": false,
+        "pageErrors": 0,
+        "image": "output/review/live-delivery-20261110/final/Teacher-assistant-390.png",
+        "passed": true
+      },
+      {
+        "role": "Teacher",
+        "path": "/personal/education",
+        "width": 834,
+        "height": 1112,
+        "status": 200,
+        "primaryData": {
+          "path": "/api/v1/dashboards/teacher",
+          "status": 200
+        },
+        "heading": "آموزشگاه",
+        "overflow": false,
+        "alerts": [],
+        "fixture": false,
+        "pageErrors": 0,
+        "image": "output/review/live-delivery-20261110/final/Teacher-school-834.png",
+        "passed": true
+      },
+      {
+        "role": "Teacher",
+        "path": "/personal/profile",
+        "width": 834,
+        "height": 1112,
+        "status": 200,
+        "primaryData": {
+          "path": "/api/v1/workspaces/snapshot",
+          "status": 200
+        },
+        "heading": "پروفایل",
+        "overflow": false,
+        "alerts": [],
+        "fixture": false,
+        "pageErrors": 0,
+        "image": "output/review/live-delivery-20261110/final/Teacher-profile-834.png",
+        "passed": true
+      },
+      {
+        "role": "Teacher",
+        "path": "/personal/messages",
+        "width": 834,
+        "height": 1112,
+        "status": 200,
+        "primaryData": {
+          "path": "/api/v1/conversations/account",
+          "status": 200
+        },
+        "heading": "پیام‌ها",
+        "overflow": false,
+        "alerts": [],
+        "fixture": false,
+        "pageErrors": 0,
+        "image": "output/review/live-delivery-20261110/final/Teacher-chat-834.png",
+        "passed": true
+      },
+      {
+        "role": "Teacher",
+        "path": "/personal/assistant",
+        "width": 834,
+        "height": 1112,
+        "status": 200,
+        "primaryData": {
+          "path": "/api/client/session",
+          "status": 200
+        },
+        "heading": "دستیار",
+        "overflow": false,
+        "alerts": [],
+        "fixture": false,
+        "pageErrors": 0,
+        "image": "output/review/live-delivery-20261110/final/Teacher-assistant-834.png",
+        "passed": true
+      },
+      {
+        "role": "Teacher",
+        "path": "/personal/education",
+        "width": 1440,
+        "height": 1000,
+        "status": 200,
+        "primaryData": {
+          "path": "/api/v1/dashboards/teacher",
+          "status": 200
+        },
+        "heading": "آموزشگاه",
+        "overflow": false,
+        "alerts": [],
+        "fixture": false,
+        "pageErrors": 0,
+        "image": "output/review/live-delivery-20261110/final/Teacher-school-1440.png",
+        "passed": true
+      },
+      {
+        "role": "Teacher",
+        "path": "/personal/profile",
+        "width": 1440,
+        "height": 1000,
+        "status": 200,
+        "primaryData": {
+          "path": "/api/v1/workspaces/snapshot",
+          "status": 200
+        },
+        "heading": "پروفایل",
+        "overflow": false,
+        "alerts": [],
+        "fixture": false,
+        "pageErrors": 0,
+        "image": "output/review/live-delivery-20261110/final/Teacher-profile-1440.png",
+        "passed": true
+      },
+      {
+        "role": "Teacher",
+        "path": "/personal/messages",
+        "width": 1440,
+        "height": 1000,
+        "status": 200,
+        "primaryData": {
+          "path": "/api/v1/conversations/account",
+          "status": 200
+        },
+        "heading": "پیام‌ها",
+        "overflow": false,
+        "alerts": [],
+        "fixture": false,
+        "pageErrors": 0,
+        "image": "output/review/live-delivery-20261110/final/Teacher-chat-1440.png",
+        "passed": true
+      },
+      {
+        "role": "Teacher",
+        "path": "/personal/assistant",
+        "width": 1440,
+        "height": 1000,
+        "status": 200,
+        "primaryData": {
+          "path": "/api/client/session",
+          "status": 200
+        },
+        "heading": "دستیار",
+        "overflow": false,
+        "alerts": [],
+        "fixture": false,
+        "pageErrors": 0,
+        "image": "output/review/live-delivery-20261110/final/Teacher-assistant-1440.png",
+        "passed": true
+      },
+      {
+        "role": "Parent",
+        "path": "/personal/education",
+        "width": 390,
+        "height": 844,
+        "status": 200,
+        "primaryData": {
+          "path": "/api/v1/dashboards/parent",
+          "status": 200
+        },
+        "heading": "آموزشگاه",
+        "overflow": false,
+        "alerts": [],
+        "fixture": false,
+        "pageErrors": 0,
+        "image": "output/review/live-delivery-20261110/final/Parent-school-390.png",
+        "passed": true
+      },
+      {
+        "role": "Parent",
+        "path": "/personal/profile",
+        "width": 390,
+        "height": 844,
+        "status": 200,
+        "primaryData": {
+          "path": "/api/v1/workspaces/snapshot",
+          "status": 200
+        },
+        "heading": "پروفایل",
+        "overflow": false,
+        "alerts": [],
+        "fixture": false,
+        "pageErrors": 0,
+        "image": "output/review/live-delivery-20261110/final/Parent-profile-390.png",
+        "passed": true
+      },
+      {
+        "role": "Parent",
+        "path": "/personal/messages",
+        "width": 390,
+        "height": 844,
+        "status": 200,
+        "primaryData": {
+          "path": "/api/v1/conversations/account",
+          "status": 200
+        },
+        "heading": "پیام‌ها",
+        "overflow": false,
+        "alerts": [],
+        "fixture": false,
+        "pageErrors": 0,
+        "image": "output/review/live-delivery-20261110/final/Parent-chat-390.png",
+        "passed": true
+      },
+      {
+        "role": "Parent",
+        "path": "/personal/assistant",
+        "width": 390,
+        "height": 844,
+        "status": 200,
+        "primaryData": {
+          "path": "/api/client/session",
+          "status": 200
+        },
+        "heading": "دستیار",
+        "overflow": false,
+        "alerts": [],
+        "fixture": false,
+        "pageErrors": 0,
+        "image": "output/review/live-delivery-20261110/final/Parent-assistant-390.png",
+        "passed": true
+      },
+      {
+        "role": "Parent",
+        "path": "/personal/education",
+        "width": 834,
+        "height": 1112,
+        "status": 200,
+        "primaryData": {
+          "path": "/api/v1/dashboards/parent",
+          "status": 200
+        },
+        "heading": "آموزشگاه",
+        "overflow": false,
+        "alerts": [],
+        "fixture": false,
+        "pageErrors": 0,
+        "image": "output/review/live-delivery-20261110/final/Parent-school-834.png",
+        "passed": true
+      },
+      {
+        "role": "Parent",
+        "path": "/personal/profile",
+        "width": 834,
+        "height": 1112,
+        "status": 200,
+        "primaryData": {
+          "path": "/api/v1/workspaces/snapshot",
+          "status": 200
+        },
+        "heading": "پروفایل",
+        "overflow": false,
+        "alerts": [],
+        "fixture": false,
+        "pageErrors": 0,
+        "image": "output/review/live-delivery-20261110/final/Parent-profile-834.png",
+        "passed": true
+      },
+      {
+        "role": "Parent",
+        "path": "/personal/messages",
+        "width": 834,
+        "height": 1112,
+        "status": 200,
+        "primaryData": {
+          "path": "/api/v1/conversations/account",
+          "status": 200
+        },
+        "heading": "پیام‌ها",
+        "overflow": false,
+        "alerts": [],
+        "fixture": false,
+        "pageErrors": 0,
+        "image": "output/review/live-delivery-20261110/final/Parent-chat-834.png",
+        "passed": true
+      },
+      {
+        "role": "Parent",
+        "path": "/personal/assistant",
+        "width": 834,
+        "height": 1112,
+        "status": 200,
+        "primaryData": {
+          "path": "/api/client/session",
+          "status": 200
+        },
+        "heading": "دستیار",
+        "overflow": false,
+        "alerts": [],
+        "fixture": false,
+        "pageErrors": 0,
+        "image": "output/review/live-delivery-20261110/final/Parent-assistant-834.png",
+        "passed": true
+      },
+      {
+        "role": "Parent",
+        "path": "/personal/education",
+        "width": 1440,
+        "height": 1000,
+        "status": 200,
+        "primaryData": {
+          "path": "/api/v1/dashboards/parent",
+          "status": 200
+        },
+        "heading": "آموزشگاه",
+        "overflow": false,
+        "alerts": [],
+        "fixture": false,
+        "pageErrors": 0,
+        "image": "output/review/live-delivery-20261110/final/Parent-school-1440.png",
+        "passed": true
+      },
+      {
+        "role": "Parent",
+        "path": "/personal/profile",
+        "width": 1440,
+        "height": 1000,
+        "status": 200,
+        "primaryData": {
+          "path": "/api/v1/workspaces/snapshot",
+          "status": 200
+        },
+        "heading": "پروفایل",
+        "overflow": false,
+        "alerts": [],
+        "fixture": false,
+        "pageErrors": 0,
+        "image": "output/review/live-delivery-20261110/final/Parent-profile-1440.png",
+        "passed": true
+      },
+      {
+        "role": "Parent",
+        "path": "/personal/messages",
+        "width": 1440,
+        "height": 1000,
+        "status": 200,
+        "primaryData": {
+          "path": "/api/v1/conversations/account",
+          "status": 200
+        },
+        "heading": "پیام‌ها",
+        "overflow": false,
+        "alerts": [],
+        "fixture": false,
+        "pageErrors": 0,
+        "image": "output/review/live-delivery-20261110/final/Parent-chat-1440.png",
+        "passed": true
+      },
+      {
+        "role": "Parent",
+        "path": "/personal/assistant",
+        "width": 1440,
+        "height": 1000,
+        "status": 200,
+        "primaryData": {
+          "path": "/api/client/session",
+          "status": 200
+        },
+        "heading": "دستیار",
+        "overflow": false,
+        "alerts": [],
+        "fixture": false,
+        "pageErrors": 0,
+        "image": "output/review/live-delivery-20261110/final/Parent-assistant-1440.png",
+        "passed": true
+      },
+      {
+        "role": "Manager",
+        "path": "/personal/education",
+        "width": 390,
+        "height": 844,
+        "status": 200,
+        "primaryData": {
+          "path": "/api/v1/dashboards/manager",
+          "status": 200
+        },
+        "heading": "آموزشگاه",
+        "overflow": false,
+        "alerts": [],
+        "fixture": false,
+        "pageErrors": 0,
+        "image": "output/review/live-delivery-20261110/final/Manager-school-390.png",
+        "passed": true
+      },
+      {
+        "role": "Manager",
+        "path": "/personal/profile",
+        "width": 390,
+        "height": 844,
+        "status": 200,
+        "primaryData": {
+          "path": "/api/v1/workspaces/snapshot",
+          "status": 200
+        },
+        "heading": "پروفایل",
+        "overflow": false,
+        "alerts": [],
+        "fixture": false,
+        "pageErrors": 0,
+        "image": "output/review/live-delivery-20261110/final/Manager-profile-390.png",
+        "passed": true
+      },
+      {
+        "role": "Manager",
+        "path": "/personal/messages",
+        "width": 390,
+        "height": 844,
+        "status": 200,
+        "primaryData": {
+          "path": "/api/v1/conversations/account",
+          "status": 200
+        },
+        "heading": "پیام‌ها",
+        "overflow": false,
+        "alerts": [],
+        "fixture": false,
+        "pageErrors": 0,
+        "image": "output/review/live-delivery-20261110/final/Manager-chat-390.png",
+        "passed": true
+      },
+      {
+        "role": "Manager",
+        "path": "/personal/assistant",
+        "width": 390,
+        "height": 844,
+        "status": 200,
+        "primaryData": {
+          "path": "/api/client/session",
+          "status": 200
+        },
+        "heading": "دستیار",
+        "overflow": false,
+        "alerts": [],
+        "fixture": false,
+        "pageErrors": 0,
+        "image": "output/review/live-delivery-20261110/final/Manager-assistant-390.png",
+        "passed": true
+      },
+      {
+        "role": "Manager",
+        "path": "/personal/education",
+        "width": 834,
+        "height": 1112,
+        "status": 200,
+        "primaryData": {
+          "path": "/api/v1/dashboards/manager",
+          "status": 200
+        },
+        "heading": "آموزشگاه",
+        "overflow": false,
+        "alerts": [],
+        "fixture": false,
+        "pageErrors": 0,
+        "image": "output/review/live-delivery-20261110/final/Manager-school-834.png",
+        "passed": true
+      },
+      {
+        "role": "Manager",
+        "path": "/personal/profile",
+        "width": 834,
+        "height": 1112,
+        "status": 200,
+        "primaryData": {
+          "path": "/api/v1/workspaces/snapshot",
+          "status": 200
+        },
+        "heading": "پروفایل",
+        "overflow": false,
+        "alerts": [],
+        "fixture": false,
+        "pageErrors": 0,
+        "image": "output/review/live-delivery-20261110/final/Manager-profile-834.png",
+        "passed": true
+      },
+      {
+        "role": "Manager",
+        "path": "/personal/messages",
+        "width": 834,
+        "height": 1112,
+        "status": 200,
+        "primaryData": {
+          "path": "/api/v1/conversations/account",
+          "status": 200
+        },
+        "heading": "پیام‌ها",
+        "overflow": false,
+        "alerts": [],
+        "fixture": false,
+        "pageErrors": 0,
+        "image": "output/review/live-delivery-20261110/final/Manager-chat-834.png",
+        "passed": true
+      },
+      {
+        "role": "Manager",
+        "path": "/personal/assistant",
+        "width": 834,
+        "height": 1112,
+        "status": 200,
+        "primaryData": {
+          "path": "/api/client/session",
+          "status": 200
+        },
+        "heading": "دستیار",
+        "overflow": false,
+        "alerts": [],
+        "fixture": false,
+        "pageErrors": 0,
+        "image": "output/review/live-delivery-20261110/final/Manager-assistant-834.png",
+        "passed": true
+      },
+      {
+        "role": "Manager",
+        "path": "/personal/education",
+        "width": 1440,
+        "height": 1000,
+        "status": 200,
+        "primaryData": {
+          "path": "/api/v1/dashboards/manager",
+          "status": 200
+        },
+        "heading": "آموزشگاه",
+        "overflow": false,
+        "alerts": [],
+        "fixture": false,
+        "pageErrors": 0,
+        "image": "output/review/live-delivery-20261110/final/Manager-school-1440.png",
+        "passed": true
+      },
+      {
+        "role": "Manager",
+        "path": "/personal/profile",
+        "width": 1440,
+        "height": 1000,
+        "status": 200,
+        "primaryData": {
+          "path": "/api/v1/workspaces/snapshot",
+          "status": 200
+        },
+        "heading": "پروفایل",
+        "overflow": false,
+        "alerts": [],
+        "fixture": false,
+        "pageErrors": 0,
+        "image": "output/review/live-delivery-20261110/final/Manager-profile-1440.png",
+        "passed": true
+      },
+      {
+        "role": "Manager",
+        "path": "/personal/messages",
+        "width": 1440,
+        "height": 1000,
+        "status": 200,
+        "primaryData": {
+          "path": "/api/v1/conversations/account",
+          "status": 200
+        },
+        "heading": "پیام‌ها",
+        "overflow": false,
+        "alerts": [],
+        "fixture": false,
+        "pageErrors": 0,
+        "image": "output/review/live-delivery-20261110/final/Manager-chat-1440.png",
+        "passed": true
+      },
+      {
+        "role": "Manager",
+        "path": "/personal/assistant",
+        "width": 1440,
+        "height": 1000,
+        "status": 200,
+        "primaryData": {
+          "path": "/api/client/session",
+          "status": 200
+        },
+        "heading": "دستیار",
+        "overflow": false,
+        "alerts": [],
+        "fixture": false,
+        "pageErrors": 0,
+        "image": "output/review/live-delivery-20261110/final/Manager-assistant-1440.png",
+        "passed": true
+      }
+    ],
+    "credit": [
+      {
+        "role": "Student",
+        "payer": "Organization",
+        "status": 200,
+        "allowed": false,
+        "errorCode": "SUBSCRIPTION_INACTIVE",
+        "remaining": 0,
+        "image": "output/review/live-delivery-20261110/final/Student-credit-Organization.png"
+      },
+      {
+        "role": "Student",
+        "payer": "FreeTrial",
+        "status": 200,
+        "allowed": false,
+        "errorCode": "QUOTA_EXCEEDED",
+        "remaining": 0,
+        "image": "output/review/live-delivery-20261110/final/Student-credit-FreeTrial.png"
+      }
+    ],
+    "localInstallOfferDismissedThroughUi": true,
+    "serverWrites": false
+  },
+  "changes": [
+    {
+      "path": "src/features/personal/assistant/preflight.ts",
+      "purpose": "Share non-consuming quota read; verify actual payer and owner before use; fresh authorization still required at send."
+    },
+    {
+      "path": "src/features/personal/assistant/payer.tsx",
+      "purpose": "Show selected payer quota before send and offer a manual recheck after server activation; never switch payer automatically."
+    },
+    {
+      "path": "src/features/reference/connected-assistant.tsx",
+      "purpose": "Suppress unrelated preview during source retrieval and while an unresolved request is pending."
+    },
+    {
+      "path": "src/content/fa.ts",
+      "purpose": "Explain actual exhausted quota and inactive selected subscription."
+    },
+    {
+      "path": "src/lib/api/errors.ts",
+      "purpose": "Map real QUOTA_EXCEEDED to the credit message instead of unrelated generic permission denial."
+    },
+    {
+      "path": "src/features/pwa/pwa.module.css",
+      "purpose": "Place non-modal installation promotion below modal overlays; reproduced visually before fix."
+    }
+  ],
+  "comparison": {
+    "beforeBuild": "_SqLZ8zYGgbcgrpwzsO8r",
+    "afterBuild": "6EwbCZA0BGzGg6GRjuElc",
+    "sourceArchive": "/home/omidreza-bagheriyan/Desktop/MakanApp-cleanup-backup-2026-11-10/css-reconstruction/live-delivery-ninth-source.tar.gz",
+    "sourceArchiveSha256": "d82968ae1a7ad5f5f2d7f8f86b7a87b90eb061e3ae26f798582fac8463ed4d47",
+    "changedApplicationFiles": [
+      {
+        "path": "src/features/pwa/pwa.module.css",
+        "beforeSha256": "3a9ce49aaa07a47abc79733f6496f6e4941f1836795b904fc8f58673bbc83fa2",
+        "afterSha256": "da2ae6d926b585465ec5221bcb6ab4078e7cf2ea2bbc0a103ebb44829b1f5dea"
+      }
+    ],
+    "assistantJavaScriptSourceUnchanged": true
+  },
+  "limitations": [
+    "Student Chat remains blocked until the actual Organization preflight returns allowed=true; trial quota is zero. No rejected Chat was sent to bypass that result.",
+    "Three roles returned real generic FreeTrial Chat responses; role-specific AI tools, source ingest and RAG are not proven by those responses.",
+    "School writes, assessment submission/grading, invitations, purchases, payments and role changes were not performed on live data.",
+    "Profile save used original values in a no-op PATCH followed by GET; no changed-value save is claimed.",
+    "The response screenshot is from build9; only PWA CSS changed afterwards, verified against the archived application source.",
+    "No full 528-state V5 or pixel-perfect claim; final live frames cover four routes, four roles, three sizes, light theme.",
+    "No new file cleanup or owner/sibling changes were made in this functional repair."
+  ],
+  "safeEvidence": {
+    "credentialsRecorded": false,
+    "rawSessionsPublished": false,
+    "syntheticMessages": 2,
+    "liveGenericAiResponses": 4,
+    "liveAiRequestsNotReplayed": true
+  },
+  "handoffActivation": {
+    "time": "2026-11-10T17:16:54.004Z",
+    "ownerId": "d3800000-0000-0000-0000-000000000001",
+    "subscription": {
+      "status": 200,
+      "state": "NoSubscription",
+      "migrationStatus": "AwaitingValidContract",
+      "subscriptionIdPresent": false,
+      "hasVerifiedCommercialContract": false,
+      "observedAtUtc": "2026-11-10T17:16:53.7926418Z"
+    },
+    "student": {
+      "status": 200,
+      "allowed": false,
+      "remaining": 0,
+      "errorCode": "SUBSCRIPTION_INACTIVE",
+      "ownerMatches": true
+    }
+  },
+  "sourcesRead": [
+    {
+      "role": "Student",
+      "status": 200,
+      "count": 0,
+      "serverWrites": false
+    },
+    {
+      "role": "Teacher",
+      "status": 200,
+      "count": 0,
+      "serverWrites": false
+    },
+    {
+      "role": "Parent",
+      "status": 200,
+      "count": 0,
+      "serverWrites": false
+    },
+    {
+      "role": "Manager",
+      "status": 200,
+      "count": 0,
+      "serverWrites": false
+    }
+  ],
+  "testsChanged": [
+    "tests/unit/assistant-preflight.test.ts",
+    "tests/browser/assistant-credit-preview.spec.ts",
+    "tests/browser/navigation-experience.spec.ts",
+    "tests/fixtures/backend/ai.mjs"
+  ],
+  "sessionHandling": "Original session and draft preserved. Independent authenticated QA sessions and their private jars are retained for the pending authorized Student recheck; credentials are not part of evidence.",
+  "creditAtHandoff": {
+    "time": "2026-11-10T17:18:24.313Z",
+    "subscription": {
+      "state": "NoSubscription",
+      "migrationStatus": "AwaitingValidContract",
+      "hasVerifiedCommercialContract": false
+    },
+    "roles": [
+      {
+        "role": "Student",
+        "FreeTrial": {
+          "status": 200,
+          "allowed": false,
+          "remaining": 0,
+          "errorCode": "QUOTA_EXCEEDED"
+        },
+        "Organization": {
+          "status": 200,
+          "allowed": false,
+          "remaining": 0,
+          "errorCode": "SUBSCRIPTION_INACTIVE"
+        }
+      },
+      {
+        "role": "Teacher",
+        "FreeTrial": {
+          "status": 200,
+          "allowed": false,
+          "remaining": 0,
+          "errorCode": "QUOTA_EXCEEDED"
+        },
+        "Organization": {
+          "status": 200,
+          "allowed": false,
+          "remaining": 0,
+          "errorCode": "SUBSCRIPTION_INACTIVE"
+        }
+      },
+      {
+        "role": "Parent",
+        "FreeTrial": {
+          "status": 200,
+          "allowed": true,
+          "remaining": 1,
+          "errorCode": null
+        },
+        "Organization": {
+          "status": 200,
+          "allowed": false,
+          "remaining": 0,
+          "errorCode": "SUBSCRIPTION_INACTIVE"
+        }
+      },
+      {
+        "role": "Manager",
+        "FreeTrial": {
+          "status": 200,
+          "allowed": true,
+          "remaining": 1,
+          "errorCode": null
+        },
+        "Organization": {
+          "status": 200,
+          "allowed": false,
+          "remaining": 0,
+          "errorCode": "SUBSCRIPTION_INACTIVE"
+        }
+      }
+    ]
+  }
+}

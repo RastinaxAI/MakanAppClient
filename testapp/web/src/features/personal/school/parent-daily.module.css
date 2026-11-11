@@ -1,5 +1,5 @@
 .intro {
-  font-size: 15px;
+  font-size: calc(15px * var(--text-scale, 1));
   color: var(--muted);
   line-height: 1.9;
 }
@@ -9,11 +9,11 @@
   gap: 18px;
 }
 .identity h1 {
-  font-size: 24px;
+  font-size: calc(24px * var(--text-scale, 1));
   line-height: 1.55;
 }
 .identity p {
-  font-size: 13px;
+  font-size: calc(13px * var(--text-scale, 1));
   color: var(--muted);
 }
 .avatar {
@@ -23,7 +23,7 @@
   place-items: center;
   background: var(--primary-soft);
   color: var(--primary);
-  font-size: 28px;
+  font-size: calc(28px * var(--text-scale, 1));
   border: 4px solid var(--surface);
   box-shadow: 0 0 0 1px var(--border);
   border-radius: 50%;
@@ -43,10 +43,10 @@
 }
 .metrics strong {
   display: block;
-  font-size: 24px;
+  font-size: calc(24px * var(--text-scale, 1));
 }
 .metrics span {
-  font-size: 11px;
+  font-size: calc(11px * var(--text-scale, 1));
   color: var(--muted);
 }
 .notice {
@@ -56,11 +56,11 @@
   color: var(--primary);
   padding: 14px;
   border-radius: 10px;
-  font-size: 13px;
+  font-size: calc(13px * var(--text-scale, 1));
   line-height: 1.9;
 }
 .activities h2 {
-  font-size: 15px;
+  font-size: calc(15px * var(--text-scale, 1));
   margin-bottom: 12px;
 }
 .row {
@@ -68,18 +68,18 @@
   align-items: center;
   gap: 12px;
   min-height: 84px;
-  font-size: 14px;
+  font-size: calc(14px * var(--text-scale, 1));
 }
 .row > span:nth-child(2) {
   flex: 1;
 }
 .row strong {
   display: block;
-  font-size: 14px;
+  font-size: calc(14px * var(--text-scale, 1));
 }
 .row small {
   display: block;
-  font-size: 11px;
+  font-size: calc(11px * var(--text-scale, 1));
   color: var(--muted);
 }
 .icon {

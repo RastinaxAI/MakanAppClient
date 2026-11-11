@@ -1,4 +1,8 @@
 'use client';
+import { Select as NativeSelect } from '@/components/ui/input';
+
+import { uiClass } from '@/components/v5/classes';
+
 import * as uiText from '@/content/fa';
 import { useState } from 'react';
 import { vnext as t } from '@/content/fa';
@@ -39,9 +43,9 @@ export function ContentActivities({ classId }: { classId: string }) {
           setPage(1);
         }}
       />
-      <div className={s.two}>
+      <div className={uiClass(s.two)}>
         <Field label={t.contentKind}>
-          <select
+          <NativeSelect
             value={kind}
             onChange={(e) => {
               setKind(e.target.value);
@@ -54,7 +58,7 @@ export function ContentActivities({ classId }: { classId: string }) {
                 {t.activityKinds[k]}
               </option>
             ))}
-          </select>
+          </NativeSelect>
         </Field>
         <Field label={t.from}>
           <JalaliDateInput
@@ -85,10 +89,10 @@ export function ContentActivities({ classId }: { classId: string }) {
       ) : (
         <>
           {!q.data.items.length && <EmptyState title={t.empty} />}
-          <div className={s.editorList}>
+          <div className={uiClass(s.editorList)}>
             {q.data.items.map((a, i) => (
               <article
-                className={s.question}
+                className={uiClass(s.question)}
                 key={a.eventId ?? a.sourceVersionId + ':' + a.sourceRevision + ':' + i}
               >
                 <h3>{a.title}</h3>

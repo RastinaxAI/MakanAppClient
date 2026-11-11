@@ -1,4 +1,6 @@
 'use client';
+import { uiClass } from '@/components/v5/classes';
+
 import * as uiText from '@/content/fa';
 import { useRef, useState } from 'react';
 import Link from 'next/link';
@@ -24,7 +26,7 @@ export function SettingRow({
   href: string;
 }) {
   return (
-    <Link href={href} className={c.settingRow}>
+    <Link href={href} className={uiClass(c.settingRow)}>
       <Icon size={22} />
       <span>{title}</span>
       {value && <small>{value}</small>}
@@ -44,19 +46,15 @@ export function UnavailableSetting({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <button type="button" className={c.settingRow}>
+        <button type="button" className={uiClass(c.settingRow)}>
           <Icon size={22} />
           <span>{title}</span>
           <small>{uiText.text_4e67bd8e3482}</small>
           <ChevronLeft size={17} />
         </button>
       </DialogTrigger>
-      <DialogContent
-        className={`${t.theme} ${t.dialog} ${c.detailDialog}`}
-        title={title}
-        description={description}
-      >
-        <p className={c.note}>{uiText.text_fadd8b25529b}</p>
+      <DialogContent className={uiClass(`${t.theme}`)} title={title} description={description}>
+        <p className={uiClass(c.note)}>{uiText.text_fadd8b25529b}</p>
       </DialogContent>
     </Dialog>
   );
@@ -71,7 +69,7 @@ export function MuteAction({ summary }: { summary: S['ConversationSummaryResult'
     <div>
       <button
         disabled={busy}
-        className={c.quickButton}
+        className={uiClass(c.quickButton)}
         onClick={async () => {
           if (lock.current) return;
           lock.current = true;

@@ -1,4 +1,6 @@
 'use client';
+import { uiClass } from '@/components/v5/classes';
+
 import { useRef, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
@@ -33,14 +35,14 @@ export function ConversationWorkspaceNotice({
     ? conversationWorkspaceChoices(summary, snapshot.data, session.context)
     : [];
   return (
-    <section className={s.page} aria-label={t.title} data-conversation-workspace>
+    <section className={uiClass(s.page)} aria-label={t.title} data-conversation-workspace>
       <Button asChild variant="ghost">
         <Link href="/personal/messages">
           <ArrowRight size={18} />
           {t.back}
         </Link>
       </Button>
-      <div className={s.card}>
+      <div className={uiClass(s.card)}>
         <Building2 size={34} aria-hidden="true" />
         <h2>{summary ? t.title : t.unresolvedTitle}</h2>
         {summary?.title && <h3 dir="auto">{summary.title}</h3>}
@@ -51,7 +53,7 @@ export function ConversationWorkspaceNotice({
         ) : snapshot.isError ? (
           <ErrorState error={snapshot.error} onRetry={() => void snapshot.refetch()} />
         ) : choices.length ? (
-          <div className={s.choices}>
+          <div className={uiClass(s.choices)}>
             {choices.map((space) => (
               <Button
                 key={space.membershipId + ':' + space.role}

@@ -1,5 +1,8 @@
+import { reviewPath } from './review-output';
+import { captureExactState } from './exact-state-capture';
 import { test, expect, login, fixture, origin } from './test';
 import { mkdir } from 'node:fs/promises';
+import * as fa from '../../src/content/fa';
 const id = '00000000-0000-4000-8000-000000000950',
   base = '/personal/messages/' + id;
 test('mute is confirmed by the service and a failed change never shows false success', async ({
@@ -10,15 +13,17 @@ test('mute is confirmed by the service and a failed change never shows false suc
   await request.post(fixture + '/__test__/conversation-details', { data: {} });
   await login(context, 'Student', false);
   await page.goto(base + '/info');
+  await page.getByRole('banner').getByRole('button', { name: fa.v4_more, exact: true }).click();
   await request.post(fixture + '/__test__/fault', {
     data: { path: '/mute', method: 'PUT', status: 503 },
   });
   await page.getByRole('button', { name: 'بی‌صدا', exact: true }).click();
-  await expect(page.getByRole('main').getByRole('alert')).toBeVisible();
+  await expect(page.getByRole('dialog').getByRole('alert')).toBeVisible();
   await expect(page.getByRole('button', { name: 'بی‌صدا', exact: true })).toBeVisible();
   await page.getByRole('button', { name: 'بی‌صدا', exact: true }).click();
   await expect(page.getByRole('button', { name: 'فعال‌کردن صدا', exact: true })).toBeVisible();
   await page.reload();
+  await page.getByRole('banner').getByRole('button', { name: fa.v4_more, exact: true }).click();
   await expect(page.getByRole('button', { name: 'فعال‌کردن صدا', exact: true })).toBeVisible();
   await page.getByRole('button', { name: 'فعال‌کردن صدا', exact: true }).click();
   await expect(page.getByRole('button', { name: 'بی‌صدا', exact: true })).toBeVisible();
@@ -32,19 +37,38 @@ test('invite link creation retries with one command, requires approval, then can
   await request.post(fixture + '/__test__/conversation-details', { data: { type: 'Channel' } });
   await login(context, 'Student', false);
   await page.goto(base + '/invites');
-  await page.getByRole('button', { name: 'لینک جدید', exact: true }).click();
-  const dialog = page.getByRole('dialog');
-  await dialog.getByLabel('حداکثر تعداد استفاده').fill('2');
-  await dialog.getByRole('checkbox').check();
+  await page.getByRole('banner').getByRole('button', { name: fa.v4_more, exact: true }).click();
+  await page.getByRole('dialog').getByRole('button', { name: 'لینک جدید', exact: true }).click();
+  const form = page.locator('form.v5-native-form');
+  await form.getByLabel(fa.v5Product.inviteLinkMaximumUses, { exact: true }).fill('2');
+  await form.getByRole('switch').check();
+  await captureExactState(page, ['MK-215']);
+  await page.getByRole('banner').getByRole('link', { name: fa.common_back, exact: true }).click();
+  await expect(page.locator('[data-v5-scene="MK-216"]')).toBeVisible();
+  await page.getByRole('banner').getByRole('button', { name: fa.v4_more, exact: true }).click();
+  await page.getByRole('dialog').getByRole('button', { name: 'لینک جدید', exact: true }).click();
+  await expect(form.getByLabel(fa.v5Product.inviteLinkMaximumUses, { exact: true })).toHaveValue(
+    '2',
+  );
+  await expect(form.getByRole('switch')).toBeChecked();
+
   await request.post(fixture + '/__test__/fault', {
     data: { path: '/invite-links', method: 'POST', status: 503 },
   });
-  await dialog.getByRole('button', { name: 'ساخت لینک دعوت', exact: true }).click();
-  await expect(dialog.getByRole('alert')).toBeVisible();
-  await expect(dialog.getByLabel('حداکثر تعداد استفاده')).toHaveValue('2');
-  await expect(dialog.getByLabel('حداکثر تعداد استفاده')).toBeDisabled();
-  await dialog.getByRole('button', { name: 'تلاش مجدد', exact: true }).click();
-  await expect(dialog).toHaveCount(0);
+  await page
+    .getByRole('button', { name: fa.v5Product.createInviteLink, exact: true })
+    .filter({ visible: true })
+    .click();
+  await expect(form.getByRole('alert')).toBeVisible();
+  await expect(form.getByLabel(fa.v5Product.inviteLinkMaximumUses, { exact: true })).toHaveValue(
+    '2',
+  );
+  await expect(form.getByLabel(fa.v5Product.inviteLinkMaximumUses, { exact: true })).toBeDisabled();
+  await page
+    .getByRole('button', { name: 'تلاش مجدد', exact: true })
+    .filter({ visible: true })
+    .click();
+  await expect(page.locator('[data-v5-scene="MK-216"]')).toBeVisible();
   const url = await page.getByLabel('لینک دعوت جدید').inputValue();
   expect(url).toContain('/personal/messages/join#token=');
   const other = await browser.newContext();
@@ -57,17 +81,31 @@ test('invite link creation retries with one command, requires approval, then can
   await recipient.getByRole('button', { name: 'پیوستن به گفتگو', exact: true }).click();
   await expect(recipient.getByRole('heading', { name: 'درخواست عضویت ارسال شد' })).toBeVisible();
   await expect(recipient.getByRole('link', { name: 'ورود به گفتگو', exact: true })).toHaveCount(0);
-  await page.reload();
-  await page.getByRole('button', { name: 'تأیید', exact: true }).click();
+  await page.getByRole('banner').getByRole('button', { name: fa.v4_more, exact: true }).click();
+  await page
+    .getByRole('dialog')
+    .getByRole('button', { name: fa.v5Product.groupJoinRequestsTitle, exact: true })
+    .click();
+  await page
+    .getByRole('button', { name: fa.v5Product.reviewJoinRequest, exact: true })
+    .filter({ visible: true })
+    .click();
   await page.getByRole('dialog').getByRole('button', { name: 'تأیید', exact: true }).click();
-  await expect(page.getByText('پذیرفته‌شده', { exact: true })).toBeVisible();
+  await expect(page.locator('.v5-list').getByText('پذیرفته‌شده', { exact: true })).toBeVisible();
   await recipient.goto(base + '/info');
   await expect(
     recipient.getByRole('heading', { name: 'اطلاعات کانال', exact: true }),
   ).toBeVisible();
+  await page.getByRole('banner').getByRole('button', { name: fa.v4_more, exact: true }).click();
+  await page
+    .getByRole('dialog')
+    .getByRole('button', { name: fa.v5Product.inviteLinksTitle, exact: true })
+    .click();
   await page.getByRole('button', { name: 'لغو لینک', exact: true }).click();
+  await captureExactState(page, ['MK-217']);
+
   await page.getByRole('dialog').getByRole('button', { name: 'تأیید', exact: true }).click();
-  await expect(page.getByText('لغوشده', { exact: true })).toBeVisible();
+  await expect(page.locator('.v5-list').getByText('لغوشده', { exact: true })).toBeVisible();
   await recipient.goto(url);
   await recipient.getByRole('button', { name: 'پیوستن به گفتگو', exact: true }).click();
   await expect(recipient.getByRole('main').getByRole('alert')).toBeVisible();
@@ -89,6 +127,8 @@ test('topic draft survives errors and status changes only after server confirmat
   await login(context, 'Student', false);
   await page.goto(base + '/topics');
   await page.getByLabel('نام موضوع', { exact: true }).fill('پرسش‌های کلاس');
+  await captureExactState(page, ['MK-225']);
+
   await request.post(fixture + '/__test__/fault', {
     data: { path: '/topics', method: 'POST', status: 503 },
   });
@@ -98,6 +138,8 @@ test('topic draft survives errors and status changes only after server confirmat
   await page.getByRole('button', { name: 'تلاش مجدد', exact: true }).click();
   await expect(page.getByText('پرسش‌های کلاس', { exact: true })).toBeVisible();
   await page.getByRole('button', { name: 'بستن', exact: true }).click();
+  await captureExactState(page, ['MK-226']);
+
   await page.getByRole('dialog').getByRole('button', { name: 'تأیید', exact: true }).click();
   await expect(page.getByRole('button', { name: 'بازکردن', exact: true })).toBeVisible();
   const state = await (await request.get(fixture + '/__test__/state')).json();
@@ -137,7 +179,7 @@ test('reference group and channel surfaces keep RTL, focus and touch targets in 
 }) => {
   test.setTimeout(180000);
   await login(context, 'Student', false);
-  await mkdir('output/review/telegram-details', { recursive: true });
+  await mkdir(reviewPath('output/review/telegram-details'), { recursive: true });
   for (const theme of ['light', 'dark']) {
     await page.goto('/personal/messages');
     await page.evaluate((value) => {
@@ -156,17 +198,18 @@ test('reference group and channel surfaces keep RTL, focus and touch targets in 
         ...(kind === 'Group' ? ['topics'] : []),
       ]) {
         await page.goto(base + '/' + section);
-        await expect(
-          page.getByRole('heading', { name: 'گفتگوی آزمایشی جزئیات', exact: true }),
-        ).toBeVisible();
         const heading = {
           info: kind === 'Channel' ? 'اطلاعات کانال' : 'اطلاعات گروه',
           edit: kind === 'Channel' ? 'ویرایش کانال' : 'ویرایش گروه',
-          settings: kind === 'Channel' ? 'مدیریت کانال' : 'مدیریت گروه',
-          members: 'اعضای گفتگو',
-          media: 'رسانه‌ها و فایل‌ها',
-          invites: 'لینک‌های دعوت',
-          topics: 'موضوعات گروه',
+          settings:
+            kind === 'Channel'
+              ? fa.v5Product.channelSettingsTitle
+              : fa.v5Product.groupSettingsTitle,
+          members:
+            kind === 'Channel' ? fa.v5Product.channelMembersTitle : fa.v5Product.groupMembersTitle,
+          media: kind === 'Channel' ? fa.v5Product.channelMediaTitle : fa.v5Product.groupMediaTitle,
+          invites: fa.v5Product.inviteLinksTitle,
+          topics: fa.text_0de00f83cacf,
         }[section];
         await expect(
           page.getByRole('main').getByRole('heading', { name: heading, exact: true }),
@@ -197,15 +240,28 @@ test('reference group and channel surfaces keep RTL, focus and touch targets in 
             expect(layout.offset).toBeLessThanOrEqual(8);
           }
           await page.screenshot({
-            path: `output/review/telegram-details/${kind}-${section}-${theme}-${width}.png`,
+            path: reviewPath(
+              `output/review/telegram-details/${kind}-${section}-${theme}-${width}.png`,
+            ),
           });
         }
         if (section === 'edit') {
+          if (kind === 'Group') {
+            await page
+              .getByRole('banner')
+              .getByRole('button', { name: fa.v4_more, exact: true })
+              .click();
+            await page
+              .getByRole('dialog')
+              .getByRole('button', { name: /عکس گروه/ })
+              .click();
+          } else await page.getByRole('button', { name: /عکس کانال/ }).click();
           const action = page.getByLabel('انتخاب تصویر جدید', { exact: true });
           await action.focus();
           await expect(action).toBeFocused();
           const box = await action.locator('..').boundingBox();
           expect(box!.height).toBeGreaterThanOrEqual(44);
+          await page.keyboard.press('Escape');
         }
       }
     }

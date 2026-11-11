@@ -1,4 +1,8 @@
 'use client';
+import { Select as NativeSelect } from '@/components/ui/input';
+
+import { uiClass } from '@/components/v5/classes';
+
 import * as uiText from '@/content/fa';
 import { vnext as t } from '@/content/fa';
 import { MemberRoleEditor } from './member-role-editor';
@@ -41,10 +45,10 @@ export function MemberDirectory({ initialRole = '' }: { initialRole?: string }) 
       }),
   );
   return (
-    <div className={s.page}>
+    <div className={uiClass(s.page)}>
       <DirectoryHeader />
-      <section className={s.panel} aria-label={uiText.text_894f57ecc265}>
-        <div className={s.roles} role="group" aria-label={uiText.text_40fbc1ab0d10}>
+      <section className={uiClass(s.panel)} aria-label={uiText.text_894f57ecc265}>
+        <div className={uiClass(s.roles)} role="group" aria-label={uiText.text_40fbc1ab0d10}>
           {roles.map(([value, title]) => (
             <button
               key={value}
@@ -59,7 +63,7 @@ export function MemberDirectory({ initialRole = '' }: { initialRole?: string }) 
             </button>
           ))}
         </div>
-        <div className={s.filters}>
+        <div className={uiClass(s.filters)}>
           <SchoolSearch
             label={uiText.text_a144dcd7df31}
             onSearch={(value) => {
@@ -68,7 +72,7 @@ export function MemberDirectory({ initialRole = '' }: { initialRole?: string }) 
             }}
           />
           <Field label={uiText.text_c8756c7737fc}>
-            <select
+            <NativeSelect
               value={status}
               onChange={(e) => {
                 setStatus(e.target.value);
@@ -81,12 +85,12 @@ export function MemberDirectory({ initialRole = '' }: { initialRole?: string }) 
                   {label(v)}
                 </option>
               ))}
-            </select>
+            </NativeSelect>
           </Field>
         </div>
       </section>
-      <section className={s.panel} aria-label={uiText.text_77db9fa6328b}>
-        <header className={s.resultHeading}>
+      <section className={uiClass(s.panel)} aria-label={uiText.text_77db9fa6328b}>
+        <header className={uiClass(s.resultHeading)}>
           <h2>{role ? roles.find(([v]) => v === role)?.[1] : uiText.text_77db9fa6328b}</h2>
           {q.data && (
             <span>
@@ -106,8 +110,8 @@ export function MemberDirectory({ initialRole = '' }: { initialRole?: string }) 
         ) : (
           <>
             {q.data.items.length ? (
-              <div className={s.tableWrap}>
-                <table role="table" className={s.table}>
+              <div className={uiClass(s.tableWrap)}>
+                <table role="table" className={uiClass(s.table)}>
                   <thead role="rowgroup">
                     <tr role="row">
                       <th role="columnheader">{uiText.text_4108dae42908}</th>
@@ -124,21 +128,21 @@ export function MemberDirectory({ initialRole = '' }: { initialRole?: string }) 
                         </td>
                         <td role="cell" data-label={uiText.text_628d512903fe}>
                           {m.activeRoles.length ? (
-                            <div className={s.badges}>
+                            <div className={uiClass(s.badges)}>
                               {m.activeRoles.map((r) => (
-                                <span className={s.roleBadge} key={r}>
+                                <span className={uiClass(s.roleBadge)} key={r}>
                                   {label(r)}
                                 </span>
                               ))}
                             </div>
                           ) : (
-                            <span className={s.muted}>{uiText.text_18f6e427c723}</span>
+                            <span className={uiClass(s.muted)}>{uiText.text_18f6e427c723}</span>
                           )}
                         </td>
                         <td role="cell" data-label={uiText.text_e5e36e24f2b7}>
                           <StatusBadge value={m.membershipStatus} />
                         </td>
-                        <td role="cell" className={s.actionCell}>
+                        <td role="cell" className={uiClass(s.actionCell)}>
                           <Button variant="outline" size="sm" onClick={() => setEditing(m)}>
                             {t.manageRoles}
                           </Button>
@@ -153,7 +157,7 @@ export function MemberDirectory({ initialRole = '' }: { initialRole?: string }) 
                               </Link>
                             </Button>
                           ) : (
-                            <span className={s.unlinked}>{uiText.text_0ca10d7c79f2}</span>
+                            <span className={uiClass(s.unlinked)}>{uiText.text_0ca10d7c79f2}</span>
                           )}
                         </td>
                       </tr>

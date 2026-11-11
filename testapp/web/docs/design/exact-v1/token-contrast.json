@@ -1,0 +1,287 @@
+{
+  "method": "Relative luminance of enabled text/control token pairs. This is a token check, not a blanket screenshot or accessibility-conformance audit. Opacity, state and media must still be inspected on real controls.",
+  "source": "design/tokens.json",
+  "allPairsMeetThreshold": true,
+  "pairs": [
+    {
+      "theme": "light",
+      "foregroundToken": "text",
+      "backgroundToken": "bg",
+      "foreground": "#182a45",
+      "background": "#f5f8fe",
+      "ratio": 13.559,
+      "reviewThreshold": 4.5,
+      "meetsThreshold": true
+    },
+    {
+      "theme": "light",
+      "foregroundToken": "text",
+      "backgroundToken": "surface",
+      "foreground": "#182a45",
+      "background": "#ffffff",
+      "ratio": 14.423,
+      "reviewThreshold": 4.5,
+      "meetsThreshold": true
+    },
+    {
+      "theme": "light",
+      "foregroundToken": "muted",
+      "backgroundToken": "bg",
+      "foreground": "#5c6d85",
+      "background": "#f5f8fe",
+      "ratio": 4.958,
+      "reviewThreshold": 4.5,
+      "meetsThreshold": true
+    },
+    {
+      "theme": "light",
+      "foregroundToken": "muted",
+      "backgroundToken": "surface",
+      "foreground": "#5c6d85",
+      "background": "#ffffff",
+      "ratio": 5.275,
+      "reviewThreshold": 4.5,
+      "meetsThreshold": true
+    },
+    {
+      "theme": "light",
+      "foregroundToken": "primary",
+      "backgroundToken": "primary-soft",
+      "foreground": "#0d5ecc",
+      "background": "#eaf2ff",
+      "ratio": 5.342,
+      "reviewThreshold": 4.5,
+      "meetsThreshold": true
+    },
+    {
+      "theme": "light",
+      "foregroundToken": "on-primary",
+      "backgroundToken": "primary-button",
+      "foreground": "#ffffff",
+      "background": "#156fee",
+      "ratio": 4.625,
+      "reviewThreshold": 4.5,
+      "meetsThreshold": true
+    },
+    {
+      "theme": "light",
+      "foregroundToken": "on-danger",
+      "backgroundToken": "danger-button",
+      "foreground": "#ffffff",
+      "background": "#ad343d",
+      "ratio": 6.296,
+      "reviewThreshold": 4.5,
+      "meetsThreshold": true
+    },
+    {
+      "theme": "light",
+      "foregroundToken": "success",
+      "backgroundToken": "success-soft",
+      "foreground": "#0f6658",
+      "background": "#e3f1eb",
+      "ratio": 5.895,
+      "reviewThreshold": 4.5,
+      "meetsThreshold": true
+    },
+    {
+      "theme": "light",
+      "foregroundToken": "warning",
+      "backgroundToken": "warning-soft",
+      "foreground": "#865800",
+      "background": "#fff4df",
+      "ratio": 5.648,
+      "reviewThreshold": 4.5,
+      "meetsThreshold": true
+    },
+    {
+      "theme": "light",
+      "foregroundToken": "danger",
+      "backgroundToken": "danger-soft",
+      "foreground": "#ad343d",
+      "background": "#fcecef",
+      "ratio": 5.512,
+      "reviewThreshold": 4.5,
+      "meetsThreshold": true
+    },
+    {
+      "theme": "light",
+      "foregroundToken": "chat-outgoing-text",
+      "backgroundToken": "chat-outgoing",
+      "foreground": "#182a45",
+      "background": "#eaf2ff",
+      "ratio": 12.805,
+      "reviewThreshold": 4.5,
+      "meetsThreshold": true
+    },
+    {
+      "theme": "light",
+      "foregroundToken": "chat-outgoing-meta",
+      "backgroundToken": "chat-outgoing",
+      "foreground": "#5c6d85",
+      "background": "#eaf2ff",
+      "ratio": 4.683,
+      "reviewThreshold": 4.5,
+      "meetsThreshold": true
+    },
+    {
+      "theme": "light",
+      "foregroundToken": "control-border",
+      "backgroundToken": "surface",
+      "foreground": "#8194b0",
+      "background": "#ffffff",
+      "ratio": 3.09,
+      "reviewThreshold": 3,
+      "meetsThreshold": true
+    },
+    {
+      "theme": "light",
+      "foregroundToken": "focus",
+      "backgroundToken": "bg",
+      "foreground": "#0d5ecc",
+      "background": "#f5f8fe",
+      "ratio": 5.656,
+      "reviewThreshold": 3,
+      "meetsThreshold": true
+    },
+    {
+      "theme": "dark",
+      "foregroundToken": "text",
+      "backgroundToken": "bg",
+      "foreground": "#ecf3ff",
+      "background": "#101a2b",
+      "ratio": 15.631,
+      "reviewThreshold": 4.5,
+      "meetsThreshold": true
+    },
+    {
+      "theme": "dark",
+      "foregroundToken": "text",
+      "backgroundToken": "surface",
+      "foreground": "#ecf3ff",
+      "background": "#16243a",
+      "ratio": 13.974,
+      "reviewThreshold": 4.5,
+      "meetsThreshold": true
+    },
+    {
+      "theme": "dark",
+      "foregroundToken": "muted",
+      "backgroundToken": "bg",
+      "foreground": "#a2b4ce",
+      "background": "#101a2b",
+      "ratio": 8.265,
+      "reviewThreshold": 4.5,
+      "meetsThreshold": true
+    },
+    {
+      "theme": "dark",
+      "foregroundToken": "muted",
+      "backgroundToken": "surface",
+      "foreground": "#a2b4ce",
+      "background": "#16243a",
+      "ratio": 7.388,
+      "reviewThreshold": 4.5,
+      "meetsThreshold": true
+    },
+    {
+      "theme": "dark",
+      "foregroundToken": "primary",
+      "backgroundToken": "primary-soft",
+      "foreground": "#8cb7ff",
+      "background": "#1b3156",
+      "ratio": 6.377,
+      "reviewThreshold": 4.5,
+      "meetsThreshold": true
+    },
+    {
+      "theme": "dark",
+      "foregroundToken": "on-primary",
+      "backgroundToken": "primary-button",
+      "foreground": "#0d2345",
+      "background": "#8cb7ff",
+      "ratio": 7.691,
+      "reviewThreshold": 4.5,
+      "meetsThreshold": true
+    },
+    {
+      "theme": "dark",
+      "foregroundToken": "on-danger",
+      "backgroundToken": "danger-button",
+      "foreground": "#4a1821",
+      "background": "#ffc1c6",
+      "ratio": 9.486,
+      "reviewThreshold": 4.5,
+      "meetsThreshold": true
+    },
+    {
+      "theme": "dark",
+      "foregroundToken": "success",
+      "backgroundToken": "success-soft",
+      "foreground": "#8ed8b0",
+      "background": "#18342a",
+      "ratio": 8.059,
+      "reviewThreshold": 4.5,
+      "meetsThreshold": true
+    },
+    {
+      "theme": "dark",
+      "foregroundToken": "warning",
+      "backgroundToken": "warning-soft",
+      "foreground": "#f3ce85",
+      "background": "#3d3219",
+      "ratio": 8.377,
+      "reviewThreshold": 4.5,
+      "meetsThreshold": true
+    },
+    {
+      "theme": "dark",
+      "foregroundToken": "danger",
+      "backgroundToken": "danger-soft",
+      "foreground": "#ffc1c6",
+      "background": "#46252f",
+      "ratio": 8.745,
+      "reviewThreshold": 4.5,
+      "meetsThreshold": true
+    },
+    {
+      "theme": "dark",
+      "foregroundToken": "chat-outgoing-text",
+      "backgroundToken": "chat-outgoing",
+      "foreground": "#ecf3ff",
+      "background": "#1b3156",
+      "ratio": 11.622,
+      "reviewThreshold": 4.5,
+      "meetsThreshold": true
+    },
+    {
+      "theme": "dark",
+      "foregroundToken": "chat-outgoing-meta",
+      "backgroundToken": "chat-outgoing",
+      "foreground": "#a2b4ce",
+      "background": "#1b3156",
+      "ratio": 6.145,
+      "reviewThreshold": 4.5,
+      "meetsThreshold": true
+    },
+    {
+      "theme": "dark",
+      "foregroundToken": "control-border",
+      "backgroundToken": "surface",
+      "foreground": "#7288a8",
+      "background": "#16243a",
+      "ratio": 4.306,
+      "reviewThreshold": 3,
+      "meetsThreshold": true
+    },
+    {
+      "theme": "dark",
+      "foregroundToken": "focus",
+      "backgroundToken": "bg",
+      "foreground": "#8cb7ff",
+      "background": "#101a2b",
+      "ratio": 8.577,
+      "reviewThreshold": 3,
+      "meetsThreshold": true
+    }
+  ]
+}

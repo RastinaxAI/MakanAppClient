@@ -1,0 +1,14 @@
+{
+  "checkedAt": "2026-11-08T19:07:09.284680+00:00",
+  "scope": "Unauthenticated read of the configured public OpenAPI document; no user/session/business data or mutation.",
+  "installedFields": [
+    "title",
+    "purpose",
+    "description",
+    "suggestedCapacity",
+    "suggestedManagerUserId",
+    "suggestedTeacherUserId"
+  ],
+  "status": "unavailable",
+  "reason": "HTTPError"
+}

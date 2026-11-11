@@ -1,4 +1,8 @@
 'use client';
+import { Input as NativeInput, Textarea as NativeTextarea } from '@/components/ui/input';
+
+import { uiClass } from '@/components/v5/classes';
+
 import * as uiText from '@/content/fa';
 import { useAcademicScope } from './academic-scope';
 import { useState } from 'react';
@@ -17,6 +21,7 @@ import { ActivityDeliveryStatus } from './activity-delivery';
 import { WorkflowPage, WorkflowForm, WorkflowDraftConflict, useWorkflowDraft } from './workflow';
 import { useAssessmentAction } from './use-assessment-action';
 import { Field, Status, toUtc } from './shared';
+import { AssignmentFiles } from './assignment-files';
 import e from './evaluation.module.css';
 import s from './school.module.css';
 type S = components['schemas'];
@@ -24,6 +29,7 @@ export function AssignmentEditPage({ id, publish = false }: { id: string; publis
   const { base } = useAcademicScope();
   return (
     <WorkflowPage
+      form={!publish}
       title={publish ? uiText.text_75b3b6a69681 : uiText.text_1d3577cf9675}
       back={`${base}/assignments/${id}`}
       roles={['Teacher', 'Manager']}
@@ -45,6 +51,7 @@ function AssignmentLoader({ id, publish }: { id: string; publish: boolean }) {
   );
 }
 function AssignmentEditor({ value }: { value: S['AssignmentResult'] }) {
+  const scope = useAcademicScope();
   const { base } = useAcademicScope();
   const d = useWorkflowDraft(
     'assignment-edit:' + value.id,
@@ -62,9 +69,9 @@ function AssignmentEditor({ value }: { value: S['AssignmentResult'] }) {
     router = useRouter();
   if (value.status !== 'Draft')
     return (
-      <section className={e.panel}>
+      <section className={uiClass(e.panel)}>
         <h2>{uiText.text_fea95daa2cd8}</h2>
-        <p className={s.hint}>{uiText.text_fa2690fb6104}</p>
+        <p className={uiClass(s.hint)}>{uiText.text_fa2690fb6104}</p>
         <Button variant="outline" asChild>
           <Link href={`${base}/assignments/${value.id}`}>{uiText.text_187e46cf3b71}</Link>
         </Button>
@@ -116,6 +123,7 @@ function AssignmentEditor({ value }: { value: S['AssignmentResult'] }) {
             maxScore: Number(d.values.score),
             expectedAssignmentRowVersion: value.assignmentRowVersion,
             expectedVersionRowVersion: value.versionRowVersion,
+            ...(value.attachmentFileIds ? { attachmentFileIds: value.attachmentFileIds } : {}),
           },
           'PATCH',
         );
@@ -126,10 +134,14 @@ function AssignmentEditor({ value }: { value: S['AssignmentResult'] }) {
       }}
     >
       <Field label={uiText.text_c864088e1061}>
-        <input required value={d.values.title} onChange={(ev) => d.set('title', ev.target.value)} />
+        <NativeInput
+          required
+          value={d.values.title}
+          onChange={(ev) => d.set('title', ev.target.value)}
+        />
       </Field>
       <Field label={uiText.text_1d3c268468ff}>
-        <textarea
+        <NativeTextarea
           required
           value={d.values.description}
           onChange={(ev) => d.set('description', ev.target.value)}
@@ -143,9 +155,9 @@ function AssignmentEditor({ value }: { value: S['AssignmentResult'] }) {
           onValueChange={(v) => d.set('due', v)}
         />
       </Field>
-      <div className={s.two}>
+      <div className={uiClass(s.two)}>
         <Field label={uiText.text_0e469bc1ffab}>
-          <input
+          <NativeInput
             required
             type="number"
             min={1}
@@ -155,7 +167,7 @@ function AssignmentEditor({ value }: { value: S['AssignmentResult'] }) {
           />
         </Field>
         <Field label={uiText.text_25823dfdfd3f}>
-          <input
+          <NativeInput
             required
             type="number"
             min={0}
@@ -165,14 +177,15 @@ function AssignmentEditor({ value }: { value: S['AssignmentResult'] }) {
           />
         </Field>
       </div>
-      <label className={s.check}>
-        <input
+      <label className={uiClass(s.check)}>
+        <NativeInput
           type="checkbox"
           checked={d.values.late}
           onChange={(ev) => d.set('late', ev.target.checked)}
         />
         {uiText.text_8dd151936022}
       </label>
+      {!scope.personal && <AssignmentFiles value={value} />}
     </WorkflowForm>
   );
 }
@@ -188,15 +201,16 @@ function AssignmentPublish({
   const { call } = usePersonal();
   const [receipt, setReceipt] = useState<S['AcademicPublicationReceipt']>();
   return (
-    <section className={e.panel}>
+    <section className={uiClass(e.panel)}>
       <Status>
         {value.status === 'Draft' ? uiText.text_410c47c7f8b7 : uiText.text_e4f1cf0d1e04}
       </Status>
       <h2>{value.title}</h2>
-      <p className={e.answer} dir="auto">
+      <p className={uiClass(e.answer)} dir="auto">
         {value.description}
       </p>
-      <dl className={e.summary}>
+      {!scope.personal && <AssignmentFiles value={value} />}
+      <dl className={uiClass(e.summary)}>
         <div>
           <dt>{uiText.text_56c43e096bb9}</dt>
           <dd>{value.classTitle}</dd>
@@ -218,7 +232,7 @@ function AssignmentPublish({
           <dd>{value.allowLateSubmission ? uiText.text_d70d2d795615 : uiText.text_5c7f069cd852}</dd>
         </div>
       </dl>
-      <div className={e.actions}>
+      <div className={uiClass(e.actions)}>
         {value.status === 'Draft' && (
           <>
             <Button asChild variant="outline">

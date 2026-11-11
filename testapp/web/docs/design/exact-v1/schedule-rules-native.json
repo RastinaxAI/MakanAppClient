@@ -1,0 +1,71 @@
+{
+  "buildId": "TPNOGgZ8yjjAQYpR_SEK9",
+  "build": "passed",
+  "lintTypecheck": {
+    "status": "passed",
+    "moduleBoundaries": 339,
+    "cycles": 0,
+    "log": "tmp/exact-v1/lint-fiftieth.log"
+  },
+  "unit": {
+    "passed": 508,
+    "files": 71,
+    "log": "tmp/exact-v1/unit-fiftieth-all.log"
+  },
+  "format": {
+    "status": "passed",
+    "log": "tmp/exact-v1/format-fiftieth.log"
+  },
+  "generated": {
+    "status": "passed",
+    "clientOperations": 304,
+    "schemas": 534,
+    "ownerOperations": 0,
+    "log": "tmp/exact-v1/generated-fortyninth.log",
+    "note": "No contract changes in50."
+  },
+  "browser": {
+    "passed": 38,
+    "failed": 0,
+    "skipped": 0,
+    "retried": 0,
+    "independentSerialBatches": 2,
+    "receipts": "tmp/exact-v1/browser-fiftieth-receipts.json",
+    "scope": "Six files: weekly/native preferences/legacy connected flows and related navigation, rich interactions and vNext. Not a repeat of the full317-test run on45."
+  },
+  "mainVisual": {
+    "captured": 18,
+    "verified": 18,
+    "pageErrors": 0,
+    "overflow": 0,
+    "archive": "output/review/exact-v1/after-fiftieth-rules"
+  },
+  "responsive": {
+    "boundary": 33,
+    "largeText": 33,
+    "widths": [
+      320,
+      360,
+      390,
+      430,
+      768,
+      834,
+      1024,
+      1194,
+      1280,
+      1440,
+      1920
+    ],
+    "theme": "light; main18 cover both themes",
+    "receipt": "tmp/exact-v1/responsive-fiftieth-rules-receipts.json",
+    "nativeImageDimensionsVerified": true
+  },
+  "geometry": {
+    "rulesPaired": 18,
+    "rulesUnreviewedRectanglesAtLeast4": 0,
+    "allEvidencePairedConfigurations": 678,
+    "allEvidenceUnresolvedRectangles": 356,
+    "note": "All-evidence geometry spans multiple builds; text-format differences remain open. Rectangle count is not a confirmed CSS defect count."
+  },
+  "scope": "Native two-step weekly rule and apply-date dialog; scoped edit intent survives reload; empty/foreign acknowledgments rejected. Shared checkbox44px, portal field gap, responsive stack gap and overlay backdrop rules corrected."
+}

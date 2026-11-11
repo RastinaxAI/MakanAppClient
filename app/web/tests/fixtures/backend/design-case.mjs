@@ -1,6 +1,7 @@
 import { make, id, ids } from './state.mjs';
-export function seedReferenceCase(state) {
+export function seedReferenceCase(state, options = {}) {
   state.design = true;
+  state.webPushConfigured = options.webPushConfigured === true;
   for (const [n, firstName, lastName, username] of [
     [101, 'سارا', 'احمدی', 'sara.ahmadi'],
     [102, 'مریم', 'رضایی', 'maryam.rezaei'],
@@ -55,6 +56,17 @@ export function seedReferenceCase(state) {
       attachments: [],
     }),
   );
+  if (options.exactV5) {
+    state.messages = state.messages.slice(0, 2).map((message, index) => ({
+      ...message,
+      text:
+        index === 0
+          ? 'برای تمرین فردا، سؤال دوم را هم بررسی کنید.'
+          : 'پاسخ را در بخش تکلیف کلاس تحویل دادم.',
+      sentAtUtc: '2026-11-07T07:12:00Z',
+      createdAtUtc: '2026-11-07T07:12:00Z',
+    }));
+  }
 }
 export const referenceChild = () =>
   make('AuthorizedChildResult', {

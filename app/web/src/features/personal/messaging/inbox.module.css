@@ -1,0 +1,192 @@
+.workspace {
+  display: block;
+  width: 100%;
+  max-width: 1100px;
+  margin-inline: auto;
+  height: 100%;
+  min-height: 0;
+  min-width: 0;
+  background: transparent;
+}
+.sidebar {
+  width: 100%;
+  flex: none;
+  min-width: 0;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow: auto;
+}
+.search {
+  margin: 0;
+  min-width: 0;
+}
+.searchSubmit {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--muted);
+}
+.filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 0;
+  background: transparent;
+}
+.filter button,
+.filterTitle button {
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  background: var(--surface);
+  color: var(--muted);
+  padding: 8px 14px;
+  min-height: 44px;
+  font: inherit;
+  font-size: calc(12px * var(--text-scale, 1));
+  font-weight: 650;
+  line-height: 1.6;
+}
+.filter button[aria-pressed='true'] {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: var(--primary-soft);
+}
+.filterTitle {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+.list {
+  min-width: 0;
+}
+.inboxCard {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--surface);
+}
+.chatItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  min-height: 68px;
+  min-width: 0;
+  color: var(--text);
+}
+.chatItem + .chatItem {
+  border-top: 1px solid var(--line);
+}
+.selected {
+  background: var(--soft);
+}
+.avatar {
+  width: 44px;
+  height: 44px;
+  flex: none;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--soft);
+  color: var(--accent);
+  font-size: calc(16px * var(--text-scale, 1));
+  font-weight: 700;
+}
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+}
+.organizationAvatar {
+  background: var(--soft);
+}
+.chatSummary {
+  flex: 1;
+  min-width: 0;
+}
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  min-width: 0;
+}
+.row strong {
+  min-width: 0;
+  font-size: calc(16px * var(--text-scale, 1));
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+.row time {
+  flex: none;
+  font-size: calc(10px * var(--text-scale, 1));
+  color: var(--muted);
+}
+.preview,
+.orgLabel {
+  min-width: 0;
+  color: var(--muted);
+  font-size: calc(13px * var(--text-scale, 1));
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+.orgLabel {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: calc(11px * var(--text-scale, 1));
+}
+.unread {
+  flex: none;
+  min-width: 21px;
+  min-height: 21px;
+  padding: 1px 5px;
+  display: grid;
+  place-items: center;
+  border-radius: 7px;
+  background: var(--accent);
+  color: var(--on-action);
+  font-size: calc(10px * var(--text-scale, 1));
+}
+.paging {
+  display: flex;
+  justify-content: center;
+  padding-block: 16px;
+}
+.sidebarFoot {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: calc(11px * var(--text-scale, 1));
+  color: var(--muted);
+}
+.sidebarFoot a {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+}
+.sidebar [data-messaging-invitations] {
+  margin: 0;
+}
+@media (max-width: 359px) {
+  .chatItem {
+    padding: 12px;
+    gap: 8px;
+  }
+  .row strong {
+    font-size: calc(15px * var(--text-scale, 1));
+  }
+}

@@ -1,8 +1,9 @@
 'use client';
+import { uiClass } from '@/components/v5/classes';
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import type { CSSProperties } from 'react';
+import { useEffect, useRef, type CSSProperties } from 'react';
 import {
   School,
   UsersRound,
@@ -33,9 +34,24 @@ export function AppNavigation({
 }) {
   const pathname = usePathname();
   const current = activeHref ?? activeNavigation(pathname);
+  const element = useRef<HTMLElement>(null);
+  useEffect(() => {
+    if (presentation === 'sidebar' || !element.current) return;
+    const nav = element.current;
+    const viewport = nav.closest<HTMLElement>('.v5-product-viewport');
+    if (!viewport) return;
+    const observer = new ResizeObserver(() => {
+      const height = nav.getBoundingClientRect().height;
+      if (height > 0 && window.matchMedia('(max-width: 767px)').matches)
+        viewport.style.setProperty('--mobile-nav-height', `${height}px`);
+    });
+    observer.observe(nav);
+    return () => observer.disconnect();
+  }, [presentation]);
   return (
     <nav
-      className={`${s.navigation} ${s[presentation]}`}
+      ref={element}
+      className={uiClass(`${s.navigation} ${s[presentation]}`)}
       aria-label={uiText.text_049e4c61b067}
       data-app-navigation
       data-navigation-presentation={presentation}
@@ -49,16 +65,16 @@ export function AppNavigation({
             key={item.href}
             href={href}
             prefetch={false}
-            className={s.item}
+            className={uiClass(s.item)}
             aria-label={item.name}
             title={item.name}
             aria-current={current === item.href ? 'page' : undefined}
             data-navigation-target={href}
           >
-            <span className={s.glyph} aria-hidden="true">
+            <span className={uiClass(s.glyph)} aria-hidden="true">
               <Icon size={tokens.layout.navIcon} strokeWidth={1.8} />
             </span>
-            <span className={s.label}>{item.name}</span>
+            <span className={uiClass(s.label)}>{item.name}</span>
           </Link>
         );
       })}

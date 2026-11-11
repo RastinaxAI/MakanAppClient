@@ -290,6 +290,9 @@
 | `POST /api/v1/organization/members/{membershipId}/roles` | GrantSchoolRoleCommand | SchoolMembershipMutationResult |
 | `PUT /api/v1/organization/members/{membershipId}/roles/{roleAssignmentId}` | ChangeSchoolRoleCommand | SchoolMembershipMutationResult |
 | `GET /api/v1/notifications/devices/web-push/configuration` | — | WebPushClientConfiguration |
+| `GET /api/v1/notifications/devices` | — | PushDevicePageResult |
+| `POST /api/v1/notifications/devices/web-push` | RegisterWebPushCommand | PushDeviceRegistrationResult |
+| `DELETE /api/v1/notifications/devices/{registrationId}` | — | بدون JSON |
 | `GET /api/v1/messaging/invitations` | — | array |
 | `POST /api/v1/messaging/invitations/{invitationId}/accept` | — | ConversationInvitationResult |
 | `POST /api/v1/messaging/invitations/{invitationId}/decline` | — | ConversationInvitationResult |
@@ -308,3 +311,25 @@
 | `POST /api/v1/conversations/{conversationId}/scheduled-messages` | ScheduleMessageCommand | ScheduledMessageResult |
 | `GET /api/v1/conversations/{conversationId}/scheduled-messages` | — | ScheduledMessagePageResult |
 | `POST /api/v1/conversations/{conversationId}/scheduled-messages/{id}/cancel` | CancelScheduledMessageCommand | ScheduledMessageResult |
+| `POST /api/v1/ai/chat` | SendAiChatCommand | AiChatResult |
+| `POST /api/v1/ai/students/analyze` | — | AiStudentAnalysisResponse |
+| `POST /api/v1/ai/study-plan` | CreateStudyPlanCommand | AiStudyPlanResponse |
+| `POST /api/v1/ai/homeworks/{assignmentId}/explain` | ExplainHomeworkCommand | AiHomeworkExplanationResponse |
+| `POST /api/v1/ai/exams/{examId}/prepare` | — | AiExamPreparationResponse |
+| `POST /api/v1/ai/parents/child-summary` | — | AiParentChildSummaryResponse |
+| `POST /api/v1/ai/teachers/classes/{classId}/students/{studentId}/insight` | — | AiRoleInsightResponse |
+| `POST /api/v1/ai/teachers/classes/{classId}/activity-suggestions` | SuggestTeacherActivitiesCommand | AiActivitySuggestionsResponse |
+| `POST /api/v1/ai/managers/school-summary` | — | AiRoleInsightResponse |
+| `POST /api/v1/ai/managers/classes/{classId}/insight` | — | AiRoleInsightResponse |
+| `POST /api/v1/ai/managers/classes/{classId}/students/{studentId}/insight` | — | AiRoleInsightResponse |
+| `POST /api/v1/sources/{sourceId}/versions/{version}/knowledge/ingest` | KnowledgeMutationCommand | KnowledgeProcessingStatus |
+| `GET /api/v1/sources/{sourceId}/versions/{version}/knowledge/status` | — | KnowledgeProcessingStatus |
+| `POST /api/v1/sources/{sourceId}/versions/{version}/knowledge/delete` | KnowledgeMutationCommand | KnowledgeProcessingStatus |
+| `POST /api/v1/sources/{sourceId}/versions/{version}/knowledge/supersede` | KnowledgeMutationCommand | KnowledgeProcessingStatus |
+| `POST /api/v1/sources/{sourceId}/versions/{version}/knowledge/reindex` | KnowledgeMutationCommand | KnowledgeProcessingStatus |
+| `POST /api/v1/ai/knowledge/retrieve` | KnowledgeQueryCommand | KnowledgeRetrieveResponse |
+| `POST /api/v1/ai/knowledge/rag/answer` | KnowledgeQueryCommand | KnowledgeRagResponse |
+| `GET /api/v1/commerce/payment-attempts/{attemptId}` | — | PaymentAttemptDetailsDto |
+| `POST /api/v1/commerce/payment-attempts/{attemptId}/verify` | — | VerifyPaymentResult |
+| `GET /api/v1/commerce/orders/{orderId}/receipt` | — | PaymentReceiptDto |
+| `GET /api/v1/commerce/personal/orders/{orderId}/receipt` | — | PaymentReceiptDto |

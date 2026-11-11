@@ -4,9 +4,12 @@ import { tmpdir } from 'node:os';
 import { randomBytes } from 'node:crypto';
 import { join, resolve, dirname, basename } from 'node:path';
 import { fixtureBackend } from '../tests/fixtures/backend/server.mjs';
-const root = process.cwd(),
+const ordinaryRuntime = process.argv.includes('--ordinary-runtime'),
+  appPort = ordinaryRuntime ? 3159 : 3132,
+  backendPort = ordinaryRuntime ? 3459 : 3457,
+  root = process.cwd(),
   sessions = mkdtempSync(join(tmpdir(), 'makan-isolated-'));
-const backend = await fixtureBackend();
+const backend = await fixtureBackend(backendPort);
 const child = spawn(
   process.execPath,
   [
@@ -15,16 +18,16 @@ const child = spawn(
     '--hostname',
     '127.0.0.1',
     '--port',
-    '3132',
+    String(appPort),
   ],
   {
     cwd: root,
     env: {
       ...process.env,
-      MAKAN_TEST_MODE: 'fixture',
+      MAKAN_TEST_MODE: ordinaryRuntime ? '' : 'fixture',
       MAKAN_REFERENCE_PREVIEW: 'false',
-      APP_ORIGIN: 'http://127.0.0.1:3132',
-      BACKEND_BASE_URL: 'http://127.0.0.1:3457',
+      APP_ORIGIN: `http://127.0.0.1:${appPort}`,
+      BACKEND_BASE_URL: `http://127.0.0.1:${backendPort}`,
       SESSION_DIRECTORY: sessions,
       SESSION_SECRET: randomBytes(32).toString('hex'),
       COOKIE_SECURE: 'false',
@@ -50,4 +53,6 @@ child.on('exit', (code) => {
   stop();
   process.exitCode = code ?? 1;
 });
-console.log('ISOLATED FIXTURE APP :3132; BACKEND :3457. No external service calls.');
+console.log(
+  `ISOLATED BACKEND :${backendPort}; APP :${appPort}; ${ordinaryRuntime ? 'ordinary' : 'fixture'} runtime. No external service calls.`,
+);

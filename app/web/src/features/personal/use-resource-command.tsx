@@ -32,6 +32,8 @@ export function useResourceCommand(scope: string) {
       idempotent?: boolean;
       throwOnError?: boolean;
       acceptResult?: (value: T) => boolean;
+      expectedStatus?: number;
+      reconcileOnError?: boolean;
     } = {},
   ): Promise<{ value: T } | undefined> {
     if (pending.current) return;
@@ -54,19 +56,28 @@ export function useResourceCommand(scope: string) {
       }
       const value = await call<T>(path, {
         method,
+        ...(options.expectedStatus === undefined ? {} : { expectedStatus: options.expectedStatus }),
         ...(body === undefined ? {} : { body: JSON.stringify(body) }),
       });
       if (options.acceptResult && !options.acceptResult(value))
         throw new ApiError(502, { code: 'CONTRACT_MISMATCH' });
-      if (!alive.current) return;
       if (options.idempotent) sessionStorage.removeItem(key);
-      setSuccess(t.changed);
       await cache.invalidateQueries({ queryKey: ['personal', session.user.id, session.revision] });
+      if (!alive.current) return;
+      setSuccess(t.changed);
       return { value };
     } catch (e) {
+      if (options.reconcileOnError)
+        await cache.invalidateQueries({
+          queryKey: ['personal', session.user.id, session.revision],
+        });
       if (alive.current && !(e instanceof Error && e.name === 'AbortError')) {
         setError(e);
-        if (e instanceof ApiError && [403, 409, 412].includes(e.status))
+        if (
+          !options.reconcileOnError &&
+          e instanceof ApiError &&
+          [403, 409, 412].includes(e.status)
+        )
           await cache.invalidateQueries({
             queryKey: ['personal', session.user.id, session.revision],
           });
@@ -81,6 +92,12 @@ export function useResourceCommand(scope: string) {
     run,
     busy,
     error,
+    clearFeedback: () => {
+      if (!pending.current) {
+        setError(undefined);
+        setSuccess('');
+      }
+    },
     feedback: (
       <>
         {!!error && <ErrorState error={error} />}

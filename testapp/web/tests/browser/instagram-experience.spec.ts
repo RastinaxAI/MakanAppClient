@@ -1,7 +1,8 @@
+import { reviewPath } from './review-output';
 import { test, expect, login, fixture, origin } from './test';
 import { mkdir } from 'node:fs/promises';
 
-const output = 'output/review/mk-connected';
+const output = reviewPath('output/review/mk-connected');
 for (const theme of ['light', 'dark']) {
   for (const role of ['Student', 'Teacher', 'Parent', 'Manager', 'Personal']) {
     test(`MK reference five-destination shell: ${role} ${theme}`, async ({

@@ -1,12 +1,14 @@
 import { describe, it, expect } from 'vitest';
-import spec from '../../design/screens.json';
+import spec from '../../design/responsive-reference.json';
+import supplied from '../../design/reference-v5/MakanApp_Responsive_Design_v5/design-tokens.json';
 import tokens from '../../design/tokens.json';
-describe('version two reference integrity', () => {
-  it('has 130 unique ids and the published draft-review-receipt sequence', () => {
-    expect(spec.screens).toHaveLength(130);
-    expect(new Set(spec.screens.map((s) => s.id)).size).toBe(130);
-    expect(spec.screens.find((s) => s.id === 'S17')?.notes).toContain('S09 -> S17 -> S10');
-    expect(spec.designDirection.tablet).toContain('No side rail');
+describe('current responsive reference integrity', () => {
+  it('keeps V5 identities and current device rules distinct from obsolete reference defaults', () => {
+    expect(spec.screens).toHaveLength(528);
+    expect(new Set(spec.screens.map((s) => s.scenario_id)).size).toBe(528);
+    expect(supplied.responsiveV5.tabletRail).toBe(76);
+    expect(supplied.responsiveV5.desktopNav).toBe(208);
+    expect(supplied.responsiveV5.minimumInputHeight).toBe(48);
   });
   it('keeps independent icon size and touch target tokens', () => {
     expect(tokens.layout.navIcon).toBe(24);

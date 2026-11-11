@@ -1,4 +1,8 @@
 'use client';
+import { Input as NativeInput } from '@/components/ui/input';
+
+import { uiClass } from '@/components/v5/classes';
+
 import * as uiText from '@/content/fa';
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
@@ -24,13 +28,13 @@ export function JoinConversation() {
     setToken(new URLSearchParams(location.hash.slice(1)).get('token') ?? '');
   }, []);
   return (
-    <MessagingSurface className={c.page}>
+    <MessagingSurface className={uiClass(c.page)}>
       <PageBack href="/personal/messages" />
-      <header className={c.header}>
+      <header className={uiClass(c.header)}>
         <Link2 size={36} />
         <h1>{uiText.text_769f4b226ba8}</h1>
       </header>
-      <section className={c.panel}>
+      <section className={uiClass(c.panel)}>
         {result ? (
           <div role="status">
             {redemptionState(result) === 'denied' ? (
@@ -58,7 +62,7 @@ export function JoinConversation() {
           </div>
         ) : (
           <form
-            className={c.form}
+            className={uiClass(c.form)}
             onSubmit={async (ev) => {
               ev.preventDefault();
               if (lock.current || !token.trim()) return;
@@ -86,7 +90,7 @@ export function JoinConversation() {
           >
             <label>
               {uiText.text_1be42c39e984}
-              <input
+              <NativeInput
                 autoComplete="off"
                 spellCheck={false}
                 dir="ltr"
@@ -96,7 +100,7 @@ export function JoinConversation() {
                 disabled={busy}
               />
             </label>
-            <p className={c.note}>{uiText.text_2f53ed20dec0}</p>
+            <p className={uiClass(c.note)}>{uiText.text_2f53ed20dec0}</p>
             <Button disabled={busy || !token.trim()} type="submit">
               {busy ? uiText.text_25384e522776 : uiText.text_ab3d1db5c4aa}
             </Button>

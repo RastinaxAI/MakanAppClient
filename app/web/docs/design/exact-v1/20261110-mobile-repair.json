@@ -1,0 +1,5013 @@
+{
+  "date": "2026-11-10",
+  "scope": "Native CSS viewport review of eight representative real Next routes, with isolated declared fixtures. Not all 528 design states or a pixel-parity score.",
+  "reference": "V5 Blue; inner device viewport only; MK-170 is the actual inbox variant, MK-35 remains a family mapping.",
+  "cases": [
+    {
+      "key": "school-student",
+      "title": "آموزشگاه دانش‌آموز",
+      "width": 390,
+      "height": 844,
+      "theme": "light",
+      "productBuildId": "7mzabErvwPNa9_wVNCIJw",
+      "synthetic": true,
+      "stateVerified": true,
+      "overflow": false,
+      "images": {
+        "before": {
+          "path": "output/review/exact-v1/repair-before/school-student-390-light.png",
+          "sha256": "aaa19520dd4dfe2867c05b25406cfd9532d3f5d8fc42292a0e235f6d14d4bfc4",
+          "url": "/exact-v1/repair-before/school-student-390-light.png"
+        },
+        "reference": {
+          "path": "output/review/exact-v1/repair-reference-matched/school-student-390-light.png",
+          "sha256": "fea48fdcfa9d03b7c3ef59d5266d00ed97574405f0bc9d42cdead142d5a1175b",
+          "url": "/exact-v1/repair-reference-matched/school-student-390-light.png"
+        },
+        "after": {
+          "path": "output/review/exact-v1/repair-complete/school-student-390-light.png",
+          "sha256": "aaa19520dd4dfe2867c05b25406cfd9532d3f5d8fc42292a0e235f6d14d4bfc4",
+          "url": "/exact-v1/repair-complete/school-student-390-light.png"
+        }
+      },
+      "measurements": [
+        {
+          "element": "header",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "title",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "segmented",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listBounds",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.031,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listFirstRow",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.031,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        }
+      ]
+    },
+    {
+      "key": "school-student",
+      "title": "آموزشگاه دانش‌آموز",
+      "width": 834,
+      "height": 1112,
+      "theme": "light",
+      "productBuildId": "7mzabErvwPNa9_wVNCIJw",
+      "synthetic": true,
+      "stateVerified": true,
+      "overflow": false,
+      "images": {
+        "before": {
+          "path": "output/review/exact-v1/repair-before/school-student-834-light.png",
+          "sha256": "a9776a21daf7292a69adcf1007dbcb5203d2ba28332222d8e8b1df042e37cc41",
+          "url": "/exact-v1/repair-before/school-student-834-light.png"
+        },
+        "reference": {
+          "path": "output/review/exact-v1/repair-reference-matched/school-student-834-light.png",
+          "sha256": "08a5d94ae84aca38c95a69b83360e9aecd4b47076a9aedb2d1de431adb0f2c5b",
+          "url": "/exact-v1/repair-reference-matched/school-student-834-light.png"
+        },
+        "after": {
+          "path": "output/review/exact-v1/repair-complete/school-student-834-light.png",
+          "sha256": "b8b8d2229f597ff5b8494f5631fe22d3d74c19b81b915b9ac7b6ff477b4aed69",
+          "url": "/exact-v1/repair-complete/school-student-834-light.png"
+        }
+      },
+      "measurements": [
+        {
+          "element": "header",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "title",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "segmented",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listBounds",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.031,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listFirstRow",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.031,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "context",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        }
+      ]
+    },
+    {
+      "key": "school-student",
+      "title": "آموزشگاه دانش‌آموز",
+      "width": 1440,
+      "height": 1000,
+      "theme": "light",
+      "productBuildId": "7mzabErvwPNa9_wVNCIJw",
+      "synthetic": true,
+      "stateVerified": true,
+      "overflow": false,
+      "images": {
+        "before": {
+          "path": "output/review/exact-v1/repair-before/school-student-1440-light.png",
+          "sha256": "178231dddb7f561ffd8a9f8c97b4a7b12848b283b3ae2aeaf256e7515809b131",
+          "url": "/exact-v1/repair-before/school-student-1440-light.png"
+        },
+        "reference": {
+          "path": "output/review/exact-v1/repair-reference-matched/school-student-1440-light.png",
+          "sha256": "c2a80a3fb5f22c829341bc21feef5e3de1ae433f38a3b96bc46dbe64b9c3ce06",
+          "url": "/exact-v1/repair-reference-matched/school-student-1440-light.png"
+        },
+        "after": {
+          "path": "output/review/exact-v1/repair-complete/school-student-1440-light.png",
+          "sha256": "0bf5a722ea7f08dd37c2c797c148ff9cc890e2660aec54354dc11e140579f494",
+          "url": "/exact-v1/repair-complete/school-student-1440-light.png"
+        }
+      },
+      "measurements": [
+        {
+          "element": "header",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "title",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "segmented",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listBounds",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.031,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listFirstRow",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.031,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "context",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        }
+      ]
+    },
+    {
+      "key": "school-student",
+      "title": "آموزشگاه دانش‌آموز",
+      "width": 390,
+      "height": 844,
+      "theme": "dark",
+      "productBuildId": "7mzabErvwPNa9_wVNCIJw",
+      "synthetic": true,
+      "stateVerified": true,
+      "overflow": false,
+      "images": {
+        "before": {
+          "path": "output/review/exact-v1/repair-before/school-student-390-dark.png",
+          "sha256": "bf7c2122ea51fb7f9b21dcb78ce720f07c27840ff10e5a7c6659ac254be737be",
+          "url": "/exact-v1/repair-before/school-student-390-dark.png"
+        },
+        "reference": {
+          "path": "output/review/exact-v1/repair-reference-matched/school-student-390-dark.png",
+          "sha256": "50ffc5a0ae3811117ecf97ac82d5e5a5733814c5f937558baee032ad6662f53b",
+          "url": "/exact-v1/repair-reference-matched/school-student-390-dark.png"
+        },
+        "after": {
+          "path": "output/review/exact-v1/repair-complete/school-student-390-dark.png",
+          "sha256": "bf7c2122ea51fb7f9b21dcb78ce720f07c27840ff10e5a7c6659ac254be737be",
+          "url": "/exact-v1/repair-complete/school-student-390-dark.png"
+        }
+      },
+      "measurements": [
+        {
+          "element": "header",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "title",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "segmented",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listBounds",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.031,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listFirstRow",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.031,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        }
+      ]
+    },
+    {
+      "key": "school-student",
+      "title": "آموزشگاه دانش‌آموز",
+      "width": 834,
+      "height": 1112,
+      "theme": "dark",
+      "productBuildId": "7mzabErvwPNa9_wVNCIJw",
+      "synthetic": true,
+      "stateVerified": true,
+      "overflow": false,
+      "images": {
+        "before": {
+          "path": "output/review/exact-v1/repair-before/school-student-834-dark.png",
+          "sha256": "fbc35eca2530760d254f624e9cefaeb6851b125d52455bcf9d7fb27595db1777",
+          "url": "/exact-v1/repair-before/school-student-834-dark.png"
+        },
+        "reference": {
+          "path": "output/review/exact-v1/repair-reference-matched/school-student-834-dark.png",
+          "sha256": "8f45b1a6f7bbb99ceeb981311ac8d707958028d75d2c3cb72faafd1926644b33",
+          "url": "/exact-v1/repair-reference-matched/school-student-834-dark.png"
+        },
+        "after": {
+          "path": "output/review/exact-v1/repair-complete/school-student-834-dark.png",
+          "sha256": "b269fd108377f93b8454a40862773213a2eccec36cd30fed94ed67acde82b06b",
+          "url": "/exact-v1/repair-complete/school-student-834-dark.png"
+        }
+      },
+      "measurements": [
+        {
+          "element": "header",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "title",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "segmented",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listBounds",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.031,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listFirstRow",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.031,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "context",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        }
+      ]
+    },
+    {
+      "key": "school-student",
+      "title": "آموزشگاه دانش‌آموز",
+      "width": 1440,
+      "height": 1000,
+      "theme": "dark",
+      "productBuildId": "7mzabErvwPNa9_wVNCIJw",
+      "synthetic": true,
+      "stateVerified": true,
+      "overflow": false,
+      "images": {
+        "before": {
+          "path": "output/review/exact-v1/repair-before/school-student-1440-dark.png",
+          "sha256": "95fef3470b7361e4150fea4147d85b5386a02d1b4ecab4333823db7f39641c3a",
+          "url": "/exact-v1/repair-before/school-student-1440-dark.png"
+        },
+        "reference": {
+          "path": "output/review/exact-v1/repair-reference-matched/school-student-1440-dark.png",
+          "sha256": "67d243630b474d9fe9a6d32cf6417f5b6eb5b11c6cc54bdc83f0e533634b31ed",
+          "url": "/exact-v1/repair-reference-matched/school-student-1440-dark.png"
+        },
+        "after": {
+          "path": "output/review/exact-v1/repair-complete/school-student-1440-dark.png",
+          "sha256": "08ce060c4b11105d04e550dbab98395901ae308857caf8dfe9fde897fb55c803",
+          "url": "/exact-v1/repair-complete/school-student-1440-dark.png"
+        }
+      },
+      "measurements": [
+        {
+          "element": "header",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "title",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "segmented",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listBounds",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.031,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listFirstRow",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.031,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "context",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        }
+      ]
+    },
+    {
+      "key": "profile",
+      "title": "پروفایل",
+      "width": 390,
+      "height": 844,
+      "theme": "light",
+      "productBuildId": "7mzabErvwPNa9_wVNCIJw",
+      "synthetic": true,
+      "stateVerified": true,
+      "overflow": false,
+      "images": {
+        "before": {
+          "path": "output/review/exact-v1/repair-mobile-before/profile-390-light.png",
+          "sha256": "fdc183ee373d24bf6b77ce504f1d8baf6f05605f1cbc31d7fa04afe975c37257",
+          "url": "/exact-v1/repair-mobile-before/profile-390-light.png"
+        },
+        "reference": {
+          "path": "output/review/exact-v1/repair-reference-matched/profile-390-light.png",
+          "sha256": "d092141a7e14f30641ee8e64a5d766cf05425b6d2ffee803b99e70ee699adc82",
+          "url": "/exact-v1/repair-reference-matched/profile-390-light.png"
+        },
+        "after": {
+          "path": "output/review/exact-v1/repair-complete/profile-390-light.png",
+          "sha256": "fdc183ee373d24bf6b77ce504f1d8baf6f05605f1cbc31d7fa04afe975c37257",
+          "url": "/exact-v1/repair-complete/profile-390-light.png"
+        }
+      },
+      "measurements": [
+        {
+          "element": "header",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "title",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listBounds",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listFirstRow",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        }
+      ]
+    },
+    {
+      "key": "profile",
+      "title": "پروفایل",
+      "width": 834,
+      "height": 1112,
+      "theme": "light",
+      "productBuildId": "7mzabErvwPNa9_wVNCIJw",
+      "synthetic": true,
+      "stateVerified": true,
+      "overflow": false,
+      "images": {
+        "before": {
+          "path": "output/review/exact-v1/repair-mobile-before/profile-834-light.png",
+          "sha256": "f905ffb32e5fe6c8b1f4b6ec39d4c9e50518d5c1c5b81480577dedda8a8c517b",
+          "url": "/exact-v1/repair-mobile-before/profile-834-light.png"
+        },
+        "reference": {
+          "path": "output/review/exact-v1/repair-reference-matched/profile-834-light.png",
+          "sha256": "cb56a238d9bf62e1eb99dbfc53a64795f1d241cf877011ea3a89e5296d7d4717",
+          "url": "/exact-v1/repair-reference-matched/profile-834-light.png"
+        },
+        "after": {
+          "path": "output/review/exact-v1/repair-complete/profile-834-light.png",
+          "sha256": "f905ffb32e5fe6c8b1f4b6ec39d4c9e50518d5c1c5b81480577dedda8a8c517b",
+          "url": "/exact-v1/repair-complete/profile-834-light.png"
+        }
+      },
+      "measurements": [
+        {
+          "element": "header",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "title",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listBounds",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listFirstRow",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "context",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        }
+      ]
+    },
+    {
+      "key": "profile",
+      "title": "پروفایل",
+      "width": 1440,
+      "height": 1000,
+      "theme": "light",
+      "productBuildId": "7mzabErvwPNa9_wVNCIJw",
+      "synthetic": true,
+      "stateVerified": true,
+      "overflow": false,
+      "images": {
+        "before": {
+          "path": "output/review/exact-v1/repair-mobile-before/profile-1440-light.png",
+          "sha256": "ae05b3f697cff28be96381ec1702d95eb9f0565a3bbe5d3fdf8f24efb377068d",
+          "url": "/exact-v1/repair-mobile-before/profile-1440-light.png"
+        },
+        "reference": {
+          "path": "output/review/exact-v1/repair-reference-matched/profile-1440-light.png",
+          "sha256": "34db4112e1cd97335427ba792f7199b1bb9ef8ca7152eb16492590da4e823fe4",
+          "url": "/exact-v1/repair-reference-matched/profile-1440-light.png"
+        },
+        "after": {
+          "path": "output/review/exact-v1/repair-complete/profile-1440-light.png",
+          "sha256": "ae05b3f697cff28be96381ec1702d95eb9f0565a3bbe5d3fdf8f24efb377068d",
+          "url": "/exact-v1/repair-complete/profile-1440-light.png"
+        }
+      },
+      "measurements": [
+        {
+          "element": "header",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "title",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listBounds",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listFirstRow",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "context",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        }
+      ]
+    },
+    {
+      "key": "profile",
+      "title": "پروفایل",
+      "width": 390,
+      "height": 844,
+      "theme": "dark",
+      "productBuildId": "7mzabErvwPNa9_wVNCIJw",
+      "synthetic": true,
+      "stateVerified": true,
+      "overflow": false,
+      "images": {
+        "before": {
+          "path": "output/review/exact-v1/repair-mobile-before/profile-390-dark.png",
+          "sha256": "5637062e89aaf7e7ddddbaa727702e544e943ce0a712a773de364b19a23fad92",
+          "url": "/exact-v1/repair-mobile-before/profile-390-dark.png"
+        },
+        "reference": {
+          "path": "output/review/exact-v1/repair-reference-matched/profile-390-dark.png",
+          "sha256": "10bac2036f817ba4eb8e3995820af241a8fe2adabe054e5ebaf37769952d79b8",
+          "url": "/exact-v1/repair-reference-matched/profile-390-dark.png"
+        },
+        "after": {
+          "path": "output/review/exact-v1/repair-complete/profile-390-dark.png",
+          "sha256": "5637062e89aaf7e7ddddbaa727702e544e943ce0a712a773de364b19a23fad92",
+          "url": "/exact-v1/repair-complete/profile-390-dark.png"
+        }
+      },
+      "measurements": [
+        {
+          "element": "header",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "title",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listBounds",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listFirstRow",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        }
+      ]
+    },
+    {
+      "key": "profile",
+      "title": "پروفایل",
+      "width": 834,
+      "height": 1112,
+      "theme": "dark",
+      "productBuildId": "7mzabErvwPNa9_wVNCIJw",
+      "synthetic": true,
+      "stateVerified": true,
+      "overflow": false,
+      "images": {
+        "before": {
+          "path": "output/review/exact-v1/repair-mobile-before/profile-834-dark.png",
+          "sha256": "33f3f42eb6a4428b7d2d534e0d4d64387791eca9291af0edb29b97fa995c1a3b",
+          "url": "/exact-v1/repair-mobile-before/profile-834-dark.png"
+        },
+        "reference": {
+          "path": "output/review/exact-v1/repair-reference-matched/profile-834-dark.png",
+          "sha256": "42e58628c0c6e100910733a8bbb39ef9899a8fc3a95a4b727f8bf88b833a4c90",
+          "url": "/exact-v1/repair-reference-matched/profile-834-dark.png"
+        },
+        "after": {
+          "path": "output/review/exact-v1/repair-complete/profile-834-dark.png",
+          "sha256": "33f3f42eb6a4428b7d2d534e0d4d64387791eca9291af0edb29b97fa995c1a3b",
+          "url": "/exact-v1/repair-complete/profile-834-dark.png"
+        }
+      },
+      "measurements": [
+        {
+          "element": "header",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "title",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listBounds",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listFirstRow",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "context",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        }
+      ]
+    },
+    {
+      "key": "profile",
+      "title": "پروفایل",
+      "width": 1440,
+      "height": 1000,
+      "theme": "dark",
+      "productBuildId": "7mzabErvwPNa9_wVNCIJw",
+      "synthetic": true,
+      "stateVerified": true,
+      "overflow": false,
+      "images": {
+        "before": {
+          "path": "output/review/exact-v1/repair-mobile-before/profile-1440-dark.png",
+          "sha256": "5d11c61f0415ebcfd39c39c272cdbcf2a25be44f1955b6aff80d103c4ce48b3c",
+          "url": "/exact-v1/repair-mobile-before/profile-1440-dark.png"
+        },
+        "reference": {
+          "path": "output/review/exact-v1/repair-reference-matched/profile-1440-dark.png",
+          "sha256": "4ad2922b61cd4b59c5eacb648b6196da6476f06455d7b4fc94771b91cd6b7a0d",
+          "url": "/exact-v1/repair-reference-matched/profile-1440-dark.png"
+        },
+        "after": {
+          "path": "output/review/exact-v1/repair-complete/profile-1440-dark.png",
+          "sha256": "5d11c61f0415ebcfd39c39c272cdbcf2a25be44f1955b6aff80d103c4ce48b3c",
+          "url": "/exact-v1/repair-complete/profile-1440-dark.png"
+        }
+      },
+      "measurements": [
+        {
+          "element": "header",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "title",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listBounds",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listFirstRow",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "context",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        }
+      ]
+    },
+    {
+      "key": "settings",
+      "title": "تنظیمات",
+      "width": 390,
+      "height": 844,
+      "theme": "light",
+      "productBuildId": "7mzabErvwPNa9_wVNCIJw",
+      "synthetic": true,
+      "stateVerified": true,
+      "overflow": false,
+      "images": {
+        "before": {
+          "path": "output/review/exact-v1/repair-mobile-before/settings-390-light.png",
+          "sha256": "0881022b27915ed2326fd94bbd99034d0aab784b9ad5cd6c84cbba840d7423e3",
+          "url": "/exact-v1/repair-mobile-before/settings-390-light.png"
+        },
+        "reference": {
+          "path": "output/review/exact-v1/repair-reference-matched/settings-390-light.png",
+          "sha256": "2c47933f764c6c6dcab2fe7bc9ead4fd452034493d22ac90a4d61df775ce72c0",
+          "url": "/exact-v1/repair-reference-matched/settings-390-light.png"
+        },
+        "after": {
+          "path": "output/review/exact-v1/repair-complete/settings-390-light.png",
+          "sha256": "0881022b27915ed2326fd94bbd99034d0aab784b9ad5cd6c84cbba840d7423e3",
+          "url": "/exact-v1/repair-complete/settings-390-light.png"
+        }
+      },
+      "measurements": [
+        {
+          "element": "header",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "title",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listBounds",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listFirstRow",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        }
+      ]
+    },
+    {
+      "key": "settings",
+      "title": "تنظیمات",
+      "width": 834,
+      "height": 1112,
+      "theme": "light",
+      "productBuildId": "7mzabErvwPNa9_wVNCIJw",
+      "synthetic": true,
+      "stateVerified": true,
+      "overflow": false,
+      "images": {
+        "before": {
+          "path": "output/review/exact-v1/repair-mobile-before/settings-834-light.png",
+          "sha256": "032ee754402b01af14acada511327f04c3d569cf1030f3f914de4fbd496f6636",
+          "url": "/exact-v1/repair-mobile-before/settings-834-light.png"
+        },
+        "reference": {
+          "path": "output/review/exact-v1/repair-reference-matched/settings-834-light.png",
+          "sha256": "e6d2cb26a286eb0a811ffabed927c6a2a535849efc254281a7b7bb750af34668",
+          "url": "/exact-v1/repair-reference-matched/settings-834-light.png"
+        },
+        "after": {
+          "path": "output/review/exact-v1/repair-complete/settings-834-light.png",
+          "sha256": "032ee754402b01af14acada511327f04c3d569cf1030f3f914de4fbd496f6636",
+          "url": "/exact-v1/repair-complete/settings-834-light.png"
+        }
+      },
+      "measurements": [
+        {
+          "element": "header",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "title",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listBounds",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listFirstRow",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "context",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        }
+      ]
+    },
+    {
+      "key": "settings",
+      "title": "تنظیمات",
+      "width": 1440,
+      "height": 1000,
+      "theme": "light",
+      "productBuildId": "7mzabErvwPNa9_wVNCIJw",
+      "synthetic": true,
+      "stateVerified": true,
+      "overflow": false,
+      "images": {
+        "before": {
+          "path": "output/review/exact-v1/repair-mobile-before/settings-1440-light.png",
+          "sha256": "1621a95229b41f119a857d5f8a370fa8d85b714cf9447450a907d297880de071",
+          "url": "/exact-v1/repair-mobile-before/settings-1440-light.png"
+        },
+        "reference": {
+          "path": "output/review/exact-v1/repair-reference-matched/settings-1440-light.png",
+          "sha256": "5a39131996ada7f2201978a1196a1341b3ce28c1140459eba5866370c368393e",
+          "url": "/exact-v1/repair-reference-matched/settings-1440-light.png"
+        },
+        "after": {
+          "path": "output/review/exact-v1/repair-complete/settings-1440-light.png",
+          "sha256": "1621a95229b41f119a857d5f8a370fa8d85b714cf9447450a907d297880de071",
+          "url": "/exact-v1/repair-complete/settings-1440-light.png"
+        }
+      },
+      "measurements": [
+        {
+          "element": "header",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "title",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listBounds",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listFirstRow",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "context",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        }
+      ]
+    },
+    {
+      "key": "settings",
+      "title": "تنظیمات",
+      "width": 390,
+      "height": 844,
+      "theme": "dark",
+      "productBuildId": "7mzabErvwPNa9_wVNCIJw",
+      "synthetic": true,
+      "stateVerified": true,
+      "overflow": false,
+      "images": {
+        "before": {
+          "path": "output/review/exact-v1/repair-mobile-before/settings-390-dark.png",
+          "sha256": "0631a577588ccadde26aefa67ad696fe630226838842e7e057e504454bd0aa35",
+          "url": "/exact-v1/repair-mobile-before/settings-390-dark.png"
+        },
+        "reference": {
+          "path": "output/review/exact-v1/repair-reference-matched/settings-390-dark.png",
+          "sha256": "598df6d74247d48ec5b20dc874b92fefae608d42c8a54823e44c458ce65661ac",
+          "url": "/exact-v1/repair-reference-matched/settings-390-dark.png"
+        },
+        "after": {
+          "path": "output/review/exact-v1/repair-complete/settings-390-dark.png",
+          "sha256": "0631a577588ccadde26aefa67ad696fe630226838842e7e057e504454bd0aa35",
+          "url": "/exact-v1/repair-complete/settings-390-dark.png"
+        }
+      },
+      "measurements": [
+        {
+          "element": "header",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "title",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listBounds",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listFirstRow",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        }
+      ]
+    },
+    {
+      "key": "settings",
+      "title": "تنظیمات",
+      "width": 834,
+      "height": 1112,
+      "theme": "dark",
+      "productBuildId": "7mzabErvwPNa9_wVNCIJw",
+      "synthetic": true,
+      "stateVerified": true,
+      "overflow": false,
+      "images": {
+        "before": {
+          "path": "output/review/exact-v1/repair-mobile-before/settings-834-dark.png",
+          "sha256": "a618f1e0aa99d4f75daa4f3dd88e12719f0b394616e3af922ec4492c93ec12ca",
+          "url": "/exact-v1/repair-mobile-before/settings-834-dark.png"
+        },
+        "reference": {
+          "path": "output/review/exact-v1/repair-reference-matched/settings-834-dark.png",
+          "sha256": "0b5a648d465e2af5c64ef7100237702b2a1d36fbda023316c662709cc13fe887",
+          "url": "/exact-v1/repair-reference-matched/settings-834-dark.png"
+        },
+        "after": {
+          "path": "output/review/exact-v1/repair-complete/settings-834-dark.png",
+          "sha256": "a618f1e0aa99d4f75daa4f3dd88e12719f0b394616e3af922ec4492c93ec12ca",
+          "url": "/exact-v1/repair-complete/settings-834-dark.png"
+        }
+      },
+      "measurements": [
+        {
+          "element": "header",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "title",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listBounds",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listFirstRow",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "context",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        }
+      ]
+    },
+    {
+      "key": "settings",
+      "title": "تنظیمات",
+      "width": 1440,
+      "height": 1000,
+      "theme": "dark",
+      "productBuildId": "7mzabErvwPNa9_wVNCIJw",
+      "synthetic": true,
+      "stateVerified": true,
+      "overflow": false,
+      "images": {
+        "before": {
+          "path": "output/review/exact-v1/repair-mobile-before/settings-1440-dark.png",
+          "sha256": "40db1dbc836a4242aca5469c9977f53775a65c99b23ac45570c19979197f9936",
+          "url": "/exact-v1/repair-mobile-before/settings-1440-dark.png"
+        },
+        "reference": {
+          "path": "output/review/exact-v1/repair-reference-matched/settings-1440-dark.png",
+          "sha256": "132a70f39578279c6a9c507f6cfcd0464b10cc32e06cd2585899027a569848ae",
+          "url": "/exact-v1/repair-reference-matched/settings-1440-dark.png"
+        },
+        "after": {
+          "path": "output/review/exact-v1/repair-complete/settings-1440-dark.png",
+          "sha256": "40db1dbc836a4242aca5469c9977f53775a65c99b23ac45570c19979197f9936",
+          "url": "/exact-v1/repair-complete/settings-1440-dark.png"
+        }
+      },
+      "measurements": [
+        {
+          "element": "header",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "title",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listBounds",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listFirstRow",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "context",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        }
+      ]
+    },
+    {
+      "key": "resources",
+      "title": "منابع",
+      "width": 390,
+      "height": 844,
+      "theme": "light",
+      "productBuildId": "7mzabErvwPNa9_wVNCIJw",
+      "synthetic": true,
+      "stateVerified": true,
+      "overflow": false,
+      "images": {
+        "before": {
+          "path": "output/review/exact-v1/repair-before/resources-390-light.png",
+          "sha256": "5469e220f7f656e8ad28280037038326d8b6b0a9564b2e77212a47d4247bef4f",
+          "url": "/exact-v1/repair-before/resources-390-light.png"
+        },
+        "reference": {
+          "path": "output/review/exact-v1/repair-reference-matched/resources-390-light.png",
+          "sha256": "e3915d34795612de43056d1fb7468ae924a53d4a1cbe7b5615bc4851d3e0714e",
+          "url": "/exact-v1/repair-reference-matched/resources-390-light.png"
+        },
+        "after": {
+          "path": "output/review/exact-v1/repair-complete/resources-390-light.png",
+          "sha256": "5469e220f7f656e8ad28280037038326d8b6b0a9564b2e77212a47d4247bef4f",
+          "url": "/exact-v1/repair-complete/resources-390-light.png"
+        }
+      },
+      "measurements": [
+        {
+          "element": "header",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "title",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listBounds",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": -156.562
+          },
+          "reviewRequired": true,
+          "disposition": "فقط یک ردیف مجاز در fixture در برابر سه ردیف نمونهٔ مرجع؛ دادهٔ اطلس وارد محصول نشده است."
+        },
+        {
+          "element": "listFirstRow",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        }
+      ]
+    },
+    {
+      "key": "resources",
+      "title": "منابع",
+      "width": 834,
+      "height": 1112,
+      "theme": "light",
+      "productBuildId": "7mzabErvwPNa9_wVNCIJw",
+      "synthetic": true,
+      "stateVerified": true,
+      "overflow": false,
+      "images": {
+        "before": {
+          "path": "output/review/exact-v1/repair-before/resources-834-light.png",
+          "sha256": "f043e76ad309cdc46133afe040e1afbd60955be4386d9a7eae23d1dc3c6f8423",
+          "url": "/exact-v1/repair-before/resources-834-light.png"
+        },
+        "reference": {
+          "path": "output/review/exact-v1/repair-reference-matched/resources-834-light.png",
+          "sha256": "a51c69143f67f329eabaf35fccf97cae0df5e17806e74fd130f9606fa241cb3d",
+          "url": "/exact-v1/repair-reference-matched/resources-834-light.png"
+        },
+        "after": {
+          "path": "output/review/exact-v1/repair-complete/resources-834-light.png",
+          "sha256": "f043e76ad309cdc46133afe040e1afbd60955be4386d9a7eae23d1dc3c6f8423",
+          "url": "/exact-v1/repair-complete/resources-834-light.png"
+        }
+      },
+      "measurements": [
+        {
+          "element": "header",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "title",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listBounds",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": -156.562
+          },
+          "reviewRequired": true,
+          "disposition": "فقط یک ردیف مجاز در fixture در برابر سه ردیف نمونهٔ مرجع؛ دادهٔ اطلس وارد محصول نشده است."
+        },
+        {
+          "element": "listFirstRow",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "context",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": -155.375
+          },
+          "reviewRequired": true,
+          "disposition": "تعداد و عنوان ردیف‌های مجاز fixture با دادهٔ نمونهٔ مرجع برابر نیست؛ این تصویر شاهد برابری پیکسلیِ محتوا نیست."
+        }
+      ]
+    },
+    {
+      "key": "resources",
+      "title": "منابع",
+      "width": 1440,
+      "height": 1000,
+      "theme": "light",
+      "productBuildId": "7mzabErvwPNa9_wVNCIJw",
+      "synthetic": true,
+      "stateVerified": true,
+      "overflow": false,
+      "images": {
+        "before": {
+          "path": "output/review/exact-v1/repair-before/resources-1440-light.png",
+          "sha256": "e49dfdf58abe1fdc84384c2f993eb0ca881b6e7ac5f5092a4e593b0e21b71496",
+          "url": "/exact-v1/repair-before/resources-1440-light.png"
+        },
+        "reference": {
+          "path": "output/review/exact-v1/repair-reference-matched/resources-1440-light.png",
+          "sha256": "3d4e9596fdd6516f5c76d8195d474f9511e3cf8b55621d88c02b3f79c7fa41ef",
+          "url": "/exact-v1/repair-reference-matched/resources-1440-light.png"
+        },
+        "after": {
+          "path": "output/review/exact-v1/repair-complete/resources-1440-light.png",
+          "sha256": "e49dfdf58abe1fdc84384c2f993eb0ca881b6e7ac5f5092a4e593b0e21b71496",
+          "url": "/exact-v1/repair-complete/resources-1440-light.png"
+        }
+      },
+      "measurements": [
+        {
+          "element": "header",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "title",
+          "deltaCssPixels": {
+            "x": 0.0,
+            "y": 0.0,
+            "width": 0.0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listBounds",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": -156.562
+          },
+          "reviewRequired": true,
+          "disposition": "فقط یک ردیف مجاز در fixture در برابر سه ردیف نمونهٔ مرجع؛ دادهٔ اطلس وارد محصول نشده است."
+        },
+        {
+          "element": "listFirstRow",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "context",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": -155.375
+          },
+          "reviewRequired": true,
+          "disposition": "تعداد و عنوان ردیف‌های مجاز fixture با دادهٔ نمونهٔ مرجع برابر نیست؛ این تصویر شاهد برابری پیکسلیِ محتوا نیست."
+        }
+      ]
+    },
+    {
+      "key": "resources",
+      "title": "منابع",
+      "width": 390,
+      "height": 844,
+      "theme": "dark",
+      "productBuildId": "7mzabErvwPNa9_wVNCIJw",
+      "synthetic": true,
+      "stateVerified": true,
+      "overflow": false,
+      "images": {
+        "before": {
+          "path": "output/review/exact-v1/repair-before/resources-390-dark.png",
+          "sha256": "19222c2802760e183fe7b38e873c934cb9f60d397d610157325b9bb958abaaa2",
+          "url": "/exact-v1/repair-before/resources-390-dark.png"
+        },
+        "reference": {
+          "path": "output/review/exact-v1/repair-reference-matched/resources-390-dark.png",
+          "sha256": "d1c0007698ad5168b52059f0b7ef2a7bad32cdabd77e1d059bd15049b1797eb7",
+          "url": "/exact-v1/repair-reference-matched/resources-390-dark.png"
+        },
+        "after": {
+          "path": "output/review/exact-v1/repair-complete/resources-390-dark.png",
+          "sha256": "19222c2802760e183fe7b38e873c934cb9f60d397d610157325b9bb958abaaa2",
+          "url": "/exact-v1/repair-complete/resources-390-dark.png"
+        }
+      },
+      "measurements": [
+        {
+          "element": "header",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "title",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listBounds",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": -156.562
+          },
+          "reviewRequired": true,
+          "disposition": "فقط یک ردیف مجاز در fixture در برابر سه ردیف نمونهٔ مرجع؛ دادهٔ اطلس وارد محصول نشده است."
+        },
+        {
+          "element": "listFirstRow",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        }
+      ]
+    },
+    {
+      "key": "resources",
+      "title": "منابع",
+      "width": 834,
+      "height": 1112,
+      "theme": "dark",
+      "productBuildId": "7mzabErvwPNa9_wVNCIJw",
+      "synthetic": true,
+      "stateVerified": true,
+      "overflow": false,
+      "images": {
+        "before": {
+          "path": "output/review/exact-v1/repair-before/resources-834-dark.png",
+          "sha256": "c7a6c97ae02e159583b3e16dced9f61b11e5a22169f1748bf26d5de630577ed3",
+          "url": "/exact-v1/repair-before/resources-834-dark.png"
+        },
+        "reference": {
+          "path": "output/review/exact-v1/repair-reference-matched/resources-834-dark.png",
+          "sha256": "51c4f68282e03096ba4971cb0d52620d13fa7124f48977f404fe909dc10b1567",
+          "url": "/exact-v1/repair-reference-matched/resources-834-dark.png"
+        },
+        "after": {
+          "path": "output/review/exact-v1/repair-complete/resources-834-dark.png",
+          "sha256": "c7a6c97ae02e159583b3e16dced9f61b11e5a22169f1748bf26d5de630577ed3",
+          "url": "/exact-v1/repair-complete/resources-834-dark.png"
+        }
+      },
+      "measurements": [
+        {
+          "element": "header",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "title",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listBounds",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": -156.562
+          },
+          "reviewRequired": true,
+          "disposition": "فقط یک ردیف مجاز در fixture در برابر سه ردیف نمونهٔ مرجع؛ دادهٔ اطلس وارد محصول نشده است."
+        },
+        {
+          "element": "listFirstRow",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "context",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": -155.375
+          },
+          "reviewRequired": true,
+          "disposition": "تعداد و عنوان ردیف‌های مجاز fixture با دادهٔ نمونهٔ مرجع برابر نیست؛ این تصویر شاهد برابری پیکسلیِ محتوا نیست."
+        }
+      ]
+    },
+    {
+      "key": "resources",
+      "title": "منابع",
+      "width": 1440,
+      "height": 1000,
+      "theme": "dark",
+      "productBuildId": "7mzabErvwPNa9_wVNCIJw",
+      "synthetic": true,
+      "stateVerified": true,
+      "overflow": false,
+      "images": {
+        "before": {
+          "path": "output/review/exact-v1/repair-before/resources-1440-dark.png",
+          "sha256": "f2f5de67dac08ec58affcee9b12e2b26f125f3a0f80bc694e81fa018aeb240a5",
+          "url": "/exact-v1/repair-before/resources-1440-dark.png"
+        },
+        "reference": {
+          "path": "output/review/exact-v1/repair-reference-matched/resources-1440-dark.png",
+          "sha256": "2096c56a48820c59de247bf84f3abb50ead512c7d6c9cb0ea98af4c59cb0749e",
+          "url": "/exact-v1/repair-reference-matched/resources-1440-dark.png"
+        },
+        "after": {
+          "path": "output/review/exact-v1/repair-complete/resources-1440-dark.png",
+          "sha256": "f2f5de67dac08ec58affcee9b12e2b26f125f3a0f80bc694e81fa018aeb240a5",
+          "url": "/exact-v1/repair-complete/resources-1440-dark.png"
+        }
+      },
+      "measurements": [
+        {
+          "element": "header",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "title",
+          "deltaCssPixels": {
+            "x": 0.0,
+            "y": 0.0,
+            "width": 0.0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listBounds",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": -156.562
+          },
+          "reviewRequired": true,
+          "disposition": "فقط یک ردیف مجاز در fixture در برابر سه ردیف نمونهٔ مرجع؛ دادهٔ اطلس وارد محصول نشده است."
+        },
+        {
+          "element": "listFirstRow",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "context",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": -155.375
+          },
+          "reviewRequired": true,
+          "disposition": "تعداد و عنوان ردیف‌های مجاز fixture با دادهٔ نمونهٔ مرجع برابر نیست؛ این تصویر شاهد برابری پیکسلیِ محتوا نیست."
+        }
+      ]
+    },
+    {
+      "key": "assistant",
+      "title": "دستیار",
+      "width": 390,
+      "height": 844,
+      "theme": "light",
+      "productBuildId": "7mzabErvwPNa9_wVNCIJw",
+      "synthetic": true,
+      "stateVerified": true,
+      "overflow": false,
+      "images": {
+        "before": {
+          "path": "output/review/exact-v1/repair-before/assistant-390-light.png",
+          "sha256": "6fbf144fc2ccb7513d75470adbebd169e7beca1d90adc216a435dac887fc60ec",
+          "url": "/exact-v1/repair-before/assistant-390-light.png"
+        },
+        "reference": {
+          "path": "output/review/exact-v1/repair-reference-matched/assistant-390-light.png",
+          "sha256": "f27f8d6ecbd5506373ca913b46c3533b6f072c1695c9426add74520a4953e402",
+          "url": "/exact-v1/repair-reference-matched/assistant-390-light.png"
+        },
+        "after": {
+          "path": "output/review/exact-v1/repair-complete/assistant-390-light.png",
+          "sha256": "6fbf144fc2ccb7513d75470adbebd169e7beca1d90adc216a435dac887fc60ec",
+          "url": "/exact-v1/repair-complete/assistant-390-light.png"
+        }
+      },
+      "measurements": [
+        {
+          "element": "header",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "title",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "sceneHero",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "assistantSources",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "assistantComposer",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "assistantSendIcon",
+          "deltaCssPixels": {
+            "x": -0.5,
+            "y": -1.0,
+            "width": 2,
+            "height": 2
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listBounds",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listFirstRow",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        }
+      ]
+    },
+    {
+      "key": "assistant",
+      "title": "دستیار",
+      "width": 834,
+      "height": 1112,
+      "theme": "light",
+      "productBuildId": "7mzabErvwPNa9_wVNCIJw",
+      "synthetic": true,
+      "stateVerified": true,
+      "overflow": false,
+      "images": {
+        "before": {
+          "path": "output/review/exact-v1/repair-before/assistant-834-light.png",
+          "sha256": "a39e5df106dbfc45967f2f99803ae995f15ab734555cf82ba14b73d5cc0d0302",
+          "url": "/exact-v1/repair-before/assistant-834-light.png"
+        },
+        "reference": {
+          "path": "output/review/exact-v1/repair-reference-matched/assistant-834-light.png",
+          "sha256": "624944cd0c495fb450e9805515fd1d15023830151744e311576b5e6ad58f0442",
+          "url": "/exact-v1/repair-reference-matched/assistant-834-light.png"
+        },
+        "after": {
+          "path": "output/review/exact-v1/repair-complete/assistant-834-light.png",
+          "sha256": "a39e5df106dbfc45967f2f99803ae995f15ab734555cf82ba14b73d5cc0d0302",
+          "url": "/exact-v1/repair-complete/assistant-834-light.png"
+        }
+      },
+      "measurements": [
+        {
+          "element": "header",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "title",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "sceneHero",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "assistantSources",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "assistantComposer",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "assistantSendIcon",
+          "deltaCssPixels": {
+            "x": -0.5,
+            "y": -1.0,
+            "width": 2,
+            "height": 2
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listBounds",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listFirstRow",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "context",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        }
+      ]
+    },
+    {
+      "key": "assistant",
+      "title": "دستیار",
+      "width": 1440,
+      "height": 1000,
+      "theme": "light",
+      "productBuildId": "7mzabErvwPNa9_wVNCIJw",
+      "synthetic": true,
+      "stateVerified": true,
+      "overflow": false,
+      "images": {
+        "before": {
+          "path": "output/review/exact-v1/repair-before/assistant-1440-light.png",
+          "sha256": "ddc9c834dc82a67a71e74e15170d301d53a350dfaee1532d3e09169b236097d6",
+          "url": "/exact-v1/repair-before/assistant-1440-light.png"
+        },
+        "reference": {
+          "path": "output/review/exact-v1/repair-reference-matched/assistant-1440-light.png",
+          "sha256": "b24fcce2cf93b50c7859e7fdece72b722ae799c83b62fbc73a8fbced450469b0",
+          "url": "/exact-v1/repair-reference-matched/assistant-1440-light.png"
+        },
+        "after": {
+          "path": "output/review/exact-v1/repair-complete/assistant-1440-light.png",
+          "sha256": "ddc9c834dc82a67a71e74e15170d301d53a350dfaee1532d3e09169b236097d6",
+          "url": "/exact-v1/repair-complete/assistant-1440-light.png"
+        }
+      },
+      "measurements": [
+        {
+          "element": "header",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "title",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "sceneHero",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "assistantSources",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "assistantComposer",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "assistantSendIcon",
+          "deltaCssPixels": {
+            "x": -0.5,
+            "y": -1.0,
+            "width": 2,
+            "height": 2
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listBounds",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listFirstRow",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "context",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        }
+      ]
+    },
+    {
+      "key": "assistant",
+      "title": "دستیار",
+      "width": 390,
+      "height": 844,
+      "theme": "dark",
+      "productBuildId": "7mzabErvwPNa9_wVNCIJw",
+      "synthetic": true,
+      "stateVerified": true,
+      "overflow": false,
+      "images": {
+        "before": {
+          "path": "output/review/exact-v1/repair-before/assistant-390-dark.png",
+          "sha256": "51b8ce6e29528c16f1da17f617b24860851be3501a086296ff56eb001dc7c51d",
+          "url": "/exact-v1/repair-before/assistant-390-dark.png"
+        },
+        "reference": {
+          "path": "output/review/exact-v1/repair-reference-matched/assistant-390-dark.png",
+          "sha256": "2fff068581a460eb67c4f50c4c718ce46527e66fbe7fa8dc34d00f7338946713",
+          "url": "/exact-v1/repair-reference-matched/assistant-390-dark.png"
+        },
+        "after": {
+          "path": "output/review/exact-v1/repair-complete/assistant-390-dark.png",
+          "sha256": "51b8ce6e29528c16f1da17f617b24860851be3501a086296ff56eb001dc7c51d",
+          "url": "/exact-v1/repair-complete/assistant-390-dark.png"
+        }
+      },
+      "measurements": [
+        {
+          "element": "header",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "title",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "sceneHero",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "assistantSources",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "assistantComposer",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "assistantSendIcon",
+          "deltaCssPixels": {
+            "x": -0.5,
+            "y": -1.0,
+            "width": 2,
+            "height": 2
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listBounds",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listFirstRow",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        }
+      ]
+    },
+    {
+      "key": "assistant",
+      "title": "دستیار",
+      "width": 834,
+      "height": 1112,
+      "theme": "dark",
+      "productBuildId": "7mzabErvwPNa9_wVNCIJw",
+      "synthetic": true,
+      "stateVerified": true,
+      "overflow": false,
+      "images": {
+        "before": {
+          "path": "output/review/exact-v1/repair-before/assistant-834-dark.png",
+          "sha256": "ed1bb4180f4689c0066d406b21e94c73842c0a2e2d4a33da396c8913af8166e3",
+          "url": "/exact-v1/repair-before/assistant-834-dark.png"
+        },
+        "reference": {
+          "path": "output/review/exact-v1/repair-reference-matched/assistant-834-dark.png",
+          "sha256": "48dc799ec0531ad09ea09f93413599f530dc3eb93bad92fd6671a350c4e4d052",
+          "url": "/exact-v1/repair-reference-matched/assistant-834-dark.png"
+        },
+        "after": {
+          "path": "output/review/exact-v1/repair-complete/assistant-834-dark.png",
+          "sha256": "ed1bb4180f4689c0066d406b21e94c73842c0a2e2d4a33da396c8913af8166e3",
+          "url": "/exact-v1/repair-complete/assistant-834-dark.png"
+        }
+      },
+      "measurements": [
+        {
+          "element": "header",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "title",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "sceneHero",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "assistantSources",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "assistantComposer",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "assistantSendIcon",
+          "deltaCssPixels": {
+            "x": -0.5,
+            "y": -1.0,
+            "width": 2,
+            "height": 2
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listBounds",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listFirstRow",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "context",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        }
+      ]
+    },
+    {
+      "key": "assistant",
+      "title": "دستیار",
+      "width": 1440,
+      "height": 1000,
+      "theme": "dark",
+      "productBuildId": "7mzabErvwPNa9_wVNCIJw",
+      "synthetic": true,
+      "stateVerified": true,
+      "overflow": false,
+      "images": {
+        "before": {
+          "path": "output/review/exact-v1/repair-before/assistant-1440-dark.png",
+          "sha256": "3afd1ce81c52efb1f4d114c7c64ff1b4944d3c5df0963625d74607540963a66b",
+          "url": "/exact-v1/repair-before/assistant-1440-dark.png"
+        },
+        "reference": {
+          "path": "output/review/exact-v1/repair-reference-matched/assistant-1440-dark.png",
+          "sha256": "b7d37e0e8733e769da091ca9893351db470cd763c256b75fd0ccaadd882640bd",
+          "url": "/exact-v1/repair-reference-matched/assistant-1440-dark.png"
+        },
+        "after": {
+          "path": "output/review/exact-v1/repair-complete/assistant-1440-dark.png",
+          "sha256": "3afd1ce81c52efb1f4d114c7c64ff1b4944d3c5df0963625d74607540963a66b",
+          "url": "/exact-v1/repair-complete/assistant-1440-dark.png"
+        }
+      },
+      "measurements": [
+        {
+          "element": "header",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "title",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "sceneHero",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "assistantSources",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "assistantComposer",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "assistantSendIcon",
+          "deltaCssPixels": {
+            "x": -0.5,
+            "y": -1.0,
+            "width": 2,
+            "height": 2
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listBounds",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listFirstRow",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "context",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        }
+      ]
+    },
+    {
+      "key": "source-detail",
+      "title": "جزئیات منبع",
+      "width": 390,
+      "height": 844,
+      "theme": "light",
+      "productBuildId": "7mzabErvwPNa9_wVNCIJw",
+      "synthetic": true,
+      "stateVerified": true,
+      "overflow": false,
+      "images": {
+        "before": {
+          "path": "output/review/exact-v1/repair-before/source-detail-390-light.png",
+          "sha256": "5c83271012c3643773959966a559e254d9db19863d787a9c565c898094e854ae",
+          "url": "/exact-v1/repair-before/source-detail-390-light.png"
+        },
+        "reference": {
+          "path": "output/review/exact-v1/repair-reference-matched/source-detail-390-light.png",
+          "sha256": "2f5283290994fa425cbf4305ebc168eaee4487c0ae62fe5574484d21647f22b0",
+          "url": "/exact-v1/repair-reference-matched/source-detail-390-light.png"
+        },
+        "after": {
+          "path": "output/review/exact-v1/repair-complete/source-detail-390-light.png",
+          "sha256": "5c83271012c3643773959966a559e254d9db19863d787a9c565c898094e854ae",
+          "url": "/exact-v1/repair-complete/source-detail-390-light.png"
+        }
+      },
+      "measurements": [
+        {
+          "element": "header",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "title",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "sceneHero",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listBounds",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listFirstRow",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        }
+      ]
+    },
+    {
+      "key": "source-detail",
+      "title": "جزئیات منبع",
+      "width": 834,
+      "height": 1112,
+      "theme": "light",
+      "productBuildId": "7mzabErvwPNa9_wVNCIJw",
+      "synthetic": true,
+      "stateVerified": true,
+      "overflow": false,
+      "images": {
+        "before": {
+          "path": "output/review/exact-v1/repair-before/source-detail-834-light.png",
+          "sha256": "4c33576d95ed2d9ae45dea9ff2cfd1270b4f3c9d7690a7af3910b2dd79ce50d8",
+          "url": "/exact-v1/repair-before/source-detail-834-light.png"
+        },
+        "reference": {
+          "path": "output/review/exact-v1/repair-reference-matched/source-detail-834-light.png",
+          "sha256": "2e2c2b6591d2eee802ed1e1d30ea9f43ca21479105f422b9fd3fd14413491f08",
+          "url": "/exact-v1/repair-reference-matched/source-detail-834-light.png"
+        },
+        "after": {
+          "path": "output/review/exact-v1/repair-complete/source-detail-834-light.png",
+          "sha256": "4c33576d95ed2d9ae45dea9ff2cfd1270b4f3c9d7690a7af3910b2dd79ce50d8",
+          "url": "/exact-v1/repair-complete/source-detail-834-light.png"
+        }
+      },
+      "measurements": [
+        {
+          "element": "header",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "title",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "sceneHero",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": -1.688
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listBounds",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 2.312,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listFirstRow",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 2.312,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "context",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        }
+      ]
+    },
+    {
+      "key": "source-detail",
+      "title": "جزئیات منبع",
+      "width": 1440,
+      "height": 1000,
+      "theme": "light",
+      "productBuildId": "7mzabErvwPNa9_wVNCIJw",
+      "synthetic": true,
+      "stateVerified": true,
+      "overflow": false,
+      "images": {
+        "before": {
+          "path": "output/review/exact-v1/repair-before/source-detail-1440-light.png",
+          "sha256": "517120cf6ae4bf25f364fd18de0a4d3be96b369f5fbbe959cf75c7ca64022d08",
+          "url": "/exact-v1/repair-before/source-detail-1440-light.png"
+        },
+        "reference": {
+          "path": "output/review/exact-v1/repair-reference-matched/source-detail-1440-light.png",
+          "sha256": "870805503e7aba8fb6dd00729605d179bb454ea82ead9e5e26bfa598604b6423",
+          "url": "/exact-v1/repair-reference-matched/source-detail-1440-light.png"
+        },
+        "after": {
+          "path": "output/review/exact-v1/repair-complete/source-detail-1440-light.png",
+          "sha256": "517120cf6ae4bf25f364fd18de0a4d3be96b369f5fbbe959cf75c7ca64022d08",
+          "url": "/exact-v1/repair-complete/source-detail-1440-light.png"
+        }
+      },
+      "measurements": [
+        {
+          "element": "header",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "title",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "sceneHero",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": -1.688
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listBounds",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": -1.688,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listFirstRow",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": -1.688,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "context",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        }
+      ]
+    },
+    {
+      "key": "source-detail",
+      "title": "جزئیات منبع",
+      "width": 390,
+      "height": 844,
+      "theme": "dark",
+      "productBuildId": "7mzabErvwPNa9_wVNCIJw",
+      "synthetic": true,
+      "stateVerified": true,
+      "overflow": false,
+      "images": {
+        "before": {
+          "path": "output/review/exact-v1/repair-before/source-detail-390-dark.png",
+          "sha256": "78d189d67c8bb3582c46aa3a2ac86e13b5925c275def3ac277ec1aa840b8cb55",
+          "url": "/exact-v1/repair-before/source-detail-390-dark.png"
+        },
+        "reference": {
+          "path": "output/review/exact-v1/repair-reference-matched/source-detail-390-dark.png",
+          "sha256": "a473afb8c5cb379a113e2135260ba4232dedfccc56697f48c0b9b9c8e063028d",
+          "url": "/exact-v1/repair-reference-matched/source-detail-390-dark.png"
+        },
+        "after": {
+          "path": "output/review/exact-v1/repair-complete/source-detail-390-dark.png",
+          "sha256": "78d189d67c8bb3582c46aa3a2ac86e13b5925c275def3ac277ec1aa840b8cb55",
+          "url": "/exact-v1/repair-complete/source-detail-390-dark.png"
+        }
+      },
+      "measurements": [
+        {
+          "element": "header",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "title",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "sceneHero",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listBounds",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listFirstRow",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        }
+      ]
+    },
+    {
+      "key": "source-detail",
+      "title": "جزئیات منبع",
+      "width": 834,
+      "height": 1112,
+      "theme": "dark",
+      "productBuildId": "7mzabErvwPNa9_wVNCIJw",
+      "synthetic": true,
+      "stateVerified": true,
+      "overflow": false,
+      "images": {
+        "before": {
+          "path": "output/review/exact-v1/repair-before/source-detail-834-dark.png",
+          "sha256": "a2f9c8ebdf929ac2988acb4a8639736e3c84c34b390dcbfb87c6d66974b4c39e",
+          "url": "/exact-v1/repair-before/source-detail-834-dark.png"
+        },
+        "reference": {
+          "path": "output/review/exact-v1/repair-reference-matched/source-detail-834-dark.png",
+          "sha256": "9c9f5708049773e13f102e3334b3769be86596f58bbbb6c5b4d2d606f55975a6",
+          "url": "/exact-v1/repair-reference-matched/source-detail-834-dark.png"
+        },
+        "after": {
+          "path": "output/review/exact-v1/repair-complete/source-detail-834-dark.png",
+          "sha256": "a2f9c8ebdf929ac2988acb4a8639736e3c84c34b390dcbfb87c6d66974b4c39e",
+          "url": "/exact-v1/repair-complete/source-detail-834-dark.png"
+        }
+      },
+      "measurements": [
+        {
+          "element": "header",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "title",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "sceneHero",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": -1.688
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listBounds",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 2.312,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listFirstRow",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 2.312,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "context",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        }
+      ]
+    },
+    {
+      "key": "source-detail",
+      "title": "جزئیات منبع",
+      "width": 1440,
+      "height": 1000,
+      "theme": "dark",
+      "productBuildId": "7mzabErvwPNa9_wVNCIJw",
+      "synthetic": true,
+      "stateVerified": true,
+      "overflow": false,
+      "images": {
+        "before": {
+          "path": "output/review/exact-v1/repair-before/source-detail-1440-dark.png",
+          "sha256": "86d984bb47b4342bf182fc3a30d3b783869a4cd7c0327ecfb857e39d50fa541f",
+          "url": "/exact-v1/repair-before/source-detail-1440-dark.png"
+        },
+        "reference": {
+          "path": "output/review/exact-v1/repair-reference-matched/source-detail-1440-dark.png",
+          "sha256": "a7e215b1e19a075046a37e35d712cee8f3d156d771595ff0c2c92ecbbd790265",
+          "url": "/exact-v1/repair-reference-matched/source-detail-1440-dark.png"
+        },
+        "after": {
+          "path": "output/review/exact-v1/repair-complete/source-detail-1440-dark.png",
+          "sha256": "86d984bb47b4342bf182fc3a30d3b783869a4cd7c0327ecfb857e39d50fa541f",
+          "url": "/exact-v1/repair-complete/source-detail-1440-dark.png"
+        }
+      },
+      "measurements": [
+        {
+          "element": "header",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "title",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "sceneHero",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": -1.688
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listBounds",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": -1.688,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listFirstRow",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": -1.688,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "context",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        }
+      ]
+    },
+    {
+      "key": "messages",
+      "title": "پیام‌ها",
+      "width": 390,
+      "height": 844,
+      "theme": "light",
+      "productBuildId": "7mzabErvwPNa9_wVNCIJw",
+      "synthetic": true,
+      "stateVerified": true,
+      "overflow": false,
+      "images": {
+        "before": {
+          "path": "output/review/exact-v1/repair-mobile-before/messages-390-light.png",
+          "sha256": "9f1d16ceaf3fbbc410be5c11b300c1e11a7bf8fa274959f66b29357abc265760",
+          "url": "/exact-v1/repair-mobile-before/messages-390-light.png"
+        },
+        "reference": {
+          "path": "output/review/exact-v1/repair-reference-matched/messages-390-light.png",
+          "sha256": "789919f82793ca7c3d7d13c71b2e9a3b5e3435a9fe1ee462994955a999b59dc7",
+          "url": "/exact-v1/repair-reference-matched/messages-390-light.png"
+        },
+        "after": {
+          "path": "output/review/exact-v1/repair-complete/messages-390-light.png",
+          "sha256": "23155e445c332b79b43152a94ccd44b57ef3dea22ecc002682cc8928be471862",
+          "url": "/exact-v1/repair-complete/messages-390-light.png"
+        }
+      },
+      "measurements": [
+        {
+          "element": "header",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "title",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "search",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listBounds",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": -156.562
+          },
+          "reviewRequired": true,
+          "disposition": "فقط یک ردیف مجاز در fixture در برابر سه ردیف نمونهٔ مرجع؛ دادهٔ اطلس وارد محصول نشده است."
+        },
+        {
+          "element": "listFirstRow",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listAvatar",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        }
+      ]
+    },
+    {
+      "key": "messages",
+      "title": "پیام‌ها",
+      "width": 834,
+      "height": 1112,
+      "theme": "light",
+      "productBuildId": "7mzabErvwPNa9_wVNCIJw",
+      "synthetic": true,
+      "stateVerified": true,
+      "overflow": false,
+      "images": {
+        "before": {
+          "path": "output/review/exact-v1/repair-mobile-before/messages-834-light.png",
+          "sha256": "42497e273449a4b9fa4eca29c8747300d038400b9db44ac9cea99f962cdb81dc",
+          "url": "/exact-v1/repair-mobile-before/messages-834-light.png"
+        },
+        "reference": {
+          "path": "output/review/exact-v1/repair-reference-matched/messages-834-light.png",
+          "sha256": "392adbb2ef0283eec229c9e997c536c4a1ba8e0fa6d8e07df414be7a17032718",
+          "url": "/exact-v1/repair-reference-matched/messages-834-light.png"
+        },
+        "after": {
+          "path": "output/review/exact-v1/repair-complete/messages-834-light.png",
+          "sha256": "f54f0d13a8d89f8ac31518e60c904623889b9407c7a8547f408045d17eaaf471",
+          "url": "/exact-v1/repair-complete/messages-834-light.png"
+        }
+      },
+      "measurements": [
+        {
+          "element": "header",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "title",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "search",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listBounds",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": -156.562
+          },
+          "reviewRequired": true,
+          "disposition": "فقط یک ردیف مجاز در fixture در برابر سه ردیف نمونهٔ مرجع؛ دادهٔ اطلس وارد محصول نشده است."
+        },
+        {
+          "element": "listFirstRow",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listAvatar",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "context",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": -155.375
+          },
+          "reviewRequired": true,
+          "disposition": "تعداد و عنوان ردیف‌های مجاز fixture با دادهٔ نمونهٔ مرجع برابر نیست؛ این تصویر شاهد برابری پیکسلیِ محتوا نیست."
+        }
+      ]
+    },
+    {
+      "key": "messages",
+      "title": "پیام‌ها",
+      "width": 1440,
+      "height": 1000,
+      "theme": "light",
+      "productBuildId": "7mzabErvwPNa9_wVNCIJw",
+      "synthetic": true,
+      "stateVerified": true,
+      "overflow": false,
+      "images": {
+        "before": {
+          "path": "output/review/exact-v1/repair-mobile-before/messages-1440-light.png",
+          "sha256": "5de450d78e7b711f9ac75e345ddca60290089b4c940b42328270dc0c6ce1b74f",
+          "url": "/exact-v1/repair-mobile-before/messages-1440-light.png"
+        },
+        "reference": {
+          "path": "output/review/exact-v1/repair-reference-matched/messages-1440-light.png",
+          "sha256": "5fcbb86d6dbb1e3b1ddaf327af28143b65d6344a2970409c53017c4e786427c6",
+          "url": "/exact-v1/repair-reference-matched/messages-1440-light.png"
+        },
+        "after": {
+          "path": "output/review/exact-v1/repair-complete/messages-1440-light.png",
+          "sha256": "8493b7f26e756bbe19c06ef07f62c164a5aeaf2042a90772dd44e0efccb2f283",
+          "url": "/exact-v1/repair-complete/messages-1440-light.png"
+        }
+      },
+      "measurements": [
+        {
+          "element": "header",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "title",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "search",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listBounds",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": -156.562
+          },
+          "reviewRequired": true,
+          "disposition": "فقط یک ردیف مجاز در fixture در برابر سه ردیف نمونهٔ مرجع؛ دادهٔ اطلس وارد محصول نشده است."
+        },
+        {
+          "element": "listFirstRow",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listAvatar",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "context",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": -155.375
+          },
+          "reviewRequired": true,
+          "disposition": "تعداد و عنوان ردیف‌های مجاز fixture با دادهٔ نمونهٔ مرجع برابر نیست؛ این تصویر شاهد برابری پیکسلیِ محتوا نیست."
+        }
+      ]
+    },
+    {
+      "key": "messages",
+      "title": "پیام‌ها",
+      "width": 390,
+      "height": 844,
+      "theme": "dark",
+      "productBuildId": "7mzabErvwPNa9_wVNCIJw",
+      "synthetic": true,
+      "stateVerified": true,
+      "overflow": false,
+      "images": {
+        "before": {
+          "path": "output/review/exact-v1/repair-mobile-before/messages-390-dark.png",
+          "sha256": "320eeb5229d01838a64d48cfac70e7f5594ad1ccd6079ed98c3c2d6e99b83d81",
+          "url": "/exact-v1/repair-mobile-before/messages-390-dark.png"
+        },
+        "reference": {
+          "path": "output/review/exact-v1/repair-reference-matched/messages-390-dark.png",
+          "sha256": "8c910e922432ecb4058b60f46397a1a684d72520c4c1b43776ad4af7263bc43e",
+          "url": "/exact-v1/repair-reference-matched/messages-390-dark.png"
+        },
+        "after": {
+          "path": "output/review/exact-v1/repair-complete/messages-390-dark.png",
+          "sha256": "158636ff4f24b706945542bf7a0d72e7de3016def4101d969bcced7a4b71ec5e",
+          "url": "/exact-v1/repair-complete/messages-390-dark.png"
+        }
+      },
+      "measurements": [
+        {
+          "element": "header",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "title",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "search",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listBounds",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": -156.562
+          },
+          "reviewRequired": true,
+          "disposition": "فقط یک ردیف مجاز در fixture در برابر سه ردیف نمونهٔ مرجع؛ دادهٔ اطلس وارد محصول نشده است."
+        },
+        {
+          "element": "listFirstRow",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listAvatar",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        }
+      ]
+    },
+    {
+      "key": "messages",
+      "title": "پیام‌ها",
+      "width": 834,
+      "height": 1112,
+      "theme": "dark",
+      "productBuildId": "7mzabErvwPNa9_wVNCIJw",
+      "synthetic": true,
+      "stateVerified": true,
+      "overflow": false,
+      "images": {
+        "before": {
+          "path": "output/review/exact-v1/repair-mobile-before/messages-834-dark.png",
+          "sha256": "2a5cdd6a079080184b05754c929ca55457c59e370fcf9f1bf92f184cc56bf73f",
+          "url": "/exact-v1/repair-mobile-before/messages-834-dark.png"
+        },
+        "reference": {
+          "path": "output/review/exact-v1/repair-reference-matched/messages-834-dark.png",
+          "sha256": "332af1eb7929734a50b0072c25ceeaac2ceb17ce97e70a955ba6b4fce198df59",
+          "url": "/exact-v1/repair-reference-matched/messages-834-dark.png"
+        },
+        "after": {
+          "path": "output/review/exact-v1/repair-complete/messages-834-dark.png",
+          "sha256": "a2e62fb9ccf474ddf223dc9514281c4156d5a467a7a598f204891188c22dc9f2",
+          "url": "/exact-v1/repair-complete/messages-834-dark.png"
+        }
+      },
+      "measurements": [
+        {
+          "element": "header",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "title",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "search",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listBounds",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": -156.562
+          },
+          "reviewRequired": true,
+          "disposition": "فقط یک ردیف مجاز در fixture در برابر سه ردیف نمونهٔ مرجع؛ دادهٔ اطلس وارد محصول نشده است."
+        },
+        {
+          "element": "listFirstRow",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listAvatar",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "context",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": -155.375
+          },
+          "reviewRequired": true,
+          "disposition": "تعداد و عنوان ردیف‌های مجاز fixture با دادهٔ نمونهٔ مرجع برابر نیست؛ این تصویر شاهد برابری پیکسلیِ محتوا نیست."
+        }
+      ]
+    },
+    {
+      "key": "messages",
+      "title": "پیام‌ها",
+      "width": 1440,
+      "height": 1000,
+      "theme": "dark",
+      "productBuildId": "7mzabErvwPNa9_wVNCIJw",
+      "synthetic": true,
+      "stateVerified": true,
+      "overflow": false,
+      "images": {
+        "before": {
+          "path": "output/review/exact-v1/repair-mobile-before/messages-1440-dark.png",
+          "sha256": "454bbda1c3eef32922e52528e7fd46c59a2403cd2b8f46aba6f78cac3ee7674c",
+          "url": "/exact-v1/repair-mobile-before/messages-1440-dark.png"
+        },
+        "reference": {
+          "path": "output/review/exact-v1/repair-reference-matched/messages-1440-dark.png",
+          "sha256": "f72b643860d35e2856d8b57eefdb0de6ba5257e7b36542e331d9891b41ed7be7",
+          "url": "/exact-v1/repair-reference-matched/messages-1440-dark.png"
+        },
+        "after": {
+          "path": "output/review/exact-v1/repair-complete/messages-1440-dark.png",
+          "sha256": "438124647e7aa5a4dc95fd247f8095eec97e6724c3673e399bafb1729ae247cd",
+          "url": "/exact-v1/repair-complete/messages-1440-dark.png"
+        }
+      },
+      "measurements": [
+        {
+          "element": "header",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "title",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "search",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listBounds",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": -156.562
+          },
+          "reviewRequired": true,
+          "disposition": "فقط یک ردیف مجاز در fixture در برابر سه ردیف نمونهٔ مرجع؛ دادهٔ اطلس وارد محصول نشده است."
+        },
+        {
+          "element": "listFirstRow",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listAvatar",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "context",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": -155.375
+          },
+          "reviewRequired": true,
+          "disposition": "تعداد و عنوان ردیف‌های مجاز fixture با دادهٔ نمونهٔ مرجع برابر نیست؛ این تصویر شاهد برابری پیکسلیِ محتوا نیست."
+        }
+      ]
+    },
+    {
+      "key": "extracurricular",
+      "title": "فوق‌برنامه",
+      "width": 390,
+      "height": 844,
+      "theme": "light",
+      "productBuildId": "7mzabErvwPNa9_wVNCIJw",
+      "synthetic": true,
+      "stateVerified": true,
+      "overflow": false,
+      "images": {
+        "before": {
+          "path": "output/review/exact-v1/repair-mobile-before/extracurricular-390-light.png",
+          "sha256": "7dc3e529da009cb023f1160892cc88ada6f81a47839ce9a87845b62a0a8f28d1",
+          "url": "/exact-v1/repair-mobile-before/extracurricular-390-light.png"
+        },
+        "reference": {
+          "path": "output/review/exact-v1/repair-reference-matched/extracurricular-390-light.png",
+          "sha256": "446ae6760c295d82651399c7c44bc20d486fa7f524989248184a9b2d83923b0b",
+          "url": "/exact-v1/repair-reference-matched/extracurricular-390-light.png"
+        },
+        "after": {
+          "path": "output/review/exact-v1/repair-complete/extracurricular-390-light.png",
+          "sha256": "6262aa0b2b1e6135e0bbfa848fb2371cf5c6bd49bc2e33710beccde47165f815",
+          "url": "/exact-v1/repair-complete/extracurricular-390-light.png"
+        }
+      },
+      "measurements": [
+        {
+          "element": "header",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "title",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "search",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "segmented",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "sceneHero",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": -2.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listBounds",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": -2.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listFirstRow",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": -2.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        }
+      ]
+    },
+    {
+      "key": "extracurricular",
+      "title": "فوق‌برنامه",
+      "width": 834,
+      "height": 1112,
+      "theme": "light",
+      "productBuildId": "7mzabErvwPNa9_wVNCIJw",
+      "synthetic": true,
+      "stateVerified": true,
+      "overflow": false,
+      "images": {
+        "before": {
+          "path": "output/review/exact-v1/repair-mobile-before/extracurricular-834-light.png",
+          "sha256": "4b41a689071250292bad1f94dbe331efcfa7619e6fd8b3d76afec614e13b258a",
+          "url": "/exact-v1/repair-mobile-before/extracurricular-834-light.png"
+        },
+        "reference": {
+          "path": "output/review/exact-v1/repair-reference-matched/extracurricular-834-light.png",
+          "sha256": "63304df99d3d3470e4e504ba43ed2f71a8b47e99b623d7c0e2d76905791a8f7b",
+          "url": "/exact-v1/repair-reference-matched/extracurricular-834-light.png"
+        },
+        "after": {
+          "path": "output/review/exact-v1/repair-complete/extracurricular-834-light.png",
+          "sha256": "cba594b9c3403f247e04b104a580125b4ec9421a84a1db678cb3f5133a2222ae",
+          "url": "/exact-v1/repair-complete/extracurricular-834-light.png"
+        }
+      },
+      "measurements": [
+        {
+          "element": "header",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "title",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "search",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "segmented",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "sceneHero",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": -2.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listBounds",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": -2.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listFirstRow",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": -2.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "context",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 21.594
+          },
+          "reviewRequired": true,
+          "disposition": "خلاصهٔ پنل از همان دو ردیف نمای واقعی گرفته می‌شود؛ متن و تعداد دعوت‌های fixture با نمونهٔ شمار درخواست/نام دعوت در مرجع برابر نیست."
+        }
+      ]
+    },
+    {
+      "key": "extracurricular",
+      "title": "فوق‌برنامه",
+      "width": 1440,
+      "height": 1000,
+      "theme": "light",
+      "productBuildId": "7mzabErvwPNa9_wVNCIJw",
+      "synthetic": true,
+      "stateVerified": true,
+      "overflow": false,
+      "images": {
+        "before": {
+          "path": "output/review/exact-v1/repair-mobile-before/extracurricular-1440-light.png",
+          "sha256": "327ad559e6ddee440dc1420fb3d6f5cda70371310c4c4700223520045b80683e",
+          "url": "/exact-v1/repair-mobile-before/extracurricular-1440-light.png"
+        },
+        "reference": {
+          "path": "output/review/exact-v1/repair-reference-matched/extracurricular-1440-light.png",
+          "sha256": "92a561612060a03d3c6a22a972f4fafd742d32e728dc45a41e965650da7fa003",
+          "url": "/exact-v1/repair-reference-matched/extracurricular-1440-light.png"
+        },
+        "after": {
+          "path": "output/review/exact-v1/repair-complete/extracurricular-1440-light.png",
+          "sha256": "581edb92ec75578c5a92ad3f2bf8ba88ba86349c86b6bfe1ddbd43877fd1eccb",
+          "url": "/exact-v1/repair-complete/extracurricular-1440-light.png"
+        }
+      },
+      "measurements": [
+        {
+          "element": "header",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "title",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "search",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "segmented",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "sceneHero",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": -2.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listBounds",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": -2.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listFirstRow",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": -2.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "context",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        }
+      ]
+    },
+    {
+      "key": "extracurricular",
+      "title": "فوق‌برنامه",
+      "width": 390,
+      "height": 844,
+      "theme": "dark",
+      "productBuildId": "7mzabErvwPNa9_wVNCIJw",
+      "synthetic": true,
+      "stateVerified": true,
+      "overflow": false,
+      "images": {
+        "before": {
+          "path": "output/review/exact-v1/repair-mobile-before/extracurricular-390-dark.png",
+          "sha256": "135736930b35985f6cf7e0c718d0bb2923cb77ab848d33bbfc8e53049c026ba8",
+          "url": "/exact-v1/repair-mobile-before/extracurricular-390-dark.png"
+        },
+        "reference": {
+          "path": "output/review/exact-v1/repair-reference-matched/extracurricular-390-dark.png",
+          "sha256": "ebdeb9206567b7f904dae5caeb610eb0e2baf9e0aae06021dca6d8b81f83148c",
+          "url": "/exact-v1/repair-reference-matched/extracurricular-390-dark.png"
+        },
+        "after": {
+          "path": "output/review/exact-v1/repair-complete/extracurricular-390-dark.png",
+          "sha256": "b9220f5fcc7c49c2272fc4be6934b0482764f17a8dc005d1802ebb6c9e958b92",
+          "url": "/exact-v1/repair-complete/extracurricular-390-dark.png"
+        }
+      },
+      "measurements": [
+        {
+          "element": "header",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "title",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "search",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "segmented",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "sceneHero",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": -2.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listBounds",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": -2.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listFirstRow",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": -2.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        }
+      ]
+    },
+    {
+      "key": "extracurricular",
+      "title": "فوق‌برنامه",
+      "width": 834,
+      "height": 1112,
+      "theme": "dark",
+      "productBuildId": "7mzabErvwPNa9_wVNCIJw",
+      "synthetic": true,
+      "stateVerified": true,
+      "overflow": false,
+      "images": {
+        "before": {
+          "path": "output/review/exact-v1/repair-mobile-before/extracurricular-834-dark.png",
+          "sha256": "7d2980d57cc74378a757e7290f7474be35d4fb8aac1924b78bba35eabbebfa4d",
+          "url": "/exact-v1/repair-mobile-before/extracurricular-834-dark.png"
+        },
+        "reference": {
+          "path": "output/review/exact-v1/repair-reference-matched/extracurricular-834-dark.png",
+          "sha256": "370db6a4cf43cb708cb0899e04ced7ab6249237e327872a1b4a6ea5152e0eb1a",
+          "url": "/exact-v1/repair-reference-matched/extracurricular-834-dark.png"
+        },
+        "after": {
+          "path": "output/review/exact-v1/repair-complete/extracurricular-834-dark.png",
+          "sha256": "21a9122049d601dae15916980fce55215793ba04e7f1bbd7ffbb9f25aa77c480",
+          "url": "/exact-v1/repair-complete/extracurricular-834-dark.png"
+        }
+      },
+      "measurements": [
+        {
+          "element": "header",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "title",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "search",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "segmented",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "sceneHero",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": -2.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listBounds",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": -2.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listFirstRow",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": -2.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "context",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 21.594
+          },
+          "reviewRequired": true,
+          "disposition": "خلاصهٔ پنل از همان دو ردیف نمای واقعی گرفته می‌شود؛ متن و تعداد دعوت‌های fixture با نمونهٔ شمار درخواست/نام دعوت در مرجع برابر نیست."
+        }
+      ]
+    },
+    {
+      "key": "extracurricular",
+      "title": "فوق‌برنامه",
+      "width": 1440,
+      "height": 1000,
+      "theme": "dark",
+      "productBuildId": "7mzabErvwPNa9_wVNCIJw",
+      "synthetic": true,
+      "stateVerified": true,
+      "overflow": false,
+      "images": {
+        "before": {
+          "path": "output/review/exact-v1/repair-mobile-before/extracurricular-1440-dark.png",
+          "sha256": "316a2b70f6fbe7295761bd4f6d5f3905e2671f4ab9228e1a8dfed9cd8e0aaaf2",
+          "url": "/exact-v1/repair-mobile-before/extracurricular-1440-dark.png"
+        },
+        "reference": {
+          "path": "output/review/exact-v1/repair-reference-matched/extracurricular-1440-dark.png",
+          "sha256": "722a7a273c4142c55917a1f5d9265292ccdc43cb368bc7a85600bb6e32bf8af3",
+          "url": "/exact-v1/repair-reference-matched/extracurricular-1440-dark.png"
+        },
+        "after": {
+          "path": "output/review/exact-v1/repair-complete/extracurricular-1440-dark.png",
+          "sha256": "59eb4710f7b28547995f48a13e86b5f3c476d673cbd7f586474e15e0612cc5f7",
+          "url": "/exact-v1/repair-complete/extracurricular-1440-dark.png"
+        }
+      },
+      "measurements": [
+        {
+          "element": "header",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "title",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "search",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "segmented",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "sceneHero",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": -2.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listBounds",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": -2.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "listFirstRow",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": -2.0,
+            "width": 0,
+            "height": 0.0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        },
+        {
+          "element": "context",
+          "deltaCssPixels": {
+            "x": 0,
+            "y": 0.0,
+            "width": 0,
+            "height": 0
+          },
+          "reviewRequired": false,
+          "disposition": null
+        }
+      ]
+    }
+  ],
+  "open": [
+    {
+      "key": "resources",
+      "width": 390,
+      "height": 844,
+      "theme": "light",
+      "measurement": {
+        "element": "listBounds",
+        "deltaCssPixels": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": -156.562
+        },
+        "reviewRequired": true,
+        "disposition": "فقط یک ردیف مجاز در fixture در برابر سه ردیف نمونهٔ مرجع؛ دادهٔ اطلس وارد محصول نشده است."
+      }
+    },
+    {
+      "key": "resources",
+      "width": 834,
+      "height": 1112,
+      "theme": "light",
+      "measurement": {
+        "element": "listBounds",
+        "deltaCssPixels": {
+          "x": 0,
+          "y": 0.0,
+          "width": 0,
+          "height": -156.562
+        },
+        "reviewRequired": true,
+        "disposition": "فقط یک ردیف مجاز در fixture در برابر سه ردیف نمونهٔ مرجع؛ دادهٔ اطلس وارد محصول نشده است."
+      }
+    },
+    {
+      "key": "resources",
+      "width": 834,
+      "height": 1112,
+      "theme": "light",
+      "measurement": {
+        "element": "context",
+        "deltaCssPixels": {
+          "x": 0,
+          "y": 0.0,
+          "width": 0,
+          "height": -155.375
+        },
+        "reviewRequired": true,
+        "disposition": "تعداد و عنوان ردیف‌های مجاز fixture با دادهٔ نمونهٔ مرجع برابر نیست؛ این تصویر شاهد برابری پیکسلیِ محتوا نیست."
+      }
+    },
+    {
+      "key": "resources",
+      "width": 1440,
+      "height": 1000,
+      "theme": "light",
+      "measurement": {
+        "element": "listBounds",
+        "deltaCssPixels": {
+          "x": 0,
+          "y": 0.0,
+          "width": 0,
+          "height": -156.562
+        },
+        "reviewRequired": true,
+        "disposition": "فقط یک ردیف مجاز در fixture در برابر سه ردیف نمونهٔ مرجع؛ دادهٔ اطلس وارد محصول نشده است."
+      }
+    },
+    {
+      "key": "resources",
+      "width": 1440,
+      "height": 1000,
+      "theme": "light",
+      "measurement": {
+        "element": "context",
+        "deltaCssPixels": {
+          "x": 0,
+          "y": 0.0,
+          "width": 0,
+          "height": -155.375
+        },
+        "reviewRequired": true,
+        "disposition": "تعداد و عنوان ردیف‌های مجاز fixture با دادهٔ نمونهٔ مرجع برابر نیست؛ این تصویر شاهد برابری پیکسلیِ محتوا نیست."
+      }
+    },
+    {
+      "key": "resources",
+      "width": 390,
+      "height": 844,
+      "theme": "dark",
+      "measurement": {
+        "element": "listBounds",
+        "deltaCssPixels": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": -156.562
+        },
+        "reviewRequired": true,
+        "disposition": "فقط یک ردیف مجاز در fixture در برابر سه ردیف نمونهٔ مرجع؛ دادهٔ اطلس وارد محصول نشده است."
+      }
+    },
+    {
+      "key": "resources",
+      "width": 834,
+      "height": 1112,
+      "theme": "dark",
+      "measurement": {
+        "element": "listBounds",
+        "deltaCssPixels": {
+          "x": 0,
+          "y": 0.0,
+          "width": 0,
+          "height": -156.562
+        },
+        "reviewRequired": true,
+        "disposition": "فقط یک ردیف مجاز در fixture در برابر سه ردیف نمونهٔ مرجع؛ دادهٔ اطلس وارد محصول نشده است."
+      }
+    },
+    {
+      "key": "resources",
+      "width": 834,
+      "height": 1112,
+      "theme": "dark",
+      "measurement": {
+        "element": "context",
+        "deltaCssPixels": {
+          "x": 0,
+          "y": 0.0,
+          "width": 0,
+          "height": -155.375
+        },
+        "reviewRequired": true,
+        "disposition": "تعداد و عنوان ردیف‌های مجاز fixture با دادهٔ نمونهٔ مرجع برابر نیست؛ این تصویر شاهد برابری پیکسلیِ محتوا نیست."
+      }
+    },
+    {
+      "key": "resources",
+      "width": 1440,
+      "height": 1000,
+      "theme": "dark",
+      "measurement": {
+        "element": "listBounds",
+        "deltaCssPixels": {
+          "x": 0,
+          "y": 0.0,
+          "width": 0,
+          "height": -156.562
+        },
+        "reviewRequired": true,
+        "disposition": "فقط یک ردیف مجاز در fixture در برابر سه ردیف نمونهٔ مرجع؛ دادهٔ اطلس وارد محصول نشده است."
+      }
+    },
+    {
+      "key": "resources",
+      "width": 1440,
+      "height": 1000,
+      "theme": "dark",
+      "measurement": {
+        "element": "context",
+        "deltaCssPixels": {
+          "x": 0,
+          "y": 0.0,
+          "width": 0,
+          "height": -155.375
+        },
+        "reviewRequired": true,
+        "disposition": "تعداد و عنوان ردیف‌های مجاز fixture با دادهٔ نمونهٔ مرجع برابر نیست؛ این تصویر شاهد برابری پیکسلیِ محتوا نیست."
+      }
+    },
+    {
+      "key": "messages",
+      "width": 390,
+      "height": 844,
+      "theme": "light",
+      "measurement": {
+        "element": "listBounds",
+        "deltaCssPixels": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": -156.562
+        },
+        "reviewRequired": true,
+        "disposition": "فقط یک ردیف مجاز در fixture در برابر سه ردیف نمونهٔ مرجع؛ دادهٔ اطلس وارد محصول نشده است."
+      }
+    },
+    {
+      "key": "messages",
+      "width": 834,
+      "height": 1112,
+      "theme": "light",
+      "measurement": {
+        "element": "listBounds",
+        "deltaCssPixels": {
+          "x": 0,
+          "y": 0.0,
+          "width": 0,
+          "height": -156.562
+        },
+        "reviewRequired": true,
+        "disposition": "فقط یک ردیف مجاز در fixture در برابر سه ردیف نمونهٔ مرجع؛ دادهٔ اطلس وارد محصول نشده است."
+      }
+    },
+    {
+      "key": "messages",
+      "width": 834,
+      "height": 1112,
+      "theme": "light",
+      "measurement": {
+        "element": "context",
+        "deltaCssPixels": {
+          "x": 0,
+          "y": 0.0,
+          "width": 0,
+          "height": -155.375
+        },
+        "reviewRequired": true,
+        "disposition": "تعداد و عنوان ردیف‌های مجاز fixture با دادهٔ نمونهٔ مرجع برابر نیست؛ این تصویر شاهد برابری پیکسلیِ محتوا نیست."
+      }
+    },
+    {
+      "key": "messages",
+      "width": 1440,
+      "height": 1000,
+      "theme": "light",
+      "measurement": {
+        "element": "listBounds",
+        "deltaCssPixels": {
+          "x": 0,
+          "y": 0.0,
+          "width": 0,
+          "height": -156.562
+        },
+        "reviewRequired": true,
+        "disposition": "فقط یک ردیف مجاز در fixture در برابر سه ردیف نمونهٔ مرجع؛ دادهٔ اطلس وارد محصول نشده است."
+      }
+    },
+    {
+      "key": "messages",
+      "width": 1440,
+      "height": 1000,
+      "theme": "light",
+      "measurement": {
+        "element": "context",
+        "deltaCssPixels": {
+          "x": 0,
+          "y": 0.0,
+          "width": 0,
+          "height": -155.375
+        },
+        "reviewRequired": true,
+        "disposition": "تعداد و عنوان ردیف‌های مجاز fixture با دادهٔ نمونهٔ مرجع برابر نیست؛ این تصویر شاهد برابری پیکسلیِ محتوا نیست."
+      }
+    },
+    {
+      "key": "messages",
+      "width": 390,
+      "height": 844,
+      "theme": "dark",
+      "measurement": {
+        "element": "listBounds",
+        "deltaCssPixels": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": -156.562
+        },
+        "reviewRequired": true,
+        "disposition": "فقط یک ردیف مجاز در fixture در برابر سه ردیف نمونهٔ مرجع؛ دادهٔ اطلس وارد محصول نشده است."
+      }
+    },
+    {
+      "key": "messages",
+      "width": 834,
+      "height": 1112,
+      "theme": "dark",
+      "measurement": {
+        "element": "listBounds",
+        "deltaCssPixels": {
+          "x": 0,
+          "y": 0.0,
+          "width": 0,
+          "height": -156.562
+        },
+        "reviewRequired": true,
+        "disposition": "فقط یک ردیف مجاز در fixture در برابر سه ردیف نمونهٔ مرجع؛ دادهٔ اطلس وارد محصول نشده است."
+      }
+    },
+    {
+      "key": "messages",
+      "width": 834,
+      "height": 1112,
+      "theme": "dark",
+      "measurement": {
+        "element": "context",
+        "deltaCssPixels": {
+          "x": 0,
+          "y": 0.0,
+          "width": 0,
+          "height": -155.375
+        },
+        "reviewRequired": true,
+        "disposition": "تعداد و عنوان ردیف‌های مجاز fixture با دادهٔ نمونهٔ مرجع برابر نیست؛ این تصویر شاهد برابری پیکسلیِ محتوا نیست."
+      }
+    },
+    {
+      "key": "messages",
+      "width": 1440,
+      "height": 1000,
+      "theme": "dark",
+      "measurement": {
+        "element": "listBounds",
+        "deltaCssPixels": {
+          "x": 0,
+          "y": 0.0,
+          "width": 0,
+          "height": -156.562
+        },
+        "reviewRequired": true,
+        "disposition": "فقط یک ردیف مجاز در fixture در برابر سه ردیف نمونهٔ مرجع؛ دادهٔ اطلس وارد محصول نشده است."
+      }
+    },
+    {
+      "key": "messages",
+      "width": 1440,
+      "height": 1000,
+      "theme": "dark",
+      "measurement": {
+        "element": "context",
+        "deltaCssPixels": {
+          "x": 0,
+          "y": 0.0,
+          "width": 0,
+          "height": -155.375
+        },
+        "reviewRequired": true,
+        "disposition": "تعداد و عنوان ردیف‌های مجاز fixture با دادهٔ نمونهٔ مرجع برابر نیست؛ این تصویر شاهد برابری پیکسلیِ محتوا نیست."
+      }
+    },
+    {
+      "key": "extracurricular",
+      "width": 834,
+      "height": 1112,
+      "theme": "light",
+      "measurement": {
+        "element": "context",
+        "deltaCssPixels": {
+          "x": 0,
+          "y": 0.0,
+          "width": 0,
+          "height": 21.594
+        },
+        "reviewRequired": true,
+        "disposition": "خلاصهٔ پنل از همان دو ردیف نمای واقعی گرفته می‌شود؛ متن و تعداد دعوت‌های fixture با نمونهٔ شمار درخواست/نام دعوت در مرجع برابر نیست."
+      }
+    },
+    {
+      "key": "extracurricular",
+      "width": 834,
+      "height": 1112,
+      "theme": "dark",
+      "measurement": {
+        "element": "context",
+        "deltaCssPixels": {
+          "x": 0,
+          "y": 0.0,
+          "width": 0,
+          "height": 21.594
+        },
+        "reviewRequired": true,
+        "disposition": "خلاصهٔ پنل از همان دو ردیف نمای واقعی گرفته می‌شود؛ متن و تعداد دعوت‌های fixture با نمونهٔ شمار درخواست/نام دعوت در مرجع برابر نیست."
+      }
+    }
+  ]
+}

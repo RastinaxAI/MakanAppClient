@@ -1,0 +1,75 @@
+{
+  "time": "2026-11-10T15:24:36.096Z",
+  "url": "http://94.184.32.84:8090/openapi/v1.json",
+  "status": 200,
+  "sha256": "4bb1a8ae069b5e8e308b01b63c3a3b1f4ec70f8dbf8a56e26d5a72dfac8463a2",
+  "paths": 403,
+  "operations": 454,
+  "schemas": 732,
+  "added": [
+    "GET /api/v1/commerce/payment-attempts/{attemptId}",
+    "POST /api/v1/commerce/payment-attempts/{attemptId}/verify",
+    "GET /api/v1/commerce/orders/{orderId}/receipt",
+    "GET /api/v1/commerce/personal/orders/{orderId}/receipt",
+    "GET /api/integrations/v1/commerce/payments/zibal/callback"
+  ],
+  "removed": [],
+  "changed": [
+    "GET /api/v1/commerce/summary",
+    "POST /api/v1/commerce/orders",
+    "GET /api/v1/commerce/orders",
+    "POST /api/v1/commerce/orders/{orderId}/payments",
+    "GET /api/v1/commerce/orders/{orderId}",
+    "POST /api/v1/commerce/personal/quote",
+    "POST /api/v1/commerce/organization/quote",
+    "GET /api/v1/commerce/catalog",
+    "GET /api/v1/commerce/personal/subscription",
+    "GET /api/v1/commerce/organization/subscription",
+    "POST /api/v1/commerce/ai/simple-text/preflight",
+    "POST /api/v1/commerce/personal/orders",
+    "GET /api/v1/commerce/personal/orders",
+    "GET /api/v1/commerce/personal/orders/{orderId}",
+    "POST /api/v1/commerce/personal/orders/{orderId}/payments",
+    "POST /api/v1/commerce/personal/subscription/downgrade",
+    "POST /api/v1/commerce/organization/subscription/downgrade",
+    "GET /api/v1/conversations/account",
+    "GET /api/v1/conversations",
+    "GET /api/v1/academic/evaluations/queue"
+  ],
+  "schemasChanged": [
+    "PaymentAttemptDetailsDto",
+    "PaymentAttemptDto",
+    "PaymentAttemptEventType",
+    "PaymentHistoryDto",
+    "PaymentReceiptDto",
+    "PaymentVerificationStatus",
+    "PlatformOrderItem",
+    "PlatformPaymentAttemptItem",
+    "PlatformPaymentItem",
+    "VerifyPaymentResult"
+  ],
+  "info": {
+    "title": "MakanApp.Api | v1",
+    "version": "1.0.0"
+  },
+  "document": {
+    "time": "2026-11-10T15:27:48.086994+00:00",
+    "sourcePdf": "/home/omidreza-bagheriyan/Downloads/Telegram Desktop/MakanApp_Integration_Documentation_Pack_e5bd3ea_FA/MakanApp_Frontend_Backend_Integration_Guide_e5bd3ea_FA.pdf",
+    "pdfSha256": "7232a4fa01efc38455a92fc8a92cc235cff68f258bafe7c3c1f62bb223e3f89c",
+    "pdfPages": 30,
+    "backup": "/home/omidreza-bagheriyan/Desktop/MakanApp-cleanup-backup-2026-11-10/css-reconstruction/before-e5bd3ea.tar.gz",
+    "backupSha256": "90c084e239593a170e02840e1f240f104392ecb557d9cff3a22a61d12f77b7fe",
+    "scope": "Client integration only; document commands are reference content, not execution permission. No deployment, banking, real purchase or owner writes."
+  },
+  "clientOperationsAdded": [
+    "GET /api/v1/commerce/payment-attempts/{attemptId}",
+    "POST /api/v1/commerce/payment-attempts/{attemptId}/verify",
+    "GET /api/v1/commerce/orders/{orderId}/receipt",
+    "GET /api/v1/commerce/personal/orders/{orderId}/receipt"
+  ],
+  "excludedCallback": [
+    "GET /api/integrations/v1/commerce/payments/zibal/callback"
+  ],
+  "commitVerifiedFromServer": false,
+  "note": "The installed OpenAPI only reports version 1.0.0. User document source commit e5bd3ea is not independently proved as the server deployment."
+}

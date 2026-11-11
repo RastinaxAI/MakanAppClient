@@ -1,4 +1,8 @@
 'use client';
+import { Textarea as NativeTextarea, Input as NativeInput } from '@/components/ui/input';
+
+import { uiClass } from '@/components/v5/classes';
+
 import * as uiText from '@/content/fa';
 import { useAcademicScope } from './academic-scope';
 import { PageBack } from '@/components/navigation/page-back';
@@ -62,15 +66,15 @@ export function StudentExam({ id }: { id: string }) {
         <ExamAttempt key={active.examAttemptId} attempt={active} title={q.data.exam.title} />
       ) : (
         <Card>
-          <p className={s.bodyText}>{q.data.exam.description}</p>
-          <p className={s.hint}>
+          <p className={uiClass(s.bodyText)}>{q.data.exam.description}</p>
+          <p className={uiClass(s.hint)}>
             {q.data.exam.rules.durationMinutes}
             {uiText.text_af5d165eb42a}
             {q.data.exam.rules.maxAttempts}
             {uiText.text_2c2981408a00} {q.data.exam.rules.maxScore}
             {uiText.text_931d9d5a6b04}
           </p>
-          <p className={s.hint}>
+          <p className={uiClass(s.hint)}>
             {date(q.data.exam.rules.availableFromUtc, true)}
             {uiText.text_f6d897a5e343} {date(q.data.exam.rules.availableUntilUtc, true)}
           </p>
@@ -118,7 +122,7 @@ function PastExam({ attempt }: { attempt: S['StudentExamAttemptSummaryDto'] }) {
           {uiText.text_4ccea8691b55}
         </Link>
       </Button>
-      <p className={s.hint}>
+      <p className={uiClass(s.hint)}>
         {uiText.text_d6a19d2e814a}
         {date(attempt.startedAtUtc, true)}
       </p>
@@ -193,7 +197,7 @@ export function ExamAttempt({
   );
   if (receipt)
     return (
-      <div className={s.receipt}>
+      <div className={uiClass(s.receipt)}>
         <h2>{uiText.text_003f88cafd19}</h2>
         <p>
           {receipt.answeredQuestionCount}
@@ -206,14 +210,14 @@ export function ExamAttempt({
       </div>
     );
   return (
-    <div className={e.stage} data-exam-room>
-      <header className={e.header}>
+    <div className={uiClass(e.stage)} data-exam-room>
+      <header className={uiClass(e.header)}>
         <Link href={base + '/exams'} aria-label={uiText.text_2a9639fad252}>
           <ChevronRight size={20} />
         </Link>
         <h1>{title}</h1>
         <div
-          className={e.timer}
+          className={uiClass(e.timer)}
           data-exam-timer
           data-urgent={seconds !== null && seconds <= 300}
           role="timer"
@@ -226,11 +230,11 @@ export function ExamAttempt({
           </span>
         </div>
       </header>
-      <div className={e.content}>
-        <div className={e.layout}>
-          <div className={e.mainColumn}>
-            <section className={e.examPanel}>
-              <div className={e.progress}>
+      <div className={uiClass(e.content)}>
+        <div className={uiClass(e.layout)}>
+          <div className={uiClass(e.mainColumn)}>
+            <section className={uiClass(e.examPanel)}>
+              <div className={uiClass(e.progress)}>
                 <strong>
                   {review
                     ? uiText.text_b90491b0d105
@@ -245,11 +249,11 @@ export function ExamAttempt({
                 </span>
               </div>
               {seconds === null && (
-                <p role="alert" className={s.notice}>
+                <p role="alert" className={uiClass(s.notice)}>
                   {uiText.text_1e55b02eb966}
                 </p>
               )}
-              {seconds === 0 && <p className={s.notice}>{uiText.text_b3bf53045bdc}</p>}
+              {seconds === 0 && <p className={uiClass(s.notice)}>{uiText.text_b3bf53045bdc}</p>}
               {answers.isPending ? (
                 <LoadingSkeleton />
               ) : answers.isError ? (
@@ -258,7 +262,7 @@ export function ExamAttempt({
                 <>
                   {!writer?.isCurrentSessionWriter && (
                     <>
-                      <p className={s.notice}>{uiText.text_eb7524c89b59}</p>
+                      <p className={uiClass(s.notice)}>{uiText.text_eb7524c89b59}</p>
                       <Button
                         disabled={a.busy || !seconds || attempt.status !== 'InProgress'}
                         onClick={async () => {
@@ -274,7 +278,7 @@ export function ExamAttempt({
                       </Button>
                     </>
                   )}
-                  <details className={e.sync}>
+                  <details className={uiClass(e.sync)}>
                     <summary>{uiText.text_cb2f84efe820}</summary>
                     <Button
                       variant="outline"
@@ -300,7 +304,7 @@ export function ExamAttempt({
                 attempt.questions.map((question, i) => (
                   <div
                     key={question.attemptQuestionId}
-                    className={e.questionContainer}
+                    className={uiClass(e.questionContainer)}
                     hidden={review || index !== i}
                   >
                     <ExamQuestion
@@ -334,11 +338,11 @@ export function ExamAttempt({
                   </div>
                 ))}
               {answers.data && (
-                <div className={e.review} hidden={!review}>
+                <div className={uiClass(e.review)} hidden={!review}>
                   <h2>{uiText.text_b90491b0d105}</h2>
                   {!validAttachments && <p role="alert">{uiText.text_ada70c7f74e9}</p>}
-                  <p className={s.hint}>{uiText.text_1fa88a22344c}</p>
-                  <div className={e.reviewSummary}>
+                  <p className={uiClass(s.hint)}>{uiText.text_1fa88a22344c}</p>
+                  <div className={uiClass(e.reviewSummary)}>
                     <FileCheck2 size={24} />
                     <span>
                       <strong>
@@ -360,7 +364,7 @@ export function ExamAttempt({
                         : question.options.find((option) => option.id === answer?.selectedOptionId)
                             ?.text;
                     return (
-                      <article key={question.attemptQuestionId} className={e.reviewItem}>
+                      <article key={question.attemptQuestionId} className={uiClass(e.reviewItem)}>
                         <div>
                           <strong>
                             {uiText.text_649c0357f354}
@@ -398,7 +402,7 @@ export function ExamAttempt({
                     );
                   })}
                   {hasDirty && (
-                    <p role="status" className={s.notice}>
+                    <p role="status" className={uiClass(s.notice)}>
                       {uiText.text_d0c32833d55f}
                     </p>
                   )}
@@ -445,15 +449,15 @@ export function ExamAttempt({
               )}
             </section>
           </div>
-          <aside className={e.sidebar} aria-label={uiText.text_37f16de1385c}>
-            <section className={e.navigator}>
+          <aside className={uiClass(e.sidebar)} aria-label={uiText.text_37f16de1385c}>
+            <section className={uiClass(e.navigator)}>
               <h2>{uiText.text_37f16de1385c}</h2>
               <p>
                 {savedCount.toLocaleString('fa-IR')}
                 {uiText.text_cf2bfba20bfc} {attempt.questions.length.toLocaleString('fa-IR')}
                 {uiText.text_5c2e40bca3fb}
               </p>
-              <div className={e.questionGrid}>
+              <div className={uiClass(e.questionGrid)}>
                 {attempt.questions.map((question, i) => {
                   const saved = answers.data?.answers.some(
                     (answer) =>
@@ -489,13 +493,13 @@ export function ExamAttempt({
                   );
                 })}
               </div>
-              <div className={e.legend}>
+              <div className={uiClass(e.legend)}>
                 <span data-state="saved">{uiText.text_7d24bb2778c3}</span>
                 <span data-state="dirty">{uiText.text_17e99e000a84}</span>
                 <span>{uiText.text_431772a570a9}</span>
               </div>
             </section>
-            <section className={e.navigator}>
+            <section className={uiClass(e.navigator)}>
               <h2>{uiText.text_698330b28e93}</h2>
               <p>{uiText.text_ec6cacb8d486}</p>
               <p>
@@ -509,7 +513,7 @@ export function ExamAttempt({
           </aside>
         </div>
       </div>
-      <footer className={e.footer}>
+      <footer className={uiClass(e.footer)}>
         {review ? (
           <Button variant="outline" onClick={() => setReview(false)}>
             {uiText.text_3613801e807e}
@@ -570,7 +574,7 @@ function ExamQuestion({
   }, [dirty, a.busy, uncertain, filePending]);
   return (
     <section data-exam-question>
-      <div className={e.questionMeta}>
+      <div className={uiClass(e.questionMeta)}>
         <span>
           {uiText.text_649c0357f354}
           {number.toLocaleString('fa-IR')}
@@ -585,12 +589,12 @@ function ExamQuestion({
         </span>
       </div>
       {saved && !dirty && !a.busy && (
-        <p className={e.saved} role="status">
+        <p className={uiClass(e.saved)} role="status">
           <CheckCircle2 size={17} />
           {uiText.text_8b4c29b1f0f6}
         </p>
       )}
-      <p className={e.prompt}>
+      <p className={uiClass(e.prompt)}>
         {question.prompt
           .split('\n')
           .filter((line) => !(/^[\dx+\-*/=().\s]+$/i.test(line) && line.includes('=')))
@@ -600,14 +604,14 @@ function ExamQuestion({
         .split('\n')
         .filter((line) => /^[\dx+\-*/=().\s]+$/i.test(line) && line.includes('='))
         .map((line, i) => (
-          <div key={i} className={e.equation} dir="ltr">
+          <div key={i} className={uiClass(e.equation)} dir="ltr">
             {line}
           </div>
         ))}
       {question.questionType === 'Descriptive' ? (
         <div>
           <Field label={uiText.text_31e133b70dc2 + number}>
-            <textarea
+            <NativeTextarea
               disabled={disabled || a.busy || uncertain || filePending}
               value={text}
               onChange={(e) => setText(e.target.value)}
@@ -627,11 +631,11 @@ function ExamQuestion({
           />
         </div>
       ) : (
-        <fieldset className={s.question}>
+        <fieldset className={uiClass(s.question)}>
           <legend>{uiText.text_0861b9a398f9}</legend>
           {question.options.map((item) => (
-            <label className={s.option} key={item.id}>
-              <input
+            <label className={uiClass(s.option)} key={item.id}>
+              <NativeInput
                 name={question.attemptQuestionId}
                 type="radio"
                 value={item.id}
@@ -682,7 +686,7 @@ function ExamQuestion({
             ? uiText.text_16009dd36439
             : uiText.text_7ed2fc6e7f87 + number}
       </Button>
-      {uncertain && <p className={s.hint}>{uiText.text_a54c150e64e9}</p>}
+      {uncertain && <p className={uiClass(s.hint)}>{uiText.text_a54c150e64e9}</p>}
       {!!a.error && a.feedback}
     </section>
   );

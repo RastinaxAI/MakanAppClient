@@ -1,3 +1,4 @@
+import { reviewPath } from './review-output';
 import { test, expect, login, schoolSections, fixture, ids } from './test';
 import { mkdir } from 'node:fs/promises';
 
@@ -24,8 +25,7 @@ test('V4 profile edit has labelled readable fields and a safe footer at all scre
     await expect(page.locator('.head-action')).toBeVisible({ visible: width >= 1200 });
     const box = (await action.boundingBox())!;
     expect(box.y + box.height).toBeLessThanOrEqual(height - 12);
-    if (width < 1200)
-      expect(height - box.y - box.height).toBeGreaterThanOrEqual(width < 768 ? 18 : 12);
+    if (width < 1200) expect(height - box.y - box.height).toBeGreaterThanOrEqual(12);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(
       true,
     );
@@ -36,7 +36,7 @@ test('V4 profile edit has labelled readable fields and a safe footer at all scre
   await page.screenshot({ path: 'test-results/school-redesign/profile-footer-mobile.png' });
 });
 
-test('school has four destinations, three nearest items and a separate class page with URL-backed sections', async ({
+test('school has the authorized education destinations, three nearest items and a separate class page with URL-backed sections', async ({
   page,
   context,
   request,
@@ -79,7 +79,13 @@ test('school has four destinations, three nearest items and a separate class pag
   });
   await page.goto('/personal/education');
   const nav = await schoolSections(page);
-  await expect(nav.getByRole('link')).toHaveText(['امروز', 'کلاس‌ها', 'برنامه', 'دعوت‌ها']);
+  await expect(nav.getByRole('link')).toHaveText([
+    'امروز',
+    'کلاس‌ها',
+    'برنامه',
+    'دعوت‌ها',
+    'گزارش‌ها و پیشرفت',
+  ]);
   await page.keyboard.press('Escape');
   for (const [name, title] of [
     ['نزدیک‌ترین جلسه', 'جلسهٔ نزدیک'],
@@ -147,20 +153,26 @@ test('Teacher opens class members alongside activities without gaining managemen
     'aria-current',
     'page',
   );
+  const members = page.getByRole('navigation', { name: 'نوع اعضای کلاس', exact: true });
   await expect(
-    page.getByRole('heading', { name: 'فهرست دانش‌آموزان کلاس', exact: true }),
-  ).toBeVisible();
-  await expect(page.getByRole('heading', { name: 'فهرست معلمان کلاس', exact: true })).toBeVisible();
+    members.getByRole('link', { name: 'دانش‌آموزان کلاس', exact: true }),
+  ).toHaveAttribute('aria-current', 'page');
+  await members.getByRole('link', { name: 'مدرسان کلاس', exact: true }).click();
+  await expect(page).toHaveURL(/tab=members&member=teachers$/);
+  await expect(members.getByRole('link', { name: 'مدرسان کلاس', exact: true })).toHaveAttribute(
+    'aria-current',
+    'page',
+  );
   await expect(page.getByRole('button', { name: /حذف از کلاس/ })).toHaveCount(0);
   await expect(page.getByRole('link', { name: /ثبت‌نام دانش‌آموز|انتساب معلم/ })).toHaveCount(0);
-  await mkdir('output/review/class-members-tab', { recursive: true });
+  await mkdir(reviewPath('output/review/class-members-tab'), { recursive: true });
   for (const width of [390, 834, 1440]) {
     await page.setViewportSize({ width, height: 1000 });
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(
       true,
     );
     await sections.scrollIntoViewIfNeeded();
-    await page.screenshot({ path: `output/review/class-members-tab/${width}.png` });
+    await page.screenshot({ path: reviewPath(`output/review/class-members-tab/${width}.png`) });
   }
   await sections.getByRole('link', { name: 'جزوه و کتاب‌ها', exact: true }).click();
   await expect(

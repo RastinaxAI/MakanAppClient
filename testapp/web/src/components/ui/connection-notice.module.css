@@ -1,0 +1,30 @@
+/* Product styles: owned here; original V5 source remains read-only in design/reference-v5. */
+.notice {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  background: var(--warning-soft);
+  color: var(--warning);
+  padding: 12px;
+  border-radius: 12px;
+  font-size: calc(12px * var(--text-scale, 1));
+  line-height: 1.9;
+}
+.notice p {
+  flex: 1;
+  margin: 0;
+}
+.notice > svg {
+  flex: none;
+}
+.notice button {
+  height: 44px;
+  width: 44px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--warning);
+}

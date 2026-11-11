@@ -1,0 +1,312 @@
+{
+  "date": "2026-11-10T11:28:05.628439+00:00",
+  "method": "Static source/config/AST/URL/reference inspection; no candidate was executed to decide deletion. Visual/build validation is a separate stage.",
+  "backup": {
+    "createdAt": "2026-11-10T11:07:04.125327+00:00",
+    "workspace": "/home/omidreza-bagheriyan/Desktop/MakanApp/testapp/web",
+    "archive": "/home/omidreza-bagheriyan/Desktop/MakanApp-cleanup-backup-2026-11-10/css-reconstruction/source-before.tar.gz",
+    "sha256": "9c60b85b7408ce54cd7b82e0e9733b993c0513724b41ed7a7f5db2d793353d5d",
+    "restore": "Extract selected members from source-before.tar.gz into a separate directory and compare before copying into web/. Never overwrite local secrets or sessions."
+  },
+  "removed": [
+    {
+      "path": "src/design/v5-author.css",
+      "bytes": 69498,
+      "sha256": "75cedb276d9710c32896007219f9ec69351e70f189d5a86c7500579e5baf7476",
+      "importedBy": [],
+      "mentions": [
+        {
+          "path": "web/docs/design/exact-v1/session-native-build70-history.json",
+          "kind": "documentation-evidence"
+        },
+        {
+          "path": "web/docs/design/exact-v1/session-native.json",
+          "kind": "documentation-evidence"
+        },
+        {
+          "path": "web/docs/prompts/20261110-css-diagnosis.json",
+          "kind": "documentation-evidence"
+        },
+        {
+          "path": "web/docs/prompts/MakanApp_PDF_Implementation_And_Static_Cleanup_FA.txt",
+          "kind": "documentation-evidence"
+        },
+        {
+          "path": "web/scripts/audit-static-usage.mjs",
+          "kind": "tool"
+        },
+        {
+          "path": "web/scripts/build-v5-product-styles.mjs",
+          "kind": "tool"
+        },
+        {
+          "path": "web/tests/unit/v5-design.test.ts",
+          "kind": "test-fixture"
+        }
+      ],
+      "role": "superseded-style/tool",
+      "reason": "Global generated atlas stylesheet superseded by locally owned product modules; no remaining application/CSS import. Original reference CSS preserved under design/reference-v5.",
+      "confidence": "high after reviewing conventions and non-import consumers",
+      "effect": "Use component CSS Modules/native reset instead; no route/API/DTO removed.",
+      "archiveMember": "src/design/v5-author.css",
+      "status": "removed after verified external backup",
+      "currentlyAbsent": true
+    },
+    {
+      "path": "src/design/v5-product.css",
+      "bytes": 26966,
+      "sha256": "5380d3f812a5a93079b1334a21764b9a36f5bd14a961c0470458d13c2b4db6c6",
+      "importedBy": [],
+      "mentions": [
+        {
+          "path": "web/docs/design/exact-v1/changed-files.json",
+          "kind": "documentation-evidence"
+        },
+        {
+          "path": "web/docs/design/exact-v1/exam-native.json",
+          "kind": "documentation-evidence"
+        },
+        {
+          "path": "web/docs/integration/20261110-assistant-mobile-repair.md",
+          "kind": "documentation-evidence"
+        },
+        {
+          "path": "web/docs/maintenance/20261110-delivery.md",
+          "kind": "documentation-evidence"
+        },
+        {
+          "path": "web/docs/prompts/MakanApp_PDF_Implementation_And_Static_Cleanup_FA.txt",
+          "kind": "documentation-evidence"
+        },
+        {
+          "path": "web/docs/quality/ASSISTANT_MOBILE_REPAIR_20261110.json",
+          "kind": "documentation-evidence"
+        },
+        {
+          "path": "web/docs/quality/EXACT_V5_20261107_CHECKS.json",
+          "kind": "documentation-evidence"
+        },
+        {
+          "path": "web/scripts/audit-static-usage.mjs",
+          "kind": "tool"
+        },
+        {
+          "path": "web/tests/unit/v5-design.test.ts",
+          "kind": "test-fixture"
+        }
+      ],
+      "role": "superseded-style/tool",
+      "reason": "Product adaptations transferred to component/feature modules; no remaining application/CSS import. Historical evidence retains its original build/file names.",
+      "confidence": "high after reviewing conventions and non-import consumers",
+      "effect": "Use component CSS Modules/native reset instead; no route/API/DTO removed.",
+      "archiveMember": "src/design/v5-product.css",
+      "status": "removed after verified external backup",
+      "currentlyAbsent": true
+    },
+    {
+      "path": "scripts/build-v5-product-styles.mjs",
+      "bytes": 3494,
+      "sha256": "be1cea239fe5fd59e0f1f12ad050f67b54f25a75eb0047f6f13d3af43fa9131a",
+      "importedBy": [],
+      "mentions": [
+        {
+          "path": "web/docs/design/exact-v1/session-native-build70-history.json",
+          "kind": "documentation-evidence"
+        },
+        {
+          "path": "web/docs/design/exact-v1/session-native.json",
+          "kind": "documentation-evidence"
+        },
+        {
+          "path": "web/scripts/audit-static-usage.mjs",
+          "kind": "tool"
+        }
+      ],
+      "role": "superseded-style/tool",
+      "reason": "Retired generator only recreates the superseded global atlas stylesheet; absent from package scripts/build/Docker and runtime import graph. Never executed for cleanup.",
+      "confidence": "high after reviewing conventions and non-import consumers",
+      "effect": "Use component CSS Modules/native reset instead; no route/API/DTO removed.",
+      "archiveMember": "scripts/build-v5-product-styles.mjs",
+      "status": "removed after verified external backup",
+      "currentlyAbsent": true
+    },
+    {
+      "path": "postcss.config.mjs",
+      "bytes": 60,
+      "sha256": "f50058e0d309cdb3e7c25a1123337338641fb71e988572607d57f47209db1fd1",
+      "importedBy": [],
+      "mentions": [
+        {
+          "path": "web/docs/CLIENT_RECOVERY.json",
+          "kind": "documentation-evidence"
+        },
+        {
+          "path": "web/docs/quality/FINAL_RESULTS.json",
+          "kind": "documentation-evidence"
+        },
+        {
+          "path": "web/docs/quality/PROJECT_CLEANUP_20261106.json",
+          "kind": "documentation-evidence"
+        },
+        {
+          "path": "web/docs/quality/test-attempts/first-clean-checkout.json",
+          "kind": "documentation-evidence"
+        },
+        {
+          "path": "web/scripts/audit-static-usage.mjs",
+          "kind": "tool"
+        },
+        {
+          "path": "web/scripts/package-source.py",
+          "kind": "tool"
+        },
+        {
+          "path": "web/scripts/repro-check.mjs",
+          "kind": "tool"
+        }
+      ],
+      "role": "retired-build-configuration",
+      "reason": "Contains only the removed Tailwind PostCSS plugin; no remaining custom PostCSS requirement. Optional staging/source allowlists updated.",
+      "confidence": "high after reviewing conventions and non-import consumers",
+      "effect": "Use component CSS Modules/native reset instead; no route/API/DTO removed.",
+      "archiveMember": "postcss.config.mjs",
+      "status": "removed after verified external backup",
+      "currentlyAbsent": true
+    }
+  ],
+  "dependenciesRemoved": [
+    "tailwindcss",
+    "@tailwindcss/postcss",
+    "tailwind-merge"
+  ],
+  "retained": [
+    {
+      "path": "node_modules/@fontsource-variable/vazirmatn",
+      "reason": "Consumed by document/guide tools; runtime uses approved reference TTF."
+    },
+    {
+      "path": "../README.md and ../readme.md",
+      "reason": "Both consumed by source handoff; lower-case linked from web/README.md."
+    },
+    {
+      "path": "design/reference-v5",
+      "reason": "Authoritative V5 source, retained unchanged."
+    },
+    {
+      "path": "tests, contracts, public, docs/evidence, output/review",
+      "reason": "Not runtime does not mean unused; validation, contracts, assets and visual evidence retained."
+    },
+    {
+      "path": "private environment/session directories and Docker volumes",
+      "reason": "Protected; neither contents nor opaque session filenames inspected."
+    }
+  ],
+  "unclassifiedRetained": [
+    {
+      "path": ".github/workflows/makan-client-quality.yml",
+      "category": "unclassified-preserve",
+      "bytes": 1126
+    },
+    {
+      "path": ".github/workflows/makan-deployment-helper.yml",
+      "category": "unclassified-preserve",
+      "bytes": 1202
+    },
+    {
+      "path": "web/output/docx/MakanApp_Backend_Messaging_Policy_FA_20261101.docx",
+      "category": "unclassified-preserve",
+      "bytes": 55159
+    },
+    {
+      "path": "web/output/pdf/MakanApp_Backend_Gaps_Test_Report_FA_20261104.pdf",
+      "category": "unclassified-preserve",
+      "bytes": 146305
+    },
+    {
+      "path": "web/output/pdf/MakanApp_Backend_Messaging_Policy_FA_20261101.pdf",
+      "category": "unclassified-preserve",
+      "bytes": 288549
+    },
+    {
+      "path": "web/output/pdf/MakanApp_Complete_Implemented_Designs_FA.pdf",
+      "category": "unclassified-preserve",
+      "bytes": 42461639
+    },
+    {
+      "path": "web/output/pdf/MakanApp_Messaging_404_Backend_Handoff_FA_20261105.pdf",
+      "category": "unclassified-preserve",
+      "bytes": 100247
+    },
+    {
+      "path": "web/output/pdf/MakanApp_Messaging_Diagnostic_FA_20261105.pdf",
+      "category": "unclassified-preserve",
+      "bytes": 110681
+    },
+    {
+      "path": "web/output/pdf/MakanApp_Panel_User_Guide_FA.pdf",
+      "category": "unclassified-preserve",
+      "bytes": 602642
+    },
+    {
+      "path": "web/output/pdf/MakanApp_Server_Integration_154c437_FA.pdf",
+      "category": "unclassified-preserve",
+      "bytes": 476318
+    },
+    {
+      "path": "web/output/reports/E11D4EC_BACKEND_GAPS_FA.md",
+      "category": "unclassified-preserve",
+      "bytes": 18224
+    },
+    {
+      "path": "web/output/reports/E11D4EC_DELIVERY_FA.md",
+      "category": "unclassified-preserve",
+      "bytes": 6754
+    },
+    {
+      "path": "web/output/reports/MANAGER_BACKEND_GAPS_FA.md",
+      "category": "unclassified-preserve",
+      "bytes": 10570
+    }
+  ],
+  "lastVerifiedAt": "2026-11-10T13:32:15.145859+00:00",
+  "lastStaticInventory": "docs/quality/STATIC_USAGE_20261110.json",
+  "prototypeFurtherFilesRemoved": 0,
+  "v9RetiredPromotion": {
+    "backup": "/home/omidreza-bagheriyan/Desktop/MakanApp-cleanup-backup-2026-11-10/css-reconstruction/v9-before-source.tar.gz",
+    "backupSha256": "dc346cb6393973249bcb361e75c224a557b74ade6b12b96196befc42a761e20c",
+    "recovery": "Extract only the named paths from this archive into web/; inspect before reintroducing a retired promotion.",
+    "files": [
+      {
+        "path": "src/features/pwa/promotion.tsx",
+        "bytes": 2077,
+        "sha256": "66c9ed32076ce2666c97aa7106d8d51e3fdc55c6d132232bf8c18515d1b4e74f",
+        "role": "Retired automatic installation promotion",
+        "confidence": "proved",
+        "consumers": "Only the retired promotion imported its preferences after provider migration; no runtime/test/tool import remains after deleting both. Manual InstallPanel and InstallHelp remain active.",
+        "effect": "No automatic floating installation banner; explicit installation still available from profile."
+      },
+      {
+        "path": "src/features/pwa/install-preferences.ts",
+        "bytes": 270,
+        "sha256": "1b7191297eb7874d31b7ef558dc0b99208b2ad542960734a4216c9846d9c2400",
+        "role": "Retired automatic installation promotion",
+        "confidence": "proved",
+        "consumers": "Only the retired promotion imported its preferences after provider migration; no runtime/test/tool import remains after deleting both. Manual InstallPanel and InstallHelp remain active.",
+        "effect": "No automatic floating installation banner; explicit installation still available from profile."
+      }
+    ],
+    "runtimeBuildUnrelatedToDeletionDecision": true,
+    "validatedBuild": "M2TRK4sxgygtqKnwXh0DD"
+  },
+  "v9NewRuntimeFiles": [
+    {
+      "path": "src/lib/api/schema-validator.ts",
+      "bytes": 5629
+    },
+    {
+      "path": "src/generated/api/browser-contract.json",
+      "bytes": 148749
+    }
+  ],
+  "v9FontPolicy": "Regular/Bold TTFs retained for known diagnostic tools; excluded only from Docker context. Variable Vazirmatn preserved and preloaded."
+}

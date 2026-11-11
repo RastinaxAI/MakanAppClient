@@ -1,4 +1,8 @@
 'use client';
+import { Select as NativeSelect } from '@/components/ui/input';
+
+import { uiClass } from '@/components/v5/classes';
+
 import Link from 'next/link';
 import { useState } from 'react';
 import { vnext as t } from '@/content/fa';
@@ -38,9 +42,9 @@ export function ExamDiscovery({ classId }: { classId?: string }) {
             setPage(1);
           }}
         />
-        <div className={s.two}>
+        <div className={uiClass(s.two)}>
           <Field label={t.title}>
-            <select
+            <NativeSelect
               value={chosen}
               disabled={!!classId}
               onChange={(e) => {
@@ -54,10 +58,10 @@ export function ExamDiscovery({ classId }: { classId?: string }) {
                   {c.title}
                 </option>
               ))}
-            </select>
+            </NativeSelect>
           </Field>
           <Field label={t.status}>
-            <select
+            <NativeSelect
               value={status}
               onChange={(e) => {
                 setStatus(e.target.value);
@@ -70,7 +74,7 @@ export function ExamDiscovery({ classId }: { classId?: string }) {
                   {label(v)}
                 </option>
               ))}
-            </select>
+            </NativeSelect>
           </Field>
         </div>
         {classes.isError && (
@@ -89,9 +93,9 @@ export function ExamDiscovery({ classId }: { classId?: string }) {
       ) : (
         <Card>
           {!q.data.items.length && <EmptyState title={t.empty} />}
-          <div className={s.editorList}>
+          <div className={uiClass(s.editorList)}>
             {q.data.items.map((exam) => (
-              <article className={s.question} key={exam.versionId}>
+              <article className={uiClass(s.question)} key={exam.versionId}>
                 <h3>{exam.title}</h3>
                 <p>
                   {exam.classTitle}

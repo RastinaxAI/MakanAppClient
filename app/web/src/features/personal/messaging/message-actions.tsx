@@ -1,4 +1,12 @@
 'use client';
+import {
+  Input as NativeInput,
+  Select as NativeSelect,
+  Textarea as NativeTextarea,
+} from '@/components/ui/input';
+
+import { uiClass } from '@/components/v5/classes';
+
 import * as uiText from '@/content/fa';
 import { useEffect, useRef, useState } from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
@@ -202,6 +210,7 @@ export function MessageActions({
       }}
     >
       <DialogContent
+        scenario={mode === 'report' ? 'MK-260' : mode === 'forward' ? 'MK-233' : undefined}
         title={
           mode === 'report'
             ? uiText.text_984f13cff775
@@ -213,9 +222,9 @@ export function MessageActions({
       >
         {mode === 'forward' && (
           <>
-            <label className="field">
+            <label className={uiClass('field')}>
               {uiText.text_88d42df1139e}
-              <input
+              <NativeInput
                 value={search}
                 disabled={!!frozen || action.busy}
                 onChange={(event) => setSearch(event.target.value)}
@@ -226,11 +235,11 @@ export function MessageActions({
             ) : inbox.isError ? (
               <ErrorState error={inbox.error} onRetry={() => void inbox.refetch()} />
             ) : (
-              <div className="mk-menu-actions">
+              <div className={uiClass('mk-menu-actions')}>
                 {targets.length ? (
                   targets.map((target) => (
-                    <label className="mk-target-choice" key={target.conversationId}>
-                      <input
+                    <label className={uiClass('mk-target-choice')} key={target.conversationId}>
+                      <NativeInput
                         type="radio"
                         name="forward-target"
                         aria-label={conversationTitle(target)}
@@ -273,7 +282,7 @@ export function MessageActions({
           <>
             <label>
               {uiText.text_e96d22a3d2dc}
-              <select
+              <NativeSelect
                 aria-label={uiText.text_e96d22a3d2dc}
                 value={reason}
                 disabled={!!frozen || action.busy}
@@ -287,11 +296,11 @@ export function MessageActions({
                     {title}
                   </option>
                 ))}
-              </select>
+              </NativeSelect>
             </label>
             <label>
               {uiText.text_c0d8a570e7ce}
-              <textarea
+              <NativeTextarea
                 aria-label={uiText.text_743f63e1ea92}
                 value={description}
                 disabled={!!frozen || action.busy}
@@ -301,9 +310,9 @@ export function MessageActions({
             </label>
           </>
         )}
-        {frozen && <p className="small muted">{uiText.text_c83a7d86b4fd}</p>}
+        {frozen && <p className={uiClass('small muted')}>{uiText.text_c83a7d86b4fd}</p>}
         {!!(error ?? action.error) && <ErrorState error={error ?? action.error} />}
-        <div className="confirm-actions">
+        <div className={uiClass('confirm-actions')}>
           <Button
             disabled={action.busy || !restored || (mode === 'report' ? !reason : !writable)}
             onClick={() => void submit()}

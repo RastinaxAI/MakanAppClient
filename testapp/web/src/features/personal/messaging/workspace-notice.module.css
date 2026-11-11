@@ -19,11 +19,11 @@
   color: var(--primary);
 }
 .card h2 {
-  font-size: 20px;
+  font-size: calc(20px * var(--text-scale, 1));
   margin-block: 14px;
 }
 .card h3 {
-  font-size: 16px;
+  font-size: calc(16px * var(--text-scale, 1));
   margin-block: 10px;
 }
 .card p {

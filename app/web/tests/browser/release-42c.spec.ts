@@ -1,3 +1,4 @@
+import { reviewPath } from './review-output';
 import { test, expect, login, fixture, origin, ids } from './test';
 import { mkdir } from 'node:fs/promises';
 const group = '00000000-0000-4000-8000-000000000970';
@@ -182,13 +183,13 @@ test('official pair keeps a healthy group available, shows a structured card and
   const card = page.getByRole('region', { name: 'اعلان رسمی تکلیف', exact: true });
   await expect(card).toContainText('تکلیف جدید معلم');
   await expect(page.getByRole('textbox', { name: 'متن پیام', exact: true })).toBeVisible();
-  await mkdir('output/review/release-42c', { recursive: true });
+  await mkdir(reviewPath('output/review/release-42c'), { recursive: true });
   for (const width of [390, 834, 1440]) {
     await page.setViewportSize({ width, height: 1000 });
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(
       true,
     );
-    await page.screenshot({ path: `output/review/release-42c/activity-${width}.png` });
+    await page.screenshot({ path: reviewPath(`output/review/release-42c/activity-${width}.png`) });
   }
   await card.getByRole('link', { name: 'مشاهدهٔ تکلیف', exact: true }).click();
   await expect(page).toHaveURL(`/personal/education/assignments/${ids.assignment}`);

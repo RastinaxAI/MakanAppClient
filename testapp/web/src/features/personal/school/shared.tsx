@@ -1,4 +1,6 @@
 'use client';
+import { uiClass } from '@/components/v5/classes';
+
 import { useAcademicScope } from './academic-scope';
 import * as uiText from '@/content/fa';
 import { Button } from '@/components/ui/button';
@@ -38,7 +40,7 @@ export function SchoolHeading({
 }) {
   const scope = useAcademicScope();
   return (
-    <div className={s.heading} data-v4-heading data-page-heading>
+    <div className={uiClass(s.heading)} data-v4-heading data-page-heading>
       <PageHeading title={title} action={action} />
       {back && <PageBack href={scope.personal ? scope.base : base + '/classes'} />}
       <div>
@@ -63,9 +65,9 @@ export function Card({
   className?: string;
 }) {
   return (
-    <section className={`${s.card} ${className}`} data-v4-card>
+    <section className={uiClass(`${s.card} ${className}`)} data-v4-card>
       {title && (
-        <div className={s.cardHeading}>
+        <div className={uiClass(s.cardHeading)}>
           <h2>{title}</h2>
           {action}
         </div>
@@ -75,12 +77,12 @@ export function Card({
   );
 }
 export function Status({ children }: { children: ReactNode }) {
-  return <span className={s.status}>{children}</span>;
+  return <span className={uiClass(s.status)}>{children}</span>;
 }
 export function Field({ label, children }: { label: string; children: ReactNode }) {
   const id = useId();
   return (
-    <div className={s.field} data-v4-field>
+    <div className={uiClass(s.field)} data-v4-field>
       <label htmlFor={id}>{label}</label>
       {isValidElement<{ id?: string }>(children) ? cloneElement(children, { id }) : children}
     </div>
@@ -99,8 +101,8 @@ export function FormDialog({
       <DialogTrigger asChild>
         <Button>{title}</Button>
       </DialogTrigger>
-      <DialogContent title={title} className={s.formDialog}>
-        <div className={s.form}>
+      <DialogContent title={title} className={uiClass(s.formDialog)}>
+        <div className={uiClass(s.form)}>
           {typeof children === 'function' ? children(() => setOpen(false)) : children}
         </div>
       </DialogContent>
@@ -122,7 +124,12 @@ export function useSchoolAction() {
       alive.current = false;
     };
   }, []);
-  async function run<T>(path: string, body?: unknown, method = 'POST'): Promise<T | undefined> {
+  async function run<T>(
+    path: string,
+    body?: unknown,
+    method = 'POST',
+    validateResult?: (result: T) => boolean,
+  ): Promise<T | undefined> {
     if (pending.current) return;
     pending.current = true;
     setBusy(true);
@@ -135,6 +142,8 @@ export function useSchoolAction() {
         ...(body !== undefined ? { body: JSON.stringify(body) } : {}),
       });
       if (!alive.current) return;
+      if (validateResult && !validateResult(result))
+        throw new ApiError(502, { code: 'CONTRACT_MISMATCH' });
       setSuccess(uiText.text_6afc863be80c);
       if (result && typeof result === 'object' && 'publicationReceipt' in result)
         setReceipt(
@@ -160,7 +169,7 @@ export function useSchoolAction() {
         <PublicationReceipt value={receipt} />
         {!!error && <ErrorState error={error} />}
         {success && (
-          <p className={s.success} role="status">
+          <p className={uiClass(s.success)} role="status">
             <CheckCircle2 size={18} />
             {success}
           </p>
@@ -202,7 +211,7 @@ export function Pager({
   size?: number;
 }) {
   return (
-    <div className={s.pager}>
+    <div className={uiClass(s.pager)}>
       <Button
         variant="outline"
         disabled={page === 1}

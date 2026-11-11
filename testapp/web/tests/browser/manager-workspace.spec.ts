@@ -1,4 +1,14 @@
-import { test, expect, login, schoolSections, fixture, ids, origin } from './test';
+import {
+  test,
+  expect,
+  login,
+  schoolSections,
+  fixture,
+  ids,
+  origin,
+  chooseSchoolCatalog,
+} from './test';
+import { captureExactState } from './exact-state-capture';
 import { mkdir } from 'node:fs/promises';
 const base = '/personal/education',
   id = (n: number) => `00000000-0000-4000-8000-${String(n).padStart(12, '0')}`;
@@ -96,7 +106,16 @@ test('Manager has a dedicated workspace and reports; other roles cannot enter ma
       const state = await login(other, role);
       const p = await other.newPage();
       await p.goto(base + '/reports');
-      await expect(p.getByRole('main').getByRole('alert')).toContainText('دسترسی محدود');
+      if (role === 'Parent')
+        await expect(p.getByRole('main').getByRole('alert')).toContainText('دسترسی محدود');
+      else
+        await expect(
+          p.getByRole('heading', {
+            name: role === 'Teacher' ? 'گزارش کلاس' : 'پیشرفت من',
+            exact: true,
+          }),
+        ).toBeVisible();
+      await expect(p.getByRole('navigation', { name: 'نوع گزارش مدیر' })).toHaveCount(0);
       expect(
         (
           await other.request.get(
@@ -119,11 +138,11 @@ test('Manager creates a class, assigns multiple teachers and students, then remo
   await request.post(fixture + '/__test__/manager-case');
   await login(context, 'Manager');
   await page.goto(base + '/classes/new');
-  await page.getByLabel('نام کلاس', { exact: true }).fill('کلاس مدیریت چندعضوی');
-  await page.getByLabel('ظرفیت کلاس', { exact: true }).fill('20');
-  await page.getByLabel('درس از کاتالوگ', { exact: true }).selectOption({ label: 'ریاضی' });
-  await page.getByLabel('دوره از کاتالوگ', { exact: true }).selectOption({ label: 'دورهٔ نمونه' });
-  await page.getByRole('button', { name: 'بازبینی اطلاعات', exact: true }).click();
+  await page.getByLabel('عنوان کلاس', { exact: true }).fill('کلاس مدیریت چندعضوی');
+  await page.getByLabel('ظرفیت', { exact: true }).fill('20');
+  await chooseSchoolCatalog(page, 'درس', 'ریاضی');
+  await chooseSchoolCatalog(page, 'دوره', 'دورهٔ نمونه');
+  await page.getByRole('button', { name: 'بازبینی کلاس', exact: true }).click();
   await page.getByRole('button', { name: 'تأیید و ثبت', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'کلاس ایجاد شد', exact: true })).toBeVisible();
   await page.getByRole('link', { name: 'انتخاب معلمان کلاس', exact: true }).click();
@@ -145,12 +164,14 @@ test('Manager creates a class, assigns multiple teachers and students, then remo
     .getByRole('link', { name: 'معلمان', exact: true })
     .click();
   await expect(page.getByRole('cell', { name: 'معلم اول', exact: true })).toBeVisible();
-  await expect(page.getByRole('link', { name: 'ایجاد جلسه', exact: true })).toHaveCount(0);
+  await expect(page.getByRole('link', { name: 'جلسه تازه', exact: true })).toHaveCount(0);
+  await captureExactState(page, ['MK-101']);
   await request.post(fixture + '/__test__/fault', {
     data: { path: '/end', method: 'POST', status: 503 },
   });
   await page.getByRole('button', { name: 'حذف از کلاس · معلم اول', exact: true }).click();
   const dialog = page.getByRole('dialog');
+  await captureExactState(page, ['MK-103']);
   await dialog.getByRole('button', { name: 'حذف از این کلاس', exact: true }).click();
   await expect(dialog.getByRole('alert')).toBeVisible();
   await dialog.getByRole('button', { name: 'حذف از این کلاس', exact: true }).click();
@@ -166,6 +187,7 @@ test('Manager creates a class, assigns multiple teachers and students, then remo
     .getByRole('link', { name: 'دانش‌آموزان', exact: true })
     .click();
   await page.getByRole('button', { name: 'حذف از کلاس · دانش‌آموز اول', exact: true }).click();
+  await captureExactState(page, ['MK-100']);
   await dialog.getByRole('button', { name: 'حذف از این کلاس', exact: true }).click();
   await expect(dialog).toHaveCount(0);
   await expect(page.getByRole('cell', { name: 'انصراف از کلاس', exact: true })).toBeVisible();

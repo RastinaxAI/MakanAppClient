@@ -1,0 +1,296 @@
+{
+  "recordedAt": "2026-11-10T17:11:31.343Z",
+  "currentBuildId": "6EwbCZA0BGzGg6GRjuElc",
+  "checks": {
+    "build": "passed",
+    "typecheck": "passed",
+    "lint": {
+      "status": "passed",
+      "boundaries": 314,
+      "cycles": 0
+    },
+    "format": "passed",
+    "generated": {
+      "status": "passed",
+      "operations": 329,
+      "schemas": 571,
+      "platformAdminOperations": 0
+    },
+    "unit": {
+      "build": "_SqLZ8zYGgbcgrpwzsO8r",
+      "passed": 493,
+      "failed": 0,
+      "files": 73,
+      "applicationTsUnchangedOnFinalBuild": true
+    },
+    "browserPrevious": {
+      "build": "_SqLZ8zYGgbcgrpwzsO8r",
+      "startTime": "2026-11-10T16:52:53.145Z",
+      "duration": 90408.67599999999,
+      "expected": 41,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "browserFinal": {
+      "build": "6EwbCZA0BGzGg6GRjuElc",
+      "startTime": "2026-11-10T17:04:06.101Z",
+      "duration": 55576.085,
+      "expected": 17,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "ordinaryRuntime": {
+      "build": "6EwbCZA0BGzGg6GRjuElc",
+      "startTime": "2026-11-10T17:05:46.783Z",
+      "duration": 5229.332,
+      "expected": 1,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "liveUi": {
+      "build": "6EwbCZA0BGzGg6GRjuElc",
+      "passed": 48,
+      "total": 48,
+      "fixture": false
+    },
+    "pwaRegression": {
+      "beforeBuild": "_SqLZ8zYGgbcgrpwzsO8r",
+      "reproducedFailure": 1,
+      "afterBuild": "6EwbCZA0BGzGg6GRjuElc",
+      "passed": true,
+      "privateFailureArchive": "/home/omidreza-bagheriyan/Desktop/MakanApp-cleanup-backup-2026-11-10/css-reconstruction/live-delivery-pwa-red.tar.gz"
+    }
+  },
+  "sourceComparison": {
+    "beforeBuild": "_SqLZ8zYGgbcgrpwzsO8r",
+    "afterBuild": "6EwbCZA0BGzGg6GRjuElc",
+    "sourceArchive": "/home/omidreza-bagheriyan/Desktop/MakanApp-cleanup-backup-2026-11-10/css-reconstruction/live-delivery-ninth-source.tar.gz",
+    "sourceArchiveSha256": "d82968ae1a7ad5f5f2d7f8f86b7a87b90eb061e3ae26f798582fac8463ed4d47",
+    "changedApplicationFiles": [
+      {
+        "path": "src/features/pwa/pwa.module.css",
+        "beforeSha256": "3a9ce49aaa07a47abc79733f6496f6e4941f1836795b904fc8f58673bbc83fa2",
+        "afterSha256": "da2ae6d926b585465ec5221bcb6ab4078e7cf2ea2bbc0a103ebb44829b1f5dea"
+      }
+    ],
+    "assistantJavaScriptSourceUnchanged": true
+  },
+  "evidence": [
+    {
+      "path": "tmp/live-delivery-20261110/build-final.log",
+      "bytes": 2616,
+      "sha256": "52c0f94088fb34efdb3821412b48f364ccc8b5abb03721617fa6381a0701a5a5"
+    },
+    {
+      "path": "tmp/live-delivery-20261110/typecheck-final.log",
+      "bytes": 48,
+      "sha256": "ef44296c8ed298332cf6d455bf7d12fc95b39f36cff13f885c64b568cf71407f"
+    },
+    {
+      "path": "tmp/live-delivery-20261110/lint-final.log",
+      "bytes": 133,
+      "sha256": "2117d2673f2661bc46f0ffd50f2a8ad778e4d1cb05e6ad14a9771669b98c5bba"
+    },
+    {
+      "path": "tmp/live-delivery-20261110/format-final.log",
+      "bytes": 233,
+      "sha256": "ba574ad2b73b835a00a325c975a31a0ae2adba698518fd901096095a8712ed7c"
+    },
+    {
+      "path": "tmp/live-delivery-20261110/generated-final.log",
+      "bytes": 499,
+      "sha256": "dbcd68ebb202a705692dd201e4c51bd4e610ebd038155b70923779d5f0913bcd"
+    },
+    {
+      "path": "tmp/live-delivery-20261110/unit-first-results.json",
+      "bytes": 181779,
+      "sha256": "eb2bcdd50a0c775259e1c30a602adad5521a9b843eceaf235b3adc4f11af4238"
+    },
+    {
+      "path": "tmp/live-delivery-20261110/browser-first-results.json",
+      "bytes": 46636,
+      "sha256": "0944ce95a5014eeb55ba48b9a6f14ffd9073f06e722292bb406f818e9057061c"
+    },
+    {
+      "path": "tmp/live-delivery-20261110/browser-final-results.json",
+      "bytes": 20544,
+      "sha256": "0463891263e7a8ab8d2744e83e81329c42dd7945e1a3c28bbc1514bd3c77d926"
+    },
+    {
+      "path": "tmp/live-delivery-20261110/production-final-results.json",
+      "bytes": 3782,
+      "sha256": "87e9afc9da2b11c24eca0b20bc43886c80a273d67b40d604f107a8c3ec7e75d4"
+    },
+    {
+      "path": "tmp/live-delivery-20261110/pwa-red-results.json",
+      "bytes": 6598,
+      "sha256": "698ec3e07982f2d1270f85471b6cf283497384ba0a93a9a44913d16d1cb12af0"
+    },
+    {
+      "path": "tmp/live-delivery-20261110/ui-results.json",
+      "bytes": 5471,
+      "sha256": "283971736f9a7655f6abbe220a3aac123eb53fbca3ddefd1301cf427487e851c"
+    },
+    {
+      "path": "tmp/live-delivery-20261110/ui-final-results.json",
+      "bytes": 23257,
+      "sha256": "afc949cd08dc82a82747465921573e36bafd25370417462f4a7d53937637115c"
+    },
+    {
+      "path": "tmp/live-delivery-20261110/activation-confirmation.json",
+      "bytes": 947,
+      "sha256": "7107709285488d3bb641ed41f13b80e906075f1e7ae1f88516ea3d10abfc7f74"
+    },
+    {
+      "path": "tmp/live-delivery-20261110/subscription-detail.json",
+      "bytes": 481,
+      "sha256": "a02e1500c387818b66b10e45d693dce8a1d17d88ba1b90e0964f023f45749eff"
+    },
+    {
+      "path": "tmp/live-delivery-20261110/build-source-comparison.json",
+      "bytes": 644,
+      "sha256": "d6df53f766c3f477b72e4ffa343c403c3d8bb520abd36daa2bc99dfb3fcce7c1"
+    },
+    {
+      "path": "tmp/live-delivery-20261110/activation-handoff.json",
+      "sha256": "1d0019c9b4ba9e504a92066edfdebff0fc40e28707add095360f26aca44f87dc",
+      "bytes": 497
+    },
+    {
+      "path": "tmp/live-delivery-20261110/credit-handoff.json",
+      "bytes": 1494,
+      "sha256": "88e0560c0afef5a3cb839e2a2f345fae6c10b8040bb8f735254222091424212f"
+    }
+  ],
+  "liveReport": "../integration/20261110-live-delivery.json",
+  "completeProductParity": false,
+  "studentLiveAnswerVerified": false,
+  "handoffActivation": {
+    "time": "2026-11-10T17:16:54.004Z",
+    "ownerId": "d3800000-0000-0000-0000-000000000001",
+    "subscription": {
+      "status": 200,
+      "state": "NoSubscription",
+      "migrationStatus": "AwaitingValidContract",
+      "subscriptionIdPresent": false,
+      "hasVerifiedCommercialContract": false,
+      "observedAtUtc": "2026-11-10T17:16:53.7926418Z"
+    },
+    "student": {
+      "status": 200,
+      "allowed": false,
+      "remaining": 0,
+      "errorCode": "SUBSCRIPTION_INACTIVE",
+      "ownerMatches": true
+    }
+  },
+  "finalSourceHashes": [
+    {
+      "path": "src/features/personal/assistant/preflight.ts",
+      "sha256": "8fdc1b6a7e3ad3bc8d7ec30e12d3f58156974d1b45ba06c77ab6520ff88d78f6"
+    },
+    {
+      "path": "src/features/personal/assistant/payer.tsx",
+      "sha256": "9462a9de7769f77f166122a9e6967ef85b14e2b95e8398b4e51e66ff32c06dba"
+    },
+    {
+      "path": "src/features/reference/connected-assistant.tsx",
+      "sha256": "9ede0cad954cf2195c327c06edac2fe42de80cee847cfe86264c64857713afb7"
+    },
+    {
+      "path": "src/content/fa.ts",
+      "sha256": "02b589ec6db84dea35cd7fc64eeb647eb365c465715d711062d1ff0c8db5a558"
+    },
+    {
+      "path": "src/lib/api/errors.ts",
+      "sha256": "8f5a04b1524bfed4370cae2cd83100103bf34007c5fe2a56b1ae4e21c135b7fd"
+    },
+    {
+      "path": "src/features/pwa/pwa.module.css",
+      "sha256": "da2ae6d926b585465ec5221bcb6ab4078e7cf2ea2bbc0a103ebb44829b1f5dea"
+    }
+  ],
+  "matrix": {
+    "rows": 528,
+    "notesUpdated": 9,
+    "acceptanceStatusUnchanged": true,
+    "csvJsonSynchronized": true
+  },
+  "finalChecksAfterDocs": {
+    "galleryHtmlImagesAndRoutes": "passed",
+    "matrixCsvJson": "passed"
+  },
+  "creditAtHandoff": {
+    "time": "2026-11-10T17:18:24.313Z",
+    "subscription": {
+      "state": "NoSubscription",
+      "migrationStatus": "AwaitingValidContract",
+      "hasVerifiedCommercialContract": false
+    },
+    "roles": [
+      {
+        "role": "Student",
+        "FreeTrial": {
+          "status": 200,
+          "allowed": false,
+          "remaining": 0,
+          "errorCode": "QUOTA_EXCEEDED"
+        },
+        "Organization": {
+          "status": 200,
+          "allowed": false,
+          "remaining": 0,
+          "errorCode": "SUBSCRIPTION_INACTIVE"
+        }
+      },
+      {
+        "role": "Teacher",
+        "FreeTrial": {
+          "status": 200,
+          "allowed": false,
+          "remaining": 0,
+          "errorCode": "QUOTA_EXCEEDED"
+        },
+        "Organization": {
+          "status": 200,
+          "allowed": false,
+          "remaining": 0,
+          "errorCode": "SUBSCRIPTION_INACTIVE"
+        }
+      },
+      {
+        "role": "Parent",
+        "FreeTrial": {
+          "status": 200,
+          "allowed": true,
+          "remaining": 1,
+          "errorCode": null
+        },
+        "Organization": {
+          "status": 200,
+          "allowed": false,
+          "remaining": 0,
+          "errorCode": "SUBSCRIPTION_INACTIVE"
+        }
+      },
+      {
+        "role": "Manager",
+        "FreeTrial": {
+          "status": 200,
+          "allowed": true,
+          "remaining": 1,
+          "errorCode": null
+        },
+        "Organization": {
+          "status": 200,
+          "allowed": false,
+          "remaining": 0,
+          "errorCode": "SUBSCRIPTION_INACTIVE"
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,268 @@
+{
+  "createdAt": "2026-11-10T01:27:29.251852+00:00",
+  "finalBuildId": "u0qJCx7QXBy7KRHVFgtAV",
+  "build": {
+    "passed": true,
+    "log": "tmp/current-review/build-school-spacing.log",
+    "typeScriptIncluded": true
+  },
+  "lint": {
+    "passed": true,
+    "boundaries": 307,
+    "cycles": 0,
+    "log": "tmp/current-review/lint-school-spacing.log"
+  },
+  "unit": {
+    "passed": true,
+    "tests": 484,
+    "failed": 0,
+    "testFiles": 71,
+    "buildId": "xzzhHIkxO9SrsmN-WPCeE",
+    "log": "tmp/current-review/unit-delivery.log",
+    "scope": "Before final School CSS/class-only change; affected browser tests rerun on final build."
+  },
+  "browserRuns": [
+    {
+      "receipt": "tmp/current-review/full-initial-results.json",
+      "sha256": "c04d12d262fe8481c49cfe9235e710e671e7fb4233b2cee522e28471abcde617",
+      "buildId": "b_k4ELWWDDjinDjgoE8ID",
+      "description": "Initial full browser run; failures retained.",
+      "stats": {
+        "startTime": "2026-11-09T23:36:06.779Z",
+        "duration": 1382573.011,
+        "expected": 491,
+        "skipped": 0,
+        "unexpected": 6,
+        "flaky": 0
+      }
+    },
+    {
+      "receipt": "tmp/current-review/full-final-base-results.json",
+      "sha256": "b24028804b321a82e70e1f32bc7f9f7eeb3447b535a9b2197530ea3b85c078d1",
+      "buildId": "vpta18hpS3rcV_QjcSMbz",
+      "description": "Full base run; one test navigation timing assertion failed.",
+      "stats": {
+        "startTime": "2026-11-10T00:03:20.883Z",
+        "duration": 1618087.0650000002,
+        "expected": 496,
+        "skipped": 0,
+        "unexpected": 1,
+        "flaky": 0
+      }
+    },
+    {
+      "receipt": "tmp/current-review/browser-delivery-targeted-results.json",
+      "sha256": "f7434be5b4798a443605608c01af1ac1b8b25d7880ab44666cd86f956152ee4f",
+      "buildId": "xzzhHIkxO9SrsmN-WPCeE",
+      "description": "70 relevant tests including the corrected full-run failure.",
+      "stats": {
+        "startTime": "2026-11-10T01:04:34.669Z",
+        "duration": 160405.28399999999,
+        "expected": 70,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      }
+    },
+    {
+      "receipt": "tmp/current-review/browser-delivery-native-results.json",
+      "sha256": "dae11f3ab65d2e45ab78c2c493d0024f3a4b72af8c221503325b521746f11acd",
+      "buildId": "xzzhHIkxO9SrsmN-WPCeE",
+      "description": "30 assistant/source tests, explicit native-state screenshot capture.",
+      "stats": {
+        "startTime": "2026-11-10T01:15:37.165Z",
+        "duration": 66753.885,
+        "expected": 30,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      }
+    },
+    {
+      "receipt": "tmp/current-review/browser-school-spacing-results.json",
+      "sha256": "e9c24d81d18637899f7802e22b1536964f40e6bec13b8a846d4f94b446b5150e",
+      "buildId": "u0qJCx7QXBy7KRHVFgtAV",
+      "description": "17 tests relevant to the final School spacing change.",
+      "stats": {
+        "startTime": "2026-11-10T01:20:03.117Z",
+        "duration": 54517.827999999994,
+        "expected": 17,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      }
+    }
+  ],
+  "ordinaryProduction": {
+    "passed": 1,
+    "buildId": "xzzhHIkxO9SrsmN-WPCeE",
+    "log": "tmp/current-review/production-delivery.log",
+    "receipt": "tmp/current-review/production-delivery-results.json"
+  },
+  "nativeStates": {
+    "buildId": "xzzhHIkxO9SrsmN-WPCeE",
+    "scenarios": [
+      "MK-374",
+      "MK-375",
+      "MK-376"
+    ],
+    "count": 18,
+    "folder": "output/review/exact-v1/states-native",
+    "synthetic": true
+  },
+  "sourceFocus": {
+    "before": "tmp/current-review/source-navigation-before.json",
+    "after": "tmp/current-review/source-navigation-after.json",
+    "result": {
+      "route": "/personal/resources/00000000-0000-4000-8000-000000001500?view=versions",
+      "focusedTag": "H1",
+      "headingFocused": true,
+      "headingFocusedAfterMenu": true,
+      "menuClosedAfterNavigation": true
+    }
+  },
+  "captures": [
+    {
+      "receipt": "output/review/exact-v1/current-family-1/results.json",
+      "sha256": "f7fd9460ff8e8d1b110370e2646b5c62621570b70ee132e732c23cebf430944a",
+      "count": 270,
+      "captured": 270,
+      "stateVerified": 270,
+      "documentOverflow": 0,
+      "buildIds": [
+        "vpta18hpS3rcV_QjcSMbz"
+      ],
+      "synthetic": true
+    },
+    {
+      "receipt": "output/review/exact-v1/current-family-2/results.json",
+      "sha256": "d00239a78bcde183c0d9f5f7ccd8cf25943e5baff9acbb90d9bb6324e548eb1a",
+      "count": 270,
+      "captured": 270,
+      "stateVerified": 270,
+      "documentOverflow": 0,
+      "buildIds": [
+        "vpta18hpS3rcV_QjcSMbz"
+      ],
+      "synthetic": true
+    },
+    {
+      "receipt": "output/review/exact-v1/current-family-3/results.json",
+      "sha256": "517e978c26202c23d9d688c8f0dced9b5a388dfb7802938bb96ef03c04715575",
+      "count": 264,
+      "captured": 264,
+      "stateVerified": 264,
+      "documentOverflow": 0,
+      "buildIds": [
+        "vpta18hpS3rcV_QjcSMbz"
+      ],
+      "synthetic": true
+    },
+    {
+      "receipt": "output/review/exact-v1/current-final/results.json",
+      "sha256": "977d79202fbe1d75acc0652c79cad8cc22c9fd697c9ce58eaf309540a36e2af8",
+      "count": 84,
+      "captured": 84,
+      "stateVerified": 84,
+      "documentOverflow": 0,
+      "buildIds": [
+        "u0qJCx7QXBy7KRHVFgtAV"
+      ],
+      "synthetic": true
+    },
+    {
+      "receipt": "output/review/exact-v1/current-boundaries/results.json",
+      "sha256": "5b546bb0b416c9e1f76dd47e53b31bf69ce7d48f03f18e954be3b08c53aaaa1e",
+      "count": 33,
+      "captured": 33,
+      "stateVerified": 33,
+      "documentOverflow": 0,
+      "buildIds": [
+        "xzzhHIkxO9SrsmN-WPCeE"
+      ],
+      "synthetic": true
+    },
+    {
+      "receipt": "output/review/exact-v1/current-large/results.json",
+      "sha256": "3540aa3d51822957beb0a0aad5913a8045b3e8eefb5bee0755aa27138fb89918",
+      "count": 33,
+      "captured": 33,
+      "stateVerified": 33,
+      "documentOverflow": 0,
+      "buildIds": [
+        "xzzhHIkxO9SrsmN-WPCeE"
+      ],
+      "synthetic": true
+    },
+    {
+      "receipt": "output/review/exact-v1/current-short/results.json",
+      "sha256": "a1005924ec819817c07df30cfb49ac45a9e7a089add9c21e80042ec527192cfe",
+      "count": 33,
+      "captured": 33,
+      "stateVerified": 33,
+      "documentOverflow": 0,
+      "buildIds": [
+        "xzzhHIkxO9SrsmN-WPCeE"
+      ],
+      "synthetic": true
+    },
+    {
+      "receipt": "output/review/exact-v1/current-school-boundaries/results.json",
+      "sha256": "e560b2a855a9a9ef31c281c2ef0328e8d652717ac3cdfdcd5ad0a9e9d61fb073",
+      "count": 22,
+      "captured": 22,
+      "stateVerified": 22,
+      "documentOverflow": 0,
+      "buildIds": [
+        "u0qJCx7QXBy7KRHVFgtAV"
+      ],
+      "synthetic": true
+    },
+    {
+      "receipt": "output/review/exact-v1/current-school-large/results.json",
+      "sha256": "f2423d95c5d908a636133de0a3f4ca541e16ec196f0f9e1e9114c5ad2876d014",
+      "count": 22,
+      "captured": 22,
+      "stateVerified": 22,
+      "documentOverflow": 0,
+      "buildIds": [
+        "u0qJCx7QXBy7KRHVFgtAV"
+      ],
+      "synthetic": true
+    }
+  ],
+  "liveFunctional": "docs/integration/20261110-live-functional.json",
+  "fullGreenFinalSuiteClaimed": false,
+  "limitations": [
+    "Full browser suite was not rerun uninterrupted after the navigation-timing test correction.",
+    "Native image and fixture success do not prove real AI or Knowledge availability.",
+    "All 528 design states and physical devices have not been verified."
+  ],
+  "format": {
+    "passed": true,
+    "log": "tmp/current-review/format-final.log"
+  },
+  "generated": {
+    "passed": true,
+    "operations": 325,
+    "schemas": 568,
+    "ownerOperations": 0,
+    "scenarios": 528,
+    "log": "tmp/current-review/generated-final.log"
+  },
+  "diffCheck": {
+    "passed": true,
+    "scope": "Active web workspace; sibling application untouched"
+  },
+  "cleanup": "docs/maintenance/post-verification-cache-cleanup.json",
+  "reviewGallery": {
+    "url": "http://127.0.0.1:3162/current-review.html",
+    "path": "output/review/exact-v1/current-review.html",
+    "screenshot": "output/review/exact-v1/current-gallery.jpg",
+    "visibleImagesLoaded": 3,
+    "fontReady": true,
+    "synthetic": true,
+    "scope": "Review document only; no alternative product runtime"
+  },
+  "supersededBy": "FOUR_ROLE_20261110.json"
+}

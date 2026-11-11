@@ -43,16 +43,14 @@ test('V5 keeps the logo in both login steps and reserves a safe action footer', 
     await expect(form.getByRole('img', { name: 'لوگوی ماکان' })).toBeVisible();
   }
 });
-test('assistant studio goes back to the assistant and the retired class destination redirects', async ({
+test('retired assistant studio and class destinations redirect to their active Next routes', async ({
   page,
   context,
 }) => {
   await login(context, 'Personal', false);
   await page.goto('/personal/assistant/studio');
-  const back = page.getByRole('banner').getByRole('link', { name: 'بازگشت', exact: true });
-  await expect(back).toHaveAttribute('href', '/personal/assistant');
-  await back.click();
   await expect(page).toHaveURL(/\/personal\/assistant$/);
+  await expect(page.getByLabel('سؤال از دستیار', { exact: true })).toBeVisible();
   for (const path of [
     '/personal/classes',
     '/personal/classes/00000000-0000-4000-8000-000000000002',
@@ -80,6 +78,82 @@ test('restored profile logout ends the current session after confirmation', asyn
   await page.getByRole('dialog').getByRole('button', { name: 'خروج از حساب', exact: true }).click();
   await expect(page).toHaveURL(/\/enter$/);
   expect((await context.request.get('/api/client/session')).status()).toBe(401);
+  await expect(page.getByRole('dialog', { name: 'برای ادامه وارد شوید', exact: true })).toHaveCount(
+    0,
+  );
+  await expect(page.getByLabel('شماره همراه', { exact: true })).toBeEditable();
+});
+test('explicit logout ignores a queued expiry notification and does not resume the previous activity', async ({
+  page,
+  context,
+}) => {
+  await login(context, 'Student');
+  await page.goto('/personal/profile');
+  await expect(page.getByRole('heading', { name: 'پروفایل', exact: true })).toBeVisible();
+  let logoutCompleted!: () => void;
+  let releaseAcknowledgment!: () => void;
+  const completed = new Promise<void>((resolve) => {
+    logoutCompleted = resolve;
+  });
+  const acknowledgment = new Promise<void>((resolve) => {
+    releaseAcknowledgment = resolve;
+  });
+  await page.route('**/api/client/auth/logout', async (route) => {
+    const response = await route.fetch();
+    expect(response.status()).toBe(204);
+    logoutCompleted();
+    await acknowledgment;
+    await route.fulfill({ response });
+  });
+  try {
+    await page.getByRole('button', { name: 'گزینه‌های بیشتر', exact: true }).click();
+    await page.getByRole('button', { name: 'خروج از حساب', exact: true }).click();
+    await page
+      .getByRole('dialog')
+      .getByRole('button', { name: 'خروج از حساب', exact: true })
+      .click();
+    await completed;
+    // A previously started authenticated read can report expiry before logout's ACK arrives.
+    await page.evaluate(() => window.dispatchEvent(new Event('makan:expired')));
+    releaseAcknowledgment();
+    await expect(page).toHaveURL(/\/enter$/);
+    await expect(
+      page.getByRole('dialog', { name: 'برای ادامه وارد شوید', exact: true }),
+    ).toHaveCount(0);
+    await expect(page.getByLabel('شماره همراه', { exact: true })).toBeEditable();
+    expect(await page.evaluate(() => sessionStorage.getItem('makan:auth:return-to'))).toBeNull();
+  } finally {
+    releaseAcknowledgment();
+    await page.unrouteAll({ behavior: 'wait' });
+  }
+});
+test('a failed explicit logout can recover the current session without automatically retrying logout', async ({
+  page,
+  context,
+}) => {
+  await login(context, 'Student');
+  await page.goto('/personal/profile');
+  let writes = 0;
+  await page.route('**/api/client/auth/logout', async (route) => {
+    writes++;
+    await route.fulfill({
+      status: 503,
+      contentType: 'application/problem+json',
+      body: JSON.stringify({ status: 503, code: 'NETWORK_ERROR' }),
+    });
+  });
+  await page.getByRole('button', { name: 'گزینه‌های بیشتر', exact: true }).click();
+  await page.getByRole('button', { name: 'خروج از حساب', exact: true }).click();
+  await page.getByRole('dialog').getByRole('button', { name: 'خروج از حساب', exact: true }).click();
+  await expect(
+    page.getByRole('alert').filter({
+      has: page.getByRole('heading', { name: 'اطلاعات دریافت نشد', exact: true }),
+    }),
+  ).toBeVisible();
+  await page.getByRole('button', { name: 'دریافت دوباره', exact: true }).click();
+  await expect(page.getByRole('heading', { name: 'پروفایل', exact: true })).toBeVisible();
+  expect(writes).toBe(1);
+  expect((await context.request.get('/api/client/session')).status()).toBe(200);
 });
 test('forged or missing origins never forward an authentication mutation', async ({ request }) => {
   for (const value of [undefined, 'null', 'https://attacker.invalid', 'http://127.0.0.1:3133']) {

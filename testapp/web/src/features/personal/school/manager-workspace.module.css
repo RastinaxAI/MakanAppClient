@@ -23,12 +23,12 @@
 }
 .metrics dt {
   color: var(--muted);
-  font-size: 12px;
+  font-size: calc(12px * var(--text-scale, 1));
   line-height: 1.9;
 }
 .metrics dd {
   margin: 12px 0 0;
-  font-size: 24px;
+  font-size: calc(24px * var(--text-scale, 1));
   font-weight: 750;
   color: var(--primary);
   overflow-wrap: anywhere;
@@ -55,11 +55,11 @@
 }
 .links strong {
   display: block;
-  font-size: 14px;
+  font-size: calc(14px * var(--text-scale, 1));
 }
 .links small {
   color: var(--muted);
-  font-size: 12px;
+  font-size: calc(12px * var(--text-scale, 1));
   display: block;
   margin-top: 6px;
   line-height: 1.8;
@@ -80,7 +80,7 @@
   border-radius: 12px;
   background: var(--surface);
   text-decoration: none;
-  font-size: 13px;
+  font-size: calc(13px * var(--text-scale, 1));
 }
 .tabs a[aria-current='page'] {
   background: var(--primary);
@@ -90,7 +90,7 @@
 .updated,
 .hint {
   color: var(--muted);
-  font-size: 12px;
+  font-size: calc(12px * var(--text-scale, 1));
   line-height: 1.9;
   margin-bottom: 16px;
 }
@@ -103,7 +103,7 @@
 .tableWrap table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 13px;
+  font-size: calc(13px * var(--text-scale, 1));
 }
 .tableWrap th,
 .tableWrap td {
@@ -124,7 +124,7 @@
   border-radius: 16px;
   padding: 18px;
   line-height: 2;
-  font-size: 13px;
+  font-size: calc(13px * var(--text-scale, 1));
 }
 .steps {
   display: grid;
@@ -160,7 +160,7 @@
     padding: 18px 14px;
   }
   .metrics dd {
-    font-size: 22px;
+    font-size: calc(22px * var(--text-scale, 1));
   }
   .tabs a {
     flex: 1;
@@ -182,12 +182,12 @@
 }
 .compactMetrics dd {
   margin: 0 0 6px;
-  font-size: 24px;
+  font-size: calc(24px * var(--text-scale, 1));
   font-weight: 750;
   color: var(--primary);
 }
 .compactMetrics dt {
-  font-size: 12px;
+  font-size: calc(12px * var(--text-scale, 1));
   color: var(--muted);
   line-height: 1.9;
 }
@@ -198,14 +198,14 @@
   gap: 16px;
 }
 .sectionHeading h2 {
-  font-size: 18px;
+  font-size: calc(18px * var(--text-scale, 1));
 }
 .sectionHeading a {
   display: flex;
   align-items: center;
   gap: 8px;
   min-height: 44px;
-  font-size: 13px;
+  font-size: calc(13px * var(--text-scale, 1));
   color: var(--primary);
 }
 .classCards {
@@ -231,13 +231,13 @@
   min-width: 0;
 }
 .classCard h2 {
-  font-size: 16px;
+  font-size: calc(16px * var(--text-scale, 1));
   line-height: 1.9;
   overflow-wrap: anywhere;
 }
 .classCard p {
   color: var(--muted);
-  font-size: 12px;
+  font-size: calc(12px * var(--text-scale, 1));
   line-height: 1.9;
 }
 .classCard footer {
@@ -261,7 +261,7 @@
   background: var(--primary-soft);
 }
 .badge {
-  font-size: 11px;
+  font-size: calc(11px * var(--text-scale, 1));
   color: var(--muted);
   white-space: nowrap;
   padding: 5px 8px;
@@ -292,11 +292,11 @@
   color: var(--primary);
 }
 .followups strong {
-  font-size: 13px;
+  font-size: calc(13px * var(--text-scale, 1));
 }
 .followups p {
   color: var(--muted);
-  font-size: 12px;
+  font-size: calc(12px * var(--text-scale, 1));
   line-height: 1.9;
   margin-top: 5px;
 }
@@ -307,12 +307,12 @@
   gap: 14px;
   padding: 14px 0;
   border-bottom: 1px solid var(--border);
-  font-size: 13px;
+  font-size: calc(13px * var(--text-scale, 1));
   line-height: 1.9;
 }
 .sessionRow span {
   color: var(--muted);
-  font-size: 12px;
+  font-size: calc(12px * var(--text-scale, 1));
 }
 .memberSwitch {
   display: flex;
@@ -326,7 +326,7 @@
   border-radius: 12px;
   background: var(--surface);
   border: 1px solid var(--border);
-  font-size: 13px;
+  font-size: calc(13px * var(--text-scale, 1));
 }
 .memberSwitch > a[aria-current='page'] {
   background: var(--primary-soft);
@@ -376,13 +376,13 @@
   min-width: 0;
 }
 .dashboardHeader h1 {
-  font-size: 22px;
+  font-size: calc(22px * var(--text-scale, 1));
   font-weight: 750;
   line-height: 1.8;
 }
 .dashboardHeader p {
   color: var(--muted);
-  font-size: 12px;
+  font-size: calc(12px * var(--text-scale, 1));
   line-height: 1.9;
 }
 .dashboardHeader :global(.button) {
@@ -405,7 +405,7 @@
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 16px;
-  font-size: 14px;
+  font-size: calc(14px * var(--text-scale, 1));
   font-weight: 650;
   line-height: 1.9;
   text-decoration: none;
@@ -450,7 +450,7 @@
   padding: 12px;
   min-height: 60px;
   border-radius: 12px;
-  font-size: 13px;
+  font-size: calc(13px * var(--text-scale, 1));
   font-weight: 600;
   line-height: 1.8;
   text-align: center;
@@ -490,12 +490,12 @@
   .reportTabs a {
     gap: 8px;
     padding-inline: 8px;
-    font-size: 12px;
+    font-size: calc(12px * var(--text-scale, 1));
   }
 }
 @media (max-width: 600px) {
   .dashboardHeader h1 {
-    font-size: 18px;
+    font-size: calc(18px * var(--text-scale, 1));
   }
   .dashboardHeader :global(.button) {
     padding-inline: 12px;
@@ -505,7 +505,7 @@
     gap: 12px;
   }
   .compactMetrics dd {
-    font-size: 21px;
+    font-size: calc(21px * var(--text-scale, 1));
     line-height: 1.4;
   }
 }

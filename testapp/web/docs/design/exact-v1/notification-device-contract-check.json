@@ -1,0 +1,77 @@
+{
+  "source": "Current local full OpenAPI + explicit client-surface.json; no live API probe or device mutation.",
+  "operations": [
+    {
+      "method": "GET",
+      "path": "/api/v1/notifications/devices/web-push/configuration",
+      "operationId": "get_api_v1_notifications_devices_web_push_configuration",
+      "includedInClientSurface": true,
+      "requestSchema": null,
+      "tags": [
+        "NotificationDevices"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/notifications/devices",
+      "operationId": "get_api_v1_notifications_devices",
+      "includedInClientSurface": false,
+      "requestSchema": null,
+      "tags": [
+        "NotificationDevices"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/notifications/devices",
+      "operationId": "post_api_v1_notifications_devices",
+      "includedInClientSurface": false,
+      "requestSchema": {
+        "$ref": "#/components/schemas/RegisterPushDeviceCommand"
+      },
+      "tags": [
+        "NotificationDevices"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/notifications/devices/web-push",
+      "operationId": "post_api_v1_notifications_devices_web_push",
+      "includedInClientSurface": false,
+      "requestSchema": {
+        "$ref": "#/components/schemas/RegisterWebPushCommand"
+      },
+      "tags": [
+        "NotificationDevices"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v1/notifications/devices/{registrationId}",
+      "operationId": "delete_api_v1_notifications_devices_by_registrationId",
+      "includedInClientSurface": false,
+      "requestSchema": null,
+      "tags": [
+        "NotificationDevices"
+      ]
+    }
+  ],
+  "finding": "The recorded self device lifecycle is now integrated in the real client and has build81 targeted browser/visual evidence. It is not a missing server API. Physical delivery and first-lost-ACK correlation remain explicitly unverified/limited.",
+  "affectedScenarios": [
+    "MK-347",
+    "MK-348",
+    "MK-349",
+    "RX-040",
+    "MK-435"
+  ],
+  "remainingWork": [
+    "No physical push delivery or actual system permission prompt was exercised. Browser APIs are declared isolated test doubles; ordinary product uses the actual browser APIs. No CUA permission action or live notification was sent.",
+    "The own-device list exposes no endpoint, subscription fingerprint, friendly device name or phone form factor. Current-browser identity requires the typed registration acknowledgment, actual local subscription fingerprint and matching own list row; other labels use the actual platform.",
+    "The first lost acknowledgment leaves no registration ID to correlate. Platform-only list rows cannot determine which belongs to the subscription. No automatic POST or guessed first-Web binding is allowed; recovery needs verified endpoint/correlation or idempotency semantics. The loopback fixture upsert model is not production proof.",
+    "The active role/workspace remains selected. This feature explicitly shows personal account scope and never grants organizational or independent-class permissions.",
+    "Main81 measurements apply to these five matched states only. Boundary/large/short195frames from79retain79build IDs; 165responsive frames are not relabelled81. No claim of full image pixel parity or complete447-test regression."
+  ],
+  "previousConfigurationOnlyFinding": "Full contract contains notification registration operations; the active client currently integrates configuration GET only. Absence from the current UI is not absence from the server API.",
+  "currentImplementation": "notification-devices-native.json",
+  "updatedAt": "2026-11-09T19:56:28.040555+00:00"
+}

@@ -1,5 +1,7 @@
-import { test, expect, login, fixture, ids } from './test';
-import { vnext as t } from '../../src/content/fa';
+import { reviewPath } from './review-output';
+import { captureExactState } from './exact-state-capture';
+import { test, expect, login, fixture, ids, chooseSchoolCatalog } from './test';
+import { vnext as t, v5ClassMembers as members } from '../../src/content/fa';
 const base = '/personal/education';
 test.beforeEach(async ({ context, request }) => {
   await login(context, 'Manager', true);
@@ -25,6 +27,7 @@ test('organization sent invitations survive reload, page/filter on server and re
     .filter({ has: page.getByRole('heading', { name: 'دعوت والد 1', exact: true }) });
   await invitation.getByLabel(t.reason, { exact: true }).fill('لغو درخواست آزمایشی');
   await invitation.getByRole('button', { name: t.revoke, exact: true }).click();
+  await captureExactState(page, ['MK-112']);
   await page.getByRole('dialog').getByRole('button', { name: t.revoke, exact: true }).click();
   await expect(invitation).toHaveCount(0);
   await page.reload();
@@ -42,6 +45,7 @@ test('organization sent invitations survive reload, page/filter on server and re
 });
 test('role changes preserve the other role and ending the last manager is rejected', async ({
   page,
+  request,
 }) => {
   await page.goto(base + '/members');
   const teacher = page
@@ -51,6 +55,22 @@ test('role changes preserve the other role and ending the last manager is reject
   const editor = page.locator('section').filter({
     has: page.getByRole('heading', { name: t.manageRoles + ' · معلم اول', exact: true }),
   });
+  await captureExactState(page, ['MK-108']);
+  await editor.getByLabel(t.roleAction).selectOption('end-role');
+  await editor.getByLabel(t.reason, { exact: true }).fill('بازبینی پایان نقش مدرس');
+  const confirmRole = editor.getByRole('button', { name: t.confirmMutation, exact: true });
+  await confirmRole.click();
+  await expect(page.getByRole('dialog')).toBeVisible();
+  await captureExactState(page, ['MK-109']);
+  await page.keyboard.press('Escape');
+  await expect(confirmRole).toBeFocused();
+  const beforeRoleChange = await (await request.get(fixture + '/__test__/state')).json();
+  expect(
+    beforeRoleChange.requests.filter(
+      (row: { path: string; method: string }) =>
+        row.path.includes('/roles/') && row.method === 'DELETE',
+    ),
+  ).toHaveLength(0);
   await editor.getByLabel(t.roleAction).selectOption('change');
   await editor.getByLabel(t.newRole).selectOption('Student');
   await editor.getByLabel(t.reason, { exact: true }).fill('تغییر فقط نقش معلم');
@@ -91,14 +111,23 @@ test('class edit retains intent through conflict until the new version is explic
   await form.getByLabel(t.title, { exact: true }).fill('عنوان اصلاح‌شده کلاس');
   await form.getByLabel(t.capacity, { exact: true }).fill('25');
   await form.getByLabel(t.reason, { exact: true }).fill('افزایش ظرفیت مجاز');
-  await form.getByRole('button', { name: t.save, exact: true }).click();
-  await expect(form.getByRole('alert').first()).toBeVisible();
+  await form.getByRole('button', { name: t.saveClassSettings, exact: true }).click();
+  await page
+    .getByRole('dialog')
+    .getByRole('button', { name: t.confirmSettings, exact: true })
+    .click();
+  await expect(page.getByRole('dialog').getByRole('alert').first()).toBeVisible();
+  await captureExactState(page, ['MK-97', 'MK-428']);
+
   await expect(form.getByLabel(t.title, { exact: true })).toHaveValue('عنوان اصلاح‌شده کلاس');
-  await form.getByRole('button', { name: t.refreshVersion }).click();
-  await form.getByRole('button', { name: t.save, exact: true }).click();
-  await expect(
-    page.getByRole('heading', { name: 'عنوان اصلاح‌شده کلاس', exact: true }),
-  ).toBeVisible();
+  await page.getByRole('dialog').getByRole('button', { name: t.reviewLatest, exact: true }).click();
+  await form.getByRole('button', { name: t.saveClassSettings, exact: true }).click();
+  await page
+    .getByRole('dialog')
+    .getByRole('button', { name: t.confirmSettings, exact: true })
+    .click();
+  await expect(form.getByLabel(t.title, { exact: true })).toHaveValue('عنوان اصلاح‌شده کلاس');
+  await expect(form.getByRole('status')).toBeVisible();
 });
 test('exam author discovers drafts after reload without exposing discovery to a personal workspace', async ({
   page,
@@ -154,10 +183,14 @@ test('academic delegation exposes only the managers effective subset to a teache
     data: { academicRecipient: true, capabilities: { canGrade: false, canAuthorExams: false } },
   });
   await page.goto('/personal/extracurricular/classes/00000000-0000-4000-8000-000000001800/members');
-  const grants = page.getByLabel('اختیار آموزشی', { exact: true });
-  await expect(grants.locator('option[value="AuthorAssignments"]')).toHaveCount(1);
-  await expect(grants.locator('option[value="Grade"]')).toHaveCount(0);
-  await expect(grants.locator('option[value="AuthorExams"]')).toHaveCount(0);
+  await page.getByTestId('membership-00000000-0000-4000-8000-000000001802').click();
+  await expect(page).toHaveURL(/\/members\/00000000-0000-4000-8000-000000001802(?:\?|$)/);
+  const target = new URL(page.url());
+  target.searchParams.set('view', 'permissions');
+  await page.goto(target.href);
+  await expect(page.getByRole('switch', { name: members.assignment, exact: true })).toBeEnabled();
+  await expect(page.getByRole('switch', { name: members.grade, exact: true })).toBeDisabled();
+  await expect(page.getByRole('switch', { name: members.exam, exact: true })).toBeDisabled();
   const session = await (await context.request.get('/api/client/session')).json();
   const permissionPath =
     '/api/client/backend/api/v1/personal-classes/00000000-0000-4000-8000-000000001800/academic-permissions/00000000-0000-4000-8000-000000001802';
@@ -174,7 +207,7 @@ test('academic delegation exposes only the managers effective subset to a teache
   );
   await request.post(fixture + '/__test__/personal-class', { data: {} });
   await page.reload();
-  await expect(page.getByLabel('اختیار آموزشی', { exact: true })).toHaveCount(0);
+  await expect(page.getByRole('switch', { name: members.assignment, exact: true })).toHaveCount(0);
   expect(
     (
       await context.request.put(permissionPath, {
@@ -195,13 +228,15 @@ test('a lost class-create response is replayed with the same operation after rel
 }) => {
   await request.post(fixture + '/__test__/vnext', { data: { lostClassAck: true } });
   await page.goto(base + '/classes/new');
-  await page.getByLabel('نام کلاس', { exact: true }).fill('کلاس با رسید گم‌شده');
-  await page.getByLabel('ظرفیت کلاس', { exact: true }).fill('20');
-  await page.getByLabel('درس از کاتالوگ', { exact: true }).selectOption({ label: 'ریاضی' });
-  await page.getByLabel('دوره از کاتالوگ', { exact: true }).selectOption({ label: 'دورهٔ نمونه' });
-  await page.getByRole('button', { name: 'بازبینی اطلاعات', exact: true }).click();
+  await page.getByLabel('عنوان کلاس', { exact: true }).fill('کلاس با رسید گم‌شده');
+  await page.getByLabel('ظرفیت', { exact: true }).fill('20');
+  await chooseSchoolCatalog(page, 'درس', 'ریاضی');
+  await chooseSchoolCatalog(page, 'دوره', 'دورهٔ نمونه');
+  await page.getByRole('button', { name: 'بازبینی کلاس', exact: true }).click();
   await page.getByRole('button', { name: 'تأیید و ثبت', exact: true }).click();
-  await expect(page.getByRole('alert').first()).toBeVisible();
+  await expect(
+    page.getByRole('alert').and(page.locator(':not(#__next-route-announcer__)')).first(),
+  ).toBeVisible();
   page.once('dialog', (dialog) => dialog.accept());
   await page.reload();
   await page.getByRole('button', { name: 'تأیید و ثبت', exact: true }).click();
@@ -263,7 +298,7 @@ test('new management forms remain usable in both themes and four viewport widths
   page,
 }) => {
   const { mkdir } = await import('node:fs/promises');
-  await mkdir('output/review/vnext-20261105/forms', { recursive: true });
+  await mkdir(reviewPath('output/review/vnext-20261105/forms'), { recursive: true });
   await page.goto(base + '/members');
   for (const theme of ['light', 'dark'])
     for (const width of [320, 390, 834, 1440]) {
@@ -284,7 +319,7 @@ test('new management forms remain usable in both themes and four viewport widths
         .poll(() => page.evaluate(() => document.documentElement.scrollWidth <= innerWidth))
         .toBe(true);
       await page.screenshot({
-        path: `output/review/vnext-20261105/forms/member-${width}-${theme}.png`,
+        path: reviewPath(`output/review/vnext-20261105/forms/member-${width}-${theme}.png`),
       });
       await page.goto(base + '/classes/' + ids.class);
       await page.getByText(t.classSettings, { exact: true }).click();
@@ -294,7 +329,7 @@ test('new management forms remain usable in both themes and four viewport widths
         .poll(() => page.evaluate(() => document.documentElement.scrollWidth <= innerWidth))
         .toBe(true);
       await page.screenshot({
-        path: `output/review/vnext-20261105/forms/class-${width}-${theme}.png`,
+        path: reviewPath(`output/review/vnext-20261105/forms/class-${width}-${theme}.png`),
       });
       await page.goto(base + '/reports?kind=content-activities');
       await page.getByLabel(t.contentKind).selectOption('Lesson');
@@ -308,7 +343,7 @@ test('new management forms remain usable in both themes and four viewport widths
         .poll(() => page.evaluate(() => document.documentElement.scrollWidth <= innerWidth))
         .toBe(true);
       await page.screenshot({
-        path: `output/review/vnext-20261105/forms/content-${width}-${theme}.png`,
+        path: reviewPath(`output/review/vnext-20261105/forms/content-${width}-${theme}.png`),
       });
     }
 });

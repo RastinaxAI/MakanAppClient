@@ -28,7 +28,7 @@ export function useTextDraft(scope: string, initialText: string, version: string
       else sessionStorage.removeItem(key);
     } catch {}
   }, [key, text, baseVersion, ready, dirty]);
-  useUnsavedChanges(dirty);
+  useUnsavedChanges(dirty, () => reset());
   function reset(nextText = initialText, nextVersion = version) {
     setText(nextText);
     setBaseVersion(nextVersion);

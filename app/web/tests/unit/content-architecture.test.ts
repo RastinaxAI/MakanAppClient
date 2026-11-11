@@ -48,9 +48,7 @@ describe('editable content and endpoint architecture', () => {
     expect(defaultBackTarget('/personal/assistant/studio')).toBe('/personal/assistant');
   });
   it('keeps the full reference atlas out of the common renderer and login imports', () => {
-    expect(fs.readFileSync('src/features/reference/screen.tsx', 'utf8')).not.toContain(
-      'blueprints.json',
-    );
+    expect(fs.readFileSync('src/components/v5/scene.tsx', 'utf8')).not.toContain('blueprints.json');
     expect(fs.readFileSync('src/features/auth/login.tsx', 'utf8')).not.toContain('ReferenceScreen');
   });
 });
