@@ -51,7 +51,7 @@ type PrivacyKey = (typeof privacyFields)[number][0];
 export function MessagingPrivacyPage() {
   const privacy = usePersonalApi<Privacy>('/api/v1/messaging/privacy');
   return (
-    <ReferenceFrame id="MK-341" title={t.title} back="/personal/profile">
+    <ReferenceFrame id="MK-341" title={t.title} back="/personal/settings">
       {privacy.isPending ? (
         <LoadingSkeleton />
       ) : privacy.isError && !privacy.data ? (

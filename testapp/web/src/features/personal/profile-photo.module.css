@@ -21,6 +21,29 @@
   margin-block: 20px;
   background: var(--surface);
 }
+.compact {
+  border: 0;
+  margin: 0;
+  padding: 20px 12px;
+  background: transparent;
+}
+.compact .identity {
+  justify-content: center;
+}
+.compact .preview {
+  width: 76px;
+  height: 76px;
+}
+.compact .actions {
+  justify-content: center;
+  margin-top: 14px;
+}
+.compact .choose {
+  border-color: transparent;
+  color: var(--accent);
+  min-height: 46px;
+  line-height: 1.7;
+}
 .identity {
   display: flex;
   gap: 20px;
@@ -102,7 +125,7 @@
   margin-top: 14px;
 }
 @media (max-width: 600px) {
-  .editor {
+  .editor:not(.compact) {
     padding: 18px;
   }
   .identity {
@@ -112,5 +135,10 @@
   .preview {
     width: 68px;
     height: 68px;
+  }
+}
+@container content (min-width: 640px) {
+  .compact {
+    padding: 24px;
   }
 }

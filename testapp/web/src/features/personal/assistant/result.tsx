@@ -1,3 +1,4 @@
+'use client';
 import { uiClass } from '@/components/v5/classes';
 import Link from 'next/link';
 import { aiIntegration as t } from '@/content/fa';
@@ -6,6 +7,13 @@ import { isRecord } from '@/lib/api/errors';
 import { number } from '@/lib/formatting';
 import type { components } from '@/generated/api/schema';
 import { BookOpen, ChevronLeft } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
+import { ErrorState, LoadingSkeleton } from '@/components/ui/states';
+import { usePersonal } from '../provider';
+import { citationSourceMatches } from './model';
+import { v7Ui } from '@/content/fa';
 type Citation = components['schemas']['KnowledgeCitation'];
 function Strings({ value, title }: { value: unknown; title: string }) {
   const items = Array.isArray(value) ? value.filter((v): v is string => typeof v === 'string') : [];
@@ -54,10 +62,11 @@ function Records({ value, title, schema }: { value: unknown; title: string; sche
   ) : null;
 }
 export function AssistantCitation({ citation: c }: { citation: Citation }) {
-  // This link performs a fresh source read; a citation never authorizes file access.
+  const [open, setOpen] = useState(false);
+  const { session } = usePersonal();
   return (
     <li>
-      <Link className={uiClass('row')} href={`/personal/resources/${c.sourceId}`}>
+      <button type="button" className={uiClass('row')} onClick={() => setOpen(true)}>
         <span className={uiClass('tile-icon')}>
           <BookOpen size={22} />
         </span>
@@ -78,9 +87,78 @@ export function AssistantCitation({ citation: c }: { citation: Citation }) {
         <span className={uiClass('chev')}>
           <ChevronLeft size={18} />
         </span>
-      </Link>
-      {c.quotePreview && <blockquote dir="auto">{c.quotePreview}</blockquote>}
+      </button>
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogContent title={v7Ui.citationTitle}>
+          {open && (
+            <CitationSource
+              key={session.user.id + ':' + session.revision + ':' + c.sourceId + ':' + c.version}
+              citation={c}
+            />
+          )}
+        </DialogContent>
+      </Dialog>
     </li>
+  );
+}
+function CitationSource({ citation }: { citation: Citation }) {
+  const { call } = usePersonal();
+  const [source, setSource] = useState<components['schemas']['EducationalSourceResult']>();
+  const [error, setError] = useState<unknown>();
+  const [retry, setRetry] = useState(0);
+  useEffect(() => {
+    const controller = new AbortController();
+    setSource(undefined);
+    setError(undefined);
+    void call<components['schemas']['EducationalSourceResult']>(
+      '/api/v1/sources/' + citation.sourceId,
+      { signal: controller.signal },
+    )
+      .then((value) => {
+        if (!controller.signal.aborted) setSource(value);
+      })
+      .catch((cause: unknown) => {
+        if (!controller.signal.aborted) setError(cause);
+      });
+    return () => controller.abort();
+  }, [call, citation.sourceId, retry]);
+  if (error) return <ErrorState error={error} onRetry={() => setRetry((value) => value + 1)} />;
+  if (!source) return <LoadingSkeleton />;
+  if (!citationSourceMatches(citation, source))
+    return (
+      <p className={uiClass('alert warn')} role="status">
+        {v7Ui.citationChanged}
+      </p>
+    );
+  return (
+    <div className={uiClass('v5-native-form')} data-citation-source>
+      <h3 dir="auto">{source.title}</h3>
+      <p className={uiClass('policy')}>
+        {t.version} {number(citation.version)}
+        {citation.pageStart !== null && (
+          <>
+            {' '}
+            · {t.page} {number(citation.pageStart)}
+            {citation.pageEnd !== null && citation.pageEnd !== citation.pageStart && (
+              <>–{number(citation.pageEnd)}</>
+            )}
+          </>
+        )}
+        {citation.sectionTitle && <> · {citation.sectionTitle}</>}
+      </p>
+      {citation.quotePreview ? (
+        <blockquote dir="auto">{citation.quotePreview}</blockquote>
+      ) : (
+        <p>{v7Ui.noQuotePreview}</p>
+      )}
+      <p className={uiClass('policy')}>{v7Ui.citationPrivacy}</p>
+      <Button asChild>
+        <Link href={'/personal/resources/' + citation.sourceId}>
+          <BookOpen size={20} />
+          {v7Ui.openSource}
+        </Link>
+      </Button>
+    </div>
   );
 }
 export function AssistantResult({

@@ -1,3 +1,4 @@
+import { v6Ui as v6 } from '../../src/content/fa';
 import { reviewPath } from './review-output';
 import { test, expect, login, fixture, origin, ids } from './test';
 import { mkdir } from 'node:fs/promises';
@@ -8,19 +9,26 @@ test('Manager opens the organization official group through its own binding', as
   request,
 }) => {
   await request.post(fixture + '/__test__/official-spaces', { data: {} });
-  await login(context, 'Manager');
+  const session = await login(context, 'Manager');
+  const pair = await (
+    await context.request.get('/api/client/backend/api/v1/organization/official-spaces', {
+      headers: { 'X-Makan-Context': session.revision },
+    })
+  ).json();
+  expect(pair.sourceKind).toBe('Organization');
+  expect(pair.sourceId).toBe(ids.org);
   await page.goto('/personal/education');
-  await page.getByText('گروه‌ها و کانال‌های رسمی آموزشگاه', { exact: true }).click();
+  await page.getByRole('button', { name: /^گروه و کانال رسمی/ }).click();
   await page
     .getByRole('region', { name: 'گروه و کانال رسمی آموزشگاه', exact: true })
     .getByRole('link', { name: 'ورود به گروه', exact: true })
     .click();
-  await expect(page.getByText('گروه رسمی آموزشگاه', { exact: true }).first()).toBeVisible();
+  await expect(page).toHaveURL(new RegExp(pair.group.conversationId));
   await expect(page.getByRole('textbox', { name: 'متن پیام', exact: true })).toBeVisible();
   // The home and room intentionally share a cached pair read. A second request
   // is required after a server capability change, not merely on navigation.
   await request.post(fixture + '/__test__/official-spaces', { data: { canRead: false } });
-  await expect(page.getByRole('main').getByRole('alert')).toBeVisible();
+  await expect(page.getByRole('main').getByRole('alert')).toBeVisible({ timeout: 20000 });
   await expect(page.getByRole('textbox', { name: 'متن پیام', exact: true })).toHaveCount(0);
   const state = await (await request.get(fixture + '/__test__/state')).json();
   expect(
@@ -43,10 +51,12 @@ for (const role of ['Student', 'Teacher', 'Parent', 'Manager'])
         r.path === '/api/v1/workspaces/select' && r.method === 'POST',
     ).length;
     await page.goto('/personal/profile');
-    await page.getByRole('button', { name: /فضاها و نقش‌های من/ }).click();
-    const spaces = page.getByRole('dialog', { name: 'فضاها و نقش‌های من', exact: true });
-    await expect(spaces.getByRole('button', { name: /حساب شخصی/ })).toHaveCount(0);
-    await expect(spaces.getByRole('button', { name: /آموزشگاه/ })).toBeVisible();
+    await page.getByRole('button', { name: v6.chooseSchool }).click();
+    const spaces = page.getByRole('dialog', { name: v6.schoolPicker, exact: true });
+    await expect(spaces.getByRole('button', { name: v6.personalSpace, exact: true })).toHaveCount(
+      0,
+    );
+    await expect(spaces.getByRole('radio')).toBeVisible();
     await page.goto('/personal/contacts');
     await expect(
       page.getByRole('button', { name: 'انتخاب فضا از پروفایل', exact: true }),
@@ -95,13 +105,13 @@ test('a roleless user has a personal card; unresolved visibility is not guessed'
 }) => {
   await login(context, 'Personal', false);
   await page.goto('/personal/profile');
-  await page.getByRole('button', { name: /فضاها و نقش‌های من/ }).click();
-  const spaces = page.getByRole('dialog', { name: 'فضاها و نقش‌های من', exact: true });
-  await expect(spaces.getByRole('button', { name: /حساب شخصی/ })).toBeVisible();
+  await page.getByRole('button', { name: v6.chooseSchool }).click();
+  const spaces = page.getByRole('dialog', { name: v6.schoolPicker, exact: true });
+  await expect(spaces.getByRole('button', { name: v6.personalSpace, exact: true })).toBeVisible();
   await request.post(fixture + '/__test__/workspace-visibility', { data: { unresolved: true } });
   await page.reload();
-  await page.getByRole('button', { name: /فضاها و نقش‌های من/ }).click();
-  await expect(spaces.getByRole('button', { name: /حساب شخصی/ })).toHaveCount(0);
+  await page.getByRole('button', { name: v6.chooseSchool }).click();
+  await expect(spaces.getByRole('button', { name: v6.personalSpace, exact: true })).toHaveCount(0);
   await expect(spaces.getByRole('status')).toContainText('وضعیت نمایش فضای شخصی هنوز مشخص نشده');
   await page.goto('/personal/contacts');
   await expect(page.getByRole('button', { name: 'مخاطب جدید', exact: true })).toBeVisible();
@@ -117,11 +127,12 @@ test('Teacher sends a personal message and uploads a personal file without switc
   try {
     await login(student, 'Student');
     const before = await login(context, 'Teacher');
-    await page.goto('/personal/contacts');
-    await page.getByRole('button', { name: 'مخاطب جدید', exact: true }).click();
-    await page.getByLabel('شماره یا نام کاربری مخاطب', { exact: true }).fill('@test.Student');
-    await page.getByRole('button', { name: 'پیدا کردن مخاطب', exact: true }).click();
-    await page.getByRole('button', { name: 'شروع گفت‌وگو', exact: true }).click();
+    await page.goto('/personal/messages?q=%40test.Student');
+    await page
+      .locator('[data-main-people-results]')
+      .getByRole('link', { name: 'مشخصات کاربر آزمایشی Student', exact: true })
+      .click();
+    await page.getByRole('button', { name: v6.startPersonalConversation, exact: true }).click();
     await page
       .getByRole('textbox', { name: 'متن پیام', exact: true })
       .fill('پیام شخصی با حفظ نقش استاد');

@@ -29,6 +29,7 @@
   "GET /api/v1/conversations/{conversationId}/messages",
   "POST /api/v1/conversations/{conversationId}/messages",
   "POST /api/v1/conversations/{conversationId}/read",
+  "POST /api/v1/conversations/{conversationId}/clear-history",
   "GET /api/v1/conversations/{conversationId}/read-states",
   "POST /api/v1/conversations/groups",
   "POST /api/v1/conversations/channels",
@@ -327,5 +328,14 @@
   "GET /api/v1/commerce/payment-attempts/{attemptId}",
   "POST /api/v1/commerce/payment-attempts/{attemptId}/verify",
   "GET /api/v1/commerce/orders/{orderId}/receipt",
-  "GET /api/v1/commerce/personal/orders/{orderId}/receipt"
+  "GET /api/v1/commerce/personal/orders/{orderId}/receipt",
+  "PATCH /api/v1/conversations/{conversationId}/messages/{messageId}",
+  "DELETE /api/v1/conversations/{conversationId}/messages/{messageId}/for-everyone",
+  "POST /api/v1/conversations/{conversationId}/pins/{messageId}",
+  "DELETE /api/v1/conversations/{conversationId}/pins/{messageId}",
+  "GET /api/v1/messages/search",
+  "POST /api/v1/conversations/{conversationId}/state/pin",
+  "DELETE /api/v1/conversations/{conversationId}/state/pin",
+  "POST /api/v1/conversations/{conversationId}/mark-unread",
+  "GET /api/v1/people/{userId}/presence"
 ]

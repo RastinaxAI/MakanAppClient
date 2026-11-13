@@ -13,7 +13,7 @@ import { useContext, useEffect, useRef, useState, type CSSProperties } from 'rea
 import { useQueryClient } from '@tanstack/react-query';
 import { BarChart3, ListChecks, Clock, Plus, X } from 'lucide-react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { ErrorState, EmptyState, LoadingSkeleton, label } from '@/components/ui/states';
 import { ConfirmAction } from '@/components/ui/confirm-action';
@@ -32,6 +32,8 @@ import {
   checklistCommand,
   scheduleCommand,
   selectedPollOptions,
+  scheduledComposerKey,
+  readScheduledComposerDraft,
 } from './rich-message-model';
 import { canWriteConversation, conversationTitle } from './model';
 import { isManagedConversation } from './summary';
@@ -156,10 +158,11 @@ function useCreationDraft<T extends object>(scope: string, initial: T) {
     set: (value: T) => draft.setText(JSON.stringify({ ...value, $clientMessageId: identity })),
     clear: () => draft.reset(),
     identity,
+    ready: draft.ready,
   };
 }
 
-function RichFormMenu({
+function RichFormActions({
   addLabel,
   removeLabel,
   count,
@@ -176,7 +179,6 @@ function RichFormMenu({
   onAdd: () => void;
   onRemove: (index: number) => void;
 }) {
-  const close = useContext(SceneMenuClose);
   return (
     <V4List>
       <V4Row
@@ -185,7 +187,6 @@ function RichFormMenu({
         disabled={count >= maximum}
         onClick={() => {
           onAdd();
-          close?.();
         }}
       />
       {count > minimum &&
@@ -196,7 +197,6 @@ function RichFormMenu({
             icon={<X />}
             onClick={() => {
               onRemove(index);
-              close?.();
             }}
           />
         ))}
@@ -245,34 +245,7 @@ function PollForm({ id, title, participantRole, quiz }: RichPageContext & { quiz
       subtitle={participantRole ? uiText.v5Product.conversationMemberRoles[participantRole] : title}
       contextTitle={title}
       back={route(id)}
-      menu={
-        <div className={uiClass('stack')}>
-          <RichFormMenu
-            addLabel={t.addOption}
-            removeLabel={(index) => t.remove + ' ' + t.option + ' ' + number(index + 1)}
-            count={v.options.length}
-            minimum={2}
-            maximum={10}
-            onAdd={() => {
-              update('options', [...v.options, '']);
-              if (quiz) setOptionsOpen(true);
-            }}
-            onRemove={(index) =>
-              draft.set({ ...v, options: v.options.filter((_, n) => n !== index), correct: 1 })
-            }
-          />
-          {quiz && (
-            <V4List>
-              <V4SwitchRow
-                title={t.anonymous}
-                description={t.anonymousHint}
-                checked={v.anonymous}
-                onCheckedChange={(checked) => update('anonymous', checked)}
-              />
-            </V4List>
-          )}
-        </div>
-      }
+      headerTools={<></>}
       actions={
         <Button type="submit" form="v4-poll" disabled={command.busy}>
           {command.busy ? t.waiting : quiz ? t.publishQuiz : t.publishPoll}
@@ -375,6 +348,32 @@ function PollForm({ id, title, participantRole, quiz }: RichPageContext & { quiz
             </V4Field>
           </>
         )}
+        <div className={uiClass('stack')}>
+          <RichFormActions
+            addLabel={t.addOption}
+            removeLabel={(index) => t.remove + ' ' + t.option + ' ' + number(index + 1)}
+            count={v.options.length}
+            minimum={2}
+            maximum={10}
+            onAdd={() => {
+              update('options', [...v.options, '']);
+              if (quiz) setOptionsOpen(true);
+            }}
+            onRemove={(index) =>
+              draft.set({ ...v, options: v.options.filter((_, n) => n !== index), correct: 1 })
+            }
+          />
+          {quiz && (
+            <V4List>
+              <V4SwitchRow
+                title={t.anonymous}
+                description={t.anonymousHint}
+                checked={v.anonymous}
+                onCheckedChange={(checked) => update('anonymous', checked)}
+              />
+            </V4List>
+          )}
+        </div>
         {invalid && (
           <p className={uiClass('v4-form-error')} role="alert">
             {t.validation}
@@ -462,19 +461,7 @@ function ChecklistForm({ id, title, participantRole }: RichPageContext) {
       subtitle={participantRole ? uiText.v5Product.conversationMemberRoles[participantRole] : title}
       contextTitle={title}
       back={route(id)}
-      menu={
-        <RichFormMenu
-          addLabel={t.addItem}
-          removeLabel={(index) => t.remove + ' ' + t.item + ' ' + number(index + 1)}
-          count={v.items.length}
-          minimum={1}
-          maximum={30}
-          onAdd={() =>
-            update({ ...v, items: [...v.items, { itemId: crypto.randomUUID(), text: '' }] })
-          }
-          onRemove={(index) => update({ ...v, items: v.items.filter((_, n) => index !== n) })}
-        />
-      }
+      headerTools={<></>}
       actions={
         <Button form="v4-checklist" type="submit" disabled={command.busy}>
           {command.busy ? t.waiting : t.publishChecklist}
@@ -542,6 +529,17 @@ function ChecklistForm({ id, title, participantRole }: RichPageContext) {
             <option value="Personal">{t.personal}</option>
           </NativeSelect>
         </V4Field>
+        <RichFormActions
+          addLabel={t.addItem}
+          removeLabel={(index) => t.remove + ' ' + t.item + ' ' + number(index + 1)}
+          count={v.items.length}
+          minimum={1}
+          maximum={30}
+          onAdd={() =>
+            update({ ...v, items: [...v.items, { itemId: crypto.randomUUID(), text: '' }] })
+          }
+          onRemove={(index) => update({ ...v, items: v.items.filter((_, n) => index !== n) })}
+        />
         {invalid && (
           <p className={uiClass('v4-form-error')} role="alert">
             {t.validation}
@@ -554,8 +552,10 @@ function ChecklistForm({ id, title, participantRole }: RichPageContext) {
 }
 
 function ScheduledMessages({ id, title, participantRole }: RichPageContext) {
+  const params = useSearchParams(),
+    { session } = usePersonal();
   const [page, setPage] = useState(1),
-    [creating, setCreating] = useState(false),
+    [creating, setCreating] = useState(params.get('compose') === '1'),
     [invalid, setInvalid] = useState(false);
   const data = usePersonalApi<S['ScheduledMessagePageResult']>(
     root(id) + `/scheduled-messages?page=${page}&pageSize=30`,
@@ -563,6 +563,17 @@ function ScheduledMessages({ id, title, participantRole }: RichPageContext) {
   const command = useRichCommand(),
     draft = useCreationDraft(`schedule:${id}`, { text: '', at: '' });
   const v = draft.value;
+  const handedOff = useRef(false);
+  useEffect(() => {
+    if (!draft.ready || handedOff.current || params.get('compose') !== '1') return;
+    handedOff.current = true;
+    const key = scheduledComposerKey(session.user.id, session.context.sessionId, id);
+    try {
+      const text = readScheduledComposerDraft(sessionStorage.getItem(key), Date.now());
+      sessionStorage.removeItem(key);
+      if (text && !draft.value.text.trim()) draft.set({ ...draft.value, text });
+    } catch {}
+  }, [draft.ready, id, params, session.user.id, session.context.sessionId, draft]);
   return (
     <V4Page
       id={creating ? 'MK-251' : 'MK-252'}

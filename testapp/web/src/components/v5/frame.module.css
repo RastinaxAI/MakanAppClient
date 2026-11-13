@@ -27,11 +27,11 @@
 }
 :where(.frame) :global(.rx-head) {
   display: flex;
-  gap: 14px;
+  gap: 12px;
   align-items: center;
-  min-height: 94px;
+  min-height: 76px;
   flex: none;
-  padding: 16px 26px;
+  padding: 12px 24px;
   background: var(--surface);
   border-bottom: 1px solid var(--line);
 }
@@ -91,18 +91,18 @@
   container: workspace / inline-size;
 }
 :where(.frame) :global(.rx-workspace) {
-  max-width: 1536px;
+  max-width: var(--content-max-width, 1184px);
   width: 100%;
   min-width: 0;
   margin-inline: auto;
 }
 :where(.frame) :global(.rx-body-grid) {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 16px;
+  display: flex;
+  gap: 18px;
   min-width: 0;
   align-content: start;
   container: content / inline-size;
+  flex-direction: column;
 }
 :where(.frame) :global(.rx-context-panel) {
   display: flex;
@@ -156,8 +156,8 @@
 :where(.frame) :global(.rx-bottom-actions) {
   display: none;
   flex: none;
-  gap: 12px;
-  padding: 16px 26px;
+  gap: 10px;
+  padding: 12px 24px;
   border-top: 1px solid var(--line);
   background: var(--surface);
   justify-content: flex-start;
@@ -165,56 +165,82 @@
 .frame[data-v5-restricted] :global(.rx-workspace) {
   max-width: 600px;
 }
+
+.auth :global(.rx-back) {
+  display: grid;
+}
+.auth :global(.rx-head p) {
+  font-size: calc(11px * var(--text-scale, 1));
+  margin-top: 1px;
+  line-height: 1.85;
+}
 .auth :global(.rx-head h1) {
-  font-size: calc(24px * var(--text-scale, 1));
-  font-weight: 750;
-  line-height: 1.7;
+  font-size: calc(17px * var(--text-scale, 1));
+  font-weight: 720;
+  line-height: 1.65;
   letter-spacing: normal;
 }
-.auth :global(.rx-head .rx-icon-button),
 .auth :global(.rx-crumb),
 .auth :global(.head-action) {
   display: none;
 }
 .auth :global(.rx-content) {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
 }
 .auth :global(.rx-workspace) {
-  width: auto;
-  max-width: 600px;
+  width: 100%;
+  max-width: 780px;
   margin: 0 auto;
 }
 .auth :global(.rx-body-grid) {
   display: flex;
   flex-direction: column;
-  width: 440px;
-  max-width: 100%;
-  gap: 20px;
+  width: 100%;
+  max-width: 780px;
+  gap: 18px;
   margin-inline: auto;
 }
 .auth :global(.rx-bottom-actions) {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
+}
+.auth :global(.rx-bottom-actions > .button) {
+  flex: none;
+  min-width: 180px;
+}
+@media (min-width: 1200px) {
+  .auth :global(.rx-head) {
+    padding: 14px 28px;
+  }
+  .auth :global(.rx-content) {
+    padding: 28px 32px;
+  }
 }
 @media (min-width: 768px) and (max-width: 1199px) {
   :where(.frame) :global(.rx-head) {
-    min-height: 88px;
-    padding: 16px 22px;
+    min-height: 76px;
+    padding: 12px 24px;
+    gap: 12px;
   }
   :where(.frame) :global(.rx-head h2),
   .auth :global(.rx-head h1) {
-    font-size: calc(23px * var(--text-scale, 1));
+    font-size: calc(17px * var(--text-scale, 1));
+    font-weight: 720;
+    line-height: 1.65;
   }
   :where(.frame) :global(.rx-content) {
     padding: 24px;
   }
   :where(.frame) :global(.rx-bottom-actions) {
-    padding: 16px 22px;
+    padding: 12px 24px;
+    gap: 10px;
   }
   :where(.frame) :global(.rx-body-grid) {
-    gap: 16px;
+    gap: 18px;
+    display: flex;
+    flex-direction: column;
   }
   :where(.frame) :global(.rx-context-panel) {
     padding: 15px;
@@ -229,24 +255,24 @@
   }
   :where(.frame) :global(.rx-bottom-actions) {
     display: flex;
+    gap: 10px;
+    padding: 12px 24px;
   }
-  :where(.frame) :global(.rx-bottom-actions > .button),
-  .auth :global(.rx-bottom-actions > .button) {
+  :where(.frame) :global(.rx-bottom-actions > .button) {
     flex: 1;
-  }
-  .auth :global(.rx-head .rx-icon-button) {
-    display: none;
   }
 }
 @media (max-width: 767px) {
   :where(.frame) :global(.rx-head) {
-    min-height: 90px;
-    padding: 14px 16px;
-    gap: 8px;
+    min-height: 72px;
+    padding: 12px 16px;
+    gap: 12px;
   }
   :where(.frame) :global(.rx-head h2),
   .auth :global(.rx-head h1) {
-    font-size: calc(21px * var(--text-scale, 1));
+    font-size: calc(17px * var(--text-scale, 1));
+    font-weight: 720;
+    line-height: 1.65;
   }
   :where(.frame) :global(.rx-head p) {
     font-size: calc(11px * var(--text-scale, 1));
@@ -260,30 +286,30 @@
   :where(.frame) :global(.rx-body-grid) {
     display: flex;
     flex-direction: column;
-    gap: 14px;
+    gap: 18px;
   }
   :where(.frame) :global(.rx-context-panel) {
     display: none;
   }
   :where(.frame) :global(.rx-bottom-actions) {
-    gap: 9px;
-    padding: 12px 16px max(12px, env(safe-area-inset-bottom));
+    gap: 10px;
+    padding: 10px 16px max(10px, env(safe-area-inset-bottom));
   }
   .auth :global(.rx-content) {
     align-items: flex-start;
-    padding-top: 28px;
   }
   .auth :global(.rx-body-grid) {
     width: 100%;
+    max-width: 780px;
+    gap: 18px;
   }
   .auth :global(.rx-workspace) {
     width: 100%;
+    max-width: 780px;
   }
-  .auth :global(.rx-head .rx-back) {
-    display: grid;
-  }
-  .auth :global(.rx-bottom-actions) {
-    padding: 14px 18px max(14px, env(safe-area-inset-bottom));
+  .auth :global(.rx-bottom-actions > .button) {
+    flex: 1;
+    min-width: 0;
   }
 }
 @media (max-width: 359px) {
@@ -293,12 +319,18 @@
   }
   :where(.frame) :global(.rx-head h2),
   .auth :global(.rx-head h1) {
-    font-size: calc(19px * var(--text-scale, 1));
+    font-size: calc(17px * var(--text-scale, 1));
+    font-weight: 720;
+    line-height: 1.65;
   }
 }
 /* The heading joins content scrolling at 200% text and keyboard-like heights. */
 @media (max-width: 767px) and (max-height: 600px) {
-  :global(html[data-reading='large']) .frame :global(.rx-page-scroll-region) {
+  :global(html[data-reading='large'])
+    .frame:has(> :global(.rx-page-scroll-region)):not(:global(.layout-messenger)):not(
+      :global(.kind-chat)
+    )
+    :global(.rx-page-scroll-region) {
     display: flex;
     flex: 1;
     min-height: 0;
@@ -306,7 +338,11 @@
     overflow: auto;
     overscroll-behavior: contain;
   }
-  :global(html[data-reading='large']) .frame :global(.rx-content) {
+  :global(html[data-reading='large'])
+    .frame:has(> :global(.rx-page-scroll-region)):not(:global(.layout-messenger)):not(
+      :global(.kind-chat)
+    )
+    :global(.rx-content) {
     flex: none;
     overflow: visible;
   }

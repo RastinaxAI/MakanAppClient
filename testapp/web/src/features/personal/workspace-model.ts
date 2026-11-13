@@ -11,5 +11,5 @@ export function visibleWorkspaces(snapshot: Snapshot): Workspace[] {
   );
 }
 export function canEnterWorkspace(workspace: Workspace) {
-  return workspace.canEnter === true;
+  return workspace.canEnter === true && workspace.isEffective !== false;
 }

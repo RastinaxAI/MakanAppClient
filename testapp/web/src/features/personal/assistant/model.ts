@@ -5,13 +5,32 @@ import { ApiError, isRecord } from '@/lib/api/errors';
 type S = components['schemas'];
 export type AiPayer = S['AiPayerSelection'];
 export type SourceVersion = S['KnowledgeSourceVersion'];
+/** A stored citation is never authorization to show a stale or revoked source excerpt. */
+export function citationSourceMatches(
+  citation: S['KnowledgeCitation'],
+  source: S['EducationalSourceResult'],
+) {
+  return (
+    source.sourceId === citation.sourceId &&
+    source.capabilities.canRead &&
+    source.status === 'Active' &&
+    source.currentVersion === citation.version
+  );
+}
 export type AssistantIntent = {
   path: string;
   operationId: string;
   payer: AiPayer;
   body?: Record<string, unknown>;
   sources?: SourceVersion[];
+  /** Client-side intent binding; never sent as an API field or permission. */
+  contextKey?: string;
 };
+export function assistantRequestScope(intent: AssistantIntent) {
+  return intent.path === '/api/v1/ai/chat' && intent.payer !== 'Organization' && !intent.sources
+    ? 'account'
+    : 'context';
+}
 export const businessOperations = {
   chat: { path: '/api/v1/ai/chat', role: null },
   analysis: { path: '/api/v1/ai/students/analyze', role: 'Student' },
@@ -36,7 +55,8 @@ export function isAssistantIntent(value: unknown): value is AssistantIntent {
     !isRecord(value) ||
     typeof value.path !== 'string' ||
     !validGuid(value.operationId) ||
-    !['Individual', 'Organization', 'FreeTrial'].includes(String(value.payer))
+    !['Individual', 'Organization', 'FreeTrial'].includes(String(value.payer)) ||
+    (value.contextKey !== undefined && typeof value.contextKey !== 'string')
   )
     return false;
   const operation = clientOperationFor('POST', value.path);

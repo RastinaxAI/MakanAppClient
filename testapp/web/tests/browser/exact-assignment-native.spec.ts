@@ -180,7 +180,7 @@ test('school assignment steps retain the scoped text, file and rules through bac
   page.on('dialog', (dialog) => dialog.accept());
   await page.goto('/personal/settings/appearance');
   await page.getByRole('radio', { name: 'تاریک', exact: true }).check();
-  await page.getByRole('button', { name: 'ذخیره ظاهر', exact: true }).click();
+  await page.getByRole('banner').getByRole('link', { name: 'بازگشت', exact: true }).click();
   await page.goto(root + '?step=rules');
   await page.reload();
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');

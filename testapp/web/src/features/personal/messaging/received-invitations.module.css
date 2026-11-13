@@ -1,51 +1,68 @@
-.panel {
-  flex-shrink: 0;
-  margin: 0 12px 8px;
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  background: var(--bg);
-  min-width: 0;
-}
-.panel[open] {
-  max-height: min(48dvh, 460px);
-  overflow: auto;
-  overscroll-behavior: contain;
-}
-.panel summary {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 12px;
-  min-height: 48px;
-  cursor: pointer;
-  color: var(--primary);
-  font-size: calc(13px * var(--text-scale, 1));
-}
-.panel summary:focus-visible {
-  outline: 2px solid var(--focus);
-  outline-offset: -3px;
-  border-radius: 10px;
-}
-.panel summary b {
-  margin-inline-start: auto;
+.badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: grid;
+  place-items: center;
+  min-width: 18px;
+  min-height: 18px;
+  padding: 1px 4px;
+  border-radius: 12px;
+  background: var(--primary-button);
+  color: var(--on-primary);
+  font-size: calc(10px * var(--text-scale, 1));
+  line-height: 1.5;
 }
 .body {
-  padding: 0 12px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  max-width: 760px;
+  margin-inline: auto;
   font-size: calc(12px * var(--text-scale, 1));
   line-height: 1.8;
   overflow-wrap: anywhere;
 }
 .body > p,
-.body article p {
+.card p {
   color: var(--muted);
 }
-.body article {
-  border-top: 1px solid var(--border);
-  padding-block: 12px;
+.card {
+  min-width: 0;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  background: var(--surface);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
-.body h2 {
-  font-size: calc(14px * var(--text-scale, 1));
+.identity {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+.identity > div {
+  min-width: 0;
+  flex: 1;
+}
+.avatar {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--avatar-bg);
+  color: var(--avatar-text);
+}
+.card h2 {
+  font-size: calc(16px * var(--text-scale, 1));
+  line-height: 1.65;
   margin: 0;
+  text-align: right;
 }
 .actions {
   display: flex;

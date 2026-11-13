@@ -24,12 +24,13 @@ test('poll secondary controls preserve distinct options and native switches acro
   await page.getByLabel(t.question, { exact: true }).fill('زمان جلسه');
   await page.getByLabel(t.option + ' ۱', { exact: true }).fill('شنبه / یکشنبه');
   await page.getByLabel(t.option + ' ۲', { exact: true }).fill('دوشنبه');
-  await (await more(page)).getByRole('button', { name: t.addOption, exact: true }).click();
+  await expect(
+    page.getByRole('banner').getByRole('button', { name: t.more, exact: true }),
+  ).toHaveCount(0);
+  await page.getByRole('button', { name: t.addOption, exact: true }).click();
   await expect(page.getByRole('dialog')).toHaveCount(0);
   await page.getByLabel(t.option + ' ۳', { exact: true }).fill('سه‌شنبه');
-  await (await more(page))
-    .getByRole('button', { name: t.remove + ' ' + t.option + ' ۲', exact: true })
-    .click();
+  await page.getByRole('button', { name: t.remove + ' ' + t.option + ' ۲', exact: true }).click();
   await expect(page.getByLabel(t.option + ' ۲', { exact: true })).toHaveValue('سه‌شنبه');
   const multiple = page.getByRole('switch', { name: t.multiple, exact: true });
   await multiple.check();
@@ -135,11 +136,12 @@ test('checklist definition dialog keeps its version and draft after failure and 
   await page.getByLabel(t.title, { exact: true }).fill('آماده‌سازی جلسه');
   await page.getByLabel(t.item + ' ۱', { exact: true }).fill('خواندن جزوه');
   await page.getByLabel(t.item + ' ۲', { exact: true }).fill('فرستادن پرسش‌ها');
-  await (await more(page)).getByRole('button', { name: t.addItem, exact: true }).click();
+  await expect(
+    page.getByRole('banner').getByRole('button', { name: t.more, exact: true }),
+  ).toHaveCount(0);
+  await page.getByRole('button', { name: t.addItem, exact: true }).click();
   await page.getByLabel(t.item + ' ۳', { exact: true }).fill('مورد اضافه');
-  await (await more(page))
-    .getByRole('button', { name: t.remove + ' ' + t.item + ' ۳', exact: true })
-    .click();
+  await page.getByRole('button', { name: t.remove + ' ' + t.item + ' ۳', exact: true }).click();
   await page.getByRole('button', { name: t.publishChecklist, exact: true }).click();
   await expect(page).toHaveURL(new RegExp(id + '$'));
   await login(context, 'Manager', false);

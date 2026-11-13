@@ -51,7 +51,10 @@ async function stage(
   await expect(dialog).toHaveCount(0);
 }
 async function review(page: Page) {
-  await page.getByRole('banner').getByRole('button', { name: t.save, exact: true }).click();
+  await page
+    .locator('.rx-bottom-actions')
+    .getByRole('button', { name: t.save, exact: true })
+    .click();
   const dialog = page.getByRole('dialog', { name: t.review, exact: true });
   await expect(dialog).toBeVisible();
   return dialog;
@@ -153,6 +156,7 @@ test('native attendance resolves bound learner names and retains per-row drafts 
   await stage(page, 1, 'Present');
   const row = page.getByTestId('attendance-00000000-0000-4000-8000-000000020001');
   await expect(row).toContainText(t.pendingStatus('غایب', 'حاضر'));
+  await page.getByText(copy.v7Ui.oneAttendanceStatus, { exact: true }).click();
   await page.getByRole('searchbox', { name: t.search, exact: true }).fill(attendanceNames[1]);
   for (const width of [320, 834, 1440]) {
     await page.setViewportSize({ width, height: 844 });
@@ -164,7 +168,7 @@ test('native attendance resolves bound learner names and retains per-row drafts 
   page.on('dialog', (dialog) => dialog.accept());
   await page.goto('/personal/settings/appearance');
   await page.getByRole('radio', { name: 'تاریک', exact: true }).check();
-  await page.getByRole('button', { name: 'ذخیره ظاهر', exact: true }).click();
+  await page.getByRole('banner').getByRole('link', { name: 'بازگشت', exact: true }).click();
   await page.goto(root);
   await page.reload();
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
@@ -467,7 +471,7 @@ test('a lost acknowledgment after the real isolated write requires reading and a
   await dialog.getByRole('button', { name: t.latest, exact: true }).click();
   await dialog.getByRole('button', { name: t.discardThis, exact: true }).click();
   await expect(
-    page.getByRole('banner').getByRole('button', { name: t.save, exact: true }),
+    page.locator('.rx-bottom-actions').getByRole('button', { name: t.save, exact: true }),
   ).toBeDisabled();
   expect(await writes(request)).toHaveLength(1);
   await expect(page.getByText(t.saved, { exact: true })).toHaveCount(0);
@@ -522,7 +526,14 @@ test('authorized paginated roster resolution reaches a second page and a foreign
   page.on('dialog', (dialog) => dialog.accept());
   await page.reload();
   await expect(
-    page.getByTestId('attendance-' + data.attendance[0].entries[0].enrollmentId),
+    page
+      .getByTestId('attendance-' + data.attendance[0].entries[0].enrollmentId)
+      .getByRole('button'),
+  ).toBeDisabled();
+  await expect(
+    page
+      .getByTestId('attendance-' + data.attendance[0].entries[0].enrollmentId)
+      .getByRole('combobox'),
   ).toBeDisabled();
   await expect(
     page.getByTestId('attendance-' + data.attendance[0].entries[0].enrollmentId),

@@ -10,23 +10,30 @@ import { clientValidator } from '@/lib/api/client-contract';
 import { ApiError } from '@/lib/api/errors';
 import type { TransferProgress } from '@/lib/api/file-transfer';
 import * as Menu from '@radix-ui/react-dropdown-menu';
+import { Check, LoaderCircle, RefreshCw } from 'lucide-react';
+import { BarChart3, ListChecks } from 'lucide-react';
+import Link from 'next/link';
 import {
+  Smile,
+  ImageIcon,
+  FilePdf,
+  FileWord,
+  FileExcel,
+  FilePowerpoint,
   Camera,
-  Check,
   ChevronLeft,
   Download,
-  File,
   FileText,
-  Image as ImageIcon,
-  LoaderCircle,
+  Mic,
   Paperclip,
+  Plus,
   Play,
-  RefreshCw,
+  Pause,
   Send,
   Video,
   X,
-} from 'lucide-react';
-import { useEffect, useRef, useState } from 'react';
+} from './messenger-icons';
+import { useEffect, useRef, useState, type ReactNode, type RefObject } from 'react';
 import { usePersonal } from '../provider';
 import {
   fileTransferPath,
@@ -37,6 +44,7 @@ import {
 } from './media-model';
 import s from './media.module.css';
 import t from './messaging-theme.module.css';
+import { VoicePlayer, LiveVoiceWaveform } from './voice-message';
 type DraftFile = {
   key: string;
   file: globalThis.File;
@@ -77,24 +85,29 @@ export function AttachmentPicker({
   disabled,
   caption,
   onSend,
+  children,
+  toolsEnabled = false,
 }: {
   conversationId: string;
   disabled: boolean;
   caption: string;
   onSend: (files: FileAsset[], caption: string) => Promise<boolean>;
+  children?: (record: () => void) => ReactNode;
+  toolsEnabled?: boolean;
 }) {
   const { session, transfer } = usePersonal();
   const [items, setItems] = useState<DraftFile[]>([]),
     [open, setOpen] = useState(false),
+    [recording, setRecording] = useState(false),
+    [pickerOpen, setPickerOpen] = useState(false),
     [text, setText] = useState(''),
     [busy, setBusy] = useState(false),
     [phase, setPhase] = useState<'upload' | 'sending'>('upload'),
     [error, setError] = useState('');
-  const photo = useRef<HTMLInputElement>(null),
-    video = useRef<HTMLInputElement>(null),
-    file = useRef<HTMLInputElement>(null),
+  const file = useRef<HTMLInputElement>(null),
     camera = useRef<HTMLInputElement>(null),
     trigger = useRef<HTMLButtonElement>(null),
+    voiceTrigger = useRef<HTMLElement | null>(null),
     abort = useRef<AbortController | null>(null),
     alive = useRef(true),
     running = useRef(false),
@@ -222,52 +235,86 @@ export function AttachmentPicker({
   }
   return (
     <>
-      <Menu.Root dir="rtl">
+      <Menu.Root dir="rtl" open={pickerOpen} onOpenChange={setPickerOpen}>
         <Menu.Trigger asChild>
           <button
             type="button"
             ref={trigger}
             className={uiClass(s.attachButton)}
             aria-label={uiText.text_01eac8227680}
-            disabled={disabled || busy}
+            disabled={(disabled && !toolsEnabled) || busy}
           >
-            <Paperclip size={23} />
+            <Plus size={23} />
             {items.length > 0 && <b>{new Intl.NumberFormat('fa-IR').format(items.length)}</b>}
           </button>
         </Menu.Trigger>
         <Menu.Portal>
-          <Menu.Content
-            className={uiClass(`dropdown ${t.theme} ${t.menu} ${s.attachMenu}`)}
-            side="top"
-            align="start"
-            sideOffset={12}
-          >
-            {items.length > 0 && (
-              <Menu.Item onSelect={() => setOpen(true)}>
-                <Paperclip size={19} />
-                {uiText.text_00cd0fea581c}
-                <ChevronLeft size={16} />
-              </Menu.Item>
+          <div>
+            {pickerOpen && (
+              <div
+                className={t.menuBackdrop}
+                aria-hidden
+                onPointerDown={() => setPickerOpen(false)}
+              />
             )}
-            <Menu.Item onSelect={() => camera.current?.click()}>
-              <Camera size={20} />
-              {uiText.text_4cab0b40565e}
-            </Menu.Item>
-            <Menu.Item onSelect={() => photo.current?.click()}>
-              <ImageIcon size={20} />
-              {uiText.text_5c661ce3aa5f}
-            </Menu.Item>
-            <Menu.Item onSelect={() => video.current?.click()}>
-              <Video size={20} />
-              {uiText.text_de0372679118}
-            </Menu.Item>
-            <Menu.Item onSelect={() => file.current?.click()}>
-              <File size={20} />
-              {uiText.text_9974dd3a9f4a}
-            </Menu.Item>
-          </Menu.Content>
+            <Menu.Content
+              className={uiClass(`dropdown ${t.theme} ${t.menu} ${s.attachMenu}`)}
+              side="top"
+              align="start"
+              alignOffset={10}
+              sideOffset={6}
+            >
+              {items.length > 0 && (
+                <Menu.Item onSelect={() => setOpen(true)}>
+                  <Paperclip size={19} />
+                  {uiText.text_00cd0fea581c}
+                  <ChevronLeft size={16} />
+                </Menu.Item>
+              )}
+              {[
+                ['poll-new', uiText.v4Text.newPoll, BarChart3],
+                ['quiz-new', uiText.v4Text.quiz, BarChart3],
+                ['checklist-new', uiText.v4Text.newChecklist, ListChecks],
+              ].map(([section, title, Icon]) => {
+                const Glyph = Icon as typeof BarChart3;
+                return (
+                  <Menu.Item asChild key={String(section)} disabled={!toolsEnabled || busy}>
+                    <Link href={`/personal/messages/${conversationId}/${section}`}>
+                      <Glyph size={20} />
+                      {String(title)}
+                    </Link>
+                  </Menu.Item>
+                );
+              })}
+              <Menu.Item disabled={disabled || busy} onSelect={() => file.current?.click()}>
+                <Paperclip size={16} />
+                {uiText.text_9974dd3a9f4a}
+              </Menu.Item>
+              <Menu.Item disabled={disabled || busy} onSelect={() => camera.current?.click()}>
+                <Camera size={16} />
+                {uiText.text_4cab0b40565e}
+              </Menu.Item>
+              {!!caption.trim() && (
+                <Menu.Item
+                  disabled={disabled || busy}
+                  onSelect={() => {
+                    voiceTrigger.current = trigger.current;
+                    setRecording(true);
+                  }}
+                >
+                  <Mic size={16} />
+                  {uiText.v6Ui.voiceRecord}
+                </Menu.Item>
+              )}
+            </Menu.Content>
+          </div>
         </Menu.Portal>
       </Menu.Root>
+      {children?.(() => {
+        voiceTrigger.current =
+          document.activeElement instanceof HTMLElement ? document.activeElement : null;
+        setRecording(true);
+      })}
       <NativeInput
         ref={camera}
         type="file"
@@ -275,24 +322,6 @@ export function AttachmentPicker({
         capture="environment"
         hidden
         aria-label={uiText.text_15e11a432ae3}
-        onChange={(event) => choose(event.currentTarget)}
-      />
-      <NativeInput
-        ref={photo}
-        type="file"
-        accept="image/*"
-        multiple
-        hidden
-        aria-label={uiText.text_9105d8bdec0d}
-        onChange={(event) => choose(event.currentTarget)}
-      />
-      <NativeInput
-        ref={video}
-        type="file"
-        accept="video/*"
-        multiple
-        hidden
-        aria-label={uiText.text_8815ba986d1a}
         onChange={(event) => choose(event.currentTarget)}
       />
       <NativeInput
@@ -420,7 +449,316 @@ export function AttachmentPicker({
           </form>
         </DialogContent>
       </Dialog>
+      {recording && (
+        <VoiceRecording
+          returnFocus={voiceTrigger}
+          onClose={() => setRecording(false)}
+          onReady={(recorded) => {
+            setItems((previous) => [
+              ...previous,
+              { key: crypto.randomUUID(), file: recorded, phase: 'selected' },
+            ]);
+            setText(caption);
+            setRecording(false);
+            setOpen(true);
+          }}
+        />
+      )}
     </>
+  );
+}
+
+export function EmojiPicker({
+  onSelect,
+  restoreFocus,
+  disabled,
+}: {
+  onSelect: (value: string) => void;
+  restoreFocus: () => void;
+  disabled: boolean;
+}) {
+  return (
+    <Menu.Root dir="rtl">
+      <Menu.Trigger asChild>
+        <button
+          type="button"
+          className={s.emojiTrigger}
+          disabled={disabled}
+          aria-label={uiText.messengerPdf.emoji}
+        >
+          <Smile size={16} />
+        </button>
+      </Menu.Trigger>
+      <Menu.Portal>
+        <Menu.Content
+          className={`${t.theme} ${s.emojiMenu}`}
+          side="top"
+          align="end"
+          sideOffset={8}
+          onCloseAutoFocus={(event) => {
+            event.preventDefault();
+            restoreFocus();
+          }}
+        >
+          {uiText.messengerPdf.emojiChoices.map((value) => (
+            <Menu.Item
+              key={value}
+              aria-label={uiText.messengerPdf.emojiInsert(value)}
+              onSelect={() => onSelect(value)}
+            >
+              {value}
+            </Menu.Item>
+          ))}
+        </Menu.Content>
+      </Menu.Portal>
+    </Menu.Root>
+  );
+}
+function VoiceRecording({
+  onClose,
+  onReady,
+  returnFocus,
+}: {
+  onClose: () => void;
+  onReady: (file: globalThis.File) => void;
+  returnFocus: RefObject<HTMLElement | null>;
+}) {
+  const [phase, setPhase] = useState<'idle' | 'requesting' | 'recording' | 'stopping'>('idle');
+  const [error, setError] = useState(''),
+    [file, setFile] = useState<globalThis.File>();
+  const [preview, setPreview] = useState(''),
+    [elapsed, setElapsed] = useState(0);
+  const [canceling, setCanceling] = useState(false);
+  const gesture = useRef<{ x: number; y: number } | null>(null);
+  const media = useRef<MediaRecorder | null>(null),
+    stream = useRef<MediaStream | null>(null);
+  const generation = useRef(0),
+    started = useRef(0);
+  const finishing = useRef(false);
+  function release() {
+    generation.current++;
+    const recorder = media.current;
+    if (recorder) {
+      recorder.onstop = null;
+      recorder.ondataavailable = null;
+      if (recorder.state !== 'inactive') recorder.stop();
+    }
+    stream.current?.getTracks().forEach((track) => track.stop());
+    stream.current = null;
+    media.current = null;
+  }
+  useEffect(() => () => release(), []);
+  useEffect(() => {
+    if (!file) {
+      setPreview('');
+      return;
+    }
+    const url = URL.createObjectURL(file);
+    setPreview(url);
+    return () => URL.revokeObjectURL(url);
+  }, [file]);
+  useEffect(() => {
+    if (phase !== 'recording') return;
+    const timer = setInterval(
+      () => setElapsed(Math.floor((Date.now() - started.current) / 1000)),
+      250,
+    );
+    return () => clearInterval(timer);
+  }, [phase]);
+  async function start() {
+    if (phase !== 'idle' || file) return;
+    setError('');
+    if (!navigator.mediaDevices?.getUserMedia || typeof MediaRecorder === 'undefined') {
+      setError(uiText.v6Ui.voiceUnavailable);
+      return;
+    }
+    const attempt = ++generation.current;
+    setPhase('requesting');
+    try {
+      const input = await navigator.mediaDevices.getUserMedia({ audio: true });
+      if (attempt !== generation.current) {
+        input.getTracks().forEach((track) => track.stop());
+        return;
+      }
+      stream.current = input;
+      const mimeType = ['audio/webm;codecs=opus', 'audio/ogg;codecs=opus', 'audio/mp4'].find(
+        (type) => MediaRecorder.isTypeSupported(type),
+      );
+      const recorder = new MediaRecorder(input, mimeType ? { mimeType } : undefined);
+      media.current = recorder;
+      const chunks: Blob[] = [];
+      recorder.ondataavailable = (event) => {
+        if (event.data.size) chunks.push(event.data);
+      };
+      recorder.onstop = () => {
+        input.getTracks().forEach((track) => track.stop());
+        if (attempt !== generation.current) return;
+        const blob = new Blob(chunks, { type: recorder.mimeType });
+        if (blob.size) {
+          const extension = blob.type.includes('mp4')
+            ? 'm4a'
+            : blob.type.includes('ogg')
+              ? 'ogg'
+              : 'webm';
+          setFile(
+            new globalThis.File([blob], 'voice-' + Date.now() + '.' + extension, {
+              type: blob.type,
+            }),
+          );
+        } else setError(uiText.v6Ui.voiceEmpty);
+        media.current = null;
+        stream.current = null;
+        setPhase('idle');
+      };
+      recorder.onerror = () => {
+        release();
+        setPhase('idle');
+        setError(uiText.v6Ui.voiceUnavailable);
+      };
+      recorder.start();
+      started.current = Date.now();
+      setElapsed(0);
+      setPhase('recording');
+    } catch (cause) {
+      if (attempt !== generation.current) return;
+      release();
+      setPhase('idle');
+      setError(
+        cause instanceof DOMException && cause.name === 'NotAllowedError'
+          ? uiText.v6Ui.voiceDenied
+          : uiText.v6Ui.voiceUnavailable,
+      );
+    }
+  }
+  return (
+    <Dialog
+      open
+      onOpenChange={(open) => {
+        if (!open) {
+          release();
+          onClose();
+        }
+      }}
+    >
+      <DialogContent
+        className={phase === 'recording' || file ? s.recorderDock : undefined}
+        title={uiText.v6Ui.voiceTitle}
+        description={uiText.v6Ui.voicePermission}
+        onCloseAutoFocus={(event) => {
+          event.preventDefault();
+          if (!finishing.current) returnFocus.current?.focus();
+        }}
+      >
+        <div className={s.sendSheet}>
+          {phase === 'recording' && (
+            <div className={s.recorderBar} data-canceling={canceling || undefined}>
+              <button
+                type="button"
+                className={s.recordDelete}
+                aria-label={uiText.v6Ui.voiceDelete}
+                onClick={() => {
+                  release();
+                  onClose();
+                }}
+              >
+                <X size={16} />
+              </button>
+              <div
+                className={s.recordTrack}
+                onPointerDown={(event) => {
+                  gesture.current = { x: event.clientX, y: event.clientY };
+                  event.currentTarget.setPointerCapture(event.pointerId);
+                }}
+                onPointerMove={(event) => {
+                  if (!gesture.current) return;
+                  const distance = Math.abs(event.clientX - gesture.current.x);
+                  setCanceling(distance > 40);
+                  if (distance > 90) {
+                    gesture.current = null;
+                    release();
+                    onClose();
+                  }
+                }}
+                onPointerUp={() => {
+                  gesture.current = null;
+                  setCanceling(false);
+                }}
+                onPointerCancel={() => {
+                  gesture.current = null;
+                  setCanceling(false);
+                }}
+              >
+                <small>{uiText.messengerPdf.cancelRecording}</small>
+                <div>
+                  <time dir="ltr">
+                    {Math.floor(elapsed / 60)}:{String(elapsed % 60).padStart(2, '0')}
+                  </time>
+                  <LiveVoiceWaveform stream={stream.current} />
+                </div>
+              </div>
+              <button
+                type="button"
+                className={s.recordStop}
+                aria-label={uiText.v6Ui.voiceStop}
+                onClick={() => {
+                  setPhase('stopping');
+                  media.current?.stop();
+                }}
+              >
+                <Pause size={16} />
+              </button>
+              <span className="sr-only" role="status">
+                {uiText.v6Ui.voiceRecording}
+              </span>
+            </div>
+          )}
+          {preview && <VoicePlayer url={preview} label={uiText.v6Ui.voiceTitle} />}
+          {!!error && (
+            <p role="alert" className={s.transferError}>
+              {error}
+            </p>
+          )}
+          <div className={s.sheetActions}>
+            {file ? (
+              <>
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    setFile(undefined);
+                    setElapsed(0);
+                  }}
+                >
+                  {uiText.v6Ui.voiceDelete}
+                </Button>
+                <Button
+                  onClick={() => {
+                    finishing.current = true;
+                    onReady(file);
+                  }}
+                >
+                  {uiText.v6Ui.voiceUse}
+                </Button>
+              </>
+            ) : phase === 'recording' ? null : phase === 'stopping' ? (
+              <Button
+                disabled
+                onClick={() => {
+                  setPhase('stopping');
+                  media.current?.stop();
+                }}
+              >
+                {uiText.v6Ui.voiceStop}
+              </Button>
+            ) : (
+              <Button disabled={phase !== 'idle'} onClick={() => void start()}>
+                <Mic size={18} />
+                {uiText.v6Ui.voiceStart}
+              </Button>
+            )}
+          </div>
+        </div>
+      </DialogContent>
+    </Dialog>
   );
 }
 export function AttachmentSummary({ attachments }: { attachments?: Attachment[] }) {
@@ -438,11 +776,14 @@ export function AttachmentSummary({ attachments }: { attachments?: Attachment[] 
 export function MessageAttachment({
   asset,
   conversationId,
+  compact = false,
 }: {
   asset: Attachment;
   conversationId: string;
+  compact?: boolean;
 }) {
   const { transfer } = usePersonal();
+  const [viewing, setViewing] = useState(false);
   const [phase, setPhase] = useState<'idle' | 'loading' | 'ready' | 'error'>('idle'),
     [progress, setProgress] = useState<TransferProgress>(),
     [url, setUrl] = useState<string>(),
@@ -511,102 +852,215 @@ export function MessageAttachment({
     return () => observer.disconnect();
   }, [image]);
   return (
-    <div
-      ref={root}
-      className={uiClass(`${s.attachment} ${image || video ? s.mediaAttachment : ''}`)}
-    >
-      {phase === 'ready' && url ? (
-        <>
-          {image ? (
-            <a
-              className={uiClass(s.imageLink)}
-              href={url}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={uiText.text_d7a06d9eaca7 + asset.fileName}
-            >
-              <img
+    <>
+      <div
+        ref={root}
+        data-compact={compact || undefined}
+        data-visual={image || video || undefined}
+        className={uiClass(`${s.attachment} ${image || video ? s.mediaAttachment : ''}`)}
+      >
+        {phase === 'ready' && url ? (
+          <>
+            {image ? (
+              <button
+                type="button"
+                className={uiClass(s.imageLink)}
+                onClick={() => setViewing(true)}
+                aria-label={uiText.text_d7a06d9eaca7 + asset.fileName}
+              >
+                <img
+                  src={url}
+                  alt={asset.fileName}
+                  loading="lazy"
+                  onError={() => setPlaybackError(true)}
+                />
+              </button>
+            ) : video && compact ? (
+              <button
+                type="button"
+                className={s.videoCover}
+                aria-label={uiText.text_d7a06d9eaca7 + asset.fileName}
+                onClick={() => setViewing(true)}
+              >
+                <Play size={32} />
+              </button>
+            ) : video ? (
+              <video
                 src={url}
-                alt={asset.fileName}
-                loading="lazy"
+                controls
+                playsInline
+                preload="metadata"
                 onError={() => setPlaybackError(true)}
               />
-            </a>
-          ) : video ? (
-            <video
-              src={url}
-              controls
-              playsInline
-              preload="metadata"
-              onError={() => setPlaybackError(true)}
-            />
-          ) : audio ? (
-            <audio src={url} controls preload="metadata" onError={() => setPlaybackError(true)} />
-          ) : null}
-          <div className={uiClass(s.fileReady)}>
-            <FileText size={19} />
-            <span>
-              <strong dir="auto">{asset.fileName}</strong>
-              <small>{formatFileSize(asset.sizeBytes)}</small>
-            </span>
-            <a
-              href={url}
-              download={asset.fileName}
-              aria-label={uiText.text_6e159b54bc47 + asset.fileName}
-            >
-              <Download size={19} />
-            </a>
-          </div>
-          {playbackError && (
-            <small className={uiClass(s.itemError)}>{uiText.text_5f11ce92fa61}</small>
-          )}
-        </>
-      ) : (
-        <>
-          <div className={uiClass(s.fileIntro)}>
-            <span className={uiClass(s.fileIcon)}>
-              {image ? (
-                <ImageIcon size={24} />
-              ) : video ? (
-                <Video size={24} />
-              ) : audio ? (
-                <Play size={24} />
-              ) : (
-                <FileText size={24} />
-              )}
-            </span>
-            <div>
-              <strong dir="auto">{asset.fileName}</strong>
-              <small>{formatFileSize(asset.sizeBytes)}</small>
+            ) : audio ? (
+              <VoicePlayer url={url} label={asset.fileName} />
+            ) : null}
+            <div className={uiClass(s.fileReady)}>
+              <FileTypeIcon name={asset.fileName} />
+              <span>
+                <strong dir="auto">{asset.fileName}</strong>
+                <small>{formatFileSize(asset.sizeBytes)}</small>
+              </span>
+              <a
+                href={url}
+                download={asset.fileName}
+                aria-label={uiText.text_6e159b54bc47 + asset.fileName}
+              >
+                <Download size={19} />
+              </a>
             </div>
-            <button
-              type="button"
-              aria-label={
-                phase === 'loading'
-                  ? uiText.text_5aea7c460498 + asset.fileName
-                  : uiText.text_1e229eb338a6 + asset.fileName
-              }
-              onClick={() => (phase === 'loading' ? abort.current?.abort() : void load())}
-            >
-              {phase === 'loading' ? (
-                <X size={20} />
-              ) : phase === 'error' ? (
-                <RefreshCw size={20} />
+            {playbackError && (
+              <small className={uiClass(s.itemError)}>{uiText.text_5f11ce92fa61}</small>
+            )}
+          </>
+        ) : (
+          <>
+            {(video || (compact && image)) && (
+              <button
+                type="button"
+                className={video ? s.videoCover : s.imageCover}
+                aria-label={
+                  phase === 'loading'
+                    ? uiText.text_5aea7c460498 + asset.fileName
+                    : uiText.text_d7a06d9eaca7 + asset.fileName
+                }
+                onClick={() => {
+                  if (phase === 'loading') abort.current?.abort();
+                  else {
+                    if (compact && video) setViewing(true);
+                    void load();
+                  }
+                }}
+              >
+                {phase === 'loading' ? (
+                  <X size={24} />
+                ) : video ? (
+                  <Play size={32} />
+                ) : (
+                  <ImageIcon size={24} />
+                )}
+              </button>
+            )}
+            {(!compact || (!image && !video)) && (
+              <div className={uiClass(s.fileIntro)}>
+                <span className={uiClass(s.fileIcon)}>
+                  {image ? (
+                    <ImageIcon size={24} />
+                  ) : video ? (
+                    <Video size={24} />
+                  ) : audio ? (
+                    <Play size={24} />
+                  ) : (
+                    <FileTypeIcon name={asset.fileName} />
+                  )}
+                </span>
+                <div>
+                  <strong dir="auto">{asset.fileName}</strong>
+                  <small>{formatFileSize(asset.sizeBytes)}</small>
+                </div>
+                <button
+                  type="button"
+                  aria-label={
+                    phase === 'loading'
+                      ? uiText.text_5aea7c460498 + asset.fileName
+                      : uiText.text_1e229eb338a6 + asset.fileName
+                  }
+                  onClick={() => (phase === 'loading' ? abort.current?.abort() : void load())}
+                >
+                  {phase === 'loading' ? (
+                    <X size={20} />
+                  ) : phase === 'error' ? (
+                    <RefreshCw size={20} />
+                  ) : (
+                    <Download size={20} />
+                  )}
+                </button>
+              </div>
+            )}
+            {phase === 'loading' && (
+              <TransferMeter progress={progress} label={uiText.text_3ebc8cefd354} />
+            )}
+            {error && (
+              <p role={phase === 'error' ? 'alert' : 'status'} className={uiClass(s.transferError)}>
+                {error}
+              </p>
+            )}
+          </>
+        )}
+      </div>
+      <Dialog
+        open={viewing}
+        onOpenChange={(next) => {
+          setViewing(next);
+          if (!next && phase === 'loading') abort.current?.abort();
+        }}
+      >
+        <DialogContent title={asset.fileName} className={s.viewer}>
+          {!url &&
+            (phase === 'loading' ? (
+              <TransferMeter progress={progress} label={uiText.text_3ebc8cefd354} />
+            ) : (
+              <div>
+                {error && (
+                  <p role="alert" className={s.transferError}>
+                    {error}
+                  </p>
+                )}
+                <Button variant="outline" onClick={() => void load()}>
+                  {uiText.text_1e229eb338a6 + asset.fileName}
+                </Button>
+              </div>
+            ))}
+          {url && (
+            <>
+              {image ? (
+                <img
+                  src={url}
+                  alt={asset.fileName}
+                  className={s.viewerImage}
+                  onError={() => setPlaybackError(true)}
+                />
               ) : (
-                <Download size={20} />
+                <video
+                  src={url}
+                  controls
+                  playsInline
+                  className={s.viewerImage}
+                  onError={() => setPlaybackError(true)}
+                />
               )}
-            </button>
-          </div>
-          {phase === 'loading' && (
-            <TransferMeter progress={progress} label={uiText.text_3ebc8cefd354} />
+              {playbackError && (
+                <p role="alert" className={s.transferError}>
+                  {uiText.text_5f11ce92fa61}
+                </p>
+              )}
+              <a className={s.viewerDownload} href={url} download={asset.fileName}>
+                <Download size={20} />
+                {uiText.text_6e159b54bc47 + asset.fileName}
+              </a>
+            </>
           )}
-          {error && (
-            <p role={phase === 'error' ? 'alert' : 'status'} className={uiClass(s.transferError)}>
-              {error}
-            </p>
-          )}
-        </>
-      )}
-    </div>
+        </DialogContent>
+      </Dialog>
+    </>
+  );
+}
+
+function FileTypeIcon({ name }: { name: string }) {
+  const extension = name.split('.').at(-1)?.toLowerCase();
+  const Icon =
+    extension === 'pdf'
+      ? FilePdf
+      : ['doc', 'docx'].includes(extension ?? '')
+        ? FileWord
+        : ['xls', 'xlsx'].includes(extension ?? '')
+          ? FileExcel
+          : ['ppt', 'pptx'].includes(extension ?? '')
+            ? FilePowerpoint
+            : FileText;
+  return (
+    <span className={s.fileType} data-file-extension={extension}>
+      <Icon size={28} />
+    </span>
   );
 }

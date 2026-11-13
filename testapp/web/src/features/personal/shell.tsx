@@ -2,15 +2,15 @@
 import { uiClass } from '@/components/v5/classes';
 
 import * as uiText from '@/content/fa';
-import { ReferenceBrand } from '@/components/ui/brand';
+import { BrandMark } from '@/components/ui/brand';
 import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
-import { ErrorState, label } from '@/components/ui/states';
-import { isFocusedPage, isMessageRoom, workspaceDestination } from '@/config/navigation';
+import { Dialog, DialogContent, DialogTrigger, DialogStyleContext } from '@/components/ui/dialog';
+import { LoadingSkeleton, label } from '@/components/ui/states';
+import { isFocusedPage, isMessageRoom } from '@/config/navigation';
 import type { components } from '@/generated/api/schema';
 import {
   ChevronDown,
-  GraduationCap,
+  CircleUserRound,
   Bell,
   Search,
   ChevronRight,
@@ -23,17 +23,21 @@ import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { useScrollMemory } from '@/components/navigation/scroll-memory';
 import s from './shell.module.css';
 import frameStyles from '@/components/v5/frame.module.css';
-import { ProfileAvatar } from './profile-photo';
 import { usePersonal, usePersonalApi } from './provider';
-import { useWorkspaceSnapshot, WorkspaceVisibilityNotice } from './workspaces';
-import { visibleWorkspaces, canEnterWorkspace } from './workspace-model';
+import { useWorkspaceSnapshot, SchoolContextPicker } from './workspaces';
 import { useThemePreference } from './theme';
-import { PageBackProvider, usePageBackTarget } from '@/components/navigation/page-back';
+import {
+  PageBackProvider,
+  usePageBackTarget,
+  ContextBackLink,
+} from '@/components/navigation/page-back';
 import { AppNavigation } from '@/components/navigation/app-navigation';
 import { ProductContext } from '@/components/v5/scene';
 import { PageHeadingProvider, usePageHeading } from '@/components/navigation/page-heading';
+import messengerTheme from './messaging/messaging-theme.module.css';
 export function PersonalShell({ children }: { children: ReactNode }) {
   const { session } = usePersonal();
+  const pathname = usePathname();
   const viewport = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const visual = window.visualViewport;
@@ -64,10 +68,24 @@ export function PersonalShell({ children }: { children: ReactNode }) {
     };
   }, []);
   return (
-    <PageBackProvider key={session.user.id + ':' + session.revision}>
+    <PageBackProvider
+      key={session.user.id + ':' + session.context.sessionId}
+      namespace={session.user.id + ':' + session.context.sessionId}
+    >
       <PageHeadingProvider>
         <div ref={viewport} className={uiClass('v5-product-viewport ' + frameStyles.viewport)}>
-          <PersonalShellContent>{children}</PersonalShellContent>
+          <DialogStyleContext.Provider
+            value={
+              pathname.startsWith('/personal/messages')
+                ? {
+                    content: `${messengerTheme.theme} ${messengerTheme.dialog}`,
+                    overlay: messengerTheme.overlay,
+                  }
+                : { content: '', overlay: '' }
+            }
+          >
+            <PersonalShellContent>{children}</PersonalShellContent>
+          </DialogStyleContext.Provider>
         </div>
       </PageHeadingProvider>
     </PageBackProvider>
@@ -76,7 +94,7 @@ export function PersonalShell({ children }: { children: ReactNode }) {
 function PersonalShellContent({ children }: { children: ReactNode }) {
   const heading = usePageHeading();
   const backTarget = usePageBackTarget();
-  const { session, selectWorkspace } = usePersonal();
+  const { session, changing } = usePersonal();
   const pathname = usePathname();
   const mainScroll = useRef<HTMLElement | null>(null);
   useScrollMemory(mainScroll, 'shell');
@@ -87,8 +105,7 @@ function PersonalShellContent({ children }: { children: ReactNode }) {
     pathname === '/personal/contacts' ||
     ['/personal/settings/privacy', '/personal/settings/blocked'].includes(pathname);
   const educationLayout = pathname.startsWith('/personal/education') || pathname === '/personal';
-  const [picker, setPicker] = useState(false),
-    [error, setError] = useState<unknown>();
+  const [picker, setPicker] = useState(false);
   const pickerTrigger = useRef<HTMLElement | null>(null);
   function openPicker() {
     pickerTrigger.current =
@@ -101,10 +118,6 @@ function PersonalShellContent({ children }: { children: ReactNode }) {
     return () => window.removeEventListener('makan:workspace-picker', open);
   }, []);
   const spaces = useWorkspaceSnapshot();
-  const name =
-    session.user.displayName ||
-    [session.user.firstName, session.user.lastName].filter(Boolean).join(' ') ||
-    uiText.text_8b4cb595cd35;
   const active = spaces.data?.workspaces.find(
     (w) => w.membershipId === session.context.membershipId && w.role === session.context.activeRole,
   );
@@ -189,7 +202,13 @@ function PersonalShellContent({ children }: { children: ReactNode }) {
                                           : uiText.brand_name;
   return (
     <div
-      className={uiClass(s.shell + ' rx-root')}
+      className={uiClass(
+        s.shell +
+          ' rx-root' +
+          (pathname.startsWith('/personal/messages')
+            ? ` ${messengerTheme.theme} ${messengerTheme.shell}`
+            : ''),
+      )}
       data-reference-shell
       data-page-heading-active={!!heading || undefined}
       data-area={
@@ -204,49 +223,26 @@ function PersonalShellContent({ children }: { children: ReactNode }) {
       data-focused={isFocusedPage(pathname) || undefined}
       data-messaging={messageLayout || undefined}
       data-messaging-page={messagingPage || undefined}
+      data-assistant={
+        pathname.startsWith('/personal/assistant') || pathname === '/personal/ai' || undefined
+      }
     >
       <a className={uiClass('skip-link')} href="#personal-content">
         {uiText.text_05508133d927}
       </a>
       <aside className={uiClass(s.sidebar)}>
-        <button
-          className={uiClass(s.brand)}
-          onClick={openPicker}
-          aria-label={uiText.text_e357d20c5ae7}
-        >
-          <ReferenceBrand />
-        </button>
-        <button className={uiClass(s.workspaceSwitch)} onClick={openPicker}>
-          <span>
-            <small>{uiText.serverAlignedUi.activeWorkspace}</small>
-            <strong>{educationLayout ? workspaceTitle : uiText.v5Product.personalWorkspace}</strong>
-          </span>
-          <ChevronDown size={16} />
-        </button>
+        <Link className={s.brand} href="/personal/profile" aria-label={uiText.brand_name}>
+          <BrandMark />
+        </Link>
         <AppNavigation presentation="sidebar" />
         <div className={uiClass(s.sidebarBottom)}>
           <Link
-            href="/personal/settings"
-            className={uiClass(s.sidebarSetting)}
-            aria-label={uiText.navigation_settings}
-          >
-            <Settings size={23} />
-            <span>{uiText.navigation_settings}</span>
-          </Link>
-          <Link
             href="/personal/profile"
-            className={uiClass(s.account)}
+            className={s.account}
             aria-label={uiText.text_8b4cb595cd35}
           >
-            <ProfileAvatar
-              photo={session.user.profilePhoto}
-              name={name}
-              className={uiClass(s.avatar)}
-            />
-            <span>
-              <strong>{name}</strong>
-              <small>{uiText.text_8b4cb595cd35}</small>
-            </span>
+            <CircleUserRound size={22} />
+            <span>{uiText.text_8b4cb595cd35}</span>
           </Link>
         </div>
       </aside>
@@ -270,17 +266,16 @@ function PersonalShellContent({ children }: { children: ReactNode }) {
                 </button>
               </DialogTrigger>
             ) : (
-              <Link
+              <ContextBackLink
                 className={uiClass(s.context)}
                 href={backTarget}
                 aria-label={uiText.common_back}
               >
                 <ChevronRight size={20} />
-              </Link>
+              </ContextBackLink>
             )}
             <DialogContent
-              title={uiText.text_52cdbbd87707}
-              description={uiText.text_c16909b11f18}
+              title={uiText.v6Ui.schoolPicker}
               onCloseAutoFocus={(event) => {
                 const target = pickerTrigger.current;
                 pickerTrigger.current = null;
@@ -290,37 +285,7 @@ function PersonalShellContent({ children }: { children: ReactNode }) {
                 }
               }}
             >
-              <div className={uiClass(s.spaceList)}>
-                {spaces.isError ? (
-                  <ErrorState error={spaces.error} onRetry={() => void spaces.refetch()} />
-                ) : spaces.isPending ? (
-                  <p role="status">{uiText.text_b71318d920ee}</p>
-                ) : (
-                  visibleWorkspaces(spaces.data).map((space, index) => (
-                    <button
-                      key={index}
-                      disabled={!canEnterWorkspace(space)}
-                      onClick={() =>
-                        void selectWorkspace(
-                          {
-                            workspaceType: space.workspaceType,
-                            membershipId: space.membershipId,
-                            role: space.role,
-                          },
-                          workspaceDestination(pathname, space.workspaceType),
-                        ).catch(setError)
-                      }
-                    >
-                      <GraduationCap size={20} />
-                      <span>
-                        {space.organizationName ?? space.displayName}
-                        <small>{label(space.role ?? space.workspaceType)}</small>
-                      </span>
-                    </button>
-                  ))
-                )}
-              </div>
-              <WorkspaceVisibilityNotice snapshot={spaces.data} />
+              <SchoolContextPicker onSelected={() => setPicker(false)} />
             </DialogContent>
           </Dialog>
           <div className={uiClass(s.headerTitle)}>
@@ -413,15 +378,22 @@ function PersonalShellContent({ children }: { children: ReactNode }) {
             `${s.main} ${messageLayout ? s.messageMain : ''} ${messagingPage && !messageLayout ? s.messagingPageMain : ''} ${pathname.startsWith('/personal/assistant') || pathname === '/personal/ai' ? s.assistantMain : ''}`,
           )}
           id="personal-content"
+          aria-busy={(educationLayout && changing) || undefined}
         >
-          {!!error && <ErrorState error={error} />}
           <ProductContext.Provider
             value={{
               title: educationLayout ? workspaceTitle : uiText.brand_name,
               role: educationLayout ? domainRole : '',
+              memoryKey: educationLayout ? session.revision : 'account',
             }}
           >
-            {children}
+            {educationLayout && changing ? (
+              <LoadingSkeleton />
+            ) : (
+              <div key={educationLayout ? session.revision : 'account'} className={s.contentScope}>
+                {children}
+              </div>
+            )}
           </ProductContext.Provider>
         </main>
         {heading?.action && (

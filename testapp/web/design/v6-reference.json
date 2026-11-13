@@ -1,0 +1,127 @@
+{
+  "version": "6.0-blue",
+  "sourceDirectory": "/home/omidreza-bagheriyan/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an/outputs/MakanApp_Master_V6",
+  "sources": {
+    "02_Design/tokens.json": "cef1867c29c7d80be75f938384118fcf1ed36166c6fe0f6189f44af50e26fafb",
+    "02_Design/layout-contract.json": "05acd6ea9360e57d615a0e09664aa13fb8911b6f15e3023f9bf67947f1d46dc4",
+    "02_Design/MakanApp_UI_UX_Atlas_FA_v6.pdf": "5a0e602d6658275ff24ff41d32aaaa7e073246b32df677eeac013444aa402c98",
+    "05_Contracts/screen-contracts.json": "3d3195445c3cdbc96b86a70cc0eea455be1916f44ccb5b79d9d400346257a889",
+    "05_Contracts/feature-gates.json": "29d57015ea84366bc1aafc590949136f9a535b5b6e0f65366bfbce4a4365091c"
+  },
+  "tokens": {
+    "version": "6.0",
+    "brand": {
+      "primary": "#156FEE"
+    },
+    "modes": {
+      "light": {
+        "canvas": "#F2F5FA",
+        "surface": "#FFFFFF",
+        "surfaceSecondary": "#F7F9FC",
+        "border": "#D7E0ED",
+        "controlBorder": "#7C90AD",
+        "textPrimary": "#17263D",
+        "textSecondary": "#526780",
+        "action": "#0D5ECC",
+        "onAction": "#FFFFFF",
+        "selected": "#EAF2FF",
+        "success": "#176C47",
+        "successBg": "#EAF7EF",
+        "error": "#B72939",
+        "errorBg": "#FFF0F1",
+        "warning": "#895812",
+        "warningBg": "#FFF7E5"
+      },
+      "dark": {
+        "canvas": "#101824",
+        "surface": "#192536",
+        "surfaceSecondary": "#203047",
+        "border": "#3B4D64",
+        "controlBorder": "#8299B8",
+        "textPrimary": "#EEF3FB",
+        "textSecondary": "#B4C3D8",
+        "action": "#8DB9FF",
+        "onAction": "#11223B",
+        "selected": "#243E64",
+        "success": "#98DBB5",
+        "successBg": "#173D30",
+        "error": "#FFB1B9",
+        "errorBg": "#48232D",
+        "warning": "#F6D28D",
+        "warningBg": "#44371F"
+      }
+    },
+    "typography": {
+      "family": "Vazirmatn",
+      "bodyPx": 15,
+      "inputPx": 16,
+      "metadataPx": 12,
+      "lineHeight": 1.85,
+      "weights": [400, 500, 650, 720, 800]
+    },
+    "spacing": [4, 8, 12, 16, 18, 24, 28, 32],
+    "radius": {
+      "input": 10,
+      "button": 11,
+      "card": 14,
+      "dialog": 19
+    },
+    "sizing": {
+      "touchMinPx": 44,
+      "inputMinPx": 48,
+      "headerMinMobilePx": 72,
+      "headerMinTabletPx": 76,
+      "mobileNavMinPx": 66,
+      "railTabletPx": 72,
+      "railDesktopPx": 208
+    },
+    "motion": {
+      "durationMs": [120, 180, 240],
+      "reducedMotion": "Remove nonessential movement; preserve feedback."
+    }
+  },
+  "layout": {
+    "version": "6.0",
+    "source": "New Makan visual reference; Light/Dark/Components are visual lineage, not backend requirements.",
+    "breakpoints": {
+      "mobileMax": 767,
+      "tabletMin": 768,
+      "desktopMin": 1200
+    },
+    "containerRules": {
+      "cardsTwoColumnsMinContentPx": 640,
+      "maxContentPx": 1184,
+      "sidebarTabletPx": 72,
+      "sidebarDesktopPx": 208,
+      "chatListTabletPx": 280,
+      "chatListDesktopPx": 312
+    },
+    "testWidths": [320, 360, 390, 430, 768, 834, 1024, 1440, 1920],
+    "testHeights": {
+      "phone": 844,
+      "tabletPortrait": 1112,
+      "tabletLandscape": 768,
+      "desktop": 900,
+      "reducedKeyboardModel": 540
+    },
+    "contracts": [
+      "Exactly one viewport-height owner",
+      "Flex children min-height:0 and min-width:0",
+      "Search is one horizontal row with input inside wrapper",
+      "Filters own a separate row",
+      "Composer and action footer are in layout, not fixed overlays over content",
+      "Install entry stays reachable without covering composer",
+      "Preserve drafts and list position on resize and theme switch",
+      "Do not change account inbox or independent class list when school context changes"
+    ],
+    "geometricAcceptance": {
+      "rootHorizontalOverflowTolerancePx": 2,
+      "controlOverlapTolerancePx": 1.6,
+      "touchMinPx": 44,
+      "inputMinPx": 48
+    },
+    "claims": "These values specify the design. They do not certify app runtime, native keyboard or API implementation."
+  },
+  "clientScope": "testapp/web only; platform-owner and landing are separate applications",
+  "legacyReference": "design/reference.json is the preserved V5 source inventory, not the active appearance"
+}

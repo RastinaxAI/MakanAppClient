@@ -197,15 +197,26 @@ for (const [name, mismatch] of [
 ] as const)
   test('a foreign exam ' + name + ' cannot expose question removal', async ({ page, context }) => {
     const session = await login(context, 'Teacher');
-    const { exam } = await seed(context, session.revision);
-    await page.route('**/api/client/backend' + api + exam.id + '/editor', async (route) => {
-      const response = await route.fetch();
-      await route.fulfill({ response, json: { ...(await response.json()), ...mismatch } });
+    const { exam, headers } = await seed(context, session.revision);
+    const response = await context.request.get('/api/client/backend' + api + exam.id + '/editor', {
+      headers,
+    });
+    expect(response.status()).toBe(200);
+    const editor = await response.json();
+    expect(editor.id).toBe(exam.id);
+    // Keep the invalid response at the HTTP fixture for every retry. This avoids
+    // changing browser route handlers while React Query is still refreshing.
+    await context.request.post(fixture + '/__test__/fault', {
+      data: {
+        path: api + exam.id + '/editor',
+        method: 'GET',
+        testResponseBody: { ...editor, ...mismatch },
+        repeat: true,
+      },
     });
     await page.goto('/personal/education/exams/' + exam.id + '/edit');
     await expect(page.getByRole('main').getByRole('alert')).toBeVisible();
     await expect(page.getByRole('button', { name: /^حذف پرسش/ })).toHaveCount(0);
-    await page.unrouteAll({ behavior: 'wait' });
   });
 for (const role of ['Student', 'Parent'] as const)
   test(

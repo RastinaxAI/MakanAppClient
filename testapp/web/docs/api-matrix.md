@@ -34,6 +34,7 @@
 | `GET /api/v1/conversations/{conversationId}/messages` | — | ConversationMessagePageResult |
 | `POST /api/v1/conversations/{conversationId}/messages` | SendMessageCommand | MessageReceiptResult |
 | `POST /api/v1/conversations/{conversationId}/read` | AdvanceConversationCursorCommand | ConversationCursorStateResult |
+| `POST /api/v1/conversations/{conversationId}/clear-history` | — | ConversationUserStateResult |
 | `GET /api/v1/conversations/{conversationId}/read-states` | — | ConversationPeerReadStateResult |
 | `POST /api/v1/conversations/groups` | CreateManagedConversationCommand | ManagedConversationResult |
 | `POST /api/v1/conversations/channels` | CreateManagedConversationCommand | ManagedConversationResult |
@@ -333,3 +334,12 @@
 | `POST /api/v1/commerce/payment-attempts/{attemptId}/verify` | — | VerifyPaymentResult |
 | `GET /api/v1/commerce/orders/{orderId}/receipt` | — | PaymentReceiptDto |
 | `GET /api/v1/commerce/personal/orders/{orderId}/receipt` | — | PaymentReceiptDto |
+| `PATCH /api/v1/conversations/{conversationId}/messages/{messageId}` | EditMessageCommand | MessageMutationResult |
+| `DELETE /api/v1/conversations/{conversationId}/messages/{messageId}/for-everyone` | — | MessageMutationResult |
+| `POST /api/v1/conversations/{conversationId}/pins/{messageId}` | — | ConversationPinResult |
+| `DELETE /api/v1/conversations/{conversationId}/pins/{messageId}` | — | ConversationPinResult |
+| `GET /api/v1/messages/search` | — | MessageSearchPageResult |
+| `POST /api/v1/conversations/{conversationId}/state/pin` | — | ConversationUserStateResult |
+| `DELETE /api/v1/conversations/{conversationId}/state/pin` | — | ConversationUserStateResult |
+| `POST /api/v1/conversations/{conversationId}/mark-unread` | — | ConversationUserStateResult |
+| `GET /api/v1/people/{userId}/presence` | — | PresenceResult |

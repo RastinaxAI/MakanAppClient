@@ -27,7 +27,7 @@ for (const theme of ['light', 'dark']) {
       });
       await login(context, 'Student', false);
       await page.goto('/personal/messages/' + ids.chat);
-      const header = page.locator('[data-chat-header]');
+      const header = page.getByRole('banner');
       const identity = header.getByRole('link', { name: 'اطلاعات گفتگو', exact: true });
       await expect(identity.getByRole('heading')).toHaveText(name);
       await expect(page.getByRole('textbox', { name: 'متن پیام', exact: true })).toBeEditable();
@@ -36,7 +36,7 @@ for (const theme of ['light', 'dark']) {
         await page.setViewportSize({ width, height });
         await page.evaluate(() => document.fonts.ready);
         const geometry = await identity.evaluate((el) => {
-          const title = el.querySelector('h2')!.getBoundingClientRect();
+          const title = el.querySelector('h1')!.getBoundingClientRect();
           const box = el.getBoundingClientRect();
           return { title: title.toJSON(), box: box.toJSON() };
         });
@@ -49,7 +49,7 @@ for (const theme of ['light', 'dark']) {
         expect(menuBox.width).toBeGreaterThanOrEqual(44);
         expect(menuBox.x + menuBox.width).toBeLessThanOrEqual(geometry.box.x);
         if (width < 768) {
-          const back = header.getByRole('link', { name: 'بازگشت به فهرست گفتگوها', exact: true });
+          const back = header.getByRole('link', { name: 'بازگشت', exact: true });
           const backBox = (await back.boundingBox())!;
           expect(backBox.x).toBeGreaterThanOrEqual(geometry.box.right);
         }
@@ -71,7 +71,7 @@ for (const theme of ['light', 'dark']) {
   }
 }
 
-test('dark V5 inbox keeps readable previews, chip filters and an accessible header compose button', async ({
+test('V7.1 dark inbox keeps readable previews, six filters and an accessible floating pencil', async ({
   page,
   context,
   request,
@@ -104,9 +104,7 @@ test('dark V5 inbox keeps readable previews, chip filters and an accessible head
       const values = [luminance(a), luminance(b)].sort((x, y) => y - x);
       return (values[0] + 0.05) / (values[1] + 0.05);
     };
-    const preview = el.querySelector(
-      'a[href*="/messages/"] > span:last-child > span:last-child > span',
-    )!;
+    const preview = el.querySelector('[data-message-preview]')!;
     const badge = el.querySelector('b[aria-label]')!;
     return {
       preview: ratio(getComputedStyle(preview).color, background(preview)),
@@ -117,15 +115,18 @@ test('dark V5 inbox keeps readable previews, chip filters and an accessible head
   expect(contrast.badge).toBeGreaterThanOrEqual(4.5);
   const filters = inbox.getByRole('navigation', { name: 'نوع گفتگوها', exact: true });
   expect(await filters.evaluate((el) => parseFloat(getComputedStyle(el).borderRadius))).toBe(0);
+  await expect(filters.getByRole('button', { name: 'مستقیم', exact: true })).toHaveAttribute(
+    'aria-pressed',
+    'false',
+  );
   await expect(filters.getByRole('button', { name: 'همه', exact: true })).toHaveAttribute(
     'aria-pressed',
     'true',
   );
+  await expect(filters.getByRole('button')).toHaveCount(6);
   for (const [width, height] of sizes) {
     await page.setViewportSize({ width, height });
-    const compose = page
-      .getByRole('banner')
-      .getByRole('button', { name: 'ایجاد گفت‌وگو یا مخاطب', exact: true });
+    const compose = page.getByRole('link', { name: 'پیام جدید', exact: true });
     const box = (await compose.boundingBox())!;
     expect(box.width).toBeGreaterThanOrEqual(44);
     expect(box.height).toBeGreaterThanOrEqual(44);
@@ -145,9 +146,8 @@ test('dark V5 inbox keeps readable previews, chip filters and an accessible head
       expect(box.y + box.height).toBeLessThanOrEqual(bottomNav.y - 8);
     }
     await compose.click();
-    await expect(page.getByRole('menuitem', { name: 'ایجاد گروه', exact: true })).toBeVisible();
-    await page.keyboard.press('Escape');
-    await expect(compose).toBeFocused();
+    await expect(page.getByRole('link', { name: 'گروه جدید', exact: true })).toBeVisible();
+    await page.getByRole('link', { name: 'بازگشت', exact: true }).click();
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(
       true,
     );
@@ -159,7 +159,8 @@ test('dark V5 inbox keeps readable previews, chip filters and an accessible head
   await inbox.getByRole('textbox', { name: 'جستجوی گفتگوها', exact: true }).fill('مریم');
   await inbox.getByRole('button', { name: 'انجام جستجوی گفتگو', exact: true }).click();
   await expect(page).toHaveURL(/q=/);
-  await filters.getByRole('button', { name: 'گروه‌ها', exact: true }).click();
+  await page.goto('/personal/messages');
+  await page.getByRole('button', { name: 'گروه‌ها', exact: true }).click();
   await expect(page).toHaveURL(/filter=Group/);
 });
 

@@ -4,7 +4,10 @@ import { Input as NativeInput } from '@/components/ui/input';
 import { uiClass } from '@/components/v5/classes';
 
 import { v4Text as t } from '@/content/fa';
+import { v71Ui as u } from '@/content/fa';
 import { useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { messagingReturnPath } from './inbox-model';
 import { useQueryClient } from '@tanstack/react-query';
 import { FolderOpen, MessageCircle, Plus, Pencil } from 'lucide-react';
 import { V4Page, V4List, V4Row, V4Field, V4Note } from '@/components/v4/page';
@@ -18,11 +21,21 @@ import type { components } from '@/generated/api/schema';
 type S = components['schemas'];
 const path = '/api/v1/messaging/folders';
 export function MessagingFolders() {
-  const data = usePersonalApi<S['ChatFolderResult'][]>(path);
+  const data = usePersonalApi<S['ChatFolderResult'][]>(path, { scope: 'account' });
+  const search = useSearchParams(),
+    router = useRouter();
+  const folder = search.get('folder') ?? '';
+  const back = messagingReturnPath(search.get('from'));
+  function setFolder(id: string) {
+    const params = new URLSearchParams(search);
+    if (id) params.set('folder', id);
+    else params.delete('folder');
+    params.delete('page');
+    router.replace('/personal/messages/folders?' + params, { scroll: false });
+  }
   const { call, session } = usePersonal(),
     cache = useQueryClient();
-  const [editing, setEditing] = useState<string | null>(null),
-    [folder, setFolder] = useState('');
+  const [editing, setEditing] = useState<string | null>(null);
   const item = data.data?.find((x) => x.id === editing);
   if (editing === 'new')
     return (
@@ -58,7 +71,7 @@ export function MessagingFolders() {
     <V4Page
       id="MK-173"
       title={t.folders}
-      back="/personal/messages"
+      back={back}
       actions={
         <Button onClick={() => setEditing('new')}>
           <Plus size={18} />
@@ -104,9 +117,9 @@ export function MessagingFolders() {
                       trigger={t.remove}
                       destructive
                       onConfirm={async () => {
-                        await call(path + '/' + item.id, { method: 'DELETE' });
+                        await call(path + '/' + item.id, { method: 'DELETE', scope: 'account' });
                         await cache.invalidateQueries({
-                          queryKey: ['personal', session.user.id, session.revision],
+                          queryKey: ['personal', session.user.id, 'account'],
                         });
                         if (folder === item.id) setFolder('');
                         return true;
@@ -121,7 +134,17 @@ export function MessagingFolders() {
       ) : (
         <EmptyState title={t.folderEmpty} description={t.folderEmptyHint} />
       )}
-      {folder && <FolderConversations key={folder} id={folder} />}
+      {folder && data.data?.some((item) => item.id === folder) && (
+        <section data-active-folder>
+          <div className={uiClass('v4-inline-actions')}>
+            <h2>{data.data.find((item) => item.id === folder)!.name}</h2>
+            <Button variant="ghost" onClick={() => setFolder('')}>
+              {u.allFolders}
+            </Button>
+          </div>
+          <FolderConversations key={folder} id={folder} />
+        </section>
+      )}
     </V4Page>
   );
 }
@@ -182,9 +205,13 @@ function FolderEditor({
               overrides: item.overrides,
               expectedVersion: version,
             };
-            await call(path + '/' + item.id, { method: 'PUT', body: JSON.stringify(command) });
+            await call(path + '/' + item.id, {
+              method: 'PUT',
+              body: JSON.stringify(command),
+              scope: 'account',
+            });
             await cache.invalidateQueries({
-              queryKey: ['personal', session.user.id, session.revision],
+              queryKey: ['personal', session.user.id, 'account'],
             });
             close();
           } catch (e) {
@@ -234,7 +261,16 @@ function FolderEditor({
   );
 }
 function FolderConversations({ id }: { id: string }) {
-  const [page, setPage] = useState(1);
+  const search = useSearchParams(),
+    router = useRouter();
+  const value = Number(search.get('page') ?? 1);
+  const page = Number.isSafeInteger(value) && value > 0 ? value : 1;
+  const returnPath = '/personal/messages/folders?' + search;
+  function setPage(next: number) {
+    const params = new URLSearchParams(search);
+    params.set('page', String(next));
+    router.replace('/personal/messages/folders?' + params, { scroll: false });
+  }
   const data = usePersonalApi<S['ConversationSummaryResult'][]>(
     `/api/v1/conversations?folderId=${id}&page=${page}&pageSize=30`,
   );
@@ -252,7 +288,12 @@ function FolderConversations({ id }: { id: string }) {
               title={conversationTitle(item)}
               description={item.lastMessagePreview}
               icon={<MessageCircle />}
-              href={'/personal/messages/' + item.conversationId}
+              href={
+                '/personal/messages/' +
+                item.conversationId +
+                '?' +
+                new URLSearchParams({ from: returnPath })
+              }
             />
           ))}
         </V4List>
@@ -264,7 +305,7 @@ function FolderConversations({ id }: { id: string }) {
           type="button"
           variant="outline"
           disabled={page === 1}
-          onClick={() => setPage((p) => p - 1)}
+          onClick={() => setPage(page - 1)}
         >
           {t.back}
         </Button>
@@ -272,7 +313,7 @@ function FolderConversations({ id }: { id: string }) {
           type="button"
           variant="outline"
           disabled={data.data.length < 30}
-          onClick={() => setPage((p) => p + 1)}
+          onClick={() => setPage(page + 1)}
         >
           {t.loadMore}
         </Button>

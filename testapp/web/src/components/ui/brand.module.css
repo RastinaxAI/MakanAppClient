@@ -11,11 +11,11 @@
 .brand-mark {
   align-items: center;
   justify-content: center;
-  background: #fff;
+  background: transparent;
   color: var(--on-primary);
   font-size: calc(34px * var(--text-scale, 1));
   font-weight: 750;
-  padding: 4px;
+  padding: 0;
   overflow: hidden;
 }
 .brand-mark {

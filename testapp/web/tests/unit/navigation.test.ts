@@ -1,5 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import {
+  readNavigationVisits,
+  previousNavigationVisit,
   activeNavigation,
   isFocusedPage,
   isSchoolRole,
@@ -96,5 +98,42 @@ describe('client navigation contract', () => {
       expect(isSchoolRole(role)).toBe(true);
     for (const role of ['Owner', 'PlatformOwner', 'Personal', null, 'Individual'])
       expect(isSchoolRole(role)).toBe(false);
+  });
+});
+
+describe('validated application history', () => {
+  const a = {
+    id: '00000000-0000-4000-8000-000000000001',
+    index: 0,
+    href: '/personal/profile?entry=one#position',
+    parentId: null,
+  };
+  const b = {
+    id: '00000000-0000-4000-8000-000000000002',
+    index: 1,
+    href: '/personal/settings',
+    parentId: a.id,
+  };
+  it('retains an exact safe pathname, query and hash and follows only an earlier known visit', () => {
+    expect(readNavigationVisits([a, b])).toEqual([a, b]);
+    expect(previousNavigationVisit(b, [a, b])).toEqual(a);
+    expect(previousNavigationVisit(a, [a, b])).toBeUndefined();
+    expect(previousNavigationVisit({ ...b, parentId: 'missing' }, [a, b])).toBeUndefined();
+    expect(previousNavigationVisit({ ...a, parentId: b.id }, [a, b])).toBeUndefined();
+  });
+  it('rejects external or malformed histories rather than authorizing browser back outside this app', () => {
+    for (const value of [
+      null,
+      {},
+      [a, a],
+      [{ ...a, href: 'https://example.org/personal' }],
+      [{ ...a, href: '/enter' }],
+      [{ ...a, index: -1 }],
+      [{ ...a, index: 1.5 }],
+      [{ ...a, id: 'unknown' }],
+      [{ ...a, parentId: 15 }],
+      Array.from({ length: 129 }, () => a),
+    ])
+      expect(readNavigationVisits(value)).toEqual([]);
   });
 });

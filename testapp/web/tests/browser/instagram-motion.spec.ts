@@ -6,7 +6,7 @@ import {
   assistantTools,
   returnToAssistantQuestion,
 } from './assistant-controls';
-import { v4_more, aiIntegration as ai } from '../../src/content/fa';
+import { aiIntegration as ai } from '../../src/content/fa';
 
 test.use({
   viewport: { width: 390, height: 844 },
@@ -40,15 +40,13 @@ for (const theme of ['light', 'dark']) {
       })),
     ).toEqual({
       width: '3px',
-      color: theme === 'dark' ? 'rgb(140, 183, 255)' : 'rgb(13, 94, 204)',
+      color: theme === 'dark' ? 'rgb(141, 185, 255)' : 'rgb(13, 94, 204)',
     });
     await nav.getByRole('link', { name: 'پیام‌ها', exact: true }).click();
-    await page.getByRole('button', { name: 'ایجاد گفت‌وگو یا مخاطب', exact: true }).click();
-    await expect(page.getByRole('menu')).toBeVisible();
-    await page.keyboard.press('Escape');
-    await expect(
-      page.getByRole('button', { name: 'ایجاد گفت‌وگو یا مخاطب', exact: true }),
-    ).toBeFocused();
+    await page.getByRole('link', { name: 'پیام جدید', exact: true }).click();
+    await expect(page.locator('[data-recipient-picker]')).toBeVisible();
+    await page.getByRole('banner').getByRole('link', { name: 'بازگشت', exact: true }).click();
+    await expect(page.getByRole('link', { name: 'پیام جدید', exact: true })).toBeVisible();
     await page.getByRole('link').filter({ hasText: 'مریم رضایی' }).click();
     const field = page.getByRole('textbox', { name: 'متن پیام', exact: true });
     await field.fill('پیام نمونهٔ بررسی جریان مرجع تلگرام');
@@ -59,10 +57,12 @@ for (const theme of ['light', 'dark']) {
         .locator('[data-message-state="history"]')
         .filter({ hasText: 'پیام نمونهٔ بررسی جریان مرجع تلگرام' }),
     ).toHaveCount(1);
-    await page.getByRole('link', { name: 'بازگشت به فهرست گفتگوها', exact: true }).click();
+    await page.getByRole('link', { name: 'بازگشت', exact: true }).click();
     await nav.getByRole('link', { name: 'پروفایل', exact: true }).click();
-    await page.getByRole('link', { name: /حریم خصوصی و امنیت/ }).click();
+    await page.getByRole('link', { name: 'تنظیمات', exact: true }).click();
+    await page.getByRole('link', { name: /^حریم خصوصی/ }).click();
     await expect(page).toHaveURL(/\/settings\/privacy$/);
+    await page.goBack();
     await page.goBack();
     await expect(page).toHaveURL(/\/profile$/);
     await nav.getByRole('link', { name: 'دستیار', exact: true }).click();
@@ -77,7 +77,7 @@ for (const theme of ['light', 'dark']) {
       })),
     ).toEqual({
       width: '3px',
-      color: theme === 'dark' ? 'rgb(140, 183, 255)' : 'rgb(13, 94, 204)',
+      color: theme === 'dark' ? 'rgb(141, 185, 255)' : 'rgb(13, 94, 204)',
     });
     await question.press('Enter');
     await expect(page.locator('[data-assistant-result]')).toContainText(
@@ -93,11 +93,9 @@ for (const theme of ['light', 'dark']) {
     const tools = await assistantTools(page);
     await expect(tools).toBeVisible();
     await expect(tools).toContainText(ai.tools);
-    await page.keyboard.press('Escape');
-    await expect(tools).toHaveCount(0);
-    await expect(
-      page.getByRole('banner').getByRole('button', { name: v4_more, exact: true }),
-    ).toBeFocused();
+    await page.getByRole('tab', { name: 'گفتگو', exact: true }).click();
+    await expect(tools).toBeHidden();
+    await expect(question).toBeVisible();
     await nav.getByRole('link', { name: 'آموزشگاه', exact: true }).click();
     const after = await (await context.request.get(origin + '/api/client/session')).json();
     expect(after.context).toEqual(initial.context);

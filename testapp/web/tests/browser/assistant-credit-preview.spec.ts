@@ -11,7 +11,7 @@ test('exhausted real credit code is visible before sending and never triggers AI
     data: { quotaAllowed: false, quotaCode: 'QUOTA_EXCEEDED' },
   });
   await login(context, 'Student');
-  await page.goto('/personal/assistant');
+  await page.goto('/personal/assistant?view=chat');
   await page.getByLabel('سؤال از دستیار', { exact: true }).fill('پرسش حفظ‌شده برای بررسی سهمیه');
   const options = await assistantOptions(page);
   await options.getByLabel(t.payer, { exact: true }).selectOption('FreeTrial');
@@ -50,7 +50,7 @@ test('refreshing availability after server activation does not send the saved qu
     data: { quotaAllowed: false, quotaCode: 'SUBSCRIPTION_INACTIVE' },
   });
   await login(context, 'Student');
-  await page.goto('/personal/assistant');
+  await page.goto('/personal/assistant?view=chat');
   await page.getByLabel('سؤال از دستیار', { exact: true }).fill('پرسش پیش از فعال‌شدن اشتراک');
   const options = await assistantOptions(page);
   await options.getByLabel(t.payer, { exact: true }).selectOption('Organization');
@@ -89,7 +89,7 @@ test('a preflight for another owner is rejected and cannot show available credit
       });
     },
   );
-  await page.goto('/personal/assistant');
+  await page.goto('/personal/assistant?view=chat');
   const options = await assistantOptions(page);
   await options.getByLabel(t.payer, { exact: true }).selectOption('Organization');
   await expect(options.locator('[data-assistant-quota-preview]')).toContainText(

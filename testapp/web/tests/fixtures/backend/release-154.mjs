@@ -1,3 +1,4 @@
+import { independentCapabilities, independentConversationSummaries } from './independent-class.mjs';
 import { randomUUID } from 'node:crypto';
 import { savedFixtureSummaries } from './message-actions.mjs';
 import { make, ids } from './state.mjs';
@@ -7,6 +8,8 @@ import { conversationDetailsRoute } from './conversation-details.mjs';
 import { messagingRoute } from './messaging.mjs';
 export const noCapabilities = () => make('ConversationEffectiveCapabilities');
 export function conversationCapabilities(value, auth, state) {
+  if (value.official?.sourceKind === 'PersonalClass' && state.independent?.options.v6Spaces)
+    return independentCapabilities(state, auth, value.type);
   const override = state.release154?.capabilities?.[auth?.user.id];
   if (override) return { ...noCapabilities(), ...override };
   const stored =
@@ -86,7 +89,25 @@ export function release154Route(ctx) {
       for (const route of [release42Route, releaseRoute, conversationDetailsRoute, messagingRoute])
         if (route(sub)) break;
     }
-    rows.push(...savedFixtureSummaries(state, auth));
+    rows.push(
+      ...savedFixtureSummaries(state, auth),
+      ...independentConversationSummaries(state, auth),
+    );
+    if (state.inboxPages?.officialLast) {
+      const row = rows.filter((row) => row.scope === 'Organization').at(-1);
+      if (row)
+        Object.assign(row, {
+          isOfficial: true,
+          official: make('OfficialSpaceMetadata', {
+            sourceKind: 'Class',
+            sourceId: ids.class,
+            organizationId: ids.org,
+            purpose: row.type,
+            displayLabel: 'گروه رسمی آزمون',
+            version: '1',
+          }),
+        });
+    }
     const unique = [...new Map(rows.map((row) => [row.conversationId, row])).values()].filter(
       (row) =>
         (filter === 'All' ||
@@ -100,6 +121,17 @@ export function release154Route(ctx) {
             row.lastMessagePreview,
           ]).includes(search)),
     );
+    for (const row of unique) {
+      const userState = state.pdfConversationState?.get(auth.user.id + ':' + row.conversationId);
+      if (userState)
+        Object.assign(row, {
+          isPinned: userState.isPinned,
+          isMuted: userState.isMuted,
+          muteMode: userState.muteMode,
+          mutedUntilUtc: userState.mutedUntilUtc,
+          isManuallyUnread: userState.isManuallyUnread,
+        });
+    }
     unique.sort(
       (a, b) =>
         Number(b.isPinned) - Number(a.isPinned) ||

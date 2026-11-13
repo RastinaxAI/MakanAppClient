@@ -88,7 +88,7 @@ test('invitation filters, readable cards and recoverable empty states fit phone,
   );
   await page.goto('/personal/settings/appearance');
   await page.getByRole('radio', { name: 'تاریک', exact: true }).check();
-  await page.getByRole('button', { name: 'ذخیره ظاهر', exact: true }).click();
+  await page.getByRole('banner').getByRole('link', { name: 'بازگشت', exact: true }).click();
   await page.goto('/personal/education/invitations');
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
   await expect(

@@ -7,12 +7,14 @@ import { v4_more } from '../../src/content/fa';
 export { expect };
 export const origin = 'http://127.0.0.1:3132';
 export const fixture = 'http://127.0.0.1:3457';
-/** V4 keeps school destinations in the header sheet, leaving the page for its content. */
+/** Main school destinations live in quick access; deep editors retain their section sheet. */
 export async function schoolSections(page: import('@playwright/test').Page) {
   await page
     .locator('.bootstrap:visible,.skeleton-wrap:visible')
     .first()
     .waitFor({ state: 'hidden' });
+  const quick = page.getByRole('navigation', { name: 'دسترسی سریع', exact: true });
+  if (await quick.isVisible()) return quick;
   const nav = page.getByRole('navigation', { name: 'بخش‌های آموزشگاه', exact: true });
   if (!(await nav.isVisible())) {
     const sections = page.locator('button[aria-label="بخش‌های آموزشگاه"]:visible');

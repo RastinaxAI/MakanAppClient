@@ -28,8 +28,8 @@ async function createThroughApi(context: BrowserContext, kind = 'groups') {
   return response.json();
 }
 async function showInvitations(page: Page) {
+  await page.locator('[data-messaging-invitations-entry]:visible').click();
   const panel = page.locator('[data-messaging-invitations]');
-  await panel.locator('summary').click();
   await expect(panel.getByRole('button', { name: t.accept, exact: true }).first()).toBeVisible();
   return panel;
 }
@@ -46,7 +46,7 @@ for (const kind of ['groups', 'channels'])
       await login(b, 'Teacher', false);
       const sender = await a.newPage(),
         receiver = await b.newPage();
-      await receiver.goto('/personal/messages');
+      await receiver.goto('/personal/messages?filter=All');
       await sender.goto('/personal/messages/new?kind=' + kind);
       await sender
         .getByLabel(kind === 'groups' ? 'نام گروه' : 'نام کانال', { exact: true })
@@ -68,14 +68,14 @@ for (const kind of ['groups', 'channels'])
       ).toHaveCount(0);
       const panel = await showInvitations(receiver);
       await panel.getByRole('button', { name: t.accept, exact: true }).click();
-      await expect(receiver).toHaveURL(/\/personal\/messages\/[a-f0-9-]{36}$/);
+      await expect(receiver).toHaveURL(/\/personal\/messages\/[a-f0-9-]{36}(?:\?|$)/);
       await expect(
         receiver.getByRole('heading', { name: 'گفتگوی نیازمند پذیرش', exact: true }).first(),
       ).toBeVisible();
       await expect(receiver.getByLabel('نتیجه اعضای اولیه', { exact: true })).not.toContainText(
         'هنوز عضو فعال نیستند',
       );
-      await receiver.goto('/personal/messages');
+      await receiver.goto('/personal/messages?filter=All');
       await expect(
         receiver.getByRole('link').filter({ hasText: 'گفتگوی نیازمند پذیرش' }),
       ).toBeVisible();
@@ -107,7 +107,7 @@ for (const kind of ['groups', 'channels'])
     try {
       await login(recipient, 'Teacher', false);
       const page = await recipient.newPage();
-      await page.goto('/personal/messages');
+      await page.goto('/personal/messages?filter=All');
       await expect(page.getByRole('link').filter({ hasText: created.title })).toBeVisible();
       const state = await (await recipient.request.get(origin + '/api/client/session')).json();
       const response = await recipient.request.get(
@@ -131,15 +131,16 @@ test('declining an invitation does not add the recipient to the conversation', a
   try {
     await login(recipient, 'Teacher', false);
     const page = await recipient.newPage();
-    await page.goto('/personal/messages');
+    await page.goto('/personal/messages?filter=All');
     const panel = await showInvitations(page);
     await panel.getByRole('button', { name: t.decline, exact: true }).click();
-    await expect(panel.getByText(t.declined, { exact: true })).toBeVisible();
+    await expect(panel.locator('[data-invitation-status="Declined"]')).toBeVisible();
     await expect(page.getByRole('link').filter({ hasText: created.title })).toHaveCount(0);
     await page.reload();
-    await expect(page.getByRole('heading', { name: 'پیام‌ها', exact: true })).toBeVisible();
-    // The reference inbox omits its optional invitation panel when no pending invite remains.
-    await expect(page.locator('[data-messaging-invitations]')).toHaveCount(0);
+    await expect(page.getByRole('heading', { name: t.title, exact: true })).toBeVisible();
+    await expect(page.locator('[data-invitation-status="Declined"]')).toBeVisible();
+    await page.getByRole('link', { name: 'بازگشت', exact: true }).click();
+    await expect(page.locator('[data-messaging-invitations-entry] b')).toHaveCount(0);
     await expect(page.getByRole('link').filter({ hasText: created.title })).toHaveCount(0);
   } finally {
     await recipient.close();
@@ -168,9 +169,9 @@ test('an expired invitation cannot be accepted by UI or by a different account',
   try {
     const state = await login(recipient, 'Teacher', false);
     const page = await recipient.newPage();
-    await page.goto('/personal/messages');
-    await page.locator('[data-messaging-invitations] summary').click();
-    await expect(page.getByText(t.expired, { exact: true })).toBeVisible();
+    await page.goto('/personal/messages?filter=All');
+    await page.locator('[data-messaging-invitations-entry]:visible').click();
+    await expect(page.locator('[data-invitation-status="Expired"]')).toBeVisible();
     await expect(page.getByRole('button', { name: t.accept, exact: true })).toHaveCount(0);
     expect(
       (
@@ -198,11 +199,11 @@ test('a receipt for another conversation never navigates the recipient to it', a
   try {
     await login(recipient, 'Teacher', false);
     const page = await recipient.newPage();
-    await page.goto('/personal/messages');
+    await page.goto('/personal/messages?filter=All');
     const panel = await showInvitations(page);
     await panel.getByRole('button', { name: t.accept, exact: true }).click();
     await expect(panel.getByRole('alert')).toBeVisible();
-    await expect(page).toHaveURL(/\/personal\/messages$/);
+    await expect(page).toHaveURL(/\/personal\/messages\/invitations\?from=/);
   } finally {
     await recipient.close();
   }
@@ -294,7 +295,7 @@ test('invitation controls fit both themes and mobile tablet desktop sizes', asyn
     for (const width of [320, 390, 834, 1440]) {
       await page.setViewportSize({ width, height: 900 });
       await page.addInitScript((value) => localStorage.setItem('makan-theme', value), theme);
-      await page.goto('/personal/messages');
+      await page.goto('/personal/messages?filter=All');
       await showInvitations(page);
       await expect
         .poll(() => page.evaluate(() => document.documentElement.dataset.theme))

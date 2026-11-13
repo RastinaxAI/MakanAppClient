@@ -5,7 +5,7 @@ test('the public introduction keeps its approved logo, all reading content and t
   page,
 }) => {
   await page.goto('/welcome');
-  const action = page.getByRole('link', { name: 'ورود یا ساخت حساب', exact: true });
+  const action = page.getByRole('link', { name: 'شروع با شماره همراه', exact: true });
   await expect(action).toHaveAttribute('href', '/enter');
   await expect(page.locator('.brand-mark')).toHaveAttribute('src', '/brand/makan-logo-v2.webp');
   await captureExactState(
@@ -29,6 +29,7 @@ test('the public introduction keeps its approved logo, all reading content and t
           width,
           height: width < 768 ? 844 : width < 1200 ? 1112 : 1000,
         });
+        await action.scrollIntoViewIfNeeded();
         await expect(action).toBeInViewport();
         const bounds = await page.locator('.rx-content').evaluate((element) => {
           element.scrollTop = 0;
@@ -49,6 +50,7 @@ test('the public introduction keeps its approved logo, all reading content and t
         expect(bounds.last).toBeLessThanOrEqual(bounds.end + 1);
       }
       await page.setViewportSize({ width: 390, height: 500 });
+      await action.scrollIntoViewIfNeeded();
       await expect(action).toBeInViewport();
       await page.locator('.rx-content').evaluate((element) => {
         element.scrollTop = 0;

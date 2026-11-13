@@ -14,17 +14,17 @@ test('profile form retains user input after a failed save and persists theme thr
   await request.post(fixture + '/__test__/fault', {
     data: { path: '/me/profile', method: 'PATCH', status: 503 },
   });
-  await page.getByRole('button', { name: 'ذخیره پروفایل', exact: true }).click();
+  await page.getByRole('button', { name: 'ذخیره تغییرات', exact: true }).click();
   await expect(page.getByRole('main').getByRole('alert')).toBeVisible();
   await expect(page.getByLabel('نام نمایشی', { exact: true })).toHaveValue('نام نمونهٔ بررسی خطا');
-  await page.getByRole('button', { name: 'ذخیره پروفایل', exact: true }).click();
+  await page.getByRole('button', { name: 'ذخیره تغییرات', exact: true }).click();
   await expect(page).toHaveURL(/\/personal\/profile$/);
   await expect(
     page.getByRole('heading', { name: 'نام نمونهٔ بررسی خطا', exact: true }),
   ).toBeVisible();
   await page.goto('/personal/settings/appearance');
   await page.getByRole('radio', { name: 'تاریک' }).check();
-  await page.getByRole('button', { name: 'ذخیره ظاهر', exact: true }).click();
+  await page.getByRole('banner').getByRole('link', { name: 'بازگشت', exact: true }).click();
   await page.reload();
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
 });

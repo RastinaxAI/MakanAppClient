@@ -1,5 +1,45 @@
 import { randomUUID } from 'node:crypto';
 import { userFor, ids, make, id } from './state.mjs';
+function v6Workspaces(state, a) {
+  if (!state.v6Contexts || a.user.id !== id(102)) return null;
+  return [
+    {
+      workspaceType: 'Personal',
+      organizationId: null,
+      organizationName: null,
+      membershipId: null,
+      role: null,
+      displayName: 'حساب شخصی',
+      status: 'Active',
+      canEnter: true,
+      isVisible: false,
+      isEffective: true,
+    },
+    ...[
+      [1, 302, 'Teacher', 'آموزشگاه آفتاب'],
+      [1, 506, 'Parent', 'آموزشگاه آفتاب'],
+      [200, 507, 'Parent', 'آموزشگاه سپهر'],
+      [200, 508, 'Teacher', 'آموزشگاه سپهر'],
+    ].map(([org, member, role, name]) => {
+      const active = member !== 508 && state.v6Contexts.revoked !== id(member);
+      return {
+        workspaceType: 'Organization',
+        organizationId: id(org),
+        organizationName: name,
+        membershipId: id(member),
+        role,
+        displayName: role,
+        status: active ? 'Active' : 'Suspended',
+        canEnter: active,
+        isVisible: true,
+        isEffective: active,
+        membershipStatus: active ? 'Active' : 'Suspended',
+        roleStatus: active ? 'Active' : 'Ended',
+        organizationStatus: 'Active',
+      };
+    }),
+  ];
+}
 export function authRoute(ctx) {
   const { state, url, body, send, req } = ctx,
     p = url.pathname;
@@ -29,13 +69,35 @@ export function authRoute(ctx) {
       subjectOrganizationPersonId: null,
     });
     state.auth.set(a.token, a);
+    const refreshToken = randomUUID();
+    state.refreshTokens ??= new Map();
+    state.refreshTokens.set(refreshToken, { auth: a, expiresAt: Date.now() + 30 * 86400000 });
     return send({
       accessToken: a.token,
       tokenType: 'Bearer',
       expiresAtUtc: new Date(Date.now() + 3600000).toISOString(),
-      refreshToken: randomUUID(),
-      refreshExpiresAtUtc: new Date(Date.now() + 7200000).toISOString(),
+      refreshToken,
+      refreshExpiresAtUtc: new Date(Date.now() + 30 * 86400000).toISOString(),
       user: a.user,
+    });
+  }
+  if (p === '/api/v1/auth/refresh' && req.method === 'POST') {
+    const current = state.refreshTokens?.get(body.refreshToken);
+    if (!current || current.expiresAt <= Date.now() || !state.auth.has(current.auth.token))
+      return send({ code: 'SESSION_EXPIRED' }, 401);
+    state.refreshTokens.delete(body.refreshToken);
+    const a = current.auth;
+    state.auth.delete(a.token);
+    a.token = randomUUID();
+    state.auth.set(a.token, a);
+    const refreshToken = randomUUID();
+    state.refreshTokens.set(refreshToken, { auth: a, expiresAt: Date.now() + 30 * 86400000 });
+    return send({
+      accessToken: a.token,
+      refreshToken,
+      tokenType: 'Bearer',
+      expiresAtUtc: new Date(Date.now() + 3600000).toISOString(),
+      refreshExpiresAtUtc: new Date(Date.now() + 30 * 86400000).toISOString(),
     });
   }
   const a = state.auth.get(req.headers.authorization?.replace(/^Bearer /, ''));
@@ -48,7 +110,7 @@ export function authRoute(ctx) {
   if (p === '/api/v1/me') return send(a.user);
   if (p === '/api/v1/workspaces/current') return send(a.context);
   if (p === '/api/v1/workspaces/me' || p === '/api/v1/workspaces/snapshot') {
-    const rows = [
+    let rows = [
       {
         workspaceType: 'Personal',
         organizationId: null,
@@ -92,6 +154,7 @@ export function authRoute(ctx) {
       if (state.conversationContext.workspacesDisabled) rows[1].canEnter = false;
       if (state.conversationContext.unrelatedWorkspace) rows[1].organizationId = id(200);
     }
+    rows = v6Workspaces(state, a) ?? rows;
     return send(
       p.endsWith('/snapshot')
         ? {
@@ -110,7 +173,18 @@ export function authRoute(ctx) {
     );
   }
   if (p === '/api/v1/workspaces/select') {
+    const v6 = v6Workspaces(state, a);
+    const selected = v6?.find(
+      (row) =>
+        row.membershipId === body.membershipId &&
+        row.role === body.role &&
+        row.workspaceType === body.workspaceType &&
+        row.canEnter &&
+        row.isEffective,
+    );
+    if (v6 && !selected) return send({ code: 'WORKSPACE_NOT_ALLOWED' }, 403);
     if (
+      !v6 &&
       body.workspaceType === 'Organization' &&
       !(
         (body.membershipId === a.membershipId && body.role === a.role) ||
@@ -123,7 +197,8 @@ export function authRoute(ctx) {
       return send({ code: 'WORKSPACE_NOT_ALLOWED' }, 403);
     Object.assign(a.context, {
       workspaceType: body.workspaceType,
-      organizationId: body.workspaceType === 'Organization' ? ids.org : null,
+      organizationId:
+        body.workspaceType === 'Organization' ? (selected?.organizationId ?? ids.org) : null,
       membershipId: body.membershipId,
       activeRole: body.role,
       subjectOrganizationPersonId: null,

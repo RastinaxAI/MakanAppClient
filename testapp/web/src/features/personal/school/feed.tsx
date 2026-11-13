@@ -1,39 +1,47 @@
 'use client';
-import { uiClass } from '@/components/v5/classes';
-
-import { buttonClass } from '@/components/ui/button';
-
 import * as uiText from '@/content/fa';
 import Link from 'next/link';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { BookOpen, ClipboardList, CalendarDays, NotebookPen, UserRoundCheck } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Select } from '@/components/ui/input';
+import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { V4List, V4Row } from '@/components/v4/page';
 import { ErrorState, LoadingSkeleton } from '@/components/ui/states';
 import { ConnectionNotice } from '@/components/ui/connection-notice';
 import { ApiError } from '@/lib/api/errors';
+import { date, number } from '@/lib/formatting';
 import type { components } from '@/generated/api/schema';
 import { usePersonal, usePersonalApi } from '../provider';
+import { useWorkspaceSnapshot } from '../workspaces';
 import {
   nearestUpcoming,
   currentSchoolWeek,
   schoolWeekRange,
   localCalendarDay,
 } from './calendar-model';
-import { ProfileAvatar } from '../profile-photo';
-import {
-  BookOpen,
-  ClipboardList,
-  ChevronLeft,
-  NotebookPen,
-  CalendarDays,
-  UserRoundCheck,
-} from 'lucide-react';
-import { date } from '@/lib/formatting';
 import { base } from './shared';
 import layout from './dashboard-layout.module.css';
+import { SchoolQuickActions } from './quick-actions';
 type S = components['schemas'];
 type Dashboard = S['ManagerDashboardDto'] | S['TeacherDashboardDto'] | S['StudentDashboardDto'];
+const t = uiText.v6Ui;
 export function SchoolFeed() {
+  const router = useRouter();
+  const [newActivity, setNewActivity] = useState<'assignments' | 'exams' | 'lessons' | null>(null),
+    [activityClass, setActivityClass] = useState('');
   const { session } = usePersonal(),
     role = session.context.activeRole,
     student = role === 'Student';
+  const spaces = useWorkspaceSnapshot();
+  const organization =
+    spaces.data?.workspaces.find(
+      (space) =>
+        space.organizationId === session.context.organizationId &&
+        space.membershipId === session.context.membershipId &&
+        space.role === role,
+    )?.organizationName ?? uiText.navigation_education;
   const dashboard = usePersonalApi<Dashboard>('/api/v1/dashboards/' + role!.toLowerCase(), {
     poll: 10000,
   });
@@ -49,24 +57,16 @@ export function SchoolFeed() {
     return <ErrorState error={new ApiError(409)} />;
   const sessions =
     'upcomingSessions' in d ? d.upcomingSessions : d.nextSession ? [d.nextSession] : [];
-  const nextSession = nearestUpcoming(
-    sessions.filter((x) => x.status === 'Scheduled'),
-    (x) => x.startUtc,
-  );
+  const scheduled = sessions.filter((item) => item.status === 'Scheduled');
+  const nextSession = nearestUpcoming(scheduled, (item) => item.startUtc);
   const candidate = 'nearestAssignmentDeadline' in d ? d.nearestAssignmentDeadline : null;
-  const nextAssignment = student && candidate && nearestUpcoming([candidate], (x) => x.dueAtUtc);
-  const examItems =
-    'upcomingExams' in d
-      ? d.upcomingExams.map((x) => ({
-          title: x.title,
-          classTitle: x.classTitle,
-          classId: x.classId,
-          time: x.availableFromUtc,
-        }))
-      : [];
-  const nextExam = nearestUpcoming(examItems, (x) => x.time);
+  const nextAssignment =
+    student && candidate && nearestUpcoming([candidate], (item) => item.dueAtUtc);
+  const exams = 'upcomingExams' in d ? d.upcomingExams : [];
+  const nextExam = nearestUpcoming(exams, (item) => item.availableFromUtc);
   const name = session.user.firstName || session.user.displayName || uiText.text_2018071defea;
   const grading = 'assignmentGradingQueue' in d ? d.assignmentGradingQueue.totalPendingCount : 0;
+  const today = localCalendarDay(d.dataAsOfUtc);
   return (
     <>
       <ConnectionNotice
@@ -74,243 +74,243 @@ export function SchoolFeed() {
         error={dashboard.isError}
         onRetry={() => void dashboard.refetch()}
       />
-
-      {student ? (
-        <>
-          <section className={layout.welcome}>
-            <div>
-              <p className={layout.eyebrow}>
-                {new Intl.DateTimeFormat('fa-IR', {
-                  weekday: 'long',
-                  month: 'long',
-                  day: 'numeric',
-                  timeZone: 'Asia/Tehran',
-                }).format(new Date(d.dataAsOfUtc))}
-              </p>
-              <h2>{uiText.serverAlignedUi.schoolGreeting(name)}</h2>
-              <p>{uiText.serverAlignedUi.dayIntro}</p>
+      <section className={layout.welcome}>
+        <h2>{uiText.serverAlignedUi.schoolGreeting(name)}</h2>
+        <p>
+          {organization} · {student ? t.schoolProgram : t.schoolTeaching}
+        </p>
+      </section>
+      <SchoolQuickActions />
+      {student && (
+        <nav className={layout.week} aria-label={uiText.v5Product.weekNavigation}>
+          {schoolWeekRange(currentSchoolWeek(new Date(d.dataAsOfUtc))).days.map((day) => (
+            <Link
+              key={day.date}
+              href={base + '/schedule?day=' + day.date}
+              aria-label={day.label}
+              aria-current={day.date === today ? 'date' : undefined}
+            >
+              <span aria-hidden="true">{Array.from(day.weekday)[0]}</span>
+              <b>
+                {new Intl.DateTimeFormat('fa-IR', { day: 'numeric', timeZone: 'UTC' }).format(
+                  new Date(day.date + 'T12:00:00Z'),
+                )}
+              </b>
+            </Link>
+          ))}
+        </nav>
+      )}
+      <section className={nextSession ? layout.sessionHero : layout.sessionEmpty}>
+        <h3>{student ? t.schoolNextSession : t.schoolSoonSession}</h3>
+        {nextSession ? (
+          <>
+            <h2>{nextSession.classTitle}</h2>
+            <p>{nextSession.title}</p>
+            <div className={layout.sessionTime}>
+              <span>{t.schoolTime}</span>
+              <b>{date(nextSession.startUtc, true)}</b>
             </div>
-            <ProfileAvatar
-              photo={session.user.profilePhoto}
-              name={name}
-              className={layout.learnerAvatar}
-            />
-          </section>
-          <nav className={layout.week} aria-label={uiText.v5Product.weekNavigation}>
-            {schoolWeekRange(currentSchoolWeek(new Date(d.dataAsOfUtc))).days.map((day) => (
-              <Link
-                key={day.date}
-                href={base + '/schedule?day=' + day.date}
-                aria-label={day.label}
-                aria-current={day.date === localCalendarDay(d.dataAsOfUtc) ? 'date' : undefined}
-              >
-                <span>{day.weekday}</span>
-                <b>
-                  {new Intl.DateTimeFormat('fa-IR', { day: 'numeric', timeZone: 'UTC' }).format(
-                    new Date(day.date + 'T12:00:00Z'),
-                  )}
-                </b>
-              </Link>
-            ))}
-          </nav>
-        </>
-      ) : (
-        <section className={uiClass('card hero')}>
-          <h3>{uiText.serverAlignedUi.teacherDay}</h3>
-          <p>{uiText.serverAlignedUi.teacherDayIntro}</p>
-        </section>
-      )}
-      {!student && (
-        <h2 className={uiClass('section-title v5-feed-heading')}>
-          <span>{uiText.text_e30bd24d513b}</span>
-          <Link className={uiClass('text-action')} href={base + '/schedule'}>
-            {uiText.text_ca0f901fdf49}
-          </Link>
-        </h2>
-      )}
-      {nextSession ? (
-        <section className={student ? layout.sessionHero : uiClass('card')}>
-          {student ? (
-            <>
-              <span className={layout.heroTag}>{uiText.text_e30bd24d513b}</span>
-              <h2>{nextSession.classTitle}</h2>
-              <p>
-                {nextSession.title} · {date(nextSession.startUtc, true)}
-              </p>
-              <Link
-                className={uiClass(buttonClass('btn secondary'))}
-                href={base + '/sessions/' + nextSession.sessionId}
-              >
+            <Button asChild>
+              <Link href={base + '/sessions/' + nextSession.sessionId}>
                 {uiText.text_7841d322609a}
               </Link>
-            </>
-          ) : (
-            <Link className={uiClass('row')} href={base + '/sessions/' + nextSession.sessionId}>
-              <span className={uiClass('tile-icon')}>
-                <CalendarDays size={22} />
-              </span>
-              <span className={uiClass('grow')}>
-                <h4>{nextSession.title}</h4>
-                <p>
-                  {nextSession.classTitle} · {date(nextSession.startUtc, true)}
-                </p>
-              </span>
-            </Link>
-          )}
-        </section>
-      ) : (
-        <div className={student ? layout.sessionEmpty : uiClass('card')}>
-          {student ? (
-            <>
-              <h3>{uiText.v5Product.schoolToday}</h3>
-              <div className={layout.sessionEmptyBody}>
-                <span className={layout.sessionEmptyMark}>
-                  <CalendarDays size={32} aria-hidden="true" />
-                </span>
-                <h4>{uiText.v5Product.noUpcomingSession}</h4>
-                <p>{uiText.v5Product.noUpcomingSessionHint}</p>
-              </div>
-            </>
-          ) : (
-            <p>{uiText.text_827cc8637f4d}</p>
-          )}
-          <Link
-            className={uiClass(student ? buttonClass('btn secondary') : 'text-action')}
-            href={base + '/schedule'}
-          >
-            {student && <CalendarDays size={20} aria-hidden="true" />}
-            {uiText.text_15aa7009c6f2}
-          </Link>
+            </Button>
+          </>
+        ) : (
+          <>
+            <p>{uiText.v5Product.noUpcomingSession}</p>
+            <Button asChild variant="outline">
+              <Link href={base + '/schedule'}>
+                <CalendarDays size={19} />
+                {uiText.text_15aa7009c6f2}
+              </Link>
+            </Button>
+          </>
+        )}
+      </section>
+      {student && (
+        <div className={layout.metrics}>
+          {[
+            [
+              uiText.serverAlignedUi.activeClasses,
+              classes.data ? classes.data.filter((c) => c.status === 'Active').length : null,
+            ],
+            [t.schoolPending, 'pendingAssignmentCount' in d ? d.pendingAssignmentCount : null],
+            [
+              t.schoolTodaySessions,
+              scheduled.filter((item) => localCalendarDay(item.startUtc) === today).length,
+            ],
+          ].map(([label, value]) => (
+            <div className={layout.metric} key={label}>
+              <strong>{value === null ? '—' : number(Number(value))}</strong>
+              <span>{label}</span>
+            </div>
+          ))}
         </div>
       )}
-      <div className={layout.metrics} data-learner={student || undefined}>
-        {('pendingAssignmentCount' in d
-          ? [
-              [
-                uiText.serverAlignedUi.activeClasses,
-                classes.data ? classes.data.filter((c) => c.status === 'Active').length : null,
-              ],
-              [uiText.serverAlignedUi.pendingAssignments, d.pendingAssignmentCount],
-              [uiText.serverAlignedUi.upcomingExams, d.upcomingExams.length],
-            ]
-          : [
-              [
-                uiText.serverAlignedUi.activeClasses,
-                'assignedClasses' in d ? d.assignedClasses.length : null,
-              ],
-              [uiText.serverAlignedUi.pendingAssessments, grading],
-              [uiText.serverAlignedUi.upcomingSessions, sessions.length],
-              [uiText.serverAlignedUi.pendingExamAssessments, d.examGradingQueue.totalPendingCount],
-            ]
-        ).map(([label, value], index) => (
-          <div className={layout.metric} key={label}>
-            {index === 0 ? (
-              <BookOpen aria-hidden="true" />
-            ) : index === 1 ? (
-              <ClipboardList aria-hidden="true" />
-            ) : index === 2 ? (
-              <CalendarDays aria-hidden="true" />
-            ) : (
-              <UserRoundCheck aria-hidden="true" />
+      <div className={layout.grid}>
+        <section className={layout.section}>
+          <h3>{student ? t.schoolForToday : t.schoolFollowUp}</h3>
+          <V4List>
+            {nextAssignment && (
+              <V4Row
+                title={nextAssignment.title}
+                description={uiText.text_fbb3425cdeea + date(nextAssignment.dueAtUtc, true)}
+                icon={<ClipboardList />}
+                href={base + '/assignments/' + nextAssignment.assignmentId}
+              />
             )}
-            <strong>{value === null ? '—' : Number(value).toLocaleString('fa-IR')}</strong>
-            <span>{label}</span>
-          </div>
-        ))}
-      </div>
-      {student && 'attendanceSummary' in d && (
-        <Link className={layout.attendance} href={base + '/reports?kind=attendance'}>
-          <UserRoundCheck size={18} />
-          {uiText.serverAlignedUi.recordedAttendance}:{' '}
-          {d.attendanceSummary.recordedCount.toLocaleString('fa-IR')}
-        </Link>
-      )}
-      {!student && nextSession && (
-        <div className={uiClass('button-row')}>
-          <Link
-            className={uiClass(buttonClass('btn'))}
-            href={base + '/sessions/' + nextSession.sessionId + '?view=attendance'}
-          >
-            {uiText.text_5ebf6333e4cd}
-          </Link>
-          <Link
-            className={uiClass(buttonClass('btn secondary'))}
-            href={base + '/sessions/' + nextSession.sessionId}
-          >
-            {uiText.text_7841d322609a}
-          </Link>
-        </div>
-      )}
-      <h2 className={uiClass('section-title v5-feed-heading')}>
-        <span>{student ? uiText.text_f9aa47c30ce0 : uiText.text_1b5115f2f6fa}</span>
-        <Link
-          className={uiClass('text-action')}
-          href={student ? base + '/assignments' : base + '/evaluations'}
-        >
-          {uiText.text_d0c8b7c92026}
-        </Link>
-      </h2>
-      <div className={uiClass('list')}>
-        {nextAssignment && (
-          <Link
-            className={uiClass('row')}
-            href={base + '/assignments/' + nextAssignment.assignmentId}
-          >
-            <span className={uiClass('tile-icon')}>
-              <ClipboardList size={22} />
-            </span>
-            <span className={uiClass('grow')}>
-              <h4>{nextAssignment.title}</h4>
-              <p>
-                {uiText.text_fbb3425cdeea}
-                {date(nextAssignment.dueAtUtc, true)}
-              </p>
-            </span>
-            <span className={uiClass('badge warn')}>{uiText.text_563c95d1f5ea}</span>
-          </Link>
-        )}
-        {!student && (
-          <Link className={uiClass('row')} href={base + '/evaluations'}>
-            <span className={uiClass('tile-icon')}>
-              <ClipboardList size={22} />
-            </span>
-            <span className={uiClass('grow')}>
-              <h4>{uiText.schoolOverview.freshAnswers}</h4>
-              <p>{uiText.text_522e4acaf773}</p>
-            </span>
-            <span className={uiClass('badge')}>{grading.toLocaleString('fa-IR')}</span>
-          </Link>
-        )}
-        <Link
-          className={uiClass('row')}
-          href={student ? base + '/classes' : base + '/content?kind=Lesson'}
-        >
-          <span className={uiClass('tile-icon')}>
-            {student ? <BookOpen size={22} /> : <NotebookPen size={22} />}
-          </span>
-          <span className={uiClass('grow')}>
-            <h4>{student ? uiText.text_4f96bdc2ea91 : uiText.schoolOverview.lessonDrafts}</h4>
-            <p>{student ? uiText.text_d59bfca8883f : uiText.schoolOverview.lessonDraftHint}</p>
-          </span>
-          <ChevronLeft size={18} />
-        </Link>
-        {student && nextExam && (
-          <Link
-            className={uiClass('row')}
-            href={base + '/classes/' + nextExam.classId + '?tab=exams'}
-          >
-            <span className={uiClass('tile-icon')}>
-              <ClipboardList size={22} />
-            </span>
-            <span className={uiClass('grow')}>
-              <h4>{nextExam.title}</h4>
-              <p>{date(nextExam.time, true)}</p>
-            </span>
-            <ChevronLeft size={18} />
-          </Link>
-        )}
+            {!student && (
+              <V4Row
+                title={uiText.schoolOverview.freshAnswers}
+                description={uiText.text_522e4acaf773}
+                icon={<ClipboardList />}
+                end={<span className={layout.count}>{number(grading)}</span>}
+                href={base + '/evaluations'}
+              />
+            )}
+            {!student && nextSession && (
+              <V4Row
+                title={uiText.text_5ebf6333e4cd}
+                description={nextSession.title}
+                icon={<UserRoundCheck />}
+                href={base + '/sessions/' + nextSession.sessionId + '?view=attendance'}
+              />
+            )}
+            <V4Row
+              title={student ? uiText.text_4f96bdc2ea91 : uiText.schoolOverview.lessonDrafts}
+              description={
+                student ? uiText.text_d59bfca8883f : uiText.schoolOverview.lessonDraftHint
+              }
+              icon={student ? <BookOpen /> : <NotebookPen />}
+              href={student ? base + '/classes' : base + '/content?kind=Lesson'}
+            />
+          </V4List>
+          <Button asChild variant="ghost">
+            <Link href={student ? base + '/assignments' : base + '/evaluations'}>
+              {uiText.text_d0c8b7c92026}
+            </Link>
+          </Button>
+        </section>
+        <section className={layout.section}>
+          <h3>{student ? t.schoolUpcoming : t.schoolWork}</h3>
+          <V4List>
+            {student ? (
+              <>
+                {nextExam && (
+                  <V4Row
+                    title={nextExam.title}
+                    description={date(nextExam.availableFromUtc, true)}
+                    icon={<ClipboardList />}
+                    href={base + '/classes/' + nextExam.classId + '?tab=exams'}
+                  />
+                )}
+                <V4Row
+                  title={uiText.text_15aa7009c6f2}
+                  description={t.schoolTomorrow}
+                  icon={<CalendarDays />}
+                  href={base + '/schedule'}
+                />
+                {'attendanceSummary' in d && (
+                  <V4Row
+                    title={uiText.serverAlignedUi.recordedAttendance}
+                    description={number(d.attendanceSummary.recordedCount)}
+                    icon={<UserRoundCheck />}
+                    href={base + '/reports?kind=attendance'}
+                  />
+                )}
+              </>
+            ) : (
+              <>
+                <V4Row
+                  title={t.schoolNewAssignment}
+                  icon={<ClipboardList />}
+                  onClick={() => {
+                    setActivityClass('');
+                    setNewActivity('assignments');
+                  }}
+                />
+                <V4Row
+                  title={t.schoolNewExam}
+                  icon={<NotebookPen />}
+                  onClick={() => {
+                    setActivityClass('');
+                    setNewActivity('exams');
+                  }}
+                />
+                <V4Row
+                  title={uiText.serverAlignedUi.newSchoolContent}
+                  icon={<BookOpen />}
+                  onClick={() => {
+                    setActivityClass('');
+                    setNewActivity('lessons');
+                  }}
+                />
+              </>
+            )}
+          </V4List>
+        </section>
       </div>
       {!!classes.error && <ErrorState error={classes.error} />}
+      <Dialog
+        open={!!newActivity}
+        onOpenChange={(open) => {
+          if (!open) setNewActivity(null);
+        }}
+      >
+        <DialogContent
+          title={
+            newActivity === 'exams'
+              ? t.schoolNewExam
+              : newActivity === 'lessons'
+                ? uiText.serverAlignedUi.newSchoolContent
+                : t.schoolNewAssignment
+          }
+        >
+          <form
+            className={layout.activityForm}
+            onSubmit={(event) => {
+              event.preventDefault();
+              if (
+                newActivity &&
+                classes.data?.some(
+                  (item) =>
+                    item.id === activityClass &&
+                    item.organizationId === session.context.organizationId &&
+                    item.status === 'Active',
+                )
+              )
+                router.push(`${base}/classes/${activityClass}/${newActivity}/new`);
+            }}
+          >
+            <label>
+              {uiText.aiIntegration.class}
+              <Select
+                aria-label={uiText.aiIntegration.class}
+                value={activityClass}
+                onChange={(event) => setActivityClass(event.target.value)}
+                required
+              >
+                <option value="">{uiText.aiIntegration.chooseClass}</option>
+                {classes.data
+                  ?.filter(
+                    (item) =>
+                      item.organizationId === session.context.organizationId &&
+                      item.status === 'Active',
+                  )
+                  .map((item) => (
+                    <option key={item.id} value={item.id}>
+                      {item.title}
+                    </option>
+                  ))}
+              </Select>
+            </label>
+            <Button type="submit" disabled={!activityClass || classes.isFetching}>
+              {uiText.text_4c1f73ed8563}
+            </Button>
+          </form>
+        </DialogContent>
+      </Dialog>
     </>
   );
 }

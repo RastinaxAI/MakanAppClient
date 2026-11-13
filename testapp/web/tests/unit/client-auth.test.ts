@@ -6,6 +6,9 @@ const mocks = vi.hoisted(() => ({
   write: vi.fn(),
   read: vi.fn(),
   remove: vi.fn(),
+  state: vi.fn(),
+  activity: vi.fn(),
+  cookie: vi.fn(),
 }));
 vi.mock('@/lib/server/backend', async (original) => ({
   ...(await original<typeof import('@/lib/server/backend')>()),
@@ -15,21 +18,28 @@ vi.mock('@/lib/server/backend', async (original) => ({
 vi.mock('@/lib/server/client-session', () => ({
   CLIENT_COOKIE: 'makan_client_session',
   clientSessionId: mocks.clientId,
+  getClientState: mocks.state,
 }));
 vi.mock('@/lib/server/session', () => ({
   writeSession: mocks.write,
   readSession: mocks.read,
   removeSession: mocks.remove,
   withSessionLock: async (_id: string, work: () => Promise<unknown>) => work(),
-  cookieOptions: () => ({
-    httpOnly: true,
-    secure: false,
-    sameSite: 'strict',
-    path: '/',
-    maxAge: 3600,
-  }),
+  recordSessionActivity: mocks.activity,
+  withSessionRead: async (_id: string, work: () => Promise<unknown>) => work(),
+  cookieOptions: (expiry?: string) => {
+    mocks.cookie(expiry);
+    return {
+      httpOnly: true,
+      secure: false,
+      sameSite: 'strict',
+      path: '/',
+      maxAge: 3600,
+    };
+  },
 }));
 import { POST } from '@/app/api/client/auth/[action]/route';
+import { GET as sessionGET, POST as sessionPOST } from '@/app/api/client/session/route';
 const user = {
   id: '00000000-0000-4000-8000-000000000001',
   phoneNumber: '+989120000101',
@@ -222,5 +232,45 @@ describe('general-account authentication isolated from the owner session', () =>
     expect(mocks.write).not.toHaveBeenCalled();
     expect(mocks.upstream).toHaveBeenCalledTimes(1);
     expect(mocks.upstream.mock.calls[0][0]).toBe('/api/v1/auth/otp/verify');
+  });
+});
+
+describe('verified foreground session renewal', () => {
+  it('never lets a passive GET renew the cookie or activity deadline', async () => {
+    mocks.clientId.mockResolvedValue('current-session');
+    mocks.state.mockResolvedValue({ user, revision: 'current' });
+    const response = await sessionGET();
+    expect(response.status).toBe(200);
+    expect(response.headers.has('set-cookie')).toBe(false);
+    expect(mocks.activity).not.toHaveBeenCalled();
+  });
+  it('validates the current identity before renewing and uses the latest backend expiry', async () => {
+    mocks.clientId.mockResolvedValue('current-session');
+    mocks.state.mockResolvedValue({ user, revision: 'after-refresh' });
+    mocks.activity.mockResolvedValue({ refreshExpiresAtUtc: '2099-03-01T00:00:00Z' });
+    const response = await sessionPOST(req('activity'));
+    expect(response.status).toBe(200);
+    expect(await response.json()).toEqual({ user, revision: 'after-refresh' });
+    expect(mocks.state.mock.invocationCallOrder[0]).toBeLessThan(
+      mocks.activity.mock.invocationCallOrder[0],
+    );
+    expect(mocks.activity).toHaveBeenCalledWith('current-session');
+    expect(mocks.cookie).toHaveBeenCalledWith('2099-03-01T00:00:00Z');
+    expect(response.headers.get('set-cookie')).toContain('HttpOnly');
+    expect(response.headers.get('cache-control')).toContain('no-store');
+  });
+  it('rejects cross-origin renewal without checking or extending the session', async () => {
+    const response = await sessionPOST(req('activity', 'https://external.invalid'));
+    expect(response.status).toBe(403);
+    expect(mocks.state).not.toHaveBeenCalled();
+    expect(mocks.activity).not.toHaveBeenCalled();
+  });
+  it('does not renew a backend-revoked or locally expired identity', async () => {
+    mocks.clientId.mockResolvedValue('current-session');
+    mocks.state.mockResolvedValue(null);
+    const response = await sessionPOST(req('activity'));
+    expect(response.status).toBe(401);
+    expect(response.headers.has('set-cookie')).toBe(false);
+    expect(mocks.activity).not.toHaveBeenCalled();
   });
 });

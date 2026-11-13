@@ -8,10 +8,12 @@ import {
 import { uiClass } from '@/components/v5/classes';
 
 import * as uiText from '@/content/fa';
-import { Users, Megaphone, ArrowLeft, Search } from 'lucide-react';
+import { Users, Megaphone, ArrowLeft, UserPlus, Search } from 'lucide-react';
 import { readCreationDraft, creationWasRejected } from './creation-draft';
+import { startPersonalConversation } from './directory';
+import { ProfileAvatar } from '../profile-photo';
 import { V5Scene } from '@/components/v5/scene';
-import { V4Field } from '@/components/v4/page';
+import { V4Field, V4List, V4Row } from '@/components/v4/page';
 import d from './directory.module.css';
 import { Button } from '@/components/ui/button';
 import { EmptyState, ErrorState, LoadingSkeleton } from '@/components/ui/states';
@@ -22,6 +24,13 @@ import { contextSignature } from '@/lib/client-surface';
 import { number } from '@/lib/formatting';
 import { useQueryClient } from '@tanstack/react-query';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
+import { useViewState } from '@/components/hooks/use-view-state';
+import { SearchField } from '@/components/ui/input';
+import { messagingReturnPath } from './inbox-model';
+const ContactPhoneForm = dynamic(() =>
+  import('./contact-form').then((module) => module.ContactPhoneForm),
+);
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import s from '../personal.module.css';
@@ -29,7 +38,9 @@ import { usePersonal, usePersonalApi } from '../provider';
 import { messagingNextLabels } from '../status-labels';
 type Command = components['schemas']['CreateManagedConversationCommand'];
 export function CreateConversationPage() {
-  const kind = useSearchParams().get('kind') === 'channels' ? 'channels' : 'groups';
+  const requested = useSearchParams().get('kind');
+  const kind = requested === 'channels' ? 'channels' : 'groups';
+  if (requested !== 'groups' && requested !== 'channels') return <NewMessage />;
   return <CreateConversation key={kind} kind={kind} />;
 }
 function CreateConversation({ kind }: { kind: 'groups' | 'channels' }) {
@@ -51,10 +62,15 @@ function CreateConversation({ kind }: { kind: 'groups' | 'channels' }) {
     [frozen, setFrozen] = useState<Command | null>(null),
     [storageReady, setStorageReady] = useState(false);
   const mutex = useRef(false);
-  const key =
-    'makan-create:' + session.user.id + ':' + contextSignature(session.context) + ':' + kind;
+  const key = 'makan-create:' + session.user.id + ':Personal:' + kind;
+  const legacyKey = useRef(
+    'makan-create:' + session.user.id + ':' + contextSignature(session.context) + ':' + kind,
+  );
   const draftKey = key + ':draft:v1';
-  const stepUrl = '/personal/messages/new?kind=' + kind;
+  const returnPath = messagingReturnPath(search.get('from'));
+  const from = new URLSearchParams({ from: returnPath });
+  const pickerUrl = '/personal/messages/new?kind=direct&' + from;
+  const stepUrl = '/personal/messages/new?' + new URLSearchParams({ kind, from: returnPath });
   const status = usePersonalApi<components['schemas']['MessagingStatusResult']>(
     '/api/v1/me/messaging-status',
   );
@@ -75,7 +91,9 @@ function CreateConversation({ kind }: { kind: 'groups' | 'channels' }) {
   const chosenVisibility = privateOnly ? 'Private' : visibility;
   useEffect(() => {
     try {
-      const draft = readCreationDraft(sessionStorage.getItem(draftKey));
+      const draft = readCreationDraft(
+        sessionStorage.getItem(draftKey) ?? sessionStorage.getItem(legacyKey.current + ':draft:v1'),
+      );
       if (draft) {
         setTitle(draft.title);
         setDescription(draft.description);
@@ -83,7 +101,7 @@ function CreateConversation({ kind }: { kind: 'groups' | 'channels' }) {
         setHistory(draft.history);
         setSelected(new Set(draft.selected));
       }
-      const raw = sessionStorage.getItem(key);
+      const raw = sessionStorage.getItem(key) ?? sessionStorage.getItem(legacyKey.current);
       if (raw) {
         const parsed = clientValidator({
           $ref: '#/components/schemas/CreateManagedConversationCommand',
@@ -142,16 +160,18 @@ function CreateConversation({ kind }: { kind: 'groups' | 'channels' }) {
       }
       const result = await call<components['schemas']['ManagedConversationResult']>(
         '/api/v1/conversations/' + kind,
-        { method: 'POST', body: JSON.stringify(command) },
+        { method: 'POST', body: JSON.stringify(command), scope: 'account' },
       );
       if (result.scope !== 'Personal' || result.type !== (group ? 'Group' : 'Channel'))
         throw new ApiError(502, { code: 'CONTRACT_MISMATCH' });
       cache.setQueryData(
-        ['personal', session.user.id, session.revision, 'creation-receipt', result.conversationId],
+        ['personal', session.user.id, 'account', 'creation-receipt', result.conversationId],
         result.initialTargets ?? [],
       );
       sessionStorage.removeItem(key);
       sessionStorage.removeItem(draftKey);
+      sessionStorage.removeItem(legacyKey.current);
+      sessionStorage.removeItem(legacyKey.current + ':draft:v1');
       setStorageReady(false);
       setFrozen(null);
       await cache.invalidateQueries({
@@ -174,15 +194,18 @@ function CreateConversation({ kind }: { kind: 'groups' | 'channels' }) {
   }
   return (
     <V5Scene
+      key={members ? 'members' : 'information'}
       id={members ? (group ? 'MK-189' : 'MK-192') : group ? 'MK-188' : 'MK-191'}
       title={
         members
-          ? uiText.text_b462d2f2ea47
+          ? group
+            ? uiText.messengerPdf.newGroup
+            : uiText.text_b462d2f2ea47
           : group
             ? uiText.v5Product.createGroup
             : uiText.v5Product.createChannel
       }
-      back={members ? stepUrl : '/personal/messages'}
+      back={members ? stepUrl : pickerUrl}
       kind={members ? 'list' : 'form'}
       onSubmit={(event) => {
         event.preventDefault();
@@ -192,17 +215,35 @@ function CreateConversation({ kind }: { kind: 'groups' | 'channels' }) {
       }}
       menu={
         group ? (
-          <V4Field label={uiText.text_d30d3aa840fa}>
-            <NativeSelect
-              value={history}
-              disabled={busy || !!frozen}
-              onChange={(e) => setHistory(e.target.value as typeof history)}
-            >
-              <option value="">{uiText.text_99f51b9ca3db}</option>
-              <option value="FullHistory">{uiText.text_079e2f4cd4d2}</option>
-              <option value="FromJoin">{uiText.text_c693180e811e}</option>
-            </NativeSelect>
-          </V4Field>
+          <>
+            {members && (
+              <>
+                <p>
+                  {title} · {number(selected.size)} {uiText.text_4339e868ff4c}
+                </p>
+                <p>{uiText.text_903259a26e2b}</p>
+                <Button
+                  type="button"
+                  variant="ghost"
+                  disabled={busy || !!frozen}
+                  onClick={() => router.push(stepUrl)}
+                >
+                  {uiText.text_d6aa12d559e9}
+                </Button>
+              </>
+            )}
+            <V4Field label={uiText.text_d30d3aa840fa}>
+              <NativeSelect
+                value={history}
+                disabled={busy || !!frozen}
+                onChange={(e) => setHistory(e.target.value as typeof history)}
+              >
+                <option value="">{uiText.text_99f51b9ca3db}</option>
+                <option value="FullHistory">{uiText.text_079e2f4cd4d2}</option>
+                <option value="FromJoin">{uiText.text_c693180e811e}</option>
+              </NativeSelect>
+            </V4Field>
+          </>
         ) : undefined
       }
       actions={
@@ -289,30 +330,35 @@ function CreateConversation({ kind }: { kind: 'groups' | 'channels' }) {
             </fieldset>
           )}
           {members && (
-            <section className={uiClass(d.memberSelection)}>
-              <div className={uiClass(d.creationSummary)}>
-                <span className={uiClass(d.smallAvatar)}>
-                  {group ? <Users size={24} /> : <Megaphone size={24} />}
-                </span>
-                <div>
-                  <strong dir="auto">{title}</strong>
-                  <small>
-                    {chosenVisibility === 'Private'
-                      ? uiText.text_e205d3a7a33e
-                      : uiText.text_526e310df41f}
-                    {uiText.text_588da4105320}
-                    {number(selected.size)} {uiText.text_4339e868ff4c}
-                  </small>
+            <section
+              className={uiClass(d.memberSelection)}
+              data-group-recipient-picker={group || undefined}
+            >
+              {!group && (
+                <div className={uiClass(d.creationSummary)}>
+                  <span className={uiClass(d.smallAvatar)}>
+                    {group ? <Users size={24} /> : <Megaphone size={24} />}
+                  </span>
+                  <div>
+                    <strong dir="auto">{title}</strong>
+                    <small>
+                      {chosenVisibility === 'Private'
+                        ? uiText.text_e205d3a7a33e
+                        : uiText.text_526e310df41f}
+                      {uiText.text_588da4105320}
+                      {number(selected.size)} {uiText.text_4339e868ff4c}
+                    </small>
+                  </div>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    disabled={busy || !!frozen}
+                    onClick={() => router.push(stepUrl)}
+                  >
+                    {uiText.text_d6aa12d559e9}
+                  </Button>
                 </div>
-                <Button
-                  type="button"
-                  variant="ghost"
-                  disabled={busy || !!frozen}
-                  onClick={() => router.push(stepUrl)}
-                >
-                  {uiText.text_d6aa12d559e9}
-                </Button>
-              </div>
+              )}
               <div className={uiClass(d.contactSearch)}>
                 <Search size={18} />
                 <NativeInput
@@ -339,10 +385,12 @@ function CreateConversation({ kind }: { kind: 'groups' | 'channels' }) {
                   {uiText.text_2a93eb7f06ce}
                 </Button>
               </div>
-              <p className={uiClass(s.muted)}>
-                {number(selected.size)}
-                {uiText.text_903259a26e2b}
-              </p>
+              {!group && (
+                <p className={uiClass(s.muted)}>
+                  {number(selected.size)}
+                  {uiText.text_903259a26e2b}
+                </p>
+              )}
               {contacts.isPending ? (
                 <LoadingSkeleton />
               ) : contacts.isError ? (
@@ -357,7 +405,7 @@ function CreateConversation({ kind }: { kind: 'groups' | 'channels' }) {
                   {contacts.data.items
                     .filter((item) => item.contactUserId !== session.user.id)
                     .map((contact) => (
-                      <label className={uiClass(s.selectContact)} key={contact.contactUserId}>
+                      <label className={d.memberChoice} key={contact.contactUserId}>
                         <NativeInput
                           type="checkbox"
                           disabled={busy || !!frozen}
@@ -370,6 +418,11 @@ function CreateConversation({ kind }: { kind: 'groups' | 'channels' }) {
                               return next;
                             })
                           }
+                        />
+                        <ProfileAvatar
+                          name={contact.savedName || contact.profile.displayName}
+                          photo={contact.profile.profilePhoto}
+                          className={d.recipientAvatar}
                         />
                         <span>
                           {contact.savedName || contact.profile.displayName}
@@ -417,6 +470,220 @@ function CreateConversation({ kind }: { kind: 'groups' | 'channels' }) {
           {frozen && <p className={uiClass(s.muted)}>{uiText.text_ca7549e86e0e}</p>}
         </>
       )}
+    </V5Scene>
+  );
+}
+
+/** Only saved account contacts are searched here; public usernames stay in MSG-02. */
+function NewMessage() {
+  const { session, call } = usePersonal();
+  const router = useRouter(),
+    search = useSearchParams();
+  const cache = useQueryClient();
+  const [picker, setPicker, ready] = useViewState(
+    'makan:draft:new-message:' + session.user.id,
+    { draft: '', query: '', page: 1 },
+    (value): value is { draft: string; query: string; page: number } => {
+      if (!value || typeof value !== 'object') return false;
+      const item = value as Record<string, unknown>;
+      return (
+        typeof item.draft === 'string' &&
+        item.draft.length <= 100 &&
+        typeof item.query === 'string' &&
+        item.query.length <= 100 &&
+        typeof item.page === 'number' &&
+        Number.isInteger(item.page) &&
+        item.page > 0
+      );
+    },
+  );
+  const { draft, query, page } = picker;
+  const [busy, setBusy] = useState(false),
+    [error, setError] = useState<unknown>();
+  const lock = useRef(false);
+  const returnPath = messagingReturnPath(search.get('from'));
+  const from = new URLSearchParams({ from: returnPath });
+  const pickerUrl = '/personal/messages/new?kind=direct&' + from;
+  const status = usePersonalApi<components['schemas']['MessagingStatusResult']>(
+    '/api/v1/me/messaging-status',
+  );
+  const contacts = usePersonalApi<components['schemas']['UserContactPageResult']>(
+    '/api/v1/contacts?' +
+      new URLSearchParams({ page: String(page), pageSize: '30', favoritesOnly: 'false', q: query }),
+    { enabled: ready },
+  );
+  const rows = contacts.data?.items
+    .map((contact) => ({
+      name: contact.savedName || contact.profile.displayName,
+      profile: contact.profile,
+    }))
+    .filter((row) => row.profile.userId !== session.user.id)
+    .sort((a, b) => a.name.localeCompare(b.name, 'fa'));
+  const canStart = status.data?.allowedActions.some(
+    (action) => action === 'CreateDirect' || action === 'CreateDirectWithAuthorizedRelationship',
+  );
+  async function start(profile: components['schemas']['MessagingPublicProfileResult']) {
+    if (lock.current || !canStart || !profile.canStartDirect) return;
+    lock.current = true;
+    setBusy(true);
+    setError(undefined);
+    try {
+      const receipt = await startPersonalConversation(call, profile.userId);
+      await cache.invalidateQueries({ queryKey: ['personal', session.user.id, 'account'] });
+      router.push('/personal/messages/' + receipt.conversationId + '?' + from);
+    } catch (cause) {
+      setError(cause);
+    } finally {
+      lock.current = false;
+      setBusy(false);
+    }
+  }
+  if (search.get('view') === 'add')
+    return (
+      <ContactPhoneForm
+        onBack={() => router.replace(pickerUrl, { scroll: false })}
+        onSaved={async () => {
+          await cache.invalidateQueries({
+            predicate: (entry) =>
+              entry.queryKey[0] === 'personal' &&
+              entry.queryKey[1] === session.user.id &&
+              entry.queryKey[2] === 'account' &&
+              String(entry.queryKey[3]).startsWith('/api/v1/contacts'),
+          });
+          router.replace(pickerUrl, { scroll: false });
+        }}
+      />
+    );
+  return (
+    <V5Scene
+      id="MSG-03"
+      title={uiText.v71Ui.newMessage}
+      back={returnPath}
+      kind="list"
+      deep
+      headerTools={<></>}
+    >
+      <section className={d.recipientPicker} data-recipient-picker>
+        <form
+          className={d.recipientSearch}
+          role="search"
+          onSubmit={(event) => {
+            event.preventDefault();
+            setPicker((previous) => ({ ...previous, query: previous.draft.trim(), page: 1 }));
+          }}
+        >
+          <SearchField
+            aria-label={uiText.v71Ui.searchContacts}
+            placeholder={uiText.v71Ui.searchContacts}
+            value={draft}
+            maxLength={100}
+            onChange={(event) =>
+              setPicker((previous) => ({ ...previous, draft: event.target.value }))
+            }
+            onClear={() => setPicker({ draft: '', query: '', page: 1 })}
+            action={
+              <Button
+                type="submit"
+                variant="ghost"
+                size="icon"
+                aria-label={uiText.text_3fb47eb71ac7}
+              >
+                <Search size={20} aria-hidden="true" />
+              </Button>
+            }
+          />
+        </form>
+        {!query && !draft && (
+          <V4List>
+            <V4Row
+              title={uiText.v71Ui.newGroup}
+              icon={<Users />}
+              href={'/personal/messages/new?kind=groups&' + from}
+            />
+            <V4Row
+              title={uiText.v71Ui.newChannel}
+              icon={<Megaphone />}
+              href={'/personal/messages/new?kind=channels&' + from}
+            />
+            <V4Row
+              title={uiText.v71Ui.newContact}
+              icon={<UserPlus />}
+              href={pickerUrl + '&view=add'}
+            />
+          </V4List>
+        )}
+        <h2 className={d.letter}>{uiText.v71Ui.contacts}</h2>
+        {!!error && <ErrorState error={error} />}
+        {status.isError ? (
+          <ErrorState error={status.error} onRetry={() => void status.refetch()} />
+        ) : status.data && !canStart ? (
+          <p role="status">{messagingNextLabels[status.data.nextAction]}</p>
+        ) : null}
+        {contacts.isPending ? (
+          <LoadingSkeleton />
+        ) : contacts.isError ? (
+          <ErrorState error={contacts.error} onRetry={() => void contacts.refetch()} />
+        ) : !rows?.length ? (
+          <>
+            <EmptyState title={uiText.text_c8acf4fa9c84} />
+            <Button variant="outline" asChild>
+              <Link href={pickerUrl + '&view=add'}>
+                <UserPlus size={20} />
+                {uiText.v71Ui.newContact}
+              </Link>
+            </Button>
+          </>
+        ) : (
+          <div>
+            {rows.map((row, index) => (
+              <div key={row.profile.userId}>
+                {(index === 0 ||
+                  rows[index - 1].name.trim().charAt(0) !== row.name.trim().charAt(0)) && (
+                  <h3 className={d.letter}>{row.name.trim().charAt(0)}</h3>
+                )}
+                <button
+                  type="button"
+                  className={d.recipient}
+                  disabled={busy || !canStart || !row.profile.canStartDirect}
+                  onClick={() => void start(row.profile)}
+                >
+                  <ProfileAvatar
+                    name={row.name}
+                    photo={row.profile.profilePhoto}
+                    className={d.recipientAvatar}
+                  />
+                  <span>
+                    <strong dir="auto">{row.name}</strong>
+                    <small>
+                      <bdi dir="ltr">@{row.profile.username}</bdi>
+                    </small>
+                  </span>
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
+        <div className={d.recipientPaging}>
+          {page > 1 && (
+            <Button
+              variant="ghost"
+              disabled={contacts.isFetching}
+              onClick={() => setPicker((previous) => ({ ...previous, page: previous.page - 1 }))}
+            >
+              {uiText.text_88e65319d694}
+            </Button>
+          )}
+          {contacts.data?.hasMore && (
+            <Button
+              variant="ghost"
+              disabled={contacts.isFetching}
+              onClick={() => setPicker((previous) => ({ ...previous, page: previous.page + 1 }))}
+            >
+              {uiText.text_12e9b2eceeab}
+            </Button>
+          )}
+        </div>
+      </section>
     </V5Scene>
   );
 }

@@ -14,6 +14,7 @@ test('profile opens its account payment history without loading the sales catalo
   request,
 }) => {
   await page.goto('/personal/profile');
+  await page.getByRole('link', { name: new RegExp('^' + copy.v6Ui.plansPayments) }).click();
   await page.getByRole('link', { name: new RegExp(copy.serverAlignedUi.payments) }).click();
   await expect(page).toHaveURL(/\/personal\/subscription\?view=payments$/);
   await expect(
@@ -141,7 +142,11 @@ test('a lost order acknowledgment is replayed after reload with its frozen body 
   await request.post(fixture + '/__test__/payments', {
     data: { noAttempt: true, lostCreateAck: true, emptyCatalogAfterLost: true },
   });
-  await page.goto('/personal/subscription');
+  await page.goto('/personal/subscription?view=plans');
+  await page
+    .getByRole('button', { name: /^بررسی پلن / })
+    .first()
+    .click();
   await page
     .getByRole('combobox', { name: 'پلن', exact: true })
     .selectOption('00000000-0000-4000-8000-000000000981');

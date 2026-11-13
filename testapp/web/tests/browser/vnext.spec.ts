@@ -256,7 +256,11 @@ test('an unavailable payment quote never enables order creation', async ({
 }) => {
   await request.post(fixture + '/__test__/vnext', { data: { paymentUnavailable: true } });
   await login(context, 'Personal', false);
-  await page.goto('/personal/subscription');
+  await page.goto('/personal/subscription?view=plans');
+  await page
+    .getByRole('button', { name: /^بررسی پلن / })
+    .first()
+    .click();
   await page
     .getByRole('combobox', { name: 'پلن', exact: true })
     .selectOption({ label: 'پلن آزمون محلی · ۱۰۰ تومان' });

@@ -1,3 +1,4 @@
+import { v6Ui as v6 } from '../../src/content/fa';
 import { v5Lessons as lessons, v5Assignments as assignment } from '../../src/content/fa';
 import { selectParentChild } from './parent-controls';
 import { mkdir, writeFile } from 'node:fs/promises';
@@ -35,7 +36,7 @@ test('current Next product geometry and authoring flows at the three V5 viewport
       await expect(destinations.nth(index)).toHaveAccessibleName(name);
     }
     const header = await page.getByRole('banner').boundingBox();
-    expect(header!.height).toBeGreaterThanOrEqual(width < 768 ? 90 : width < 1200 ? 88 : 94);
+    expect(header!.height).toBeGreaterThanOrEqual(width < 768 ? 72 : 76);
     expect(header!.height).toBeLessThan(180);
     await page.screenshot({ path: `test-results/reference-match/S01-actual-${width}.png` });
     metrics.push({
@@ -126,7 +127,9 @@ test('workspace selection is explicit and a Student cannot author a class assign
   await login(context, 'Student', false);
   await page.goto('/personal/workspaces');
   await expect(
-    page.locator('[data-workspace-choices]').getByRole('button', { name: /حساب شخصی/ }),
+    page
+      .locator('[data-school-context-picker]')
+      .getByRole('button', { name: v6.personalSpace, exact: true }),
   ).toHaveCount(0);
   for (const [width, height] of [
     [390, 844],
@@ -136,11 +139,9 @@ test('workspace selection is explicit and a Student cannot author a class assign
     await page.setViewportSize({ width, height });
     await page.screenshot({ path: `test-results/reference-match/A04-actual-${width}.png` });
   }
-  await page
-    .locator('[data-workspace-choices]')
-    .getByRole('button', { name: /آموزشگاه آفتاب/ })
-    .click();
-  await expect(page).toHaveURL(/\/personal$/);
+  await page.getByRole('radio', { name: /دانش‌آموز/ }).check();
+  await page.getByRole('button', { name: v6.enterRole, exact: true }).click();
+  await expect(page).toHaveURL(/\/personal\/education$/);
   await expect(page.getByRole('heading', { name: 'آموزشگاه', exact: true })).toBeVisible();
   await page.goto(`/personal/education/classes/${ids.class}/assignments/new`);
   await expect(page.getByRole('main').getByRole('alert')).toContainText('دسترسی محدود است');
@@ -173,7 +174,7 @@ test('Parent sees only the selected child dashboard and Manager uses the referen
   }
   await login(context, 'Manager');
   await page.goto('/personal/education');
-  await expect(page.getByRole('heading', { name: 'آموزشگاه', exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'مدیریت آموزشگاه', exact: true })).toBeVisible();
   const sections = await schoolSections(page);
   await expect(sections.getByRole('link', { name: 'اعضا', exact: true })).toBeVisible();
   await page.keyboard.press('Escape');
@@ -227,7 +228,9 @@ test('public introduction and phone sign-in follow the PDF without owner navigat
   ]) {
     await page.setViewportSize({ width, height });
     await page.goto('/welcome');
-    await expect(page.getByRole('heading', { name: /یادگیری،.*کنار آدم‌های شما/ })).toBeVisible();
+    await expect(
+      page.getByRole('heading', { name: 'یادگیری و ارتباط در کنار هم', exact: true }),
+    ).toBeVisible();
     await page.screenshot({ path: `test-results/reference-match/W01-actual-${width}.png` });
     await page.goto('/enter');
     await expect(page.getByLabel('شماره همراه', { exact: true })).toBeVisible();
@@ -245,9 +248,7 @@ test('desktop inbox restores only a previously opened, currently filtered conver
   await login(context, 'Student', false);
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto('/personal/messages');
-  await expect(
-    page.getByRole('complementary', { name: 'در همین زمینه', exact: true }),
-  ).toBeVisible();
+  await expect(page.locator('.rx-context-panel')).toHaveCount(0);
   await page
     .getByLabel('فهرست گفتگوها', { exact: true })
     .getByRole('link')
@@ -257,14 +258,16 @@ test('desktop inbox restores only a previously opened, currently filtered conver
   await page.locator('aside').getByRole('link', { name: 'پیام‌ها', exact: true }).click();
   await expect(page).toHaveURL(/\/personal\/messages$/);
   await expect(page.getByRole('textbox', { name: 'متن پیام', exact: true })).toBeVisible();
-  await page
-    .getByRole('navigation', { name: 'نوع گفتگوها' })
-    .getByRole('button', { name: 'گروه‌ها', exact: true })
-    .click();
+  // V7 keeps the compact chat sidebar focused on search. Back exposes the full inbox controls.
+  await page.getByRole('banner').getByRole('link', { name: 'بازگشت', exact: true }).click();
+  await expect(page).toHaveURL(/list=1/);
+  await expect(page.getByRole('textbox', { name: 'متن پیام', exact: true })).toHaveCount(0);
+  await page.getByRole('button', { name: 'ایجاد گفت‌وگو یا مخاطب', exact: true }).click();
+  await page.getByRole('menuitem', { name: 'گروه‌ها', exact: true }).click();
   await expect(page.getByRole('textbox', { name: 'متن پیام', exact: true })).toHaveCount(0);
   await page
     .getByRole('navigation', { name: 'نوع گفتگوها' })
-    .getByRole('button', { name: 'همه', exact: true })
+    .getByRole('button', { name: 'شخصی', exact: true })
     .click();
   await expect(page.getByRole('textbox', { name: 'متن پیام', exact: true })).toBeVisible();
   for (const [width, height] of [

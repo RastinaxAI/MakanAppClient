@@ -1,54 +1,50 @@
-:global(.rx-root.auth[data-auth-view='welcome']) .header {
+:global([data-auth-view='welcome']) .viewport > :global(.rx-workspace) {
+  max-width: 1184px;
+}
+.header > img {
+  width: 32px;
+  height: 32px;
+}
+:global([data-auth-view='welcome']) .content {
+  width: 100%;
+  max-width: 1184px;
+}
+.lead {
+  display: flex;
+  flex-direction: column;
   align-items: flex-start;
-  min-height: 98px;
+  gap: 8px;
+  padding: 12px 0 6px;
 }
-:global(.rx-root.auth[data-auth-view='welcome']) .header h1 {
-  text-align: start;
+.lead h2 {
+  font-size: calc(22px * var(--text-scale, 1));
+  font-weight: 800;
+  line-height: 1.7;
 }
-:global(.rx-root.auth[data-auth-view='welcome']) .viewport {
-  align-items: flex-start;
-}
-.content {
-  width: 440px;
-  max-width: 100%;
-}
-.content > img:global(.brand-mark) {
-  align-self: flex-start;
-  width: 24px;
-  height: 24px;
-  padding: 0;
-}
-.content > h2 {
-  font-size: calc(36px * var(--text-scale, 1));
-  line-height: 1.6;
-  text-align: start;
-  margin: 0;
-}
-.content > p:not(:global(.tagline)) {
-  font-size: calc(16px * var(--text-scale, 1));
+.lead p {
   color: var(--muted);
+  font-size: calc(13px * var(--text-scale, 1));
   line-height: 1.95;
-  text-align: start;
-  margin: 18px 0 30px;
 }
-.content > p:global(.tagline) {
-  font-size: calc(11px * var(--text-scale, 1));
-  line-height: 1.9;
-  text-align: center;
-  margin: 0;
+.mark {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  margin-bottom: 6px;
+  border-radius: 14px;
+  background: var(--primary-soft);
+  color: var(--accent);
 }
-@media (min-width: 768px) {
-  :global(.rx-root.auth[data-auth-view='welcome']) .viewport > :global(.rx-workspace) {
-    margin-block: auto;
-  }
+.start {
+  margin-top: 12px;
+  width: 100%;
 }
-@media (min-width: 768px) and (max-width: 1199px) {
-  :global(.rx-root.auth[data-auth-view='welcome']) .header {
-    min-height: 96px;
-  }
+.startCard > p {
+  color: var(--text);
 }
-@media (max-width: 767px) {
-  :global(.rx-root.auth[data-auth-view='welcome']) .header {
-    min-height: 90px;
+@container workspace (min-width: 640px) {
+  .lead h2 {
+    font-size: calc(26px * var(--text-scale, 1));
   }
 }

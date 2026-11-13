@@ -26,20 +26,20 @@ for (const theme of ['light', 'dark']) {
       const badge = inbox.getByLabel('۲ پیام خوانده‌نشده', { exact: true });
       await expect(badge).toHaveText('۲');
       expect(await badge.evaluate((el) => getComputedStyle(el).color)).not.toBe('rgba(0, 0, 0, 0)');
-      const compose = page.getByRole('button', { name: 'ایجاد گفت‌وگو یا مخاطب' });
-      await compose.click();
+      const more = page.getByRole('button', { name: 'بیشترِ فهرست پیام‌ها', exact: true });
+      await more.click();
       await expect(page.getByRole('menuitem')).toHaveText([
-        'ایجاد گروه',
-        'ایجاد کانال',
-        'مخاطبین',
-        'پوشه‌های من',
-        'گفتگوهای مستقیم',
-        'تنظیمات پیام‌رسان',
-        'آرشیو',
         'پیام‌های ذخیره‌شده',
+        'بایگانی',
+        'پوشه‌ها',
+        'تنظیمات پیام‌رسان',
       ]);
       await page.keyboard.press('Escape');
-      await expect(compose).toBeFocused();
+      await expect(more).toBeFocused();
+      await page.getByRole('link', { name: 'پیام جدید', exact: true }).click();
+      await expect(page.getByRole('heading', { name: 'پیام جدید', exact: true })).toBeVisible();
+      await expect(page.getByRole('link', { name: 'گروه جدید', exact: true })).toBeVisible();
+      await page.getByRole('link', { name: 'بازگشت', exact: true }).click();
       await mkdir(reviewPath('output/review/telegram-messenger'), { recursive: true });
       await page.evaluate(() => document.fonts.ready);
       await page.screenshot({
@@ -56,9 +56,10 @@ for (const theme of ['light', 'dark']) {
       if (theme === 'light' && width === 390) await captureExactState(page, ['MK-36']);
       const ownBox = await outgoing.boundingBox(),
         peerBox = await incoming.boundingBox();
-      expect(ownBox!.x).toBeLessThan(peerBox!.x); // RTL: your messages remain on the left.
+      // V7: own messages are on the left; incoming RTL messages retain their sender on the right.
+      expect(ownBox!.x).toBeLessThan(peerBox!.x);
       expect(await outgoing.evaluate((el) => getComputedStyle(el).backgroundColor)).toBe(
-        theme === 'dark' ? 'rgb(27, 49, 86)' : 'rgb(234, 242, 255)',
+        'rgba(0, 0, 0, 0)',
       );
       const room = page.locator('[data-message-room]');
       expect(await room.evaluate((el) => getComputedStyle(el).backgroundImage)).toBe('none');
@@ -87,10 +88,9 @@ for (const theme of ['light', 'dark']) {
       await page.keyboard.press('Escape');
       await page.getByRole('button', { name: 'افزودن پیوست', exact: true }).click();
       await expect(page.getByRole('menuitem')).toHaveText([
-        'دوربین',
-        'عکس از گالری',
-        'ویدئو از گالری',
         'فایل از دستگاه',
+        'دوربین',
+        'ضبط پیام صوتی',
       ]);
       if (theme === 'light' && width === 390)
         await captureExactState(page, ['MK-236'], '', {
@@ -145,7 +145,7 @@ test('chat survives live resizing and attachment failure retains both file and c
     await dialog
       .getByRole('button', { name: 'ارسال ۱ پیوست', exact: true })
       .evaluate((el) => getComputedStyle(el).backgroundColor),
-  ).toBe('rgb(21, 111, 238)');
+  ).toBe('rgb(13, 94, 204)');
   await request.post(fixture + '/__test__/fault', {
     data: { path: '/api/v1/files', method: 'POST', status: 503 },
   });
@@ -213,7 +213,7 @@ test('messenger directory, creation and settings pages remain usable above navig
       window.dispatchEvent(new Event('makan-theme-changed'));
     }, theme);
     for (const [path, name] of [
-      ['/personal/contacts', 'مخاطبین شما'],
+      ['/personal/contacts', 'مخاطبین'],
       ['/personal/messages/new?kind=groups', 'ساخت گروه'],
       ['/personal/messages/new?kind=channels', 'ساخت کانال'],
       ['/personal/settings/privacy', 'حریم خصوصی'],
@@ -246,14 +246,12 @@ test('messenger directory, creation and settings pages remain usable above navig
       }
     }
   }
-  await page.goto('/personal/contacts');
-  await page.getByRole('button', { name: 'مخاطب جدید', exact: true }).click();
+  await page.goto('/personal/messages?q=%40maryam.rezaei');
   await page
-    .getByRole('textbox', { name: 'شماره یا نام کاربری مخاطب', exact: true })
-    .fill('@maryam.rezaei');
-  await page.getByRole('button', { name: 'پیدا کردن مخاطب', exact: true }).click();
-  await expect(page.getByRole('button', { name: 'شروع گفت‌وگو', exact: true })).toBeEnabled();
-  await page.getByRole('button', { name: 'شروع گفت‌وگو', exact: true }).click();
+    .locator('[data-main-people-results]')
+    .getByRole('link', { name: 'مشخصات مریم رضایی', exact: true })
+    .click();
+  await page.getByRole('button', { name: 'شروع گفتگوی شخصی', exact: true }).click();
   await expect(page.getByRole('textbox', { name: 'متن پیام', exact: true })).toBeVisible();
 });
 

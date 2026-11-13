@@ -5,12 +5,12 @@ import { uiClass } from '@/components/v5/classes';
 
 import * as uiText from '@/content/fa';
 import { V5Scene } from '@/components/v5/scene';
+import { ViewTabs } from '@/components/ui/tabs';
 import { useContext, useEffect, useId, useMemo, useRef, useState, type ReactNode } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useInfiniteQuery, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
-  Files,
   Images,
   Image as ImageIcon,
   Users,
@@ -27,16 +27,16 @@ import {
   Bell,
   Search,
   Video,
-  type LucideIcon,
+  Files,
+  Pin,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
-import { V4Hero, V4List, V4Row } from '@/components/v4/page';
+import { V4List, V4Row } from '@/components/v4/page';
 import {
   SceneMenuClose,
   useSceneMenuTools,
   useSceneContextSummary,
-  useSceneFormAction,
 } from '@/components/v5/form-actions';
 import { useViewState } from '@/components/hooks/use-view-state';
 import { contextSignature } from '@/lib/client-surface';
@@ -50,8 +50,9 @@ import { usePersonal, usePersonalApi } from '../provider';
 import { findConversationSummary, isManagedConversation } from './summary';
 import { conversationRoleLabels, conversationTitle } from './model';
 import { MessageAttachment } from './media';
+import { safeImagePreview } from './media-model';
 import { useMessagingLive } from './live';
-import { OfficialBadge, useOfficialConversationAccess } from './official';
+import { OfficialBadge, OfficialIdentity, useOfficialConversationAccess } from './official';
 import c from './conversation-pages.module.css';
 import { ConversationInviteLinks } from './invite-links';
 import { ConversationTopics } from './topics';
@@ -64,8 +65,14 @@ import {
 } from './management-policy';
 import { MessagingSurface } from './messaging-surface';
 import { ProfileAvatar } from '../profile-photo';
-import { ConversationPhotoEditor } from './conversation-photo';
-import { ConversationInfoEditor, AddConversationMember, MemberManagement } from './management';
+import { ConversationPhotoEditor, ConversationAvatar } from './conversation-photo';
+import { MessengerSearchResults } from './search';
+import {
+  ConversationInfoEditor,
+  AddConversationMember,
+  MemberManagement,
+  ConversationInteractionProvider,
+} from './management';
 import { SettingRow, UnavailableSetting, MuteAction } from './conversation-controls';
 type S = components['schemas'];
 export type ConversationSection =
@@ -79,6 +86,24 @@ export type ConversationSection =
   | RichSection;
 const route = (id: string) => '/personal/messages/' + id;
 export function ConversationPage({ id, section }: { id: string; section: ConversationSection }) {
+  const { session } = usePersonal();
+  return (
+    <ConversationInteractionProvider
+      key={
+        session.user.id +
+        ':' +
+        session.context.sessionId +
+        ':' +
+        id +
+        ':' +
+        (section === 'members' ? 'media' : section)
+      }
+    >
+      <ConversationPageContent id={id} section={section} />
+    </ConversationInteractionProvider>
+  );
+}
+function ConversationPageContent({ id, section }: { id: string; section: ConversationSection }) {
   const { session, call } = usePersonal();
   const q = useQuery({
     queryKey: ['personal', session.user.id, session.revision, 'conversation-summary', id],
@@ -132,15 +157,6 @@ function ResolvedConversationPage({
   if (!access.ready) return <LoadingSkeleton />;
   if (['poll-new', 'quiz-new', 'checklist-new', 'scheduled'].includes(section))
     return <ConversationRichTools id={id} summary={summary} section={section as RichSection} />;
-  const tabs: [ConversationSection, string, LucideIcon][] = [
-    ['info', uiText.text_0ac642a80e31, MessageCircle],
-    ['media', uiText.text_563cba00d087, Files],
-  ];
-  if (isManagedConversation(summary.type))
-    tabs.push(
-      ['members', uiText.text_102f79b3f87c, Users],
-      ['settings', uiText.navigation_settings, Settings2],
-    );
   const channel = summary.type === 'Channel';
   const scene =
     section === 'info'
@@ -154,7 +170,7 @@ function ResolvedConversationPage({
           ? 'MK-198'
           : 'MK-195'
         : section === 'members'
-          ? 'MK-206'
+          ? 'MK-239'
           : section === 'media'
             ? 'MK-239'
             : section === 'invites'
@@ -193,7 +209,11 @@ function ResolvedConversationPage({
       <ConversationEditorAction.Provider value={setEditorAction}>
         <V5Scene
           id={scene}
-          title={titles[section] || conversationTitle(summary)}
+          title={
+            ['members', 'media'].includes(section)
+              ? uiText.messengerPdf.conversationLibrary
+              : titles[section] || conversationTitle(summary)
+          }
           actions={section === 'edit' ? editorAction : undefined}
           menu={
             section === 'info' ? (
@@ -219,15 +239,20 @@ function ResolvedConversationPage({
             section === 'invites' && ['new', 'requests'].includes(inviteView ?? '')
               ? route(id) + '/invites'
               : section === 'info'
-                ? route(id)
+                ? route(id) + '?focus=info'
                 : ['edit', 'members', 'media'].includes(section)
                   ? route(id) + '/info'
                   : route(id) + '/edit'
           }
         >
           <ConversationSubscription id={id} />
-          {section === 'info' && !isManagedConversation(summary.type) && (
-            <div className={uiClass(c.identityCard)}>
+          {section === 'info' && <OfficialIdentity summary={summary} />}
+          {['info', 'media'].includes(section) && !isManagedConversation(summary.type) && (
+            <div
+              className={uiClass(
+                `${c.identityCard} ${section === 'info' ? c.profileIdentity : ''}`,
+              )}
+            >
               <ProfileAvatar
                 photo={summary.otherParticipant?.profilePhoto}
                 name={conversationTitle(summary)}
@@ -255,42 +280,28 @@ function ResolvedConversationPage({
               </div>
             </div>
           )}
-          {section === 'info' &&
-            summary.type !== 'Saved' &&
-            !isManagedConversation(summary.type) && (
-              <div className={uiClass(c.quickActions)}>
-                <Link href={route(id)}>
-                  <MessageCircle size={23} />
-                  <span>{uiText.text_a5fc55f1f6ee}</span>
-                </Link>
-                <MuteAction summary={summary} />
-                <Link href={route(id) + '/media'}>
-                  <Files size={23} />
-                  <span>{uiText.text_6577ef461d82}</span>
-                </Link>
+          {['media', 'members'].includes(section) && isManagedConversation(summary.type) && (
+            <div className={c.libraryIdentity}>
+              <ConversationAvatar
+                id={id}
+                name={conversationTitle(summary)}
+                photo={managed.data?.conversationId === id ? managed.data.photo : summary.photo}
+                className={c.libraryAvatar}
+              />
+              <div>
+                <h2>{conversationTitle(summary)}</h2>
               </div>
-            )}
-          {['info', 'media', 'members'].includes(section) &&
-            !isManagedConversation(summary.type) && (
-              <nav className={uiClass(c.tabs)} aria-label={uiText.text_32cd42113754}>
-                {tabs.map(([key, title, Icon]) => (
-                  <Link
-                    href={route(id) + '/' + (key === 'settings' ? 'edit' : key)}
-                    aria-current={
-                      section === key || (section === 'edit' && key === 'settings')
-                        ? 'page'
-                        : undefined
-                    }
-                    key={key}
-                  >
-                    <Icon size={19} />
-                    {title}
-                  </Link>
-                ))}
-              </nav>
-            )}
-          {section === 'media' ? (
-            <ConversationMedia id={id} />
+            </div>
+          )}
+          {['media', 'members'].includes(section) ? (
+            <ConversationMedia
+              id={id}
+              managed={isManagedConversation(summary.type)}
+              initialTab={section === 'members' ? 'members' : 'media'}
+              members={managed.data?.conversationId === id ? managed.data : undefined}
+              membersError={managed.error}
+              retryMembers={() => void managed.refetch()}
+            />
           ) : isManagedConversation(summary.type) ? (
             ['settings', 'edit', 'invites', 'topics'].includes(section) && !access.canManage ? (
               <EmptyState title={uiText.text_12512b4e3543} />
@@ -313,33 +324,94 @@ function ConversationSubscription({ id }: { id: string }) {
   return null;
 }
 function DirectInfo({ summary }: { summary: S['ConversationSummaryResult'] }) {
+  const { call } = usePersonal();
+  const cache = useQueryClient();
+  const router = useRouter();
+  const [block, setBlock] = useState(false);
+  const blockTrigger = useRef<HTMLElement | null>(null);
+  const tools = useMemo(
+    () => (
+      <div className="stack">
+        <MuteAction summary={summary} />
+        <ArchiveAction id={summary.conversationId} archived={summary.isArchived} />
+      </div>
+    ),
+    [summary],
+  );
+  useSceneMenuTools(tools);
   return (
-    <section className={uiClass(c.panel)}>
-      {summary.type === 'Saved' && <h2>{uiText.text_f82c6fe06a24}</h2>}
+    <>
+      <V4List>
+        <V4Row
+          title={uiText.text_563cba00d087}
+          icon={<Files />}
+          href={route(summary.conversationId) + '/media'}
+        />
+        <V4Row
+          title={uiText.messengerPdf.pins}
+          icon={<Pin />}
+          href={route(summary.conversationId) + '/media?library=pins'}
+        />
+        <V4Row
+          title={uiText.messengerPdf.links}
+          icon={<Link2 />}
+          href={route(summary.conversationId) + '/media?library=links'}
+        />
+        {summary.type === 'Direct' && summary.otherParticipant && (
+          <V4Row
+            title={uiText.v7Ui.blockAccount}
+            icon={<Lock />}
+            onClick={() => {
+              blockTrigger.current = document.activeElement as HTMLElement;
+              setBlock(true);
+            }}
+          />
+        )}
+      </V4List>
       {summary.otherParticipant && (
-        <dl className={uiClass(c.profileFields)}>
-          <div>
-            <dt>{uiText.text_69c1e5b1fe20}</dt>
-            <dd dir="auto">{summary.otherParticipant.displayName}</dd>
-          </div>
-          {summary.otherParticipant.username && (
-            <div>
-              <dt>{uiText.text_173fec6019a6}</dt>
-              <dd>
-                <bdi dir="ltr">
-                  {uiText.text_c3641f8544d7}
-                  {summary.otherParticipant.username}
-                </bdi>
-              </dd>
-            </div>
-          )}
-        </dl>
+        <ConfirmAction
+          hideTrigger
+          open={block}
+          onOpenChange={setBlock}
+          trigger={uiText.v7Ui.blockAccount}
+          title={uiText.v7Ui.blockAccount}
+          description={uiText.v7Ui.blockAccountHint}
+          confirm={uiText.v7Ui.blockAccount}
+          destructive
+          onCloseAutoFocus={(event) => {
+            if (blockTrigger.current?.isConnected) {
+              event.preventDefault();
+              blockTrigger.current.focus();
+            }
+          }}
+          onConfirm={async () => {
+            const targetUserId = summary.otherParticipant?.userId;
+            if (!targetUserId) throw new ApiError(403);
+            const result = await call<S['UserBlockResult']>(
+              '/api/v1/messaging/blocks/' + targetUserId,
+              { method: 'POST', scope: 'account' },
+            );
+            if (
+              result.blockedUser.userId !== targetUserId ||
+              result.status !== 'Active' ||
+              !result.blockId ||
+              !result.version.trim()
+            )
+              throw new ApiError(502, { code: 'CONTRACT_MISMATCH' });
+            router.replace('/personal/messages');
+            await cache.invalidateQueries({
+              predicate: (query) =>
+                query.queryKey.some(
+                  (value) =>
+                    typeof value === 'string' &&
+                    (value.includes('conversation') || value.includes('/messaging/blocks')),
+                ),
+            });
+            return true;
+          }}
+        />
       )}
-      <p className={uiClass(c.note)}>
-        {summary.scope === 'Personal' ? uiText.text_6223ba2ea5ad : uiText.text_86b851ad9cd5}
-      </p>
-      <ArchiveAction id={summary.conversationId} archived={summary.isArchived} />
-    </section>
+    </>
   );
 }
 function ManagedPage({
@@ -377,6 +449,7 @@ function ManagedPage({
 function ConversationEditOptions({ value }: { value: S['ManagedConversationResult'] }) {
   const closeMenu = useContext(SceneMenuClose);
   const [photo, setPhoto] = useState(false);
+  const photoTrigger = useRef<HTMLDivElement>(null);
   const channel = value.type === 'Channel';
   const photoTitle = channel ? uiText.v5Product.channelPhoto : uiText.v5Product.groupPhoto;
   const photoAction = useMemo(
@@ -396,27 +469,26 @@ function ConversationEditOptions({ value }: { value: S['ManagedConversationResul
   const tools = useMemo(
     () => (
       <div className={uiClass('stack')}>
-        {!channel && conversationCapability(value, 'canEditInfo') && <V4List>{photoAction}</V4List>}
         <ManagementRows value={value} />
       </div>
     ),
-    [channel, photoAction, value],
+    [value],
   );
   const inMenu = useSceneMenuTools(tools);
   return (
     <>
-      {channel && conversationCapability(value, 'canEditInfo') && <V4List>{photoAction}</V4List>}
+      {conversationCapability(value, 'canEditInfo') && (
+        <div ref={photoTrigger}>
+          <V4List>{photoAction}</V4List>
+        </div>
+      )}
       {!inMenu && tools}
       <Dialog open={photo} onOpenChange={setPhoto}>
         <DialogContent
           title={photoTitle}
           onCloseAutoFocus={(event) => {
-            if (!channel) {
-              event.preventDefault();
-              document
-                .querySelector<HTMLElement>('.v5-scene .rx-head button.rx-icon-button')
-                ?.focus();
-            }
+            event.preventDefault();
+            photoTrigger.current?.querySelector('button')?.focus();
           }}
         >
           <ConversationPhotoEditor value={value} />
@@ -562,23 +634,34 @@ function ManagedInfo({
   const inMenu = useSceneMenuTools(tools);
   return (
     <>
-      <V4Hero title={value.title}>
-        {(channel ? uiText.text_2db356b462dd : uiText.text_774668d4acc7) +
-          ' · ' +
-          (value.visibility === 'Public' ? uiText.text_526e310df41f : uiText.text_e205d3a7a33e)}
-      </V4Hero>
-      {channel && <p className={uiClass('policy')}>{uiText.text_779e272fcf42}</p>}
-      <V4List>
-        {rows.map(({ Icon, href, ...row }) => (
-          <V4Row
-            key={row.title}
-            {...row}
-            icon={<Icon />}
-            href={href || undefined}
-            onClick={!href ? () => setNotification(true) : undefined}
-          />
-        ))}
-      </V4List>
+      <div className={c.libraryIdentity}>
+        <ConversationAvatar
+          id={value.conversationId}
+          name={value.title}
+          photo={value.photo}
+          className={c.libraryAvatar}
+        />
+        <div>
+          <h2>{value.title}</h2>
+          {value.description && <p>{value.description}</p>}
+        </div>
+      </div>
+      <ConversationMedia
+        id={value.conversationId}
+        managed
+        initialTab="members"
+        members={value}
+        retryMembers={() =>
+          void cache.invalidateQueries({
+            queryKey: [
+              'personal',
+              session.user.id,
+              session.revision,
+              '/api/v1/conversations/' + value.conversationId,
+            ],
+          })
+        }
+      />
       {!inMenu && tools}
       <Dialog open={notification} onOpenChange={setNotification}>
         <DialogContent
@@ -692,7 +775,6 @@ function ConversationMembers({ id, value }: { id: string; value: S['ManagedConve
       ) : null,
     [value],
   );
-  const lifted = useSceneFormAction(addMember);
   const visible = (q.data?.items ?? []).filter(
     (member) =>
       (!admins || member.role !== 'Member') &&
@@ -707,9 +789,8 @@ function ConversationMembers({ id, value }: { id: string; value: S['ManagedConve
     })),
   );
   return (
-    <>
-      {!lifted && addMember}
-      <label className={uiClass('search')}>
+    <section className={c.members}>
+      <label className={uiClass(`search ${c.memberSearch}`)}>
         <Search size={19} />
         <NativeInput
           aria-label={uiText.v5Product.memberNameOrId}
@@ -719,6 +800,7 @@ function ConversationMembers({ id, value }: { id: string; value: S['ManagedConve
           onChange={(event) => setSearch(event.target.value)}
         />
       </label>
+      {addMember}
       <div
         className={uiClass(c.memberFilters)}
         role="group"
@@ -814,15 +896,52 @@ function ConversationMembers({ id, value }: { id: string; value: S['ManagedConve
           )}
         </>
       )}
-    </>
+    </section>
   );
 }
-function ConversationMedia({ id }: { id: string }) {
+type LibraryTab = 'members' | 'media' | 'pins' | 'links';
+function ConversationMedia({
+  id,
+  managed = false,
+  initialTab,
+  members,
+  membersError,
+  retryMembers,
+}: {
+  id: string;
+  managed?: boolean;
+  initialTab: LibraryTab;
+  members?: S['ManagedConversationResult'];
+  membersError?: unknown;
+  retryMembers: () => void;
+}) {
   const selectId = useId();
+  const params = useSearchParams();
+  const requested = params.get('library');
+  const tab: LibraryTab =
+    requested === 'pins' || requested === 'links' || requested === 'media'
+      ? requested
+      : requested === 'members' && managed
+        ? 'members'
+        : initialTab;
+  const [membersVisited, setMembersVisited] = useState(tab === 'members');
+  useEffect(() => {
+    if (tab === 'members') setMembersVisited(true);
+  }, [tab]);
+  const [draft, setDraft] = useState(params.get('q') ?? '');
+  const query = params.get('q') ?? '';
+  function update(tab: LibraryTab, query: string) {
+    const next = new URLSearchParams(params);
+    next.set('library', tab);
+    if (query) next.set('q', query);
+    else next.delete('q');
+    window.history.replaceState(null, '', window.location.pathname + '?' + next);
+  }
   const { session, call } = usePersonal();
   const [kind, setKind] = useState('');
   const q = useInfiniteQuery({
     queryKey: ['personal', session.user.id, session.revision, 'conversation-media', id, kind],
+    enabled: tab === 'media' && !query,
     initialPageParam: null as number | null,
     refetchInterval: 5000,
     queryFn: async ({ pageParam, signal }) => {
@@ -855,49 +974,132 @@ function ConversationMedia({ id }: { id: string }) {
           ) === i,
       ) ?? [];
   return (
-    <section className={uiClass(c.panel)}>
-      <div className={uiClass(c.filters)}>
-        <h2>{uiText.text_8b5bf435319d}</h2>
-        <div>
-          <label htmlFor={selectId}>{uiText.text_745ae2a160df}</label>
-          <NativeSelect id={selectId} value={kind} onChange={(ev) => setKind(ev.target.value)}>
-            <option value="">{uiText.text_85a801ba9df1}</option>
-            <option value="Image">{uiText.text_972d6b378a7b}</option>
-            <option value="Video">{uiText.text_8a1583a102ac}</option>
-            <option value="File">{uiText.text_d099cfd756e0}</option>
-          </NativeSelect>
-        </div>
-      </div>
-      {q.isPending ? (
-        <LoadingSkeleton />
-      ) : q.isError && !items.length ? (
-        <ErrorState error={q.error} onRetry={() => void q.refetch()} />
-      ) : (
-        <>
-          <div className={uiClass(c.media)}>
-            {items.length ? (
-              items.map((item) => (
-                <article key={item.sequence + ':' + item.attachment.fileAssetId}>
-                  <MessageAttachment conversationId={id} asset={item.attachment} />
-                  <small>{date(item.sentAtUtc, true)}</small>
-                </article>
-              ))
-            ) : (
-              <EmptyState title={uiText.text_648cc23ae875} />
-            )}
-          </div>
-          {q.isError && <ErrorState error={q.error} />}
-          {q.hasNextPage && (
-            <Button
-              disabled={q.isFetchingNextPage}
-              variant="outline"
-              onClick={() => void q.fetchNextPage()}
-            >
-              {q.isFetchingNextPage ? uiText.text_80516c4adbbe : uiText.text_12e9b2eceeab}
-            </Button>
+    <section className={c.library}>
+      <ViewTabs
+        value={tab}
+        onChange={(value) => update(value, query)}
+        label={uiText.messengerPdf.conversationLibrary}
+        prefix="conversation-library"
+        className={c.libraryTabs}
+        items={[
+          ...(managed ? [{ value: 'members' as const, label: uiText.text_102f79b3f87c }] : []),
+          ...(['media', 'pins', 'links'] as const).map((value) => ({
+            value,
+            label: uiText.messengerPdf[value],
+          })),
+        ]}
+      />
+      {membersVisited && managed && (
+        <div
+          hidden={tab !== 'members'}
+          className={c.libraryPanel}
+          role="tabpanel"
+          id="conversation-library-panel-members"
+          aria-labelledby="conversation-library-tab-members"
+        >
+          {members ? (
+            <ConversationMembers id={id} value={members} />
+          ) : membersError ? (
+            <ErrorState error={membersError} onRetry={retryMembers} />
+          ) : (
+            <LoadingSkeleton />
           )}
-        </>
+        </div>
       )}
+      <div
+        hidden={tab === 'members'}
+        className={c.libraryPanel}
+        role="tabpanel"
+        id={'conversation-library-panel-' + (tab === 'members' ? 'media' : tab)}
+        aria-labelledby={'conversation-library-tab-' + (tab === 'members' ? 'media' : tab)}
+      >
+        <form
+          className={c.librarySearch}
+          role="search"
+          onSubmit={(event) => {
+            event.preventDefault();
+            update(tab, draft.trim());
+          }}
+        >
+          <button type="submit" aria-label={uiText.text_3fb47eb71ac7}>
+            <Search size={16} />
+          </button>
+          <NativeInput
+            value={draft}
+            aria-label={uiText.messengerPdf.searchConversation}
+            placeholder={uiText.messengerPdf.searchConversation}
+            onChange={(event) => setDraft(event.target.value)}
+            maxLength={100}
+          />
+          {tab === 'media' && !query && (
+            <details className={c.libraryFilters}>
+              <summary role="button" aria-label={uiText.text_745ae2a160df}>
+                <Settings2 size={16} />
+              </summary>
+              <label htmlFor={selectId}>
+                {uiText.text_745ae2a160df}
+                <NativeSelect
+                  id={selectId}
+                  value={kind}
+                  onChange={(ev) => setKind(ev.target.value)}
+                >
+                  <option value="">{uiText.text_85a801ba9df1}</option>
+                  <option value="Image">{uiText.text_972d6b378a7b}</option>
+                  <option value="Video">{uiText.text_8a1583a102ac}</option>
+                  <option value="File">{uiText.text_d099cfd756e0}</option>
+                </NativeSelect>
+              </label>
+            </details>
+          )}
+        </form>
+        {tab === 'members' ? null : tab !== 'media' || !!query ? (
+          <MessengerSearchResults query={query} tab={tab} conversationId={id} />
+        ) : (
+          <>
+            {q.isPending ? (
+              <LoadingSkeleton />
+            ) : q.isError && !items.length ? (
+              <ErrorState error={q.error} onRetry={() => void q.refetch()} />
+            ) : (
+              <>
+                <div className={uiClass(c.mediaGrid)}>
+                  {items.length ? (
+                    items.map((item) => (
+                      <article
+                        key={item.sequence + ':' + item.attachment.fileAssetId}
+                        data-media-tile={
+                          safeImagePreview(item.attachment.contentType) ||
+                          item.attachment.contentType.startsWith('video/') ||
+                          undefined
+                        }
+                      >
+                        <MessageAttachment conversationId={id} asset={item.attachment} compact />
+                        <time className={c.mediaTimestamp} dateTime={item.sentAtUtc}>
+                          {date(item.sentAtUtc, true)}
+                        </time>
+                      </article>
+                    ))
+                  ) : (
+                    <div className={c.libraryEmpty}>
+                      <EmptyState title={uiText.text_648cc23ae875} />
+                    </div>
+                  )}
+                </div>
+                {q.isError && <ErrorState error={q.error} />}
+                {q.hasNextPage && (
+                  <Button
+                    disabled={q.isFetchingNextPage}
+                    variant="outline"
+                    onClick={() => void q.fetchNextPage()}
+                  >
+                    {q.isFetchingNextPage ? uiText.text_80516c4adbbe : uiText.text_12e9b2eceeab}
+                  </Button>
+                )}
+              </>
+            )}
+          </>
+        )}
+      </div>
     </section>
   );
 }

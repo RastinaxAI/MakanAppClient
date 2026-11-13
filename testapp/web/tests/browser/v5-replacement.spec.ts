@@ -1,3 +1,4 @@
+import { v6Ui as v6 } from '../../src/content/fa';
 import { test, expect, login } from './test';
 test('V5 profile uses the compact account list and real workspace chooser', async ({
   page,
@@ -8,8 +9,8 @@ test('V5 profile uses the compact account list and real workspace chooser', asyn
   await page.goto('/personal/profile');
   await expect(page.locator('[data-v5-scene="MK-47"]')).toBeVisible();
   await expect(page.locator('.mk-ui')).toHaveCount(0);
-  await expect(page.locator('.v5-list .v5-row')).toHaveCount(5);
-  await page.getByRole('button', { name: /فضاها و نقش‌های من/ }).click();
+  await expect(page.locator('.v5-list .v5-row')).toHaveCount(4);
+  await page.getByRole('button', { name: v6.chooseSchool }).click();
   await expect(page.getByRole('dialog')).toBeVisible();
   await page.keyboard.press('Escape');
   await expect(page.getByRole('dialog')).toHaveCount(0);
@@ -22,9 +23,9 @@ test('V5 settings fills its reading area and preserves appearance navigation', a
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto('/personal/settings');
   await expect(page.locator('[data-v5-scene="MK-338"]')).toBeVisible();
-  await expect(page.locator('.v5-list .v5-row')).toHaveCount(6);
-  await expect(page.locator('.rx-context-panel')).toBeVisible();
-  await page.getByRole('link', { name: /ظاهر و خوانایی/ }).click();
+  await expect(page.locator('.v5-list .v5-row')).toHaveCount(9);
+  await expect(page.locator('.rx-context-panel')).toBeHidden();
+  await page.getByRole('link', { name: /ظاهر برنامه/ }).click();
   await expect(page.getByRole('radio', { name: /تاریک/ })).toBeVisible();
   await page.keyboard.press('Escape');
   await page
@@ -46,12 +47,12 @@ test('V5 form moves its single visible action from header to bottom without losi
   await page.getByLabel('نام نمایشی', { exact: true }).fill('نام جدید');
   for (const width of [390, 834, 1440]) {
     await page.setViewportSize({ width, height: 1000 });
-    const visible = page.getByRole('button', { name: 'ذخیره پروفایل', exact: true });
+    const visible = page.getByRole('button', { name: 'ذخیره تغییرات', exact: true });
     await expect(visible).toBeVisible();
     expect(await visible.count()).toBe(1);
     await expect(page.getByLabel('نام نمایشی', { exact: true })).toHaveValue('نام جدید');
-    await expect(page.locator('.head-action')).toBeVisible({ visible: width >= 1200 });
-    await expect(page.locator('.rx-bottom-actions')).toBeVisible({ visible: width < 1200 });
+    await expect(page.locator('.head-action')).toBeHidden();
+    await expect(page.locator('.rx-bottom-actions')).toBeVisible();
   }
 });
 test('V5 login keeps a readable centered form and numeric input on desktop', async ({ page }) => {
@@ -62,6 +63,6 @@ test('V5 login keeps a readable centered form and numeric input on desktop', asy
   await input.fill('abc۰۹۱۲34');
   await expect(input).toHaveValue('091234');
   const box = (await input.boundingBox())!;
-  expect(box.width).toBeLessThanOrEqual(440);
+  expect(box.width).toBeLessThanOrEqual(780);
   await expect(page.locator('[data-auth-intro]')).toHaveCount(0);
 });

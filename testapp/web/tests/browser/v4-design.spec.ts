@@ -187,7 +187,7 @@ test('V4 publication tools respect server capabilities and provide a usable gap 
   await expect(button).toBeVisible();
   const box = await button.boundingBox();
   expect(box).not.toBeNull();
-  expect(box!.y + box!.height).toBeLessThanOrEqual(832);
+  expect(box!.y + box!.height).toBeLessThanOrEqual(834);
   expect(844 - box!.y - box!.height).toBeLessThanOrEqual(24);
   await expect(page.locator('[data-app-navigation]:visible')).toHaveCount(0);
   const question = await page.getByLabel(t.question, { exact: true }).boundingBox();

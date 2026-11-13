@@ -1,5 +1,25 @@
 import type { components } from '@/generated/api/schema';
 type S = components['schemas'];
+export function scheduledComposerKey(userId: string, sessionId: string, conversationId: string) {
+  return `makan:draft:scheduled:${userId}:${sessionId}:${conversationId}`;
+}
+/** Handoff stays out of the URL and expires; existing scheduled drafts are never overwritten. */
+export function readScheduledComposerDraft(raw: string | null, now: number) {
+  try {
+    const value = JSON.parse(raw ?? 'null');
+    return value &&
+      typeof value.text === 'string' &&
+      value.text.length <= 20000 &&
+      value.text.trim() &&
+      Number.isFinite(value.at) &&
+      value.at <= now &&
+      now - value.at <= 300000
+      ? (value.text as string)
+      : null;
+  } catch {
+    return null;
+  }
+}
 export function pollCommand(
   input: {
     question: string;

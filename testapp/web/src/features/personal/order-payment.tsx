@@ -10,6 +10,7 @@ import { paymentCopy as t } from '@/content/fa';
 import type { components } from '@/generated/api/schema';
 import { ApiError } from '@/lib/api/errors';
 import { date } from '@/lib/formatting';
+import { contextSignature } from '@/lib/client-surface';
 import { usePersonal, usePersonalApi } from './provider';
 import {
   acceptOrder,
@@ -40,11 +41,13 @@ export function OrderPayment({
   const organizationId = organization ? session.context.organizationId : null;
   const path = prefixFor(organization) + orderId;
   const q = usePersonalApi<S['OrderDto']>(path, { poll: 15000 });
-  const key = `makan:draft:payment:${session.user.id}:${session.revision}:${orderId}`;
+  const key = `makan:draft:payment:${session.user.id}:${organization ? contextSignature(session.context) : 'account'}:${orderId}`;
+  const legacyKey = useRef(`makan:draft:payment:${session.user.id}:${session.revision}:${orderId}`);
   const [pending, setPending, restored] = useViewState<PaymentIntent | null>(
     key,
     null,
     isPaymentIntent,
+    legacyKey.current,
   );
   const [error, setError] = useState<unknown>();
   const [busy, setBusy] = useState(false),
@@ -116,6 +119,7 @@ export function OrderPayment({
       });
       const result = acceptPayment(value, 'InitiatePaymentResult', orderId, organizationId);
       sessionStorage.removeItem(key);
+      sessionStorage.removeItem(legacyKey.current);
       if (!alive.current) return false;
       setPending(null);
       setAttemptId(result.paymentAttempt.paymentAttemptId);

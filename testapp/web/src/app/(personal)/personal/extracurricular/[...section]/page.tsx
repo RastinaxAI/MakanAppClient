@@ -1,4 +1,4 @@
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 import { ExtracurricularRoute } from '@/features/extracurricular/connected';
 import { isExtracurricularPath } from '@/features/extracurricular/routes';
 export const dynamic = 'force-dynamic';
@@ -12,5 +12,7 @@ export default async function Page({
   const { section } = await params,
     { step } = await searchParams;
   if (!isExtracurricularPath(section)) notFound();
+  if (section.length === 1 && ['requests', 'invitations'].includes(section[0]))
+    redirect('/personal/extracurricular?tab=' + section[0]);
   return <ExtracurricularRoute section={section} step={step} />;
 }

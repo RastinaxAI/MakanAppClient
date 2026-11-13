@@ -21,6 +21,16 @@
   min-width: 0;
   margin: auto;
 }
+.portal:has(> [data-exam-room]) {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  max-width: none;
+}
 .portal .heading h1 {
   font-size: calc(26px * var(--text-scale, 1));
   line-height: 1.6;
@@ -737,4 +747,115 @@
 .lessonText {
   white-space: pre-wrap;
   overflow-wrap: anywhere;
+}
+.portal :global(.attendance-status) {
+  flex: 0 1 110px;
+  min-width: 88px;
+  max-width: 110px;
+  min-height: 48px;
+  padding: 8px;
+  border-radius: 9px;
+  background: var(--soft);
+  font-size: calc(13px * var(--text-scale, 1));
+}
+.attendanceContext {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  padding: 15px 16px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--surface);
+}
+.attendanceContext > svg {
+  color: var(--primary);
+  flex: none;
+}
+.attendanceContext > span {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+.attendanceContext b {
+  font-size: calc(14px * var(--text-scale, 1));
+  line-height: 1.9;
+}
+.attendanceContext small {
+  color: var(--muted);
+  font-size: calc(11px * var(--text-scale, 1));
+  line-height: 1.9;
+}
+.attendanceSummary {
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--surface);
+  min-width: 0;
+}
+.attendanceSummary h2 {
+  font-size: calc(15px * var(--text-scale, 1));
+  font-weight: 720;
+  line-height: 1.9;
+  margin-bottom: 8px;
+}
+.attendanceSession,
+.attendanceSummary summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 0;
+  min-height: 44px;
+  gap: 12px;
+  font-size: calc(13px * var(--text-scale, 1));
+  line-height: 1.85;
+}
+.attendanceSession {
+  padding-block: 10px;
+  border-bottom: 1px solid var(--line);
+}
+.attendanceSession > span,
+.attendanceSummary summary > span {
+  color: var(--muted);
+}
+.attendanceSession b {
+  text-align: end;
+}
+.attendanceSummary summary {
+  list-style: none;
+  cursor: pointer;
+  padding-block: 10px;
+}
+.attendanceSummary summary::-webkit-details-marker {
+  display: none;
+}
+.attendanceSummary summary b {
+  margin-inline-start: auto;
+  font-weight: 600;
+}
+.attendanceSummary summary svg {
+  flex: none;
+  color: var(--muted);
+}
+.attendanceSummary details[open] > [data-ui='search'] {
+  margin-top: 10px;
+}
+.attendancePolicy {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 14px;
+  background: var(--primary-soft);
+  font-size: calc(12px * var(--text-scale, 1));
+  line-height: 1.85;
+}
+.attendancePolicy svg {
+  flex: none;
+  color: var(--primary);
+}
+.attendancePolicy p {
+  margin: 0;
 }

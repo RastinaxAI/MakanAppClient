@@ -2,8 +2,17 @@ import { reviewPath } from './review-output';
 import { captureExactState } from './exact-state-capture';
 import { test, expect, login, fixture, origin } from './test';
 import { mkdir } from 'node:fs/promises';
+import type { Page } from '@playwright/test';
 const group = '00000000-0000-4000-8000-000000000950';
 const base = '/personal/messages/' + group;
+async function creationEdit(page: Page, kind = 'groups') {
+  if (kind === 'groups')
+    await page
+      .getByRole('banner')
+      .getByRole('button', { name: 'گزینه‌های بیشتر', exact: true })
+      .click();
+  return page.getByRole('button', { name: 'ویرایش', exact: true });
+}
 for (const kind of ['groups', 'channels'])
   test(`${kind}: two-step creation persists information and invited contacts, then creates once`, async ({
     page,
@@ -33,7 +42,7 @@ for (const kind of ['groups', 'channels'])
     await page.getByRole('checkbox').first().check();
     await page.reload();
     await expect(page.getByRole('checkbox').first()).toBeChecked();
-    await page.getByRole('button', { name: 'ویرایش', exact: true }).click();
+    await (await creationEdit(page, kind)).click();
     await expect(page.getByLabel('نام ' + label, { exact: true })).toHaveValue('گفتگوی جدید آزمون');
     await page.getByRole('button', { name: 'انتخاب افراد', exact: true }).click();
     state = await (await request.get(fixture + '/__test__/state')).json();
@@ -73,7 +82,8 @@ test('unknown creation failure retries the identical operation after reload, wit
   });
   await page.getByRole('button', { name: 'ساخت گروه', exact: true }).click();
   await expect(page.getByRole('main').getByRole('alert')).toBeVisible();
-  await expect(page.getByRole('button', { name: 'ویرایش', exact: true })).toBeDisabled();
+  await expect(await creationEdit(page)).toBeDisabled();
+  await page.keyboard.press('Escape');
   await page.reload();
   await expect(
     page.getByRole('button', { name: 'پیگیری همین درخواست', exact: true }),
@@ -112,21 +122,22 @@ test('owner edits information, adds a contact, changes administrator role and re
     .click();
   await page.getByRole('dialog').getByRole('link', { name: 'اعضا و مدیران', exact: true }).click();
   await page.getByRole('button', { name: 'دعوت فرد', exact: true }).click();
-  let dialog = page.getByRole('dialog');
+  let dialog = page.getByRole('dialog', { name: 'دعوت فرد', exact: true });
   await dialog.getByLabel('جستجوی عضو جدید').fill('Parent');
   await dialog.getByRole('button', { name: 'جستجو', exact: true }).click();
   await expect(dialog.getByText('کاربر آزمایشی Parent', { exact: true })).toBeVisible();
+  await dialog.getByRole('checkbox', { name: 'کاربر آزمایشی Parent', exact: true }).check();
   await request.post(fixture + '/__test__/fault', {
     data: { path: '/members', method: 'POST', status: 503 },
   });
-  await dialog.getByRole('button', { name: 'افزودن', exact: true }).click();
+  await dialog.getByRole('button', { name: 'دعوت ۱ نفر', exact: true }).click();
   await expect(dialog.getByRole('alert')).toBeVisible();
-  await dialog.getByRole('button', { name: 'افزودن', exact: true }).click();
+  await dialog.getByRole('button', { name: 'دعوت ۱ نفر', exact: true }).click();
   await expect(dialog).toHaveCount(0);
   await expect(page.getByRole('button', { name: 'دعوت فرد', exact: true })).toBeFocused();
   await page.getByRole('button', { name: 'صفحهٔ بعد', exact: true }).click();
   await page.getByRole('button', { name: 'مدیریت عضو آزمایشی دوم', exact: true }).click();
-  dialog = page.getByRole('dialog');
+  dialog = page.getByRole('dialog', { name: 'مدیریت عضو آزمایشی دوم', exact: true });
   await dialog.getByRole('button', { name: 'ارتقا به مدیر', exact: true }).click();
   await captureExactState(page, ['MK-207']);
 
@@ -174,7 +185,7 @@ test('unified inbox includes direct and official conversations without a persona
 }) => {
   await request.post(fixture + '/__test__/official-spaces', { data: {} });
   await login(context, 'Teacher');
-  await page.goto('/personal/messages');
+  await page.goto('/personal/messages?filter=All');
   const list = page.getByLabel('فهرست گفتگوها', { exact: true });
   await expect(list.getByText('استاد آزمایشی', { exact: true })).toHaveCount(0);
   await expect(list.getByText('دانشجوی آزمایشی', { exact: true })).toBeVisible();
@@ -215,7 +226,7 @@ test('unified inbox follows the server cursor and retains earlier conversations'
     data: { personal: 31, organization: 1 },
   });
   await login(context, 'Teacher');
-  await page.goto('/personal/messages');
+  await page.goto('/personal/messages?filter=All');
   const list = page.getByLabel('فهرست گفتگوها', { exact: true });
   await expect(list.getByText('گفتگوی حساب 1', { exact: true })).toBeVisible();
   await expect(list.getByText('گفتگوی حساب 31', { exact: true })).toHaveCount(0);
@@ -286,13 +297,18 @@ test('creation and member management remain usable in both themes across mobile 
       await page.getByRole('button', { name: 'صفحهٔ بعد', exact: true }).click();
     else await expect(page.getByRole('button', { name: 'صفحهٔ بعد', exact: true })).toBeDisabled();
     await page.getByRole('button', { name: 'مدیریت عضو آزمایشی دوم', exact: true }).click();
+    const memberDialog = page.getByRole('dialog', { name: 'مدیریت عضو آزمایشی دوم', exact: true });
+    await memberDialog.getByRole('button', { name: 'ارتقا به مدیر', exact: true }).click();
     for (const [width, height] of [
       [390, 844],
       [834, 1194],
       [1440, 1000],
     ]) {
       await page.setViewportSize({ width, height });
-      await expect(page.getByRole('dialog')).toBeInViewport();
+      await expect(memberDialog).toBeInViewport();
+      await expect(
+        memberDialog.getByRole('button', { name: 'تأیید تغییر', exact: true }),
+      ).toBeVisible();
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(
         true,
       );
@@ -334,7 +350,7 @@ test('a definitive invitation-required rejection preserves the draft and reopens
   );
   await expect(page.getByRole('checkbox').first()).toBeEnabled();
   await expect(page.getByRole('checkbox').first()).toBeChecked();
-  await page.getByRole('button', { name: 'ویرایش', exact: true }).click();
+  await (await creationEdit(page)).click();
   await expect(page.getByLabel('نام گروه', { exact: true })).toHaveValue('گروه نیازمند دعوت');
   const state = await (await request.get(fixture + '/__test__/state')).json();
   expect(
@@ -354,7 +370,7 @@ test('loading more remains clickable during a background inbox refresh and the i
     data: { personal: 31, organization: 1 },
   });
   await login(context, 'Teacher');
-  await page.goto('/personal/messages');
+  await page.goto('/personal/messages?filter=All');
   const list = page.getByLabel('فهرست گفتگوها', { exact: true });
   await expect(list.getByText('گفتگوی حساب 1', { exact: true })).toBeVisible();
   let release!: () => void;

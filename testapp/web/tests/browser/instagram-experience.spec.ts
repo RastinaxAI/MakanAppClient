@@ -38,7 +38,7 @@ for (const theme of ['light', 'dark']) {
           await expect(page.locator('html')).toHaveAttribute('data-theme', theme);
           if (area === 'education' && role === 'Student' && width < 768) {
             await expect(page.locator('[data-mk-view="MK-04"]')).toBeVisible();
-            await expect(page.getByRole('main')).toContainText('جلسهٔ بعدی');
+            await expect(page.getByRole('main')).toContainText('جلسه بعدی');
           }
           await expect(
             page.getByRole('dialog', { name: 'انتخاب فضای کار', exact: true }),
@@ -86,7 +86,7 @@ for (const theme of ['light', 'dark']) {
       await expect(page.locator('body')).toBeAttached();
       await expect(page.locator('html')).toHaveAttribute('data-theme', theme);
       expect(await page.locator('meta[name="theme-color"]').getAttribute('content')).toBe(
-        theme === 'dark' ? '#101a2b' : '#f5f8fe',
+        theme === 'dark' ? '#101824' : '#F2F5FA',
       );
     } finally {
       release();

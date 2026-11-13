@@ -4,6 +4,8 @@ import {
   checklistCommand,
   scheduleCommand,
   selectedPollOptions,
+  scheduledComposerKey,
+  readScheduledComposerDraft,
 } from '@/features/personal/messaging/rich-message-model';
 import { isClientOperation } from '@/lib/client-surface';
 import type { components } from '@/generated/api/schema';
@@ -108,4 +110,30 @@ describe('V4 rich messaging contracts and user intent', () => {
       isClientOperation('POST', '/api/v1/platform/personal-classes/{id}/academic-permissions'),
     ).toBe(false);
   });
+});
+
+it('scheduled-message handoff is account/session/conversation bound and rejects stale or malformed input', () => {
+  const now = 500000;
+  expect(scheduledComposerKey('a', 'session-1', 'chat')).not.toBe(
+    scheduledComposerKey('b', 'session-1', 'chat'),
+  );
+  expect(scheduledComposerKey('a', 'session-1', 'chat')).not.toBe(
+    scheduledComposerKey('a', 'session-2', 'chat'),
+  );
+  expect(scheduledComposerKey('a', 'session-1', 'chat')).not.toBe(
+    scheduledComposerKey('a', 'session-1', 'other'),
+  );
+  expect(
+    readScheduledComposerDraft(JSON.stringify({ text: 'متن محفوظ Latin', at: now - 1000 }), now),
+  ).toBe('متن محفوظ Latin');
+  for (const value of [
+    null,
+    'bad',
+    '{}',
+    JSON.stringify({ text: 'expired', at: now - 300001 }),
+    JSON.stringify({ text: 'future', at: now + 1 }),
+    JSON.stringify({ text: 'x'.repeat(20001), at: now }),
+    JSON.stringify({ text: ' ', at: now }),
+  ])
+    expect(readScheduledComposerDraft(value, now)).toBeNull();
 });

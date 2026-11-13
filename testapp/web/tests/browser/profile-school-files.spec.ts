@@ -38,28 +38,34 @@ test('profile exposes identity and age below spaces and moves preference menus t
   await expect(page).toHaveURL(/\/profile\/preferences$/);
   await expect(page.getByRole('heading', { name: 'تنظیمات', exact: true, level: 1 })).toBeVisible();
   for (const name of [
-    'اطلاعات حساب',
-    'حریم ارتباط',
+    'ظاهر برنامه',
     'اعلان‌ها',
-    'ظاهر و خوانایی',
-    'امنیت و نشست‌ها',
-    'اشتراک و مصرف',
+    'حریم خصوصی',
+    'دستگاه‌ها و امنیت',
+    'همگام‌سازی مخاطبین',
   ])
     await expect(page.locator('.v5-list').getByText(name, { exact: true })).toBeVisible();
   await page.goto('/personal/messages');
   await page.getByRole('button', { name: 'ایجاد گفت‌وگو یا مخاطب' }).click();
   const menu = page.getByRole('menu');
   await expect(menu.getByRole('menuitem')).toHaveText([
+    'پیام جدید',
     'ایجاد گروه',
     'ایجاد کانال',
     'مخاطبین',
     'پوشه‌های من',
     'گفتگوهای مستقیم',
+    'گروه‌ها',
+    'کانال‌ها',
     'تنظیمات پیام‌رسان',
     'آرشیو',
     'پیام‌های ذخیره‌شده',
+    'همهٔ گفتگوها',
+    'رسمی',
+    'نخوانده',
+    'اعلان‌ها',
   ]);
-  expect(await menu.getByRole('menuitem').locator('svg').count()).toBe(8);
+  expect(await menu.getByRole('menuitem').locator('svg').count()).toBe(15);
   await page.screenshot({ path: 'test-results/profile-school-files/message-menu-mobile.png' });
   await page.keyboard.press('Escape');
   await page.goto('/personal/assistant');

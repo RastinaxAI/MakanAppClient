@@ -7,15 +7,14 @@ test('preference links and dialog buttons share one aligned responsive layout an
   await login(context);
   await mkdir('test-results/preferences-weekly', { recursive: true });
   await page.goto('/personal/profile/preferences');
-  const list = page.locator('.v5-list'),
+  const list = page.locator('.v5-list').first(),
     rows = list.locator(':scope > a');
   await expect(rows.locator('strong')).toHaveText([
-    'اطلاعات حساب',
-    'حریم ارتباط',
+    'ظاهر برنامه',
     'اعلان‌ها',
-    'ظاهر و خوانایی',
-    'امنیت و نشست‌ها',
-    'اشتراک و مصرف',
+    'حریم خصوصی',
+    'دستگاه‌ها و امنیت',
+    'همگام‌سازی مخاطبین',
   ]);
   for (const [width, height] of [
     [320, 844],
@@ -31,7 +30,7 @@ test('preference links and dialog buttons share one aligned responsive layout an
         chevron: node.lastElementChild!.getBoundingClientRect().toJSON(),
       })),
     );
-    expect(boxes).toHaveLength(6);
+    expect(boxes).toHaveLength(5);
     for (const box of boxes) {
       expect(box.row.height).toBeGreaterThanOrEqual(44);
       expect(Math.abs(box.row.width - boxes[0].row.width)).toBeLessThan(1);
@@ -46,11 +45,11 @@ test('preference links and dialog buttons share one aligned responsive layout an
   await list.getByRole('link', { name: /^اعلان‌ها/ }).click();
   await expect(page).toHaveURL(/settings\/notifications$/);
   await page.goBack();
-  await list.getByRole('link', { name: /^حریم ارتباط/ }).click();
+  await list.getByRole('link', { name: /^حریم خصوصی/ }).click();
   await expect(page).toHaveURL(/\/settings\/privacy$/);
   await page.goto('/personal/settings/appearance');
   await page.getByRole('radio', { name: 'تاریک', exact: true }).check();
-  await page.getByRole('button', { name: 'ذخیره ظاهر', exact: true }).click();
+  await page.getByRole('banner').getByRole('link', { name: 'بازگشت', exact: true }).click();
   await page.goto('/personal/profile/preferences');
   await page.setViewportSize({ width: 390, height: 844 });
   expect(await list.evaluate((el) => getComputedStyle(el).backgroundColor)).not.toBe(

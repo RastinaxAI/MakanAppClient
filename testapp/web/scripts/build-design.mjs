@@ -1,8 +1,37 @@
-// Generates current design tokens and a V5 inventory; never an alternate HTML app.
+// Generates active product tokens and the preserved historical V5 inventory.
 import fs from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 const check = process.argv.includes('--check');
 const tokens = JSON.parse(await fs.readFile('design/tokens.json', 'utf8'));
+const product = JSON.parse(await fs.readFile('design/v7-reference.json', 'utf8'));
+if (tokens.version !== product.version || product.tokens.design_version !== '7.0')
+  throw Error('Active V7 reference and tokens differ');
+if (product.scenes.length !== 209 || new Set(product.scenes.map((s) => s.id)).size !== 209)
+  throw Error('Invalid V7 scene inventory');
+const themeFields = {
+  primary: 'action',
+  bg: 'canvas',
+  surface: 'surface',
+  soft: 'surfaceSecondary',
+  border: 'border',
+  'control-border': 'controlBorder',
+  text: 'textPrimary',
+  muted: 'textSecondary',
+  'on-primary': 'onAction',
+  'primary-soft': 'selected',
+  success: 'success',
+  danger: 'error',
+  warning: 'warning',
+  'success-soft': 'successBg',
+  'danger-soft': 'errorBg',
+  'warning-soft': 'warningBg',
+};
+for (const mode of ['light', 'dark'])
+  for (const [key, referenceKey] of Object.entries(themeFields))
+    if (tokens[mode][key].toLowerCase() !== product.tokens.modes[mode][referenceKey].toLowerCase())
+      throw Error('V7 token mapping drift: ' + mode + '.' + key);
+const cssValue = (value) =>
+  typeof value === 'string' && value.startsWith('#') ? value.toLowerCase() : value;
 const active = JSON.parse(await fs.readFile('design/reference.json', 'utf8'));
 const reference = JSON.parse(await fs.readFile('design/responsive-reference.json', 'utf8'));
 const pdfHash = createHash('sha256')
@@ -22,7 +51,7 @@ const tokenCss =
         Object.entries({
           ...values,
           surface2: values.soft,
-          soft: values['primary-soft'],
+          soft: values.soft,
           accent: values.primary,
           'accent-text': values.primary,
           action: values['primary-button'],
@@ -35,8 +64,17 @@ const tokenCss =
           'reference-text': values.text,
           'reference-muted': values.muted,
           'reference-secondary': values.soft,
+          'radius-input': product.tokens.radius.input + 'px',
+          'radius-button': product.tokens.radius.button + 'px',
+          'radius-card': product.tokens.radius.card + 'px',
+          'radius-dialog': product.tokens.radius.dialog + 'px',
+          'body-font-size': product.tokens.typography.bodyPx + 'px',
+          'body-line-height': product.tokens.typography.lineHeight,
+          'content-max-width': product.layout.containerRules.maxContentPx + 'px',
+          'form-max-width': tokens.layout.formMax + 'px',
+          'layout-gap': '18px',
         })
-          .map(([k, v]) => `  --${k}: ${v};`)
+          .map(([k, v]) => `  --${k}: ${cssValue(v)};`)
           .join('\n') +
         '\n}',
     )
@@ -48,13 +86,13 @@ const tokenCss =
     accent: tokens.dark.primary,
     action: tokens.dark['primary-button'],
     'on-action': tokens.dark['on-primary'],
-    soft: tokens.dark['primary-soft'],
+    soft: tokens.dark.soft,
     surface2: tokens.dark.soft,
     line: tokens.dark.border,
     warnbg: tokens.dark['warning-soft'],
     badbg: tokens.dark['danger-soft'],
   })
-    .map(([k, v]) => `  --${k}: ${v};`)
+    .map(([k, v]) => `  --${k}: ${cssValue(v)};`)
     .join('\n') +
   '\n}' +
   '\n';
@@ -67,8 +105,34 @@ const inventory = {
   clientScenarios: reference.screens.filter((s) => s.scope === 'client').length,
   separateOwnerScenarios: reference.screens.filter((s) => s.scope !== 'client').length,
 };
+const layoutMarker = '// ACTIVE V7 SCENE METADATA';
+const layoutFile = 'src/design/v5-layouts.ts';
+const historicalLayouts = (await fs.readFile(layoutFile, 'utf8')).split(layoutMarker)[0].trimEnd();
+const productLayouts = Object.fromEntries(
+  product.scenes.map((scene) => {
+    if (typeof scene.deep !== 'boolean' || typeof scene.kind !== 'string')
+      throw Error('Missing V7 layout metadata: ' + scene.id);
+    return [scene.id, scene.kind === 'content' ? 'list' : scene.kind];
+  }),
+);
+const layoutMetadata =
+  historicalLayouts +
+  '\n\n' +
+  layoutMarker +
+  '\n' +
+  '// Generated from design/v7-reference.json; historical IDs remain unchanged.\n' +
+  'export const currentLayouts: Record<string, string> = { ...v5Layouts, ...' +
+  JSON.stringify(productLayouts) +
+  ' };\n' +
+  'export const currentDeepViews = new Set<string>([...v5DeepViews, ...' +
+  JSON.stringify(product.scenes.filter((scene) => scene.deep).map((scene) => scene.id)) +
+  ']);\n';
+const formattedLayouts = await (
+  await import('prettier')
+).format(layoutMetadata, { parser: 'typescript', singleQuote: true, printWidth: 95 });
 for (const [file, content] of [
   ['src/design/tokens.css', tokenCss],
+  [layoutFile, formattedLayouts],
   ['docs/quality/V5_REFERENCE_INVENTORY.json', JSON.stringify(inventory, null, 2) + '\n'],
 ]) {
   if (check) {
@@ -76,4 +140,10 @@ for (const [file, content] of [
       throw Error('Generated file is stale: ' + file);
   } else await fs.writeFile(file, content);
 }
-console.log(JSON.stringify({ mode: check ? 'verified' : 'generated', ...inventory }));
+console.log(
+  JSON.stringify({
+    mode: check ? 'verified' : 'generated',
+    activeDesign: product.version,
+    historicalInventory: inventory,
+  }),
+);

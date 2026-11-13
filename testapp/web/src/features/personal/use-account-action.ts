@@ -26,7 +26,7 @@ export function useAccountAction() {
         ...(body === undefined ? {} : { body: JSON.stringify(body) }),
       });
       if (!alive.current) return;
-      await cache.invalidateQueries({ queryKey: ['personal', session.user.id, session.revision] });
+      await cache.invalidateQueries({ queryKey: ['personal', session.user.id] });
       return value;
     } catch (e) {
       if (alive.current) setError(e);

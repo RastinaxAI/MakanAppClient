@@ -1,9 +1,10 @@
 'use client';
-import { Input as NativeInput } from '@/components/ui/input';
+import { FieldGroup, Input as NativeInput } from '@/components/ui/input';
 
 import * as uiText from '@/content/fa';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { Check } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { JalaliDateInput } from '@/components/ui/jalali-date-input';
 import { ErrorState } from '@/components/ui/states';
@@ -35,13 +36,14 @@ export function PersonalProfileEdit() {
       title={uiText.text_7f941e8233a2}
       subtitle={`${uiText.text_d034f3bcfe7f} · ${session.user.firstName ?? session.user.displayName ?? ''}`}
       back="/personal/profile"
-      menu={<ProfilePhotoEditor disabled={busy || dirty} onBusyChange={setPhotoBusy} />}
       actions={
         <Button form="profile-edit" type="submit" disabled={busy || photoBusy}>
-          {busy ? uiText.text_b5ef00b1806f : uiText.v5Product.savedProfile}
+          {!busy && <Check size={18} />}
+          {busy ? uiText.text_b5ef00b1806f : uiText.text_a2af9c4ab7db}
         </Button>
       }
     >
+      <ProfilePhotoEditor compact disabled={busy || dirty} onBusyChange={setPhotoBusy} />
       <form
         id="profile-edit"
         data-profile-form
@@ -64,22 +66,31 @@ export function PersonalProfileEdit() {
           }
         }}
       >
-        {(
-          [
-            { key: 'firstName', label: uiText.text_69c1e5b1fe20, autoComplete: 'given-name' },
-            { key: 'lastName', label: uiText.text_3fe7ba4a2131, autoComplete: 'family-name' },
-            { key: 'displayName', label: uiText.text_5903c1c121cb, autoComplete: 'nickname' },
-          ] as const
-        ).map((field) => (
-          <V4Field key={field.key} label={field.label}>
-            <NativeInput
-              disabled={busy || photoBusy}
-              autoComplete={field.autoComplete}
-              value={values[field.key]}
-              onChange={(e) => setValues((v) => ({ ...v, [field.key]: e.target.value }))}
-            />
-          </V4Field>
-        ))}
+        <FieldGroup>
+          {(
+            [
+              { key: 'firstName', label: uiText.text_69c1e5b1fe20, autoComplete: 'given-name' },
+              { key: 'lastName', label: uiText.text_3fe7ba4a2131, autoComplete: 'family-name' },
+            ] as const
+          ).map((field) => (
+            <V4Field key={field.key} label={field.label}>
+              <NativeInput
+                disabled={busy || photoBusy}
+                autoComplete={field.autoComplete}
+                value={values[field.key]}
+                onChange={(e) => setValues((v) => ({ ...v, [field.key]: e.target.value }))}
+              />
+            </V4Field>
+          ))}
+        </FieldGroup>
+        <V4Field label={uiText.text_5903c1c121cb}>
+          <NativeInput
+            disabled={busy || photoBusy}
+            autoComplete="nickname"
+            value={values.displayName}
+            onChange={(event) => setValues((old) => ({ ...old, displayName: event.target.value }))}
+          />
+        </V4Field>
         <V4Field label={uiText.text_173fec6019a6}>
           <NativeInput
             disabled={busy || photoBusy}

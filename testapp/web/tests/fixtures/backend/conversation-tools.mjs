@@ -99,8 +99,8 @@ export function conversationToolsRoute({ state, auth, url, req, body, send }) {
       make('ConversationUserStateResult', {
         conversationId: v.conversationId,
         isMuted: req.method === 'PUT',
-        muteMode: req.method === 'PUT' ? 'Permanent' : 'None',
-        mutedUntilUtc: null,
+        muteMode: req.method === 'PUT' ? body.mode : 'None',
+        mutedUntilUtc: req.method === 'PUT' ? body.mutedUntilUtc : null,
       }),
     );
   }

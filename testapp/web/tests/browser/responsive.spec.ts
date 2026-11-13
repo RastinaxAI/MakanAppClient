@@ -104,10 +104,10 @@ test('workspace dialog restores focus and an external context change clears prio
 }) => {
   const current = await login(context, 'Teacher');
   await page.setViewportSize({ width: 1440, height: 1000 });
-  await page.goto('/personal/education/classes');
-  const trigger = page.getByRole('button', { name: 'ماکان؛ انتخاب نقش و فضای کار', exact: true });
+  await page.goto('/personal/profile');
+  const trigger = page.getByRole('button', { name: 'تغییر آموزشگاه و نقش', exact: true });
   await trigger.click();
-  await expect(page.getByRole('dialog', { name: 'انتخاب فضای کار' })).toBeVisible();
+  await expect(page.getByRole('dialog', { name: 'آموزشگاه و نقش' })).toBeVisible();
   await page.keyboard.press('Escape');
   await expect(trigger).toBeFocused();
   await trigger.click();

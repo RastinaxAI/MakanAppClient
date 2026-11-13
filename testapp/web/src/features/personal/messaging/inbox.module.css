@@ -1,106 +1,158 @@
+/* V7 MSG-01: account filters, 84px rows and a pane-owned create action. */
 .workspace {
-  display: block;
+  display: flex;
   width: 100%;
-  max-width: 1100px;
-  margin-inline: auto;
   height: 100%;
-  min-height: 0;
   min-width: 0;
-  background: transparent;
+  min-height: 0;
+}
+.inboxWorkspace {
+  max-width: 1184px;
+  margin-inline: auto;
+}
+.searchWorkspace {
+  padding: 0;
 }
 .sidebar {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
   width: 100%;
-  flex: none;
   min-width: 0;
   min-height: 0;
-  padding: 0;
-  border: 0;
+}
+.top {
+  flex: none;
   display: flex;
   flex-direction: column;
   gap: 12px;
-  overflow: auto;
+  padding-block: 16px;
+  background: var(--bg);
 }
 .search {
-  margin: 0;
+  margin: 0 16px;
   min-width: 0;
+}
+.search [data-ui='search'] {
+  position: relative;
+  min-height: max(48px, calc(26.4px * var(--text-scale, 1) + 18px));
+  height: auto;
+  gap: 0;
+  padding: 0;
+  border: 0;
+  box-shadow: inset 0 0 0 1px var(--control-border);
+  border-radius: 11px;
+  background: var(--surface);
+}
+.search [data-ui='search'] input {
+  min-height: 46px;
+  padding: 8px 0;
+  font-size: calc(16px * var(--text-scale, 1));
+  line-height: 1.65;
+}
+.search [data-ui='search'] > button {
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 10px;
+  border-radius: 4px;
 }
 .searchSubmit {
   flex: none;
   display: grid;
   place-items: center;
-  width: 44px;
-  height: 44px;
   padding: 0;
   border: 0;
-  border-radius: 10px;
   background: transparent;
   color: var(--muted);
 }
 .filter {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  align-items: center;
+  flex: none;
   gap: 8px;
-  padding: 0;
-  background: transparent;
+  padding-inline: 16px;
+  min-height: 44px;
 }
-.filter button,
-.filterTitle button {
+.filter button {
+  flex: none;
+  white-space: nowrap;
+  position: relative;
+  min-height: 44px;
+  padding: 8px 14px;
   border: 1px solid var(--line);
-  border-radius: 11px;
+  border-radius: 10px;
   background: var(--surface);
   color: var(--muted);
-  padding: 8px 14px;
-  min-height: 44px;
-  font: inherit;
+  font-family: inherit;
   font-size: calc(12px * var(--text-scale, 1));
-  font-weight: 650;
   line-height: 1.6;
+  text-align: start;
 }
 .filter button[aria-pressed='true'] {
-  color: var(--accent);
-  border-color: var(--accent);
+  border-color: var(--primary);
   background: var(--primary-soft);
+  color: var(--primary);
+  box-shadow: inset 0 -3px 0 var(--primary);
+  font-weight: 700;
+}
+.filter button:disabled {
+  opacity: 0.5;
 }
 .filterTitle {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 12px;
+  padding: 8px 16px;
+  color: var(--muted);
+  font-size: calc(12px * var(--text-scale, 1));
+}
+.filterTitle button {
+  min-height: 44px;
+  background: transparent;
+  color: var(--primary);
+  border: 0;
+  font: inherit;
 }
 .list {
   min-width: 0;
+  padding: 18px 0 0;
 }
 .inboxCard {
-  border: 1px solid var(--line);
-  border-radius: 14px;
   background: var(--surface);
 }
 .chatItem {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 14px;
-  min-height: 68px;
+  min-height: 84px;
+  padding: 14px 16px;
   min-width: 0;
+  flex: 1;
+  border: 0;
   color: var(--text);
 }
-.chatItem + .chatItem {
-  border-top: 1px solid var(--line);
-}
+.chatItem:hover,
 .selected {
-  background: var(--soft);
+  background: var(--primary-soft);
 }
 .avatar {
-  width: 44px;
-  height: 44px;
-  flex: none;
-  border-radius: 50%;
   display: grid;
   place-items: center;
-  background: var(--soft);
-  color: var(--accent);
-  font-size: calc(16px * var(--text-scale, 1));
-  font-weight: 700;
+  flex: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--avatar-bg);
+  color: var(--avatar-text);
+  font-size: calc(18px * var(--text-scale, 1));
+  font-weight: 600;
 }
 .avatar img {
   width: 100%;
@@ -109,84 +161,364 @@
   border-radius: inherit;
 }
 .organizationAvatar {
-  background: var(--soft);
+  background: var(--surface2);
 }
 .chatSummary {
+  display: flex;
+  flex-direction: column;
   flex: 1;
   min-width: 0;
+  gap: 4px;
 }
 .row {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 10px;
+  gap: 4px;
   min-width: 0;
 }
 .row strong {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
   min-width: 0;
-  font-size: calc(16px * var(--text-scale, 1));
-  line-height: 1.7;
+  gap: 4px;
+  font-size: calc(14px * var(--text-scale, 1));
+  font-weight: 700;
+  line-height: 1.65;
   overflow-wrap: anywhere;
 }
-.row time {
+.tail {
+  display: flex;
+  flex-direction: column;
   flex: none;
-  font-size: calc(10px * var(--text-scale, 1));
+  align-items: flex-end;
+  gap: 4px;
+  max-width: 64px;
+}
+.tail time {
   color: var(--muted);
+  font-size: calc(10px * var(--text-scale, 1));
+  line-height: 1.5;
 }
 .preview,
 .orgLabel {
   min-width: 0;
   color: var(--muted);
-  font-size: calc(13px * var(--text-scale, 1));
-  line-height: 1.7;
+  font-size: calc(12px * var(--text-scale, 1));
+  line-height: 1.85;
   overflow-wrap: anywhere;
+}
+.preview {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 .orgLabel {
   display: flex;
   align-items: center;
   gap: 4px;
-  font-size: calc(11px * var(--text-scale, 1));
+  font-size: calc(10px * var(--text-scale, 1));
 }
 .unread {
-  flex: none;
-  min-width: 21px;
-  min-height: 21px;
-  padding: 1px 5px;
   display: grid;
   place-items: center;
-  border-radius: 7px;
-  background: var(--accent);
-  color: var(--on-action);
+  min-width: 20px;
+  min-height: 20px;
+  padding: 1px 4px;
+  border-radius: 50%;
+  background: var(--primary-button);
+  color: var(--on-primary);
   font-size: calc(10px * var(--text-scale, 1));
+  line-height: 1.5;
+  font-weight: 500;
 }
 .paging {
   display: flex;
   justify-content: center;
-  padding-block: 16px;
+  padding: 16px;
 }
-.sidebarFoot {
+.compose {
+  position: absolute;
+  left: 16px;
+  bottom: 16px;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--primary-button);
+  color: var(--on-primary);
+}
+.compose:hover {
+  background: var(--primary);
+}
+.compose:active {
+  opacity: 0.85;
+}
+.scroll {
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-bottom: 88px;
+  scroll-padding-block-start: var(--inbox-header-height, 0px);
+}
+.tools {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 12px;
-  font-size: calc(11px * var(--text-scale, 1));
-  color: var(--muted);
+  flex: none;
+  align-items: center;
 }
-.sidebarFoot a {
+.tool {
+  display: grid;
+  place-items: center;
+  position: relative;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  flex: none;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--text);
+}
+.tool:hover {
+  background: var(--surface2);
+}
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 3;
   display: flex;
   align-items: center;
-  gap: 6px;
-  min-height: 44px;
+  gap: 12px;
+  flex: none;
+  min-height: 72px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--line);
+  background: var(--surface);
 }
-.sidebar [data-messaging-invitations] {
+.header .headerSearch {
+  flex: 1;
+  min-width: 0;
   margin: 0;
 }
+.header h1,
+.header h2 {
+  flex: 1;
+  min-width: 0;
+  font-size: calc(17px * var(--text-scale, 1));
+  font-weight: 720;
+  line-height: 1.65;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+@media (max-height: 600px) {
+  :global(:root[data-reading='large']) .header {
+    position: static;
+  }
+  :global(:root[data-reading='large']) .scroll {
+    scroll-padding-block-start: 0;
+  }
+}
+.peopleSearch {
+  padding: 0 16px 16px;
+}
+.filterNotice {
+  padding: 16px;
+  color: var(--muted);
+  font-size: calc(13px * var(--text-scale, 1));
+}
+.searchTop {
+  padding-top: 16px;
+}
+.embeddedTop {
+  padding-block: 14px;
+  gap: 0;
+}
+.embeddedTop .search {
+  margin-inline: 14px;
+}
+.embeddedTop + .list {
+  padding-top: 0;
+}
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 420px;
+  margin: 24px auto;
+  padding: 16px;
+  text-align: center;
+  gap: 12px;
+}
+.emptyIllustration {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 224px;
+  height: 224px;
+  margin-bottom: 12px;
+  color: var(--primary);
+}
+.emptyIllustration svg {
+  width: 120px;
+  height: 120px;
+  stroke-width: 1;
+}
+.empty h2 {
+  font-size: calc(20px * var(--text-scale, 1));
+  font-weight: 650;
+  line-height: 1.5;
+}
+.empty p {
+  font-size: calc(12px * var(--text-scale, 1));
+  color: var(--muted);
+  line-height: 1.6667;
+}
+.empty > a {
+  width: calc(100% + 4px);
+  min-height: 44px;
+  margin: 4px -2px 0;
+  padding: 8px 16px;
+  border: 2px solid var(--bg);
+  background-clip: padding-box;
+  line-height: calc(24px * var(--text-scale, 1));
+}
 @media (max-width: 359px) {
-  .chatItem {
-    padding: 12px;
-    gap: 8px;
+  .search {
+    margin-inline: 12px;
   }
-  .row strong {
-    font-size: calc(15px * var(--text-scale, 1));
+  .filter {
+    padding-inline: 12px;
   }
+}
+@media (min-width: 768px) {
+  .inboxWorkspace .top {
+    padding-block: 22px;
+  }
+  .inboxWorkspace .search {
+    margin-inline: 24px;
+  }
+  .inboxWorkspace .filter {
+    padding-inline: 24px;
+  }
+}
+.itemContainer {
+  display: flex;
+  min-width: 0;
+  border-bottom: 1px solid var(--line);
+}
+.itemContainer:hover {
+  background: var(--primary-soft);
+}
+.itemDetails {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  padding-block: 6px;
+  padding-inline-end: 12px;
+}
+.itemTime {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+.itemTime time {
+  white-space: nowrap;
+  color: var(--muted);
+  font-size: calc(10px * var(--text-scale, 1));
+  line-height: 1.5;
+}
+.itemStatus {
+  display: flex;
+  justify-content: flex-end;
+  padding-inline-end: 12px;
+}
+.itemOptions {
+  flex: none;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 8px;
+  color: var(--muted);
+  background: transparent;
+  opacity: 0.65;
+}
+.itemContainer:hover .itemOptions,
+.itemContainer:focus-within .itemOptions {
+  opacity: 1;
+}
+/* Optional embedded account list; the assistant has its own source panel. */
+.embeddedLegacy .top {
+  padding: 14px;
+  gap: 12px;
+}
+.embeddedLegacy .search {
+  margin: 0;
+}
+.embeddedLegacy .search [data-ui='search'] {
+  min-height: 48px;
+  height: auto;
+  border-radius: 10px;
+  background: var(--surface);
+}
+.embeddedLegacy .search input {
+  min-height: 46px;
+  font-size: calc(16px * var(--text-scale, 1));
+}
+.embeddedLegacy .filter {
+  padding: 0;
+  border: 0;
+  box-shadow: none;
+  gap: 8px;
+}
+.embeddedLegacy .filter button {
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  padding: 8px 14px;
+  background: var(--surface);
+  font-size: calc(12px * var(--text-scale, 1));
+}
+.embeddedLegacy .filter button[aria-pressed='true'] {
+  background: var(--primary-soft);
+  border-color: var(--primary);
+}
+.embeddedLegacy .list {
+  padding: 0;
+}
+.embeddedLegacy .chatItem {
+  min-height: 84px;
+  margin: 0;
+  padding: 14px 16px;
+  gap: 12px;
+  border-radius: 0;
+  border-bottom: 1px solid var(--line);
+}
+.embeddedLegacy .avatar {
+  width: 44px;
+  height: 44px;
+}
+.embeddedLegacy .row strong {
+  font-size: calc(14px * var(--text-scale, 1));
+  line-height: 1.65;
+}
+.embeddedLegacy .preview {
+  font-size: calc(12px * var(--text-scale, 1));
+  line-height: 1.85;
+}
+.avatarSlot {
+  position: relative;
+  display: block;
+  flex: none;
+  width: 44px;
+  height: 44px;
 }

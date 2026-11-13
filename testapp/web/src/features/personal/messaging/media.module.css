@@ -1,87 +1,119 @@
-.attachButton {
-  position: relative;
+/* V7 controls keep the existing upload/voice lifecycle and product tokens. */
+.attachButton,
+.emojiTrigger {
   display: grid;
   place-items: center;
-  flex-shrink: 0;
-  min-width: 44px;
+  position: relative;
+  flex: none;
   width: 44px;
+  min-width: 44px;
   height: 44px;
-  border: 1px solid var(--line);
-  border-radius: 10px;
-  background: var(--surface);
+  padding: 12px;
+  border: 0;
+  border-radius: 12px;
   color: var(--muted);
+  background: transparent;
 }
-.attachButton:hover {
-  color: var(--primary);
-  background: var(--primary-soft);
+.attachButton svg,
+.emojiTrigger svg {
+  width: 21px;
+  height: 21px;
+}
+.emojiTrigger {
+  background: transparent;
+  width: 44px;
+  min-width: 44px;
+  height: 44px;
 }
 .attachButton b {
   position: absolute;
-  top: 0;
+  top: -2px;
   inset-inline-end: 0;
   border-radius: 8px;
-  background: var(--primary);
-  color: var(--surface);
-  font-size: calc(9px * var(--text-scale, 1));
-  padding: 1px 5px;
+  background: var(--primary-button);
+  color: var(--on-primary);
+  font-size: calc(10px * var(--text-scale, 1));
+  padding: 0 4px;
 }
-.attachMenu {
-  min-width: 240px;
-  padding: 8px !important;
+.attachMenu.attachMenu {
+  min-width: 172px;
+  width: 172px;
+  padding: 0;
+  border: 0;
+  background: var(--surface);
 }
-.attachMenu > [role='menuitem'] {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  min-height: 50px;
-  padding: 12px 14px;
-  border-radius: 10px;
-  font-size: calc(13px * var(--text-scale, 1));
-  cursor: pointer;
-  outline: 0;
+.attachMenu.attachMenu > [role='menuitem'] {
+  min-height: 48px;
+  margin: 0;
+  padding: 11px 12px;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  border-radius: 0;
 }
-.attachMenu > [role='menuitem'] > svg:first-child {
-  color: var(--primary);
+.attachMenu.attachMenu > [role='menuitem'] + [role='menuitem'] {
+  margin-top: 0;
+  border-top: 1px solid var(--line);
 }
-.attachMenu > [role='menuitem'][data-highlighted] {
-  background: var(--primary-soft);
-  color: var(--primary);
+.emojiMenu {
+  display: grid;
+  grid-template-columns: repeat(4, 44px);
+  gap: 4px;
+  padding: 8px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  box-shadow: 0 4px 12px #1018281a;
+  z-index: 65;
+}
+.emojiMenu > [role='menuitem'] {
+  display: grid;
+  place-items: center;
+  min-height: 44px;
+  font-size: 24px;
+  border-radius: 8px;
+  outline: none;
+}
+.emojiMenu > [data-highlighted] {
+  background: var(--surface2);
 }
 .sendSheet {
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 16px;
   min-width: 0;
+}
+.voicePreview {
+  width: 100%;
+  max-width: 100%;
 }
 .draftList {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 8px;
   max-height: 38dvh;
   overflow-y: auto;
   overscroll-behavior: contain;
-  padding: 2px;
 }
 .draftCard {
   display: flex;
   align-items: center;
-  gap: 14px;
-  padding: 12px;
-  border: 1px solid var(--border);
-  background: var(--bg);
-  border-radius: 16px;
+  gap: 8px;
   min-width: 0;
+  padding: 8px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
 }
 .draftThumb {
-  width: 72px;
-  height: 72px;
-  flex-shrink: 0;
-  border-radius: 12px;
-  overflow: hidden;
-  background: var(--primary-soft);
+  flex: none;
   display: grid;
   place-items: center;
-  color: var(--primary);
+  width: 56px;
+  height: 56px;
+  border-radius: 4px;
+  overflow: hidden;
+  color: var(--muted);
+  background: var(--surface2);
 }
 .draftThumb img,
 .draftThumb video {
@@ -96,73 +128,70 @@
 .draftInfo > strong {
   display: block;
   font-size: calc(12px * var(--text-scale, 1));
+  line-height: 1.5;
   overflow-wrap: anywhere;
 }
 .draftInfo > small {
   display: block;
   font-size: calc(10px * var(--text-scale, 1));
   color: var(--muted);
-  margin-block: 3px;
+  margin-block: 4px;
 }
 .remove {
+  flex: none;
   display: grid;
   place-items: center;
-  width: 40px;
+  width: 44px;
   height: 44px;
-  flex-shrink: 0;
   border: 0;
-  border-radius: 10px;
+  border-radius: 50%;
   background: transparent;
   color: var(--muted);
 }
 .remove:hover {
-  background: var(--surface);
+  background: var(--surface2);
   color: var(--danger);
 }
 .ready,
 .selected {
   display: flex;
-  gap: 5px;
   align-items: center;
-  color: var(--teal);
+  gap: 4px;
   font-size: calc(10px * var(--text-scale, 1));
+  color: var(--teal);
 }
 .selected {
   color: var(--muted);
 }
-.itemError {
+.itemError,
+.transferError {
   display: block;
   color: var(--danger);
-  font-size: calc(10px * var(--text-scale, 1));
-  line-height: 1.9;
+  font-size: calc(12px * var(--text-scale, 1));
+  line-height: 1.6;
+  overflow-wrap: anywhere;
 }
 .caption {
-  font-size: calc(12px * var(--text-scale, 1));
   display: flex;
   flex-direction: column;
-  gap: 10px;
-}
-.caption textarea {
-  resize: vertical;
-  min-height: 70px;
-  max-height: 160px;
-  border-radius: 14px;
+  gap: 8px;
   font-size: calc(14px * var(--text-scale, 1));
 }
-.transferError {
-  font-size: calc(11px * var(--text-scale, 1));
-  line-height: 1.9;
-  color: var(--danger);
-  overflow-wrap: anywhere;
+.caption textarea {
+  min-height: 70px;
+  max-height: 160px;
+  resize: vertical;
+  border-radius: 4px;
+  font-size: calc(16px * var(--text-scale, 1));
 }
 .sheetActions {
   display: flex;
   justify-content: space-between;
-  gap: 12px;
-  padding-top: 8px;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 .sheetActions > button {
-  min-height: 46px;
+  flex: 1 1 120px;
 }
 .spin {
   animation: spin 1s linear infinite;
@@ -175,239 +204,385 @@
 .meter {
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 4px;
   width: 100%;
-  padding-block: 8px;
   min-width: 0;
+  padding-block: 8px;
 }
-.meter > span {
+.meter > span,
+.meter small {
   font-size: calc(10px * var(--text-scale, 1));
   color: var(--muted);
 }
 .meter progress {
-  height: 5px;
-  accent-color: var(--primary);
   width: 100%;
+  height: 4px;
+  accent-color: var(--primary-button);
   border: 0;
-  border-radius: 6px;
-  overflow: hidden;
-}
-.meter small {
-  font-size: calc(9px * var(--text-scale, 1));
-  color: var(--muted);
+  border-radius: 4px;
 }
 .pendingFiles {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  margin-block: 8px;
   min-width: 0;
+  margin-block: 8px;
 }
 .pendingFiles > span {
   display: flex;
   align-items: center;
-  gap: 7px;
-  font-size: calc(11px * var(--text-scale, 1));
-  color: var(--primary);
+  gap: 8px;
   overflow-wrap: anywhere;
-}
-.pendingFiles svg {
-  flex-shrink: 0;
+  font-size: calc(12px * var(--text-scale, 1));
+  color: var(--muted);
 }
 .attachment {
-  margin-block: 10px;
-  width: 320px;
+  width: fit-content;
   max-width: 100%;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  overflow: hidden;
+  min-width: min(220px, 100%);
+  background: var(--surface2);
+  border-radius: 4px;
 }
 .mediaAttachment {
-  width: 400px;
-}
-.attachment > .meter,
-.attachment > .transferError,
-.attachment > .itemError {
-  padding: 0 14px 12px;
+  width: 256px;
+  min-width: 0;
+  background: transparent;
 }
 .fileIntro,
 .fileReady {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 14px;
+  gap: 8px;
   min-width: 0;
+  padding: 8px;
 }
-.fileIntro > div {
+.fileIntro > div,
+.fileReady > span {
   flex: 1;
   min-width: 0;
 }
 .fileIntro strong,
 .fileReady strong {
   display: block;
-  font-size: calc(11px * var(--text-scale, 1));
-  font-weight: 600;
+  font-size: calc(12px * var(--text-scale, 1));
+  line-height: 1.5;
+  font-weight: 400;
   overflow-wrap: anywhere;
-  white-space: normal;
 }
 .fileIntro small,
 .fileReady small {
   display: block;
   color: var(--muted);
-  font-size: calc(9px * var(--text-scale, 1));
-  margin-top: 4px;
+  font-size: calc(10px * var(--text-scale, 1));
+  margin-top: 2px;
 }
-.fileIcon {
+.fileIcon,
+.fileType {
   display: grid;
   place-items: center;
-  flex-shrink: 0;
-  width: 44px;
-  height: 48px;
-  border-radius: 12px;
-  background: var(--primary-soft);
+  flex: none;
+  width: 32px;
+  height: 40px;
   color: var(--primary);
+}
+.fileIcon:has(.fileType) {
+  width: auto;
 }
 .fileIntro > button,
 .fileReady > a {
   display: grid;
   place-items: center;
-  border: 0;
-  background: var(--primary-soft);
-  color: var(--primary);
-  border-radius: 50%;
+  flex: none;
   width: 44px;
   height: 44px;
-  flex-shrink: 0;
-}
-.fileReady > span {
-  flex: 1;
-  min-width: 0;
-}
-.fileReady > svg {
-  flex-shrink: 0;
-  color: var(--primary);
+  border: 0;
+  background: transparent;
+  color: var(--msg-body);
+  border-radius: 50%;
 }
 .attachment > video,
 .imageLink,
 .imageLink img {
+  display: block;
   width: 100%;
   max-height: 360px;
   object-fit: contain;
-  display: block;
-  background: var(--bg);
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
 }
-.attachment > audio {
-  width: 100%;
-  max-width: 100%;
-  padding: 10px 0;
+.imageLink {
+  padding: 0;
+  cursor: zoom-in;
 }
 .imageLink img {
   min-height: 60px;
 }
-.imageLink {
-  cursor: zoom-in;
+.mediaAttachment .fileReady {
+  padding-inline: 0;
 }
-.fileReady {
-  padding: 10px 12px;
+.mediaAttachment .fileReady > .fileType {
+  display: none;
 }
-.fileReady a {
-  background: transparent;
+.attachment > .meter,
+.attachment > .transferError,
+.attachment > .itemError {
+  padding: 8px;
 }
-.fileReady a:hover {
-  background: var(--primary-soft);
+.voicePlayer {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+  width: min(260px, 100%);
+  min-height: 44px;
+  padding-inline: 4px 12px;
+  border-radius: 24px;
+  background: var(--surface2);
+  color: var(--msg-body);
 }
-@media (max-width: 600px) {
-  .draftThumb {
-    width: 60px;
-    height: 60px;
-  }
-  .draftCard {
-    padding: 10px;
-    gap: 10px;
-  }
-  .draftInfo > strong {
-    font-size: calc(12px * var(--text-scale, 1));
-  }
-  .caption textarea {
-    font-size: calc(16px * var(--text-scale, 1));
-  }
-  .sheetActions {
-    flex-wrap: wrap;
-  }
-  .sheetActions > button {
-    flex: 1;
-    min-width: 140px;
-  }
-  .fileIntro strong,
-  .fileReady strong {
-    font-size: calc(12px * var(--text-scale, 1));
-  }
-  .fileIntro small,
-  .fileReady small {
-    font-size: calc(10px * var(--text-scale, 1));
-  }
-  .attachment {
-    width: 290px;
-  }
-  .mediaAttachment {
-    width: 320px;
-  }
-  .fileIntro {
-    padding: 12px;
-    gap: 10px;
-  }
-  .meter > span {
-    font-size: calc(11px * var(--text-scale, 1));
-  }
+.voicePlayer > audio {
+  display: none;
+}
+.voicePlayer > button {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 44px;
+  height: 44px;
+  padding: 12px;
+  background: var(--primary-button);
+  color: var(--on-primary);
+  border: 0;
+  border-radius: 50%;
+}
+.voicePlayer > button svg {
+  width: 16px;
+  height: 16px;
+}
+.voicePlayer time {
+  font-size: calc(10px * var(--text-scale, 1));
+}
+.voiceTrack {
+  flex: 1;
+  position: relative;
+  min-width: 60px;
+  height: 44px;
+}
+.waveform {
+  display: block;
+  width: 100%;
+  height: 32px;
+  color: inherit;
+}
+.voiceTrack .waveform {
+  position: absolute;
+  inset: 6px 0;
+}
+.voiceTrack input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 44px;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+  direction: ltr;
+}
+.voiceTrack:focus-within {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+.viewer.viewer:global(.dialog-content) {
+  inset: 0;
+  width: 100%;
+  height: var(--app-visual-height, 100dvh);
+  max-height: none;
+  max-width: none;
+  transform: none;
+  border: 0;
+  border-radius: 0;
+  background: #131316;
+  color: #fafafa;
+  box-shadow: none;
+}
+.viewer :global(.dialog-heading) {
+  color: inherit;
+  background: #131316;
+  border-color: #26272b;
+}
+.viewer :global(.dialog-heading .button) {
+  color: #fafafa;
+}
+.viewer :global(.dialog-body) {
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  min-height: 0;
+}
+.viewerImage {
+  display: block;
+  max-width: 100%;
+  max-height: calc(var(--app-visual-height, 100dvh) - 160px);
+  object-fit: contain;
+  border-radius: 8px;
+}
+.viewerDownload {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  color: #fafafa;
+  font-size: calc(12px * var(--text-scale, 1));
+  overflow-wrap: anywhere;
 }
 @media (prefers-reduced-motion: reduce) {
   .spin {
     animation: none;
   }
 }
-.draftCard {
-  border-radius: 12px;
+.attachment[data-compact] {
+  width: 100%;
+  min-width: 0;
+}
+.attachment[data-compact][data-visual] {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  aspect-ratio: 109 / 132;
+}
+.attachment[data-compact][data-visual] > .videoCover,
+.attachment[data-compact][data-visual] > .imageCover {
+  flex: 1;
+  min-height: 44px;
+  aspect-ratio: auto;
+  border-radius: 0;
+}
+.attachment[data-compact][data-visual] .imageLink,
+.attachment[data-compact][data-visual] .imageLink img,
+.attachment[data-compact][data-visual] > video {
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0;
+}
+.attachment[data-compact][data-visual] .fileReady {
+  display: none;
+}
+.attachment[data-compact][data-visual] button:focus-visible {
+  outline-offset: -3px;
+}
+.attachment[data-compact][data-visual] > .meter {
+  position: absolute;
+  inset: auto 0 0;
+  padding: 4px;
+  background: var(--surface2);
+}
+.attachment[data-compact][data-visual] > .transferError {
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;
+  background: var(--surface);
+  pointer-events: none;
+}
+.recorderDock.recorderDock:global(.dialog-content) {
+  inset: auto 0 0;
+  width: 100%;
+  max-width: none;
+  max-height: 50dvh;
+  transform: none;
+  border: 0;
+  border-top: 1px solid var(--line);
+  border-radius: 0;
   background: var(--soft);
+  box-shadow: none;
 }
-.attachMenu > [role='menuitem'] {
-  min-height: 52px;
-  font-size: calc(14px * var(--text-scale, 1));
-}
-
-/* File cards sit inside a message bubble, with native transfer feedback retained. */
-.attachment {
+:global(.dialog-overlay):has(+ .recorderDock) {
   background: transparent;
+  backdrop-filter: none;
+}
+.recorderDock > :global(.dialog-heading),
+.recorderDock :global(.dialog-description) {
+  display: none;
+}
+.recorderDock > :global(.dialog-body) {
+  padding: 8px 8px max(8px, env(safe-area-inset-bottom));
+  gap: 8px;
+}
+.recorderDock .sendSheet {
+  gap: 8px;
+}
+.recorderBar {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+}
+.recordTrack {
+  flex: 1;
+  min-width: 0;
+  touch-action: pan-y;
+  user-select: none;
+}
+.recordTrack > small {
+  display: block;
+  text-align: center;
+  color: var(--muted);
+  font-size: calc(10px * var(--text-scale, 1));
+  margin-bottom: 4px;
+}
+.recordTrack > div {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 12px;
+  min-height: 44px;
+  border-radius: 24px;
+  color: var(--on-primary);
+  background: var(--primary-button);
+}
+.recordTrack time {
+  font-size: calc(12px * var(--text-scale, 1));
+}
+.recordTrack .waveform {
+  flex: 1;
+  min-width: 0;
+}
+.recordDelete,
+.recordStop {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 44px;
+  height: 44px;
+  padding: 12px;
+  border: 0;
+  border-radius: 50%;
+  color: var(--on-primary);
+  background: var(--primary-button);
+}
+.recordDelete,
+.recorderBar[data-canceling] .recordTrack > div {
+  background: var(--danger-button);
+  color: var(--on-danger);
+}
+.videoCover,
+.imageCover {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  aspect-ratio: 16 / 10;
   border: 0;
   border-radius: 8px;
-  margin-block: 4px;
+  background: #000;
+  color: #fff;
 }
-.fileIntro,
-.fileReady {
-  padding: 6px;
-  gap: 10px;
+.imageCover {
+  background: var(--surface2);
+  color: var(--muted);
 }
-.fileIntro strong,
-.fileReady strong {
-  font-size: calc(13px * var(--text-scale, 1));
-  color: var(--primary);
-}
-.fileIntro small,
-.fileReady small {
-  font-size: calc(11px * var(--text-scale, 1));
-}
-.fileIcon {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background: var(--primary);
-  color: var(--on-primary);
-}
-.attachMenu > [role='menuitem'] {
-  font-size: calc(14px * var(--text-scale, 1));
-  border-radius: 8px;
-}
-.draftCard {
-  border-radius: 10px;
-  background: var(--surface);
+.videoCover > svg,
+.imageCover > svg {
+  width: 32px;
+  height: 32px;
 }

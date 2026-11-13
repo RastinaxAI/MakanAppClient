@@ -57,10 +57,12 @@ export function MessagingLiveProvider({
       const replayAbort = new AbortController();
       const invalidateScope = queuedSnapshotRefresh(
         async () => {
-          await cache.invalidateQueries({ queryKey: ['personal', userId, revision] });
+          await cache.invalidateQueries({ queryKey: ['personal', userId] });
           if (!disposed) await contextCheck.current?.();
         },
         () => !disposed,
+        // Batch the personal and school stream hints within one rendering frame.
+        16,
       );
       const readReplay = (path: string) =>
         request(
@@ -98,13 +100,14 @@ export function MessagingLiveProvider({
       const changed = () => {
         if (disposed) return;
         void cache.invalidateQueries({
-          queryKey: ['personal', userId, revision],
+          queryKey: ['personal', userId],
           predicate: (query) =>
-            query.queryKey[3] === 'messages' ||
-            query.queryKey[3] === 'conversation-media' ||
-            query.queryKey[3] === 'conversation-summary' ||
-            query.queryKey[3] === '/api/v1/messaging/invitations' ||
-            String(query.queryKey[3]).startsWith('/api/v1/conversations'),
+            (query.queryKey[2] === revision || query.queryKey[2] === 'account') &&
+            (query.queryKey[3] === 'messages' ||
+              query.queryKey[3] === 'conversation-media' ||
+              query.queryKey[3] === 'conversation-summary' ||
+              query.queryKey[3] === '/api/v1/messaging/invitations' ||
+              String(query.queryKey[3]).startsWith('/api/v1/conversations')),
         });
       };
       async function subscribed() {

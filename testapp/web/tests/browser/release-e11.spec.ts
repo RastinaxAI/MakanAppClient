@@ -183,7 +183,11 @@ test('personal commerce shows unknown usage honestly and an order never activate
   context,
 }) => {
   await login(context, 'Personal', false);
-  await page.goto('/personal/subscription');
+  await page.goto('/personal/subscription?view=plans');
+  await page
+    .getByRole('button', { name: /^بررسی پلن / })
+    .first()
+    .click();
   await expect(
     page.getByRole('heading', { name: 'اشتراک و مصرف شخصی', exact: true }),
   ).toBeVisible();

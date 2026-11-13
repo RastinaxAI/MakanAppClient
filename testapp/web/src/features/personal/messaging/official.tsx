@@ -1,7 +1,10 @@
 'use client';
 import { uiClass } from '@/components/v5/classes';
 
-import { ShieldCheck } from 'lucide-react';
+import { BadgeCheck } from 'lucide-react';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+import { v6Ui as t } from '@/content/fa';
 import { ApiError } from '@/lib/api/errors';
 import type { components } from '@/generated/api/schema';
 import { usePersonal, usePersonalApi } from '../provider';
@@ -13,15 +16,61 @@ import {
 } from './official-model';
 import s from '../school/official-spaces.module.css';
 
-export function OfficialBadge({
+export function OfficialIdentity({
   summary,
 }: {
   summary: components['schemas']['ConversationSummaryResult'];
 }) {
+  if (!officialMetadataMatches(summary) || !summary.official) return null;
+  const source = summary.official;
+  const href =
+    source.sourceKind === 'PersonalClass'
+      ? '/personal/extracurricular/classes/' + encodeURIComponent(source.sourceId)
+      : source.sourceKind === 'Class'
+        ? '/personal/education/classes/' + encodeURIComponent(source.sourceId)
+        : '/personal/education';
+  return (
+    <section className={uiClass('card')} data-v6-official-identity>
+      <h3>
+        <BadgeCheck size={18} /> {t.officialIdentity}
+      </h3>
+      <div className={uiClass('kv')}>
+        <span className={uiClass('key')}>{t.officialSource}</span>
+        <b className={uiClass('val')}>{source.displayLabel}</b>
+      </div>
+      <div className={uiClass('kv')}>
+        <span className={uiClass('key')}>{t.officialDomain}</span>
+        <b className={uiClass('val')}>
+          {source.sourceKind === 'PersonalClass'
+            ? t.independentTag
+            : source.sourceKind === 'Class'
+              ? t.schoolClass
+              : t.schoolOrganization}
+        </b>
+      </div>
+      <p>{t.officialMembership}</p>
+      <Button asChild variant="outline">
+        <Link href={href}>{t.viewOfficialSource}</Link>
+      </Button>
+    </section>
+  );
+}
+
+export function OfficialBadge({
+  summary,
+  compact = false,
+}: {
+  summary: components['schemas']['ConversationSummaryResult'];
+  compact?: boolean;
+}) {
   return officialMetadataMatches(summary) ? (
-    <span className={uiClass(s.badge)}>
-      <ShieldCheck size={15} />
-      {summary.official!.displayLabel}
+    <span
+      className={uiClass(compact ? s.compactBadge : s.badge)}
+      aria-label={compact ? summary.official!.displayLabel : undefined}
+      title={summary.official!.displayLabel}
+    >
+      <BadgeCheck size={15} />
+      {!compact && summary.official!.displayLabel}
     </span>
   ) : null;
 }
@@ -32,8 +81,9 @@ export function useOfficialConversationAccess(
   const declared = !!summary.official || summary.isOfficial === true;
   const binding =
     officialMetadataMatches(summary) &&
-    session.context.workspaceType === 'Organization' &&
-    summary.organizationId === session.context.organizationId;
+    (summary.official?.sourceKind === 'PersonalClass' ||
+      (session.context.workspaceType === 'Organization' &&
+        summary.organizationId === session.context.organizationId));
   const q = usePersonalApi<OfficialPair>(
     summary.official ? officialPairPath(summary.official) : '/api/v1/organization/official-spaces',
     {

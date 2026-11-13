@@ -108,6 +108,7 @@ export async function POST(request: Request, { params }: { params: Promise<{ act
         refreshExpiresAtUtc: value.refreshExpiresAtUtc,
         userId: value.user.id,
         revision: randomUUID(),
+        lastActivityAtUtc: new Date().toISOString(),
       });
       createdSessionId = id;
       const old = await clientSessionId();
@@ -116,7 +117,7 @@ export async function POST(request: Request, { params }: { params: Promise<{ act
         { authenticated: true },
         { headers: { 'Cache-Control': 'no-store, private' } },
       );
-      result.cookies.set(CLIENT_COOKIE, id, cookieOptions());
+      result.cookies.set(CLIENT_COOKIE, id, cookieOptions(value.refreshExpiresAtUtc));
       result.cookies.set(AUTH_RETURN_COOKIE, '', { ...cookieOptions(), maxAge: 0 });
       accepted = true;
       return result;

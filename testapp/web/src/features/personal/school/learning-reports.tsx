@@ -198,6 +198,10 @@ function ReportRows({
       key: key + ':' + index,
       title,
       context,
+      learnerHref:
+        teacher && classId && 'learnerOrganizationPersonId' in row
+          ? base + '/classes/' + classId + '/learners/' + row.learnerOrganizationPersonId
+          : null,
       status,
       when: when ? date(when, true) : t.unknown,
       score:
@@ -229,7 +233,13 @@ function ReportRows({
                 {rows.map((row) => (
                   <tr key={row.key}>
                     <td>{row.title}</td>
-                    <td>{row.context}</td>
+                    <td>
+                      {row.learnerHref ? (
+                        <Link href={row.learnerHref}>{row.context}</Link>
+                      ) : (
+                        row.context
+                      )}
+                    </td>
                     <td>{row.status}</td>
                     <td>{kind === 'attendance' ? t.notApplicable : <bdi>{row.score}</bdi>}</td>
                     <td>{row.when}</td>
@@ -242,6 +252,11 @@ function ReportRows({
             {rows.map((row) => (
               <article className={uiClass('card')} key={row.key}>
                 <h2>{row.title}</h2>
+                {row.learnerHref && (
+                  <Link className={uiClass('text-action')} href={row.learnerHref}>
+                    {t.learner}: {row.context}
+                  </Link>
+                )}
                 <dl>
                   {[
                     [teacher ? t.learner : t.class, row.context],

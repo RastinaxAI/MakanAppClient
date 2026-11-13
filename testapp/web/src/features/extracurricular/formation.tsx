@@ -27,19 +27,41 @@ import {
   validRequest,
   type S,
 } from './api-model';
-import { StaticConnectedFrame } from './frame';
+import { StaticConnectedFrame, useClassViewState } from './frame';
+import { usePersonal } from '@/features/personal/provider';
 import { V4List, V4Row, V4Note } from '@/components/v4/page';
 import { CheckCircle2, Clock3, AlertCircle, Users, MessagesSquare, Megaphone } from 'lucide-react';
 
-export function FormationList() {
-  const [page, setPage] = useState(1),
-    [status, setStatus] = useState('');
+export function FormationList({ embedded = false }: { embedded?: boolean } = {}) {
+  const { session } = usePersonal();
+  const memory = 'makan:draft:view:' + session.user.id + ':account:extra-requests:';
+  const [page, setPage] = useClassViewState(
+      memory + 'page',
+      1,
+      (v): v is number => typeof v === 'number' && Number.isSafeInteger(v) && v > 0,
+    ),
+    [status, setStatus] = useClassViewState(
+      memory + 'status',
+      '',
+      (v): v is string =>
+        typeof v === 'string' &&
+        [
+          '',
+          'Draft',
+          'Submitted',
+          'UnderReview',
+          'NeedsChanges',
+          'Approved',
+          'Rejected',
+          'Cancelled',
+        ].includes(v),
+    );
   const q = usePersonalApi<S['PersonalClassPageOfPersonalClassRequestDto']>(
     `${api}?page=${page}&pageSize=30${status ? '&status=' + status : ''}`,
     { poll: 15000 },
   );
-  return (
-    <StaticConnectedFrame id="MK-12" title={t.requests}>
+  const content = (
+    <>
       <Field label={t.status}>
         <NativeSelect
           value={status}
@@ -85,6 +107,13 @@ export function FormationList() {
       <Link className={uiClass(buttonClass('btn'))} href={`${base}/requests/new`}>
         {t.requests}
       </Link>
+    </>
+  );
+  return embedded ? (
+    content
+  ) : (
+    <StaticConnectedFrame id="MK-12" title={t.requests}>
+      {content}
     </StaticConnectedFrame>
   );
 }

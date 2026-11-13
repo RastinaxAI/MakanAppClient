@@ -3,6 +3,7 @@ import { clientValidator } from '@/lib/api/client-contract';
 import { parseProblem } from '@/lib/api/errors';
 import {
   acceptAssistantResult,
+  assistantRequestScope,
   sourceVersions,
   type AssistantIntent,
 } from '@/features/personal/assistant/model';
@@ -36,6 +37,14 @@ const intent: AssistantIntent = {
   body: { clientOperationId: id, query: 'پرسش', sources: versions, payer: 'Individual' },
 };
 describe('authorized, version-pinned assistant answers', () => {
+  it('keeps personal chat account-owned while binding school payers, sources and role tools to their context', () => {
+    const chat = { ...intent, path: '/api/v1/ai/chat', sources: undefined };
+    expect(assistantRequestScope(chat)).toBe('account');
+    expect(assistantRequestScope({ ...chat, payer: 'FreeTrial' })).toBe('account');
+    expect(assistantRequestScope({ ...chat, payer: 'Organization' })).toBe('context');
+    expect(assistantRequestScope(intent)).toBe('context');
+    expect(assistantRequestScope({ ...chat, path: '/api/v1/ai/study-plan' })).toBe('context');
+  });
   it('enforces the published nonempty, bounded source list at the shared contract boundary', () => {
     const schema = clientValidator({ $ref: '#/components/schemas/KnowledgeQueryCommand' });
     expect(schema.safeParse(intent.body).success).toBe(true);

@@ -1,7 +1,7 @@
 import { test, expect, login } from './test';
 
 for (const theme of ['light', 'dark']) {
-  test(`${theme}: messages and assistant share one navigation geometry and icon family through live transitions`, async ({
+  test(`${theme}: messages keep all five destinations and icons through scoped PDF styling and live transitions`, async ({
     page,
     context,
   }) => {
@@ -27,15 +27,21 @@ for (const theme of ['light', 'dark']) {
         background: getComputedStyle(el).backgroundColor,
         icons: [...el.querySelectorAll('svg')].map((svg) => svg.innerHTML),
       }));
-      expect(assistant).toEqual(baseline);
+      expect(assistant.icons).toEqual(baseline.icons);
+      // V7 uses the same five-destination shell across the account areas.
+      expect(assistant.rect).toEqual(baseline.rect);
+      if (width < 768) {
+        expect(baseline.rect.width).toBe(width);
+        expect(baseline.rect.height).toBeGreaterThanOrEqual(66);
+      }
       for (const link of await nav.getByRole('link').all()) {
         const box = (await link.boundingBox())!;
         expect(box.width).toBeGreaterThanOrEqual(44);
         expect(box.height).toBeGreaterThanOrEqual(44);
         await expect(link).toBeInViewport();
         const glyph = await link.locator('svg').boundingBox();
-        expect(glyph?.width).toBe(width < 768 ? 22 : 24);
-        expect(glyph?.height).toBe(width < 768 ? 22 : 24);
+        expect(glyph?.width).toBe(width < 768 ? 22 : 21);
+        expect(glyph?.height).toBe(width < 768 ? 22 : 21);
       }
       await nav.getByRole('link', { name: 'پیام‌ها', exact: true }).click();
       await expect(page).toHaveURL(/\/personal\/messages$/);
@@ -80,10 +86,12 @@ test('bottom navigation stays readable with enlarged text, a safe area and a sho
       true,
     );
     if (path.endsWith('assistant')) {
+      await page.getByRole('button', { name: /^مرور درس/ }).click();
       const input = page.getByRole('textbox', { name: 'سؤال از دستیار', exact: true });
       await input.focus();
       const box = (await input.boundingBox())!;
-      expect(box.y + box.height).toBeLessThanOrEqual((await nav.boundingBox())!.y);
+      await expect(nav).toHaveCount(0);
+      expect(box.y + box.height).toBeLessThanOrEqual(500);
     }
   }
   await cdp.detach();

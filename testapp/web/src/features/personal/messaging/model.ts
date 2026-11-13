@@ -51,3 +51,29 @@ export const conversationRoleLabels = {
   Admin: uiText.text_c420e4b83a1f,
   Member: uiText.text_171874b82f6c,
 } as const;
+
+/** A hidden, expired or mismatched server presence never becomes an online badge. */
+export function visiblePresence(
+  value: components['schemas']['PresenceResult'] | undefined,
+  userId: string,
+  now: number,
+) {
+  const current = visiblePresenceDetail(value, userId, now);
+  return current?.state === 'Online' || current?.state === 'Recently' ? current.state : null;
+}
+/** Exact last-seen is usable only when the server publishes a current, matching presence. */
+export function visiblePresenceDetail(
+  value: components['schemas']['PresenceResult'] | undefined,
+  userId: string,
+  now: number,
+) {
+  if (
+    !value ||
+    value.userId !== userId ||
+    !Number.isFinite(Date.parse(value.expiresAtUtc)) ||
+    Date.parse(value.expiresAtUtc) <= now ||
+    value.state === 'Hidden'
+  )
+    return null;
+  return value;
+}

@@ -11,7 +11,7 @@ export function SceneFooterPortal({ children }: { children: ReactNode }) {
   const footer = useContext(SceneFooter);
   return footer ? createPortal(children, footer) : children;
 }
-export type SceneHeading = { title: string; subtitle?: string; tools?: ReactNode };
+export type SceneHeading = { title: string; subtitle?: string; tools?: ReactNode; href?: string };
 export const SceneHeader = createContext<((heading: SceneHeading | undefined) => void) | null>(
   null,
 );

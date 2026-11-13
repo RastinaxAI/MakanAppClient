@@ -5,7 +5,7 @@ import { v4Text, v4_more, v5Product as t } from '../../src/content/fa';
 const chat = '/personal/messages/00000000-0000-4000-8000-000000000950';
 const members = '/personal/extracurricular/classes/00000000-0000-4000-8000-000000001800/members';
 
-test('context summaries prioritize visible form fields, resolve numeric selections and exclude closed option dialogs', async ({
+test('V6 rich forms retain their values and resolve selected options without a generic context sidebar', async ({
   page,
   context,
   request,
@@ -19,14 +19,11 @@ test('context summaries prioritize visible form fields, resolve numeric selectio
   await page.getByLabel(v4Text.question, { exact: true }).fill('چه زمانی؟');
   await page.getByLabel('گزینه ۱', { exact: true }).fill('شنبه');
   await page.getByLabel('گزینه ۲', { exact: true }).fill('دوشنبه');
-  const panel = page.locator('.rx-context-panel');
-  await expect(panel.locator('.context-item > b')).toHaveText([
-    v4Text.question,
-    'گزینه ۱',
-    'گزینه ۲',
-  ]);
   await page.getByRole('switch', { name: v4Text.anonymous, exact: true }).uncheck();
-  await expect(panel.locator('.context-item > b')).toHaveCount(3);
+  await expect(page.getByLabel(v4Text.question, { exact: true })).toHaveValue('چه زمانی؟');
+  await expect(page.getByLabel('گزینه ۱', { exact: true })).toHaveValue('شنبه');
+  await expect(page.getByLabel('گزینه ۲', { exact: true })).toHaveValue('دوشنبه');
+  await expect(page.locator('.rx-context-panel')).toHaveCount(0);
 
   await page.goto(chat + '/quiz-new');
   await page.getByLabel(v4Text.question, { exact: true }).fill('کدام گزینه؟');
@@ -36,24 +33,23 @@ test('context summaries prioritize visible form fields, resolve numeric selectio
   await dialog.getByLabel('گزینه ۲', { exact: true }).fill('پاسخ دوم');
   await dialog.getByRole('button', { name: v4Text.applyOptions, exact: true }).click();
   await expect(dialog).toHaveCount(0);
-  await page.getByLabel(v4Text.correctOption, { exact: true }).selectOption('2');
+  const correct = page.getByLabel(v4Text.correctOption, { exact: true });
+  await correct.selectOption('2');
   await page.getByLabel(v4Text.explanation, { exact: true }).fill('توضیح معتبر');
-  await expect(panel.locator('.context-item > b')).toHaveText([
-    v4Text.question,
-    v4Text.options,
-    v4Text.correctOption,
-    v4Text.explanation,
-  ]);
-  await expect(panel.locator('.context-value')).toHaveText([
-    'کدام گزینه؟',
-    'الف / ب / پاسخ دوم',
-    'پاسخ دوم',
-    'توضیح معتبر',
-  ]);
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.evaluate(() => {
+    document.documentElement.dataset.theme = 'dark';
+  });
+  await expect(page.getByLabel(v4Text.question, { exact: true })).toHaveValue('کدام گزینه؟');
+  await expect(correct).toHaveValue('2');
+  await expect(correct.locator('option:checked')).toHaveText('پاسخ دوم');
+  await expect(page.getByLabel(v4Text.explanation, { exact: true })).toHaveValue('توضیح معتبر');
+  await expect(page.getByLabel('گزینه ۱', { exact: true })).toHaveCount(0);
+  await expect(page.locator('.rx-context-panel')).toHaveCount(0);
   await captureExactState(
     page,
     ['MK-245'],
-    'Active Admin, visible four-field quiz; closed option-editor fields never appear in the page context.',
+    'V6 explicit quiz fields, selected human-readable option, closed option dialog and no imposed context sidebar.',
   );
 });
 
@@ -83,7 +79,10 @@ test('independent member search preserves context and page, displays only matchi
   await expect(rows).toHaveCount(1);
   await search.fill('هیچ عضو با این نام');
   await expect(page.getByRole('heading', { name: t.noMatchingMembers, exact: true })).toBeVisible();
-  await page.locator('.v5-search-clear').click();
+  await page
+    .locator('[data-ui="search"]')
+    .getByRole('button', { name: 'پاک‌کردن جستجو', exact: true })
+    .click();
   await expect(rows).toHaveCount(3);
   let calls = (await (await request.get(fixture + '/__test__/state')).json()).requests;
   expect(calls.filter((r: { path: string }) => r.path.endsWith('/manager-transfers'))).toHaveLength(
@@ -146,7 +145,7 @@ test('a profile belonging to another identity never labels a class member or app
     .getByRole('textbox', { name: t.memberName, exact: true })
     .fill('هویت متعلق به فرد دیگر');
   await expect(page.getByRole('heading', { name: t.noMatchingMembers, exact: true })).toBeVisible();
-  await expect(page.locator('.rx-context-panel')).not.toContainText('هویت متعلق به فرد دیگر');
+  await expect(page.locator('[data-testid^="membership-"]')).toHaveCount(0);
 });
 
 test('join-request review keeps the selected version after failure and displays only the acknowledged result', async ({

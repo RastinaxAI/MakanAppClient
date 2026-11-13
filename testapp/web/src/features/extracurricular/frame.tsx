@@ -11,7 +11,21 @@ import { V5Scene } from '@/components/v5/scene';
 import s from './connected.module.css';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { SceneFooterPortal } from '@/components/v5/form-actions';
+import { useViewState } from '@/components/hooks/use-view-state';
+import { contextSignature } from '@/lib/client-surface';
 const base = '/personal/extracurricular';
+/** Preserve valid older drafts while moving independent views off school context keys. */
+export function useClassViewState<T>(
+  legacyKey: string,
+  initial: T,
+  validate: (value: unknown) => value is T,
+) {
+  const { session } = usePersonal();
+  const key = legacyKey
+    .replace(contextSignature(session.context), 'account')
+    .replace(':' + session.revision + ':', ':account:');
+  return useViewState(key, initial, validate, legacyKey);
+}
 export function useFrameActions() {
   const router = useRouter(),
     { session } = usePersonal();
@@ -55,6 +69,7 @@ export function StaticConnectedFrame({
   contextTitle,
   kind,
   mobileFooter,
+  headerTools,
 }: {
   id: string;
   back?: string;
@@ -66,6 +81,7 @@ export function StaticConnectedFrame({
   contextTitle?: string;
   kind?: 'form' | 'list' | 'article' | 'dashboard' | 'status';
   mobileFooter?: ReactNode;
+  headerTools?: ReactNode;
 }) {
   return (
     <V5Scene
@@ -77,6 +93,7 @@ export function StaticConnectedFrame({
       kind={kind}
       footerSlot={!!mobileFooter}
       actions={actions}
+      headerTools={headerTools ?? <></>}
       menu={
         menu ?? (
           <nav className={uiClass('stack')}>
@@ -94,6 +111,11 @@ export function StaticConnectedFrame({
       }
     >
       <div className={uiClass('app-body ' + s.body)}>{children}</div>
+      {menu && (
+        <div className={uiClass('stack')} data-page-actions>
+          {menu}
+        </div>
+      )}
       {mobileFooter && (
         <SceneFooterPortal>
           <div className={s.mobileFooter}>{mobileFooter}</div>

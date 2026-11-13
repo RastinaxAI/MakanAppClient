@@ -43,9 +43,9 @@ import {
 import { StaticConnectedFrame } from './frame';
 import { ClassMemberWorkspace } from './class-member';
 import { useClassCommand } from './use-class-command';
-import { useViewState } from '@/components/hooks/use-view-state';
+import { useClassViewState } from './frame';
 import { contextSignature } from '@/lib/client-surface';
-import { V4Hero, V4List, V4Row } from '@/components/v4/page';
+import { V4List, V4Row } from '@/components/v4/page';
 import {
   useSceneFormAction,
   useSceneContextSummary,
@@ -61,7 +61,13 @@ import {
   History,
   Settings,
   SearchX,
+  ArrowLeftRight,
+  ArrowUpLeft,
+  Megaphone,
+  Bell,
 } from 'lucide-react';
+import { readableOfficialEndpoint } from '@/features/personal/messaging/official-model';
+import appearance from './connected.module.css';
 
 function QueryResult({
   q,
@@ -80,25 +86,82 @@ function QueryResult({
 }
 export function ClassOverview({ id }: { id: string }) {
   const { session } = usePersonal();
+  const params = useSearchParams();
+  const router = useRouter();
+  const [viewOpen, setViewOpen] = useState(false),
+    [viewChoice, setViewChoice] = useState('management');
   const q = usePersonalApi<S['PersonalClassDto']>(`${api}/${id}`, { poll: 10000 });
+  const manager = q.data?.managerUserId === session.user.id;
+  const memberView = params.get('view') === 'member';
+  const members = usePersonalApi<S['PersonalClassPageOfPersonalClassMembershipDto']>(
+    `${api}/${id}/memberships?page=1&pageSize=100`,
+    { enabled: q.data?.capabilities?.canManageMembers === true },
+  );
+  const teacher = members.data?.items.find(
+    (member) => member.status === 'Active' && hasFlag(member.localRoles, 'Teacher'),
+  );
+  const teachersKnown =
+    members.isSuccess && (!!teacher || members.data.totalCount <= members.data.items.length);
+  const allowedView =
+    viewChoice === 'management'
+      ? manager
+      : viewChoice === 'member' && q.data?.capabilities?.canViewOwnResults;
   return (
     <StaticConnectedFrame
       id={
         q.data?.archived ? 'MK-25' : q.data?.managerUserId === session.user.id ? 'MK-24' : 'MK-23'
       }
-      title={q.data?.title ?? t.independent}
+      title={
+        manager && !memberView ? uiText.v6Ui.workshopManagement : (q.data?.title ?? t.independent)
+      }
+      subtitle={uiText.v6Ui.independentClass}
+      headerTools={
+        <Button asChild variant="ghost" size="icon">
+          <Link href="/personal/notifications" aria-label={uiText.text_9f2a436a61f3}>
+            <Bell size={21} />
+          </Link>
+        </Button>
+      }
     >
       <QueryResult q={q}>
         {q.data && (
           <>
-            <V4Hero title={q.data.title}>
-              <span className={uiClass('badge')}>{stateLabel(q.data.state ?? 'Unknown')}</span>
-              <span>
-                {t.capacity}
-                {uiText.text_45822f54a0d0}
-                {q.data.capacity?.toLocaleString('fa-IR') ?? '—'}
-              </span>
-            </V4Hero>
+            <section className={appearance.classSummary}>
+              <h3>{q.data.title}</h3>
+              <span className={uiClass('badge')}>{uiText.v6Ui.independentTag}</span>
+              <div>
+                <span>{uiText.v6Ui.localRole}</span>
+                <strong>{manager ? uiText.v6Ui.managerMember : uiText.v6Ui.classMember}</strong>
+              </div>
+              <div>
+                <span>{teachersKnown ? uiText.v6Ui.teacherLabel : t.capacity}</span>
+                <strong>
+                  {teachersKnown ? (
+                    teacher ? (
+                      <MemberName userId={teacher.userId} />
+                    ) : (
+                      uiText.v6Ui.optionalTeacher
+                    )
+                  ) : (
+                    (q.data.capacity?.toLocaleString('fa-IR') ?? '—')
+                  )}
+                </strong>
+              </div>
+              {q.data.archived && <p>{stateLabel(q.data.state ?? 'Unknown')}</p>}
+            </section>
+            {manager && (
+              <Button
+                variant="outline"
+                onClick={() => {
+                  setViewChoice(memberView ? 'member' : 'management');
+                  setViewOpen(true);
+                }}
+              >
+                <ArrowLeftRight size={20} />
+                {memberView ? uiText.v6Ui.manageClassView : uiText.v6Ui.myClassView}
+              </Button>
+            )}
+            <ClassSpaces value={q.data} compact />
             <V4List>
               {[
                 {
@@ -112,13 +175,13 @@ export function ClassOverview({ id }: { id: string }) {
                   path: 'requests',
                   title: t.joins,
                   Icon: ClipboardList,
-                  show: q.data.capabilities?.canManageMembers,
+                  show: !memberView && q.data.capabilities?.canManageMembers,
                 },
                 {
                   path: 'invite',
                   title: t.invite,
                   Icon: UserPlus,
-                  show: q.data.capabilities?.canManageMembers,
+                  show: !memberView && q.data.capabilities?.canManageMembers,
                 },
                 { path: 'setup', title: t.spaces, Icon: MessagesSquare, show: true },
                 { path: 'info', title: t.history, Icon: History, show: true },
@@ -126,7 +189,7 @@ export function ClassOverview({ id }: { id: string }) {
                   path: 'edit',
                   title: t.settings,
                   Icon: Settings,
-                  show: q.data.managerUserId === session.user.id,
+                  show: !memberView && q.data.managerUserId === session.user.id,
                 },
               ]
                 .filter((item) => item.show)
@@ -140,7 +203,53 @@ export function ClassOverview({ id }: { id: string }) {
                 ))}
             </V4List>
             <p className={uiClass('policy')}>{t.grantHint}</p>
-            <ClassSpaces value={q.data} />
+            <Dialog open={viewOpen} onOpenChange={setViewOpen}>
+              <DialogContent title={uiText.v6Ui.myClassView} scenario="EXC-04">
+                <form
+                  className={appearance.localView}
+                  onSubmit={(event) => {
+                    event.preventDefault();
+                    if (!allowedView) return;
+                    router.replace(
+                      `${base}/classes/${id}${viewChoice === 'member' ? '?view=member' : ''}`,
+                    );
+                    setViewOpen(false);
+                  }}
+                >
+                  <p className={appearance.localViewHint}>{uiText.v6Ui.localClassViewHint}</p>
+                  <label className={appearance.localViewChoice}>
+                    <NativeInput
+                      type="radio"
+                      name="class-view"
+                      checked={viewChoice === 'management'}
+                      onChange={() => setViewChoice('management')}
+                      disabled={!manager}
+                    />
+                    <span>{uiText.v6Ui.managementView}</span>
+                  </label>
+                  <label className={appearance.localViewChoice}>
+                    <NativeInput type="radio" name="class-view" checked={false} disabled />
+                    <span>
+                      {uiText.v6Ui.teachingView}
+                      <small>{uiText.v6Ui.independentTeachingOff}</small>
+                    </span>
+                  </label>
+                  <label className={appearance.localViewChoice}>
+                    <NativeInput
+                      type="radio"
+                      name="class-view"
+                      checked={viewChoice === 'member'}
+                      onChange={() => setViewChoice('member')}
+                      disabled={!q.data.capabilities?.canViewOwnResults}
+                    />
+                    <span>{uiText.v6Ui.membershipView}</span>
+                  </label>
+                  <Button type="submit" disabled={!allowedView}>
+                    {uiText.v6Ui.enterClassView}
+                  </Button>
+                </form>
+              </DialogContent>
+            </Dialog>
           </>
         )}
       </QueryResult>
@@ -340,48 +449,73 @@ export function ClassManagement({
     </StaticConnectedFrame>
   );
 }
-function ClassSpaces({ value }: { value: S['PersonalClassDto'] }) {
+function ClassSpaces({
+  value,
+  compact = false,
+}: {
+  value: S['PersonalClassDto'];
+  compact?: boolean;
+}) {
   const q = usePersonalApi<S['OfficialSpacesPairResult']>(`${api}/${value.id}/spaces`, {
     poll: 5000,
   });
   const command = useClassCommand('repair:' + value.id),
     [pending, setPending] = useState(false);
   return (
-    <section className={uiClass('card stack')}>
-      <h3>{t.spaces}</h3>
+    <section className={compact ? appearance.classSpaces : uiClass('card stack')}>
+      {!compact && <h3>{t.spaces}</h3>}
       <QueryResult q={q}>
-        {q.data && (
-          <div className={uiClass('link-pair')}>
-            {(['group', 'channel'] as const).map((kind) => {
-              const space = q.data![kind];
-              return (
-                <div className={uiClass('link-card')} key={kind}>
-                  <h4>{t[kind]}</h4>
-                  <p>{stateLabel(space.state)}</p>
-                  {space.conversationId && space.capabilities.canRead && (
-                    <Link
-                      className={uiClass(buttonClass('btn secondary'))}
-                      href={`/personal/messages/${space.conversationId}`}
-                    >
-                      {t.open}
-                    </Link>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        )}
+        {q.data &&
+          (q.data.sourceKind !== 'PersonalClass' ||
+          q.data.sourceId !== value.id ||
+          q.data.organizationId !== null ? (
+            <ErrorState error={new ApiError(502, { code: 'CONTRACT_MISMATCH' })} />
+          ) : (
+            <div className={appearance.spacesGrid}>
+              {(['group', 'channel'] as const).map((kind) => {
+                const space = q.data![kind];
+                return (
+                  <div className={appearance.spaceCard} key={kind}>
+                    <h3>
+                      {kind === 'group' ? <MessagesSquare size={20} /> : <Megaphone size={20} />}
+                      {kind === 'group' ? uiText.v6Ui.officialGroup : uiText.v6Ui.officialChannel}
+                    </h3>
+                    <p>
+                      {space.state === 'Ready'
+                        ? kind === 'group'
+                          ? uiText.v6Ui.officialGroupHint
+                          : uiText.v6Ui.officialChannelHint
+                        : stateLabel(space.state)}
+                    </p>
+                    {readableOfficialEndpoint(q.data!, kind === 'group' ? 'Group' : 'Channel') && (
+                      <Link
+                        className={uiClass(buttonClass('btn secondary'))}
+                        href={`/personal/messages/${space.conversationId}`}
+                      >
+                        <ArrowUpLeft size={20} />
+                        {kind === 'group' ? uiText.v6Ui.enterGroup : uiText.v6Ui.enterChannel}
+                      </Link>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          ))}
       </QueryResult>
-      {value.capabilities?.canManageSpaces && value.version && (
+      {!compact && value.capabilities?.canManageSpaces && value.version && (
         <VersionForm
           version={value.version}
           busy={command.busy}
           label={t.repair}
           onSubmit={async (f, version) => {
-            const r = await command.run(`${api}/${value.id}/spaces/repair`, {
-              expectedVersion: version,
-              reason: f.get('reason'),
-            });
+            const r = await command.run(
+              `${api}/${value.id}/spaces/repair`,
+              {
+                expectedVersion: version,
+                reason: f.get('reason'),
+              },
+              { expectedStatus: 202 },
+            );
             if (r) {
               setPending(true);
               void q.refetch();
@@ -396,14 +530,19 @@ function ClassSpaces({ value }: { value: S['PersonalClassDto'] }) {
     </section>
   );
 }
-export function ClassInvitationList({ id }: { id?: string }) {
-  const [page, setPage] = useState(1);
+export function ClassInvitationList({ id, embedded = false }: { id?: string; embedded?: boolean }) {
+  const { session } = usePersonal();
+  const [page, setPage] = useClassViewState(
+    'makan:draft:view:' + session.user.id + ':account:extra-invitations:' + (id ?? 'all'),
+    1,
+    (v): v is number => typeof v === 'number' && Number.isSafeInteger(v) && v > 0,
+  );
   const q = usePersonalApi<S['PersonalClassPageOfPersonalClassInvitationDto']>(
     `${api}/invitations/page?page=${page}&pageSize=30`,
     { poll: 10000 },
   );
-  return (
-    <StaticConnectedFrame id="MK-297" title={t.invitations}>
+  const content = (
+    <>
       <QueryResult q={q}>
         {q.data && (
           <>
@@ -418,6 +557,13 @@ export function ClassInvitationList({ id }: { id?: string }) {
         )}
       </QueryResult>
       <Transfers />
+    </>
+  );
+  return embedded ? (
+    content
+  ) : (
+    <StaticConnectedFrame id="MK-297" title={t.invitations}>
+      {content}
     </StaticConnectedFrame>
   );
 }
@@ -644,12 +790,12 @@ function JoinDecision({
     ':join-decision:' +
     value.id +
     ':';
-  const [reason, setReason, ready] = useViewState(
+  const [reason, setReason, ready] = useClassViewState(
     key + 'reason',
     '',
     (v): v is string => typeof v === 'string' && v.length <= 500,
   );
-  const [decision, setDecision] = useViewState(
+  const [decision, setDecision] = useClassViewState(
     key + 'decision',
     'Approved',
     (v): v is string => v === 'Approved' || v === 'Rejected',
@@ -739,7 +885,7 @@ function Members({
     queries: members.map((member) => {
       const path = '/api/v1/people/' + member.userId;
       return {
-        queryKey: ['personal', session.user.id, session.revision, path],
+        queryKey: ['personal', session.user.id, 'account', path],
         queryFn: async ({ signal }: { signal: AbortSignal }) => {
           const profile = await call<S['MessagingPublicProfileResult']>(path, { signal });
           if (profile.userId !== member.userId)
@@ -757,7 +903,7 @@ function Members({
         ? session.user.displayName || session.user.firstName
         : identities[index]?.data?.displayName) || uiText.v5Product.classMember,
   }));
-  const [search, setSearch, searchReady] = useViewState(
+  const [search, setSearch, searchReady] = useClassViewState(
     session.user.id + ':' + contextSignature(session.context) + ':class-members:' + value.id,
     '',
     (s): s is string => typeof s === 'string' && s.length <= 200,
