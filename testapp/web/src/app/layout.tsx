@@ -29,6 +29,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="fa" dir="rtl" data-design-version="7" suppressHydrationWarning>
       <head>
+        {/* Reserve Cypress's injection node so its runner preserves the SSR tree. */}
+        <script data-cy-bootstrap suppressHydrationWarning>
+          {'/* Cypress bootstrap marker. */'}
+        </script>
         <link
           rel="preload"
           href="/fonts/makan-reference/Vazirmatn.woff2"

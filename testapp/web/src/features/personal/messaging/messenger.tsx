@@ -202,6 +202,7 @@ function ContextMessenger({
     if (searchMode) {
       next.set('search', '1');
       next.set('searchIn', searchTarget);
+      if (search.has('from')) next.set('from', messagingReturnPath(search.get('from')));
     }
     router.push(pathname + '?' + next, { scroll: false });
   }

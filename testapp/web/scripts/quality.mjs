@@ -1,5 +1,14 @@
 import { spawnSync } from 'node:child_process';
-const steps = ['format:check', 'lint', 'typecheck', 'test', 'generated:check', 'build', 'test:e2e'];
+const steps = [
+  'format:check',
+  'lint',
+  'typecheck',
+  'test:cypress:types',
+  'test',
+  'generated:check',
+  'build',
+  'test:e2e',
+];
 for (const step of steps) {
   console.log('\nQUALITY STEP: ' + step);
   const r = spawnSync(process.execPath, [process.env.npm_execpath, 'run', step], {

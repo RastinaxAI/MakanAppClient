@@ -115,6 +115,26 @@ export function ReferenceAssistant() {
     previousStage.current = stage;
   }, [stage]);
   useScrollMemory(scroll, 'MK-38:' + activeTab);
+  const revealedAnswer = useRef<unknown>(null);
+  useEffect(() => {
+    if (
+      activeTab !== 'chat' ||
+      stage !== 'answer' ||
+      !request.result ||
+      revealedAnswer.current === request.result
+    )
+      return;
+    const result = request.result;
+    const frame = requestAnimationFrame(() => {
+      const answer = scroll.current?.querySelector<HTMLElement>('[data-assistant-result]');
+      if (!answer) return;
+      // Reveal each accepted response once; theme, resize and tab revisits keep
+      // the reader's position. A response received in another tab waits for Chat.
+      answer.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+      revealedAnswer.current = result;
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [activeTab, stage, request.result]);
   const memory = 'makan:draft:view:' + session.user.id + ':account:assistant:';
   const [payer, setPayer] = useViewState<AiPayer | ''>(
     // A school/role/child change requires a new explicit billing choice.
