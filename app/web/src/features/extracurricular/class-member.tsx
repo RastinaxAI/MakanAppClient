@@ -13,7 +13,7 @@ import { Button, buttonClass } from '@/components/ui/button';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { EmptyState, ErrorState, LoadingSkeleton } from '@/components/ui/states';
 import { V4Field, V4Hero, V4List, V4Note, V4Row, V4SwitchRow } from '@/components/v4/page';
-import { useViewState } from '@/components/hooks/use-view-state';
+import { useClassViewState } from './frame';
 import {
   SceneMenuClose,
   useSceneContextSummary,
@@ -125,7 +125,7 @@ function useMemberGrants(classId: string, enabled: boolean) {
     queryKey: [
       'personal',
       session.user.id,
-      session.revision,
+      'account',
       `${api}/${classId}/academic-permissions`,
       'all-pages',
     ],
@@ -248,7 +248,7 @@ export function ClassMemberWorkspace({
       busy={command.busy}
       onAction={open}
       onRefresh={() =>
-        void cache.invalidateQueries({ queryKey: ['personal', session.user.id, session.revision] })
+        void cache.invalidateQueries({ queryKey: ['personal', session.user.id, 'account'] })
       }
     />
   );
@@ -575,7 +575,7 @@ function MemberEditor({
     capabilities: flags(grant?.capabilities ?? 'None'),
     reason: '',
   };
-  const [draft, setDraft, ready] = useViewState(
+  const [draft, setDraft, ready] = useClassViewState(
     session.user.id +
       ':' +
       contextSignature(session.context) +
@@ -783,7 +783,7 @@ function MemberActionDialog({
 }) {
   const formId = useId(),
     { session } = usePersonal();
-  const [reasons, setReasons] = useViewState(
+  const [reasons, setReasons] = useClassViewState(
     session.user.id +
       ':' +
       contextSignature(session.context) +

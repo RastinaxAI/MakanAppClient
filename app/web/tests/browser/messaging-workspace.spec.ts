@@ -101,7 +101,7 @@ for (const mode of ['workspacesDisabled', 'unrelatedWorkspace'])
   }) => {
     await request.post(fixture + '/__test__/conversation-context', { data: { [mode]: true } });
     await login(context, 'Teacher', false);
-    await page.goto('/personal/messages');
+    await page.goto('/personal/messages?filter=All');
     await page.getByRole('link').filter({ hasText: 'گفتگوی آموزشگاه برای آزمون زمینه' }).click();
     const notice = page.locator('[data-conversation-workspace]');
     await expect(notice.getByText(t.noMatchingWorkspace, { exact: true })).toBeVisible();
@@ -138,7 +138,7 @@ test('a failed workspace switch preserves the URL and personal context without l
   request,
 }) => {
   await login(context, 'Teacher', false);
-  await page.goto('/personal/messages');
+  await page.goto('/personal/messages?filter=All');
   await page.getByRole('link').filter({ hasText: 'گفتگوی آموزشگاه برای آزمون زمینه' }).click();
   await request.post(fixture + '/__test__/fault', {
     data: { path: '/workspaces/select', method: 'POST', status: 503 },
@@ -174,7 +174,7 @@ test('workspace guidance fits both themes and phone tablet desktop viewports', a
     for (const width of [320, 390, 834, 1440]) {
       await page.setViewportSize({ width, height: 1000 });
       await page.addInitScript((v) => localStorage.setItem('makan-theme', v), theme);
-      await page.goto('/personal/messages');
+      await page.goto('/personal/messages?filter=All');
       await page.getByRole('link').filter({ hasText: 'گفتگوی آموزشگاه برای آزمون زمینه' }).click();
       const notice = page.locator('[data-conversation-workspace]');
       await expect(notice.getByRole('button', { name: new RegExp(t.select) })).toBeVisible();

@@ -71,3 +71,20 @@ describe('late responses from a previous personal account or context', () => {
     },
   );
 });
+
+it('session verification can handle a current 401 without recursively expiring the browser, while ordinary requests still emit expiry', async () => {
+  const dispatchEvent = vi.fn(),
+    onUnauthorized = vi.fn();
+  vi.stubGlobal('window', { dispatchEvent });
+  vi.stubGlobal(
+    'fetch',
+    vi.fn().mockImplementation(() => Promise.resolve(Response.json({}, { status: 401 }))),
+  );
+  await expect(
+    request('/api/client/session', {}, { revision: '', onUnauthorized }),
+  ).rejects.toMatchObject({ status: 401 });
+  expect(onUnauthorized).toHaveBeenCalledTimes(1);
+  expect(dispatchEvent).not.toHaveBeenCalled();
+  await expect(request('/api/client/backend/operation')).rejects.toMatchObject({ status: 401 });
+  expect(dispatchEvent).toHaveBeenCalledTimes(1);
+});

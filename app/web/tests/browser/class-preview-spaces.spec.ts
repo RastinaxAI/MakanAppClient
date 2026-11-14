@@ -22,9 +22,8 @@ test('the first independent-class card uses its real bound group and keeps the p
   await expect(pair).toContainText('در انتظار');
   await expect(page.getByRole('button', { name: 'بعدی', exact: true })).toHaveCount(0);
   await page.setViewportSize({ width: 1440, height: 1000 });
-  const summary = page.getByRole('complementary', { name: 'در همین زمینه', exact: true });
-  await expect(summary.getByText('درخواست‌های تشکیل من', { exact: true })).toBeVisible();
-  await expect(summary.getByText('دعوت‌های دریافتی', { exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: /درخواست‌های تشکیل من/ })).toBeVisible();
+  await expect(page.getByRole('link', { name: /دعوت‌های دریافتی/ })).toBeVisible();
 });
 
 for (const mismatch of ['pair', 'endpoint'])
@@ -35,15 +34,25 @@ for (const mismatch of ['pair', 'endpoint'])
   }) => {
     await setup(request);
     await login(context, 'Personal', false);
+    let inspected = false;
     await page.route('**/api/client/backend/api/v1/personal-classes/*/spaces', async (route) => {
       const response = await route.fetch();
       const pair = await response.json();
       if (mismatch === 'pair') pair.sourceId = '00000000-0000-4000-8000-000000000001';
       else pair.group.official.sourceId = '00000000-0000-4000-8000-000000000001';
       await route.fulfill({ response, json: pair });
+      inspected = true;
     });
-    await page.goto('/personal/extracurricular');
-    if (mismatch === 'pair') await expect(page.getByRole('main').getByRole('alert')).toBeVisible();
-    else await expect(page.locator('.link-pair[aria-label="گروه و کانال کلاس"]')).toBeVisible();
-    await expect(page.locator('.link-pair').getByRole('link')).toHaveCount(0);
+    try {
+      await page.goto('/personal/extracurricular');
+      await expect.poll(() => inspected).toBe(true);
+      if (mismatch === 'pair')
+        await expect(page.getByRole('main').getByRole('alert')).toBeVisible();
+      else await expect(page.locator('.link-pair[aria-label="گروه و کانال کلاس"]')).toBeVisible();
+      await expect(page.locator('.link-pair').getByRole('link')).toHaveCount(0);
+    } finally {
+      // A background query may still be entering the override after the final assertion.
+      // Remove it before context teardown; only teardown errors are ignored.
+      await page.unrouteAll({ behavior: 'ignoreErrors' });
+    }
   });

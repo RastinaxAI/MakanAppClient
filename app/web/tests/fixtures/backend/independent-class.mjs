@@ -30,6 +30,185 @@ const page = (items, url, academic = false) => {
     ...(academic ? { total: items.length } : {}),
   };
 };
+function localMember(x, auth) {
+  return (
+    !x.removed &&
+    x.members.find((member) => member.userId === auth.user.id && member.status === 'Active')
+  );
+}
+export function independentCapabilities(state, auth, purpose) {
+  const x = state.independent,
+    member = x && localMember(x, auth);
+  const manager = !!member && /(?:^|,\s*)Manager(?:,|$)/.test(member.localRoles);
+  return make('ConversationEffectiveCapabilities', {
+    canPublish: !!member && (purpose === 'Group' || manager),
+    canManageMembers: manager,
+    canManageMessages: manager,
+    canManageInvites: manager,
+  });
+}
+function independentPair(x, auth) {
+  const v6 = x.options.v6Spaces,
+    member = v6 ? localMember(x, auth) : true;
+  return make('OfficialSpacesPairResult', {
+    sourceKind: 'PersonalClass',
+    sourceId: cid,
+    organizationId: null,
+    version: version(x.revision),
+    ...Object.fromEntries(
+      ['Group', 'Channel'].map((purpose) => {
+        const state =
+          purpose === 'Group'
+            ? (x.options.groupState ?? 'Ready')
+            : (x.options.channelState ?? (v6 ? 'Ready' : 'Pending'));
+        const canRead = !!member && state === 'Ready' && x.options.canRead !== false;
+        const caps = v6
+          ? independentCapabilities({ independent: x }, auth, purpose)
+          : make('ConversationEffectiveCapabilities', { canPublish: purpose === 'Group' });
+        return [
+          purpose === 'Group' ? 'group' : 'channel',
+          make('OfficialSpaceEndpointResult', {
+            conversationId: v6
+              ? id(purpose === 'Group' || x.options.sameConversation ? 1950 : 1951)
+              : id(950),
+            state,
+            capabilities: {
+              canRead,
+              canSend: canRead && caps.canPublish,
+              canManage: canRead && caps.canManageMembers,
+            },
+            effectiveCapabilities: caps,
+            official: make('OfficialSpaceMetadata', {
+              sourceKind: 'PersonalClass',
+              sourceId: cid,
+              organizationId: null,
+              purpose,
+              displayLabel: (purpose === 'Group' ? 'گروه رسمی ' : 'کانال رسمی ') + x.class.title,
+              version: version(x.revision),
+            }),
+          }),
+        ];
+      }),
+    ),
+  });
+}
+export function independentConversationSummaries(state, auth) {
+  const x = state.independent;
+  if (!x?.options.v6Spaces || !localMember(x, auth)) return [];
+  const pair = independentPair(x, auth);
+  return ['Group', 'Channel']
+    .filter((p) => pair[p === 'Group' ? 'group' : 'channel'].state === 'Ready')
+    .map((purpose) => {
+      const endpoint = pair[purpose === 'Group' ? 'group' : 'channel'];
+      return make('ConversationSummaryResult', {
+        conversationId: endpoint.conversationId,
+        type: purpose,
+        scope: 'Personal',
+        organizationId: null,
+        title: endpoint.official.displayLabel,
+        official: endpoint.official,
+        isOfficial: true,
+        otherParticipant: null,
+        organization: null,
+        effectiveCapabilities: endpoint.effectiveCapabilities,
+        lastMessageAtUtc: '2026-11-12T08:00:00Z',
+      });
+    });
+}
+function independentConversationRoute(ctx, x) {
+  if (!x.options.v6Spaces) return false;
+  const { auth, url, req, body, state, send } = ctx,
+    match = url.pathname.match(/^\/api\/v1\/conversations\/([0-9a-f-]+)(?:\/(.*))?$/);
+  if (!match || ![id(1950), id(1951)].includes(match[1])) return false;
+  const purpose = match[1] === id(1950) ? 'Group' : 'Channel',
+    pair = independentPair(x, auth),
+    endpoint = pair[purpose === 'Group' ? 'group' : 'channel'];
+  if (!localMember(x, auth) || !endpoint.capabilities.canRead)
+    return send({ code: 'CONVERSATION_NOT_FOUND' }, 404);
+  const summary = independentConversationSummaries(state, auth).find(
+    (row) => row.conversationId === match[1],
+  );
+  if (match[2] === 'summary') return send(summary);
+  if (!match[2])
+    return send(
+      make('ManagedConversationResult', {
+        conversationId: match[1],
+        type: purpose,
+        scope: 'Personal',
+        organizationId: null,
+        title: summary.title,
+        description: null,
+        status: 'Active',
+        official: summary.official,
+        managementPolicy: 'SystemManagedAcademic',
+        visibility: 'Private',
+        groupHistoryPolicy: 'FullHistory',
+        memberCapabilities: 'SendMessages',
+        effectiveCapabilities: endpoint.effectiveCapabilities,
+        participants: x.members
+          .filter((m) => m.status === 'Active')
+          .map((m) =>
+            make('ConversationParticipantResult', {
+              participantId: m.id,
+              user: make('SafeMessagingIdentityResult', {
+                userId: m.userId,
+                displayName: state.users.get(m.userId)?.displayName ?? 'عضو آزمون',
+              }),
+              role: m.localRoles.includes('Manager') ? 'Owner' : 'Member',
+              status: 'Active',
+            }),
+          ),
+      }),
+    );
+  x.spaceMessages ??= new Map();
+  if (!x.spaceMessages.has(match[1]))
+    x.spaceMessages.set(match[1], [
+      make('ConversationMessageResult', {
+        messageId: id(purpose === 'Group' ? 1960 : 1961),
+        conversationId: match[1],
+        clientMessageId: id(purpose === 'Group' ? 1962 : 1963),
+        senderUserId: id(199),
+        sender: make('SafeMessagingIdentityResult', {
+          userId: id(199),
+          displayName: state.users.get(id(199))?.displayName ?? 'مدیر کلاس',
+        }),
+        sequence: 1,
+        kind: 'Text',
+        text: 'پیام رسمی مجاز همین کلاس مستقل',
+        attachments: [],
+        sentAtUtc: '2026-11-12T08:00:00Z',
+      }),
+    ]);
+  const messages = x.spaceMessages.get(match[1]);
+  if (match[2] === 'messages') {
+    if (req.method === 'GET')
+      return send(make('ConversationMessagePageResult', { messages, nextBeforeSequence: null }));
+    if (req.method === 'POST') {
+      if (!endpoint.capabilities.canSend) return send({ code: 'FORBIDDEN' }, 403);
+      const old = messages.find((m) => m.clientMessageId === body.clientMessageId);
+      if (old) return send(old, 201);
+      const row = make('ConversationMessageResult', {
+        messageId: randomUUID(),
+        conversationId: match[1],
+        clientMessageId: body.clientMessageId,
+        senderUserId: auth.user.id,
+        sender: make('SafeMessagingIdentityResult', {
+          userId: auth.user.id,
+          displayName: auth.user.displayName,
+        }),
+        text: body.text,
+        kind: body.kind,
+        sequence: messages.length + 1,
+        attachments: [],
+        sentAtUtc: new Date().toISOString(),
+      });
+      messages.push(row);
+      return send(row, 201);
+    }
+  }
+  return send({ code: 'FIXTURE_ENDPOINT_NOT_IMPLEMENTED' }, 404);
+}
+
 export function seedIndependent(state, options = {}) {
   state.independent = {
     options,
@@ -286,6 +465,11 @@ export function independentRoute({ state, url, body, auth, req, res, send }) {
   }
   const pc = '/api/v1/personal-classes',
     pr = '/api/v1/personal-class-requests';
+  if (independentConversationRoute({ state, auth, url, req, body, send }, x)) return true;
+  if (x.options.v6Spaces && (p.includes(cid) || p === pc + '/page') && !localMember(x, auth))
+    return p === pc + '/page'
+      ? send(page([], url))
+      : send({ code: 'PERSONAL_CLASS_NOT_FOUND' }, 404);
   const bump = (row) => {
     row.version = version(++x.revision);
     return row;
@@ -376,41 +560,7 @@ export function independentRoute({ state, url, body, auth, req, res, send }) {
     return send(bump(row));
   }
   if (p === `${pc}/${cid}` && m === 'GET') return send(x.class);
-  if (p === `${pc}/${cid}/spaces`)
-    return send(
-      make('OfficialSpacesPairResult', {
-        sourceKind: 'PersonalClass',
-        sourceId: cid,
-        organizationId: null,
-        version: version(1),
-        group: make('OfficialSpaceEndpointResult', {
-          conversationId: id(950),
-          state: 'Ready',
-          capabilities: { canRead: true, canSend: true, canManage: true },
-          official: make('OfficialSpaceMetadata', {
-            sourceKind: 'PersonalClass',
-            sourceId: cid,
-            organizationId: null,
-            purpose: 'Group',
-            displayLabel: 'گروه کلاس مستقل آزمایشی',
-            version: version(1),
-          }),
-        }),
-        channel: make('OfficialSpaceEndpointResult', {
-          conversationId: id(950),
-          state: 'Pending',
-          capabilities: { canRead: false, canSend: false, canManage: false },
-          official: make('OfficialSpaceMetadata', {
-            sourceKind: 'PersonalClass',
-            sourceId: cid,
-            organizationId: null,
-            purpose: 'Channel',
-            displayLabel: 'کانال کلاس مستقل آزمایشی',
-            version: version(1),
-          }),
-        }),
-      }),
-    );
+  if (p === `${pc}/${cid}/spaces`) return send(independentPair(x, auth));
   if (p === `${pc}/${cid}/spaces/repair`) {
     if (!x.class.capabilities.canManageSpaces) return fail('FORBIDDEN', 403);
     if (!expected(x.class)) return fail('VERSION_CONFLICT');

@@ -15,8 +15,9 @@ import {
   type FormEventHandler,
 } from 'react';
 import Link from 'next/link';
-import { v5Layouts, v5DeepViews } from '@/design/v5-layouts';
+import { currentLayouts, currentDeepViews } from '@/design/v5-layouts';
 import { useScrollMemory } from '@/components/navigation/scroll-memory';
+import { ContextBackLink } from '@/components/navigation/page-back';
 import { ChevronRight, MoreHorizontal, PanelRight } from 'lucide-react';
 import { BrandMark } from '@/components/ui/brand';
 import frameStyles from './frame.module.css';
@@ -32,7 +33,10 @@ import {
   type SceneHeading,
   type SceneSummary,
 } from './form-actions';
-export const ProductContext = createContext({ title: '', role: '' });
+export const ProductContext = createContext<{ title: string; role: string; memoryKey?: string }>({
+  title: '',
+  role: '',
+});
 export function V5Scene({
   id,
   title,
@@ -49,7 +53,7 @@ export function V5Scene({
   kind,
   context,
   contextTitle,
-  deep = v5DeepViews.has(id),
+  deep = currentDeepViews.has(id),
   onSubmit,
   layout = 'standard',
   schoolForm = false,
@@ -58,9 +62,11 @@ export function V5Scene({
   moreButtonRef,
   restricted = false,
   headerTools,
+  headerClassName,
+  header,
   contextual = false,
   footerSlot = false,
-  desktopActionPlacement = 'header',
+  desktopActionPlacement = 'footer',
 }: {
   id: string;
   title: string;
@@ -86,11 +92,14 @@ export function V5Scene({
   moreButtonRef?: Ref<HTMLButtonElement>;
   restricted?: boolean;
   headerTools?: ReactNode;
+  headerClassName?: string;
+  /** A workspace may own a specialized header without changing other page shells. */
+  header?: ReactNode;
   contextual?: boolean;
   footerSlot?: boolean;
   desktopActionPlacement?: 'header' | 'footer';
 }) {
-  const sceneKind = overlayActive ? 'modal' : kind || v5Layouts[id] || 'form';
+  const sceneKind = overlayActive ? 'modal' : kind || currentLayouts[id] || 'form';
   const [formAction, setFormAction] = useState<ReactNode>();
   const [contextOpen, setContextOpen] = useState(false);
   const [publishedSummary, setPublishedSummary] = useState<SceneSummary>();
@@ -106,8 +115,8 @@ export function V5Scene({
     [open, setOpen] = useState(false);
   const scroll = useRef<HTMLDivElement>(null);
   const compactScroll = useRef<HTMLDivElement>(null);
-  useScrollMemory(scroll, id);
-  useScrollMemory(compactScroll, id + '-compact');
+  useScrollMemory(scroll, id + ':' + (place.memoryKey ?? 'account'));
+  useScrollMemory(compactScroll, id + '-compact:' + (place.memoryKey ?? 'account'));
   // Context is a page-owned slot, never an inferred copy of arbitrary descendants.
   const contextRows = (summary ?? publishedSummary ?? []).filter((item) => item.value).slice(0, 4);
   const showContext =
@@ -161,74 +170,91 @@ export function V5Scene({
   const content = (
     <>
       <div className={uiClass('rx-page-scroll-region')} ref={compactScroll}>
-        <header className={uiClass('rx-head')} role="banner">
-          {!deep && back === '/personal' && !backWithinPage ? (
-            onBack ? (
+        {header ?? (
+          <header className={uiClass('rx-head', headerClassName)} role="banner">
+            {!deep && back === '/personal' && !backWithinPage ? (
+              onBack ? (
+                <button
+                  type="button"
+                  className={uiClass('rx-icon-button', sceneStyles.brandMark)}
+                  onClick={onBack}
+                  aria-label={uiText.text_e357d20c5ae7}
+                >
+                  <BrandMark />
+                </button>
+              ) : (
+                <span className={sceneStyles.brandMark} aria-hidden="true">
+                  <BrandMark />
+                </span>
+              )
+            ) : onBack ? (
               <button
                 type="button"
-                className={uiClass('rx-icon-button', sceneStyles.brandMark)}
+                className={uiClass('rx-icon-button rx-back')}
+                aria-label={uiText.common_back}
+                data-navigation-target={backWithinPage ? undefined : back}
                 onClick={onBack}
-                aria-label={uiText.text_e357d20c5ae7}
               >
-                <BrandMark />
+                <ChevronRight />
               </button>
             ) : (
-              <span className={sceneStyles.brandMark} aria-hidden="true">
-                <BrandMark />
-              </span>
-            )
-          ) : onBack ? (
-            <button
-              type="button"
-              className={uiClass('rx-icon-button rx-back')}
-              aria-label={uiText.common_back}
-              data-navigation-target={backWithinPage ? undefined : back}
-              onClick={onBack}
-            >
-              <ChevronRight />
-            </button>
-          ) : (
-            <Link
-              className={uiClass('rx-icon-button rx-back')}
-              href={back}
-              aria-label={uiText.common_back}
-            >
-              <ChevronRight />
-            </Link>
-          )}
-          <div className={uiClass('grow')}>
-            <div className={uiClass('rx-crumb')}>
-              {contextTitle || (place.role ? place.title : uiText.brand_name) || title}
+              <ContextBackLink
+                className={uiClass('rx-icon-button rx-back')}
+                href={back}
+                aria-label={uiText.common_back}
+              >
+                <ChevronRight />
+              </ContextBackLink>
+            )}
+            <div className={uiClass('grow')}>
+              <div className={uiClass('rx-crumb')}>
+                {contextTitle || (place.role ? place.title : uiText.brand_name) || title}
+              </div>
+              {workspaceHeading?.href ? (
+                <Link
+                  className={sceneStyles.headingLink}
+                  href={workspaceHeading.href}
+                  aria-label={uiText.text_3a3510c0ba99}
+                >
+                  <h1 ref={headingRef} tabIndex={-1}>
+                    {heading}
+                  </h1>
+                  {(headingSubtitle || place.role) && <p>{headingSubtitle || place.role}</p>}
+                </Link>
+              ) : (
+                <>
+                  <h1 ref={headingRef} tabIndex={-1}>
+                    {heading}
+                  </h1>
+                  {(headingSubtitle || place.role) && <p>{headingSubtitle || place.role}</p>}
+                </>
+              )}
             </div>
-            <h1 ref={headingRef} tabIndex={-1}>
-              {heading}
-            </h1>
-            {(headingSubtitle || place.role) && <p>{headingSubtitle || place.role}</p>}
-          </div>
-          {sceneActions && <div className={uiClass('head-action')}>{sceneActions}</div>}
-          {context !== undefined && (
-            <button
-              type="button"
-              className={uiClass('rx-icon-button', sceneStyles.contextToggle)}
-              aria-label={uiText.v5Product.context}
-              onClick={() => setContextOpen(true)}
-            >
-              <PanelRight />
-            </button>
-          )}
-          {tools}
-          {!tools && (pageMenu || onMore) && (
-            <button
-              ref={moreButtonRef}
-              type="button"
-              className={uiClass('rx-icon-button')}
-              aria-label={menuTools ? uiText.v4_more : moreLabel || uiText.v4_more}
-              onClick={() => (pageMenu ? setOpen(true) : onMore?.())}
-            >
-              <MoreHorizontal />
-            </button>
-          )}
-        </header>
+            {sceneActions && <div className={uiClass('head-action')}>{sceneActions}</div>}
+            {showContext && (
+              <button
+                type="button"
+                className={uiClass('rx-icon-button', sceneStyles.contextToggle)}
+                aria-label={uiText.v5Product.context}
+                onClick={() => setContextOpen(true)}
+              >
+                <PanelRight />
+              </button>
+            )}
+            {tools}
+            {!tools && (pageMenu || onMore) && (
+              <button
+                ref={moreButtonRef}
+                type="button"
+                className={uiClass('rx-icon-button')}
+                aria-label={menuTools ? uiText.v4_more : moreLabel || uiText.v4_more}
+                onClick={() => (pageMenu ? setOpen(true) : onMore?.())}
+              >
+                <MoreHorizontal />
+              </button>
+            )}
+          </header>
+        )}
         <div className={uiClass('rx-content')} ref={scroll}>
           <div className={uiClass('rx-workspace')} data-with-context={showContext || undefined}>
             <div className={uiClass('rx-body-grid')}>{children}</div>
@@ -299,7 +325,7 @@ export function V5Scene({
                     <DialogContent title={uiText.v4_more}>{pageMenu}</DialogContent>
                   </Dialog>
                 )}
-                {context !== undefined && (
+                {showContext && (
                   <Dialog open={contextOpen} onOpenChange={setContextOpen}>
                     <DialogContent title={contextTitle || uiText.v5Product.context}>
                       {side}

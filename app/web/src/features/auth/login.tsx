@@ -1,5 +1,5 @@
 'use client';
-import { Input as NativeInput } from '@/components/ui/input';
+import { Input as NativeInput, Select as NativeSelect } from '@/components/ui/input';
 
 import { uiClass } from '@/components/v5/classes';
 
@@ -29,7 +29,15 @@ import {
 } from '@/lib/auth-return';
 import { AuthLayout } from './auth-layout';
 import { Button, buttonClass } from '@/components/ui/button';
-import { ChevronRight, Ellipsis, LoaderCircle, ShieldCheck } from 'lucide-react';
+import {
+  ChevronRight,
+  ChevronDown,
+  Ellipsis,
+  LoaderCircle,
+  ShieldCheck,
+  ArrowLeft,
+  Check,
+} from 'lucide-react';
 import s from './login.module.css';
 import { network } from '@/config/network';
 type LoginValues = { phoneNumber: string; code: string };
@@ -214,19 +222,18 @@ export function LoginForm({ returnPath = null }: { returnPath?: string | null } 
             </Button>
             <div className={uiClass('grow')}>
               <div className={uiClass('rx-crumb')}>{uiText.brand_name}</div>
-              <h1>{challenge ? uiText.auth_codeTitle : uiText.auth_phoneTitle}</h1>
-              <p>
-                {challenge
-                  ? uiText.v5Product.codeDestination + phone
-                  : uiText.v5Product.loginSubtitle}
-              </p>
+              <h1>{challenge ? uiText.auth_codeTitle : uiText.v6Ui.authPhoneTitle}</h1>
+              <p>{uiText.v6Ui.authWelcomeTitle}</p>
             </div>
             <Button
               type="button"
               size="icon"
               variant="ghost"
               className={uiClass('rx-icon-button')}
-              onClick={() => setHelp(true)}
+              onClick={(event) => {
+                helpTrigger.current = event.currentTarget;
+                setHelp(true);
+              }}
               aria-label={uiText.text_a0f446ea0a11}
             >
               <Ellipsis size={22} />
@@ -236,33 +243,61 @@ export function LoginForm({ returnPath = null }: { returnPath?: string | null } 
             <div className={uiClass('rx-workspace')}>
               <div className={uiClass('rx-body-grid')}>
                 <section className={s.loginCard}>
-                  <p className={uiClass('policy', challenge ? s.codeIntro : s.intro)}>
-                    {challenge ? uiText.v5Product.codeIntro : uiText.text_5d9c3b2dee3e}
-                  </p>
-                  <div className={uiClass(s.field)}>
-                    <label
-                      className={uiClass(challenge ? 'sr-only' : undefined)}
-                      htmlFor={challenge ? 'otp-code' : 'phone-number'}
-                    >
-                      {challenge ? uiText.auth_codeLabel : uiText.auth_phoneLabel}
+                  <section className={s.lead}>
+                    <h2>{challenge ? uiText.v6Ui.authCodeLead : uiText.v6Ui.authPhoneLead}</h2>
+                    <p>
+                      {challenge
+                        ? uiText.v5Product.codeDestination + phone
+                        : uiText.v6Ui.authPhoneIntro}
+                    </p>
+                  </section>
+                  {!challenge && (
+                    <label className={s.field}>
+                      {uiText.v6Ui.authCountry}
+                      <span className={s.countryControl}>
+                        <NativeSelect
+                          className={s.countrySelect}
+                          aria-label={uiText.v6Ui.authCountry}
+                          value="IR"
+                          onChange={() => {}}
+                          disabled={busy}
+                        >
+                          <option value="IR">{uiText.v6Ui.authIran}</option>
+                          <option value="other" disabled>
+                            {uiText.v6Ui.authOtherCountry}
+                          </option>
+                        </NativeSelect>
+                        <ChevronDown className={s.countryArrow} size={20} aria-hidden="true" />
+                        <span className={s.countryValue} aria-hidden="true" data-country-value>
+                          <svg viewBox="0 0 30 20" width="24" height="16" aria-hidden="true">
+                            <path fill="#239f40" d="M0 0h30v7H0z" />
+                            <path fill="#fff" d="M0 7h30v6H0z" />
+                            <path fill="#da0000" d="M0 13h30v7H0z" />
+                            <path fill="#da0000" d="M14 8h2v4h-2zM12 9h6v1h-6z" />
+                          </svg>
+                          <span>{uiText.v6Ui.authIran.replace(/\s*\+.*$/u, '')}</span>
+                          <bdi dir="ltr">
+                            {latinDigits(uiText.v6Ui.authIran.match(/\+.*$/u)?.[0] ?? '')}
+                          </bdi>
+                        </span>
+                      </span>
                     </label>
-                    <div className={uiClass(challenge ? s.otp : undefined)}>
-                      {challenge && (
-                        <div className={s.digits} aria-hidden="true">
-                          {Array.from({ length: 6 }, (_, index) => (
-                            <span
-                              key={index}
-                              data-active={index === Math.min(code.length, 5) || undefined}
-                            >
-                              {code[index] ? Number(code[index]).toLocaleString('fa-IR') : ''}
-                            </span>
-                          ))}
-                        </div>
-                      )}
+                  )}
+                  <div className={uiClass(s.field)}>
+                    <label htmlFor={challenge ? 'otp-code' : 'phone-number'}>
+                      {challenge ? uiText.auth_codeLabel : uiText.auth_phoneLabel}
+                      <span aria-hidden="true" className={s.required}>
+                        {' '}
+                        *
+                      </span>
+                    </label>
+                    <div>
                       <NativeInput
                         {...registration}
                         id={challenge ? 'otp-code' : 'phone-number'}
+                        aria-label={challenge ? uiText.auth_codeLabel : uiText.auth_phoneLabel}
                         type={challenge ? 'text' : 'tel'}
+                        className={s.phoneValue}
                         dir="ltr"
                         inputMode="numeric"
                         autoComplete={challenge ? 'one-time-code' : 'tel'}
@@ -270,11 +305,7 @@ export function LoginForm({ returnPath = null }: { returnPath?: string | null } 
                         maxLength={challenge ? 6 : 11}
                         minLength={challenge ? 6 : 11}
                         pattern={challenge ? '[0-9]{6}' : '09[0-9]{9}'}
-                        placeholder={
-                          challenge
-                            ? uiText.serverAlignedUi.otpPlaceholder
-                            : uiText.serverAlignedUi.phonePlaceholder
-                        }
+                        placeholder={challenge ? uiText.serverAlignedUi.otpPlaceholder : undefined}
                         aria-required="true"
                         autoFocus
                         key={activeField}
@@ -300,8 +331,8 @@ export function LoginForm({ returnPath = null }: { returnPath?: string | null } 
                         {issue}
                       </p>
                     ) : (
-                      <p id="identifier-hint" className={uiClass(challenge ? 'sr-only' : s.hint)}>
-                        {challenge ? uiText.text_c7b877a28050 : uiText.text_0ec3b647b2d7}
+                      <p id="identifier-hint" className={s.hint}>
+                        {challenge ? uiText.text_c7b877a28050 : uiText.v6Ui.authPhoneExample}
                       </p>
                     )}
                   </div>
@@ -335,17 +366,21 @@ export function LoginForm({ returnPath = null }: { returnPath?: string | null } 
                     </>
                   )}
                   {!challenge && (
-                    <p className={uiClass(s.policy)}>
-                      <button
-                        ref={helpTrigger}
-                        type="button"
-                        data-auth-policy
-                        aria-haspopup="dialog"
-                        onClick={() => setHelp(true)}
-                      >
-                        {uiText.text_7982e7b03d4c}
-                      </button>
-                    </p>
+                    <button
+                      ref={helpTrigger}
+                      type="button"
+                      data-auth-policy
+                      aria-haspopup="dialog"
+                      aria-label={uiText.text_7982e7b03d4c}
+                      className={s.privacyNotice}
+                      onClick={(event) => {
+                        helpTrigger.current = event.currentTarget;
+                        setHelp(true);
+                      }}
+                    >
+                      <ShieldCheck size={18} aria-hidden="true" />
+                      <span>{uiText.v6Ui.authPrivacy}</span>
+                    </button>
                   )}
                   {error && (
                     <div className={uiClass('mk-auth-error')} role="alert">
@@ -369,7 +404,13 @@ export function LoginForm({ returnPath = null }: { returnPath?: string | null } 
               disabled={unavailable}
               aria-busy={busy}
             >
-              {busy && <LoaderCircle className={uiClass(s.spinner)} size={18} />}{' '}
+              {busy ? (
+                <LoaderCircle className={uiClass(s.spinner)} size={18} />
+              ) : challenge ? (
+                <Check size={19} />
+              ) : (
+                <ArrowLeft size={19} />
+              )}{' '}
               {busy
                 ? uiText.text_ee2ee0a2117a
                 : challenge

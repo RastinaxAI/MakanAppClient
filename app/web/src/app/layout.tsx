@@ -27,19 +27,19 @@ export const viewport: Viewport = {
 };
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="fa" dir="rtl" suppressHydrationWarning>
+    <html lang="fa" dir="rtl" data-design-version="7" suppressHydrationWarning>
       <head>
         <link
           rel="preload"
-          href="/fonts/makan-reference/Vazirmatn.ttf"
+          href="/fonts/makan-reference/Vazirmatn.woff2"
           as="font"
-          type="font/ttf"
+          type="font/woff2"
           crossOrigin="anonymous"
         />
         <script
           id="makan-theme-bootstrap"
           dangerouslySetInnerHTML={{
-            __html: `try{var p=localStorage.getItem('makan-theme');var t=p==='dark'?'dark':p==='light'?'light':matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.dataset.theme=t;document.documentElement.dataset.themePreference=p==='dark'||p==='light'?p:'system';var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content',${JSON.stringify({ light: tokens.light.bg, dark: tokens.dark.bg })}[t]);}catch{document.documentElement.dataset.theme='light';}`,
+            __html: `try{var r=localStorage.getItem('makan-reading');document.documentElement.dataset.reading=r==='large'?'large':r==='comfortable'?'comfortable':'standard';document.documentElement.dataset.motion=localStorage.getItem('makan-motion')==='reduce'?'reduce':'system';var p=localStorage.getItem('makan-theme');var t=p==='dark'?'dark':p==='light'?'light':matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.dataset.theme=t;document.documentElement.dataset.themePreference=p==='dark'||p==='light'?p:'system';var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content',${JSON.stringify({ light: tokens.light.bg, dark: tokens.dark.bg })}[t]);}catch{document.documentElement.dataset.theme='light';}`,
           }}
         />
       </head>

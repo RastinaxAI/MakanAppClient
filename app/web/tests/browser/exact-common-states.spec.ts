@@ -75,7 +75,7 @@ test('an empty account inbox and an extracurricular search with no match keep th
   );
   await page.goto('/personal/messages');
   await expect(
-    page.getByRole('heading', { name: text.text_b82a78a5d594, exact: true }),
+    page.getByRole('heading', { name: text.messengerPdf.emptyPersonal, exact: true }),
   ).toBeVisible();
   await captureExactState(
     page,
@@ -95,7 +95,10 @@ test('an empty account inbox and an extracurricular search with no match keep th
     ['MK-424'],
     'No match in the authorized extracurricular response; the local search is preserved after reload and can be cleared.',
   );
-  await page.getByRole('button', { name: text.text_35c84a68f506, exact: true }).click();
+  await page
+    .locator('[data-ui="search"]')
+    .getByRole('button', { name: text.text_35c84a68f506, exact: true })
+    .click();
   await expect(search).toHaveValue('');
   await expect(
     page.locator('.rx-body-grid a[href^="/personal/extracurricular/classes/"]').first(),

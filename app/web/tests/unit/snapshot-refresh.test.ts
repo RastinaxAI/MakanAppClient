@@ -82,3 +82,48 @@ describe('snapshot invalidation during replay', () => {
     expect(refresh).toHaveBeenCalledTimes(2);
   });
 });
+
+it('batches hints from separate stream responses before the first snapshot, but preserves a later in-flight hint', async () => {
+  vi.useFakeTimers();
+  try {
+    let release!: () => void;
+    const refresh = vi
+      .fn()
+      .mockImplementationOnce(
+        () =>
+          new Promise<void>((resolve) => {
+            release = resolve;
+          }),
+      )
+      .mockResolvedValue(undefined);
+    const invalidate = queuedSnapshotRefresh(refresh, () => true, 16);
+    const first = invalidate();
+    await vi.advanceTimersByTimeAsync(8);
+    const second = invalidate();
+    await vi.advanceTimersByTimeAsync(8);
+    expect(refresh).toHaveBeenCalledTimes(1);
+    const duringRead = invalidate();
+    release();
+    await Promise.all([first, second, duringRead]);
+    expect(refresh).toHaveBeenCalledTimes(2);
+  } finally {
+    vi.useRealTimers();
+  }
+});
+
+it('does not read a disposed account when it changes during the batching window', async () => {
+  vi.useFakeTimers();
+  try {
+    let active = true;
+    const refresh = vi.fn().mockResolvedValue(undefined);
+    const invalidate = queuedSnapshotRefresh(refresh, () => active, 16);
+    const queued = invalidate();
+    await vi.advanceTimersByTimeAsync(8);
+    active = false;
+    await vi.advanceTimersByTimeAsync(8);
+    await queued;
+    expect(refresh).not.toHaveBeenCalled();
+  } finally {
+    vi.useRealTimers();
+  }
+});

@@ -1,6 +1,6 @@
 /* Page regions follow the V5 viewport, independent of the reference document frames. */
 .scene {
-  --v5-layout-gap: 16px;
+  --v5-layout-gap: 18px;
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -11,7 +11,7 @@
 }
 .scene :global(.rx-head) {
   min-height: 76px;
-  padding: 12px 24px;
+  padding: 14px 28px;
   gap: 12px;
 }
 .scene :global(.rx-crumb) {
@@ -19,26 +19,34 @@
 }
 .scene :global(.rx-head h1) {
   letter-spacing: normal;
-  font-size: calc(21px * var(--text-scale, 1));
-  font-weight: 800;
-  line-height: 1.5;
+  font-size: calc(17px * var(--text-scale, 1));
+  font-weight: 720;
+  line-height: 1.65;
   margin: 0;
   overflow-wrap: anywhere;
 }
 .scene :global(.rx-head p) {
-  margin-top: 3px;
+  font-size: calc(11px * var(--text-scale, 1));
+  line-height: 1.85;
+  margin-top: 1px;
 }
 .brandMark {
   flex: none;
 }
+.headingLink {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 44px;
+}
 .brandMark img {
   display: block;
-  width: 36px;
-  height: 36px;
-  border-radius: 11px;
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
 }
 .scene .contextToggle {
-  display: none;
+  display: grid;
 }
 .scene :global(.rx-back) {
   display: grid;
@@ -55,10 +63,10 @@
   display: block;
   width: 100%;
   min-width: 0;
-  max-width: 1280px;
+  max-width: var(--content-max-width, 1184px);
 }
 .scene :global(.rx-content) {
-  padding: 24px;
+  padding: 28px 32px;
 }
 .scene :global(.rx-body-grid > *) {
   min-width: 0;
@@ -92,6 +100,12 @@
 .scene :global(.rx-bottom-actions > .button) {
   flex: 1;
 }
+@media (min-width: 768px) {
+  .scene :global(.rx-bottom-actions > .button) {
+    flex: none;
+    min-width: 180px;
+  }
+}
 .scene :global(button.input) {
   display: flex;
   align-items: center;
@@ -111,15 +125,19 @@
     display: var(--desktop-header-action-display, flex);
   }
   .scene :global(.rx-workspace[data-with-context]) {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) 280px;
-    gap: 24px;
+    display: block;
   }
   .scene :global(.rx-bottom-actions) {
     display: var(--desktop-footer-display, none);
   }
 }
 @media (min-width: 768px) and (max-width: 1199px) {
+  .scene :global(.rx-head) {
+    padding: 12px 24px;
+  }
+  .scene :global(.rx-content) {
+    padding: 24px;
+  }
   .scene :global(.rx-workspace[data-with-context]) {
     display: block;
   }
@@ -137,21 +155,23 @@
 }
 @media (max-width: 767px) {
   .scene {
-    --v5-layout-gap: 16px;
+    --v5-layout-gap: 18px;
   }
   .scene :global(.rx-head) {
     min-height: 72px;
-    padding: calc(10px + env(safe-area-inset-top)) 16px 10px;
-    gap: 8px;
+    padding: 12px 16px;
+    gap: 12px;
   }
   .scene :global(.rx-content) {
-    padding: 16px;
+    padding: 18px 16px 24px;
   }
   .scene :global(.rx-head h1) {
-    font-size: calc(19px * var(--text-scale, 1));
+    font-size: calc(17px * var(--text-scale, 1));
+    font-weight: 720;
+    line-height: 1.65;
   }
   .scene :global(.rx-bottom-actions) {
-    padding-bottom: max(12px, env(safe-area-inset-bottom));
+    padding-bottom: max(10px, env(safe-area-inset-bottom));
   }
   .scene :global(.rx-bottom-actions .button) {
     font-size: calc(14px * var(--text-scale, 1));
@@ -162,13 +182,6 @@
   }
 }
 @media (max-height: 640px) {
-  .scene :global(.rx-head) {
-    min-height: 64px;
-    padding-block: calc(8px + env(safe-area-inset-top)) 8px;
-  }
-  .scene :global(.rx-bottom-actions) {
-    padding-block: 8px max(12px, env(safe-area-inset-bottom));
-  }
   .scene :global(.rx-content) {
     scroll-padding-block: 24px;
   }
@@ -203,20 +216,22 @@
 @media (max-width: 359px) {
   .scene :global(.rx-head) {
     padding-inline: 12px;
+    gap: 12px;
+    padding: 12px;
+    min-height: 72px;
   }
   .scene :global(.rx-content) {
     padding-inline: 12px;
+    padding: 18px 12px 24px;
   }
 }
-@container content (min-width: 680px) {
+@container content (min-width: 640px) {
   .scene :global(.rx-body-grid > form),
   .scene:global(.kind-form) :global(.app-body) {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
 .scene:global(.kind-chat) :global(.rx-content) {
-  background-color: var(--chat-canvas);
-  background-image: radial-gradient(var(--chat-pattern-dot) 0.8px, transparent 0.8px);
-  background-size: 24px 24px;
+  background: var(--bg);
 }

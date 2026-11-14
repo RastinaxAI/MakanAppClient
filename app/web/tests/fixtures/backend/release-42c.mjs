@@ -31,7 +31,10 @@ export function release42Route({ state, auth, url, req, body, send }) {
       state: config?.[purpose === 'Group' ? 'groupState' : 'channelState'] ?? 'Missing',
       capabilities: {
         canRead: config?.canRead ?? true,
-        canSend: purpose === 'Group' && (config?.canSend ?? true),
+        canSend:
+          purpose === 'Channel'
+            ? !!config?.noticePublishing && !classId && auth.context.activeRole === 'Manager'
+            : (config?.canSend ?? true),
         canManage: false,
       },
       official: {
@@ -217,14 +220,56 @@ export function release42Route({ state, auth, url, req, body, send }) {
                 })
               : null,
           }),
+          ...(!isClass && purpose === 'Channel' ? (state.schoolNotices ?? []) : []),
         ],
         nextBeforeSequence: null,
       }),
     );
   }
   if (tail === '/messages' && req.method === 'POST') {
-    if (purpose === 'Channel' || config.canSend === false)
+    if (
+      (purpose === 'Channel' &&
+        (!config.noticePublishing || isClass || auth.context.activeRole !== 'Manager')) ||
+      config.canSend === false
+    )
       return send({ code: 'SEND_NOT_ALLOWED' }, 403);
+    if (purpose === 'Channel') {
+      state.schoolNotices ??= [];
+      let message = state.schoolNotices.find(
+        (item) => item.clientMessageId === body.clientMessageId,
+      );
+      if (!message) {
+        message = make('ConversationMessageResult', {
+          messageId: id(1200 + state.schoolNotices.length),
+          conversationId,
+          senderUserId: auth.user.id,
+          sender: make('SafeMessagingIdentityResult', {
+            userId: auth.user.id,
+            displayName: 'مدیر آزمایشی',
+          }),
+          clientMessageId: body.clientMessageId,
+          sequence: 2 + state.schoolNotices.length,
+          kind: 'Text',
+          text: body.text,
+          originKind: 'User',
+          sentAtUtc: new Date().toISOString(),
+          version: '1',
+        });
+        state.schoolNotices.push(message);
+        if (config.noticeLostAckOnce) {
+          config.noticeLostAckOnce = false;
+          return send({ code: 'SERVICE_UNAVAILABLE' }, 503);
+        }
+      }
+      return send(
+        make('MessageReceiptResult', {
+          conversationId,
+          clientMessageId: body.clientMessageId,
+          messageId: message.messageId,
+          sequence: message.sequence,
+        }),
+      );
+    }
     return send(
       make('MessageReceiptResult', {
         conversationId,

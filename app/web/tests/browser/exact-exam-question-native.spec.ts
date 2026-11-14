@@ -54,6 +54,8 @@ test('a cached authorized question can open confirmation while its background sn
   } finally {
     releaseRead();
     releaseReplay();
+    // Finish the deliberately held request before Playwright disposes its API response.
+    await page.unrouteAll({ behavior: 'wait' });
   }
   await expect(page.getByRole('dialog', { name: t.removeTitle, exact: true })).toBeVisible();
   await page.keyboard.press('Escape');

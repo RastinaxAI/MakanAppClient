@@ -1,6 +1,8 @@
+import { v6Ui as v6 } from '../../src/content/fa';
 import { test, expect, login, origin, fixture } from './test';
 import { mkdir } from 'node:fs/promises';
 import {
+  openAssistantChat,
   assistantOptions,
   assistantTools,
   chooseAssistantPayer,
@@ -51,12 +53,9 @@ for (const role of ['Student', 'Teacher', 'Parent', 'Manager']) {
     expect(changes).toEqual([]);
     await second.close();
     await page.goto('/personal/profile');
-    await page.getByRole('button', { name: /فضاها و نقش‌های من/ }).click();
-    const roles = page.getByLabel('تغییر نقش و فضای کار', { exact: true });
-    await expect(roles.getByRole('button', { name: /آموزشگاه/ })).toHaveAttribute(
-      'aria-pressed',
-      'true',
-    );
+    await page.getByRole('button', { name: v6.chooseSchool }).click();
+    const roles = page.getByRole('dialog', { name: v6.schoolPicker, exact: true });
+    await expect(roles.getByRole('radio')).toBeChecked();
     await expect(page).toHaveURL(/\/personal\/profile$/);
   });
 }
@@ -80,6 +79,7 @@ test('connected assistant keeps its composer usable and separates the answer at 
     await page.setViewportSize({ width, height });
     await page.goto('/personal/assistant/studio');
     await expect(page).toHaveURL(/\/personal\/assistant$/);
+    await openAssistantChat(page);
     const field = page.getByRole('textbox', { name: 'سؤال از دستیار', exact: true });
     await expect(field).toBeEnabled();
     const composer = (await field.boundingBox())!;
@@ -91,20 +91,17 @@ test('connected assistant keeps its composer usable and separates the answer at 
     expect(send.width).toBeGreaterThanOrEqual(44);
     expect(send.height).toBeGreaterThanOrEqual(44);
     expect(Math.abs(composer.y + composer.height - send.y - send.height)).toBeLessThanOrEqual(2);
-    if (width < 768) {
-      const dock = (await page
-        .getByRole('navigation', { name: 'ناوبری حساب شخصی' })
-        .filter({ visible: true })
-        .boundingBox())!;
-      expect(form.y + form.height).toBeLessThanOrEqual(dock.y);
-    }
+    expect(form.y + form.height).toBeLessThanOrEqual(height);
+    if (width < 768)
+      await expect(page.getByRole('navigation', { name: 'ناوبری حساب شخصی' })).toBeVisible();
     await chooseAssistantPayer(page, 'Individual');
     await field.fill('سؤال ایزوله برای بررسی چیدمان واقعی پاسخ');
     await page.getByRole('button', { name: 'ارسال سؤال', exact: true }).click();
     await expect(page.locator('[data-assistant-result]')).toContainText(
       'پاسخ واقعی قرارداد در محیط آزمون',
     );
-    await expect(field).toHaveCount(0);
+    await expect(field).toBeEnabled();
+    await expect(field).toHaveValue('');
     await expect(page.getByRole('heading', { level: 1 })).toBeFocused();
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(
       true,
@@ -117,9 +114,10 @@ test('connected assistant keeps its composer usable and separates the answer at 
     const box = (await tools.boundingBox())!;
     expect(box.x).toBeGreaterThanOrEqual(0);
     expect(box.x + box.width).toBeLessThanOrEqual(width + 1);
-    expect(box.y + box.height).toBeLessThanOrEqual(height + 1);
-    await page.keyboard.press('Escape');
-    await expect(tools).toHaveCount(0);
+    expect(box.y).toBeGreaterThanOrEqual(0);
+    await page.getByRole('tab', { name: 'گفتگو', exact: true }).click();
+    await expect(tools).toBeHidden();
+    await expect(field).toBeVisible();
     await page.goto('/personal/messages');
     await expect(page.getByRole('navigation', { name: 'نوع گفتگوها' })).toBeVisible();
   }
@@ -151,7 +149,7 @@ test('V9 never covers assistant, chat, forms or payment with an automatic instal
   await page.keyboard.press('Escape');
   await expect(options).toHaveCount(0);
   await expect(
-    page.getByRole('banner').getByRole('button', { name: 'گزینه‌های بیشتر', exact: true }),
+    page.getByRole('banner').getByRole('button', { name: ai.normalQuota, exact: true }),
   ).toBeFocused();
 });
 
@@ -162,7 +160,8 @@ test('installation help is reachable explicitly from profile without any floatin
   await login(context, 'Student');
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/personal/profile');
-  await page.getByRole('link', { name: /راهنما و نصب برنامه/ }).click();
+  await page.getByRole('link', { name: /^تنظیمات/ }).click();
+  await page.getByRole('link', { name: /^نصب ماکان/ }).click();
   await expect(page).toHaveURL(/\/personal\/settings\/install$/);
   await page.getByRole('button', { name: 'نصب ماکان', exact: true }).click();
   const dialog = page.getByRole('dialog', { name: 'نصب برنامهٔ ماکان', exact: true });

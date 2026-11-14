@@ -15,14 +15,14 @@
   top: calc(var(--app-visual-height, 100dvh) / 2);
   left: 50%;
   transform: translate(-50%, -50%);
-  width: calc(100% - 64px);
-  max-width: 600px;
-  max-height: calc(var(--app-visual-height, 100dvh) - 64px);
-  min-height: 140px;
+  width: calc(100% - 48px);
+  max-width: 560px;
+  max-height: calc(var(--app-visual-height, 100dvh) - 48px);
+  min-height: 0;
   background: var(--surface);
   color: var(--text);
-  border: 1px solid var(--control-border);
-  border-radius: 22px;
+  border: 1px solid var(--line);
+  border-radius: 19px;
   padding: 0;
   z-index: 61;
   display: flex;
@@ -30,19 +30,19 @@
   overflow-y: var(--dialog-overflow);
   scroll-padding-block: 16px;
   overscroll-behavior: contain;
-  box-shadow: 0 24px 80px #050f2845;
+  box-shadow: 0 16px 56px #06172926;
 }
 .dialog-heading {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 14px;
-  padding: 18px 22px;
+  gap: 12px;
+  padding: 12px 16px;
   border-bottom: 1px solid var(--border);
   flex: none;
 }
 .dialog-heading h2 {
-  font-size: calc(18px * var(--text-scale, 1));
+  font-size: calc(16px * var(--text-scale, 1));
   line-height: 1.7;
   margin: 0;
   overflow-wrap: anywhere;
@@ -60,7 +60,7 @@
   overflow: var(--dialog-body-overflow);
   flex: var(--dialog-body-flex);
   min-height: 0;
-  padding: 22px;
+  padding: 18px;
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -165,41 +165,41 @@
     max-height: calc(var(--app-visual-height, 100dvh) - 64px);
     width: calc(100% - 64px);
     max-width: 600px;
-    border-radius: 22px;
+    border-radius: 19px;
   }
 }
 @media (max-width: 767px) {
   .dialog-content {
-    inset: auto 0 max(0px, calc(100dvh - var(--app-visual-height, 100dvh)));
+    inset: auto 12px max(12px, calc(100dvh - var(--app-visual-height, 100dvh) + 12px));
     transform: none;
-    width: 100%;
-    max-width: 100%;
+    width: calc(100% - 24px);
+    max-width: 560px;
     height: auto;
-    max-height: calc(var(--app-visual-height, 100dvh) - 64px);
-    border-radius: 24px 24px 0 0;
+    max-height: calc(var(--app-visual-height, 100dvh) - 24px);
+    border-radius: 19px;
     padding: 0;
   }
 }
 @media (max-width: 767px) {
   .dialog-content.sheet-content {
-    inset: auto 0 max(0px, calc(100dvh - var(--app-visual-height, 100dvh)));
+    inset: auto 12px max(12px, calc(100dvh - var(--app-visual-height, 100dvh) + 12px));
     transform: none;
-    width: 100%;
+    width: calc(100% - 24px);
     max-width: 100%;
     height: auto;
-    max-height: calc(var(--app-visual-height, 100dvh) - 64px);
-    border-radius: 24px 24px 0 0;
+    max-height: calc(var(--app-visual-height, 100dvh) - 24px);
+    border-radius: 19px;
     padding: 0;
   }
 }
 @media (max-width: 767px) {
   .dialog-heading h2 {
-    font-size: calc(18px * var(--text-scale, 1));
+    font-size: calc(16px * var(--text-scale, 1));
   }
 }
 @media (max-width: 767px) {
   .dialog-body {
-    padding: 18px 16px;
+    padding: 18px;
     gap: 14px;
   }
 }

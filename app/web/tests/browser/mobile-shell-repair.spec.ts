@@ -3,11 +3,11 @@ import { test, expect, login, fixture } from './test';
 import { mkdir, writeFile } from 'node:fs/promises';
 
 const destinations = [
-  ['/personal/education', 'امروز من'],
-  ['/personal/extracurricular', 'کلاس‌های مستقل من'],
-  ['/personal/assistant', 'دستیار یادگیری'],
+  ['/personal/education', 'آموزشگاه'],
+  ['/personal/extracurricular', 'فوق‌برنامه'],
+  ['/personal/assistant', 'دستیار'],
   ['/personal/messages', 'پیام‌ها'],
-  ['/personal/profile', 'پروفایل من'],
+  ['/personal/profile', 'پروفایل'],
 ] as const;
 
 for (const width of [320, 390, 430])

@@ -2,6 +2,7 @@ import { reviewPath } from './review-output';
 import { test, expect, login, fixture, ids } from './test';
 import { captureExactState } from './exact-state-capture';
 import { mkdir } from 'node:fs/promises';
+import * as fa from '../../src/content/fa';
 const group = '00000000-0000-4000-8000-000000000950';
 const base = '/personal/messages/' + group;
 test('conversation members and media follow server pagination and a media filter restarts its cursor', async ({
@@ -12,15 +13,11 @@ test('conversation members and media follow server pagination and a media filter
   await request.post(fixture + '/__test__/conversation-details', { data: {} });
   await login(context, 'Student', false);
   await page.goto(base + '/info');
+  await expect(page.getByText('توضیحات معتبر گروه آزمایشی', { exact: true })).toBeVisible();
   await page
-    .getByRole('banner')
-    .getByRole('button', { name: 'گزینه‌های بیشتر', exact: true })
+    .getByRole('tablist', { name: fa.messengerPdf.conversationLibrary })
+    .getByRole('tab', { name: fa.text_102f79b3f87c, exact: true })
     .click();
-  await expect(
-    page.getByRole('dialog').getByText('توضیحات معتبر گروه آزمایشی', { exact: true }),
-  ).toBeVisible();
-  await page.keyboard.press('Escape');
-  await page.getByRole('link', { name: /^اعضا و مدیران/ }).click();
   await expect(
     page.locator('.v5-list .v5-row').filter({ hasText: 'مالک آزمایشی گفتگو' }),
   ).toBeVisible();
@@ -30,9 +27,11 @@ test('conversation members and media follow server pagination and a media filter
     page.locator('.v5-list .v5-row').filter({ hasText: 'عضو آزمایشی دوم' }),
   ).toBeVisible();
   await expect(page.getByRole('button', { name: 'صفحهٔ بعد', exact: true })).toBeDisabled();
-  await page.getByRole('banner').getByRole('link', { name: 'بازگشت', exact: true }).click();
-  await expect(page).toHaveURL(/\/info$/);
-  await page.getByRole('link', { name: /^رسانه و فایل/ }).click();
+  await expect(page).toHaveURL(/\/info[?]library=members$/);
+  await page
+    .getByRole('tablist', { name: fa.messengerPdf.conversationLibrary })
+    .getByRole('tab', { name: fa.messengerPdf.media, exact: true })
+    .click();
   await expect(page.getByText('جزوه-50.pdf', { exact: true })).toBeVisible();
   await page.getByRole('button', { name: 'نمایش بیشتر', exact: true }).click();
   await expect(page.getByText('جزوه-20.pdf', { exact: true })).toBeVisible();
@@ -40,10 +39,11 @@ test('conversation members and media follow server pagination and a media filter
   const filtered = page.waitForRequest(
     (r) => r.url().includes('/media?') && r.url().includes('kind=Image'),
   );
-  await page.getByLabel('نوع رسانه', { exact: true }).selectOption('Image');
+  await page.getByRole('button', { name: 'نوع رسانه', exact: true }).click();
+  await page.getByRole('combobox', { name: 'نوع رسانه', exact: true }).selectOption('Image');
   expect((await filtered).url()).not.toContain('beforeSequence');
   await expect(page.getByText('رسانه‌ای در این بخش نیست', { exact: true })).toBeVisible();
-  await page.getByLabel('نوع رسانه', { exact: true }).selectOption('');
+  await page.getByRole('combobox', { name: 'نوع رسانه', exact: true }).selectOption('');
   await expect(page.getByText('جزوه-50.pdf', { exact: true })).toBeVisible();
   await request.post(fixture + '/__test__/conversation-details', {
     data: { mediaTitle: 'فایل تازه' },
@@ -82,11 +82,13 @@ test('conversation settings retain failed selections and leave confirmation reta
   await page.getByRole('banner').getByRole('link', { name: 'بازگشت', exact: true }).click();
   await expect(page).toHaveURL(/\/edit$/);
   await page.getByRole('banner').getByRole('link', { name: 'بازگشت', exact: true }).click();
-  await expect(page.getByText('گروه · عمومی', { exact: true })).toBeVisible();
+  await expect(page).toHaveURL(/\/settings$/);
+  await page.goto(base + '/info');
   await page
     .getByRole('banner')
     .getByRole('button', { name: 'گزینه‌های بیشتر', exact: true })
     .click();
+  await expect(page.getByRole('dialog').getByText('عمومی', { exact: true })).toBeVisible();
   await request.post(fixture + '/__test__/fault', {
     data: { path: '/leave', method: 'POST', status: 503 },
   });
@@ -129,10 +131,12 @@ test('direct conversation info is reached from chat and archive uses confirmed u
   await page.getByRole('link', { name: 'اطلاعات گفتگو', exact: true }).click();
   await expect(page).toHaveURL(/\/info$/);
   await captureExactState(page, ['MK-180']);
+  await page.getByRole('banner').getByRole('button', { name: fa.v4_more, exact: true }).click();
   await page.getByRole('button', { name: 'آرشیو گفتگو', exact: true }).click();
   await page.getByRole('dialog').getByRole('button', { name: 'تأیید', exact: true }).click();
   await expect(page).toHaveURL(/filter=Archived/);
   await page.goto('/personal/messages/' + ids.chat + '/info');
+  await page.getByRole('banner').getByRole('button', { name: fa.v4_more, exact: true }).click();
   await expect(page.getByRole('button', { name: 'بازگرداندن به گفتگوها' })).toBeVisible();
 });
 test('conversation detail pages preserve RTL and layout at mobile tablet and desktop', async ({
@@ -150,9 +154,9 @@ test('conversation detail pages preserve RTL and layout at mobile tablet and des
         name: (
           {
             info: 'اطلاعات گروه',
-            members: 'اعضای گروه',
+            members: fa.messengerPdf.conversationLibrary,
             settings: 'تنظیمات گروه',
-            media: 'رسانه‌های گروه',
+            media: fa.messengerPdf.conversationLibrary,
           } as Record<string, string>
         )[section],
         exact: true,

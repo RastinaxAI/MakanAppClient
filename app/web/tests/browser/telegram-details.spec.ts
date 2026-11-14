@@ -18,9 +18,12 @@ test('mute is confirmed by the service and a failed change never shows false suc
     data: { path: '/mute', method: 'PUT', status: 503 },
   });
   await page.getByRole('button', { name: 'بی‌صدا', exact: true }).click();
-  await expect(page.getByRole('dialog').getByRole('alert')).toBeVisible();
-  await expect(page.getByRole('button', { name: 'بی‌صدا', exact: true })).toBeVisible();
-  await page.getByRole('button', { name: 'بی‌صدا', exact: true }).click();
+  const duration = page.getByRole('dialog', { name: fa.messengerPdf.muteTitle, exact: true });
+  await duration.getByRole('button', { name: fa.messengerPdf.mute15, exact: true }).click();
+  await expect(duration.getByRole('alert')).toBeVisible();
+  await expect(duration).toBeVisible();
+  await duration.getByRole('button', { name: fa.messengerPdf.mute15, exact: true }).click();
+  await expect(duration).toHaveCount(0);
   await expect(page.getByRole('button', { name: 'فعال‌کردن صدا', exact: true })).toBeVisible();
   await page.reload();
   await page.getByRole('banner').getByRole('button', { name: fa.v4_more, exact: true }).click();

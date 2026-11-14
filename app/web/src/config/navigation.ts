@@ -1,5 +1,40 @@
 import * as uiText from '@/content/fa';
 import type { components } from '@/generated/api/schema';
+import { safeAuthReturnPath } from '@/lib/auth-return';
+
+export type NavigationVisit = { id: string; index: number; href: string; parentId: string | null };
+/** Browser-local UI history never accepts an external return destination. */
+export function readNavigationVisits(value: unknown): NavigationVisit[] {
+  if (!Array.isArray(value) || value.length > 128) return [];
+  const visits: NavigationVisit[] = [];
+  for (const item of value) {
+    if (
+      !item ||
+      typeof item !== 'object' ||
+      typeof item.id !== 'string' ||
+      !/^[\da-f-]{36}$/i.test(item.id) ||
+      !Number.isSafeInteger(item.index) ||
+      item.index < 0 ||
+      typeof item.href !== 'string' ||
+      safeAuthReturnPath(item.href) !== item.href ||
+      (item.parentId !== null && typeof item.parentId !== 'string') ||
+      visits.some((old) => old.id === item.id)
+    )
+      return [];
+    visits.push({ id: item.id, index: item.index, href: item.href, parentId: item.parentId });
+  }
+  return visits;
+}
+export function previousNavigationVisit(
+  current: NavigationVisit | undefined,
+  visits: readonly NavigationVisit[],
+) {
+  if (!current) return undefined;
+  return visits.find(
+    (item) =>
+      item.id === current.parentId && item.index < current.index && item.href !== current.href,
+  );
+}
 
 export const routes = {
   enter: '/enter',
@@ -131,14 +166,18 @@ export function isSchoolPath(section: readonly string[]) {
       'evaluations',
       'reports',
       'content',
+      'notices',
     ].includes(area);
   if (section.length === 2 && id === 'new')
-    return ['classes', 'people', 'courses', 'periods', 'guardians'].includes(area);
+    return ['classes', 'people', 'courses', 'periods', 'guardians', 'notices'].includes(area);
   if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id)) return false;
   if (section.length === 2)
     return ['classes', 'lessons', 'assignments', 'exams', 'sessions', 'people'].includes(area);
   if (section.length === 4)
     return (
+      (area === 'classes' &&
+        action === 'learners' &&
+        /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(extra)) ||
       (area === 'exam-submissions' &&
         action === 'questions' &&
         /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(extra)) ||

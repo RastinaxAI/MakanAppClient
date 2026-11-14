@@ -1484,6 +1484,38 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/conversations/{conversationId}/messages/{messageId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch: operations["patch_api_v1_conversations_by_conversationId_messages_by_messageId"];
+        trace?: never;
+    };
+    "/api/v1/conversations/{conversationId}/messages/{messageId}/for-everyone": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete: operations["delete_api_v1_conversations_by_conversationId_messages_by_messageId_for_everyone"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/conversations/{conversationId}/messages/{messageId}/forward": {
         parameters: {
             query?: never;
@@ -1495,6 +1527,22 @@ export interface paths {
         put?: never;
         post: operations["post_api_v1_conversations_by_conversationId_messages_by_messageId_forward"];
         delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/conversations/{conversationId}/pins/{messageId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["post_api_v1_conversations_by_conversationId_pins_by_messageId"];
+        delete: operations["delete_api_v1_conversations_by_conversationId_pins_by_messageId"];
         options?: never;
         head?: never;
         patch?: never;
@@ -1648,6 +1696,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/conversations/{conversationId}/state/pin": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["post_api_v1_conversations_by_conversationId_state_pin"];
+        delete: operations["delete_api_v1_conversations_by_conversationId_state_pin"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/conversations/{conversationId}/mute": {
         parameters: {
             query?: never;
@@ -1659,6 +1723,38 @@ export interface paths {
         put: operations["put_api_v1_conversations_by_conversationId_mute"];
         post?: never;
         delete: operations["delete_api_v1_conversations_by_conversationId_mute"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/conversations/{conversationId}/mark-unread": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["post_api_v1_conversations_by_conversationId_mark_unread"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/conversations/{conversationId}/clear-history": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["post_api_v1_conversations_by_conversationId_clear_history"];
+        delete?: never;
         options?: never;
         head?: never;
         patch?: never;
@@ -3011,6 +3107,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/messages/search": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["get_api_v1_messages_search"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/messaging/folders": {
         parameters: {
             query?: never;
@@ -3552,6 +3664,22 @@ export interface paths {
             cookie?: never;
         };
         get: operations["get_api_v1_people_by_userId"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/people/{userId}/presence": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["get_api_v1_people_by_userId_presence"];
         put?: never;
         post?: never;
         delete?: never;
@@ -6779,6 +6907,8 @@ export interface components {
             displayName: string;
             profilePhoto?: components["schemas"]["ProfilePhotoResult"];
         };
+        /** @enum {string} */
+        ConversationListFilter: "All" | "Direct" | "Group" | "Channel" | "Unread" | "Archived" | "Saved";
         AccountInboxPageResult: {
             items: components["schemas"]["ConversationSummaryResult"][];
             nextCursor: string | null;
@@ -6998,6 +7128,11 @@ export interface components {
             createdAtUtc: string;
             alreadyExisted: boolean;
         };
+        /**
+         * @default All
+         * @enum {string}
+         */
+        ConversationListFilter2: "All" | "Direct" | "Group" | "Channel" | "Unread" | "Archived" | "Saved";
         ConversationMessagePageResult: {
             messages: components["schemas"]["ConversationMessageResult"][];
             /** Format: int64 */
@@ -7131,6 +7266,22 @@ export interface components {
             topicId?: string | null;
             isSilent?: boolean;
         };
+        EditMessageCommand: {
+            text: string | null;
+            expectedVersion: string;
+        };
+        MessageMutationResult: {
+            /** Format: uuid */
+            messageId: string;
+            /** Format: int64 */
+            sequence: number;
+            /** Format: date-time */
+            editedAtUtc: string | null;
+            /** Format: date-time */
+            deletedAtUtc: string | null;
+            isDeleted: boolean;
+            version: string;
+        };
         ForwardMessageCommand: {
             /** Format: uuid */
             destinationConversationId: string;
@@ -7143,6 +7294,17 @@ export interface components {
             destinationTopicId: string | null;
             /** @default false */
             isSilent: boolean;
+        };
+        ConversationPinResult: {
+            /** Format: uuid */
+            conversationId: string;
+            /** Format: uuid */
+            messageId: string;
+            /** Format: uuid */
+            pinnedByUserId: string;
+            /** Format: date-time */
+            pinnedAtUtc: string;
+            isPinned: boolean;
         };
         ConversationMediaPageResult: {
             items: components["schemas"]["ConversationMediaItemResult"][];
@@ -7693,6 +7855,11 @@ export interface components {
         };
         /** @enum {string} */
         EvaluationReviewStatus: "AwaitingEvaluation" | "Draft" | "Released" | "CorrectionDraft";
+        /**
+         * @default OrganizationClass
+         * @enum {string}
+         */
+        AcademicClassKind2: "OrganizationClass" | "PersonalClass";
         SubmissionForEvaluationResult: {
             /** Format: uuid */
             submissionAttemptId: string;
@@ -8828,6 +8995,27 @@ export interface components {
         };
         /** @enum {string} */
         AbuseReportStatus: "Submitted" | "UnderReview" | "Resolved" | "Dismissed";
+        MessageSearchPageResult: {
+            items: components["schemas"]["MessageSearchItemResult"][];
+            /** Format: int32 */
+            totalCount: number;
+            nextCursor: string | null;
+        };
+        MessageSearchItemResult: {
+            /** Format: uuid */
+            messageId: string;
+            /** Format: uuid */
+            conversationId: string;
+            conversationDisplayName: string | null;
+            sender: components["schemas"]["SafeMessagingIdentityResult"];
+            snippet: string | null;
+            kind: components["schemas"]["MessageKind"];
+            /** Format: date-time */
+            sentAtUtc: string;
+            /** Format: int64 */
+            sequence: number;
+            attachments: components["schemas"]["MessageAttachmentResult"][];
+        };
         ChatFolderResult: {
             /** Format: uuid */
             id: string;
@@ -9350,6 +9538,17 @@ export interface components {
             canStartDirect: boolean;
             profilePhoto?: components["schemas"]["ProfilePhotoResult"];
         } | null;
+        PresenceResult: {
+            /** Format: uuid */
+            userId: string;
+            state: components["schemas"]["MessagingPresenceState"];
+            /** Format: date-time */
+            lastSeenAtUtc: string | null;
+            /** Format: date-time */
+            expiresAtUtc: string;
+        };
+        /** @enum {string} */
+        MessagingPresenceState: "Online" | "Recently" | "Offline" | "Hidden";
         SetPersonalClassAcademicPermissionCommand: {
             capabilities: components["schemas"]["PersonalClassAcademicCapabilities"];
             /**
@@ -18776,7 +18975,7 @@ export interface operations {
     get_api_v1_conversations_account: {
         parameters: {
             query?: {
-                Filter?: "All" | "Direct" | "Group" | "Channel" | "Unread" | "Archived" | "Saved";
+                Filter?: components["schemas"]["ConversationListFilter"];
                 Search?: string;
                 Limit?: number;
                 Cursor?: string;
@@ -19152,7 +19351,7 @@ export interface operations {
     get_api_v1_conversations: {
         parameters: {
             query?: {
-                filter?: "All" | "Direct" | "Group" | "Channel" | "Unread" | "Archived" | "Saved";
+                filter?: components["schemas"]["ConversationListFilter2"];
                 page?: number;
                 pageSize?: number;
                 q?: string;
@@ -19380,6 +19579,112 @@ export interface operations {
             };
         };
     };
+    patch_api_v1_conversations_by_conversationId_messages_by_messageId: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                conversationId: string;
+                messageId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EditMessageCommand"];
+                "text/json": components["schemas"]["EditMessageCommand"];
+                "application/*+json": components["schemas"]["EditMessageCommand"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": components["schemas"]["MessageMutationResult"];
+                    "application/json": components["schemas"]["MessageMutationResult"];
+                    "text/json": components["schemas"]["MessageMutationResult"];
+                };
+            };
+            /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description Too Many Requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": components["schemas"]["ProblemDetails"];
+                    "application/json": components["schemas"]["ProblemDetails"];
+                    "text/json": components["schemas"]["ProblemDetails"];
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+        };
+    };
+    delete_api_v1_conversations_by_conversationId_messages_by_messageId_for_everyone: {
+        parameters: {
+            query?: {
+                expectedVersion?: string;
+            };
+            header?: never;
+            path: {
+                conversationId: string;
+                messageId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": components["schemas"]["MessageMutationResult"];
+                    "application/json": components["schemas"]["MessageMutationResult"];
+                    "text/json": components["schemas"]["MessageMutationResult"];
+                };
+            };
+            /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+        };
+    };
     post_api_v1_conversations_by_conversationId_messages_by_messageId_forward: {
         parameters: {
             query?: never;
@@ -19436,6 +19741,92 @@ export interface operations {
                     "text/plain": components["schemas"]["ProblemDetails"];
                     "application/json": components["schemas"]["ProblemDetails"];
                     "text/json": components["schemas"]["ProblemDetails"];
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+        };
+    };
+    post_api_v1_conversations_by_conversationId_pins_by_messageId: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                conversationId: string;
+                messageId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": components["schemas"]["ConversationPinResult"];
+                    "application/json": components["schemas"]["ConversationPinResult"];
+                    "text/json": components["schemas"]["ConversationPinResult"];
+                };
+            };
+            /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+        };
+    };
+    delete_api_v1_conversations_by_conversationId_pins_by_messageId: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                conversationId: string;
+                messageId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": components["schemas"]["ConversationPinResult"];
+                    "application/json": components["schemas"]["ConversationPinResult"];
+                    "text/json": components["schemas"]["ConversationPinResult"];
+                };
+            };
+            /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
                     "application/problem+json": components["schemas"]["MakanProblemDetails"];
                 };
             };
@@ -19936,6 +20327,90 @@ export interface operations {
             };
         };
     };
+    post_api_v1_conversations_by_conversationId_state_pin: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                conversationId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": components["schemas"]["ConversationUserStateResult"];
+                    "application/json": components["schemas"]["ConversationUserStateResult"];
+                    "text/json": components["schemas"]["ConversationUserStateResult"];
+                };
+            };
+            /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+        };
+    };
+    delete_api_v1_conversations_by_conversationId_state_pin: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                conversationId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": components["schemas"]["ConversationUserStateResult"];
+                    "application/json": components["schemas"]["ConversationUserStateResult"];
+                    "text/json": components["schemas"]["ConversationUserStateResult"];
+                };
+            };
+            /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+        };
+    };
     put_api_v1_conversations_by_conversationId_mute: {
         parameters: {
             query?: never;
@@ -19985,6 +20460,90 @@ export interface operations {
         };
     };
     delete_api_v1_conversations_by_conversationId_mute: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                conversationId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": components["schemas"]["ConversationUserStateResult"];
+                    "application/json": components["schemas"]["ConversationUserStateResult"];
+                    "text/json": components["schemas"]["ConversationUserStateResult"];
+                };
+            };
+            /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+        };
+    };
+    post_api_v1_conversations_by_conversationId_mark_unread: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                conversationId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": components["schemas"]["ConversationUserStateResult"];
+                    "application/json": components["schemas"]["ConversationUserStateResult"];
+                    "text/json": components["schemas"]["ConversationUserStateResult"];
+                };
+            };
+            /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+        };
+    };
+    post_api_v1_conversations_by_conversationId_clear_history: {
         parameters: {
             query?: never;
             header?: never;
@@ -21228,7 +21787,7 @@ export interface operations {
                 classId?: string;
                 reviewStatus?: string;
                 isLate?: boolean;
-                classKind?: "OrganizationClass" | "PersonalClass";
+                classKind?: components["schemas"]["AcademicClassKind2"];
                 page?: number;
                 pageSize?: number;
             };
@@ -28355,6 +28914,60 @@ export interface operations {
             };
         };
     };
+    get_api_v1_messages_search: {
+        parameters: {
+            query?: {
+                q?: string;
+                conversationId?: string;
+                senderUserId?: string;
+                kind?: string;
+                fromUtc?: string;
+                toUtc?: string;
+                cursor?: string;
+                limit?: number;
+                savedLabel?: string;
+                hasAttachment?: boolean;
+                hasLinks?: boolean;
+                topicId?: string;
+                scope?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": components["schemas"]["MessageSearchPageResult"];
+                    "application/json": components["schemas"]["MessageSearchPageResult"];
+                    "text/json": components["schemas"]["MessageSearchPageResult"];
+                };
+            };
+            /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+        };
+    };
     get_api_v1_messaging_folders: {
         parameters: {
             query?: never;
@@ -30543,6 +31156,48 @@ export interface operations {
                     "text/plain": components["schemas"]["MessagingPublicProfileResult"];
                     "application/json": components["schemas"]["MessagingPublicProfileResult"];
                     "text/json": components["schemas"]["MessagingPublicProfileResult"];
+                };
+            };
+            /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+            /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["MakanProblemDetails"];
+                };
+            };
+        };
+    };
+    get_api_v1_people_by_userId_presence: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                userId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": components["schemas"]["PresenceResult"];
+                    "application/json": components["schemas"]["PresenceResult"];
+                    "text/json": components["schemas"]["PresenceResult"];
                 };
             };
             /** @description ProblemDetails؛ خانوادهٔ خطاهای مرتبط این حوزه، نه تضمین وقوع همهٔ کدها در هر عملیات. */

@@ -31,9 +31,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <link
           rel="preload"
-          href="/fonts/makan-reference/Vazirmatn.ttf"
+          href="/fonts/makan-reference/Vazirmatn.woff2"
           as="font"
-          type="font/ttf"
+          type="font/woff2"
           crossOrigin="anonymous"
         />
         <script

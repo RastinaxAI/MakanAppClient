@@ -62,14 +62,13 @@ test('200 percent text and a reduced viewport keep the form action and scrolled 
       await name.focus();
       await expect(name).toHaveValue('نام بلند فارسی و Latin 123');
       await expect(name).toBeInViewport({ ratio: 1 });
-      const action = page.getByRole('button', { name: 'ذخیره پروفایل', exact: true });
+      const action = page.getByRole('button', { name: 'ذخیره تغییرات', exact: true });
       const a = (await action.boundingBox())!,
         input = (await name.boundingBox())!;
       expect(a.y + a.height).toBeLessThanOrEqual(500 - 34);
       expect(input.y + input.height).toBeLessThanOrEqual(a.y);
       const dock = page.locator('[data-navigation-presentation="dock"]');
-      await expect(dock).toBeVisible();
-      expect(a.y + a.height).toBeLessThanOrEqual((await dock.boundingBox())!.y);
+      await expect(dock).toBeHidden();
       const overflow = await page.evaluate(() => document.documentElement.scrollWidth > innerWidth);
       expect(overflow).toBe(false);
       const image = `${out}/profile-${width}-${theme}.png`;
@@ -93,7 +92,7 @@ test('200 percent text and a reduced viewport keep the form action and scrolled 
   await writeFile(out + '/results.json', JSON.stringify(records, null, 2) + '\n');
 });
 
-test('V9 auth keeps its 480px reading column and its policy dialog restores focus', async ({
+test('V6 auth keeps its compact larger-screen action and its policy dialog restores focus', async ({
   page,
 }) => {
   await page.goto('/enter');
@@ -103,8 +102,8 @@ test('V9 auth keeps its 480px reading column and its policy dialog restores focu
     const action = (await page
       .getByRole('button', { name: 'دریافت کد تأیید', exact: true })
       .boundingBox())!;
-    expect(action.width).toBeLessThanOrEqual(Math.min(480, width - 24));
-    expect(action.width).toBeGreaterThanOrEqual(Math.min(480, width - 48));
+    if (width < 768) expect(action.width).toBe(width - 32);
+    else expect(action.width).toBe(180);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(
       true,
     );
@@ -120,7 +119,7 @@ test('V9 auth keeps its 480px reading column and its policy dialog restores focu
   }
 });
 
-test('V9 200 percent text uses three plus two navigation rows and keeps form navigation usable', async ({
+test('V6 large text reflows allowed primary navigation and keeps deep form navigation hidden', async ({
   page,
   context,
   request,
@@ -128,7 +127,7 @@ test('V9 200 percent text uses three plus two navigation rows and keeps form nav
   await request.post(fixture + '/__test__/manager-case');
   await context.addInitScript(() => localStorage.setItem('makan-reading', 'large'));
   await login(context, 'Manager', true);
-  await page.goto('/personal/education/classes');
+  await page.goto('/personal/profile');
   for (const width of [320, 390, 430]) {
     await page.setViewportSize({ width, height: 740 });
     const dock = page.locator('[data-navigation-presentation="dock"]');
@@ -147,7 +146,7 @@ test('V9 200 percent text uses three plus two navigation rows and keeps form nav
     );
   }
   await page.goto('/personal/profile/edit');
-  await expect(page.locator('[data-navigation-presentation="dock"]')).toBeVisible();
+  await expect(page.locator('[data-navigation-presentation="dock"]')).toBeHidden();
   await expect(page.getByLabel('نام نمایشی', { exact: true })).toBeEditable();
 });
 
@@ -195,7 +194,7 @@ test('V9 messenger retains its draft across two panes, mobile and theme changes'
     await expect(inspector).toBeHidden();
     const list = page.locator('[data-chat-list]');
     await expect(list).toBeVisible({ visible: width >= 768 });
-    if (width >= 768) expect((await list.boundingBox())!.width).toBe(width >= 1200 ? 304 : 248);
+    if (width >= 768) expect((await list.boundingBox())!.width).toBe(width >= 1200 ? 312 : 280);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(
       true,
     );

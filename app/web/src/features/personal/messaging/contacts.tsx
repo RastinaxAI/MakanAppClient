@@ -1,14 +1,11 @@
 'use client';
-import { Input as NativeInput } from '@/components/ui/input';
-
+import { Input as NativeInput, SearchField } from '@/components/ui/input';
 import { uiClass } from '@/components/v5/classes';
-
 import * as uiText from '@/content/fa';
-import { MessagingSurface } from './messaging-surface';
 import d from './directory.module.css';
 import t from './messaging-theme.module.css';
-import { PageBack } from '@/components/navigation/page-back';
 import { Button } from '@/components/ui/button';
+import { V5Scene } from '@/components/v5/scene';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { EmptyState, ErrorState, LoadingSkeleton } from '@/components/ui/states';
 import type { components } from '@/generated/api/schema';
@@ -17,39 +14,71 @@ import { number } from '@/lib/formatting';
 import { useQueryClient } from '@tanstack/react-query';
 import {
   Ban,
+  Bell,
   ChevronLeft,
   ChevronRight,
   MessageCircle,
   Plus,
+  Pencil,
+  RefreshCw,
+  Info,
   Search,
   Trash2,
   MoreHorizontal,
 } from 'lucide-react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import dynamic from 'next/dynamic';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useRef, useState } from 'react';
 import s from '../personal.module.css';
 import { ProfileAvatar } from '../profile-photo';
+import { startPersonalConversation } from './directory';
 import { usePersonal, usePersonalApi } from '../provider';
+import { safeAuthReturnPath } from '@/lib/auth-return';
 import { messagingNextLabels } from '../status-labels';
-import { resolvePersonInput } from './directory';
+const ContactPhoneForm = dynamic(() => import('./contact-form').then((m) => m.ContactPhoneForm), {
+  loading: () => <LoadingSkeleton />,
+});
 type Person = components['schemas']['MessagingPublicProfileResult'];
-export function ContactsPage() {
+type ContactRow = {
+  profile: Person;
+  name: string;
+  contact?: components['schemas']['UserContactResult'];
+};
+const text = uiText.v6Ui;
+export function MessengerPeopleSearch({ query }: { query: string }) {
+  return <ContactsPage embedded initialQuery={query} />;
+}
+export function ContactsPage({
+  embedded = false,
+  initialQuery,
+}: { embedded?: boolean; initialQuery?: string } = {}) {
   const { session, call } = usePersonal(),
     router = useRouter(),
     cache = useQueryClient();
-  const [tab, setTab] = useState<'contacts' | 'add' | 'search'>('contacts'),
-    [draft, setDraft] = useState(''),
-    [query, setQuery] = useState(''),
+  const params = useSearchParams();
+  const personId = params.get('person') ?? '';
+  const validPersonId = /^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i.test(personId);
+  const person = usePersonalApi<Person>('/api/v1/people/' + encodeURIComponent(personId), {
+    enabled: validPersonId,
+  });
+  const initial = initialQuery ?? params.get('q') ?? '';
+  const [tab, setTab] = useState<'contacts' | 'add' | 'search'>(
+    params.get('view') === 'add'
+      ? 'add'
+      : embedded || params.get('view') === 'search'
+        ? 'search'
+        : 'contacts',
+  );
+  const [draft, setDraft] = useState(initial),
+    [query, setQuery] = useState(initial),
     [page, setPage] = useState(1);
-  const [target, setTarget] = useState(''),
-    [savedName, setSavedName] = useState(''),
-    [person, setPerson] = useState<Person | null>(null),
-    [resolved, setResolved] = useState(false),
-    [busy, setBusy] = useState(false),
+  const [busy, setBusy] = useState(false),
     [error, setError] = useState<unknown>(),
     [notice, setNotice] = useState('');
-  const [lookupError, setLookupError] = useState('');
+  const [detail, setDetail] = useState<ContactRow | null>(null),
+    [sync, setSync] = useState(params.get('view') === 'sync');
+  const lock = useRef(false);
   const status = usePersonalApi<components['schemas']['MessagingStatusResult']>(
     '/api/v1/me/messaging-status',
     { poll: 10000 },
@@ -59,14 +88,9 @@ export function ContactsPage() {
     status.data.allowedActions.some(
       (action) => action === 'CreateDirect' || action === 'CreateDirectWithAuthorizedRelationship',
     );
-  const params = new URLSearchParams({
-    q: query,
-    page: String(page),
-    pageSize: '20',
-    favoritesOnly: 'false',
-  });
   const contacts = usePersonalApi<components['schemas']['UserContactPageResult']>(
-    '/api/v1/contacts?' + params,
+    '/api/v1/contacts?' +
+      new URLSearchParams({ q: query, page: String(page), pageSize: '20', favoritesOnly: 'false' }),
     { enabled: tab === 'contacts' },
   );
   const people = usePersonalApi<components['schemas']['PeopleSearchPageResult']>(
@@ -81,28 +105,20 @@ export function ContactsPage() {
     setPage(1);
     setError(undefined);
     setNotice('');
-    setPerson(null);
-    setResolved(false);
-    setSavedName('');
-    setLookupError('');
   }
   async function start(profile: Person) {
-    if (!canCreateDirect || !profile.canStartDirect || profile.userId === session.user.id) return;
+    if (
+      lock.current ||
+      !canCreateDirect ||
+      !profile.canStartDirect ||
+      profile.userId === session.user.id
+    )
+      return;
+    lock.current = true;
     setBusy(true);
     setError(undefined);
     try {
-      const result = await call<components['schemas']['DirectConversationResult']>(
-        '/api/v1/conversations/direct',
-        {
-          method: 'POST',
-          body: JSON.stringify({
-            targetUserId: profile.userId,
-            scope: 'Personal',
-          } satisfies components['schemas']['StartDirectConversationCommand']),
-        },
-      );
-      if (result.otherParticipant.userId !== profile.userId || result.scope !== 'Personal')
-        throw new ApiError(502, { code: 'CONTRACT_MISMATCH' });
+      const result = await startPersonalConversation(call, profile.userId);
       await cache.invalidateQueries({
         predicate: (item) =>
           item.queryKey.some(
@@ -113,10 +129,13 @@ export function ContactsPage() {
     } catch (e) {
       setError(e);
     } finally {
+      lock.current = false;
       setBusy(false);
     }
   }
-  async function save(profile: Person, alias: string | null = null) {
+  async function save(profile: Person) {
+    if (lock.current || profile.userId === session.user.id) return;
+    lock.current = true;
     setBusy(true);
     setError(undefined);
     try {
@@ -124,86 +143,55 @@ export function ContactsPage() {
         method: 'POST',
         body: JSON.stringify({
           contactUserId: profile.userId,
-          savedName: alias,
+          savedName: null,
         } satisfies components['schemas']['SaveUserContactCommand']),
       });
       if (result.contactUserId !== profile.userId)
         throw new ApiError(502, { code: 'CONTRACT_MISMATCH' });
       setNotice(uiText.text_c69ebbd6ae2f);
-      setTab('contacts');
-      setQuery('');
-      setPage(1);
+      setDetail(null);
       await cache.invalidateQueries({
         predicate: (item) =>
           item.queryKey.some(
-            (key) => typeof key === 'string' && key.startsWith('/api/v1/contacts'),
+            (key) =>
+              typeof key === 'string' &&
+              (key.startsWith('/api/v1/contacts') || key.startsWith('/api/v1/people')),
           ),
       });
     } catch (e) {
       setError(e);
     } finally {
+      lock.current = false;
       setBusy(false);
     }
   }
   const data = tab === 'contacts' ? contacts : people;
-  const rows =
+  const rows: ContactRow[] | undefined =
     tab === 'contacts'
       ? contacts.data?.items.map((contact) => ({
           profile: contact.profile,
           name: contact.savedName || contact.profile.displayName,
           contact,
         }))
-      : people.data?.items.map((profile) => ({
-          profile,
-          name: profile.displayName,
-          contact: undefined,
-        }));
-  return (
-    <MessagingSurface className={uiClass(d.directory)}>
-      <div className={uiClass(s.headingRow)}>
-        <div className={uiClass(s.heading)}>
-          <h1 className={uiClass('sr-only')}>{uiText.text_8236f4ce3dac}</h1>
-        </div>
-        <PageBack href="/personal/messages" />
-      </div>
-      <nav className={uiClass(s.sectionLinks)} aria-label={uiText.text_1971055384f8}>
-        <button aria-pressed={tab === 'contacts'} onClick={() => changeTab('contacts')}>
-          {uiText.text_759044ca1d2d}
-        </button>
-        <button aria-pressed={tab === 'add'} onClick={() => changeTab('add')}>
-          <Plus size={16} />
-          {uiText.text_5fde423d6a3f}
-        </button>
-        <button aria-pressed={tab === 'search'} onClick={() => changeTab('search')}>
-          {uiText.text_6c705b7f7da2}
-        </button>
-      </nav>
+      : people.data?.items.map((profile) => ({ profile, name: profile.displayName }));
+  const contents = (
+    <>
       {notice && (
-        <p className={uiClass(s.success)} role="status">
+        <p className={s.success} role="status">
           {notice}
         </p>
       )}
-      {status.isPending ? (
-        <p role="status">{uiText.text_a72edc3a1bd6}</p>
-      ) : status.isError ? (
+      {status.isError ? (
         <ErrorState error={status.error} onRetry={() => void status.refetch()} />
       ) : (
+        status.data &&
         status.data.nextAction !== 'None' && (
-          <section className={uiClass(s.profileCard)} role="status">
-            {canCreateDirect ? (
-              <>
-                <p>{uiText.text_1b9ffc2a9963}</p>
-                <details>
-                  <summary>{uiText.text_3dad9471da0a}</summary>
-                  <p>{messagingNextLabels[status.data.nextAction]}</p>
-                </details>
-              </>
-            ) : (
-              <>
-                <p>{messagingNextLabels[status.data.nextAction]}</p>
-                <p>{uiText.text_a86147563bca}</p>
-              </>
-            )}
+          <section className={d.contactNotice} role="status">
+            <p>
+              {canCreateDirect
+                ? uiText.text_1b9ffc2a9963
+                : messagingNextLabels[status.data.nextAction]}
+            </p>
             {status.data.nextAction === 'ProfileCompletionRequired' && (
               <Button asChild variant="outline">
                 <Link href="/personal/profile/edit">{uiText.text_dc1e77f52af9}</Link>
@@ -212,259 +200,326 @@ export function ContactsPage() {
           </section>
         )
       )}
-      {!!error && <ErrorState error={error} />}
-      {lookupError && (
-        <p className={uiClass('field-error')} role="alert">
-          {lookupError}
-        </p>
-      )}
-      {tab === 'add' ? (
-        <section className={uiClass(s.profileCard)}>
-          <form
-            className={uiClass(s.directoryForm)}
-            onSubmit={async (event) => {
-              event.preventDefault();
-              let command: components['schemas']['ResolvePersonCommand'];
-              try {
-                command = resolvePersonInput(target);
-                setLookupError('');
-              } catch (error) {
-                setLookupError(error instanceof Error ? error.message : uiText.text_6242b7c1497d);
-                return;
-              }
-              setBusy(true);
-              setError(undefined);
-              setResolved(false);
-              setPerson(null);
-              try {
-                const result = await call<components['schemas']['PeopleResolveResult']>(
-                  '/api/v1/people/resolve',
-                  { method: 'POST', body: JSON.stringify(command) },
-                );
-                setPerson(result.isDiscoverable ? result.profile : null);
-                setResolved(true);
-              } catch (e) {
-                setError(e);
-              } finally {
-                setBusy(false);
-              }
-            }}
-          >
-            <label>
-              {uiText.text_54c852331c9b}
-              <NativeInput
-                dir="ltr"
-                aria-label={uiText.text_30d28a3021cd}
-                placeholder={uiText.text_cff9c0e723ac}
-                value={target}
-                onChange={(e) => {
-                  setTarget(e.target.value);
-                  setPerson(null);
-                  setResolved(false);
-                  setSavedName('');
-                  setLookupError('');
-                  setError(undefined);
-                }}
-                required
-                disabled={busy}
-              />
-            </label>
-            <Button type="submit" disabled={busy || !target.trim()}>
-              {busy ? uiText.text_25384e522776 : uiText.text_43dad0d90fdf}
-            </Button>
-          </form>
-          {resolved && !person && (
-            <EmptyState title={uiText.text_0364864766f8} description={uiText.text_2dd3b2bb5816} />
-          )}
-          {person && (
-            <div className={uiClass(s.foundPerson)}>
-              <div className={uiClass(s.profileIdentity)}>
-                <ProfileAvatar
-                  photo={person.profilePhoto}
-                  name={person.displayName}
-                  className={uiClass(s.largeAvatar)}
-                />
-                <div>
-                  <h2>{person.displayName}</h2>
-                  <bdi dir="ltr">
-                    {uiText.text_c3641f8544d7}
-                    {person.username}
-                  </bdi>
-                  {person.phoneNumber && (
-                    <p>
-                      <bdi dir="ltr">{person.phoneNumber}</bdi>
-                    </p>
-                  )}
-                </div>
-              </div>
-              {person.userId === session.user.id ? (
-                <p className={uiClass(s.muted)}>{uiText.text_c068733f39cf}</p>
-              ) : (
-                <>
-                  <label className={uiClass(s.singleField)}>
-                    {uiText.text_07436f1f45ac}
-                    <NativeInput value={savedName} onChange={(e) => setSavedName(e.target.value)} />
-                  </label>
-                  <div className={uiClass(s.actions)}>
-                    <Button
-                      disabled={busy}
-                      onClick={() => void save(person, savedName.trim() || null)}
-                    >
-                      {uiText.text_7290148d263c}
-                    </Button>
-                    <Button
-                      variant="outline"
-                      disabled={
-                        busy ||
-                        person.userId === session.user.id ||
-                        !canCreateDirect ||
-                        !person.canStartDirect
-                      }
-                      onClick={() => void start(person)}
-                    >
-                      <MessageCircle size={17} />
-                      {uiText.text_2d995041bb4a}
-                    </Button>
-                  </div>
-                  {!person.canStartDirect && (
-                    <p className={uiClass(s.muted)}>{uiText.text_b8440364bb81}</p>
-                  )}
-                </>
-              )}
-            </div>
-          )}
-        </section>
-      ) : (
-        <section className={uiClass(s.profileCard)}>
-          <form
-            className={uiClass(s.directoryForm)}
-            role="search"
-            onSubmit={(event) => {
-              event.preventDefault();
-              setQuery(draft.trim());
-              setPage(1);
-            }}
-          >
-            <label>
-              <span className={uiClass('sr-only')}>
-                {tab === 'contacts' ? uiText.text_88c808fdf7f4 : uiText.text_2562435815a8}
-              </span>
-              <NativeInput
-                aria-label={uiText.text_2c54ecc60e86}
-                value={draft}
-                onChange={(e) => setDraft(e.target.value)}
-                placeholder={
-                  tab === 'contacts' ? uiText.text_47c491561dd4 : uiText.text_39abf906c29d
-                }
-              />
-            </label>
-            <Button type="submit" variant="outline">
-              <Search size={17} />
-              <span className={uiClass('sr-only')}>{uiText.text_2a93eb7f06ce}</span>
-            </Button>
-          </form>
-          {tab === 'search' && !query ? (
-            <EmptyState title={uiText.text_8e4123c40ba0} description={uiText.text_514b1fbad09d} />
-          ) : data.isPending ? (
-            <LoadingSkeleton />
-          ) : data.isError ? (
-            <ErrorState error={data.error} onRetry={() => void data.refetch()} />
-          ) : !rows?.length ? (
-            <EmptyState
-              title={tab === 'contacts' ? uiText.text_8d1b81ec1aa1 : uiText.text_9620a4294e2d}
-              description={tab === 'contacts' ? uiText.text_17f6af62f546 : uiText.text_dae5c09caaa2}
-            />
-          ) : (
-            <div className={uiClass(s.contactRows)}>
-              {rows.map((row) => (
-                <article
-                  key={row.profile.userId}
-                  className={uiClass(`${s.contactRow} ${d.contact}`)}
+      {!!error && !detail && <ErrorState error={error} />}
+      {embedded && <h2 className={d.sectionTitle}>{text.people}</h2>}
+      <section className={d.book} aria-label={tab === 'search' ? text.people : text.contactBook}>
+        {!embedded && <h3>{tab === 'search' ? text.people : text.contactBook}</h3>}
+        {tab === 'search' && !query ? (
+          <EmptyState title={uiText.text_8e4123c40ba0} description={uiText.text_514b1fbad09d} />
+        ) : data.isPending ? (
+          <LoadingSkeleton />
+        ) : data.isError ? (
+          <ErrorState error={data.error} onRetry={() => void data.refetch()} />
+        ) : !rows?.length ? (
+          <EmptyState
+            title={tab === 'contacts' ? uiText.text_8d1b81ec1aa1 : uiText.text_9620a4294e2d}
+            description={tab === 'contacts' ? uiText.text_17f6af62f546 : uiText.text_dae5c09caaa2}
+          />
+        ) : (
+          <div className={d.peopleRows}>
+            {rows.map((row) => (
+              <article className={d.person} key={row.profile.userId}>
+                <button
+                  type="button"
+                  className={d.personMain}
+                  aria-label={text.showContact(row.name)}
+                  onClick={() => {
+                    if (embedded)
+                      router.push(
+                        '/personal/contacts?person=' +
+                          row.profile.userId +
+                          '&from=' +
+                          encodeURIComponent('/personal/messages?' + params),
+                      );
+                    else setDetail(row);
+                    setError(undefined);
+                  }}
                 >
                   <ProfileAvatar
                     photo={row.profile.profilePhoto}
                     name={row.name}
-                    className={uiClass(s.avatar)}
+                    className={d.personAvatar}
                   />
-                  <div>
-                    <strong>{row.name}</strong>
+                  <span>
+                    <strong dir="auto">{row.name}</strong>
                     <small>
-                      <bdi dir="ltr">
-                        {uiText.text_c3641f8544d7}
-                        {row.profile.username}
-                      </bdi>
+                      <bdi dir="ltr">@{row.profile.username}</bdi>
                     </small>
-                  </div>
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    disabled={
-                      busy ||
-                      !canCreateDirect ||
-                      !row.profile.canStartDirect ||
-                      row.profile.userId === session.user.id
-                    }
-                    onClick={() => void start(row.profile)}
-                  >
-                    <MessageCircle size={16} />
-                    {uiText.text_99c891fdab48}
-                  </Button>
-                  {row.contact ? (
-                    <ContactActions
-                      contact={row.contact}
-                      onChanged={() => void contacts.refetch()}
-                    />
-                  ) : (
-                    <Button
-                      size="sm"
-                      variant="ghost"
-                      disabled={busy || row.profile.userId === session.user.id}
-                      onClick={() => void save(row.profile)}
-                    >
-                      {uiText.text_8cfe257aece4}
-                    </Button>
-                  )}
-                </article>
-              ))}
-            </div>
-          )}
-          {(tab === 'contacts' || !!query) && (
-            <div className={uiClass(s.paging)}>
-              <Button
-                size="icon"
-                variant="outline"
-                aria-label={uiText.text_a7009e9019ab}
-                disabled={page <= 1 || data.isFetching}
-                onClick={() => setPage(page - 1)}
-              >
-                <ChevronRight size={18} />
-              </Button>
-              <span>
-                {uiText.text_2714496eef16}
-                {number(page)}
-              </span>
-              <Button
-                size="icon"
-                variant="outline"
-                aria-label={uiText.text_a0b6f49670b9}
-                disabled={!data.data?.hasMore || data.isFetching}
-                onClick={() => setPage(page + 1)}
-              >
-                <ChevronLeft size={18} />
-              </Button>
-            </div>
-          )}
-        </section>
+                  </span>
+                  <ChevronLeft size={18} />
+                </button>
+              </article>
+            ))}
+          </div>
+        )}
+        {(tab === 'contacts' || !!query) && data.data && (data.data.hasMore || page > 1) && (
+          <div className={s.paging}>
+            <Button
+              size="icon"
+              variant="outline"
+              aria-label={uiText.text_a7009e9019ab}
+              disabled={page <= 1 || data.isFetching}
+              onClick={() => setPage(page - 1)}
+            >
+              <ChevronRight size={18} />
+            </Button>
+            <span>
+              {uiText.text_2714496eef16}
+              {number(page)}
+            </span>
+            <Button
+              size="icon"
+              variant="outline"
+              aria-label={uiText.text_a0b6f49670b9}
+              disabled={!data.data.hasMore || data.isFetching}
+              onClick={() => setPage(page + 1)}
+            >
+              <ChevronLeft size={18} />
+            </Button>
+          </div>
+        )}
+      </section>
+      {embedded && (
+        <p className={d.contactNotice}>
+          <Info size={20} />
+          {text.searchPrivacy}
+        </p>
       )}
-    </MessagingSurface>
+    </>
+  );
+  const selected =
+    detail ??
+    (validPersonId && person.data?.userId.toLowerCase() === personId.toLowerCase()
+      ? {
+          profile: person.data,
+          name: person.data.displayName,
+          contact: contacts.data?.items.find((row) => row.contactUserId === personId),
+        }
+      : null);
+  const startView = !!personId && !!params.get('from')?.startsWith('/personal/messages');
+  if (!embedded && (selected || personId))
+    return (
+      <V5Scene
+        id={startView ? 'MSG-03' : 'CON-08'}
+        title={startView ? text.startConversation : (selected?.name ?? text.contactInformation)}
+        subtitle={text.personalIdentity}
+        back={
+          detail
+            ? '/personal/contacts'
+            : (safeAuthReturnPath(params.get('from')) ?? '/personal/messages')
+        }
+        onBack={
+          detail
+            ? () => {
+                setDetail(null);
+                setError(undefined);
+              }
+            : undefined
+        }
+        backWithinPage={!!detail}
+        kind="list"
+        deep
+      >
+        {selected ? (
+          <div className={d.personDetail}>
+            <div className={d.personSummary}>
+              <ProfileAvatar
+                photo={selected.profile.profilePhoto}
+                name={selected.name}
+                className={d.detailAvatar}
+              />
+              <h2>{selected.name}</h2>
+              <p>
+                {selected.contact?.savedName ? text.savedContactNameHint : text.registeredContact}
+              </p>
+              {startView && (
+                <>
+                  <bdi dir="ltr">@{selected.profile.username}</bdi>
+                  <p>{selected.profile.phoneNumber ?? text.phonePrivate}</p>
+                </>
+              )}
+            </div>
+            {!startView && (
+              <dl>
+                <div>
+                  <dt>{text.publicName}</dt>
+                  <dd>{selected.profile.displayName}</dd>
+                </div>
+                <div>
+                  <dt>{text.username}</dt>
+                  <dd>
+                    <bdi dir="ltr">@{selected.profile.username}</bdi>
+                  </dd>
+                </div>
+                {selected.profile.phoneNumber ? (
+                  <div>
+                    <dt>{text.publicPhone}</dt>
+                    <dd>
+                      <bdi dir="ltr">{selected.profile.phoneNumber}</bdi>
+                    </dd>
+                  </div>
+                ) : (
+                  <p>{text.phonePrivate}</p>
+                )}
+              </dl>
+            )}
+            {status.isError ? (
+              <ErrorState error={status.error} onRetry={() => void status.refetch()} />
+            ) : (
+              status.data &&
+              status.data.nextAction !== 'None' && (
+                <p className={d.contactNotice}>{messagingNextLabels[status.data.nextAction]}</p>
+              )
+            )}
+            <Button
+              disabled={
+                busy ||
+                !canCreateDirect ||
+                !selected.profile.canStartDirect ||
+                selected.profile.userId === session.user.id
+              }
+              onClick={() => void start(selected.profile)}
+            >
+              <MessageCircle size={20} />
+              {startView ? text.startPersonalConversation : uiText.text_51dd685556b8}
+            </Button>
+            {!selected.contact && !selected.profile.isSavedContact && (
+              <Button variant="outline" disabled={busy} onClick={() => void save(selected.profile)}>
+                {uiText.text_8cfe257aece4}
+              </Button>
+            )}
+            {startView && (
+              <Button asChild variant="outline">
+                <Link href="/personal/contacts?view=add">{text.addContactByPhone}</Link>
+              </Button>
+            )}
+            {!startView && selected.contact && (
+              <ContactActions
+                contact={selected.contact}
+                triggerLabel={uiText.text_dae770ce3334}
+                onChanged={() => {
+                  void contacts.refetch();
+                  setDetail(null);
+                }}
+              />
+            )}
+            {!!error && <ErrorState error={error} />}
+          </div>
+        ) : !validPersonId ? (
+          <ErrorState error={new ApiError(400, { code: 'VALIDATION_ERROR' })} />
+        ) : person.isError ? (
+          <ErrorState error={person.error} onRetry={() => void person.refetch()} />
+        ) : (
+          <LoadingSkeleton />
+        )}
+      </V5Scene>
+    );
+  if (embedded)
+    return (
+      <div className={d.directoryContent} data-main-people-results>
+        {contents}
+      </div>
+    );
+  if (tab === 'add')
+    return (
+      <ContactPhoneForm
+        onBack={() => changeTab('contacts')}
+        onSaved={async () => {
+          await cache.invalidateQueries({
+            predicate: (item) =>
+              item.queryKey.some(
+                (key) => typeof key === 'string' && key.startsWith('/api/v1/contacts'),
+              ),
+          });
+          changeTab('contacts');
+          setNotice(uiText.text_c69ebbd6ae2f);
+        }}
+      />
+    );
+  return (
+    <V5Scene
+      id="CON-01"
+      title={uiText.text_759044ca1d2d}
+      subtitle={text.personalIdentity}
+      back="/personal/messages"
+      kind="list"
+      deep
+      headerTools={
+        <Button asChild variant="ghost" size="icon">
+          <Link href="/personal/notifications" aria-label={uiText.text_9f2a436a61f3}>
+            <Bell size={21} />
+          </Link>
+        </Button>
+      }
+    >
+      <div className={d.directoryContent} data-contacts-directory>
+        <form
+          role="search"
+          onSubmit={(event) => {
+            event.preventDefault();
+            setQuery(draft.trim());
+            setPage(1);
+          }}
+        >
+          <SearchField
+            showEmptyClear
+            aria-label={uiText.text_2c54ecc60e86}
+            placeholder={text.contactSearch}
+            value={draft}
+            onChange={(e) => setDraft(e.target.value)}
+            onClear={() => {
+              setDraft('');
+              setQuery('');
+              setPage(1);
+            }}
+            action={
+              <button
+                className={d.searchAction}
+                type="submit"
+                aria-label={uiText.text_2a93eb7f06ce}
+              >
+                <Search size={22} />
+              </button>
+            }
+          />
+        </form>
+        <Button
+          variant="outline"
+          className={d.addContact}
+          aria-label={uiText.text_5fde423d6a3f}
+          onClick={() => changeTab('add')}
+        >
+          <Plus size={20} />
+          {text.addContactByPhone}
+        </Button>
+        {contents}
+        <button type="button" className={d.syncContact} onClick={() => setSync(true)}>
+          <span className={d.syncIcon}>
+            <RefreshCw size={22} />
+          </span>
+          <span>
+            <strong>{text.syncContacts}</strong>
+            <small>{text.syncHint}</small>
+          </span>
+          <ChevronLeft size={18} />
+        </button>
+        <Dialog open={sync} onOpenChange={setSync}>
+          <DialogContent title={text.syncContacts}>
+            <p>{text.syncUnavailable}</p>
+          </DialogContent>
+        </Dialog>
+      </div>
+    </V5Scene>
   );
 }
 function ContactActions({
   contact,
   onChanged,
+  triggerLabel,
 }: {
   contact: components['schemas']['UserContactResult'];
   onChanged: () => void;
+  triggerLabel?: string;
 }) {
   const { call } = usePersonal();
   const cache = useQueryClient();
@@ -487,11 +542,21 @@ function ContactActions({
     >
       <DialogTrigger asChild>
         <Button
-          size="icon"
-          variant="ghost"
-          aria-label={uiText.text_aa46bc41d37e + (contact.savedName || contact.profile.displayName)}
+          size={triggerLabel ? 'default' : 'icon'}
+          variant={triggerLabel ? 'outline' : 'ghost'}
+          aria-label={
+            triggerLabel ??
+            uiText.text_aa46bc41d37e + (contact.savedName || contact.profile.displayName)
+          }
         >
-          <MoreHorizontal size={20} />
+          {triggerLabel ? (
+            <>
+              <Pencil size={20} />
+              {triggerLabel}
+            </>
+          ) : (
+            <MoreHorizontal size={20} />
+          )}
         </Button>
       </DialogTrigger>
       <DialogContent

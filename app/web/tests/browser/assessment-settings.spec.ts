@@ -205,7 +205,7 @@ test('privacy submit stays bound to its form, retains failed edits and uses retu
   }
   await page.goto('/personal/settings/appearance');
   await page.getByRole('radio', { name: 'تاریک', exact: true }).check();
-  await page.getByRole('button', { name: 'ذخیره ظاهر', exact: true }).click();
+  await page.getByRole('banner').getByRole('link', { name: 'بازگشت', exact: true }).click();
   await page.goto('/personal/settings/privacy');
   await page.setViewportSize({ width: 390, height: 844 });
   await page.getByRole('button', { name: privacy.save, exact: true }).scrollIntoViewIfNeeded();

@@ -1,0 +1,112 @@
+.picker {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+.notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--primary-soft);
+  font-size: calc(12px * var(--text-scale, 1));
+  line-height: 1.95;
+}
+.notice svg {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  margin-top: 3px;
+  color: var(--primary);
+}
+.organization {
+  border: 1px solid var(--line);
+  padding: 16px;
+  border-radius: 13px;
+  background: var(--surface);
+  min-width: 0;
+}
+.organization[data-selected] {
+  border-color: var(--primary);
+}
+.organizationHeading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+.organizationHeading > div {
+  flex: 1;
+  min-width: 0;
+}
+.organizationHeading strong {
+  display: block;
+  font-size: calc(14px * var(--text-scale, 1));
+  overflow-wrap: anywhere;
+}
+.organizationHeading small {
+  display: block;
+  font-size: calc(12px * var(--text-scale, 1));
+  color: var(--muted);
+}
+.avatar {
+  width: 44px;
+  height: 44px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--primary);
+  background: var(--primary-soft);
+  font-size: calc(18px * var(--text-scale, 1));
+}
+.active {
+  display: inline-flex;
+  align-items: center;
+  flex: none;
+  border-radius: 6px;
+  padding: 3px 8px;
+  background: var(--primary-soft);
+  color: var(--primary);
+  font-size: calc(11px * var(--text-scale, 1));
+}
+.choice {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 0;
+  min-height: 48px;
+  cursor: pointer;
+  border-top: 1px solid var(--line);
+}
+.choice > span {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+.choice strong {
+  font-size: calc(14px * var(--text-scale, 1));
+  font-weight: 600;
+  line-height: 1.9;
+}
+.choice small {
+  font-size: calc(12px * var(--text-scale, 1));
+  color: var(--muted);
+  line-height: 1.85;
+}
+.choice:has(input:disabled) {
+  opacity: 0.6;
+  cursor: default;
+}
+.submit {
+  width: 100%;
+  flex: none;
+}
+.personal {
+  width: 100%;
+}

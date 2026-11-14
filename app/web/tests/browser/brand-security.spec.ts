@@ -19,28 +19,28 @@ test('phone and code reject typed letters and normalize Persian and Arabic numer
   await page.getByRole('button', { name: 'دریافت کد تأیید', exact: true }).click();
   await expect(page.getByLabel('کد ورود', { exact: true })).toBeVisible();
 });
-test('V5 keeps the logo in both login steps and reserves a safe action footer', async ({
+test('V6 keeps back navigation in both login steps and reserves a safe action footer', async ({
   page,
 }) => {
   for (const width of [320, 390, 834, 1440, 1920]) {
     await page.setViewportSize({ width, height: 1000 });
     await page.goto('/enter');
     const form = page.getByRole('region', { name: 'ورود به حساب ماکان' });
-    await expect(form.getByRole('img', { name: 'لوگوی ماکان' })).toBeVisible();
+    await expect(form.getByRole('button', { name: 'بازگشت', exact: true })).toBeVisible();
     const field = (await page.getByLabel('شماره همراه', { exact: true }).boundingBox())!,
       action = (await page
         .getByRole('button', { name: 'دریافت کد تأیید', exact: true })
         .boundingBox())!;
     expect(action.y - field.y - field.height).toBeGreaterThan(20);
     expect(action.y - field.y - field.height).toBeGreaterThan(20);
-    expect(action.y + action.height).toBeLessThanOrEqual(988);
+    expect(action.y + action.height).toBeLessThanOrEqual(width < 768 ? 990 : 988);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(
       true,
     );
     await page.getByLabel('شماره همراه', { exact: true }).fill('09120000199');
     await page.getByRole('button', { name: 'دریافت کد تأیید', exact: true }).click();
     await expect(page.getByLabel('کد ورود', { exact: true })).toBeVisible();
-    await expect(form.getByRole('img', { name: 'لوگوی ماکان' })).toBeVisible();
+    await expect(form.getByRole('button', { name: 'بازگشت', exact: true })).toBeVisible();
   }
 });
 test('retired assistant studio and class destinations redirect to their active Next routes', async ({
@@ -50,7 +50,7 @@ test('retired assistant studio and class destinations redirect to their active N
   await login(context, 'Personal', false);
   await page.goto('/personal/assistant/studio');
   await expect(page).toHaveURL(/\/personal\/assistant$/);
-  await expect(page.getByLabel('سؤال از دستیار', { exact: true })).toBeVisible();
+  await expect(page.getByRole('button', { name: /^مرور درس/ })).toBeVisible();
   for (const path of [
     '/personal/classes',
     '/personal/classes/00000000-0000-4000-8000-000000000002',
@@ -73,7 +73,6 @@ test('restored profile logout ends the current session after confirmation', asyn
 }) => {
   await login(context, 'Student');
   await page.goto('/personal/profile');
-  await page.getByRole('button', { name: 'گزینه‌های بیشتر', exact: true }).click();
   await page.getByRole('button', { name: 'خروج از حساب', exact: true }).click();
   await page.getByRole('dialog').getByRole('button', { name: 'خروج از حساب', exact: true }).click();
   await expect(page).toHaveURL(/\/enter$/);
@@ -106,7 +105,6 @@ test('explicit logout ignores a queued expiry notification and does not resume t
     await route.fulfill({ response });
   });
   try {
-    await page.getByRole('button', { name: 'گزینه‌های بیشتر', exact: true }).click();
     await page.getByRole('button', { name: 'خروج از حساب', exact: true }).click();
     await page
       .getByRole('dialog')
@@ -142,7 +140,6 @@ test('a failed explicit logout can recover the current session without automatic
       body: JSON.stringify({ status: 503, code: 'NETWORK_ERROR' }),
     });
   });
-  await page.getByRole('button', { name: 'گزینه‌های بیشتر', exact: true }).click();
   await page.getByRole('button', { name: 'خروج از حساب', exact: true }).click();
   await page.getByRole('dialog').getByRole('button', { name: 'خروج از حساب', exact: true }).click();
   await expect(

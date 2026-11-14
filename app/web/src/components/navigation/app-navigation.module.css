@@ -11,13 +11,13 @@
   align-items: center;
   gap: 12px;
   min-height: 48px;
-  padding: 10px 12px;
-  border-radius: 10px;
+  padding: 12px 14px;
+  border-radius: 11px;
   text-decoration: none;
   color: var(--muted);
   min-width: 0;
   text-align: start;
-  font-size: calc(14px * var(--text-scale, 1));
+  font-size: calc(13px * var(--text-scale, 1));
 }
 .item[aria-current='page'] {
   background: var(--primary-soft);
@@ -38,8 +38,8 @@
 }
 .label {
   min-width: 0;
-  font-size: calc(14px * var(--text-scale, 1));
-  line-height: 1.6;
+  font-size: calc(13px * var(--text-scale, 1));
+  line-height: 1.75;
   overflow-wrap: anywhere;
 }
 .item:focus-visible {
@@ -58,20 +58,20 @@
 .adaptive {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
-  min-height: 74px;
+  min-height: 66px;
   height: auto;
   background: var(--surface);
   border-top: 1px solid var(--border);
-  padding: 6px 7px calc(8px + env(safe-area-inset-bottom));
-  gap: 2px;
+  padding: 4px 5px max(7px, env(safe-area-inset-bottom));
+  gap: 0;
 }
 .dock .item,
 .adaptive .item {
   flex-direction: column;
   justify-content: center;
   gap: 3px;
-  min-height: 56px;
-  padding: 3px;
+  min-height: 48px;
+  padding: 5px 1px;
   text-align: center;
   border-radius: 10px;
 }
@@ -112,7 +112,7 @@
 }
 @media (min-width: 768px) and (max-width: 1199px) {
   .sidebar {
-    gap: 13px;
+    gap: 8px;
   }
   .sidebar .item {
     padding: 12px;
@@ -131,11 +131,11 @@
     position: fixed;
     inset-block: 0;
     inset-inline-start: 0;
-    width: 76px;
+    width: 72px;
     height: 100dvh;
     display: flex;
     flex-direction: column;
-    gap: 13px;
+    gap: 8px;
     padding: 20px 8px;
     border-top: 0;
     border-inline-end: 1px solid var(--border);

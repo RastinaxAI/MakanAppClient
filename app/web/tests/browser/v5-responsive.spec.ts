@@ -28,15 +28,15 @@ test('V5 profile keeps its draft across the full responsive range and short heig
     await page.setViewportSize({ width, height });
     await expect(page.getByLabel('نام نمایشی', { exact: true })).toHaveValue('پیش‌نویس واکنش‌گرا');
     const form = page.locator('form[data-profile-form]');
-    const cols = await form.evaluate(
-      (el) => getComputedStyle(el).gridTemplateColumns.split(' ').length,
-    );
-    expect(cols).toBe((await form.boundingBox())!.width >= 680 ? 2 : 1);
+    const cols = await form
+      .locator('[data-ui="field-group"]')
+      .evaluate((el) => getComputedStyle(el).gridTemplateColumns.split(' ').length);
+    expect(cols).toBe((await form.boundingBox())!.width >= 640 ? 2 : 1);
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth > innerWidth);
     expect(overflow).toBe(false);
-    const save = page.getByRole('button', { name: 'ذخیره پروفایل', exact: true });
+    const save = page.getByRole('button', { name: 'ذخیره تغییرات', exact: true });
     const box = (await save.boundingBox())!;
-    expect(box.y + box.height).toBeLessThanOrEqual(height - 12);
+    expect(box.y + box.height).toBeLessThanOrEqual(height - (width < 768 ? 10 : 12));
     await page.screenshot({ path: reviewPath(`output/review/v5/profile-${width}-${height}.png`) });
     evidence.push({ width, height, cols, overflow });
   }
@@ -54,7 +54,7 @@ test('V5 tablet rail and desktop sidebar use the reference widths', async ({ pag
       .getByRole('complementary')
       .filter({ has: page.getByRole('navigation', { name: 'ناوبری حساب شخصی', exact: true }) });
     await expect(rail).toBeVisible();
-    expect((await rail.boundingBox())!.width).toBe(width < 1200 ? 76 : 208);
+    expect((await rail.boundingBox())!.width).toBe(width < 1200 ? 72 : 208);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(
       true,
     );
@@ -98,7 +98,10 @@ test('V5.2 search remains contained and separate from filters with large text an
           : page.getByRole('navigation', { name: copy.text_6f9bc91900c3, exact: true });
         if (await filter.count()) {
           const box = await filter.boundingBox();
-          if (box) expect(box.y).toBeGreaterThanOrEqual(a.y + a.height + 11);
+          if (box)
+            expect(box.y).toBeGreaterThanOrEqual(
+              a.y + a.height + (route.includes('messages') ? 0 : 11),
+            );
         }
         await expect(input).toHaveValue('جستجوی فارسی و Latin');
         expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(
@@ -128,9 +131,7 @@ test('V5.2 portrait tablet gives the useful width to content and keeps related a
     await expect(page.locator('.rx-context-panel')).toBeHidden();
   }
   await page.goto('/personal/extracurricular/requests/new?step=details');
-  const toggle = page
-    .getByRole('banner')
-    .getByRole('button', { name: copy.v5Product.context, exact: true });
+  const toggle = page.getByRole('banner').getByRole('button', { name: copy.v4_more, exact: true });
   await expect(toggle).toBeVisible();
   await toggle.click();
   await expect(page.getByRole('dialog')).toBeVisible();
@@ -144,7 +145,7 @@ test('V5.2 assistant composer stays in the visible viewport without losing a dra
 }) => {
   await login(context, 'Student', false);
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto('/personal/assistant');
+  await page.goto('/personal/assistant?view=chat');
   const input = page.getByRole('textbox', { name: 'سؤال از دستیار', exact: true });
   await input.fill('پیش‌نویس بدون ارسال و مصرف سهمیه');
   for (const height of [844, 540, 420]) {

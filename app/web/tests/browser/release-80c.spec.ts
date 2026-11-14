@@ -394,7 +394,7 @@ test('new connected views keep mobile tablet desktop bounds and actual theme', a
                   ? t.requests
                   : name === 'members'
                     ? copy.v5Product.classMembersAndRoles
-                    : 'کلاس مستقل قرارداد جدید',
+                    : t.learning,
               exact: true,
             })
             .first(),
@@ -405,7 +405,9 @@ test('new connected views keep mobile tablet desktop bounds and actual theme', a
           await expect(page.getByLabel(t.grants, { exact: true })).toHaveCount(0);
         }
         if (name === 'learning')
-          await expect(page.getByText('تکلیف مستقل واقعی', { exact: true })).toBeVisible();
+          await expect(
+            page.getByText(copy.v5Product.independentLearningPending, { exact: true }),
+          ).toBeVisible();
         await page.screenshot({
           path: reviewPath(`output/review/integration-80c/${theme}-${name}-${width}.png`),
           fullPage: true,

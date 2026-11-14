@@ -46,11 +46,19 @@ for (const theme of ['light', 'dark']) {
         const geometry = await first.evaluate((el) => {
           const identity = el.querySelector('strong')!.getBoundingClientRect();
           const content = el.querySelector('p')!.getBoundingClientRect();
-          return { identity: identity.toJSON(), content: content.toJSON() };
+          const paragraph = el.querySelector('p')!;
+          return {
+            identity: identity.toJSON(),
+            content: content.toJSON(),
+            fontSize: getComputedStyle(paragraph).fontSize,
+            clipped: paragraph.scrollWidth > paragraph.clientWidth + 2,
+          };
         });
         expect(geometry.identity.bottom).toBeLessThanOrEqual(geometry.content.y);
         expect(Math.abs(geometry.identity.right - geometry.content.right)).toBeLessThanOrEqual(2);
-        expect(geometry.content.width).toBeGreaterThan(200);
+        // The PDF row uses 14px body text and intrinsic content width.
+        expect(geometry.fontSize).toBe('14px');
+        expect(geometry.clipped).toBe(false);
         expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(
           true,
         );

@@ -326,7 +326,7 @@ test('new assessment pages remain readable without overflow at three viewports',
   await capture('exam-publication', exam + '/grading-review', undefined, 'بازخورد نهایی آزمون');
   await page.goto('/personal/settings/appearance');
   await page.getByRole('radio', { name: 'تاریک', exact: true }).check();
-  await page.getByRole('button', { name: 'ذخیره ظاهر', exact: true }).click();
+  await page.getByRole('banner').getByRole('link', { name: 'بازگشت', exact: true }).click();
   await page.goto(exam + '/grading-review');
   await expect(page.getByText('بازخورد نهایی آزمون', { exact: true })).toBeVisible();
   await page.setViewportSize({ width: 390, height: 844 });

@@ -33,6 +33,40 @@ export function messagingRoute({ state, url, body, auth, send, req }) {
   if (p === '/api/v1/messaging/blocks' && req.method === 'GET')
     return send(state.blocked.get(auth.user.id) ?? []);
   const block = p.match(/^\/api\/v1\/messaging\/blocks\/([^/]+)$/);
+  if (block && req.method === 'POST') {
+    const user = state.users.get(block[1]);
+    if (!user || user.id === auth.user.id) return send({ code: 'AUTH_FORBIDDEN' }, 403);
+    const rows = state.blocked.get(auth.user.id) ?? [];
+    const alreadyExisted = rows.some((item) => item.user.userId === user.id);
+    if (!alreadyExisted)
+      state.blocked.set(auth.user.id, [
+        ...rows,
+        make('BlockedUserResult', {
+          user: make('SafeMessagingIdentityResult', {
+            userId: user.id,
+            displayName: user.displayName,
+            username: user.username,
+          }),
+          createdAtUtc: new Date().toISOString(),
+          version: '1',
+        }),
+      ]);
+    return send(
+      make('UserBlockResult', {
+        blockId: id(12400),
+        blockedUser: make('SafeMessagingIdentityResult', {
+          userId: user.id,
+          displayName: user.displayName,
+          username: user.username,
+        }),
+        status: 'Active',
+        createdAtUtc: new Date().toISOString(),
+        version: '1',
+        alreadyExisted,
+      }),
+      alreadyExisted ? 200 : 201,
+    );
+  }
   if (block && req.method === 'DELETE') {
     const rows = state.blocked.get(auth.user.id) ?? [];
     if (!rows.some((item) => item.user.userId === block[1]))
@@ -69,30 +103,75 @@ export function messagingRoute({ state, url, body, auth, send, req }) {
     const user = state.users.get(p.split('/').at(-1));
     return user ? send(profile(user)) : send({ code: 'PERSON_NOT_FOUND' }, 404);
   }
-  if (p === '/api/v1/contacts')
-    return send(
-      paged(
-        'UserContactPageResult',
-        [...state.users.values()]
-          .filter(
-            (u) =>
-              u.id !== auth.user.id &&
-              (!url.searchParams.get('q') ||
-                (u.displayName + ' ' + u.username)
-                  .toLowerCase()
-                  .includes(url.searchParams.get('q').toLowerCase())),
-          )
-          .map((u) =>
-            make('UserContactResult', {
-              contactUserId: u.id,
-              displayName: u.displayName,
-              contact: profile(u),
-              profile: profile(u),
-            }),
-          ),
-        url,
-      ),
+  if (p === '/api/v1/contacts' || /^\/api\/v1\/contacts\/[^/]+$/.test(p)) {
+    state.contactBooks ??= new Map();
+    if (!state.contactBooks.has(auth.user.id))
+      state.contactBooks.set(
+        auth.user.id,
+        new Map(
+          [...state.users.values()]
+            .filter((u) => u.id !== auth.user.id)
+            .map((u) => [
+              u.id,
+              make('UserContactResult', {
+                contactUserId: u.id,
+                profile: profile(u),
+                savedName: null,
+                version: 'AAAAAAAAAAE=',
+              }),
+            ]),
+        ),
+      );
+    const book = state.contactBooks.get(auth.user.id);
+    const userId = p === '/api/v1/contacts' ? body.contactUserId : p.split('/').at(-1);
+    if (req.method === 'POST') {
+      const user = state.users.get(userId);
+      if (!user || userId === auth.user.id) return send({ code: 'PERSON_NOT_FOUND' }, 404);
+      const row = make('UserContactResult', {
+        contactUserId: userId,
+        profile: profile(user),
+        savedName: body.savedName,
+        version: 'AAAAAAAAAAI=',
+      });
+      book.set(userId, row);
+      return send(row);
+    }
+    if (req.method === 'DELETE') {
+      book.delete(userId);
+      return send(null, 204);
+    }
+    if (req.method === 'PATCH') {
+      const row = book.get(userId);
+      if (!row) return send({ code: 'CONTACT_NOT_FOUND' }, 404);
+      if (row.version !== body.expectedVersion) return send({ code: 'VERSION_CONFLICT' }, 409);
+      Object.assign(row, {
+        savedName: body.savedName,
+        isFavorite: body.isFavorite,
+        version: 'AAAAAAAAAAM=',
+      });
+      return send(row);
+    }
+    const query = (url.searchParams.get('q') ?? '').toLowerCase();
+    const matching = [...book.values()].filter(
+      (row) =>
+        (!query ||
+          (row.savedName + ' ' + row.profile.displayName + ' ' + row.profile.username)
+            .toLowerCase()
+            .includes(query)) &&
+        (url.searchParams.get('favoritesOnly') !== 'true' || row.isFavorite),
     );
+    const page = Number(url.searchParams.get('page') ?? 1),
+      pageSize = Number(url.searchParams.get('pageSize') ?? 30);
+    return send(
+      make('UserContactPageResult', {
+        items: matching.slice((page - 1) * pageSize, page * pageSize),
+        page,
+        pageSize,
+        hasMore: page * pageSize < matching.length,
+      }),
+    );
+  }
+
   const allowed = [id(101), id(102)].includes(auth.user.id);
   const summary = () =>
     make('ConversationSummaryResult', {
@@ -120,9 +199,32 @@ export function messagingRoute({ state, url, body, auth, send, req }) {
       lastMessagePreview: state.messages.at(-1)?.text ?? null,
       lastMessageAtUtc: state.messages.at(-1)?.createdAtUtc ?? null,
       lastMessageSequence: state.messages.length,
-      unreadCount: state.messages.filter((m) => m.senderUserId !== auth.user.id).length,
-      isPinned: false,
-      isArchived: state.chatArchived ?? false,
+      lastReadMessageSequence: state.pdfReadCursors?.get(auth.user.id + ':' + ids.chat) ?? 0,
+      unreadCount: state.messages.filter(
+        (m) =>
+          m.senderUserId !== auth.user.id &&
+          m.sequence > (state.pdfReadCursors?.get(auth.user.id + ':' + ids.chat) ?? 0),
+      ).length,
+      ...((value) =>
+        value
+          ? {
+              isPinned: value.isPinned,
+              isMuted: value.isMuted,
+              muteMode: value.muteMode,
+              mutedUntilUtc: value.mutedUntilUtc,
+              isManuallyUnread: value.isManuallyUnread,
+            }
+          : { isPinned: false })(state.pdfConversationState?.get(auth.user.id + ':' + ids.chat)),
+      isArchived: state.chatArchives?.get(auth.user.id) ?? state.chatArchived ?? false,
+      ...((hidden) =>
+        hidden && state.messages.at(-1)?.sequence <= hidden
+          ? {
+              lastMessagePreview: null,
+              lastMessageAtUtc: null,
+              lastMessageSequence: null,
+              unreadCount: 0,
+            }
+          : {})(state.chatHistoryHidden?.get(auth.user.id)),
       organization: null,
     });
   if (p === `/api/v1/conversations/${ids.chat}/summary`) {
@@ -171,12 +273,27 @@ export function messagingRoute({ state, url, body, auth, send, req }) {
     ['POST', 'DELETE'].includes(req.method)
   ) {
     if (!allowed) return send({ code: 'CONVERSATION_NOT_FOUND' }, 404);
-    state.chatArchived = req.method === 'POST';
+    state.chatArchives ??= new Map();
+    state.chatArchives.set(auth.user.id, req.method === 'POST');
     return send(
       make('ConversationUserStateResult', {
         conversationId: ids.chat,
-        isArchived: state.chatArchived,
+        isArchived: state.chatArchives.get(auth.user.id),
         version: '1',
+      }),
+    );
+  }
+  if (p === `/api/v1/conversations/${ids.chat}/clear-history` && req.method === 'POST') {
+    if (!allowed) return send({ code: 'CONVERSATION_NOT_FOUND' }, 404);
+    state.chatHistoryHidden ??= new Map();
+    const through = state.messages.at(-1)?.sequence ?? 0;
+    state.chatHistoryHidden.set(auth.user.id, through);
+    return send(
+      make('ConversationUserStateResult', {
+        conversationId: ids.chat,
+        historyHiddenThroughSequence: through,
+        isArchived: state.chatArchives?.get(auth.user.id) ?? false,
+        version: 'clear-' + through,
       }),
     );
   }
@@ -207,7 +324,18 @@ export function messagingRoute({ state, url, body, auth, send, req }) {
       return send(
         make('ConversationPeerReadStateResult', { conversationId: ids.chat, participants: [] }),
       );
-    if (p.endsWith('/read') || p.endsWith('/delivered')) return send(null, 204);
+    if (p.endsWith('/read')) {
+      state.pdfReadCursors ??= new Map();
+      const key = auth.user.id + ':' + ids.chat;
+      state.pdfReadCursors.set(
+        key,
+        Math.max(state.pdfReadCursors.get(key) ?? 0, body.upToMessageSequence ?? 0),
+      );
+      const saved = state.pdfConversationState?.get(key);
+      if (saved) saved.isManuallyUnread = false;
+      return send(null, 204);
+    }
+    if (p.endsWith('/delivered')) return send(null, 204);
     if (p.endsWith('/messages')) {
       if (req.method === 'POST') {
         const old = state.messages.find(
@@ -259,7 +387,9 @@ export function messagingRoute({ state, url, body, auth, send, req }) {
       }
       return send(
         make('ConversationMessagePageResult', {
-          messages: state.messages,
+          messages: state.messages.filter(
+            (message) => message.sequence > (state.chatHistoryHidden?.get(auth.user.id) ?? 0),
+          ),
           nextBeforeSequence: null,
         }),
       );

@@ -96,6 +96,10 @@ export function fixtureBackend(port = 3457) {
         state.profileRoles = true;
         return send({ configured: true });
       }
+      if (url.pathname === '/__test__/v6-contexts') {
+        state.v6Contexts = { ...state.v6Contexts, ...body };
+        return send({ configured: true });
+      }
       if (url.pathname === '/__test__/design') {
         seedReferenceCase(state, body);
         return send({ seeded: true });
@@ -111,6 +115,10 @@ export function fixtureBackend(port = 3457) {
         return send({ seeded: true });
       }
       if (url.pathname === '/__test__/personal-class') return send(seedIndependent(state, body));
+      if (url.pathname === '/__test__/v6-class-spaces') {
+        Object.assign(state.independent.options, body);
+        return send({ configured: true });
+      }
       if (url.pathname === '/__test__/personal-class-revoke') {
         state.independent.removed = true;
         return send({ revoked: true });
@@ -255,10 +263,12 @@ export function fixtureBackend(port = 3457) {
         (f) => url.pathname.endsWith(f.path) && (!f.method || f.method === req.method),
       );
       if (fault) {
-        state.faults.splice(state.faults.indexOf(fault), 1);
+        if (fault.repeat !== true) state.faults.splice(state.faults.indexOf(fault), 1);
         if (fault.delay) await new Promise((r) => setTimeout(r, fault.delay));
         if (Number.isInteger(fault.retryAfter) && fault.retryAfter > 0 && fault.retryAfter <= 3600)
           res.setHeader('Retry-After', String(fault.retryAfter));
+        if (Object.hasOwn(fault, 'testResponseBody'))
+          return send(fault.testResponseBody, fault.status || 200);
         if (fault.status)
           return send(
             { code: fault.code ?? 'FIXTURE_INJECTED_FAILURE', traceId: 'fixture-error' },
@@ -323,12 +333,12 @@ export function fixtureBackend(port = 3457) {
       }
       if (url.pathname === '/api/v1/guardian/children')
         return send(
-          ctx.auth.role === 'Parent'
+          ctx.auth.context.activeRole === 'Parent'
             ? (state.parentChildren ?? (state.design ? [referenceChild()] : []))
             : [],
         );
       if (
-        ctx.auth.role === 'Parent' &&
+        ctx.auth.context.activeRole === 'Parent' &&
         /^\/api\/v1\/guardian\/children\/[^/]+\/select$/.test(url.pathname)
       ) {
         const child = (state.parentChildren ?? (state.design ? [referenceChild()] : [])).find(

@@ -44,7 +44,7 @@ test('weekly details and range are separate native steps; validation, back, resi
   await login(context, 'Manager');
   await page.goto('/personal/settings/appearance');
   await page.getByRole('radio', { name: 'تاریک', exact: true }).check();
-  await page.getByRole('button', { name: 'ذخیره ظاهر', exact: true }).click();
+  await page.getByRole('banner').getByRole('link', { name: 'بازگشت', exact: true }).click();
   await page.goto(root);
   await details(page);
   await expect(page.getByLabel(old.startDate, { exact: true })).toHaveCount(0);

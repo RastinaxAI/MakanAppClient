@@ -1,6 +1,11 @@
+import { v6Ui as v6 } from '../../src/content/fa';
 import { test, expect, login, fixture, ids } from './test';
 import { mkdir } from 'node:fs/promises';
-import { chooseAssistantPayer, returnToAssistantQuestion } from './assistant-controls';
+import {
+  chooseAssistantPayer,
+  returnToAssistantQuestion,
+  openAssistantChat,
+} from './assistant-controls';
 import * as copy from '../../src/content/fa';
 
 test('an appearance storage failure stays on the editable page and never masquerades as a saved preference', async ({
@@ -17,7 +22,6 @@ test('an appearance storage failure stays on the editable page and never masquer
   await login(context, 'Student', false);
   await page.goto('/personal/settings/appearance');
   await page.getByRole('radio', { name: 'تاریک', exact: true }).check();
-  await page.getByRole('button', { name: 'ذخیره ظاهر', exact: true }).click();
   await expect(page).toHaveURL(/settings\/appearance$/);
   await expect(page.getByRole('main').getByRole('alert')).toContainText(copy.text_d1a91d934e1c);
   await expect(page.getByRole('radio', { name: 'تاریک', exact: true })).toBeChecked();
@@ -36,7 +40,7 @@ test('dark theme persists across panels and real assistant request and result st
   await mkdir('test-results/assistant-theme', { recursive: true });
   await page.goto('/personal/settings/appearance');
   await page.getByRole('radio', { name: 'تاریک', exact: true }).check();
-  await page.getByRole('button', { name: 'ذخیره ظاهر', exact: true }).click();
+  await page.getByRole('banner').getByRole('link', { name: 'بازگشت', exact: true }).click();
   await page.reload();
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
   for (const [width, height] of [
@@ -63,7 +67,7 @@ test('dark theme persists across panels and real assistant request and result st
             }
             return 'transparent';
           }),
-        ).toBe('rgb(13, 23, 40)');
+        ).toBe('rgb(16, 24, 36)');
       }
       if (name === 'profile')
         await expect(page.getByRole('heading', { name: 'سارا احمدی', exact: true })).toBeVisible();
@@ -74,6 +78,7 @@ test('dark theme persists across panels and real assistant request and result st
     }
     await page.goto('/personal/assistant/studio');
     await expect(page).toHaveURL(/\/personal\/assistant$/);
+    await openAssistantChat(page);
     const field = page.getByRole('textbox', { name: 'سؤال از دستیار', exact: true });
     await expect(field).toBeEnabled();
     await chooseAssistantPayer(page, 'Individual');
@@ -98,21 +103,15 @@ test('dark theme persists across panels and real assistant request and result st
     await expect(page.getByRole('textbox', { name: 'متن پیام', exact: true })).toBeVisible();
     await page.screenshot({ path: `test-results/assistant-theme/chat-dark-${width}.png` });
     await page.goto('/personal/profile');
-    await page
-      .getByRole('banner')
-      .getByRole('button', { name: 'گزینه‌های بیشتر', exact: true })
-      .click();
-    await page.getByRole('button', { name: /فضاها و نقش‌های من/ }).click();
+    await page.getByRole('button', { name: v6.chooseSchool }).click();
     await expect(page.getByRole('dialog')).toBeVisible();
-    await expect(
-      page.getByRole('dialog').getByRole('button', { name: /آموزشگاه آفتاب/ }),
-    ).toHaveAttribute('aria-pressed', 'true');
+    await expect(page.getByRole('dialog').getByRole('radio')).toBeChecked();
     await page.keyboard.press('Escape');
     await page.goto('/personal/settings/appearance');
     await expect(page.getByRole('radio', { name: 'تاریک', exact: true })).toBeChecked();
   }
   await page.getByRole('radio', { name: 'روشن', exact: true }).check();
-  await page.getByRole('button', { name: 'ذخیره ظاهر', exact: true }).click();
+  await page.getByRole('banner').getByRole('link', { name: 'بازگشت', exact: true }).click();
   await page.reload();
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
 });

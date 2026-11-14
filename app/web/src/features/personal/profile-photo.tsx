@@ -62,9 +62,11 @@ export function ProfileAvatar({
 export function ProfilePhotoEditor({
   disabled = false,
   onBusyChange,
+  compact = false,
 }: {
   disabled?: boolean;
   onBusyChange?: (busy: boolean) => void;
+  compact?: boolean;
 }) {
   const { session, transfer, call, reload } = usePersonal();
   const [file, setFile] = useState<File>();
@@ -144,7 +146,10 @@ export function ProfilePhotoEditor({
     }
   }
   return (
-    <section className={uiClass(s.editor)} aria-label={uiText.text_81387363cbf9}>
+    <section
+      className={uiClass(s.editor, compact && s.compact)}
+      aria-label={uiText.text_81387363cbf9}
+    >
       <div className={uiClass(s.identity)}>
         {preview ? (
           <span className={uiClass(s.preview)}>
@@ -157,15 +162,17 @@ export function ProfilePhotoEditor({
             className={uiClass(s.preview)}
           />
         )}
-        <div>
-          <h2>{uiText.text_81387363cbf9}</h2>
-          <p>{uiText.text_cb7c102e0609}</p>
-        </div>
+        {!compact && (
+          <div>
+            <h2>{uiText.text_81387363cbf9}</h2>
+            <p>{uiText.text_cb7c102e0609}</p>
+          </div>
+        )}
       </div>
       <div className={uiClass(s.actions)}>
         <label className={uiClass(s.choose)}>
           <Camera size={18} />
-          {uiText.text_679d612cbfb1}
+          {compact ? uiText.v6Ui.changePhoto : uiText.text_679d612cbfb1}
           <NativeInput
             aria-label={uiText.text_6e3ddb3deb6e}
             type="file"

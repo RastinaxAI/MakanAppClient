@@ -1,4 +1,4 @@
-/* The V5 authentication scene has one reading column in every device. */
+/* Product authentication: V6 geometry, existing form state and API handlers. */
 .form {
   display: flex;
   flex-direction: column;
@@ -14,15 +14,62 @@
 .field {
   display: flex;
   flex-direction: column;
-  gap: 7px;
+  gap: 6px;
   min-width: 0;
 }
+.field,
 .field label {
-  font-size: calc(14px * var(--text-scale, 1));
-  font-weight: 600;
+  font-size: calc(12px * var(--text-scale, 1));
+  font-weight: 650;
+  line-height: 1.85;
 }
 .field input {
   font-variant-numeric: tabular-nums;
+}
+.field .phoneValue {
+  text-align: center;
+  unicode-bidi: isolate;
+}
+.countryControl {
+  position: relative;
+  display: grid;
+  min-width: 0;
+}
+.countryControl .countrySelect {
+  grid-area: 1 / 1;
+  color: transparent;
+  appearance: none;
+  padding-inline: 44px;
+}
+.countryArrow {
+  position: absolute;
+  left: 12px;
+  top: calc(50% - 10px);
+  color: var(--muted);
+  pointer-events: none;
+}
+.countrySelect option {
+  color: var(--text);
+  background: var(--surface);
+  text-align: start;
+}
+.countryValue {
+  grid-area: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 0;
+  padding: 8px 44px;
+  pointer-events: none;
+  color: var(--text);
+  font-size: calc(14px * var(--text-scale, 1));
+  line-height: 1.65;
+  z-index: 1;
+}
+.countryValue svg {
+  flex: none;
+  border-radius: 2px;
 }
 .hint,
 .error {
@@ -43,13 +90,7 @@
 .actions > :global(.button) {
   flex: none;
 }
-.policy {
-  font-size: calc(11px * var(--text-scale, 1));
-  line-height: 1.9;
-  color: var(--muted);
-  text-align: center;
-  margin: 0;
-}
+
 .codeActions {
   display: flex;
   align-items: center;
@@ -68,64 +109,16 @@
   font: inherit;
   font-size: calc(13px * var(--text-scale, 1));
 }
-.otp {
-  position: relative;
-  direction: ltr;
-  max-width: 100%;
-  width: 100%;
-}
-.otp input {
-  position: absolute;
-  inset: 0;
-  display: block;
-  width: 100%;
-  height: 100%;
-  min-height: 51px;
-  opacity: 0;
-  cursor: text;
-}
-.digits {
-  display: grid;
-  grid-template-columns: repeat(6, minmax(0, 44px));
-  justify-content: center;
-  gap: 9px;
-  margin: 6px 0;
-  direction: ltr;
-}
-.digits span {
-  display: grid;
-  place-items: center;
-  min-height: 51px;
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  background: var(--surface);
-  color: var(--text);
-  font-size: calc(22px * var(--text-scale, 1));
-  font-weight: 700;
-  line-height: 1.7;
-}
-.otp:focus-within .digits [data-active] {
-  border-color: var(--accent);
-  outline: 2px solid var(--soft);
-  outline-offset: 0;
-}
-.otp:has([aria-invalid='true']) .digits span {
-  border-color: var(--danger);
-}
 .loginCard {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 18px;
 }
-.loginCard .policy {
-  margin-top: 0;
-}
+
 .loginCard .codeActions {
   margin-top: 0;
 }
-.loginCard .intro {
-  font-size: calc(14px * var(--text-scale, 1));
-}
+
 .spinner {
   animation: spin 900ms linear infinite;
 }
@@ -135,9 +128,6 @@
   }
 }
 @media (max-width: 767px) {
-  .identity h1 {
-    font-size: calc(21px * var(--text-scale, 1));
-  }
   .actions > :global(.button) {
     flex: 1;
   }
@@ -154,21 +144,6 @@
 .form > .actions {
   flex: none;
 }
-.policy button {
-  font: inherit;
-  background: none;
-  border: 0;
-  color: inherit;
-  padding: 0;
-  min-height: 44px;
-  display: block;
-  margin-block: min(0px, calc((1lh - 44px) / 2));
-  margin-inline: auto;
-  max-width: 100%;
-  text-align: inherit;
-  border-radius: 8px;
-  cursor: pointer;
-}
 .form :global(.rx-content) {
   min-height: 0;
   overflow: auto;
@@ -176,10 +151,50 @@
 .form :global(.rx-body-grid) {
   text-align: start;
 }
-.form .intro {
-  font-size: calc(15px * var(--text-scale, 1));
-}
 
-.codeIntro {
-  margin: 10px 0 3px;
+.lead {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 12px 0 6px;
+}
+.lead h2 {
+  font-size: calc(22px * var(--text-scale, 1));
+  font-weight: 800;
+  line-height: 1.7;
+}
+.lead p {
+  color: var(--muted);
+  font-size: calc(13px * var(--text-scale, 1));
+  line-height: 1.95;
+}
+.required {
+  color: var(--danger);
+}
+.privacyNotice {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  min-height: 48px;
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  background: var(--primary-soft);
+  color: var(--text);
+  font: inherit;
+  font-size: calc(12px * var(--text-scale, 1));
+  line-height: 1.9;
+  padding: 12px 14px;
+  text-align: start;
+  cursor: pointer;
+}
+.privacyNotice svg {
+  flex: none;
+  margin-top: 3px;
+  color: var(--accent);
+}
+@container workspace (min-width: 640px) {
+  .lead h2 {
+    font-size: calc(26px * var(--text-scale, 1));
+  }
 }

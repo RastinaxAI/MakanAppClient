@@ -3,6 +3,8 @@ import { readAssistantQuota, checkAssistantQuota } from '@/features/personal/ass
 import { ApiError } from '@/lib/api/errors';
 import type { ClientState } from '@/lib/server/client-session';
 import { aiIntegration as t } from '@/content/fa';
+import { citationSourceMatches } from '@/features/personal/assistant/model';
+import type { components } from '@/generated/api/schema';
 const user = '00000000-0000-4000-8000-000000000101',
   org = '00000000-0000-4000-8000-000000000001';
 const session = {
@@ -23,6 +25,28 @@ const result = {
 };
 const signal = new AbortController().signal;
 describe('assistant credit preflight', () => {
+  it('does not reveal a citation excerpt after access, source identity, current version or status changes', () => {
+    const citation = { sourceId: org, version: 3 } as components['schemas']['KnowledgeCitation'];
+    const source = {
+      sourceId: org,
+      currentVersion: 3,
+      status: 'Active',
+      capabilities: { canRead: true },
+    } as components['schemas']['EducationalSourceResult'];
+    expect(citationSourceMatches(citation, source)).toBe(true);
+    for (const changed of [
+      { sourceId: user },
+      { currentVersion: 4 },
+      { status: 'Archived' },
+      { capabilities: { canRead: false } },
+    ])
+      expect(
+        citationSourceMatches(citation, {
+          ...source,
+          ...changed,
+        } as components['schemas']['EducationalSourceResult']),
+      ).toBe(false);
+  });
   it('can display a denied selection without representing it as permission to send', async () => {
     const call = vi.fn().mockResolvedValue(result) as Parameters<typeof readAssistantQuota>[0];
     expect(await readAssistantQuota(call, session, 'Organization', signal)).toMatchObject({

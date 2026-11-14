@@ -24,7 +24,7 @@ test('an unacknowledged request can be edited from the error page only after an 
   await enable(request, { status: 503 });
   await login(context, 'Personal', false);
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto('/personal/assistant');
+  await page.goto('/personal/assistant?view=chat');
   await chooseAssistantPayer(page, 'Individual');
   await page
     .getByRole('textbox', { name: 'سؤال از دستیار', exact: true })
@@ -34,11 +34,12 @@ test('an unacknowledged request can be edited from the error page only after an 
   await captureExactState(
     page,
     ['MK-376'],
-    'Acknowledged fixture service refusal, native restricted layout and explicit edit recovery; no live AI.',
+    'Fixture service refusal inside the persistent tab shell with explicit edit recovery; no live AI.',
   );
   await page.getByRole('button', { name: t.editQuestion, exact: true }).click();
   await page.getByRole('dialog').getByRole('button', { name: 'انصراف', exact: true }).click();
-  await expect(page.getByRole('heading', { name: t.unavailableTitle, exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'دستیار', exact: true })).toBeVisible();
+  await expect(page.getByRole('main').getByRole('alert')).toContainText(t.serviceUnavailable);
   expect(await aiWrites(request)).toHaveLength(1);
   await page.getByRole('button', { name: t.editQuestion, exact: true }).click();
   await page.getByRole('dialog').getByRole('button', { name: 'تأیید', exact: true }).click();
@@ -68,7 +69,7 @@ for (const [role, payer, school, href] of [
   }) => {
     await enable(request, { quotaAllowed: false });
     await login(context, role, school);
-    await page.goto('/personal/assistant');
+    await page.goto('/personal/assistant?view=chat');
     await chooseAssistantPayer(page, payer);
     await page
       .getByRole('textbox', { name: 'سؤال از دستیار', exact: true })
@@ -94,7 +95,7 @@ for (const [role, payer, school, href] of [
     expect(await aiWrites(request)).toHaveLength(0);
   });
 
-test('source-dependent suggestions open source selection before sending or consuming quota', async ({
+test('review and explicit source selection never send a request or consume quota on opening', async ({
   page,
   context,
   request,
@@ -102,14 +103,17 @@ test('source-dependent suggestions open source selection before sending or consu
   await enable(request);
   await login(context, 'Personal', false);
   await page.goto('/personal/assistant');
-  await page.getByRole('button', { name: /^نکته اصلی این منبع چیست/ }).click();
-  await expect(
-    page.getByRole('dialog', { name: 'انتخاب منابع دستیار', exact: true }),
-  ).toBeVisible();
+  await page.getByRole('button', { name: /^مرور درس/ }).click();
+  await page
+    .getByRole('textbox', { name: 'سؤال از دستیار', exact: true })
+    .fill('پرسش پیش از انتخاب منبع');
+  await page.getByRole('button', { name: 'افزودن منبع', exact: true }).click();
+  await expect(page.locator('[data-assistant-source-selection]')).toBeVisible();
   expect(await aiWrites(request)).toHaveLength(0);
-  await page.keyboard.press('Escape');
+  await expect(page.getByRole('dialog')).toHaveCount(0);
+  await page.getByRole('tab', { name: 'گفتگو', exact: true }).click();
   await expect(page.getByRole('textbox', { name: 'سؤال از دستیار', exact: true })).toHaveValue(
-    'نکته اصلی این منبع چیست؟',
+    'پرسش پیش از انتخاب منبع',
   );
 });
 
@@ -120,7 +124,7 @@ test('slow preflight is visibly in progress and repeated submit cannot create a 
 }) => {
   await enable(request);
   await login(context, 'Personal', false);
-  await page.goto('/personal/assistant');
+  await page.goto('/personal/assistant?view=chat');
   await chooseAssistantPayer(page, 'Individual');
   let release = () => {};
   const held = new Promise<void>((resolve) => {
@@ -139,7 +143,7 @@ test('slow preflight is visibly in progress and repeated submit cannot create a 
       .getByRole('textbox', { name: 'سؤال از دستیار', exact: true })
       .fill('پرسش در حال پردازش');
     await page.getByRole('button', { name: 'ارسال سؤال', exact: true }).click();
-    await expect(page.getByRole('status')).toContainText(t.sending);
+    await expect(page.getByRole('status').filter({ hasText: t.sending })).toBeVisible();
     await expect(page.getByRole('button', { name: 'ارسال سؤال', exact: true })).toBeDisabled();
     expect(await aiWrites(request)).toHaveLength(0);
   } finally {

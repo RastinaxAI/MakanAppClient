@@ -1,0 +1,2251 @@
+{
+  "version": "7.0-blue",
+  "sourceDirectory": "/home/omidreza-bagheriyan/Desktop/MakanApp-v7-review-2026-11-13/packages/MakanApp_Design_V7",
+  "sources": {
+    "tokens.json": "5786d76f285c548b45a5ba7e790268a49f3c03b4c9097346ddab59329fb7ff55",
+    "layout-contract.json": "5940b022bf9cd15b2ef295800ec8e6301533040bbc6c98661b777e047d784a5c",
+    "MakanApp_UI_UX_Integrated_FA_v7.pdf": "dc9babc88e48eaa8e4986762e579d261b5df054dfdb056759bb96f30f8b312e0",
+    "screen_contracts.json": "2a84566beb7862a50e7644e2eac60c37e179fd6e0b77a7f31a1f2ef19ecfe451",
+    "feature_gates.json": "b065b0f5022e5c230548f2a1f4c91334c7fe636c5b6e09a9666fb3aaa8bd45cb",
+    "scene_catalog.json": "28ada57331c625c55a06e6b5d48693b10fe28f89ee290370673efa42b3e0289d"
+  },
+  "tokens": {
+    "version": "6.0",
+    "brand": {
+      "primary": "#156FEE"
+    },
+    "modes": {
+      "light": {
+        "canvas": "#F2F5FA",
+        "surface": "#FFFFFF",
+        "surfaceSecondary": "#F7F9FC",
+        "border": "#D7E0ED",
+        "controlBorder": "#7C90AD",
+        "textPrimary": "#17263D",
+        "textSecondary": "#526780",
+        "action": "#0D5ECC",
+        "onAction": "#FFFFFF",
+        "selected": "#EAF2FF",
+        "success": "#176C47",
+        "successBg": "#EAF7EF",
+        "error": "#B72939",
+        "errorBg": "#FFF0F1",
+        "warning": "#895812",
+        "warningBg": "#FFF7E5"
+      },
+      "dark": {
+        "canvas": "#101824",
+        "surface": "#192536",
+        "surfaceSecondary": "#203047",
+        "border": "#3B4D64",
+        "controlBorder": "#8299B8",
+        "textPrimary": "#EEF3FB",
+        "textSecondary": "#B4C3D8",
+        "action": "#8DB9FF",
+        "onAction": "#11223B",
+        "selected": "#243E64",
+        "success": "#98DBB5",
+        "successBg": "#173D30",
+        "error": "#FFB1B9",
+        "errorBg": "#48232D",
+        "warning": "#F6D28D",
+        "warningBg": "#44371F"
+      }
+    },
+    "typography": {
+      "family": "Vazirmatn",
+      "bodyPx": 15,
+      "inputPx": 16,
+      "metadataPx": 12,
+      "lineHeight": 1.85,
+      "weights": [
+        400,
+        500,
+        650,
+        720,
+        800
+      ]
+    },
+    "spacing": [
+      4,
+      8,
+      12,
+      16,
+      18,
+      24,
+      28,
+      32
+    ],
+    "radius": {
+      "input": 10,
+      "button": 11,
+      "card": 14,
+      "dialog": 19
+    },
+    "sizing": {
+      "touchMinPx": 44,
+      "inputMinPx": 48,
+      "headerMinMobilePx": 72,
+      "headerMinTabletPx": 76,
+      "mobileNavMinPx": 66,
+      "railTabletPx": 72,
+      "railDesktopPx": 208
+    },
+    "motion": {
+      "durationMs": [
+        120,
+        180,
+        240
+      ],
+      "reducedMotion": "Remove nonessential movement; preserve feedback."
+    },
+    "design_version": "7.0"
+  },
+  "layout": {
+    "version": "6.0",
+    "source": "New Makan visual reference; Light/Dark/Components are visual lineage, not backend requirements.",
+    "breakpoints": {
+      "mobileMax": 767,
+      "tabletMin": 768,
+      "desktopMin": 1200
+    },
+    "containerRules": {
+      "cardsTwoColumnsMinContentPx": 640,
+      "maxContentPx": 1184,
+      "sidebarTabletPx": 72,
+      "sidebarDesktopPx": 208,
+      "chatListTabletPx": 280,
+      "chatListDesktopPx": 312
+    },
+    "testWidths": [
+      320,
+      360,
+      390,
+      430,
+      768,
+      834,
+      1024,
+      1440,
+      1920
+    ],
+    "testHeights": {
+      "phone": 844,
+      "tabletPortrait": 1112,
+      "tabletLandscape": 768,
+      "desktop": 900,
+      "reducedKeyboardModel": 540
+    },
+    "contracts": [
+      "Exactly one viewport-height owner",
+      "Flex children min-height:0 and min-width:0",
+      "Search is one horizontal row with input inside wrapper",
+      "Filters own a separate row",
+      "Composer and action footer are in layout, not fixed overlays over content",
+      "Install entry stays reachable without covering composer",
+      "Preserve drafts and list position on resize and theme switch",
+      "Do not change account inbox or independent class list when school context changes"
+    ],
+    "geometricAcceptance": {
+      "rootHorizontalOverflowTolerancePx": 2,
+      "controlOverlapTolerancePx": 1.6,
+      "touchMinPx": 44,
+      "inputMinPx": 48
+    },
+    "claims": "These values specify the design. They do not certify app runtime, native keyboard or API implementation.",
+    "design_version": "7.0"
+  },
+  "scenes": [
+    {
+      "id": "AUT-01",
+      "title": "به ماکان خوش آمدید",
+      "domain": "auth",
+      "proposalOff": false,
+      "mobilePage": 46,
+      "responsivePage": 47,
+      "deep": false,
+      "kind": "content"
+    },
+    {
+      "id": "AUT-02",
+      "title": "شماره همراه",
+      "domain": "auth",
+      "proposalOff": false,
+      "mobilePage": 48,
+      "responsivePage": 49,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "AUT-03",
+      "title": "کد تأیید",
+      "domain": "auth",
+      "proposalOff": false,
+      "mobilePage": 50,
+      "responsivePage": 51,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "AUT-04",
+      "title": "تکمیل حساب",
+      "domain": "auth",
+      "proposalOff": false,
+      "mobilePage": 52,
+      "responsivePage": 53,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "AUT-05",
+      "title": "دعوت‌های من",
+      "domain": "auth",
+      "proposalOff": false,
+      "mobilePage": 54,
+      "responsivePage": 55,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "PRO-01",
+      "title": "پروفایل",
+      "domain": "profile",
+      "proposalOff": false,
+      "mobilePage": 56,
+      "responsivePage": 57,
+      "deep": false,
+      "kind": "content"
+    },
+    {
+      "id": "PRO-02",
+      "title": "ویرایش پروفایل",
+      "domain": "profile",
+      "proposalOff": false,
+      "mobilePage": 58,
+      "responsivePage": 59,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "PRO-03",
+      "title": "آموزشگاه و نقش",
+      "domain": "profile",
+      "proposalOff": false,
+      "mobilePage": 60,
+      "responsivePage": 61,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "PRO-04",
+      "title": "دسترسی‌های من",
+      "domain": "profile",
+      "proposalOff": false,
+      "mobilePage": 62,
+      "responsivePage": 63,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "PRO-05",
+      "title": "تنظیمات",
+      "domain": "profile",
+      "proposalOff": false,
+      "mobilePage": 64,
+      "responsivePage": 65,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "PRO-06",
+      "title": "ظاهر و خوانایی",
+      "domain": "profile",
+      "proposalOff": false,
+      "mobilePage": 66,
+      "responsivePage": 67,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "PRO-07",
+      "title": "اعلان‌ها",
+      "domain": "profile",
+      "proposalOff": false,
+      "mobilePage": 68,
+      "responsivePage": 69,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "PRO-08",
+      "title": "حریم خصوصی",
+      "domain": "profile",
+      "proposalOff": false,
+      "mobilePage": 70,
+      "responsivePage": 71,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "PRO-09",
+      "title": "دستگاه‌ها و امنیت",
+      "domain": "profile",
+      "proposalOff": false,
+      "mobilePage": 72,
+      "responsivePage": 73,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "PRO-10",
+      "title": "تغییر شماره همراه",
+      "domain": "profile",
+      "proposalOff": false,
+      "mobilePage": 74,
+      "responsivePage": 75,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "PRO-11",
+      "title": "حذف حساب",
+      "domain": "profile",
+      "proposalOff": false,
+      "mobilePage": 76,
+      "responsivePage": 77,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "PRO-12",
+      "title": "پشتیبانی",
+      "domain": "profile",
+      "proposalOff": false,
+      "mobilePage": 78,
+      "responsivePage": 79,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "ORG-01",
+      "title": "آموزشگاه",
+      "domain": "school",
+      "proposalOff": false,
+      "mobilePage": 80,
+      "responsivePage": 81,
+      "deep": false,
+      "kind": "content"
+    },
+    {
+      "id": "ORG-02",
+      "title": "فضای معلم",
+      "domain": "school",
+      "proposalOff": false,
+      "mobilePage": 82,
+      "responsivePage": 83,
+      "deep": false,
+      "kind": "content"
+    },
+    {
+      "id": "ORG-03",
+      "title": "همراهی فرزند",
+      "domain": "school",
+      "proposalOff": false,
+      "mobilePage": 84,
+      "responsivePage": 85,
+      "deep": false,
+      "kind": "content"
+    },
+    {
+      "id": "ORG-04",
+      "title": "مدیریت آموزشگاه",
+      "domain": "school",
+      "proposalOff": false,
+      "mobilePage": 86,
+      "responsivePage": 87,
+      "deep": false,
+      "kind": "content"
+    },
+    {
+      "id": "ORG-05",
+      "title": "کلاس‌های آموزشگاه",
+      "domain": "school",
+      "proposalOff": false,
+      "mobilePage": 88,
+      "responsivePage": 89,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "ORG-06",
+      "title": "ریاضی دهم",
+      "domain": "school",
+      "proposalOff": false,
+      "mobilePage": 90,
+      "responsivePage": 91,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "ORG-07",
+      "title": "جلسه ریاضی",
+      "domain": "school",
+      "proposalOff": false,
+      "mobilePage": 92,
+      "responsivePage": 93,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "ORG-08",
+      "title": "درس و منابع",
+      "domain": "school",
+      "proposalOff": false,
+      "mobilePage": 94,
+      "responsivePage": 95,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "ORG-09",
+      "title": "تکلیف‌های من",
+      "domain": "school",
+      "proposalOff": false,
+      "mobilePage": 96,
+      "responsivePage": 97,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "ORG-10",
+      "title": "پاسخ تکلیف",
+      "domain": "school",
+      "proposalOff": false,
+      "mobilePage": 98,
+      "responsivePage": 99,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "ORG-11",
+      "title": "طراحی تکلیف",
+      "domain": "school",
+      "proposalOff": false,
+      "mobilePage": 100,
+      "responsivePage": 101,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "ORG-12",
+      "title": "ارزیابی پاسخ",
+      "domain": "school",
+      "proposalOff": false,
+      "mobilePage": 102,
+      "responsivePage": 103,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "ORG-13",
+      "title": "آزمون آموزشگاه",
+      "domain": "school",
+      "proposalOff": false,
+      "mobilePage": 104,
+      "responsivePage": 105,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "ORG-14",
+      "title": "طراحی آزمون",
+      "domain": "school",
+      "proposalOff": false,
+      "mobilePage": 106,
+      "responsivePage": 107,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "ORG-15",
+      "title": "نتیجه و پیشرفت",
+      "domain": "school",
+      "proposalOff": false,
+      "mobilePage": 108,
+      "responsivePage": 109,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "ORG-16",
+      "title": "ساخت کلاس آموزشگاهی",
+      "domain": "school",
+      "proposalOff": false,
+      "mobilePage": 110,
+      "responsivePage": 111,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "ORG-17",
+      "title": "افراد آموزشگاه",
+      "domain": "school",
+      "proposalOff": false,
+      "mobilePage": 112,
+      "responsivePage": 113,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "ORG-18",
+      "title": "دعوت عضو آموزشگاه",
+      "domain": "school",
+      "proposalOff": false,
+      "mobilePage": 114,
+      "responsivePage": 115,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "ORG-19",
+      "title": "حضور جلسه",
+      "domain": "school",
+      "proposalOff": false,
+      "mobilePage": 116,
+      "responsivePage": 117,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "ORG-20",
+      "title": "تنظیمات آموزشگاه",
+      "domain": "school",
+      "proposalOff": false,
+      "mobilePage": 118,
+      "responsivePage": 119,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "ORG-21",
+      "title": "گزارش آموزشگاه",
+      "domain": "school",
+      "proposalOff": false,
+      "mobilePage": 120,
+      "responsivePage": 121,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "ORG-22",
+      "title": "رابط والد و فرزند",
+      "domain": "school",
+      "proposalOff": false,
+      "mobilePage": 122,
+      "responsivePage": 123,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "ORG-23",
+      "title": "ترم‌ها و درس‌ها",
+      "domain": "school",
+      "proposalOff": false,
+      "mobilePage": 124,
+      "responsivePage": 125,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "ORG-24",
+      "title": "فضاهای رسمی آموزشگاه",
+      "domain": "school",
+      "proposalOff": false,
+      "mobilePage": 126,
+      "responsivePage": 127,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "ORG-25",
+      "title": "آموزشگاه شما",
+      "domain": "school",
+      "proposalOff": false,
+      "mobilePage": 128,
+      "responsivePage": 129,
+      "deep": false,
+      "kind": "content"
+    },
+    {
+      "id": "ORG-26",
+      "title": "تغییر آموزشگاه انجام نشد",
+      "domain": "school",
+      "proposalOff": false,
+      "mobilePage": 130,
+      "responsivePage": 131,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "ORG-27",
+      "title": "برنامه هفتگی",
+      "domain": "school",
+      "proposalOff": false,
+      "mobilePage": 132,
+      "responsivePage": 133,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "ORG-28",
+      "title": "برنامه روز و جلسه",
+      "domain": "school",
+      "proposalOff": false,
+      "mobilePage": 134,
+      "responsivePage": 135,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "ORG-29",
+      "title": "انتخاب کلاس و درس",
+      "domain": "school",
+      "proposalOff": false,
+      "mobilePage": 136,
+      "responsivePage": 137,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "ORG-30",
+      "title": "خلاصه حضور من",
+      "domain": "school",
+      "proposalOff": false,
+      "mobilePage": 138,
+      "responsivePage": 139,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "ORG-31",
+      "title": "جزئیات حضور دوره",
+      "domain": "school",
+      "proposalOff": false,
+      "mobilePage": 140,
+      "responsivePage": 141,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "ORG-32",
+      "title": "اصلاح حضور ثبت‌شده",
+      "domain": "school",
+      "proposalOff": false,
+      "mobilePage": 142,
+      "responsivePage": 143,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "ORG-33",
+      "title": "نتایج ترم‌ها",
+      "domain": "school",
+      "proposalOff": false,
+      "mobilePage": 144,
+      "responsivePage": 145,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "ORG-34",
+      "title": "دفتر ثبت نمره",
+      "domain": "school",
+      "proposalOff": false,
+      "mobilePage": 146,
+      "responsivePage": 147,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "ORG-35",
+      "title": "بازبینی انتشار نتایج",
+      "domain": "school",
+      "proposalOff": false,
+      "mobilePage": 148,
+      "responsivePage": 149,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "ORG-36",
+      "title": "کارنامه منتشرشده",
+      "domain": "school",
+      "proposalOff": false,
+      "mobilePage": 150,
+      "responsivePage": 151,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "ORG-37",
+      "title": "اطلاعیه‌ها و رویدادهای آموزشگاه",
+      "domain": "school",
+      "proposalOff": false,
+      "mobilePage": 152,
+      "responsivePage": 153,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "ORG-38",
+      "title": "جزئیات اطلاعیه رسمی",
+      "domain": "school",
+      "proposalOff": false,
+      "mobilePage": 154,
+      "responsivePage": 155,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "ORG-39",
+      "title": "انتشار اطلاعیه آموزشی",
+      "domain": "school",
+      "proposalOff": false,
+      "mobilePage": 156,
+      "responsivePage": 157,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "ORG-40",
+      "title": "پرسش‌های آموزشی کلاس",
+      "domain": "school",
+      "proposalOff": true,
+      "mobilePage": 158,
+      "responsivePage": 159,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "ORG-41",
+      "title": "ثبت پرسش آموزشی",
+      "domain": "school",
+      "proposalOff": true,
+      "mobilePage": 160,
+      "responsivePage": 161,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "ORG-42",
+      "title": "پرسش و پاسخ مدرس",
+      "domain": "school",
+      "proposalOff": true,
+      "mobilePage": 162,
+      "responsivePage": 163,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "ORG-43",
+      "title": "شروع آزمون کوتاه آموزشگاه",
+      "domain": "school",
+      "proposalOff": false,
+      "mobilePage": 164,
+      "responsivePage": 165,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "ORG-44",
+      "title": "سؤال چندگزینه‌ای آزمون",
+      "domain": "school",
+      "proposalOff": false,
+      "mobilePage": 166,
+      "responsivePage": 167,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "ORG-45",
+      "title": "بازبینی و تحویل آزمون",
+      "domain": "school",
+      "proposalOff": false,
+      "mobilePage": 168,
+      "responsivePage": 169,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "ORG-46",
+      "title": "نتیجه آزمون و بازخورد",
+      "domain": "school",
+      "proposalOff": false,
+      "mobilePage": 170,
+      "responsivePage": 171,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "ORG-47",
+      "title": "پرونده آموزشی دانش‌آموز",
+      "domain": "school",
+      "proposalOff": false,
+      "mobilePage": 172,
+      "responsivePage": 173,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "ORG-48",
+      "title": "درخواست اصلاح پرونده آموزشی",
+      "domain": "school",
+      "proposalOff": true,
+      "mobilePage": 174,
+      "responsivePage": 175,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "ORG-49",
+      "title": "تعارض ویرایش نمره",
+      "domain": "school",
+      "proposalOff": false,
+      "mobilePage": 176,
+      "responsivePage": 177,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "ORG-50",
+      "title": "حضور ثبت‌نشده در قطع اتصال",
+      "domain": "school",
+      "proposalOff": false,
+      "mobilePage": 178,
+      "responsivePage": 179,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "ORG-51",
+      "title": "بازیابی تلاش آزمون",
+      "domain": "school",
+      "proposalOff": false,
+      "mobilePage": 180,
+      "responsivePage": 181,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "ORG-52",
+      "title": "نتیجه هنوز منتشر نشده",
+      "domain": "school",
+      "proposalOff": false,
+      "mobilePage": 182,
+      "responsivePage": 183,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "ORG-53",
+      "title": "پرونده خارج از دامنه دسترسی",
+      "domain": "school",
+      "proposalOff": false,
+      "mobilePage": 184,
+      "responsivePage": 185,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "EXC-01",
+      "title": "کلاس‌های فوق‌برنامه",
+      "domain": "extra",
+      "proposalOff": false,
+      "mobilePage": 186,
+      "responsivePage": 187,
+      "deep": false,
+      "kind": "content"
+    },
+    {
+      "id": "EXC-02",
+      "title": "کارگاه داستان‌نویسی",
+      "domain": "extra",
+      "proposalOff": false,
+      "mobilePage": 188,
+      "responsivePage": 189,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "EXC-03",
+      "title": "مدیریت کارگاه",
+      "domain": "extra",
+      "proposalOff": false,
+      "mobilePage": 190,
+      "responsivePage": 191,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "EXC-04",
+      "title": "نمای من در این کلاس",
+      "domain": "extra",
+      "proposalOff": false,
+      "mobilePage": 192,
+      "responsivePage": 193,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "EXC-05",
+      "title": "درخواست تشکیل کلاس",
+      "domain": "extra",
+      "proposalOff": false,
+      "mobilePage": 194,
+      "responsivePage": 195,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "EXC-06",
+      "title": "مدیریت و مدرس کلاس",
+      "domain": "extra",
+      "proposalOff": false,
+      "mobilePage": 196,
+      "responsivePage": 197,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "EXC-07",
+      "title": "بازبینی درخواست کلاس",
+      "domain": "extra",
+      "proposalOff": false,
+      "mobilePage": 198,
+      "responsivePage": 199,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "EXC-08",
+      "title": "پیگیری درخواست کلاس",
+      "domain": "extra",
+      "proposalOff": false,
+      "mobilePage": 200,
+      "responsivePage": 201,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "EXC-09",
+      "title": "آماده‌سازی کلاس",
+      "domain": "extra",
+      "proposalOff": false,
+      "mobilePage": 202,
+      "responsivePage": 203,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "EXC-10",
+      "title": "اعضای کلاس مستقل",
+      "domain": "extra",
+      "proposalOff": false,
+      "mobilePage": 204,
+      "responsivePage": 205,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "EXC-11",
+      "title": "دعوت به کلاس مستقل",
+      "domain": "extra",
+      "proposalOff": false,
+      "mobilePage": 206,
+      "responsivePage": 207,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "EXC-12",
+      "title": "بررسی درخواست پیوستن",
+      "domain": "extra",
+      "proposalOff": false,
+      "mobilePage": 208,
+      "responsivePage": 209,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "EXC-13",
+      "title": "انتقال مدیریت کلاس",
+      "domain": "extra",
+      "proposalOff": false,
+      "mobilePage": 210,
+      "responsivePage": 211,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "EXC-14",
+      "title": "بایگانی کلاس مستقل",
+      "domain": "extra",
+      "proposalOff": false,
+      "mobilePage": 212,
+      "responsivePage": 213,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "EXC-15",
+      "title": "کلاس بایگانی‌شده",
+      "domain": "extra",
+      "proposalOff": false,
+      "mobilePage": 214,
+      "responsivePage": 215,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "EXC-16",
+      "title": "جلسه‌ها و منابع کلاس مستقل",
+      "domain": "extra",
+      "proposalOff": true,
+      "mobilePage": 216,
+      "responsivePage": 217,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "EXC-17",
+      "title": "تکلیف کلاس مستقل",
+      "domain": "extra",
+      "proposalOff": true,
+      "mobilePage": 218,
+      "responsivePage": 219,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "EXC-18",
+      "title": "آزمون کلاس مستقل",
+      "domain": "extra",
+      "proposalOff": true,
+      "mobilePage": 220,
+      "responsivePage": 221,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "EXC-19",
+      "title": "اولین کلاس مستقل",
+      "domain": "extra",
+      "proposalOff": false,
+      "mobilePage": 222,
+      "responsivePage": 223,
+      "deep": false,
+      "kind": "content"
+    },
+    {
+      "id": "EXC-20",
+      "title": "مدیر و مدرس کلاس",
+      "domain": "extra",
+      "proposalOff": false,
+      "mobilePage": 224,
+      "responsivePage": 225,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "AST-01",
+      "title": "دستیار یادگیری",
+      "domain": "assistant",
+      "proposalOff": false,
+      "mobilePage": 226,
+      "responsivePage": 227,
+      "deep": false,
+      "kind": "content"
+    },
+    {
+      "id": "AST-02",
+      "title": "گفتگو با دستیار",
+      "domain": "assistant",
+      "proposalOff": false,
+      "mobilePage": 228,
+      "responsivePage": 229,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "AST-03",
+      "title": "زمینه و منابع دستیار",
+      "domain": "assistant",
+      "proposalOff": false,
+      "mobilePage": 230,
+      "responsivePage": 231,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "AST-04",
+      "title": "منابع من",
+      "domain": "assistant",
+      "proposalOff": false,
+      "mobilePage": 232,
+      "responsivePage": 233,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "AST-05",
+      "title": "سهمیه و وضعیت دستیار",
+      "domain": "assistant",
+      "proposalOff": false,
+      "mobilePage": 234,
+      "responsivePage": 235,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "AST-06",
+      "title": "دفترهای مطالعه",
+      "domain": "assistant",
+      "proposalOff": true,
+      "mobilePage": 236,
+      "responsivePage": 237,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "AST-07",
+      "title": "ساخت فضای مطالعه",
+      "domain": "assistant",
+      "proposalOff": true,
+      "mobilePage": 238,
+      "responsivePage": 239,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "AST-08",
+      "title": "نمای فضای مطالعه",
+      "domain": "assistant",
+      "proposalOff": true,
+      "mobilePage": 240,
+      "responsivePage": 241,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "AST-09",
+      "title": "انتخاب نوع منبع",
+      "domain": "assistant",
+      "proposalOff": false,
+      "mobilePage": 242,
+      "responsivePage": 243,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "AST-10",
+      "title": "افزودن فایل به منابع",
+      "domain": "assistant",
+      "proposalOff": false,
+      "mobilePage": 244,
+      "responsivePage": 245,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "AST-11",
+      "title": "افزودن متن مجاز",
+      "domain": "assistant",
+      "proposalOff": false,
+      "mobilePage": 246,
+      "responsivePage": 247,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "AST-12",
+      "title": "پیشنهاد افزودن نشانی وب",
+      "domain": "assistant",
+      "proposalOff": true,
+      "mobilePage": 248,
+      "responsivePage": 249,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "AST-13",
+      "title": "منابع بیرونیِ متصل",
+      "domain": "assistant",
+      "proposalOff": true,
+      "mobilePage": 250,
+      "responsivePage": 251,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "AST-14",
+      "title": "صف پردازش منبع",
+      "domain": "assistant",
+      "proposalOff": false,
+      "mobilePage": 252,
+      "responsivePage": 253,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "AST-15",
+      "title": "منبع آماده و مورد ناموفق",
+      "domain": "assistant",
+      "proposalOff": false,
+      "mobilePage": 254,
+      "responsivePage": 255,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "AST-16",
+      "title": "انتخاب منابع همین گفتگو",
+      "domain": "assistant",
+      "proposalOff": false,
+      "mobilePage": 256,
+      "responsivePage": 257,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "AST-17",
+      "title": "نمای منبع و محل شاهد",
+      "domain": "assistant",
+      "proposalOff": false,
+      "mobilePage": 258,
+      "responsivePage": 259,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "AST-18",
+      "title": "شاهد پاسخ در پنجره منبع",
+      "domain": "assistant",
+      "proposalOff": false,
+      "mobilePage": 260,
+      "responsivePage": 261,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "AST-19",
+      "title": "پاسخ متکی به منابع",
+      "domain": "assistant",
+      "proposalOff": false,
+      "mobilePage": 262,
+      "responsivePage": 263,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "AST-20",
+      "title": "شاهد کافی در منابع نیست",
+      "domain": "assistant",
+      "proposalOff": false,
+      "mobilePage": 264,
+      "responsivePage": 265,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "AST-21",
+      "title": "دسترسی یا نسخه منبع تغییر کرده",
+      "domain": "assistant",
+      "proposalOff": false,
+      "mobilePage": 266,
+      "responsivePage": 267,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "AST-22",
+      "title": "خلاصه مرورِ متکی به منبع",
+      "domain": "assistant",
+      "proposalOff": true,
+      "mobilePage": 268,
+      "responsivePage": 269,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "AST-23",
+      "title": "یادداشت‌های مطالعه",
+      "domain": "assistant",
+      "proposalOff": true,
+      "mobilePage": 270,
+      "responsivePage": 271,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "AST-24",
+      "title": "خروجی‌های یادگیری",
+      "domain": "assistant",
+      "proposalOff": true,
+      "mobilePage": 272,
+      "responsivePage": 273,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "AST-25",
+      "title": "طرح تنظیم مرور صوتی",
+      "domain": "assistant",
+      "proposalOff": true,
+      "mobilePage": 274,
+      "responsivePage": 275,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "AST-26",
+      "title": "طرح پردازش مرور صوتی",
+      "domain": "assistant",
+      "proposalOff": true,
+      "mobilePage": 276,
+      "responsivePage": 277,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "AST-27",
+      "title": "طرح پخش مرور صوتی",
+      "domain": "assistant",
+      "proposalOff": true,
+      "mobilePage": 278,
+      "responsivePage": 279,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "AST-28",
+      "title": "طرح متن و اشتراک خروجی",
+      "domain": "assistant",
+      "proposalOff": true,
+      "mobilePage": 280,
+      "responsivePage": 281,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "AST-29",
+      "title": "سهمیه و پیش‌بررسی درخواست",
+      "domain": "assistant",
+      "proposalOff": false,
+      "mobilePage": 282,
+      "responsivePage": 283,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "AST-30",
+      "title": "خطا یا قطع ارتباط دستیار",
+      "domain": "assistant",
+      "proposalOff": false,
+      "mobilePage": 284,
+      "responsivePage": 285,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "AST-31",
+      "title": "تنظیمات فضای مطالعه",
+      "domain": "assistant",
+      "proposalOff": true,
+      "mobilePage": 286,
+      "responsivePage": 287,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "AST-32",
+      "title": "نوع یا اندازه منبع پشتیبانی نمی‌شود",
+      "domain": "assistant",
+      "proposalOff": false,
+      "mobilePage": 288,
+      "responsivePage": 289,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "AST-33",
+      "title": "اولین منبع و فضای مطالعه",
+      "domain": "assistant",
+      "proposalOff": false,
+      "mobilePage": 290,
+      "responsivePage": 291,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "AST-34",
+      "title": "برنامه مطالعه پیشنهادی دستیار",
+      "domain": "assistant",
+      "proposalOff": false,
+      "mobilePage": 292,
+      "responsivePage": 293,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "AST-35",
+      "title": "خلاصه آموزشی برای والد",
+      "domain": "assistant",
+      "proposalOff": false,
+      "mobilePage": 294,
+      "responsivePage": 295,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "AST-36",
+      "title": "خلاصه کلاس برای معلم",
+      "domain": "assistant",
+      "proposalOff": false,
+      "mobilePage": 296,
+      "responsivePage": 297,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "AST-37",
+      "title": "خلاصه آموزشگاه برای مدیر",
+      "domain": "assistant",
+      "proposalOff": false,
+      "mobilePage": 298,
+      "responsivePage": 299,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "AST-38",
+      "title": "توقف پاسخ و ادامه مجاز",
+      "domain": "assistant",
+      "proposalOff": false,
+      "mobilePage": 300,
+      "responsivePage": 301,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "AST-39",
+      "title": "حریم منابع دستیار",
+      "domain": "assistant",
+      "proposalOff": false,
+      "mobilePage": 302,
+      "responsivePage": 303,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "AST-40",
+      "title": "جستجو در فضای مطالعه",
+      "domain": "assistant",
+      "proposalOff": true,
+      "mobilePage": 304,
+      "responsivePage": 305,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "MSG-01",
+      "title": "پیام‌ها",
+      "domain": "messages",
+      "proposalOff": false,
+      "mobilePage": 306,
+      "responsivePage": 307,
+      "deep": false,
+      "kind": "inbox"
+    },
+    {
+      "id": "MSG-02",
+      "title": "جستجوی عمومی",
+      "domain": "messages",
+      "proposalOff": false,
+      "mobilePage": 308,
+      "responsivePage": 309,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "MSG-03",
+      "title": "شروع گفتگو",
+      "domain": "messages",
+      "proposalOff": false,
+      "mobilePage": 310,
+      "responsivePage": 311,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "MSG-04",
+      "title": "مریم رضایی",
+      "domain": "messages",
+      "proposalOff": false,
+      "mobilePage": 312,
+      "responsivePage": 313,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "MSG-05",
+      "title": "درخواست پیام",
+      "domain": "messages",
+      "proposalOff": false,
+      "mobilePage": 314,
+      "responsivePage": 315,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "MSG-06",
+      "title": "مسدود و گزارش",
+      "domain": "messages",
+      "proposalOff": false,
+      "mobilePage": 316,
+      "responsivePage": 317,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "MSG-07",
+      "title": "گزینه‌های پیام",
+      "domain": "messages",
+      "proposalOff": false,
+      "mobilePage": 318,
+      "responsivePage": 319,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "MSG-08",
+      "title": "پاسخ به پیام",
+      "domain": "messages",
+      "proposalOff": false,
+      "mobilePage": 320,
+      "responsivePage": 321,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "MSG-09",
+      "title": "ارسال پیوست",
+      "domain": "messages",
+      "proposalOff": false,
+      "mobilePage": 322,
+      "responsivePage": 323,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "MSG-10",
+      "title": "پیوست ارسال‌نشده",
+      "domain": "messages",
+      "proposalOff": false,
+      "mobilePage": 324,
+      "responsivePage": 325,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "MSG-11",
+      "title": "پیام صوتی",
+      "domain": "messages",
+      "proposalOff": false,
+      "mobilePage": 326,
+      "responsivePage": 327,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "MSG-12",
+      "title": "رسانه‌ها و فایل‌های گفتگو",
+      "domain": "messages",
+      "proposalOff": false,
+      "mobilePage": 328,
+      "responsivePage": 329,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "MSG-13",
+      "title": "اطلاعات پیام",
+      "domain": "messages",
+      "proposalOff": false,
+      "mobilePage": 330,
+      "responsivePage": 331,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "MSG-14",
+      "title": "اطلاعات گفتگو",
+      "domain": "messages",
+      "proposalOff": false,
+      "mobilePage": 332,
+      "responsivePage": 333,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "MSG-15",
+      "title": "گروه ریاضی دهم",
+      "domain": "messages",
+      "proposalOff": false,
+      "mobilePage": 334,
+      "responsivePage": 335,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "MSG-16",
+      "title": "کانال ریاضی دهم",
+      "domain": "messages",
+      "proposalOff": false,
+      "mobilePage": 336,
+      "responsivePage": 337,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "MSG-17",
+      "title": "هویت فضای رسمی",
+      "domain": "messages",
+      "proposalOff": false,
+      "mobilePage": 338,
+      "responsivePage": 339,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "MSG-18",
+      "title": "دسترسی گفتگو پایان یافت",
+      "domain": "messages",
+      "proposalOff": false,
+      "mobilePage": 340,
+      "responsivePage": 341,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "MSG-19",
+      "title": "ورود به فضای رسمی",
+      "domain": "messages",
+      "proposalOff": false,
+      "mobilePage": 342,
+      "responsivePage": 343,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "MSG-20",
+      "title": "ساخت گروه شخصی",
+      "domain": "messages",
+      "proposalOff": false,
+      "mobilePage": 344,
+      "responsivePage": 345,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "MSG-21",
+      "title": "انتخاب اعضای گروه",
+      "domain": "messages",
+      "proposalOff": false,
+      "mobilePage": 346,
+      "responsivePage": 347,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "MSG-22",
+      "title": "مدیریت گروه شخصی",
+      "domain": "messages",
+      "proposalOff": false,
+      "mobilePage": 348,
+      "responsivePage": 349,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "MSG-23",
+      "title": "ذخیره‌شده‌ها",
+      "domain": "messages",
+      "proposalOff": false,
+      "mobilePage": 350,
+      "responsivePage": 351,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "MSG-24",
+      "title": "پوشه‌ها و بایگانی",
+      "domain": "messages",
+      "proposalOff": false,
+      "mobilePage": 352,
+      "responsivePage": 353,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "MSG-25",
+      "title": "نظرسنجی و پیام زمان‌دار",
+      "domain": "messages",
+      "proposalOff": false,
+      "mobilePage": 354,
+      "responsivePage": 355,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "MSG-26",
+      "title": "گروه آموزشگاه آفتاب",
+      "domain": "messages",
+      "proposalOff": false,
+      "mobilePage": 356,
+      "responsivePage": 357,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "MSG-27",
+      "title": "کانال آموزشگاه آفتاب",
+      "domain": "messages",
+      "proposalOff": false,
+      "mobilePage": 358,
+      "responsivePage": 359,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "MSG-28",
+      "title": "گروه کارگاه داستان‌نویسی",
+      "domain": "messages",
+      "proposalOff": false,
+      "mobilePage": 360,
+      "responsivePage": 361,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "MSG-29",
+      "title": "کانال کارگاه داستان‌نویسی",
+      "domain": "messages",
+      "proposalOff": false,
+      "mobilePage": 362,
+      "responsivePage": 363,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "MSG-30",
+      "title": "هویت رسمی آموزشگاه",
+      "domain": "messages",
+      "proposalOff": false,
+      "mobilePage": 364,
+      "responsivePage": 365,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "MSG-31",
+      "title": "هویت رسمی کلاس مستقل",
+      "domain": "messages",
+      "proposalOff": false,
+      "mobilePage": 366,
+      "responsivePage": 367,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "CON-01",
+      "title": "مخاطبین",
+      "domain": "messages",
+      "proposalOff": false,
+      "mobilePage": 368,
+      "responsivePage": 369,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "CON-02",
+      "title": "افزودن مخاطب",
+      "domain": "messages",
+      "proposalOff": false,
+      "mobilePage": 370,
+      "responsivePage": 371,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "CON-03",
+      "title": "همگام‌سازی مخاطبین",
+      "domain": "messages",
+      "proposalOff": false,
+      "mobilePage": 372,
+      "responsivePage": 373,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "CON-04",
+      "title": "اجازه دسترسی گوشی",
+      "domain": "messages",
+      "proposalOff": false,
+      "mobilePage": 374,
+      "responsivePage": 375,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "CON-05",
+      "title": "بازبینی مخاطبین انتخاب‌شده",
+      "domain": "messages",
+      "proposalOff": false,
+      "mobilePage": 376,
+      "responsivePage": 377,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "CON-06",
+      "title": "وضعیت همگام‌سازی",
+      "domain": "messages",
+      "proposalOff": false,
+      "mobilePage": 378,
+      "responsivePage": 379,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "CON-07",
+      "title": "دسترسی مخاطبین غیرفعال است",
+      "domain": "messages",
+      "proposalOff": false,
+      "mobilePage": 380,
+      "responsivePage": 381,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "CON-08",
+      "title": "مریم رضایی",
+      "domain": "messages",
+      "proposalOff": false,
+      "mobilePage": 382,
+      "responsivePage": 383,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "CON-09",
+      "title": "ویرایش مخاطب",
+      "domain": "messages",
+      "proposalOff": false,
+      "mobilePage": 384,
+      "responsivePage": 385,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "CON-10",
+      "title": "حذف مخاطب",
+      "domain": "messages",
+      "proposalOff": false,
+      "mobilePage": 386,
+      "responsivePage": 387,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "CON-11",
+      "title": "تعارض نام مخاطب",
+      "domain": "messages",
+      "proposalOff": false,
+      "mobilePage": 388,
+      "responsivePage": 389,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "CON-12",
+      "title": "مخاطبین در وب",
+      "domain": "messages",
+      "proposalOff": false,
+      "mobilePage": 390,
+      "responsivePage": 391,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "CON-13",
+      "title": "موارد نیازمند بررسی",
+      "domain": "messages",
+      "proposalOff": false,
+      "mobilePage": 392,
+      "responsivePage": 393,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "CON-14",
+      "title": "دعوت مخاطب به ماکان",
+      "domain": "messages",
+      "proposalOff": false,
+      "mobilePage": 394,
+      "responsivePage": 395,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "FIN-01",
+      "title": "پلن و خدمات من",
+      "domain": "profile",
+      "proposalOff": false,
+      "mobilePage": 396,
+      "responsivePage": 397,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "FIN-02",
+      "title": "پلن‌های ماکان",
+      "domain": "profile",
+      "proposalOff": false,
+      "mobilePage": 398,
+      "responsivePage": 399,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "FIN-03",
+      "title": "انتخاب استفاده‌کننده پلن",
+      "domain": "profile",
+      "proposalOff": false,
+      "mobilePage": 400,
+      "responsivePage": 401,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "FIN-04",
+      "title": "بازبینی خرید",
+      "domain": "profile",
+      "proposalOff": false,
+      "mobilePage": 402,
+      "responsivePage": 403,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "FIN-05",
+      "title": "پیگیری پرداخت",
+      "domain": "profile",
+      "proposalOff": false,
+      "mobilePage": 404,
+      "responsivePage": 405,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "FIN-06",
+      "title": "رسید و ارائه خدمت",
+      "domain": "profile",
+      "proposalOff": false,
+      "mobilePage": 406,
+      "responsivePage": 407,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "FIN-07",
+      "title": "پرداخت‌های من",
+      "domain": "profile",
+      "proposalOff": false,
+      "mobilePage": 408,
+      "responsivePage": 409,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "FIN-08",
+      "title": "بازیابی خرید",
+      "domain": "profile",
+      "proposalOff": false,
+      "mobilePage": 410,
+      "responsivePage": 411,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "FIN-09",
+      "title": "درخواست آموزشگاه",
+      "domain": "profile",
+      "proposalOff": false,
+      "mobilePage": 412,
+      "responsivePage": 413,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "FIN-10",
+      "title": "آموزشگاه حقوقی یا شرکتی",
+      "domain": "profile",
+      "proposalOff": false,
+      "mobilePage": 414,
+      "responsivePage": 415,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "FIN-11",
+      "title": "درخواست مدرس حقیقی",
+      "domain": "profile",
+      "proposalOff": false,
+      "mobilePage": 416,
+      "responsivePage": 417,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "FIN-12",
+      "title": "مدارک درخواست آموزشگاه",
+      "domain": "profile",
+      "proposalOff": false,
+      "mobilePage": 418,
+      "responsivePage": 419,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "FIN-13",
+      "title": "پیگیری درخواست آموزشگاه",
+      "domain": "profile",
+      "proposalOff": false,
+      "mobilePage": 420,
+      "responsivePage": 421,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "FIN-14",
+      "title": "ظرفیت و پیش‌فاکتور آموزشگاه",
+      "domain": "profile",
+      "proposalOff": false,
+      "mobilePage": 422,
+      "responsivePage": 423,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "FIN-15",
+      "title": "راه‌اندازی آموزشگاه",
+      "domain": "profile",
+      "proposalOff": false,
+      "mobilePage": 424,
+      "responsivePage": 425,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "ADM-01",
+      "title": "داشبورد مدیریت ماکان",
+      "domain": "admin",
+      "proposalOff": false,
+      "mobilePage": 426,
+      "responsivePage": 427,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "ADM-02",
+      "title": "صف درخواست‌ها",
+      "domain": "admin",
+      "proposalOff": false,
+      "mobilePage": 428,
+      "responsivePage": 429,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "ADM-03",
+      "title": "بررسی آموزشگاه",
+      "domain": "admin",
+      "proposalOff": false,
+      "mobilePage": 430,
+      "responsivePage": 431,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "ADM-04",
+      "title": "بررسی درخواست کلاس مستقل",
+      "domain": "admin",
+      "proposalOff": false,
+      "mobilePage": 432,
+      "responsivePage": 433,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "ADM-05",
+      "title": "سلامت فضاهای رسمی",
+      "domain": "admin",
+      "proposalOff": false,
+      "mobilePage": 434,
+      "responsivePage": 435,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "ADM-06",
+      "title": "تنظیم ارائه‌دهنده پرداخت",
+      "domain": "admin",
+      "proposalOff": false,
+      "mobilePage": 436,
+      "responsivePage": 437,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "ADM-07",
+      "title": "محصول و نسخه پلن",
+      "domain": "admin",
+      "proposalOff": false,
+      "mobilePage": 438,
+      "responsivePage": 439,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "ADM-08",
+      "title": "پرداخت و ارائه خدمت",
+      "domain": "admin",
+      "proposalOff": false,
+      "mobilePage": 440,
+      "responsivePage": 441,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "ADM-09",
+      "title": "رسیدگی گزارش تخلف",
+      "domain": "admin",
+      "proposalOff": false,
+      "mobilePage": 442,
+      "responsivePage": 443,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "ADM-10",
+      "title": "حسابرسی",
+      "domain": "admin",
+      "proposalOff": false,
+      "mobilePage": 444,
+      "responsivePage": 445,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "ADM-11",
+      "title": "کارکنان و اختیارات پلتفرم",
+      "domain": "admin",
+      "proposalOff": false,
+      "mobilePage": 446,
+      "responsivePage": 447,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "ADM-12",
+      "title": "پرونده عملیاتی آموزشگاه",
+      "domain": "admin",
+      "proposalOff": false,
+      "mobilePage": 448,
+      "responsivePage": 449,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "ADM-13",
+      "title": "کتابخانه مرکزی",
+      "domain": "admin",
+      "proposalOff": false,
+      "mobilePage": 450,
+      "responsivePage": 451,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "ADM-14",
+      "title": "تیکت‌های پشتیبانی",
+      "domain": "admin",
+      "proposalOff": false,
+      "mobilePage": 452,
+      "responsivePage": 453,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "STA-01",
+      "title": "ارتباط قطع است",
+      "domain": "profile",
+      "proposalOff": false,
+      "mobilePage": 454,
+      "responsivePage": 455,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "STA-02",
+      "title": "نشست پایان یافته است",
+      "domain": "auth",
+      "proposalOff": false,
+      "mobilePage": 456,
+      "responsivePage": 457,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "STA-03",
+      "title": "این بخش در دسترس نیست",
+      "domain": "school",
+      "proposalOff": false,
+      "mobilePage": 458,
+      "responsivePage": 459,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "STA-04",
+      "title": "بارگذاری و تلاش دوباره",
+      "domain": "messages",
+      "proposalOff": false,
+      "mobilePage": 460,
+      "responsivePage": 461,
+      "deep": true,
+      "kind": "content"
+    },
+    {
+      "id": "STA-05",
+      "title": "فرم در موبایل باریک",
+      "domain": "extra",
+      "proposalOff": false,
+      "mobilePage": 462,
+      "responsivePage": 463,
+      "deep": true,
+      "kind": "content"
+    }
+  ],
+  "clientScope": "testapp/web only; platform-owner and landing are separate applications",
+  "legacyReference": "V5 and V6 inventories remain historical. V7 supersedes appearance; it does not grant API permissions or enable proposals."
+}

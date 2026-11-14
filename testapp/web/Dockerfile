@@ -11,7 +11,8 @@ WORKDIR /app
 ENV NEXT_TELEMETRY_DISABLED=1 \
     CYPRESS_INSTALL_BINARY=0
 COPY package.json package-lock.json ./
-RUN npm ci --no-audit --no-fund
+RUN --mount=type=cache,id=makan-node-npm,target=/root/.npm,sharing=locked \
+    npm ci --prefer-offline --no-audit --no-fund
 
 FROM dependencies AS build
 ENV NEXT_STANDALONE=true \

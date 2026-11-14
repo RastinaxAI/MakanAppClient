@@ -65,7 +65,10 @@ test('conversation creation tools show the returned participant role and keep th
     await expect(page.getByRole('banner').locator('.grow > p')).toHaveText(
       v5Product.conversationMemberRoles.Admin,
     );
-    await expect(page.locator('.rx-context-panel h3')).toHaveText('باشگاه کتاب‌خوانی');
+    await expect(page.locator('.rx-context-panel')).toHaveCount(0);
+    await expect(
+      page.getByRole('banner').getByRole('link', { name: 'بازگشت', exact: true }),
+    ).toHaveAttribute('href', base);
     await captureExactState(
       page,
       [scenario],

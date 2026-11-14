@@ -4,9 +4,8 @@
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  padding: 16px;
-  border: 1px solid var(--line);
-  border-radius: 16px;
+  padding: 13px 12px;
+  border-bottom: 1px solid var(--line);
   background: var(--surface);
   color: var(--text);
   text-decoration: none;
@@ -24,17 +23,17 @@
   min-width: 0;
   overflow-wrap: anywhere;
 }
-.copy strong,
+.copy h2,
 .copy small {
   display: block;
 }
-.copy strong {
-  font-size: calc(16px * var(--text-scale, 1));
-  line-height: 1.65;
+.copy h2 {
+  font-size: calc(14px * var(--text-scale, 1));
+  line-height: 1.75;
 }
 .copy small {
-  font-size: calc(13px * var(--text-scale, 1));
-  line-height: 1.8;
+  font-size: calc(12px * var(--text-scale, 1));
+  line-height: 1.85;
   color: var(--muted);
 }
 .timeline {
@@ -57,8 +56,19 @@
   overflow-wrap: anywhere;
   font-size: calc(11px * var(--text-scale, 1));
 }
-@media (min-width: 768px) {
-  .child {
-    padding: 18px;
-  }
+.privacy {
+  display: flex;
+  gap: 10px;
+  color: var(--muted);
+  font-size: calc(15px * var(--text-scale, 1));
+  line-height: 1.95;
+}
+.privacy svg {
+  flex: none;
+  margin-top: 5px;
+  color: var(--action);
+}
+.privacy + .privacy {
+  margin-top: 12px;
+  font-size: calc(12px * var(--text-scale, 1));
 }

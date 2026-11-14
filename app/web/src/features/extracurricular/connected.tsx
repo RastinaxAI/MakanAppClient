@@ -19,7 +19,7 @@ import { Button, buttonClass } from '@/components/ui/button';
 import { ApiError } from '@/lib/api/errors';
 import { resolvePersonInput } from '@/features/personal/messaging/directory';
 import { draftPrefix } from '@/lib/draft-storage';
-import { useViewState } from '@/components/hooks/use-view-state';
+import { useClassViewState } from './frame';
 import { Field, Pager } from '@/features/personal/school/shared';
 import { ConnectionNotice } from '@/components/ui/connection-notice';
 
@@ -35,6 +35,8 @@ import { V5Scene } from '@/components/v5/scene';
 import { V4Field, V4Note } from '@/components/v4/page';
 import wizard from './formation-wizard.module.css';
 import appearance from './connected.module.css';
+import { ViewTabs } from '@/components/ui/tabs';
+import { useSearchParams } from 'next/navigation';
 import { ClassPreviewSpaces } from './class-preview-spaces';
 
 const base = '/personal/extracurricular';
@@ -70,6 +72,18 @@ function useClassDraft() {
   return { draft, setDraft, loaded, storageIssue };
 }
 export function ExtracurricularHome() {
+  const params = useSearchParams();
+  const tab =
+    params.get('tab') === 'requests'
+      ? 'requests'
+      : params.get('tab') === 'invitations'
+        ? 'invitations'
+        : 'classes';
+  function changeTab(value: 'classes' | 'requests' | 'invitations') {
+    const next = new URLSearchParams(params);
+    next.set('tab', value);
+    window.history.replaceState(null, '', base + '?' + next);
+  }
   const [page, setPage] = useState(1);
   const query = usePersonalApi<components['schemas']['PersonalClassPageOfPersonalClassDto']>(
     `/api/v1/personal-classes/page?page=${page}&pageSize=30`,
@@ -81,12 +95,12 @@ export function ExtracurricularHome() {
     { session } = usePersonal();
   const memory =
     draftPrefix + 'view:' + session.user.id + ':' + session.revision + ':extracurricular:';
-  const [search, setSearch] = useViewState(
+  const [search, setSearch] = useClassViewState(
       memory + 'search',
       '',
       (v): v is string => typeof v === 'string' && v.length <= 200,
     ),
-    [filter, setFilter] = useViewState(
+    [filter, setFilter] = useClassViewState(
       memory + 'filter',
       uiText.text_15270886eadd,
       (v): v is string =>
@@ -115,15 +129,7 @@ export function ExtracurricularHome() {
         <ErrorState error={query.error} onRetry={() => void query.refetch()} />
       ) : (
         <>
-          {!query.data?.items.length ? (
-            <nav className={appearance.tabs} aria-label={uiText.navigation_extracurricular}>
-              <Link className={appearance.activeFilter} href={base} aria-current="page">
-                {uiText.text_7c61d113156b}
-              </Link>
-              <Link href={`${base}/requests`}>{uiText.v5Product.extraTabRequests}</Link>
-              <Link href={`${base}/invitations`}>{uiText.v5Product.extraTabInvites}</Link>
-            </nav>
-          ) : (
+          {!!query.data?.items.length && (
             <div className={appearance.searchZone}>
               <SearchField
                 aria-label={uiText.text_74c3aeacf724}
@@ -217,7 +223,7 @@ export function ExtracurricularHome() {
             </section>
           ) : (
             <div className={uiClass('list')}>
-              <Link className={uiClass('row')} href={`${base}/requests`}>
+              <Link className={uiClass('row')} href={`${base}?tab=requests`}>
                 <span className={uiClass('tile-icon')}>
                   <ClipboardList />
                 </span>
@@ -229,7 +235,7 @@ export function ExtracurricularHome() {
                   <span className={uiClass('badge warn')}>{uiText.text_410c47c7f8b7}</span>
                 )}
               </Link>
-              <Link className={uiClass('row')} href={`${base}/invitations`}>
+              <Link className={uiClass('row')} href={`${base}?tab=invitations`}>
                 <span className={uiClass('tile-icon')}>
                   <Mail />
                 </span>
@@ -282,7 +288,7 @@ export function ExtracurricularHome() {
       subtitle={uiText.text_d034f3bcfe7f}
       back="/personal/education"
       mobileFooter={
-        query.data ? (
+        tab === 'classes' && query.data ? (
           <Link className={uiClass(buttonClass('btn'))} href={`${base}/requests/new?step=details`}>
             <Plus size={19} />
             {uiText.text_2d5123fde88c}
@@ -290,7 +296,32 @@ export function ExtracurricularHome() {
         ) : undefined
       }
     >
-      {body}
+      <ViewTabs
+        value={tab}
+        onChange={changeTab}
+        prefix="extra"
+        label={uiText.navigation_extracurricular}
+        className={appearance.tabs}
+        items={[
+          { value: 'classes', label: uiText.text_7c61d113156b },
+          { value: 'requests', label: uiText.v5Product.extraTabRequests },
+          { value: 'invitations', label: uiText.v5Product.extraTabInvites },
+        ]}
+      />
+      <section
+        role="tabpanel"
+        id={`extra-panel-${tab}`}
+        aria-labelledby={`extra-tab-${tab}`}
+        className={appearance.body}
+      >
+        {tab === 'requests' ? (
+          <FormationList embedded />
+        ) : tab === 'invitations' ? (
+          <ClassInvitationList embedded />
+        ) : (
+          body
+        )}
+      </section>
     </StaticConnectedFrame>
   );
 }
@@ -301,7 +332,7 @@ export function ClassRequestWizard({ step = 'details' }: { step?: string }) {
   const submission = useClassCommand('formation-submit');
   const { call, session } = usePersonal();
   const receiptKey = draftPrefix + 'formation-receipt:' + session.user.id;
-  const [createdId, setCreatedId, receiptReady] = useViewState<string | null>(
+  const [createdId, setCreatedId, receiptReady] = useClassViewState<string | null>(
     receiptKey,
     null,
     (value): value is string | null =>
@@ -400,6 +431,7 @@ export function ClassRequestWizard({ step = 'details' }: { step?: string }) {
     <>
       <V5Scene
         id={review ? 'MK-16' : management ? 'MK-15' : 'MK-13'}
+        headerTools={<></>}
         desktopActionPlacement="footer"
         title={review ? copy.requestReview : v9.classRequest}
         subtitle={copy.requestActiveAccounts}

@@ -127,7 +127,7 @@ def main():
             for service in ("app", "testapp", "management", "testmanagement"):
                 host = service + ".makanapp.org"
                 source = ROOT / (service + "/web" if service in ("app", "testapp") else service)
-                assets = ["/fonts/makan-reference/Vazirmatn.ttf", "/brand/makan-logo-v2.webp"] if service in ("app", "testapp") else ["/guides/makan-owner-guide.pdf"]
+                assets = ["/fonts/makan-reference/Vazirmatn.woff2", "/brand/makan-logo-v2.webp"] if service in ("app", "testapp") else ["/guides/makan-owner-guide.pdf"]
                 for asset in assets:
                     body = directory / "asset"
                     code = run(curl + ["--resolve", f"{host}:{https_port}:127.0.0.1", "--cacert", str(certificate), "-o", str(body), "-w", "%{http_code}", f"https://{host}:{https_port}{asset}"], capture_output=True, text=True).stdout

@@ -4,31 +4,32 @@ import { Textarea as NativeTextarea } from '@/components/ui/input';
 import { uiClass } from '@/components/v5/classes';
 
 import * as uiText from '@/content/fa';
-import { PageBack } from '@/components/navigation/page-back';
+import { useViewState } from '@/components/hooks/use-view-state';
+import { PageBack, ContextBackLink } from '@/components/navigation/page-back';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { ErrorState, LoadingSkeleton } from '@/components/ui/states';
 import type { components } from '@/generated/api/schema';
 import { ApiError } from '@/lib/api/errors';
+import type { ApiRequestInit } from '@/lib/api/client';
 import { contextSignature } from '@/lib/client-surface';
 import { date, number } from '@/lib/formatting';
-import { useInfiniteQuery, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
-  ArrowUpLeft,
-  Building2,
-  Check,
-  CheckCheck,
-  Clock,
-  Send,
-  PanelRight,
-  X,
-} from 'lucide-react';
+  useInfiniteQuery,
+  useQuery,
+  useQueryClient,
+  type InfiniteData,
+} from '@tanstack/react-query';
+import { ArrowUpLeft, Building2, Check, CheckCheck, Clock, PanelRight } from 'lucide-react';
+import { Pin, Mic, Send, ChevronRight, X } from './messenger-icons';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
+import { safeAuthReturnPath } from '@/lib/auth-return';
 import { Fragment, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ProfileAvatar } from '../profile-photo';
 import { usePersonal, usePersonalApi } from '../provider';
 import { useMessagingLive } from './live';
-import { AttachmentPicker, AttachmentSummary, MessageAttachment } from './media';
+import { AttachmentPicker, AttachmentSummary, MessageAttachment, EmojiPicker } from './media';
 import { attachmentMessageKind, attachmentMetadata, type FileAsset } from './media-model';
 import s from './messenger.module.css';
 import {
@@ -43,15 +44,20 @@ import { personalMessageQueue, type QueuedMessage } from './outbox';
 import { findConversationSummary, isManagedConversation } from './summary';
 import { OfficialBadge, useOfficialConversationAccess } from './official';
 import { AcademicActivity } from './academic-activity';
-import { ConversationActions } from './conversation-actions';
-import { MessageBubble, MessageBody } from './message-bubble';
+import { ConversationActions, ScheduledSendButton } from './conversation-actions';
+import { MessageBubble, MessageBody, MessageText } from './message-bubble';
 import { canForwardMessage } from './message-action-policy';
 import { visibleLocalMessages, type AcknowledgedMessage } from './message-reconciliation';
 import { currentInitialTargets } from './invitation-model';
 import { conversationNeedsWorkspace } from './workspace-model';
 import { ConversationWorkspaceNotice } from './workspace-notice';
 import { RichMessage } from './rich-messages';
-import { useSceneHeader } from '@/components/v5/form-actions';
+import { mutateMessage, type MessageMutation } from './message-mutations';
+import { ConversationAvatar } from './conversation-photo';
+import { useMentions } from './mentions';
+import { PresenceIndicator } from './conversation-controls';
+import { AddConversationMember } from './management';
+import { conversationCapability } from './management-policy';
 type Summary = components['schemas']['ConversationSummaryResult'];
 type Message = components['schemas']['ConversationMessageResult'];
 
@@ -76,9 +82,9 @@ export function ConversationRoom({
   onUnavailable: (id: string) => void;
   onAvailable: (id: string) => void;
 }) {
-  const { session, call } = usePersonal();
+  const { session, call, changing } = usePersonal();
   const lookup = useQuery({
-    queryKey: ['personal', session.user.id, session.revision, 'conversation-summary', id],
+    queryKey: ['personal', session.user.id, 'account', 'conversation-summary', id],
     queryFn: ({ signal }) =>
       findConversationSummary(id, (path) => call<Summary>(path, { signal }), signal),
     enabled: !summary,
@@ -87,6 +93,7 @@ export function ConversationRoom({
   const resolved = summary ?? lookup.data;
   if (resolved && conversationNeedsWorkspace(resolved, session.context))
     return <ConversationWorkspaceNotice id={id} summary={resolved} />;
+  if (changing && resolved?.scope === 'Organization') return <LoadingSkeleton />;
   if (!resolved && lookup.error instanceof ApiError && lookup.error.status === 404)
     return (
       <ConversationWorkspaceNotice
@@ -126,9 +133,20 @@ function ResolvedConversationRoom({
   onUnavailable: (id: string) => void;
   onAvailable: (id: string) => void;
 }) {
-  const { session, call } = usePersonal(),
+  const { session, call: read, changing } = usePersonal(),
     cache = useQueryClient();
+  const requestScope = summary.scope === 'Personal' ? 'account' : 'context';
+  const cacheScope = requestScope === 'account' ? 'account' : session.revision;
+  function call<T>(path: string, init: ApiRequestInit = {}) {
+    return read<T>(path, { ...init, scope: requestScope });
+  }
   const managed = isManagedConversation(summary.type);
+  const params = useSearchParams();
+  const requestedSequence = Number(params.get('sequence'));
+  const focusSequence =
+    Number.isSafeInteger(requestedSequence) && requestedSequence > 0 ? requestedSequence : null;
+  const focusId = params.get('message');
+  const back = safeAuthReturnPath(params.get('from')) ?? '/personal/messages?list=1';
   const measureRegion = useCallback(
     (property: string) => (node: HTMLDivElement | HTMLElement | null) => {
       if (!node) return;
@@ -143,11 +161,12 @@ function ResolvedConversationRoom({
     [],
   );
   const headerRegion = useMemo(() => measureRegion('--chat-header-height'), [measureRegion]);
+  const infoLink = useRef<HTMLAnchorElement>(null);
   const composerRegion = useMemo(() => measureRegion('--chat-composer-height'), [measureRegion]);
   const officialAccess = useOfficialConversationAccess(summary);
   const metadata = usePersonalApi<components['schemas']['ManagedConversationResult']>(
     '/api/v1/conversations/' + id,
-    { enabled: managed, poll: 5000 },
+    { enabled: managed, poll: 5000, scope: requestScope },
   );
   const membership = metadata.data?.participants.find(
     (member) => member.user.userId === session.user.id,
@@ -161,14 +180,14 @@ function ResolvedConversationRoom({
       [403, 404].includes(officialAccess.error.status));
   const ready = (!managed || metadata.isSuccess) && officialAccess.ready;
   const conversation = managed ? metadata.data : summary;
-  const enabled = ready && !forbidden;
+  const enabled = ready && !forbidden && (requestScope === 'account' || !changing);
   const { subscribe } = useMessagingLive();
   useEffect(() => {
     if (enabled) return subscribe(id);
   }, [enabled, id, subscribe]);
   const history = useInfiniteQuery({
-    queryKey: ['personal', session.user.id, session.revision, 'messages', id],
-    initialPageParam: null as number | null,
+    queryKey: ['personal', session.user.id, cacheScope, 'messages', id, focusSequence],
+    initialPageParam: focusSequence ? focusSequence + 1 : (null as number | null),
     queryFn: ({ pageParam, signal }) =>
       call<components['schemas']['ConversationMessagePageResult']>(
         '/api/v1/conversations/' +
@@ -187,7 +206,7 @@ function ResolvedConversationRoom({
   });
   const reads = usePersonalApi<components['schemas']['ConversationPeerReadStateResult']>(
     '/api/v1/conversations/' + id + '/read-states',
-    { enabled: enabled && summary.type === 'Direct', poll: 5000 },
+    { enabled: enabled && summary.type === 'Direct', poll: 5000, scope: requestScope },
   );
   const messages = useMemo(() => {
     const records = new Map<string, Message>();
@@ -195,8 +214,16 @@ function ResolvedConversationRoom({
       for (const message of page.messages) records.set(message.messageId, message);
     return [...records.values()].sort((a, b) => a.sequence - b.sequence);
   }, [history.data]);
-  const [draft, setDraft] = useState(''),
-    [reply, setReply] = useState<Message | null>(null),
+  const [editing, setEditing] = useState<{ message: Message; text: string } | null>(null);
+  const [mutationBusy, setMutationBusy] = useState(false);
+  const mutationLock = useRef(false);
+  const scopeKey = summary.scope === 'Personal' ? 'Personal' : contextSignature(session.context);
+  const [draft, setDraft, draftReady] = useViewState(
+    session.user.id + ':' + scopeKey + ':conversation-draft:' + id,
+    '',
+    (value): value is string => typeof value === 'string',
+  );
+  const [reply, setReply] = useState<Message | null>(null),
     [pending, setPending] = useState<QueuedMessage[]>([]),
     [sending, setSending] = useState<string | null>(null),
     [error, setError] = useState<unknown>(),
@@ -212,18 +239,69 @@ function ResolvedConversationRoom({
     lastReadAttempt = useRef(0),
     currentRef = useRef(true),
     operationInFlight = useRef(false);
+  const unreadBoundary = useRef(
+    summary.unreadCount > 0 ? summary.lastReadMessageSequence + 1 : null,
+  );
+  const inputText = editing ? editing.text : draft;
+  async function applyMutation(message: Message, action: MessageMutation, text?: string) {
+    const patch = await mutateMessage(call, message, action, text);
+    const key = ['personal', session.user.id, cacheScope, 'messages', id, focusSequence];
+    await cache.cancelQueries({ queryKey: key });
+    cache.setQueryData<InfiniteData<components['schemas']['ConversationMessagePageResult']>>(
+      key,
+      (old) =>
+        old
+          ? {
+              ...old,
+              pages: old.pages.map((page) => ({
+                ...page,
+                messages: page.messages.map((row) =>
+                  row.messageId === message.messageId &&
+                  (action === 'pin' || action === 'unpin' || row.version === message.version)
+                    ? { ...row, ...patch }
+                    : row,
+                ),
+              })),
+            }
+          : old,
+    );
+    void cache.invalidateQueries({ queryKey: ['personal', session.user.id, cacheScope] });
+  }
+  async function submitComposer() {
+    if (!editing) {
+      await send();
+      return;
+    }
+    if (
+      mutationLock.current ||
+      !writable ||
+      (!editing.text.trim() && !editing.message.attachments.length)
+    )
+      return;
+    mutationLock.current = true;
+    setMutationBusy(true);
+    setError(undefined);
+    try {
+      await applyMutation(editing.message, 'edit', editing.text);
+      if (currentRef.current) setEditing(null);
+    } catch (cause) {
+      if (currentRef.current) setError(cause);
+      if (cause instanceof ApiError && [403, 409, 412].includes(cause.status)) void refresh();
+    } finally {
+      mutationLock.current = false;
+      if (currentRef.current) setMutationBusy(false);
+    }
+  }
   const currentReply = reply
     ? messages.find((message) => message.messageId === reply.messageId)
     : null;
   useEffect(() => {
     const node = composer.current;
     if (node) {
-      node.style.height = '42px';
-      node.style.height = Math.min(120, node.scrollHeight) + 'px';
+      node.style.height = '0px';
+      node.style.height = Math.min(160, node.scrollHeight) + 'px';
     }
-  }, [draft]);
-  const scopeKey =
-    conversation?.scope === 'Personal' ? 'Personal' : contextSignature(session.context);
+  }, [inputText]);
   const owner = { userId: session.user.id, conversationId: id, scopeKey };
   const localMessages = useMemo(
     () => visibleLocalMessages(messages, acknowledged, pending, session.user.id, id),
@@ -241,6 +319,17 @@ function ResolvedConversationRoom({
       : managed
         ? !!metadata.data && canWriteConversation(metadata.data, session.user.id)
         : history.isSuccess && !history.isError);
+  const canManageMessages =
+    summary.effectiveCapabilities?.canManageMessages === true ||
+    metadata.data?.effectiveCapabilities?.canManageMessages === true;
+  const canPin =
+    writable &&
+    (!managed ||
+      canManageMessages ||
+      metadata.data?.memberCapabilities
+        ?.split(',')
+        .map((value) => value.trim())
+        .includes('PinMessages'));
   const needsRestriction = managed;
   const restriction = usePersonalApi<components['schemas']['MemberRestrictionResult']>(
     '/api/v1/conversations/' + id + '/me/restriction',
@@ -258,6 +347,16 @@ function ResolvedConversationRoom({
         restriction.data.conversationId === id &&
         restriction.data.userId === session.user.id &&
         !mediaRestricted(restriction.data)));
+  const mentions = useMentions({
+    id,
+    scope: requestScope,
+    scopeKey,
+    enabled: writable && conversation?.type === 'Group' && !editing,
+    draft,
+    setDraft,
+    composer,
+    knownMembers: metadata.data?.participants ?? [],
+  });
   const messageDenied =
     history.error instanceof ApiError && [403, 404].includes(history.error.status);
   useEffect(() => {
@@ -314,6 +413,22 @@ function ResolvedConversationRoom({
       initial.current = false;
     }
   }, [messages.length, pending.length, acknowledged.length]);
+  useEffect(() => {
+    if (!focusId || !messages.some((message) => message.messageId === focusId)) return;
+    const node = [
+      ...(scroller.current?.querySelectorAll<HTMLElement>('[data-message-id]') ?? []),
+    ].find((node) => node.dataset.messageId === focusId);
+    if (node) {
+      node.scrollIntoView({ block: 'center' });
+      initial.current = false;
+      nearBottom.current = false;
+    }
+  }, [focusId, messages]);
+  useEffect(() => {
+    if (params.get('focus') !== 'info' || !ready) return;
+    const frame = requestAnimationFrame(() => infoLink.current?.focus());
+    return () => cancelAnimationFrame(frame);
+  }, [params, ready]);
   async function refresh() {
     await Promise.all([
       ...(officialAccess.declared ? [officialAccess.refetch()] : []),
@@ -391,6 +506,8 @@ function ResolvedConversationRoom({
   async function send(assets: FileAsset[] = [], caption?: string): Promise<boolean> {
     const text = (caption ?? draft).trim();
     if (
+      !draftReady ||
+      !mentions.ready ||
       (!text && !assets.length) ||
       operationInFlight.current ||
       !writable ||
@@ -410,6 +527,7 @@ function ResolvedConversationRoom({
         text: text || null,
         attachmentIds: assets.length ? assets.map((asset) => asset.id) : null,
         replyToMessageId: reply?.messageId ?? null,
+        ...(mentions.ids(text).length ? { mentionedUserIds: mentions.ids(text) } : {}),
       },
       createdAt: new Date().toISOString(),
       state: 'sending',
@@ -422,6 +540,7 @@ function ResolvedConversationRoom({
         return false;
       }
       setDraft('');
+      mentions.clear();
       setReply(null);
       await loadPending();
       await transmit(message, true);
@@ -436,24 +555,10 @@ function ResolvedConversationRoom({
   const name = summary
     ? conversationTitle(summary)
     : metadata.data?.title || uiText.text_99c891fdab48;
-  const workspaceHeading = useMemo(
-    () => ({
-      title: name,
-      subtitle:
-        summary.scope === 'Personal'
-          ? uiText.text_d034f3bcfe7f
-          : summary.organization?.organizationName || uiText.text_7298890ac877,
-      tools: <ConversationActions id={id} managed={managed} writable={writable} />,
-    }),
-    [name, summary.scope, summary.organization?.organizationName, id, managed, writable],
-  );
-  const embeddedHeader = useSceneHeader(workspaceHeading, ready && !forbidden && !messageDenied);
-  const localAuthor = managed
-    ? {
-        displayName: session.user.displayName || session.user.firstName || uiText.text_578786ff448b,
-        profilePhoto: session.user.profilePhoto,
-      }
-    : undefined;
+  const localAuthor = {
+    displayName: session.user.displayName || session.user.firstName || uiText.text_578786ff448b,
+    profilePhoto: session.user.profilePhoto,
+  };
   const peerRead =
     reads.data?.conversationId === id && reads.data.visibility === 'Visible'
       ? reads.data.peerReadThroughSequence
@@ -500,19 +605,50 @@ function ResolvedConversationRoom({
         data-conversation-type={conversation.type}
         aria-label={uiText.text_6a022c87a2bf + name}
       >
-        {!embeddedHeader && (
-          <header ref={headerRegion} className={uiClass(s.roomHeader)} data-chat-header>
+        {
+          <header
+            ref={headerRegion}
+            className={uiClass(s.roomHeader)}
+            role="banner"
+            data-chat-header
+          >
+            <Button asChild size="icon" variant="ghost">
+              <ContextBackLink href={back} aria-label={uiText.common_back}>
+                <ChevronRight size={20} />
+              </ContextBackLink>
+            </Button>
             <Link
+              ref={infoLink}
               className={uiClass(s.identity)}
+              data-chat-identity
+              title={name}
               href={`/personal/messages/${id}/info`}
               aria-label={uiText.text_3a3510c0ba99}
             >
-              <ProfileAvatar name={name} className={uiClass(s.avatar)} />
+              {managed ? (
+                <ConversationAvatar
+                  id={id}
+                  name={name}
+                  photo={summary.photo}
+                  className={s.avatar}
+                />
+              ) : (
+                <span className={s.avatarSlot}>
+                  <ProfileAvatar
+                    name={name}
+                    photo={summary.otherParticipant?.profilePhoto}
+                    className={s.avatar}
+                  />
+                </span>
+              )}
               <div className={uiClass(s.identityText)}>
                 <span className={uiClass(s.roomCrumb)}>
                   {uiText.v5Product.conversations} / {uiText.text_f6aa82db3906}
                 </span>
-                <h2 dir="auto">{name}</h2>
+                <h1 dir="auto">{name}</h1>
+                {conversation.type === 'Direct' && summary.otherParticipant && (
+                  <PresenceIndicator userId={summary.otherParticipant.userId} variant="label" />
+                )}
                 <OfficialBadge summary={summary} />
                 <span className={uiClass(s.identitySubtitle)}>
                   {conversation.type === 'Direct'
@@ -526,11 +662,19 @@ function ResolvedConversationRoom({
               </div>
             </Link>
             <ConversationActions
-              id={id}
+              summary={summary}
               managed={isManagedConversation(conversation.type)}
-              writable={writable}
             />
           </header>
+        }
+        {messages.some((message) => message.isPinned && !message.isDeleted) && (
+          <Link className={s.pinnedMessage} href={`/personal/messages/${id}/media?library=pins`}>
+            <Pin size={14} />
+            <span>
+              {messages.find((message) => message.isPinned && !message.isDeleted)?.text ||
+                uiText.messengerPdf.pins}
+            </span>
+          </Link>
         )}
         <CreationReceipt
           participants={metadata.data?.participants ?? []}
@@ -540,7 +684,7 @@ function ResolvedConversationRoom({
               : (cache.getQueryData([
                   'personal',
                   session.user.id,
-                  session.revision,
+                  cacheScope,
                   'creation-receipt',
                   id,
                 ]) ?? [])
@@ -552,6 +696,11 @@ function ResolvedConversationRoom({
             ? uiText.text_25d5b2def6af
             : (summary?.organization?.organizationName ?? uiText.text_7298890ac877)}
         </div>
+        {focusSequence && (
+          <Link className={s.pinnedMessage} href={'/personal/messages/' + id}>
+            {uiText.messengerPdf.latestMessages}
+          </Link>
+        )}
         <div
           className={uiClass(s.history)}
           ref={scroller}
@@ -591,21 +740,40 @@ function ResolvedConversationRoom({
                     className={uiClass(s.startConversation)}
                     aria-label={uiText.text_4ca85a23d967}
                   >
-                    <ProfileAvatar
-                      name={name}
-                      photo={
-                        conversation.type === 'Direct'
-                          ? summary.otherParticipant?.profilePhoto
-                          : undefined
-                      }
-                      className={uiClass(s.avatar)}
-                    />
+                    {managed ? (
+                      <ConversationAvatar
+                        id={id}
+                        name={name}
+                        photo={summary.photo}
+                        className={s.avatar}
+                      />
+                    ) : (
+                      <ProfileAvatar
+                        name={name}
+                        photo={
+                          conversation.type === 'Direct'
+                            ? summary.otherParticipant?.profilePhoto
+                            : undefined
+                        }
+                        className={uiClass(s.avatar)}
+                      />
+                    )}
                     <h2>{name}</h2>
                     <p>
                       {conversation.type === 'Saved'
                         ? uiText.text_f8b315b8d51e
                         : uiText.text_95aa33dd2c6c}
                     </p>
+                    {metadata.data && conversationCapability(metadata.data, 'canManageMembers') && (
+                      <AddConversationMember value={metadata.data} />
+                    )}
+                    {metadata.data && conversationCapability(metadata.data, 'canManageInvites') && (
+                      <Button asChild variant="outline">
+                        <Link href={`/personal/messages/${id}/invites`}>
+                          {uiText.v5Product.inviteLinksTitle}
+                        </Link>
+                      </Button>
+                    )}
                     <Button asChild variant="ghost">
                       <Link href={`/personal/messages/${id}/info`}>{uiText.text_ea3d101400ed}</Link>
                     </Button>
@@ -623,17 +791,67 @@ function ResolvedConversationRoom({
                           : date(message.sentAtUtc)}
                       </p>
                     )}
+                    {unreadBoundary.current !== null &&
+                      message.sequence >= unreadBoundary.current &&
+                      (index === 0 || messages[index - 1].sequence < unreadBoundary.current) && (
+                        <p className={s.unreadDivider}>{uiText.messengerPdf.newMessages}</p>
+                      )}
                     <MessageBubble
                       message={message}
                       canForward={canForwardMessage(message, conversation, writable)}
                       own={own}
                       sender={
-                        isManagedConversation(conversation.type) || !own
-                          ? message.sender
-                          : undefined
+                        message.originKind === 'System' && !message.academicActivity
+                          ? undefined
+                          : message.sender
+                      }
+                      meta={
+                        <div className={uiClass(s.messageMeta)}>
+                          <time title={date(message.sentAtUtc, true)}>
+                            {shortTime(message.sentAtUtc)}
+                            {message.isEdited ? uiText.text_d1260a2bc5bc : ''}
+                          </time>
+                          {own &&
+                            (peerRead !== null &&
+                            peerRead !== undefined &&
+                            peerRead >= message.sequence ? (
+                              <CheckCheck
+                                className={uiClass(s.readTick)}
+                                size={16}
+                                aria-label={uiText.text_bb4316d764c2}
+                              />
+                            ) : (
+                              <Check size={15} aria-label={uiText.text_d2bf2d21c42a} />
+                            ))}
+                        </div>
                       }
                       sequence={message.sequence}
                       text={message.isDeleted ? null : message.text}
+                      onEdit={
+                        message.originKind !== 'System' && own && writable
+                          ? () => {
+                              setEditing({ message, text: message.text ?? '' });
+                              setReply(null);
+                              requestAnimationFrame(() => composer.current?.focus());
+                            }
+                          : undefined
+                      }
+                      onDelete={
+                        (own || canManageMessages) && writable
+                          ? async () => {
+                              await applyMutation(message, 'delete');
+                              return true;
+                            }
+                          : undefined
+                      }
+                      onTogglePin={
+                        canPin
+                          ? async () => {
+                              await applyMutation(message, message.isPinned ? 'unpin' : 'pin');
+                            }
+                          : undefined
+                      }
+                      onRestoreFocus={() => composer.current?.focus()}
                       onReply={
                         !message.isDeleted && writable
                           ? () => {
@@ -659,18 +877,21 @@ function ResolvedConversationRoom({
                         />
                       ) : (
                         (message.isDeleted || message.text || !message.attachments.length) && (
-                          <p dir="auto">
-                            {message.isDeleted
-                              ? uiText.text_105c4ade8a0f
-                              : (message.text ??
-                                (message.attachments.length
-                                  ? uiText.text_03049af97fa6
-                                  : message.kind === 'Poll'
-                                    ? uiText.text_dc81ca4bc376
-                                    : message.kind === 'Checklist'
-                                      ? uiText.text_b769871263a6
-                                      : uiText.text_a5fc55f1f6ee))}
-                          </p>
+                          <MessageText
+                            mentions={message.isDeleted ? [] : message.mentions}
+                            text={
+                              message.isDeleted
+                                ? uiText.text_105c4ade8a0f
+                                : (message.text ??
+                                  (message.attachments.length
+                                    ? uiText.text_03049af97fa6
+                                    : message.kind === 'Poll'
+                                      ? uiText.text_dc81ca4bc376
+                                      : message.kind === 'Checklist'
+                                        ? uiText.text_b769871263a6
+                                        : uiText.text_a5fc55f1f6ee))
+                            }
+                          />
                         )
                       )}
                       {!message.isDeleted && message.attachments.length > 0 && (
@@ -694,24 +915,6 @@ function ResolvedConversationRoom({
                           ))}
                         </div>
                       )}
-                      <div className={uiClass(s.messageMeta)}>
-                        <time title={date(message.sentAtUtc, true)}>
-                          {shortTime(message.sentAtUtc)}
-                          {message.isEdited ? uiText.text_d1260a2bc5bc : ''}
-                        </time>
-                        {own &&
-                          (peerRead !== null &&
-                          peerRead !== undefined &&
-                          peerRead >= message.sequence ? (
-                            <CheckCheck
-                              className={uiClass(s.readTick)}
-                              size={16}
-                              aria-label={uiText.text_bb4316d764c2}
-                            />
-                          ) : (
-                            <Check size={15} aria-label={uiText.text_d2bf2d21c42a} />
-                          ))}
-                      </div>
                     </MessageBubble>
                   </Fragment>
                 );
@@ -826,6 +1029,28 @@ function ResolvedConversationRoom({
               {uiText.text_0ac3a64e7697}
             </button>
           )}
+          {editing && (
+            <div className={s.reply}>
+              <span>
+                <strong>{uiText.messengerPdf.editMessage}</strong>
+                <small>{editing.message.text}</small>
+              </span>
+              <Button
+                type="button"
+                size="icon"
+                variant="ghost"
+                disabled={!draftReady || mutationBusy}
+                aria-label={uiText.messengerPdf.cancelEdit}
+                onClick={() => {
+                  setEditing(null);
+                  setError(undefined);
+                  composer.current?.focus();
+                }}
+              >
+                <X size={16} />
+              </Button>
+            </div>
+          )}
           {reply && (
             <div className={uiClass(s.reply)}>
               <ArrowUpLeft size={18} />
@@ -859,43 +1084,92 @@ function ResolvedConversationRoom({
               data-ui="composer"
               onSubmit={(event) => {
                 event.preventDefault();
-                void send();
+                void submitComposer();
               }}
             >
               <AttachmentPicker
                 conversationId={id}
-                disabled={!canMedia || !!sending}
+                toolsEnabled={draftReady && writable && !sending && !editing}
+                disabled={!draftReady || !canMedia || !!sending || !!editing}
                 caption={draft}
                 onSend={send}
-              />
-              <div className={uiClass(s.composeInput)}>
-                <NativeTextarea
-                  ref={composer}
-                  aria-label={uiText.text_8b2fcc6817d9}
-                  placeholder={uiText.text_5be55bdb4435}
-                  rows={1}
-                  value={draft}
-                  onChange={(event) => setDraft(event.target.value)}
-                  onKeyDown={(event) => {
-                    if (
-                      event.key === 'Enter' &&
-                      !event.shiftKey &&
-                      !event.nativeEvent.isComposing
-                    ) {
-                      event.preventDefault();
-                      void send();
-                    }
-                  }}
-                />
-              </div>
-              <button
-                type="submit"
-                className={uiClass(s.send)}
-                disabled={!!sending || !draft.trim()}
-                aria-label={uiText.text_51dd685556b8}
               >
-                <Send size={21} />
-              </button>
+                {(record) => (
+                  <>
+                    <div className={uiClass(s.composeInput)}>
+                      {mentions.panel}
+                      <NativeTextarea
+                        {...mentions.inputProps}
+                        ref={composer}
+                        aria-label={uiText.text_8b2fcc6817d9}
+                        placeholder={uiText.text_5be55bdb4435}
+                        rows={1}
+                        value={inputText}
+                        disabled={!draftReady || mutationBusy}
+                        onChange={(event) =>
+                          editing
+                            ? setEditing({ ...editing, text: event.target.value })
+                            : mentions.change(event.target.value, event.target.selectionStart)
+                        }
+                        onKeyDown={(event) => {
+                          if (mentions.keyDown(event)) return;
+                          if (
+                            event.key === 'Enter' &&
+                            !event.shiftKey &&
+                            !event.nativeEvent.isComposing
+                          ) {
+                            event.preventDefault();
+                            void submitComposer();
+                          }
+                        }}
+                      />
+                      <EmojiPicker
+                        disabled={!draftReady || !!sending}
+                        restoreFocus={() => composer.current?.focus()}
+                        onSelect={(value) => {
+                          const start = composer.current?.selectionStart ?? inputText.length;
+                          const end = composer.current?.selectionEnd ?? start;
+                          const next = inputText.slice(0, start) + value + inputText.slice(end);
+                          if (editing) setEditing({ ...editing, text: next });
+                          else mentions.change(next, start + value.length);
+                          requestAnimationFrame(() =>
+                            composer.current?.setSelectionRange(
+                              start + value.length,
+                              start + value.length,
+                            ),
+                          );
+                        }}
+                      />
+                    </div>
+                    {!editing && (
+                      <Button
+                        type="button"
+                        size="icon"
+                        variant="ghost"
+                        disabled={!canMedia || !!sending}
+                        aria-label={uiText.v6Ui.voiceRecord}
+                        onClick={record}
+                      >
+                        <Mic size={21} />
+                      </Button>
+                    )}
+                    <ScheduledSendButton
+                      id={id}
+                      text={inputText}
+                      scheduleDisabled={!!editing}
+                      className={uiClass(s.send)}
+                      disabled={
+                        !draftReady ||
+                        !!sending ||
+                        mutationBusy ||
+                        (!inputText.trim() && !editing?.message.attachments.length)
+                      }
+                    >
+                      <Send size={20} />
+                    </ScheduledSendButton>
+                  </>
+                )}
+              </AttachmentPicker>
             </form>
           ) : (
             <p className={uiClass(s.readOnly)}>{uiText.text_afacfaf1253c}</p>

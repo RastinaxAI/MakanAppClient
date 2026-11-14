@@ -65,7 +65,7 @@ test('expanded workflow and account pages preserve RTL, visible controls and res
   }
   await page.goto('/personal/settings/appearance');
   await page.getByRole('radio', { name: 'تاریک', exact: true }).check();
-  await page.getByRole('button', { name: 'ذخیره ظاهر', exact: true }).click();
+  await page.getByRole('banner').getByRole('link', { name: 'بازگشت', exact: true }).click();
   await page.goto('/personal/settings/notifications/Messages');
   await page.setViewportSize({ width: 390, height: 844 });
   await expect(page.getByLabel('اعلان دستگاه', { exact: true })).toBeVisible();

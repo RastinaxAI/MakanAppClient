@@ -99,7 +99,10 @@ export function ConversationPhotoEditor({ value }: { value: S['ManagedConversati
     );
     setFile(undefined);
     setAsset(undefined);
-    await cache.invalidateQueries({ queryKey: ['personal', session.user.id, session.revision] });
+    await Promise.all([
+      cache.invalidateQueries({ queryKey: ['personal', session.user.id, session.revision] }),
+      cache.invalidateQueries({ queryKey: ['personal', session.user.id, 'account'] }),
+    ]);
     await cache.invalidateQueries({
       queryKey: ['conversation-photo', session.user.id, session.revision, value.conversationId],
     });

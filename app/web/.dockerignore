@@ -23,6 +23,7 @@ scripts/**
 !scripts/docker-start.mjs
 !scripts/build-public-brand.mjs
 
-# Used by local PDF diagnostic tools; the product uses the variable face.
+# TTF originals serve local authoring tools; the product loads the WOFF2 variable face.
+public/fonts/makan-reference/Vazirmatn.ttf
 public/fonts/makan-reference/Vazirmatn-Regular.ttf
 public/fonts/makan-reference/Vazirmatn-Bold.ttf

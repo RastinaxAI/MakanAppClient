@@ -44,7 +44,7 @@ test('phone and OTP enforce exact lengths, normalize Persian digits and reject o
   await expect(otp).toBeVisible();
   await expect(otp).toHaveAttribute('maxlength', '6');
   await otp.fill('12345');
-  await expect(page.getByRole('button', { name: 'تأیید و ورود', exact: true })).toBeDisabled();
+  await expect(page.getByRole('button', { name: 'تأیید و ادامه', exact: true })).toBeDisabled();
   await expect(otp).toHaveAttribute('aria-invalid', 'false');
   await otp.fill('');
   await otp.evaluate((node) => {
@@ -74,13 +74,13 @@ test('an invalid server OTP preserves the challenge and input until a valid expl
   await page.getByRole('button', { name: 'دریافت کد تأیید', exact: true }).click();
   const otp = page.getByRole('textbox', { name: 'کد ورود', exact: true });
   await otp.fill('000000');
-  await page.getByRole('button', { name: 'تأیید و ورود', exact: true }).click();
+  await page.getByRole('button', { name: 'تأیید و ادامه', exact: true }).click();
   await expect(page.getByRole('main').getByRole('alert')).toBeVisible();
   await expect(otp).toHaveValue('000000');
   await expect(page).toHaveURL(/\/enter$/);
   await captureExactState(page, ['MK-333']);
   await otp.fill('123456');
-  await page.getByRole('button', { name: 'تأیید و ورود', exact: true }).click();
+  await page.getByRole('button', { name: 'تأیید و ادامه', exact: true }).click();
   await expect(page).toHaveURL(/\/personal\/workspaces/);
 });
 
@@ -115,14 +115,15 @@ test('all invitation entry points converge on one inbox', async ({ page, context
   await expect(page.getByRole('link', { name: 'دعوت‌ها در آموزشگاه', exact: true })).toHaveCount(0);
   await page.goto('/personal/settings');
   await page.goto('/personal/education');
-  await page.getByRole('button', { name: 'بخش‌های آموزشگاه', exact: true }).click();
-  const invitationLink = page.getByRole('link', { name: 'دعوت‌ها', exact: true });
+  const invitationLink = page
+    .getByRole('navigation', { name: 'دسترسی سریع', exact: true })
+    .getByRole('link', { name: 'دعوت‌ها', exact: true });
   await expect(invitationLink).toHaveAttribute('href', '/personal/education/invitations');
   await invitationLink.click();
   await expect(page.getByRole('region', { name: 'دعوت‌های دریافتی', exact: true })).toHaveCount(1);
 });
 
-test('V5 entry action fills mobile and tablet but stays compact and centered on desktop', async ({
+test('V6 entry action fills mobile and stays compact at the reading edge on larger screens', async ({
   page,
 }) => {
   await page.goto('/enter');
@@ -131,14 +132,14 @@ test('V5 entry action fills mobile and tablet but stays compact and centered on 
     const action = page.getByRole('button', { name: 'دریافت کد تأیید', exact: true });
     await expect(action).toBeInViewport();
     const box = (await action.boundingBox())!;
-    expect(box.y + box.height).toBeLessThanOrEqual(888);
-    if (width < 1200) {
-      const inset = width < 768 ? 18 : 22;
+    expect(box.y + box.height).toBeLessThanOrEqual(width < 768 ? 890 : 888);
+    if (width < 768) {
+      const inset = 16;
       expect(box.x).toBe(inset);
       expect(box.width).toBe(width - inset * 2);
     } else {
       expect(box.width).toBeLessThan(220);
-      expect(Math.abs(box.x + box.width / 2 - width / 2)).toBeLessThan(1);
+      expect(Math.abs(box.x + box.width - (width - 24))).toBeLessThan(1);
     }
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(
       true,

@@ -17,6 +17,9 @@ __pycache__/
 output/review/
 output/delivery/
 .venv-guide/
+cypress/screenshots/
+cypress/videos/
+cypress/downloads/
 
 # Ad-hoc visual checks are temporary; canonical evidence stays in docs/quality.
 *.log

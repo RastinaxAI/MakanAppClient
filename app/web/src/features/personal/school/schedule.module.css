@@ -4,6 +4,49 @@
   flex-wrap: wrap;
   gap: 8px;
 }
+.standalone {
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+.viewControls {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+  padding-top: 18px;
+}
+.viewTabs {
+  display: flex;
+  min-width: 0;
+  background: var(--surface);
+  border-bottom: 1px solid var(--line);
+}
+.viewTabs button {
+  min-height: 46px;
+  min-width: 64px;
+  padding: 8px 14px;
+  border: 0;
+  border-bottom: 3px solid transparent;
+  background: transparent;
+  color: var(--muted);
+  font: inherit;
+  font-size: calc(12px * var(--text-scale, 1));
+}
+.viewTabs [aria-pressed='true'] {
+  color: var(--primary);
+  border-bottom-color: var(--primary);
+  font-weight: 700;
+}
+.dayChoice {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  min-width: 0;
+  max-width: 100%;
+  flex: 1 1 240px;
+  font-size: calc(13px * var(--text-scale, 1));
+}
 .cancelledCheck {
   display: flex;
   flex-direction: row;

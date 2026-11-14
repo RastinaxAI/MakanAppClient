@@ -1,3 +1,4 @@
+import { messagingReturnPath } from '@/features/personal/messaging/inbox-model';
 import { describe, expect, it } from 'vitest';
 import type { components } from '@/generated/api/schema';
 import {
@@ -122,5 +123,26 @@ describe('messaging invitation and privacy boundaries', () => {
     expect(
       isClientOperation('POST', '/api/admin/v1/messaging/invitations/{invitationId}/accept'),
     ).toBe(false);
+  });
+});
+
+describe('messaging return destinations', () => {
+  it('retains the inbox filter, room and folder while rejecting unrelated or external paths', () => {
+    for (const path of [
+      '/personal/messages?filter=Direct&list=1',
+      '/personal/messages/folders?folder=one&page=3',
+      '/personal/messages/00000000-0000-4000-8000-000000000009?filter=Group',
+    ])
+      expect(messagingReturnPath(path)).toBe(path);
+    for (const path of [
+      null,
+      'https://example.com/personal/messages',
+      '//example.com',
+      '/personal/messages/new',
+      '/personal/messages/invitations',
+      '/personal/profile',
+      '/personal/messages/folders/other',
+    ])
+      expect(messagingReturnPath(path)).toBe('/personal/messages?list=1');
   });
 });

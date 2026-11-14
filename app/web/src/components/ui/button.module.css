@@ -1,24 +1,24 @@
-/* Shared button variants. Width belongs to the surrounding action layout. */
+/* V6 button variants. Action layouts own width, controls own appearance. */
 .button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 9px;
-  min-width: 0;
+  gap: 8px;
+  min-width: 44px;
   max-width: 100%;
-  min-height: 48px;
+  min-height: 46px;
   width: auto;
   border: 1px solid transparent;
-  border-radius: 12px;
-  padding: 10px 18px;
+  border-radius: var(--radius-button, 11px);
+  padding: 9px 18px;
   font: inherit;
-  font-size: calc(15px * var(--text-scale, 1));
-  font-weight: 700;
-  line-height: 1.6;
+  font-size: calc(14px * var(--text-scale, 1));
+  font-weight: 650;
+  line-height: 1.7;
   text-align: center;
   white-space: normal;
   overflow-wrap: anywhere;
-  transition: background 0.15s;
+  transition: background 0.18s;
   box-shadow: none;
 }
 .primary {
@@ -29,13 +29,13 @@
   background: var(--primary-hover);
 }
 .outline {
-  border-color: var(--control-border);
+  border-color: var(--line);
   background: var(--surface);
   color: var(--primary);
 }
 .ghost {
   background: transparent;
-  color: var(--muted);
+  color: var(--primary);
 }
 .outline:hover,
 .ghost:hover {
@@ -57,6 +57,9 @@
   height: 44px;
   min-height: 44px;
   padding: 10px;
+}
+.icon.ghost {
+  color: var(--muted);
 }
 .legacy svg {
   width: 19px;

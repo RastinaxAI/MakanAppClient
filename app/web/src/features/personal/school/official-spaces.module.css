@@ -56,6 +56,12 @@
 .pair :global(.button) {
   min-height: 44px;
 }
+.compactBadge {
+  display: inline-flex;
+  align-items: center;
+  color: var(--accent);
+  flex: none;
+}
 .badge {
   display: inline-flex;
   align-items: center;

@@ -167,7 +167,7 @@ for (const role of ['Personal', 'Student', 'Teacher', 'Parent', 'Manager']) {
       );
       for (const link of links) {
         expect(link.height).toBeGreaterThanOrEqual(44);
-        expect(link.iconWidth).toBe(width < 768 ? 22 : 24);
+        expect(link.iconWidth).toBe(width < 768 ? 22 : 21);
         const row = links.filter((x) => Math.abs(x.top - link.top) < 2);
         expect(
           Math.max(...row.map((x) => x.iconY)) - Math.min(...row.map((x) => x.iconY)),

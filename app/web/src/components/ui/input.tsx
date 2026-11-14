@@ -10,11 +10,7 @@ export function Input({ className, type, ...props }: ComponentProps<'input'>) {
     <input
       {...props}
       type={type}
-      className={uiClass(
-        s.control,
-        (type === 'checkbox' || type === 'radio') && s.choice,
-        className,
-      )}
+      className={uiClass(type === 'checkbox' || type === 'radio' ? s.choice : s.control, className)}
     />
   );
 }
@@ -24,29 +20,38 @@ export function Select({ className, ...props }: ComponentProps<'select'>) {
 export function Textarea({ className, ...props }: ComponentProps<'textarea'>) {
   return <textarea {...props} className={uiClass(s.control, s.multiline, className)} />;
 }
+export function FieldGroup({ children }: { children: ReactNode }) {
+  return (
+    <div className={s.group} data-ui="field-group">
+      {children}
+    </div>
+  );
+}
 
 /** Search owns its horizontal geometry independently of form labels and native field padding. */
 export function SearchField({
   action,
   onClear,
+  showEmptyClear = true,
   containerClassName,
   ...props
 }: ComponentProps<'input'> & {
   'aria-label': string;
   action?: ReactNode;
   onClear?: () => void;
+  showEmptyClear?: boolean;
   containerClassName?: string;
 }) {
   return (
     <div className={uiClass(s.search, containerClassName)} data-ui="search">
       {action ?? <Search size={22} aria-hidden="true" />}
       <Input {...props} className={uiClass(s.searchInput, props.className)} />
-      {onClear && !!props.value && (
+      {onClear && (!!props.value || showEmptyClear) && (
         <button
           type="button"
           className={s.searchClear}
           aria-label={uiText.text_35c84a68f506}
-          disabled={props.disabled}
+          disabled={props.disabled || !props.value}
           onClick={(event) => {
             onClear();
             event.currentTarget.parentElement?.querySelector('input')?.focus();

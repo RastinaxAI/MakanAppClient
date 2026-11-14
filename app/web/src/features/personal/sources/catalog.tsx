@@ -3,6 +3,7 @@ import {
   Input as NativeInput,
   Select as NativeSelect,
   Textarea as NativeTextarea,
+  SearchField,
 } from '@/components/ui/input';
 
 import { uiClass } from '@/components/v5/classes';
@@ -20,8 +21,19 @@ import {
   type ReactNode,
   type Ref,
 } from 'react';
-import { BookOpen, LibraryBig, Search, ChevronLeft, X, History, Eye } from 'lucide-react';
-import { ProductContext, V5Scene } from '@/components/v5/scene';
+import {
+  BookOpen,
+  LibraryBig,
+  ChevronLeft,
+  FileText,
+  Plus,
+  History,
+  Eye,
+  Globe,
+  Link2,
+  Type,
+} from 'lucide-react';
+import { V5Scene } from '@/components/v5/scene';
 import {
   SceneMenuClose,
   useSceneFormAction,
@@ -39,8 +51,9 @@ import type { components } from '@/generated/api/schema';
 import { clientValidator } from '@/lib/api/client-contract';
 import { ApiError } from '@/lib/api/errors';
 import { date, number } from '@/lib/formatting';
+import { V4List, V4Row } from '@/components/v4/page';
 import { usePersonal, usePersonalApi } from '../provider';
-import { sourceScopes, sourceDownloadable, sourceReadiness } from './model';
+import { sourceScopes, sourceDownloadable, sourceReadiness, sourceAiSelectable } from './model';
 import s from '../service-layout.module.css';
 import catalogStyle from './source-catalog.module.css';
 type S = components['schemas'];
@@ -67,11 +80,25 @@ function SourceMenuLink({ href, children }: { href: string; children: ReactNode 
 }
 export function SourceCatalog({
   upload = false,
+  chooseType = false,
   initialScope = 'Personal',
   initialClassId = '',
-}: { upload?: boolean; initialScope?: Scope; initialClassId?: string } = {}) {
+  embedded = false,
+  selection,
+}: {
+  upload?: boolean;
+  chooseType?: boolean;
+  initialScope?: Scope;
+  initialClassId?: string;
+  embedded?: boolean;
+  selection?: {
+    items: { id: string; title: string }[];
+    onChange: (items: { id: string; title: string }[]) => void;
+    disabled?: boolean;
+  };
+} = {}) {
   const router = useRouter();
-  const heading = useSourceHeading(upload ? 'upload' : 'catalog');
+  const heading = useSourceHeading(upload ? 'upload' : chooseType ? 'types' : 'catalog');
   const searchInput = useRef<HTMLInputElement>(null);
   const { session } = usePersonal();
   const memory =
@@ -123,8 +150,26 @@ export function SourceCatalog({
   if (search) params.set('Search', search);
   if (scope === 'Class' && classId) params.set('ClassId', classId);
   const query = usePersonalApi<S['SourcePage']>('/api/v1/sources?' + params, {
-    enabled: scopeRestored && classRestored && (scope !== 'Class' || (school && !!classId)),
+    enabled:
+      !upload &&
+      !chooseType &&
+      scopeRestored &&
+      classRestored &&
+      (scope !== 'Class' || (school && !!classId)),
   });
+  const selectionRef = useRef(selection);
+  selectionRef.current = selection;
+  useEffect(() => {
+    const current = selectionRef.current;
+    if (!current || current.disabled || query.isError || !query.data) return;
+    const denied = new Set(
+      query.data.items
+        .filter((source) => !sourceAiSelectable(source))
+        .map((source) => source.sourceId),
+    );
+    if (current.items.some((source) => denied.has(source.id)))
+      current.onChange(current.items.filter((source) => !denied.has(source.id)));
+  }, [query.data, query.isError, selection?.disabled]);
   const create =
     scope === 'Personal' ||
     (school &&
@@ -139,14 +184,20 @@ export function SourceCatalog({
   );
   const createAction = create && (scope !== 'Class' || !!classId) && (
     <Button
+      className={catalogStyle.create}
       onClick={() =>
         router.push(
           base +
             '?' +
-            new URLSearchParams({ upload: '1', scope, ...(scope === 'Class' ? { classId } : {}) }),
+            new URLSearchParams({
+              upload: 'choose',
+              scope,
+              ...(scope === 'Class' ? { classId } : {}),
+            }),
         )
       }
     >
+      <Plus size={20} />
       {uiText.text_1d488a965baa}
     </Button>
   );
@@ -169,6 +220,7 @@ export function SourceCatalog({
   );
   const content = (
     <>
+      {createAction}
       <ConnectionNotice
         cached={!!query.data}
         error={query.isError}
@@ -198,35 +250,23 @@ export function SourceCatalog({
             </label>
           ))}
       </div>
-      <div className={uiClass(catalogStyle.search)} role="search" data-source-search>
-        <Search size={19} />
-        <NativeInput
-          ref={searchInput}
-          aria-label={uiText.text_c7ffe2197db2}
-          placeholder={uiText.text_8cc9dcd7a18e}
-          value={search}
-          maxLength={100}
-          onChange={(event) => {
-            setSearch(event.target.value);
-            setPage(1);
-          }}
-        />
-        {search && (
-          <Button
-            type="button"
-            variant="ghost"
-            size="icon"
-            aria-label={uiText.text_35c84a68f506}
-            onClick={() => {
-              setSearch('');
-              setPage(1);
-              searchInput.current?.focus();
-            }}
-          >
-            <X size={19} />
-          </Button>
-        )}
-      </div>
+      <SearchField
+        ref={searchInput}
+        aria-label={uiText.text_c7ffe2197db2}
+        placeholder={uiText.text_8cc9dcd7a18e}
+        value={search}
+        maxLength={100}
+        showEmptyClear
+        onChange={(event) => {
+          setSearch(event.target.value);
+          setPage(1);
+        }}
+        onClear={() => {
+          setSearch('');
+          setPage(1);
+        }}
+        containerClassName={catalogStyle.search}
+      />
       {scope === 'Class' &&
         (classes.isPending ? (
           <LoadingSkeleton />
@@ -260,31 +300,87 @@ export function SourceCatalog({
         <ErrorState error={query.error} onRetry={() => void query.refetch()} />
       ) : (
         <>
-          <div className={uiClass('list')} data-source-list>
+          <div className={catalogStyle.cards} data-source-list>
             {!rows.length ? (
               <EmptyState title={search ? uiText.text_76263ba743f2 : uiText.text_d00189e07062} />
             ) : (
               rows.map((source) => (
-                <Link
-                  href={base + '/' + source.sourceId}
-                  aria-label={source.title}
-                  className={uiClass('row mk-source-row')}
-                  key={source.sourceId}
-                >
-                  <span className={uiClass('tile-icon')}>
-                    {source.scope === 'Library' ? <LibraryBig size={22} /> : <BookOpen size={22} />}
-                  </span>
-                  <span className={uiClass('grow')}>
-                    <h4 dir="auto">{source.title}</h4>
-                    <p>{sourceSummary(source)}</p>
-                  </span>
-                  <span className={uiClass('chev')}>
-                    <ChevronLeft size={18} />
-                  </span>
-                </Link>
+                <article className={catalogStyle.sourceCard} key={source.sourceId}>
+                  <Link
+                    href={base + '/' + source.sourceId}
+                    aria-label={source.title}
+                    className={catalogStyle.sourceLink}
+                  >
+                    <h3 dir="auto">{source.title}</h3>
+                    <div className={catalogStyle.file}>
+                      {source.scope === 'Library' ? (
+                        <LibraryBig size={29} />
+                      ) : (
+                        <FileText size={29} />
+                      )}
+                      <span>
+                        <b dir="auto">{source.file?.originalFileName ?? source.title}</b>
+                        <small>{sourceSummary(source)}</small>
+                      </span>
+                      <ChevronLeft size={16} />
+                    </div>
+                    <span
+                      className={catalogStyle.readiness}
+                      data-ready={source.fileReady && source.sourceReady}
+                    >
+                      {source.processingStatus === 'Failed'
+                        ? uiText.text_bbd429973d6e
+                        : source.scope === 'Library'
+                          ? uiText.v5Product.libraryMetadata
+                          : source.fileReady && source.sourceReady
+                            ? uiText.text_376e9c9561e2
+                            : uiText.text_58b53f9acd41}
+                    </span>
+                  </Link>
+                  {selection && (
+                    <label className={catalogStyle.selection}>
+                      <NativeInput
+                        type="checkbox"
+                        aria-label={uiText.text_390a9cb6ef20 + source.title}
+                        disabled={
+                          selection.disabled || query.isError || !sourceAiSelectable(source)
+                        }
+                        checked={
+                          sourceAiSelectable(source) &&
+                          selection.items.some((item) => item.id === source.sourceId)
+                        }
+                        onChange={(event) =>
+                          selection.onChange(
+                            event.target.checked
+                              ? [...selection.items, { id: source.sourceId, title: source.title }]
+                              : selection.items.filter((item) => item.id !== source.sourceId),
+                          )
+                        }
+                      />
+                      <span>
+                        {sourceAiSelectable(source)
+                          ? uiText.v7Ui.conversationSources
+                          : uiText.v6Ui.sourceUnavailable}
+                      </span>
+                    </label>
+                  )}
+                </article>
               ))
             )}
           </div>
+          {scope !== 'Library' && (
+            <V4List>
+              <V4Row
+                title={uiText.v6Ui.authorizedLibrary}
+                description={uiText.v6Ui.authorizedLibraryHint}
+                icon={<LibraryBig />}
+                onClick={() => {
+                  setScope('Library');
+                  setPage(1);
+                }}
+              />
+            </V4List>
+          )}
           {(page > 1 || query.data!.totalCount > query.data!.pageSize) && (
             <div className={uiClass('between')}>
               <Button variant="ghost" disabled={page <= 1} onClick={() => setPage(page - 1)}>
@@ -307,16 +403,28 @@ export function SourceCatalog({
       )}
     </>
   );
+  if (embedded)
+    return (
+      <section className={catalogStyle.detail} data-assistant-resources>
+        {readinessFilter}
+        {content}
+      </section>
+    );
   return (
     <SourceFrame
       headingRef={heading}
-      id={upload ? 'MK-359' : 'MK-356'}
+      id={chooseType ? 'AST-09' : upload ? 'MK-359' : 'MK-356'}
+      title={chooseType ? uiText.v7Ui.sourceTypes : undefined}
       scope={sourceScopes[scope]}
-      actions={upload ? undefined : createAction}
-      menu={upload ? undefined : readinessFilter}
-      context={upload ? undefined : <SourceListContext items={rows} />}
+      menu={upload || chooseType ? undefined : readinessFilter}
     >
-      {upload ? (
+      {chooseType ? (
+        create && (scope !== 'Class' || !!classId) ? (
+          <SourceTypeChoice scope={scope} classId={scope === 'Class' ? classId : null} />
+        ) : (
+          <ErrorState error={new ApiError(403)} />
+        )
+      ) : upload ? (
         create && (scope !== 'Class' || !!classId) ? (
           <SourceUpload
             key={scope + classId}
@@ -330,6 +438,53 @@ export function SourceCatalog({
         content
       )}
     </SourceFrame>
+  );
+}
+function SourceTypeChoice({ scope, classId }: { scope: Scope; classId: string | null }) {
+  const t = uiText.v7Ui;
+  const suffix = new URLSearchParams({ upload: '1', scope, ...(classId ? { classId } : {}) });
+  return (
+    <div className={catalogStyle.detail} data-source-type-choice>
+      <nav className={catalogStyle.studyNavigation} aria-label={t.assistantSections}>
+        <Link href={base} aria-current="page">
+          {t.sources}
+        </Link>
+        <Link href="/personal/assistant?view=chat">{t.chat}</Link>
+        <span aria-disabled="true">{t.outputs}</span>
+      </nav>
+      <div className={catalogStyle.lead}>
+        <h2>{t.chooseSourceType}</h2>
+        <p>{t.sourceTypeHint}</p>
+      </div>
+      <V4List>
+        <V4Row
+          title={t.pdfSource}
+          description={t.pdfSourceHint}
+          icon={<FileText />}
+          href={base + '?' + suffix}
+        />
+        {[
+          { title: t.ownedText, hint: t.ownedTextUnavailable, icon: Type },
+          { title: t.webSource, hint: t.proposalOff, icon: Globe },
+          { title: t.connectorSource, hint: t.sourceConsentHint, icon: Link2 },
+        ].map(({ title, hint, icon: Icon }) => (
+          <button
+            key={title}
+            type="button"
+            disabled
+            className={uiClass('v5-row row', catalogStyle.unavailableType)}
+          >
+            <span className={uiClass('tile-icon')} aria-hidden="true">
+              <Icon />
+            </span>
+            <span className={uiClass('v5-row-copy grow')}>
+              <strong>{title}</strong>
+              <small>{hint}</small>
+            </span>
+          </button>
+        ))}
+      </V4List>
+    </div>
   );
 }
 function SourceFrame({
@@ -362,7 +517,7 @@ function SourceFrame({
       title={
         title ??
         (id === 'MK-356'
-          ? uiText.text_28042640ff75
+          ? uiText.v6Ui.assistantResources
           : id === 'MK-359'
             ? uiText.text_fe2fa4ad990a
             : uiText.text_8a52f7bc3f5c)
@@ -381,13 +536,15 @@ function SourceFrame({
 function sourceSummary(source: S['EducationalSourceResult']) {
   return [
     sourceScopes[source.scope],
-    source.scope === 'Library'
-      ? uiText.v5Product.libraryMetadata
-      : !source.fileReady
-        ? uiText.text_d099cfd756e0 + ': ' + uiText.text_f7b3cdaee0a4
-        : source.sourceReady
-          ? uiText.text_5d94e336834f
-          : uiText.text_58b53f9acd41,
+    source.processingStatus === 'Failed'
+      ? uiText.text_bbd429973d6e
+      : source.scope === 'Library'
+        ? uiText.v5Product.libraryMetadata
+        : !source.fileReady
+          ? uiText.text_d099cfd756e0 + ': ' + uiText.text_f7b3cdaee0a4
+          : source.sourceReady
+            ? uiText.text_5d94e336834f
+            : uiText.text_58b53f9acd41,
     ...(source.status !== 'Active'
       ? [source.status === 'Archived' ? uiText.text_9defd77e1a5d : uiText.text_4e67bd8e3482]
       : []),
@@ -421,29 +578,6 @@ function sourceNavigation(source: S['EducationalSourceResult']) {
       allowed: source.capabilities.canChangeVisibility,
     },
   ].filter((item) => item.allowed);
-}
-function SourceListContext({ items }: { items: S['EducationalSourceResult'][] }) {
-  const place = useContext(ProductContext);
-  return (
-    <>
-      <div className={uiClass('context-tag')}>{uiText.v5Product.context}</div>
-      <h3>{place.title}</h3>
-      <p>{place.role}</p>
-      {items.slice(0, 3).map((source) => (
-        <Link
-          className={uiClass('context-item')}
-          href={base + '/' + source.sourceId}
-          key={source.sourceId}
-        >
-          <b>{source.title}</b>
-          <div className={uiClass('context-value')}>{sourceSummary(source)}</div>
-        </Link>
-      ))}
-      <div className={uiClass('context-item')}>
-        <p>{uiText.v5Product.contextBackPolicy}</p>
-      </div>
-    </>
-  );
 }
 export function SourceStatus({ source }: { source: S['EducationalSourceResult'] }) {
   return (

@@ -26,7 +26,7 @@ it('keeps local fixture servers isolated through explicit settings', () => {
   });
 });
 
-it('uses the application backend in development without changing explicit environment settings', () => {
+it('uses the main backend in development without changing explicit environment settings', () => {
   vi.stubEnv('NODE_ENV', 'development');
   expect(serverConfig().backend).toBe('http://94.184.32.84');
   vi.stubEnv('BACKEND_BASE_URL', 'http://127.0.0.1:3457');

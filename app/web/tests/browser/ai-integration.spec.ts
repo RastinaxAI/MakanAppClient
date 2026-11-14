@@ -28,7 +28,7 @@ test('personal chat requires an explicit payer and consumes no request on openin
 }) => {
   await enable(request);
   await login(context, 'Personal', false);
-  await page.goto('/personal/assistant');
+  await page.goto('/personal/assistant?view=chat');
   await page.getByLabel('سؤال از دستیار', { exact: true }).fill('پرسش آزمایشی قرارداد');
   expect(await requests(request, '/api/v1/ai/chat')).toHaveLength(0);
   await page.getByRole('button', { name: 'ارسال سؤال', exact: true }).click();
@@ -57,7 +57,7 @@ test('lost business-AI acknowledgment preserves question, payer, body and operat
 }) => {
   await enable(request, { lostAck: true });
   await login(context, 'Personal', false);
-  await page.goto('/personal/assistant');
+  await page.goto('/personal/assistant?view=chat');
   await chooseAssistantPayer(page, 'Individual');
   await page.getByLabel('سؤال از دستیار', { exact: true }).fill('همین پرسش پس از پاسخ گم‌شده');
   await page.getByRole('button', { name: 'ارسال سؤال', exact: true }).click();
@@ -84,7 +84,7 @@ test('quota refusal keeps the draft and never switches to another payer or calls
 }) => {
   await enable(request, { quotaAllowed: false });
   await login(context, 'Student');
-  await page.goto('/personal/assistant');
+  await page.goto('/personal/assistant?view=chat');
   await chooseAssistantPayer(page, 'Organization');
   await page.getByLabel('سؤال از دستیار', { exact: true }).fill('نوشتهٔ حفظ‌شده');
   await page.getByRole('button', { name: 'ارسال سؤال', exact: true }).click();
@@ -106,14 +106,11 @@ async function chooseSource(
   request: import('@playwright/test').APIRequestContext,
 ) {
   await request.post(fixture + '/__test__/source-ai-ready', { data: { sourceId } });
-  await page.getByRole('button', { name: 'انتخاب منابع', exact: true }).click();
+  await page.getByRole('tab', { name: 'منابع', exact: true }).click();
   await page
     .getByRole('checkbox', { name: 'انتخاب منبع واقعی منبع شخصی آزمایشی', exact: true })
     .check();
-  await page
-    .getByRole('dialog')
-    .getByRole('button', { name: /استفاده از/ })
-    .click();
+  await page.getByRole('tab', { name: 'گفتگو', exact: true }).click();
 }
 test('RAG pins the preflight version and renders only the authorized returned citations', async ({
   page,
@@ -123,15 +120,21 @@ test('RAG pins the preflight version and renders only the authorized returned ci
   await enable(request);
   await login(context, 'Student', false);
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto('/personal/assistant');
+  await page.goto('/personal/assistant?view=chat');
   await chooseSource(page, request);
   await chooseAssistantPayer(page, 'Individual');
   await page.getByLabel('سؤال از دستیار', { exact: true }).fill('سؤال از این منبع');
   await page.getByRole('button', { name: 'ارسال سؤال', exact: true }).click();
   await expect(page.locator('[data-assistant-result]')).toContainText('پاسخ مستند آزمایشی');
+  await page
+    .locator('[data-assistant-result]')
+    .getByRole('button', { name: /^منبع شخصی آزمایشی نسخه/ })
+    .click();
+  await expect(page.getByRole('dialog').locator('[data-citation-source]')).toBeVisible();
   await expect(
-    page.locator('[data-assistant-result]').getByRole('link', { name: /^منبع شخصی آزمایشی نسخه/ }),
+    page.getByRole('dialog').getByRole('link', { name: 'مشاهده منبع', exact: true }),
   ).toHaveAttribute('href', '/personal/resources/' + sourceId);
+  await page.keyboard.press('Escape');
   const calls = await requests(request, '/api/v1/ai/knowledge/rag/answer');
   expect(calls).toHaveLength(1);
   expect(calls[0].body.sources).toEqual([{ sourceId, version: 1 }]);
@@ -149,7 +152,7 @@ test('foreign citations never appear as a successful answer', async ({
 }) => {
   await enable(request, { foreignCitation: ids.class });
   await login(context, 'Student', false);
-  await page.goto('/personal/assistant');
+  await page.goto('/personal/assistant?view=chat');
   await chooseSource(page, request);
   await chooseAssistantPayer(page, 'Individual');
   await page.getByLabel('سؤال از دستیار', { exact: true }).fill('پرسش');
@@ -171,11 +174,11 @@ test('retrieval uses the registered knowledge route with the same exact source v
 }) => {
   await enable(request);
   await login(context, 'Student', false);
-  await page.goto('/personal/assistant');
+  await page.goto('/personal/assistant?view=chat');
   await chooseSource(page, request);
-  const options = await assistantOptions(page);
-  await options.getByRole('combobox', { name: t.mode, exact: true }).selectOption('retrieve');
-  await options.getByRole('button', { name: t.done, exact: true }).click();
+  await page.getByRole('tab', { name: 'منابع', exact: true }).click();
+  await page.getByRole('combobox', { name: t.mode, exact: true }).selectOption('retrieve');
+  await page.getByRole('tab', { name: 'گفتگو', exact: true }).click();
   await chooseAssistantPayer(page, 'Individual');
   await page.getByLabel('سؤال از دستیار', { exact: true }).fill('جستجوی مرتبط');
   await page.getByRole('button', { name: 'ارسال سؤال', exact: true }).click();
@@ -200,10 +203,10 @@ for (const [role, kind, path] of [
   }) => {
     await enable(request);
     await login(context, role);
-    await page.goto('/personal/assistant');
-    await assistantTools(page);
-    const dialog = page.getByRole('dialog');
-    await dialog.getByRole('combobox', { name: t.operation, exact: true }).selectOption(kind);
+    await page.goto('/personal/assistant?view=chat');
+    await chooseAssistantPayer(page, 'Organization');
+    const dialog = await assistantTools(page);
+    await dialog.getByRole('tab', { name: t.operations[kind], exact: true }).click();
     if (['homework', 'teacherClass', 'activities', 'managerClass'].includes(kind))
       await dialog.getByRole('combobox', { name: t.class, exact: true }).selectOption(ids.class);
     if (kind === 'homework') {
@@ -218,7 +221,6 @@ for (const [role, kind, path] of [
       await dialog.getByLabel(t.goals, { exact: true }).fill('مرور درس\nحل تمرین');
     if (kind === 'activities')
       await dialog.getByLabel(t.objective, { exact: true }).fill('تمرین گروهی');
-    await dialog.getByLabel(t.payer, { exact: true }).selectOption('Organization');
     await dialog.getByRole('button', { name: t.send, exact: true }).click();
     await expect(dialog.locator('[data-assistant-result]')).toBeVisible();
     const calls = await requests(request, path);
@@ -234,16 +236,18 @@ test('parent AI uses the acknowledged selected child and clears the earlier resp
   await request.post(fixture + '/__test__/parent-case', { data: {} });
   await enable(request);
   await login(context, 'Parent');
-  await page.goto('/personal/assistant');
+  await page.goto('/personal/assistant?view=chat');
   await assistantTools(page);
   await page
-    .getByRole('dialog')
+    .locator('#assistant-panel-outputs')
     .getByLabel('انتخاب فرزند', { exact: true })
     .selectOption('00000000-0000-4000-8000-000000000501');
   // Selection remounts the workspace from the server-confirmed child context.
   await assistantTools(page);
-  const dialog = page.getByRole('dialog');
-  await dialog.getByLabel(t.payer, { exact: true }).selectOption('Organization');
+  const options = await assistantOptions(page);
+  await options.getByLabel(t.payer, { exact: true }).selectOption('Organization');
+  await options.getByRole('button', { name: t.done, exact: true }).click();
+  const dialog = page.locator('#assistant-panel-outputs');
   await dialog.getByRole('button', { name: t.send, exact: true }).click();
   await expect(dialog.locator('[data-assistant-result]')).toContainText(
     'خلاصهٔ مجاز فرزند انتخاب‌شده',
@@ -303,7 +307,7 @@ test('rate limiting honors Retry-After and sends no automatic AI retry', async (
   await request.post(fixture + '/__test__/fault', {
     data: { path: '/ai/chat', method: 'POST', status: 429, retryAfter: 3 },
   });
-  await page.goto('/personal/assistant');
+  await page.goto('/personal/assistant?view=chat');
   await chooseAssistantPayer(page, 'Individual');
   await page.getByLabel('سؤال از دستیار', { exact: true }).fill('پرسش محدودشده');
   await page.getByRole('button', { name: 'ارسال سؤال', exact: true }).click();
@@ -325,7 +329,7 @@ test('a completed RAG replay remains a conflict after a lost answer and never be
 }) => {
   await enable(request, { lostAck: true });
   await login(context, 'Student', false);
-  await page.goto('/personal/assistant');
+  await page.goto('/personal/assistant?view=chat');
   await chooseSource(page, request);
   await chooseAssistantPayer(page, 'Individual');
   await page.getByLabel('سؤال از دستیار', { exact: true }).fill('پرسش مستند با پاسخ گم‌شده');
@@ -420,4 +424,114 @@ test('source preparation respects Retry-After while preserving the exact version
   const calls = await requests(request, path);
   expect(calls).toHaveLength(2);
   expect(calls[0].body).toEqual(calls[1].body);
+});
+
+test('quota header owns selection and output tool cards preserve the selected form across the other local tabs', async ({
+  page,
+  context,
+  request,
+}) => {
+  await enable(request);
+  await login(context, 'Student');
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/personal/assistant?tab=outputs');
+  const options = await assistantOptions(page);
+  await expect(options.getByRole('button', { name: 'انتخاب منابع', exact: true })).toHaveCount(0);
+  await expect(options.getByRole('button', { name: t.tools, exact: true })).toHaveCount(0);
+  await options.getByLabel(t.payer, { exact: true }).selectOption('Organization');
+  await options.getByRole('button', { name: t.done, exact: true }).click();
+  await expect(
+    page.getByRole('banner').getByRole('button', { name: t.schoolQuota, exact: true }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole('banner').getByRole('button', { name: 'گزینه‌های بیشتر', exact: true }),
+  ).toHaveCount(0);
+  const output = page.locator('#assistant-panel-outputs');
+  const tools = output.getByRole('tablist', { name: t.tools, exact: true });
+  await tools.getByRole('tab', { name: t.operations.plan, exact: true }).click();
+  await output.getByLabel(t.goals, { exact: true }).fill('پیش‌نویس ابزار برنامه‌ریزی');
+  for (const name of ['منابع', 'گفتگو', 'خروجی‌ها'])
+    await page.getByRole('tab', { name, exact: true }).click();
+  await expect(tools.getByRole('tab', { name: t.operations.plan, exact: true })).toHaveAttribute(
+    'aria-selected',
+    'true',
+  );
+  await expect(output.getByLabel(t.goals, { exact: true })).toHaveValue(
+    'پیش‌نویس ابزار برنامه‌ریزی',
+  );
+  expect(await tools.evaluate((element) => element.scrollWidth > element.clientWidth)).toBe(true);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  const state = await (await request.get(fixture + '/__test__/state')).json();
+  expect(
+    state.requests.filter(
+      (r: { path: string; method: string }) =>
+        r.path.startsWith('/api/v1/ai/') && r.method === 'POST',
+    ),
+  ).toHaveLength(0);
+});
+
+test('school quota is not silently carried into a different authorized role context', async ({
+  page,
+  context,
+  request,
+}) => {
+  await request.post(fixture + '/__test__/v6-contexts', { data: {} });
+  await enable(request);
+  await login(context, 'Teacher');
+  await page.goto('/personal/assistant?view=chat');
+  await chooseAssistantPayer(page, 'Organization');
+  const state = await (await context.request.get('/api/client/session')).json();
+  const changed = await context.request.post('/api/client/backend/api/v1/workspaces/select', {
+    headers: { Origin: origin, 'X-Makan-Context': state.revision },
+    data: {
+      workspaceType: 'Organization',
+      membershipId: '00000000-0000-4000-8000-000000000506',
+      role: 'Parent',
+    },
+  });
+  expect(changed.status()).toBe(200);
+  await page.reload();
+  await expect(
+    page.getByRole('banner').getByRole('button', { name: t.chooseQuota, exact: true }),
+  ).toBeVisible();
+  const options = await assistantOptions(page);
+  await expect(options.getByLabel(t.payer, { exact: true })).toHaveValue('');
+  const events = await requests(request, '/api/v1/ai/chat');
+  expect(events).toHaveLength(0);
+});
+
+test('200% text gives the school quota its own header row instead of breaking the assistant title into letters', async ({
+  page,
+  context,
+  request,
+}) => {
+  await enable(request);
+  await login(context, 'Student');
+  await page.setViewportSize({ width: 320, height: 568 });
+  await page.goto('/personal/assistant?tab=outputs');
+  const options = await assistantOptions(page);
+  await options.getByLabel(t.payer, { exact: true }).selectOption('Organization');
+  await page.keyboard.press('Escape');
+  await page.evaluate(() => {
+    document.documentElement.dataset.reading = 'large';
+  });
+  const heading = page.getByRole('heading', { name: 'دستیار', level: 1, exact: true });
+  const title = (await heading.boundingBox())!;
+  const quota = (await page
+    .getByRole('banner')
+    .getByRole('button', { name: t.schoolQuota, exact: true })
+    .boundingBox())!;
+  expect(title.width).toBeGreaterThan(180);
+  expect(title.height).toBeLessThan(80);
+  expect(quota.y).toBeGreaterThan(title.y + title.height);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  const tool = page
+    .locator('#assistant-panel-outputs')
+    .getByRole('tab', { name: t.operations.plan, exact: true });
+  await tool.focus();
+  await expect(tool).toBeInViewport();
+  await tool.press('Enter');
+  await expect(
+    page.locator('#assistant-panel-outputs').getByLabel(t.goals, { exact: true }),
+  ).toBeVisible();
 });

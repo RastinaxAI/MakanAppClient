@@ -9,6 +9,28 @@ export function seedConversationDetails(state, body) {
   state.conversationMessages = body.messages
     ? state.messages.map((message) => ({ ...message, conversationId: id(950) }))
     : [];
+  if (body.systemMessages)
+    state.conversationMessages = [
+      'عضوی گروه را ترک کرد.',
+      'عضوی به گروه اضافه شد.',
+      'عضوی از پیوند دعوت پیوست.',
+    ].map((text, i) =>
+      make('ConversationMessageResult', {
+        conversationId: id(950),
+        messageId: id(980 + i),
+        sequence: i + 1,
+        text,
+        originKind: 'System',
+        kind: 'Text',
+        senderUserId: id(9999),
+        sender: make('SafeMessagingIdentityResult', {
+          userId: id(9999),
+          displayName: 'سامانهٔ آزمون',
+        }),
+        sentAtUtc: new Date().toISOString(),
+        version: '1',
+      }),
+    );
   state.conversationMediaTitle = body.mediaTitle ?? 'جزوه';
   state.conversationDetail = make('ManagedConversationResult', {
     conversationId: id(950),
@@ -224,6 +246,63 @@ export function conversationDetailsRoute({ state, auth, url, req, body, send }) 
     }
     v.version = String(Number(v.version) + 1);
     return send(v);
+  }
+  if (p.endsWith('/messages') && req.method === 'POST') {
+    const override = state.release154?.capabilities?.[auth.user.id]?.canPublish;
+    if (
+      override === false ||
+      !(
+        override === true ||
+        writable ||
+        (v.type === 'Group' && /SendMessages|All/.test(v.memberCapabilities))
+      )
+    )
+      return send({ code: 'SEND_NOT_ALLOWED' }, 403);
+    const peers = (body.mentionedUserIds ?? []).map((userId) =>
+      v.participants.find((row) => row.user.userId === userId && row.status === 'Active'),
+    );
+    if (peers.some((row) => !row)) return send({ code: 'MENTION_NOT_AVAILABLE' }, 400);
+    state.conversationMessages ??= [];
+    const old = state.conversationMessages.find(
+      (row) => row.clientMessageId === body.clientMessageId && row.senderUserId === auth.user.id,
+    );
+    if (old) return send(make('MessageReceiptResult', { ...old }));
+    const files = (body.attachmentIds ?? []).map((fileId) => state.files.get(fileId));
+    if (
+      files.some(
+        (file) =>
+          !file || file.asset.uploadedByUserId !== auth.user.id || file.asset.status !== 'Ready',
+      )
+    )
+      return send({ code: 'FILE_NOT_AVAILABLE' }, 403);
+    const message = make('ConversationMessageResult', {
+      messageId: randomUUID(),
+      conversationId: v.conversationId,
+      clientMessageId: body.clientMessageId,
+      senderUserId: auth.user.id,
+      sender: member.user,
+      kind: body.kind ?? 'Text',
+      text: body.text,
+      mentions: peers.map((row) => row.user),
+      sequence: state.conversationMessages.length + 1,
+      sentAtUtc: new Date().toISOString(),
+      version: '1',
+      attachments: files.map(({ asset }) =>
+        make('MessageAttachmentResult', {
+          fileAssetId: asset.id,
+          fileName: asset.originalFileName,
+          contentType: asset.contentType,
+          sizeBytes: asset.sizeBytes,
+          kind: asset.contentType.startsWith('image/')
+            ? 'Image'
+            : asset.contentType.startsWith('video/')
+              ? 'Video'
+              : 'File',
+        }),
+      ),
+    });
+    state.conversationMessages.push(message);
+    return send(make('MessageReceiptResult', { ...message }));
   }
   if (p.endsWith('/messages') && req.method === 'GET')
     return send(

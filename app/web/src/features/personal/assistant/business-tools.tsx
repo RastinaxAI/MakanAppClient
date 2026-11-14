@@ -7,7 +7,9 @@ import {
 
 import { uiClass } from '@/components/v5/classes';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { Sparkles } from 'lucide-react';
+import { ViewTabs } from '@/components/ui/tabs';
 import type { components } from '@/generated/api/schema';
 import { aiIntegration as t } from '@/content/fa';
 import { Button } from '@/components/ui/button';
@@ -18,7 +20,6 @@ import { usePersonal, usePersonalApi } from '../provider';
 import { useAuthorizedChildren } from '../school/use-authorized-children';
 import { ChildSelector } from '../school/child-selector';
 import { ApiError } from '@/lib/api/errors';
-import { AssistantPayer } from './payer';
 import { AssistantResult } from './result';
 import { useAssistantRequest } from './use-assistant-request';
 import { businessOperations, type AiPayer, type BusinessOperation } from './model';
@@ -40,7 +41,18 @@ const empty: Fields = {
   objective: '',
   materials: '',
 };
-export function AssistantBusinessTools() {
+export type AssistantToolStatus = { busy: boolean; pendingPayer: AiPayer | null };
+type ToolProps = {
+  payer: AiPayer | '';
+  disabled?: boolean;
+  onStatus: (status: AssistantToolStatus) => void;
+};
+export function AssistantBusinessTools({
+  payer,
+  disabled = false,
+  onStatus,
+  navigationClassName,
+}: ToolProps & { navigationClassName: string }) {
   const { session } = usePersonal();
   const operations = (Object.keys(businessOperations) as BusinessOperation[]).filter(
     (key) =>
@@ -49,27 +61,45 @@ export function AssistantBusinessTools() {
       businessOperations[key].role === session.context.activeRole,
   );
   const [kind, setKind] = useState<BusinessOperation>(operations[0] ?? 'chat');
+  const [status, setStatus] = useState<AssistantToolStatus>({ busy: false, pendingPayer: null });
+  const choices = ['chat' as const, ...operations];
+  const currentKind = choices.includes(kind) ? kind : choices[0];
+  useEffect(() => onStatus(status), [onStatus, status]);
+  const props = { payer, disabled, onStatus: setStatus };
   return (
     <div className={uiClass('v5-native-form')}>
-      <label className={uiClass('field')}>
-        {t.operation}
-        <NativeSelect value={kind} onChange={(e) => setKind(e.target.value as BusinessOperation)}>
-          {['chat' as const, ...operations].map((key) => (
-            <option key={key} value={key}>
-              {t.operations[key]}
-            </option>
-          ))}
-        </NativeSelect>
-      </label>
-      {kind === 'child' ? (
-        <ParentTool key={session.revision} />
-      ) : (
-        <BusinessForm key={kind} kind={kind} />
-      )}
+      <ViewTabs
+        value={currentKind}
+        onChange={setKind}
+        items={choices.map((value) => ({
+          value,
+          label: t.operations[value],
+          icon: <Sparkles size={22} aria-hidden="true" />,
+        }))}
+        label={t.tools}
+        prefix="assistant-tool"
+        className={navigationClassName}
+        disabled={disabled || status.busy || !!status.pendingPayer}
+      />
+      <section
+        role="tabpanel"
+        id={'assistant-tool-panel-' + currentKind}
+        aria-labelledby={'assistant-tool-tab-' + currentKind}
+      >
+        {currentKind === 'child' ? (
+          <ParentTool
+            key={session.revision}
+            {...props}
+            selectionDisabled={status.busy || !!status.pendingPayer}
+          />
+        ) : (
+          <BusinessForm key={currentKind} kind={currentKind} {...props} />
+        )}
+      </section>
     </div>
   );
 }
-function ParentTool() {
+function ParentTool({ selectionDisabled, ...props }: ToolProps & { selectionDisabled: boolean }) {
   const child = useAuthorizedChildren();
   return (
     <>
@@ -77,7 +107,7 @@ function ParentTool() {
         children={child.scoped}
         active={child.active}
         pendingId={child.pendingId}
-        busy={child.busy}
+        busy={child.busy || selectionDisabled || !!props.disabled}
         loading={child.children.isPending}
         error={child.error}
         onRetry={child.retry}
@@ -87,6 +117,7 @@ function ParentTool() {
         key={child.active?.learnerOrganizationPersonId ?? 'none'}
         kind="child"
         childReady={!!child.active && !child.busy && !child.children.isError}
+        {...props}
       />
     </>
   );
@@ -94,10 +125,13 @@ function ParentTool() {
 function BusinessForm({
   kind,
   childReady = false,
+  payer: chosenPayer,
+  disabled = false,
+  onStatus,
 }: {
   kind: BusinessOperation;
   childReady?: boolean;
-}) {
+} & ToolProps) {
   const { session, call } = usePersonal(),
     request = useAssistantRequest('tool:' + kind);
   const [values, setValues, loaded] = useViewState<Fields>(
@@ -109,11 +143,7 @@ function BusinessForm({
       Object.keys(empty).every((key) => typeof (v as Fields)[key as keyof Fields] === 'string'),
   );
   const memory = `makan:draft:ai-selection:${session.user.id}:${session.revision}:${kind}:`;
-  const [payer, setPayer] = useViewState<AiPayer | ''>(
-    memory + 'payer',
-    '',
-    (v): v is AiPayer | '' => ['', 'Organization', 'Individual', 'FreeTrial'].includes(String(v)),
-  );
+  const payer = request.pending?.payer ?? chosenPayer;
   const [classId, setClass] = useViewState(
     memory + 'class',
     '',
@@ -148,6 +178,10 @@ function BusinessForm({
         )
       : exams.data?.filter((e) => e.classRef?.kind !== 'PersonalClass');
   const blocked = request.busy || !!request.pending;
+  const pendingPayer = request.pending?.payer ?? null;
+  useEffect(() => {
+    onStatus({ busy: request.busy, pendingPayer });
+  }, [onStatus, request.busy, pendingPayer]);
   const set = (key: keyof Fields, value: string) => setValues((old) => ({ ...old, [key]: value }));
   const lines = (value: string) =>
     value
@@ -215,7 +249,7 @@ function BusinessForm({
       <fieldset
         className={uiClass('v5-native-fields')}
         data-fields-layout="dialog"
-        disabled={blocked || !loaded}
+        disabled={disabled || blocked || !loaded || (kind === 'child' && !childReady)}
       >
         {needsClass && (
           <>
@@ -272,6 +306,7 @@ function BusinessForm({
             {t.question}
             <NativeTextarea
               required
+              aria-label={t.question}
               value={values.question}
               maxLength={20000}
               onChange={(e) => set('question', e.target.value)}
@@ -283,6 +318,7 @@ function BusinessForm({
             {t.goals}
             <NativeTextarea
               required
+              aria-label={t.goals}
               value={values.goals}
               maxLength={20000}
               onChange={(e) => set('goals', e.target.value)}
@@ -295,6 +331,7 @@ function BusinessForm({
               {t.objective}
               <NativeTextarea
                 required
+                aria-label={t.objective}
                 value={values.objective}
                 maxLength={20000}
                 onChange={(e) => set('objective', e.target.value)}
@@ -303,6 +340,7 @@ function BusinessForm({
             <label className={uiClass('field')}>
               {t.materials}
               <NativeTextarea
+                aria-label={t.materials}
                 value={values.materials}
                 maxLength={20000}
                 onChange={(e) => set('materials', e.target.value)}
@@ -318,6 +356,7 @@ function BusinessForm({
                 type="number"
                 min="1"
                 step="1"
+                aria-label={t.minutes}
                 value={values.minutes}
                 onChange={(e) => set('minutes', e.target.value)}
               />
@@ -325,6 +364,7 @@ function BusinessForm({
             <label className={uiClass('field')}>
               {t.notes}
               <NativeTextarea
+                aria-label={t.notes}
                 value={values.notes}
                 maxLength={20000}
                 onChange={(e) => set('notes', e.target.value)}
@@ -332,15 +372,11 @@ function BusinessForm({
             </label>
           </>
         )}
-        <AssistantPayer
-          value={request.pending?.payer ?? payer}
-          onChange={setPayer}
-          disabled={blocked}
-        />
       </fieldset>
       <Button
         type="submit"
         disabled={
+          disabled ||
           request.busy ||
           request.waiting ||
           !request.restored ||

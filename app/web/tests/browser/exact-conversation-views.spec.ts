@@ -1,6 +1,11 @@
 import { test, expect, login, fixture } from './test';
 import { captureExactState } from './exact-state-capture';
-import { v5Product as t, text_9d2a510784b3 } from '../../src/content/fa';
+import {
+  v5Product as t,
+  messengerPdf as pdf,
+  v4_more,
+  text_9d2a510784b3,
+} from '../../src/content/fa';
 
 const base = '/personal/messages/00000000-0000-4000-8000-000000000950';
 
@@ -13,7 +18,10 @@ test('member search and administrator filter preserve their authorized page thro
   await login(context, 'Student', false);
   await page.goto(base + '/info');
   await expect(page.getByRole('heading', { name: 'باشگاه کتاب‌خوانی', exact: true })).toBeVisible();
-  await page.getByRole('link', { name: /^اعضا و مدیران/ }).click();
+  await page
+    .getByRole('tablist', { name: pdf.conversationLibrary })
+    .getByRole('tab', { name: 'اعضا', exact: true })
+    .click();
   const rows = page.locator('.v5-list .v5-row');
   await expect(rows).toHaveCount(3);
   await page.getByRole('button', { name: t.conversationAdmins, exact: true }).click();
@@ -73,23 +81,29 @@ test('a channel member keeps mute failure truthful, respects a denied member rea
   await page.goto(base + '/info');
   await expect(page.getByRole('heading', { name: 'اطلاعات کانال', exact: true })).toBeVisible();
   await expect(page.locator('.v5-list .v5-row')).toHaveCount(3);
-  const notification = page.getByRole('button', { name: /^اعلان کانال/ });
+  const notification = page.getByRole('banner').getByRole('button', { name: v4_more, exact: true });
   await notification.click();
-  const dialog = page.getByRole('dialog', { name: t.channelNotifications, exact: true });
+  const dialog = page.getByRole('dialog', { name: v4_more, exact: true });
   await request.post(fixture + '/__test__/fault', {
     data: { path: '/mute', method: 'PUT', status: 503 },
   });
   await dialog.getByRole('button', { name: 'بی‌صدا', exact: true }).click();
-  await expect(dialog.getByRole('alert')).toBeVisible();
-  await expect(dialog.getByRole('button', { name: 'بی‌صدا', exact: true })).toBeVisible();
-  await dialog.getByRole('button', { name: 'بی‌صدا', exact: true }).click();
+  const duration = page.getByRole('dialog', { name: pdf.muteTitle, exact: true });
+  await duration.getByRole('button', { name: pdf.mute60, exact: true }).click();
+  await expect(duration.getByRole('alert')).toBeVisible();
+  await expect(duration.getByRole('button', { name: pdf.mute60, exact: true })).toBeEnabled();
+  await duration.getByRole('button', { name: pdf.mute60, exact: true }).click();
+  await expect(duration).toHaveCount(0);
   await expect(dialog.getByRole('button', { name: 'فعال‌کردن صدا', exact: true })).toBeVisible();
   await page.keyboard.press('Escape');
   await expect(notification).toBeFocused();
   await request.post(fixture + '/__test__/fault', {
     data: { path: '/members', method: 'GET', status: 403 },
   });
-  await page.getByRole('link', { name: /^اعضای قابل مشاهده/ }).click();
+  await page
+    .getByRole('tablist', { name: pdf.conversationLibrary })
+    .getByRole('tab', { name: 'اعضا', exact: true })
+    .click();
   await expect(
     page.getByRole('alert').and(page.locator(':not(#__next-route-announcer__)')),
   ).toBeVisible();

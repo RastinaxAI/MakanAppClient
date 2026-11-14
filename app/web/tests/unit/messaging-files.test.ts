@@ -1,3 +1,4 @@
+import { attachmentMessageKind } from '@/features/personal/messaging/media-model';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 const mocks = vi.hoisted(() => ({
   id: vi.fn(),
@@ -375,4 +376,12 @@ describe('conversation-bound streaming file BFF', () => {
     streamController.close();
     await expect(pending).rejects.toMatchObject({ status: 409 });
   });
+});
+
+it('classifies an audio-only upload as Voice and mixed media as File', () => {
+  expect(attachmentMessageKind([{ contentType: 'audio/webm;codecs=opus' }])).toBe('Voice');
+  expect(attachmentMessageKind([{ contentType: 'audio/mp4' }])).toBe('Voice');
+  expect(
+    attachmentMessageKind([{ contentType: 'audio/ogg' }, { contentType: 'application/pdf' }]),
+  ).toBe('File');
 });

@@ -27,6 +27,8 @@ const dialogClass = (value: string) =>
     .join(' ');
 export const Dialog = DialogPrimitive.Root;
 export const DialogTrigger = DialogPrimitive.Trigger;
+/** Feature-owned portal styling follows React context without changing other routes. */
+export const DialogStyleContext = createContext({ content: '', overlay: '' });
 export function DialogHero({ title, description }: { title: string; description?: ReactNode }) {
   return (
     <section className={uiClass(dialogClass('v5-dialog-hero'))}>
@@ -66,6 +68,7 @@ export function DialogContent({
   scenario?: string;
   footer?: ReactNode;
 }) {
+  const featureStyle = useContext(DialogStyleContext);
   const content = useRef<HTMLDivElement>(null);
   const returnFocus = useRef<HTMLElement | null>(null);
   const [componentActions, setComponentActions] = useState<ReactNode>();
@@ -111,7 +114,9 @@ export function DialogContent({
   });
   return (
     <DialogPrimitive.Portal>
-      <DialogPrimitive.Overlay className={uiClass(dialogClass('dialog-overlay'))} />
+      <DialogPrimitive.Overlay
+        className={uiClass(dialogClass('dialog-overlay'), featureStyle.overlay)}
+      />
       <DialogPrimitive.Content
         ref={content}
         dir="rtl"
@@ -119,6 +124,7 @@ export function DialogContent({
         data-design-scenario={scenario}
         className={uiClass(
           dialogClass(`dialog-content ${side ? 'sheet-content' : ''} ${className}`),
+          featureStyle.content,
         )}
         onOpenAutoFocus={() => {
           returnFocus.current =

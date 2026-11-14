@@ -2,7 +2,7 @@ import { uiClass } from '@/components/v5/classes';
 import type { ReactNode } from 'react';
 import t from './messaging-theme.module.css';
 
-/** Messenger controls use the same semantic palette as the rest of the client. */
+/** The PDF palette belongs to messaging; the rest of the client keeps its own theme. */
 export function MessagingSurface({
   children,
   className = '',

@@ -3,6 +3,8 @@ export type ContextGuard = {
   revision: string;
   onContextChanged?: () => void;
   isCurrent?: () => boolean;
+  /** Session verification owns its final 401, avoiding a recursive expiry event. */
+  onUnauthorized?: () => void;
 };
 export type ApiRequestInit = RequestInit & { expectedStatus?: number };
 export async function request<T>(
@@ -42,8 +44,10 @@ export async function request<T>(
     ensureCurrent();
     const p = parseProblem(body, response.status, response.headers.get('Retry-After'));
     if (p.code === 'CONTEXT_CHANGED') guard?.onContextChanged?.();
-    if (response.status === 401 && typeof window !== 'undefined')
-      window.dispatchEvent(new Event('makan:expired'));
+    if (response.status === 401) {
+      if (guard?.onUnauthorized) guard.onUnauthorized();
+      else if (typeof window !== 'undefined') window.dispatchEvent(new Event('makan:expired'));
+    }
     throw new ApiError(response.status, p);
   }
   if (expectedStatus !== undefined && response.status !== expectedStatus)

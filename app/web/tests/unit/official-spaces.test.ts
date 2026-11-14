@@ -4,10 +4,12 @@ import {
   officialMetadataMatches,
   readableOfficialEndpoint,
   officialConversationCapabilities,
+  officialPairPath,
   academicActivityMatches,
   academicActivityHref,
   type OfficialPair,
 } from '@/features/personal/messaging/official-model';
+import { filterAccountInbox } from '@/features/personal/messaging/inbox-model';
 type S = components['schemas'];
 const meta = {
   sourceKind: 'Class',
@@ -82,6 +84,14 @@ describe('server-bound official spaces', () => {
     expect(readableOfficialEndpoint(p, 'Channel')).toBe(false);
     expect(officialConversationCapabilities(summary(), p)?.canSend).toBe(false);
   });
+  it('rejects a ready pair that points both purposes at the same conversation', () => {
+    const p = pair();
+    p.channel.state = 'Ready';
+    p.channel.conversationId = p.group.conversationId;
+    expect(readableOfficialEndpoint(p, 'Group')).toBe(false);
+    expect(readableOfficialEndpoint(p, 'Channel')).toBe(false);
+    expect(officialConversationCapabilities(summary(), p)).toBeNull();
+  });
   it('requires explicit read permission and the exact source and conversation bindings', () => {
     const p = pair();
     p.group.capabilities = { canRead: false, canSend: true, canManage: true };
@@ -109,5 +119,65 @@ describe('server-bound official spaces', () => {
       ),
     ).toBe(false);
     expect(academicActivityHref(activity)).toBe('/personal/education/assignments/task');
+  });
+});
+
+describe('independent official bindings and account inbox views', () => {
+  const metadata = {
+    ...meta,
+    sourceKind: 'PersonalClass' as const,
+    sourceId: 'independent',
+    organizationId: null,
+  };
+  const personal = summary({ scope: 'Personal', organizationId: null, official: metadata });
+  const ownPair: OfficialPair = {
+    ...pair(),
+    sourceKind: 'PersonalClass',
+    sourceId: 'independent',
+    organizationId: null,
+    group: {
+      ...endpoint,
+      official: metadata,
+      capabilities: { canRead: true, canSend: true, canManage: false },
+    },
+    channel: { ...pair().channel, official: { ...metadata, purpose: 'Channel' } },
+  };
+  it('uses the actual independent pair without requiring an organization role', () => {
+    expect(officialMetadataMatches(personal)).toBe(true);
+    expect(officialPairPath(metadata)).toBe('/api/v1/personal-classes/independent/spaces');
+    expect(officialConversationCapabilities(personal, ownPair)?.canSend).toBe(true);
+    expect(
+      officialConversationCapabilities(personal, { ...ownPair, sourceId: 'other-class' }),
+    ).toBeNull();
+    expect(
+      officialConversationCapabilities(personal, {
+        ...ownPair,
+        group: {
+          ...ownPair.group,
+          capabilities: { canRead: false, canSend: true, canManage: true },
+        },
+      }),
+    ).toBeNull();
+  });
+  it('rejects a personal-class badge bound to an organization or another purpose', () => {
+    expect(officialMetadataMatches(summary({ official: metadata }))).toBe(false);
+    expect(
+      officialMetadataMatches({ ...personal, official: { ...metadata, purpose: 'Channel' } }),
+    ).toBe(false);
+  });
+  it('filters loaded pages without sorting or treating an unbound flag as a personal conversation', () => {
+    const direct = summary({
+      conversationId: 'direct',
+      scope: 'Personal',
+      organizationId: null,
+      official: null,
+      isOfficial: false,
+      type: 'Direct',
+    });
+    const bad = { ...direct, conversationId: 'bad', isOfficial: true };
+    const rows = [personal, direct, bad, summary()];
+    expect(filterAccountInbox(rows, 'all')).toEqual(rows);
+    expect(filterAccountInbox(rows, 'personal')).toEqual([direct]);
+    expect(filterAccountInbox(rows, 'official')).toEqual([personal, rows[3]]);
   });
 });

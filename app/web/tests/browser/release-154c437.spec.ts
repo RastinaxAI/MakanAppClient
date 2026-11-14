@@ -18,6 +18,7 @@ test('source upload waits for Ready, then retries one frozen create operation af
   await login(context, 'Student', false);
   await page.goto('/personal/resources');
   await page.getByRole('button', { name: 'افزودن منبع', exact: true }).click();
+  await page.getByRole('link', { name: /^فایل PDF/ }).click();
   await page.getByLabel('عنوان منبع', { exact: true }).fill('منبع ثبت پایدار');
   await page.getByLabel('دلیل ثبت', { exact: true }).fill('آزمون ثبت منبع');
   await page.getByLabel('فایل منبع', { exact: true }).setInputFiles(pdf);
@@ -148,7 +149,7 @@ test('assistant preflight preserves real source selection when retrieval is unav
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/personal/assistant');
   await request.post(fixture + '/__test__/source-ai-ready', { data: { sourceId: source } });
-  await page.getByRole('button', { name: 'انتخاب منابع', exact: true }).click();
+  await page.getByRole('tab', { name: 'منابع', exact: true }).click();
   const real = page.getByRole('region', { name: 'منابع متصل به سرور', exact: true });
   const selected = real.getByRole('checkbox', {
     name: 'انتخاب منبع واقعی منبع شخصی آزمایشی',
@@ -194,14 +195,7 @@ test('conversation photo uses Ready file and opaque version; retry preserves one
   await request.post(fixture + '/__test__/conversation-details', { data: {} });
   await login(context, 'Student', false);
   await page.goto(`/personal/messages/${group}/edit`);
-  await page
-    .getByRole('banner')
-    .getByRole('button', { name: 'گزینه‌های بیشتر', exact: true })
-    .click();
-  await page
-    .getByRole('dialog')
-    .getByRole('button', { name: /عکس گروه/ })
-    .click();
+  await page.getByRole('button', { name: /عکس گروه/ }).click();
   await page
     .getByLabel('انتخاب تصویر جدید', { exact: true })
     .setInputFiles({ name: 'photo.png', mimeType: 'image/png', buffer: png });
@@ -279,6 +273,7 @@ for (const role of ['Student', 'Teacher', 'Manager'])
     );
     if (role !== 'Student') {
       await page.getByRole('button', { name: 'افزودن منبع', exact: true }).click();
+      await page.getByRole('link', { name: /^فایل PDF/ }).click();
       await expect(page.getByRole('region', { name: 'افزودن منبع', exact: true })).toBeVisible();
       await expect(page).toHaveURL(/scope=Class&classId=/);
       await page.goBack();
@@ -306,6 +301,7 @@ test('definitive source validation rejection unlocks the retained draft without 
   await login(context, 'Student', false);
   await page.goto('/personal/resources');
   await page.getByRole('button', { name: 'افزودن منبع', exact: true }).click();
+  await page.getByRole('link', { name: /^فایل PDF/ }).click();
   await page.getByLabel('عنوان منبع', { exact: true }).fill('نیازمند اصلاح');
   await page.getByLabel('دلیل ثبت', { exact: true }).fill('ثبت آزمایشی');
   await page.getByLabel('فایل منبع', { exact: true }).setInputFiles(pdf);
@@ -393,3 +389,40 @@ test('source version conflict keeps its uploaded file and requires explicit revi
     ),
   ).toHaveLength(1);
 });
+
+for (const type of ['Group', 'Channel'])
+  test(`${type} photo action is visible and the acknowledged upload refreshes the actual avatar`, async ({
+    page,
+    context,
+    request,
+  }) => {
+    await request.post(fixture + '/__test__/conversation-details', { data: { type } });
+    await login(context, 'Student', false);
+    await page.setViewportSize({ width: 390, height: 844 });
+    const title = type === 'Channel' ? 'عکس کانال' : 'عکس گروه';
+    await page.goto(`/personal/messages/${group}/edit`);
+    await page.getByRole('button', { name: new RegExp('^' + title) }).click();
+    const dialog = page.getByRole('dialog', { name: title, exact: true });
+    await dialog
+      .getByLabel('انتخاب تصویر جدید', { exact: true })
+      .setInputFiles({ name: 'photo.png', mimeType: 'image/png', buffer: png });
+    await dialog.getByRole('button', { name: 'ثبت عکس گفتگو', exact: true }).click();
+    await expect(dialog.getByRole('button', { name: 'حذف عکس گفتگو', exact: true })).toBeVisible();
+    await page.keyboard.press('Escape');
+    await expect(page.getByRole('button', { name: new RegExp('^' + title) })).toBeFocused();
+    await page.goto(`/personal/messages/${group}/media`);
+    const image = page.locator('img[src^="blob:"]');
+    await expect(image).toBeVisible();
+    expect(
+      await image.evaluate((element: HTMLImageElement) => element.naturalWidth),
+    ).toBeGreaterThan(0);
+    await page.goto('/personal/messages?list=1');
+    await expect(page.locator(`a[href*="${group}"] img[src^="blob:"]`).first()).toBeVisible();
+    const state = await (await request.get(fixture + '/__test__/state')).json();
+    const writes = state.requests.filter(
+      (r: { path: string; method: string }) =>
+        r.path === `/api/v1/conversations/${group}/photo` && r.method === 'PUT',
+    );
+    expect(writes).toHaveLength(1);
+    expect(writes[0].body.expectedVersion).toBe('1');
+  });

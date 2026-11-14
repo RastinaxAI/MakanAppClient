@@ -1,12 +1,12 @@
 'use client';
-import { Input as NativeInput } from '@/components/ui/input';
+import { Input as NativeInput, Select as NativeSelect } from '@/components/ui/input';
 
 import { uiClass } from '@/components/v5/classes';
 
 import * as uiText from '@/content/fa';
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { ChevronLeft, ChevronRight, Clock3, SlidersHorizontal } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Clock3, SlidersHorizontal, MoreHorizontal } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { EmptyState, ErrorState, LoadingSkeleton, label } from '@/components/ui/states';
 import type { components } from '@/generated/api/schema';
@@ -17,6 +17,7 @@ import { JalaliDateInput } from '@/components/ui/jalali-date-input';
 import { useViewState } from '@/components/hooks/use-view-state';
 import { contextSignature } from '@/lib/client-surface';
 import { useWorkspaceSnapshot } from '../workspaces';
+import { V5Scene } from '@/components/v5/scene';
 import Link from 'next/link';
 import {
   currentSchoolWeek,
@@ -27,7 +28,37 @@ import {
 } from './calendar-model';
 import s from './schedule.module.css';
 type S = components['schemas'];
-export function Schedule({ classId, teach }: { classId?: string; teach: boolean }) {
+export function SchedulePage({ teach }: { teach: boolean }) {
+  return (
+    <V5Scene
+      id="ORG-27"
+      title={uiText.v7Ui.weeklySchedule}
+      back={base}
+      kind="list"
+      headerTools={
+        <Button
+          size="icon"
+          variant="ghost"
+          aria-label={uiText.text_589d5004f227}
+          onClick={() => window.dispatchEvent(new Event('makan:education-sections'))}
+        >
+          <MoreHorizontal size={20} />
+        </Button>
+      }
+    >
+      <Schedule teach={teach} standalone />
+    </V5Scene>
+  );
+}
+export function Schedule({
+  classId,
+  teach,
+  standalone = false,
+}: {
+  classId?: string;
+  teach: boolean;
+  standalone?: boolean;
+}) {
   const { session } = usePersonal();
   const workspaces = useWorkspaceSnapshot();
   const organizationName =
@@ -77,6 +108,23 @@ export function Schedule({ classId, teach }: { classId?: string; teach: boolean 
     [draftFilter, setDraftFilter] = useState(filter),
     [draftDate, setDraftDate] = useState(week);
   const range = schoolWeekRange(week);
+  const [view, setView] = useViewState(
+    memory + 'view',
+    day ? 'day' : 'week',
+    (value): value is string => value === 'week' || value === 'day',
+  );
+  const [chosenDay, setChosenDay] = useViewState(
+    memory + 'day',
+    day || localCalendarDay(new Date().toISOString()),
+    (value): value is string => typeof value === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(value),
+  );
+  useEffect(() => {
+    if (day && requestedWeek) {
+      setChosenDay(day);
+      setView('day');
+    }
+  }, [day, requestedWeek, setChosenDay, setView]);
+  const activeDay = range.days.some((value) => value.date === chosenDay) ? chosenDay : range.first;
   const classes = usePersonalApi<S['ClassResult'][]>('/api/v1/academic/classes', {
     enabled: filterOpen && !classId,
   });
@@ -101,7 +149,7 @@ export function Schedule({ classId, teach }: { classId?: string; teach: boolean 
       ...day,
       items: items.filter((item) => localCalendarDay(item.startUtc) === day.date),
     }))
-    .filter((day) => day.items.length > 0);
+    .filter((day) => day.items.length > 0 && (view !== 'day' || day.date === activeDay));
   const time = (value: string) =>
     new Intl.DateTimeFormat('fa-IR', { hour: '2-digit', minute: '2-digit' }).format(
       new Date(value),
@@ -109,7 +157,7 @@ export function Schedule({ classId, teach }: { classId?: string; teach: boolean 
   return (
     <Card
       title={uiText.text_2fdcd8a1bdba}
-      className={uiClass(s.schedule)}
+      className={uiClass(`${s.schedule} ${standalone ? s.standalone : ''}`)}
       action={
         <div className={uiClass(s.filterActions)}>
           <Button
@@ -179,6 +227,32 @@ export function Schedule({ classId, teach }: { classId?: string; teach: boolean 
           <ChevronLeft size={18} />
         </Button>
       </nav>
+      <div className={s.viewControls}>
+        <div className={s.viewTabs} role="group" aria-label={uiText.v7Ui.scheduleView}>
+          <button type="button" aria-pressed={view === 'week'} onClick={() => setView('week')}>
+            {uiText.v7Ui.weekView}
+          </button>
+          <button type="button" aria-pressed={view === 'day'} onClick={() => setView('day')}>
+            {uiText.v7Ui.dayView}
+          </button>
+        </div>
+        {view === 'day' && (
+          <label className={s.dayChoice}>
+            {uiText.v7Ui.chooseDay}
+            <NativeSelect
+              aria-label={uiText.v7Ui.chooseDay}
+              value={activeDay}
+              onChange={(event) => setChosenDay(event.target.value)}
+            >
+              {range.days.map((value) => (
+                <option key={value.date} value={value.date}>
+                  {value.weekday} · {value.label}
+                </option>
+              ))}
+            </NativeSelect>
+          </label>
+        )}
+      </div>
       {q.isPending ? (
         <LoadingSkeleton />
       ) : q.isError ? (

@@ -1,8 +1,73 @@
 .body {
   display: grid;
-  gap: 16px;
+  gap: 18px;
   align-content: start;
   min-width: 0;
+}
+.classSummary {
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  background: var(--surface);
+}
+.classSummary h3 {
+  font-size: calc(15px * var(--text-scale, 1));
+  font-weight: 720;
+  line-height: 1.9;
+  margin-bottom: 18px;
+}
+.classSummary > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 18px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: calc(13px * var(--text-scale, 1));
+}
+.classSummary > div:last-child {
+  border: 0;
+}
+.classSummary > div > span {
+  color: var(--muted);
+}
+.classSummary > div > strong {
+  font-weight: 650;
+  overflow-wrap: anywhere;
+}
+.classSpaces {
+  min-width: 0;
+}
+.spacesGrid {
+  display: grid;
+  gap: 16px;
+}
+.spaceCard {
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  background: var(--surface);
+  min-width: 0;
+}
+.spaceCard h3 {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  font-size: calc(15px * var(--text-scale, 1));
+  font-weight: 720;
+  line-height: 1.9;
+  margin-bottom: 12px;
+}
+.spaceCard p {
+  font-size: calc(15px * var(--text-scale, 1));
+  color: var(--muted);
+  line-height: 1.95;
+  margin-bottom: 16px;
+}
+@container content (min-width: 640px) {
+  .spacesGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 .mobileFooter {
   display: none;
@@ -88,12 +153,14 @@
   font-size: calc(14px * var(--text-scale, 1));
   line-height: 1.7;
 }
-.tabs :is(button, a).activeFilter {
+.tabs :is(button, a).activeFilter,
+.tabs [aria-selected='true'] {
   color: var(--accent-text);
   border-color: transparent;
   font-weight: 700;
 }
-.tabs .activeFilter::before {
+.tabs .activeFilter::before,
+.tabs [aria-selected='true']::before {
   content: '';
   position: absolute;
   inset: 0;
@@ -137,4 +204,38 @@
 
 .openClass {
   --card-title-size: calc(16px * var(--text-scale, 1));
+}
+.localView {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.localViewHint {
+  border: 1px solid var(--line);
+  background: var(--primary-soft);
+  color: var(--muted);
+  padding: 14px;
+  border-radius: 10px;
+  font-size: calc(12px * var(--text-scale, 1));
+  line-height: 1.95;
+}
+.localViewChoice {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  min-height: 48px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+}
+.localViewChoice > span {
+  min-width: 0;
+  flex: 1;
+}
+.localViewChoice small {
+  display: block;
+  color: var(--muted);
+  font-size: calc(12px * var(--text-scale, 1));
+}
+.localViewChoice:has(input:disabled) {
+  color: var(--muted);
 }

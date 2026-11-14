@@ -19,20 +19,20 @@ test('V4 profile edit has labelled readable fields and a safe footer at all scre
     await expect(page.getByLabel('نام خانوادگی', { exact: true })).toBeEditable();
     await expect(page.getByLabel('نام نمایشی', { exact: true })).toBeEditable();
     await expect(page.getByLabel('نام کاربری', { exact: true })).toBeEditable();
-    const action = page.getByRole('button', { name: 'ذخیره پروفایل', exact: true });
+    const action = page.getByRole('button', { name: 'ذخیره تغییرات', exact: true });
     const footer = page.locator('.rx-bottom-actions');
-    await expect(footer).toBeVisible({ visible: width < 1200 });
-    await expect(page.locator('.head-action')).toBeVisible({ visible: width >= 1200 });
+    await expect(footer).toBeVisible();
+    await expect(page.locator('.head-action')).toBeHidden();
     const box = (await action.boundingBox())!;
-    expect(box.y + box.height).toBeLessThanOrEqual(height - 12);
-    if (width < 1200) expect(height - box.y - box.height).toBeGreaterThanOrEqual(12);
+    expect(box.y + box.height).toBeLessThanOrEqual(height - 8);
+    if (width < 1200) expect(height - box.y - box.height).toBeGreaterThanOrEqual(8);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(
       true,
     );
     await page.screenshot({ path: `test-results/school-redesign/profile-edit-${width}.png` });
   }
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.getByRole('button', { name: 'ذخیره پروفایل', exact: true }).scrollIntoViewIfNeeded();
+  await page.getByRole('button', { name: 'ذخیره تغییرات', exact: true }).scrollIntoViewIfNeeded();
   await page.screenshot({ path: 'test-results/school-redesign/profile-footer-mobile.png' });
 });
 
@@ -79,20 +79,27 @@ test('school has the authorized education destinations, three nearest items and 
   });
   await page.goto('/personal/education');
   const nav = await schoolSections(page);
-  await expect(nav.getByRole('link')).toHaveText([
-    'امروز',
-    'کلاس‌ها',
-    'برنامه',
-    'دعوت‌ها',
-    'گزارش‌ها و پیشرفت',
-  ]);
+  await expect(page.getByRole('navigation', { name: 'بخش‌های آموزشگاه', exact: true })).toHaveCount(
+    0,
+  );
+  for (const href of ['', '/classes', '/schedule', '/invitations', '/notices', '/reports'])
+    await expect(nav.locator(`a[href="/personal/education${href}"]`)).toBeVisible();
   await page.keyboard.press('Escape');
   for (const [name, title] of [
     ['نزدیک‌ترین جلسه', 'جلسهٔ نزدیک'],
     ['نزدیک‌ترین تکلیف', 'تکلیف نزدیک'],
     ['نزدیک‌ترین آزمون', 'آزمون نزدیک'],
   ])
-    await expect(page.getByRole('link').filter({ hasText: title }).first(), name).toBeVisible();
+    await expect(
+      name === 'نزدیک‌ترین جلسه'
+        ? page.getByText(title, { exact: true })
+        : page.getByRole('link').filter({ hasText: title }).first(),
+      name,
+    ).toBeVisible();
+  await expect(page.getByRole('link', { name: 'جزئیات جلسه', exact: true })).toHaveAttribute(
+    'href',
+    '/personal/education/sessions/' + ids.class,
+  );
   for (const [width, height] of [
     [390, 844],
     [834, 1194],

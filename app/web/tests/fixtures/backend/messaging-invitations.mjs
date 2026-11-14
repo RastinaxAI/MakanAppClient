@@ -4,6 +4,46 @@ import { id, make } from './state.mjs';
 export function seedMessagingRepair(state, body) {
   state.messagingRepair = body;
   state.messagingInvitations = [];
+  if (Number.isInteger(body.contactCount) && body.contactCount >= 0) {
+    state.contactBooks ??= new Map();
+    state.contactBooks.set(
+      id(102),
+      new Map(
+        Array.from({ length: body.contactCount }, (_, index) => {
+          const userId = id(20000 + index);
+          return [
+            userId,
+            make('UserContactResult', {
+              contactUserId: userId,
+              savedName: `مخاطب آزمایشی ${index + 1}`,
+              profile: make('MessagingPublicProfileResult', {
+                userId,
+                username: `saved.contact.${index + 1}`,
+                displayName: `مخاطب ${index + 1}`,
+                canStartDirect: true,
+                phoneNumber: null,
+              }),
+              version: '1',
+            }),
+          ];
+        }),
+      ),
+    );
+  }
+  if (body.receivedStatuses) {
+    state.messagingInvitations = body.receivedStatuses.map((status, index) =>
+      make('ConversationInvitationResult', {
+        id: id(21000 + index),
+        conversationId: id(9),
+        inviterUserId: id(101),
+        targetUserId: id(102),
+        status: status === 'PastPending' ? 'Pending' : status,
+        expiresAtUtc: new Date(
+          Date.now() + (status === 'PastPending' || status === 'Expired' ? -3600000 : 86400000),
+        ).toISOString(),
+      }),
+    );
+  }
   if (body.blocked)
     state.blocked.set(
       id(102),

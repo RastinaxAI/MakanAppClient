@@ -28,15 +28,24 @@ docker build -t makan-management-deploy-tests tests/deployment
 docker run --rm --network none --mount "type=bind,source=$($PWD.Path),target=/work,readonly" makan-management-deploy-tests
 ```
 
-خروجی تست‌ها در `maintenance/generated` است و وارد Git یا بستهٔ سرور نمی‌شود. آرشیو `maintenance/history` و خروجی‌های قدیمی حذف شده‌اند. تصاویر جاری راهنما در `docs/screenshots/redesign-20261030` و PDF قابل ارسال در `public/guides/makan-owner-guide.pdf` قرار دارد. اسکن Tailwind به سورس فعال محدود است و مستندات، تست‌ها و قراردادهای تولیدشده را بررسی نمی‌کند.
+خروجی تست‌ها در `maintenance/generated` است و وارد Git یا بستهٔ سرور نمی‌شود. PDF راهنمای تصویری جاری در `public/guides/makan-owner-guide.pdf` قرار دارد و نسخه قابل تحویل آن در `output/pdf/MakanApp_Admin_Visual_User_Guide_FA.pdf` تولید می‌شود. تصاویر و خروجی میانی راهنمای جدید در `tmp/pdfs/owner-handbook` هستند. اسکن Tailwind به سورس فعال محدود است و مستندات، تست‌ها و قراردادهای تولیدشده را بررسی نمی‌کند.
 
-تست‌های تصویری به‌صورت پیش‌فرض تصاویر موقت را در `maintenance/generated/redesign-screenshots` می‌نویسند و تصاویر راهنمای تحویل‌شده را بازنویسی نمی‌کنند. فقط برای بازسازی عمدی راهنما، متغیر `MAKAN_GUIDE_SCREENSHOTS=true` را پیش از اجرای تست‌های `redesign.spec.ts` تنظیم کنید.
+تست‌های تصویری به‌صورت پیش‌فرض تصاویر موقت را در `maintenance/generated/redesign-screenshots` می‌نویسند. تصاویر قدیمی `docs/screenshots/redesign-20261030` منبع راهنمای کامل جدید نیستند.
 
-بازسازی PDF پس از آماده‌بودن تصاویر و وابستگی‌های توسعه:
+برای بازسازی راهنمای کامل، ابتدا پس از build یک سرور نمایشی ایزوله را در ترمینال جدا اجرا کنید. هیچ عکس یا داده‌ای از حساب واقعی دریافت نمی‌شود:
 
 ```powershell
+node scripts/test-server.mjs --skip-build
+```
+
+سپس در ترمینال دوم:
+
+```powershell
+node scripts/capture-owner-handbook.mjs
 node scripts/build-user-handbook.cjs
 ```
+
+متن درس‌ها در `scripts/owner-handbook-content.cjs` است. سازنده، توضیح‌ها و فلش‌ها را داخل تصاویر قرار می‌دهد و چیدمان را قبل از تولید PDF کنترل می‌کند. خروجی باید با Poppler رندر و از نظر بصری بررسی شود؛ فایل نهایی در مسیر عمومی راهنمای داخل پنل نیز کپی می‌شود. پس از پایان، سرور نمایشی را ببندید.
 
 برای تغییر قرارداد، snapshot را دریافت، اختلاف را مرور و سپس کد تولیدشده را بازسازی کنید:
 

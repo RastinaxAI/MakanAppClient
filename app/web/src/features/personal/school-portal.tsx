@@ -16,6 +16,7 @@ import {
   Users,
   UserRoundCheck,
   ChartNoAxesCombined,
+  Megaphone,
 } from 'lucide-react';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
@@ -61,6 +62,16 @@ const Assignments = dynamic(() => import('./school/learning').then((m) => m.Assi
 const Schedule = dynamic(() => import('./school/learning').then((m) => m.Schedule), {
   loading: dynamicLoading,
 });
+const SchedulePage = dynamic(() => import('./school/schedule').then((m) => m.SchedulePage), {
+  loading: dynamicLoading,
+});
+const SchoolNotices = dynamic(() => import('./school/notices').then((m) => m.SchoolNotices), {
+  loading: dynamicLoading,
+});
+const LearnerRecord = dynamic(
+  () => import('./school/learner-record').then((m) => m.LearnerRecord),
+  { loading: dynamicLoading },
+);
 const AssignmentFormPage = dynamic(
   () => import('./school/learning').then((m) => m.AssignmentFormPage),
   { loading: dynamicLoading },
@@ -209,16 +220,19 @@ export function PersonalEducation({ section = [] }: { section?: string[] }) {
     ? ([
         ['overview', uiText.text_ca3c4420b9b8, Building2],
         ['classes', uiText.text_e7b1ccd0bda3, BookOpen],
+        ['schedule', uiText.v7Ui.schoolSchedule, CalendarDays],
         ['members', uiText.text_102f79b3f87c, Users],
         ['guardians', uiText.text_d61b3d58a5e7, UserRoundCheck],
         ['invitations', uiText.text_016c18389868, Mail],
         ['reports', uiText.text_5dc634b07b21, ChartNoAxesCombined],
+        ['notices', uiText.v7Ui.schoolNotices, Megaphone],
       ] as const)
     : ([
         ['overview', uiText.text_9a8e4bfdd18e, Building2],
         ['classes', uiText.text_e7b1ccd0bda3, BookOpen],
         ['schedule', uiText.text_82ec67c14936, CalendarDays],
         ['invitations', uiText.text_016c18389868, Mail],
+        ['notices', uiText.v7Ui.schoolNotices, Megaphone],
         ...(!parent
           ? ([['reports', uiText.learningReports.navigation, ChartNoAxesCombined]] as const)
           : []),
@@ -252,7 +266,6 @@ export function PersonalEducation({ section = [] }: { section?: string[] }) {
     if (active && parent) return <ParentWorkspace />;
     return (
       <ReferenceSchoolFrame>
-        {navigation}
         {!active ? (
           <WorkspaceList />
         ) : !isSchoolRole(role) ? (
@@ -315,6 +328,8 @@ export function PersonalEducation({ section = [] }: { section?: string[] }) {
       {navigation}
       {!allowed ? (
         <ErrorState error={new ApiError(403)} />
+      ) : page === 'notices' ? (
+        <SchoolNotices compose={section[1] === 'new'} />
       ) : page === 'content' ? (
         <TeacherContentPage />
       ) : page === 'evaluations' ? (
@@ -367,6 +382,8 @@ export function PersonalEducation({ section = [] }: { section?: string[] }) {
         <ExamReviewPage id={section[1]} />
       ) : page === 'exams' && section[2] === 'questions' ? (
         <QuestionCreatePage id={section[1]} />
+      ) : page === 'classes' && section[2] === 'learners' && section[3] ? (
+        <LearnerRecord classId={section[1]} learnerId={section[3]} />
       ) : page === 'classes' && section[2] === 'members' ? (
         <ClassMembersPage classId={section[1]} kind="all" />
       ) : page === 'classes' && section[3] === 'new' && section[2] === 'schedule-rules' ? (
@@ -450,10 +467,7 @@ export function PersonalEducation({ section = [] }: { section?: string[] }) {
       ) : page === 'exams' ? (
         <Exams teach={teacher || manager} />
       ) : page === 'schedule' ? (
-        <>
-          <SchoolHeading title={uiText.text_0465a6813992} />
-          <Schedule teach={teacher || manager} />
-        </>
+        <SchedulePage teach={teacher || manager} />
       ) : (
         <ResourcesClasses />
       )}

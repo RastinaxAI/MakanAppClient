@@ -37,6 +37,7 @@ const serviceMessages: Record<string, string> = {
   NETWORK_ERROR: uiText.text_ad5229f8ee19,
 };
 const actionMessages: Record<string, string> = {
+  AI_CONTEXT_RESELECT_REQUIRED: uiText.v6Ui.assistantContextChanged,
   PAYMENT_STORAGE_UNAVAILABLE: uiText.paymentCopy.storageUnavailable,
   PAYMENT_PROVIDER_UNAVAILABLE: uiText.paymentCopy.unavailable,
   PAYMENT_PENDING_VERIFICATION: uiText.paymentCopy.verificationPending,

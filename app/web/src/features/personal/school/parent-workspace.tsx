@@ -2,23 +2,24 @@
 import { uiClass } from '@/components/v5/classes';
 import { SegmentedNavigation } from '@/components/ui/tabs';
 
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-import { CheckCircle2, Clock3 } from 'lucide-react';
+import { CheckCircle2, Clock3, Search } from 'lucide-react';
 import * as uiText from '@/content/fa';
-import { Button, buttonClass } from '@/components/ui/button';
+import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { EmptyState, ErrorState, LoadingSkeleton, label } from '@/components/ui/states';
 import { V4List, V4Row } from '@/components/v4/page';
 import { V5Scene } from '@/components/v5/scene';
-import { SceneMenuClose, useSceneContextSummary } from '@/components/v5/form-actions';
+import { useSceneContextSummary } from '@/components/v5/form-actions';
 import type { components } from '@/generated/api/schema';
 import { date, number } from '@/lib/formatting';
 import { usePersonal, usePersonalApi } from '../provider';
 import { ChildSelector } from './child-selector';
 import { useAuthorizedChildren } from './use-authorized-children';
 import { ParentDaily } from './parent-daily';
+import { SchoolQuickActions } from './quick-actions';
 import { Pager } from './shared';
 type S = components['schemas'];
 type Report = S['ParentAssignmentReportItem'] | S['ParentExamReportItem'];
@@ -96,8 +97,17 @@ export function ParentWorkspace({ reports }: { reports?: 'assignments' | 'exams'
           ? () => window.dispatchEvent(new Event('makan:workspace-picker'))
           : undefined
       }
-      menu={<ParentNavigation />}
+      headerTools={
+        <Link
+          href="/personal/education/search"
+          className={uiClass('rx-icon-button')}
+          aria-label={uiText.text_8e87c1832a1e}
+        >
+          <Search size={22} />
+        </Link>
+      }
     >
+      <SchoolQuickActions />
       {childrenView ? (
         <ChildSelector
           variant="list"
@@ -122,7 +132,9 @@ export function ParentWorkspace({ reports }: { reports?: 'assignments' | 'exams'
         (reports ? (
           <ParentResults key={session.revision + reports} child={selection.active} kind={reports} />
         ) : (
-          <ParentDaily child={selection.active} program={program} />
+          <>
+            <ParentDaily child={selection.active} program={program} />
+          </>
         ))
       )}
       <Dialog
@@ -157,49 +169,6 @@ export function ParentWorkspace({ reports }: { reports?: 'assignments' | 'exams'
         </DialogContent>
       </Dialog>
     </V5Scene>
-  );
-}
-function ParentNavigation() {
-  const close = useContext(SceneMenuClose);
-  return (
-    <nav
-      className={uiClass('stack')}
-      aria-label={uiText.text_589d5004f227}
-      onClick={(event) => {
-        if ((event.target as HTMLElement).closest('a,button')) close?.();
-      }}
-    >
-      <Link className={uiClass(buttonClass('button button-outline'))} href={root}>
-        {uiText.text_9a8e4bfdd18e}
-      </Link>
-      <Link
-        className={uiClass(buttonClass('button button-outline'))}
-        href={root + '?view=children'}
-      >
-        {t.children}
-      </Link>
-      <Link className={uiClass(buttonClass('button button-outline'))} href={root + '?view=program'}>
-        {t.program}
-      </Link>
-      <Link className={uiClass(buttonClass('button button-outline'))} href={root + '/assignments'}>
-        {t.results}
-      </Link>
-      <Link className={uiClass(buttonClass('button button-outline'))} href={root + '/classes'}>
-        {uiText.text_e7b1ccd0bda3}
-      </Link>
-      <Link className={uiClass(buttonClass('button button-outline'))} href={root + '/schedule'}>
-        {uiText.text_82ec67c14936}
-      </Link>
-      <Link className={uiClass(buttonClass('button button-outline'))} href={root + '/invitations'}>
-        {uiText.text_016c18389868}
-      </Link>
-      <Button
-        variant="outline"
-        onClick={() => window.dispatchEvent(new Event('makan:workspace-picker'))}
-      >
-        {uiText.text_d6541f139845}
-      </Button>
-    </nav>
   );
 }
 function hasReleasedResult(item: Report) {

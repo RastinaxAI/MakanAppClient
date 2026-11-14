@@ -1,4 +1,4 @@
-import { v5Lessons as lessons } from '../../src/content/fa';
+import { v6Ui as v6, v5Lessons as lessons } from '../../src/content/fa';
 import { selectParentChild, openParentChildren, parentChildButton } from './parent-controls';
 import { test, expect, login, fixture, ids } from './test';
 import { mkdir } from 'node:fs/promises';
@@ -15,7 +15,8 @@ test('one workspace click enters it once; a failed switch never claims entry', a
   await request.post(fixture + '/__test__/fault', {
     data: { path: '/workspaces/select', method: 'POST', status: 503 },
   });
-  await page.getByRole('button', { name: /آموزشگاه آفتاب/ }).click();
+  await page.getByRole('radio', { name: /دانش‌آموز/ }).check();
+  await page.getByRole('button', { name: v6.enterRole, exact: true }).click();
   await expect(
     page
       .getByRole('alert')
@@ -25,15 +26,18 @@ test('one workspace click enters it once; a failed switch never claims entry', a
   const failed = await (await context.request.get('/api/client/session')).json();
   expect(failed.context.workspaceType).toBe('Personal');
   await page.reload();
-  await expect(page.getByRole('button', { name: /آموزشگاه آفتاب/ })).toBeVisible();
+  await expect(page.getByRole('radio', { name: /دانش‌آموز/ })).toBeVisible();
+  await page.getByRole('radio', { name: /دانش‌آموز/ }).check();
   await request.post(fixture + '/__test__/fault', {
     data: { path: '/workspaces/select', method: 'POST', delay: 600 },
   });
-  await page.getByRole('button', { name: /آموزشگاه آفتاب/ }).evaluate((el: HTMLButtonElement) => {
-    el.click();
-    el.click();
-  });
-  await expect(page).toHaveURL(/\/personal$/);
+  await page
+    .getByRole('button', { name: v6.enterRole, exact: true })
+    .evaluate((el: HTMLButtonElement) => {
+      el.click();
+      el.click();
+    });
+  await expect(page).toHaveURL(/\/personal\/education$/);
   await expect(page.getByRole('heading', { name: 'آموزشگاه', exact: true })).toBeVisible();
   const state = await (await request.get(fixture + '/__test__/state')).json();
   expect(

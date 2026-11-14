@@ -1,81 +1,204 @@
+/* V7 uses the product's blue tokens in the workspace and in Radix portals. */
 .theme {
+  --library-search: var(--soft);
+  --msg-body: var(--text);
   --chat-header: var(--surface);
   --detail-action: var(--surface);
-  --chat-background: var(--chat-canvas);
-  --chat-wallpaper: radial-gradient(var(--chat-pattern-dot) 0.8px, transparent 0.8px);
+  --chat-background: var(--bg);
+  --chat-wallpaper: none;
   --chat-selected: var(--primary-soft);
   --chat-badge-text: var(--on-primary);
   color: var(--text);
   background: var(--bg);
-  color-scheme: inherit;
+}
+.shell:global(.rx-root):has([data-message-room]) :global(.layout-messenger .rx-head) {
+  display: none;
+}
+.shell:global(.rx-root) :global(.layout-messenger .rx-content) {
+  padding: 0;
 }
 .page {
   width: 100%;
   min-height: 100%;
-  padding: 24px max(16px, calc((100% - 760px) / 2));
+  padding: 24px max(16px, calc((100% - 780px) / 2));
 }
-.page > :first-child h1 {
-  font-size: calc(20px * var(--text-scale, 1));
-}
-.page > :first-child > div > span {
-  display: none;
-}
-.page > :first-child p {
-  font-size: calc(13px * var(--text-scale, 1));
-}
-.page input:not([type='checkbox']),
-.page textarea,
-.page select {
-  background: var(--surface);
-  color: var(--text);
-  border-color: var(--control-border);
-  border-radius: 12px;
-}
-.page :global(.button) {
-  border-radius: 12px;
-}
-.page :global(.button-ghost),
-.page :global(.button-outline) {
-  color: var(--primary);
-}
-.page :global(.button-primary) {
-  color: var(--on-primary);
-}
-.page :global(.button-danger) {
-  color: var(--on-danger);
-}
-/* Portals inherit neither the room nor the page: apply this class explicitly. */
 .menu {
+  z-index: 1101;
   min-width: 230px;
-  border-radius: 14px;
+  max-width: calc(100vw - 24px);
+  max-height: min(80dvh, 680px);
+  overflow-y: auto;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
   background: var(--surface);
-  padding: 4px;
-  box-shadow: 0 12px 40px #0003;
+  padding: 8px;
+  box-shadow: 0 4px 18px #10182414;
+  color: var(--text);
 }
 .menu [role='menuitem'] {
   min-height: 48px;
-  padding: 10px 14px;
+  padding: 12px 14px;
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
   font-size: calc(14px * var(--text-scale, 1));
+  line-height: 1.85;
   outline: none;
-  border-radius: 9px;
+  border-radius: 10px;
   cursor: pointer;
 }
 .menu [role='menuitem'][data-highlighted] {
-  background: var(--soft);
+  background: var(--primary-soft);
+}
+.menu [role='menuitem'][data-disabled] {
+  opacity: 0.5;
+  cursor: default;
 }
 .menu [role='menuitem'] svg {
-  width: 20px;
-  height: 20px;
+  flex: none;
+  width: 21px;
+  height: 21px;
   color: var(--primary);
+}
+.menu [data-destructive],
+.menu [data-destructive] svg {
+  color: var(--danger);
+}
+.menuHeading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 14px 12px;
+  color: var(--text);
+  font-size: calc(14px * var(--text-scale, 1));
+  font-weight: 650;
+}
+.menuHeading > span {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+}
+.menuBackdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1099;
+  background: var(--dialog-overlay);
+}
+.overlay {
+  background: var(--dialog-overlay);
+}
+.dialog:global(.dialog-content) {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-dialog);
+  width: min(520px, calc(100% - 32px));
+  max-height: calc(var(--app-visual-height, 100dvh) - 32px);
+}
+.durationList {
+  display: grid;
+}
+.durationList > button {
+  min-height: 48px;
+  padding: 12px 0;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  background: transparent;
+  color: var(--text);
+  text-align: start;
+  font: inherit;
+  font-size: calc(14px * var(--text-scale, 1));
+}
+.durationList > button:disabled {
+  opacity: 0.5;
+}
+.presence {
+  position: absolute;
+  inset-inline-end: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  width: 12px;
+  height: 12px;
+  border: 2px solid var(--surface);
+  border-radius: 50%;
+  background: var(--success);
+  visibility: hidden;
+  pointer-events: none;
+}
+.presence[data-presence-state='Online'],
+.presence[data-presence-state='Recently'] {
+  visibility: visible;
+}
+.presence[data-presence-state='Recently'] {
+  width: 24px;
+  border-radius: 8px;
+}
+.presence i {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--surface);
+}
+.presenceLabel {
+  display: block;
+  min-height: 20px;
+  color: var(--muted);
+  font-size: calc(11px * var(--text-scale, 1));
+  line-height: 1.85;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.presenceLabel[data-presence-state='Online'] {
+  color: var(--success);
+}
+.conversationPreview {
+  padding: 12px;
+  border-radius: var(--radius-card);
+  background: var(--soft);
+  color: var(--text);
+  font-size: calc(14px * var(--text-scale, 1));
+  overflow-wrap: anywhere;
+}
+.conversationPreview p {
+  margin: 8px 0 0;
+  line-height: 1.95;
 }
 @media (max-width: 767px) {
   .page {
-    padding: 18px 12px 30px;
+    padding: 18px 16px 24px;
   }
-  .page > :first-child {
-    margin-bottom: 16px;
+  /* Radix owns inline popper positioning; the mobile variant is a sheet. */
+  :global([data-radix-popper-content-wrapper]):has(> .menu:global(.mk-message-menu)) {
+    position: fixed !important;
+    inset: auto 0 0 !important;
+    transform: none !important;
+    width: 100% !important;
+    z-index: 1101 !important;
+  }
+  .menu:global(.mk-message-menu),
+  .menu:global(.mk-conversation-menu) {
+    position: fixed;
+    inset-inline: 0;
+    bottom: 0;
+    width: 100%;
+    max-width: none;
+    max-height: calc(var(--app-visual-height, 100dvh) - 24px);
+    border: 1px solid var(--line);
+    border-radius: 19px 19px 0 0;
+    padding: 16px 12px max(16px, env(safe-area-inset-bottom));
+    box-shadow: none;
+    z-index: 1101;
+  }
+  .selectionSheet:global(.dialog-content) {
+    inset: auto 0 0;
+    width: 100%;
+    max-width: none;
+    min-height: 60dvh;
+    max-height: calc(var(--app-visual-height, 100dvh) - 24px);
+    transform: none;
+    border-radius: 19px 19px 0 0;
   }
 }

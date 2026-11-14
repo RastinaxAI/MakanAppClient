@@ -1,26 +1,23 @@
 'use client';
-import { Input as NativeInput } from '@/components/ui/input';
+import { Input as NativeInput, Select as NativeSelect } from '@/components/ui/input';
 
 import { uiClass } from '@/components/v5/classes';
 
 import * as uiText from '@/content/fa';
 import appearance from './appearance.module.css';
-import { Button, buttonClass } from '@/components/ui/button';
-import { Bell, MonitorSmartphone, UserRound, Wallet } from 'lucide-react';
-import { Palette, ShieldCheck, Type, Accessibility, Headphones } from 'lucide-react';
+import { buttonClass } from '@/components/ui/button';
+import { Bell, MonitorSmartphone, ContactRound, Phone, Download, UserRoundX } from 'lucide-react';
+import { Palette, ShieldCheck, Headphones } from 'lucide-react';
 import Link from 'next/link';
 import { V5Scene } from '@/components/v5/scene';
 import { V4List, V4Row } from '@/components/v4/page';
 import { useThemePreference } from './theme';
-import { usePersonal } from './provider';
-import { label } from '@/components/ui/states';
-import { useRouter } from 'next/navigation';
+import { applyReadingPreference } from '@/lib/reading-preference';
 import { useState, useEffect } from 'react';
 export function ProfilePreferences() {
   return <PersonalSettings />;
 }
 export function PersonalSettings() {
-  const { session } = usePersonal();
   const t = uiText.v5Product;
 
   return (
@@ -29,9 +26,7 @@ export function PersonalSettings() {
       title={uiText.navigation_settings}
       back="/personal/profile"
       kind="list"
-      subtitle={[label(session.context.activeRole ?? 'Personal'), session.user.firstName]
-        .filter(Boolean)
-        .join(' · ')}
+      subtitle={uiText.v6Ui.personalIdentity}
       deep={false}
       menu={
         <div className={uiClass('stack')}>
@@ -56,16 +51,10 @@ export function PersonalSettings() {
       <V4List>
         {[
           {
-            href: '/personal/profile/edit',
-            title: t.account,
-            description: t.accountSettingsDescription,
-            Icon: UserRound,
-          },
-          {
-            href: '/personal/settings/privacy',
-            title: t.communication,
-            description: t.communicationDescription,
-            Icon: ShieldCheck,
+            href: '/personal/settings/appearance',
+            title: uiText.v6Ui.settingsAppearance,
+            description: uiText.v6Ui.settingsAppearanceHint,
+            Icon: Palette,
           },
           {
             href: '/personal/settings/notifications',
@@ -74,39 +63,66 @@ export function PersonalSettings() {
             Icon: Bell,
           },
           {
-            href: '/personal/settings/appearance',
-            title: t.appearance,
-            description: t.appearanceSettingsDescription,
-            Icon: Palette,
+            href: '/personal/settings/privacy',
+            title: uiText.v6Ui.settingsPrivacy,
+            description: uiText.v6Ui.settingsPrivacyHint,
+            Icon: ShieldCheck,
           },
           {
             href: '/personal/settings/devices',
-            title: t.security,
+            title: uiText.v6Ui.settingsDevices,
             description: t.devicesDescription,
             Icon: MonitorSmartphone,
           },
           {
-            href: '/personal/subscription',
-            title: t.billing,
-            description: t.billingDescription,
-            Icon: Wallet,
+            href: '/personal/contacts?view=sync',
+            title: uiText.v6Ui.syncContacts,
+            description: uiText.v6Ui.syncHint,
+            Icon: ContactRound,
           },
         ].map(({ Icon, ...item }) => (
           <V4Row key={item.href} {...item} icon={<Icon />} />
         ))}
       </V4List>
+      <V4List>
+        <V4Row href="/personal/settings/phone" title={uiText.v4Text.phoneChange} icon={<Phone />} />
+        <V4Row href="/personal/settings/help" title={uiText.v4Text.support} icon={<Headphones />} />
+        <V4Row
+          href="/personal/settings/install"
+          title={uiText.v6Ui.installApp}
+          icon={<Download />}
+        />
+        <V4Row
+          href="/personal/settings/delete-account"
+          title={uiText.v4Text.deleteAccount}
+          icon={<UserRoundX />}
+        />
+      </V4List>
     </V5Scene>
   );
 }
 export function AppearanceSettings() {
-  const { theme, changeTheme, error } = useThemePreference(),
-    router = useRouter();
+  const { theme, changeTheme, error } = useThemePreference();
   const [draft, setDraft] = useState(theme);
-  const [reading, setReading] = useState({ large: false, reduce: false });
+  const [reading, setReading] = useState({ size: 'system', reduce: false });
+  const [readingError, setReadingError] = useState('');
+  function changeReading(key: 'makan-reading' | 'makan-motion', value: string) {
+    try {
+      localStorage.setItem(key, value);
+      applyReadingPreference();
+      setReading({
+        size: document.documentElement.dataset.reading ?? 'standard',
+        reduce: document.documentElement.dataset.motion === 'reduce',
+      });
+      setReadingError('');
+    } catch {
+      setReadingError(uiText.v5Product.readingStorageError);
+    }
+  }
   useEffect(
     () =>
       setReading({
-        large: document.documentElement.dataset.reading === 'large',
+        size: document.documentElement.dataset.reading ?? 'standard',
         reduce: document.documentElement.dataset.motion === 'reduce',
       }),
     [],
@@ -120,19 +136,13 @@ export function AppearanceSettings() {
       back="/personal/settings"
       kind="form"
       deep
-      actions={
-        <>
-          <Button
-            onClick={() => {
-              if (changeTheme(draft)) router.push('/personal/settings');
-            }}
-          >
-            {t.saveAppearance}
-          </Button>
-          <Button variant="outline" onClick={() => router.push('/personal/settings')}>
-            {uiText.text_fa7af603d430}
-          </Button>
-        </>
+      menu={
+        <Link
+          href="/personal/settings/reading"
+          className={uiClass(buttonClass('button button-outline'))}
+        >
+          {uiText.v4Text.reading}
+        </Link>
       }
     >
       <div className={appearance.page}>
@@ -154,9 +164,15 @@ export function AppearanceSettings() {
                   aria-label={title}
                   value={value}
                   checked={draft === value}
-                  onChange={() => setDraft(value)}
+                  onChange={() => {
+                    setDraft(value);
+                    changeTheme(value);
+                  }}
                 />
-                <span>{title}</span>
+                <span>
+                  <b>{title}</b>
+                  <small>{uiText.v6Ui.themeHints[value]}</small>
+                </span>
               </label>
             ))}
           </fieldset>
@@ -164,38 +180,40 @@ export function AppearanceSettings() {
         </section>
         <section className={uiClass('card')}>
           <h3>{uiText.v4Text.reading}</h3>
-          <V4List>
-            <V4Row
-              href="/personal/settings/reading"
-              icon={<Type />}
-              title={uiText.v4Text.largerText}
-              description={reading.large ? t.preferenceOn : t.preferenceOff}
+          <label className={appearance.size}>
+            {uiText.v6Ui.textSize}
+            <NativeSelect
+              aria-label={uiText.v6Ui.textSize}
+              value={reading.size}
+              onChange={(event) => changeReading('makan-reading', event.target.value)}
+            >
+              <option value="standard">{uiText.v6Ui.textStandard}</option>
+              <option value="comfortable">{uiText.v6Ui.textComfortable}</option>
+              <option value="large">{uiText.v6Ui.textVeryLarge}</option>
+            </NativeSelect>
+          </label>
+          <label className={appearance.motion}>
+            <NativeInput
+              type="checkbox"
+              role="switch"
+              aria-label={uiText.v4Text.reduceMotion}
+              checked={reading.reduce}
+              onChange={(event) =>
+                changeReading('makan-motion', event.target.checked ? 'reduce' : 'system')
+              }
             />
-            <V4Row
-              href="/personal/settings/reading"
-              icon={<Accessibility />}
-              title={uiText.v4Text.reduceMotion}
-              description={reading.reduce ? t.preferenceOn : uiText.text_09ac966bd1cb}
-            />
-          </V4List>
+            <span>
+              <b>{uiText.v4Text.reduceMotion}</b>
+              <small>{uiText.v5Product.readingMotionHint}</small>
+            </span>
+          </label>
         </section>
-        <V4List>
-          <V4Row
-            href="/personal/settings/notifications"
-            icon={<Bell />}
-            title={uiText.text_9f2a436a61f3}
-          />
-          <V4Row
-            href="/personal/settings/privacy"
-            icon={<ShieldCheck />}
-            title={uiText.v5Product.communication}
-          />
-          <V4Row
-            href="/personal/settings/help"
-            icon={<Headphones />}
-            title={uiText.v4Text.support}
-          />
-        </V4List>
+        <p className={uiClass('policy')}>{uiText.v6Ui.preferenceKeepsDraft}</p>
+        {readingError && (
+          <p role="alert" className={uiClass('field-error')}>
+            {readingError}
+          </p>
+        )}
         {error && (
           <p role="alert" className={uiClass('field-error')}>
             {error}

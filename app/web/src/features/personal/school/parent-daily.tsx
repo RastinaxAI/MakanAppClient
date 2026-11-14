@@ -15,7 +15,7 @@ import {
   UserRoundCheck,
 } from 'lucide-react';
 import { ErrorState, LoadingSkeleton } from '@/components/ui/states';
-import { V4Hero, V4List, V4Row } from '@/components/v4/page';
+import { V4List, V4Row } from '@/components/v4/page';
 import {
   useSceneContextSummary,
   useSceneMenuTools,
@@ -28,6 +28,7 @@ import type { components } from '@/generated/api/schema';
 import { usePersonal, usePersonalApi } from '../provider';
 import { nearestUpcoming } from './calendar-model';
 import styles from './parent-workspace.module.css';
+import layout from './dashboard-layout.module.css';
 type S = components['schemas'];
 const t = uiText.v5Parent;
 function sessionTime(value: string) {
@@ -175,87 +176,73 @@ export function ParentDaily({
   if (!d) return <ErrorState error={new ApiError(403)} />;
   return (
     <>
-      {program ? (
-        <V4Hero title={child.displayName}>{child.organizationName}</V4Hero>
-      ) : (
-        <>
+      <Link
+        href="/personal/education?view=children"
+        className={styles.child}
+        data-parent-active-child
+      >
+        <span className={styles.identity}>
+          <span className={uiClass('avatar')} aria-hidden="true">
+            {Array.from(child.displayName)[0]}
+          </span>
+          <span className={styles.copy}>
+            <h2>{child.displayName}</h2>
+            <small>
+              {t.authorizedRelation(child.displayName)} · {child.organizationName}
+            </small>
+          </span>
+        </span>
+        <ChevronDown size={18} aria-hidden="true" />
+      </Link>
+      <section className={layout.section}>
+        <h3>{uiText.v6Ui.childToday}</h3>
+        <div className={uiClass('kv')}>
+          <span className={uiClass('key')}>{uiText.v6Ui.childSession}</span>
           <Link
-            href="/personal/education?view=children"
-            className={uiClass(styles.child)}
-            data-parent-active-child
+            href={sessionRow.href}
+            className={uiClass('val')}
+            data-parent-upcoming-session={nextSession ? '' : undefined}
           >
-            <span className={uiClass(styles.identity)}>
-              <span className={uiClass('avatar')} aria-hidden="true">
-                {Array.from(child.displayName)[0]}
-              </span>
-              <span className={uiClass(styles.copy)}>
-                <strong>{child.displayName}</strong>
-                <small>{t.selectedChild}</small>
-              </span>
-            </span>
-            <ChevronDown size={20} aria-hidden="true" />
+            {sessionRow.title}
           </Link>
-          <div className={uiClass('v5-note alert')}>
-            <ShieldCheck size={18} aria-hidden="true" />
-            <p>{t.authorizedChildInfo(child.displayName, child.organizationName)}</p>
-          </div>
-          <h2 className={uiClass('section-title')}>{t.upcoming}</h2>
-        </>
-      )}
-      {program ? (
-        <V4List>
-          <V4Row {...sessionRow} />
-          {followUp.map((row) => (
-            <V4Row key={row.title} {...row} />
-          ))}
-        </V4List>
-      ) : (
-        <>
-          {nextSession ? (
-            <Link
-              className={uiClass(`schedule ${styles.timeline}`)}
-              href={sessionRow.href}
-              data-parent-upcoming-session
-            >
-              <time className={uiClass('time')} dateTime={nextSession.startUtc}>
-                {new Intl.DateTimeFormat('fa-IR', {
-                  timeZone: 'Asia/Tehran',
-                  hour: '2-digit',
-                  minute: '2-digit',
-                  hourCycle: 'h23',
-                }).format(new Date(nextSession.startUtc))}
-                {Date.parse(nextSession.endUtc) > Date.parse(nextSession.startUtc) && (
-                  <small className={uiClass('muted tiny')}>
-                    {t.minutes(
-                      number(
-                        Math.round(
-                          (Date.parse(nextSession.endUtc) - Date.parse(nextSession.startUtc)) /
-                            60000,
-                        ),
-                      ),
-                    )}
-                  </small>
-                )}
-              </time>
-              <span className={uiClass('bar')} aria-hidden="true" />
-              <div>
-                <h4>{nextSession.classTitle}</h4>
-                <p>{nextSession.title}</p>
-              </div>
-            </Link>
-          ) : (
-            <V4List>
-              <V4Row {...sessionRow} />
-            </V4List>
-          )}
-          <h2 className={uiClass('section-title')}>{t.followUp}</h2>
+        </div>
+        <div className={uiClass('kv')}>
+          <span className={uiClass('key')}>{t.attendance}</span>
+          <b className={uiClass('val')}>{attendanceDescription}</b>
+        </div>
+        <div className={uiClass('kv')}>
+          <span className={uiClass('key')}>{t.assignmentFollowUp}</span>
+          <b className={uiClass('val')}>{t.availableActivities(number(pending))}</b>
+        </div>
+      </section>
+      <div className={layout.grid}>
+        <section className={layout.section}>
+          <h3>{uiText.v6Ui.childEducation}</h3>
           <V4List>
             {followUp.map((row) => (
               <V4Row key={row.title} {...row} />
             ))}
+            {program && (
+              <V4Row
+                title={t.publishedResults}
+                description={released[0]?.assignmentTitle || t.noPublishedResult}
+                icon={<ChartNoAxesCombined />}
+                href="/personal/education/assignments"
+              />
+            )}
           </V4List>
-        </>
-      )}
+        </section>
+        <section className={layout.section}>
+          <h3>{uiText.v6Ui.childConnection}</h3>
+          <p className={styles.privacy}>
+            <ShieldCheck size={18} aria-hidden="true" />
+            {uiText.v6Ui.childPrivacy}
+          </p>
+          <p className={styles.privacy}>
+            {t.authorizedChildInfo(child.displayName, child.organizationName)}
+          </p>
+        </section>
+      </div>
     </>
   );
 }

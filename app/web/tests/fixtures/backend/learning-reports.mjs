@@ -1,6 +1,34 @@
 import { id, ids, make } from './state.mjs';
 
 export function learningReportRoute({ auth, state, url, send }) {
+  const learner = /^\/api\/v1\/reports\/teacher\/classes\/([^/]+)\/learners\/([^/]+)$/.exec(
+    url.pathname,
+  );
+  if (learner) {
+    if (auth.context.workspaceType !== 'Organization' || auth.context.activeRole !== 'Teacher')
+      return send({ code: 'AUTH_FORBIDDEN' }, 403);
+    if (learner[1] !== ids.class || learner[2] !== id(501)) return send({ code: 'NOT_FOUND' }, 404);
+    return send(
+      make('TeacherLearnerOverviewDto', {
+        dataAsOfUtc: '2026-11-13T12:00:00Z',
+        classId: ids.class,
+        classTitle: 'ریاضی دهم',
+        enrollmentId: id(500),
+        learnerOrganizationPersonId: id(501),
+        learnerDisplayName: 'سارا احمدی',
+        eligibleSessionCount: 10,
+        presentCount: 8,
+        absentCount: 1,
+        lateCount: 1,
+        assignmentCount: 3,
+        submittedAssignmentCount: 2,
+        releasedAssignmentCount: 1,
+        examCount: 2,
+        finalizedExamAttemptCount: 1,
+        releasedExamCount: 1,
+      }),
+    );
+  }
   const match = url.pathname.match(
     /^\/api\/v1\/reports\/(student|teacher)(?:\/classes\/([^/]+))?\/(attendance|assignments|exams|grades)$/,
   );
@@ -20,12 +48,35 @@ export function learningReportRoute({ auth, state, url, send }) {
   if (scope === 'student' && kind === 'attendance' && state.studentAttendance) {
     const page = Number(url.searchParams.get('PageNumber') || 1);
     const size = Number(url.searchParams.get('PageSize') || 30);
+    const from = url.searchParams.get('FromUtc'),
+      to = url.searchParams.get('ToUtc'),
+      selectedClass = url.searchParams.get('ClassId');
+    const items = state.studentAttendance.items.filter(
+      (row) =>
+        (!selectedClass || row.classId === selectedClass) &&
+        (!from || Date.parse(row.startUtc) >= Date.parse(from)) &&
+        (!to || Date.parse(row.startUtc) <= Date.parse(to)),
+    );
+    const count = (status) => items.filter((row) => row.status === status).length;
     return send({
       ...state.studentAttendance,
+      ...(from || to || selectedClass
+        ? {
+            summary: {
+              eligibleCount: items.length,
+              recordedCount: items.length - count('NotRecorded'),
+              presentCount: count('Present'),
+              absentCount: count('Absent'),
+              lateCount: count('Late'),
+              excusedCount: count('Excused'),
+              notRecordedCount: count('NotRecorded'),
+            },
+          }
+        : {}),
       pageNumber: page,
       pageSize: size,
-      totalCount: state.studentAttendance.items.length,
-      items: state.studentAttendance.items.slice((page - 1) * size, page * size),
+      totalCount: items.length,
+      items: items.slice((page - 1) * size, page * size),
     });
   }
   const teacher = scope === 'teacher',

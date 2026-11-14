@@ -1,16 +1,17 @@
 'use client';
-import { Input as NativeInput, SearchField } from '@/components/ui/input';
+import { Input as NativeInput, Select as NativeSelect, SearchField } from '@/components/ui/input';
 
 import { uiClass } from '@/components/v5/classes';
 
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { Building2, ChevronDown, Info } from 'lucide-react';
 import { useQueryClient } from '@tanstack/react-query';
-import { v5Attendance as t, v5Sessions, text_fa7af603d430 as cancel } from '@/content/fa';
+import { v5Attendance as t, v5Sessions, v7Ui, text_fa7af603d430 as cancel } from '@/content/fa';
 import { Button } from '@/components/ui/button';
 import { ConfirmAction } from '@/components/ui/confirm-action';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { EmptyState, ErrorState, LoadingSkeleton, label } from '@/components/ui/states';
-import { V4Field, V4Hero, V4List, V4Row } from '@/components/v4/page';
+import { V4Field, V4List, V4Row } from '@/components/v4/page';
 import { useSceneContextSummary, useSceneFormAction } from '@/components/v5/form-actions';
 import { useTextDraft } from '@/components/hooks/use-text-draft';
 import { useViewState } from '@/components/hooks/use-view-state';
@@ -32,10 +33,16 @@ import {
   type AttendanceDraft,
   type AttendanceEntry,
   type RowDraft,
+  type Mark,
 } from './attendance-model';
 import { useAttendanceRoster } from './attendance-roster';
+import { useWorkspaceSnapshot } from '../workspaces';
+import { sessionTimeRange } from './session-time';
+import styles from './school.module.css';
 type S = components['schemas'];
-type Overlay = { kind: 'row'; enrollmentId: string } | { kind: 'review'; rows: AttendanceDraft };
+type Overlay =
+  | { kind: 'row'; enrollmentId: string; status?: Mark }
+  | { kind: 'review'; rows: AttendanceDraft };
 const mismatch = () => new ApiError(502, { code: 'CONTRACT_MISMATCH' });
 
 export function SessionAttendancePage({ id }: { id: string }) {
@@ -114,6 +121,11 @@ function AttendanceEditor({
 }) {
   const { session, call } = usePersonal(),
     cache = useQueryClient();
+  const workspaces = useWorkspaceSnapshot();
+  const organizationName = workspaces.data?.workspaces.find(
+    (row) =>
+      row.membershipId === session.context.membershipId && row.role === session.context.activeRole,
+  )?.organizationName;
   const scope =
     session.user.id + ':' + contextSignature(session.context) + ':session-attendance:' + item.id;
   const draft = useTextDraft(scope, '{}', '1');
@@ -124,6 +136,14 @@ function AttendanceEditor({
     '',
     (value): value is string => typeof value === 'string',
   );
+  const [searchOpen, setSearchOpen] = useViewState(
+    scope + ':search-open',
+    false,
+    (value): value is boolean => typeof value === 'boolean',
+  );
+  useEffect(() => {
+    if (search) setSearchOpen(true);
+  }, [search, setSearchOpen]);
   const [busy, setBusy] = useState(false),
     [saved, setSaved] = useState(false),
     [error, setError] = useState<unknown>();
@@ -179,7 +199,14 @@ function AttendanceEditor({
   );
   const selectedId = overlay?.kind === 'row' ? overlay.enrollmentId : undefined;
   const selected = selectedId ? entry(selectedId) : undefined;
-  const selectedDraft = selectedId ? rows?.[selectedId] : undefined;
+  const storedDraft = selectedId ? rows?.[selectedId] : undefined;
+  const selectedDraft =
+    overlay?.kind === 'row' && overlay.status && selected
+      ? {
+          ...(storedDraft ?? attendanceDraft(selected, overlay.status, '')),
+          status: overlay.status,
+        }
+      : storedDraft;
   const stale = selectedId && selectedDraft ? conflict(selectedId, selectedDraft) : false;
   const filtered = attendance.entries.filter(
     (row) => !search.trim() || names[row.enrollmentId]?.includes(search.trim()),
@@ -288,25 +315,45 @@ function AttendanceEditor({
   }
   return (
     <>
-      <V4Hero title={item.title}>
-        {t.sessionContext(
-          new Intl.DateTimeFormat('fa-IR', {
-            timeZone: 'Asia/Tehran',
-            day: 'numeric',
-            month: 'long',
-          }).format(new Date(item.startUtc)),
-          item.classTitle,
-        )}
-      </V4Hero>
-      <SearchField
-        type="search"
-        aria-label={t.search}
-        placeholder={t.search}
-        value={search}
-        onChange={(event) => setSearch(event.target.value)}
-        onClear={() => setSearch('')}
-        disabled={busy}
-      />
+      <div className={styles.attendanceContext}>
+        <Building2 size={24} aria-hidden="true" />
+        <span>
+          <b>{item.classTitle}</b>
+          <small>{organizationName ?? v7Ui.schoolClasses}</small>
+        </span>
+      </div>
+      <section className={styles.attendanceSummary}>
+        <h2>{v5Sessions.attendance}</h2>
+        <div className={styles.attendanceSession}>
+          <span>{item.title}</span>
+          <b title={sessionTimeRange(item.startUtc, item.endUtc)}>
+            <time dateTime={item.startUtc}>
+              {new Intl.DateTimeFormat('fa-IR', {
+                timeZone: 'Asia/Tehran',
+                weekday: 'long',
+                hour: '2-digit',
+                minute: '2-digit',
+              }).format(new Date(item.startUtc))}
+            </time>
+          </b>
+        </div>
+        <details open={searchOpen} onToggle={(event) => setSearchOpen(event.currentTarget.open)}>
+          <summary>
+            <span>{v7Ui.attendanceRegistration}</span>
+            <b>{v7Ui.oneAttendanceStatus}</b>
+            <ChevronDown size={16} />
+          </summary>
+          <SearchField
+            type="search"
+            aria-label={t.search}
+            placeholder={t.search}
+            value={search}
+            onChange={(event) => setSearch(event.target.value)}
+            onClear={() => setSearch('')}
+            disabled={busy}
+          />
+        </details>
+      </section>
       {roster.isPending && <LoadingSkeleton />}
       {roster.isError && <ErrorState error={roster.error} onRetry={() => void roster.refetch()} />}
       {roster.isSuccess && attendance.entries.some((row) => !names[row.enrollmentId]) && (
@@ -323,6 +370,13 @@ function AttendanceEditor({
           {filtered.map((row) => {
             const change = rows?.[row.enrollmentId],
               name = names[row.enrollmentId] || t.unknownName;
+            const disabled =
+              busy ||
+              !draft.ready ||
+              !rows ||
+              !names[row.enrollmentId] ||
+              item.status === 'Cancelled' ||
+              (!row.attendanceId && item.status !== 'Scheduled');
             return (
               <V4Row
                 key={row.enrollmentId}
@@ -339,24 +393,35 @@ function AttendanceEditor({
                 icon={names[row.enrollmentId] ? [...name][0] : '—'}
                 iconClassName="avatar"
                 end={
-                  <span
-                    className={uiClass(
-                      'badge' +
-                        (['Absent', 'Late'].includes(change?.status ?? row.status) ? ' warn' : ''),
-                    )}
+                  <NativeSelect
+                    className={uiClass('attendance-status')}
+                    aria-label={v7Ui.attendanceStatus(name)}
+                    value={change?.status ?? row.status}
+                    disabled={disabled}
+                    onChange={(event) => {
+                      const status = attendanceMarks.find((value) => value === event.target.value);
+                      if (!status || disabled) return;
+                      if (row.attendanceId)
+                        setOverlay({ kind: 'row', enrollmentId: row.enrollmentId, status });
+                      else
+                        updateRows((previous) => ({
+                          ...previous,
+                          [row.enrollmentId]: attendanceDraft(row, status, ''),
+                        }));
+                    }}
                   >
-                    {label(change?.status ?? row.status)}
-                  </span>
+                    <option value="NotRecorded" disabled>
+                      {label('NotRecorded')}
+                    </option>
+                    {attendanceMarks.map((status) => (
+                      <option key={status} value={status}>
+                        {label(status)}
+                      </option>
+                    ))}
+                  </NativeSelect>
                 }
-                endInteractive={false}
-                disabled={
-                  busy ||
-                  !draft.ready ||
-                  !rows ||
-                  !names[row.enrollmentId] ||
-                  item.status === 'Cancelled' ||
-                  (!row.attendanceId && item.status !== 'Scheduled')
-                }
+                endInteractive
+                disabled={disabled}
                 onClick={() => {
                   returnFocus.current =
                     document.activeElement instanceof HTMLButtonElement
@@ -391,7 +456,10 @@ function AttendanceEditor({
             ))}
         </V4List>
       )}
-      <p className={uiClass('policy')}>{t.policy}</p>
+      <div className={styles.attendancePolicy}>
+        <Info size={20} aria-hidden="true" />
+        <p>{t.policy}</p>
+      </div>
       {pending.length > 0 && (
         <p className={uiClass('alert')} role="status">
           {t.pendingCount(number(pending.length))}

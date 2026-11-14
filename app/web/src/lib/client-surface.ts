@@ -32,3 +32,14 @@ export function contextSignature(context: {
     context.subjectOrganizationPersonId,
   ]);
 }
+
+export type ClientRequestScope = 'account' | 'context';
+/** Cache ownership only. The BFF revision check and server authorization still apply. */
+export function clientRequestScope(path: string): ClientRequestScope {
+  const pathname = path.split('?')[0];
+  return /^\/api\/v1\/(contacts(?:\/|$)|people(?:\/|$)|personal-classes(?:\/|$)|personal-class-requests(?:\/|$)|messaging\/(?:privacy|blocks|invitations)(?:\/|$)|conversations\/account$|conversations\/[^/]+\/summary$|workspaces\/snapshot$|commerce\/personal(?:\/|$)|me(?:\/profile)?$|auth\/sessions(?:\/|$))/.test(
+    pathname,
+  ) || /^\/api\/client\/security\/sessions(?:\/|$)/.test(pathname)
+    ? 'account'
+    : 'context';
+}

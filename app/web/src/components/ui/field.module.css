@@ -1,10 +1,11 @@
-/* Native form controls share this base; page variants use their explicit slots. */
+/* V6 native fields. Checkbox/radio geometry never inherits text-input geometry. */
 .control {
   min-width: 0;
   width: 100%;
+  max-width: 100%;
   min-height: 48px;
   border: 1px solid var(--control-border);
-  border-radius: 12px;
+  border-radius: var(--radius-input, 10px);
   padding: 10px 12px;
   background: var(--surface);
   color: var(--text);
@@ -13,7 +14,40 @@
 }
 .multiline {
   resize: vertical;
-  min-height: 108px;
+  min-height: 96px;
+}
+.control::placeholder {
+  color: var(--muted);
+}
+.control:focus {
+  border-color: var(--primary);
+}
+.control[aria-invalid='true'] {
+  border-color: var(--danger);
+  background: var(--danger-soft);
+}
+.choice {
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  min-width: 22px;
+  max-width: 22px;
+  min-height: 22px;
+  padding: 0;
+  margin: 2px 0 0;
+  flex: 0 0 22px;
+  accent-color: var(--primary);
+}
+.group {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 18px;
+  min-width: 0;
+}
+@container content (min-width: 640px) {
+  .group {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 .search {
   display: flex;
@@ -24,10 +58,17 @@
   min-width: 0;
   min-height: 48px;
   width: 100%;
-  padding-inline: 12px;
+  padding-inline: 8px 0;
   border: 1px solid var(--control-border);
-  border-radius: 12px;
+  border-radius: 11px;
   background: var(--surface);
+  color: var(--muted);
+}
+.search > svg {
+  width: 19px;
+  height: 19px;
+  flex: none;
+  margin-inline: 6px 0;
   color: var(--muted);
 }
 .search:focus-within {
@@ -40,12 +81,12 @@
   width: 0;
   min-width: 0;
   min-height: 44px;
-  padding: 0;
+  padding: 8px 4px;
   border: 0;
-  border-radius: 0;
+  border-radius: 8px;
   background: transparent;
   font-size: calc(16px * var(--text-scale, 1));
-  line-height: 1.5;
+  line-height: 1.65;
 }
 .searchInput:focus-visible {
   outline: 0;
@@ -65,222 +106,115 @@
   background: transparent;
   color: var(--muted);
 }
-.control::placeholder {
-  color: var(--muted);
-}
-.control:focus {
-  border-color: var(--primary);
-  background: var(--surface);
-}
-.choice {
-  width: 20px;
-  height: 20px;
-  min-height: 20px;
-  padding: 0;
-  flex-shrink: 0;
-  accent-color: var(--primary);
-}
-/* Product styles: owned here; original V5 source remains read-only in design/reference-v5. */
-:where(.scope) :global(.field-help) {
-  font-size: calc(12px * var(--text-scale, 1));
-  color: var(--muted);
-  font-weight: 400;
-}
-:where(.scope) :global(.field-error) {
-  font-size: calc(12px * var(--text-scale, 1));
-  color: var(--danger);
-}
-:where(.scope) :global(.input) {
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-}
-:where(.scope) :global(.input.textarea) {
-  min-height: 106px;
-  align-items: flex-start;
-  line-height: 1.9;
-  font-size: 14px;
-}
-:where(.scope) :global(.input.error) {
-  box-shadow: 0 0 0 2px var(--badbg);
-}
-:where(.scope) :global(.input.focused) {
-  border-color: var(--accent);
-  outline: 3px solid #246ce0;
-  outline-offset: 2px;
-}
-:where(.scope) :global(.field .hint) {
-  color: var(--muted);
-}
-:where(.scope) :global(.field .counter) {
-  font-size: 10px;
-  color: var(--muted);
-  text-align: left;
-}
-:where(.scope) :global(.edu-body .two-col .field .input) {
-  font-size: 13px;
-  padding: 9px 10px;
-}
-:where(.scope) :global(.edu-body .two-col .field label) {
-  font-size: 12px;
-}
-:where(.scope) :global(.edu-body .two-col .field) {
-  gap: 6px;
-}
-:where(.scope) :global(.edu-exam-layout .field label) {
-  font-size: 11px;
-}
-:where(.scope) :global(.edu-exam-layout .input) {
-  font-size: 12px;
-  min-height: 40px;
-  padding: 8px 10px;
-}
-:where(.scope) :global(.edu-exam-layout .input.textarea) {
-  min-height: 72px;
-}
-:where(.scope) :global(.edu-exam-layout .field) {
-  gap: 5px;
-}
-:where(.scope) :global(.input) {
-  border-color: var(--control-border);
-}
-:where(.scope) :global(.input.focused) {
-  outline-color: var(--focus);
-}
-:where(.scope) :global(.v4-modal .input) {
-  font-size: 14px;
-}
-:where(.scope) :global(.v4-body .field label) {
-  font-size: 13px;
-}
-:where(.scope) :global(.v4-body .input.textarea) {
-  min-height: 89px;
-}
-.scope :global(.field) {
+.scope :global(.field),
+.scope :global(.v5-field) {
   display: flex;
   flex-direction: column;
   gap: 7px;
+  min-width: 0;
 }
-.scope :global(.field label) {
-  font-size: calc(14px * var(--text-scale, 1));
+.scope :global(.field > label),
+.scope :global(.v5-field > label) {
+  font-size: calc(13px * var(--text-scale, 1));
   color: var(--text);
-  font-weight: 600;
+  font-weight: 650;
   display: block;
 }
-.scope :global(.input) {
+.scope :global(.input:not([type='checkbox']):not([type='radio'])),
+.scope
+  :global(
+    .v5-field
+      :is(input:not([type='checkbox']):not([type='radio']), select, textarea):not(
+        [data-v5-number-value]
+      )
+  ) {
   width: 100%;
-  display: block;
+  min-width: 0;
+  max-width: 100%;
   min-height: 48px;
-  font-size: calc(16px * var(--text-scale, 1));
+  display: block;
   padding: 10px 12px;
   border: 1px solid var(--control-border);
-  border-radius: 12px;
-  line-height: 1.7;
+  border-radius: var(--radius-input, 10px);
+  line-height: 1.65;
   background: var(--surface);
   color: var(--text);
+  font-size: calc(16px * var(--text-scale, 1));
   white-space: normal;
   overflow-wrap: anywhere;
   box-shadow: none;
 }
-.scope :global(textarea.input) {
-  min-height: 116px;
-  resize: none;
+.scope :global(button.input) {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  text-align: start;
+}
+.scope :global(textarea.input),
+.scope :global(.v5-field textarea) {
+  min-height: 96px;
+  resize: vertical;
 }
 .scope :global(.input.error) {
   border-color: var(--danger);
+  background: var(--danger-soft);
 }
-.scope :global(.field .hint) {
-  font-size: calc(12px * var(--text-scale, 1));
-  line-height: 1.8;
-}
-.scope :global(.field .err) {
-  font-size: calc(12px * var(--text-scale, 1));
-  line-height: 1.8;
-}
-.scope :global(.field .err) {
-  color: var(--danger);
-}
-@container device (max-width:359px) {
-  .scope :global(.input) {
-    font-size: calc(16px * var(--text-scale, 1));
-  }
-}
-:where(.scope) :global(.v5-field) {
-  display: flex;
-  flex-direction: column;
-  gap: 7px;
-}
-:where(.scope) :global(.v5-field > label) {
-  font-size: calc(14px * var(--text-scale, 1));
-  font-weight: 600;
-}
-:where(.scope)
-  :global(
-    .v5-field
-      :is(input:not([type='checkbox']):not([type='radio']), select, textarea):where(
-        :not([data-v5-number-value])
-      )
-  ) {
-  width: 100%;
-  min-height: var(--v5-control-min-height, 48px);
-  padding: 10px 12px;
-  border: 1px solid var(--control-border);
-  border-radius: 12px;
-  background: var(--surface);
-  color: var(--text);
-  font-size: calc(16px * var(--text-scale, 1));
-  line-height: 1.7;
-}
-:where(.scope) :global(.v5-field small) {
+.scope :global(.field :is(.hint, .field-help)),
+.scope :global(.v5-field small) {
   font-size: calc(12px * var(--text-scale, 1));
   color: var(--muted);
-  line-height: 1.8;
+  line-height: 1.85;
+  font-weight: 400;
 }
-:where(.scope) :global(.v5-field textarea) {
-  --v5-control-min-height: 116px;
+.scope :global(.field :is(.err, .field-error)) {
+  font-size: calc(12px * var(--text-scale, 1));
+  line-height: 1.85;
+  color: var(--danger);
 }
-:where(.scope) :global(.v5-field input:focus-visible) {
+.scope :global(.input.focused),
+.scope :global(.v5-field input:focus-visible) {
   outline: 3px solid var(--focus);
   outline-offset: 3px;
 }
-:where(.scope) :global(.v5-time-input) {
+.scope :global(.field .counter) {
+  font-size: calc(12px * var(--text-scale, 1));
+  color: var(--muted);
+  text-align: end;
+}
+.scope :global(.v5-time-input) {
   direction: ltr;
   text-align: right;
 }
-:where(.scope) :global(.v5-native-checkline:has(input:focus-visible) .checkbox) {
-  outline: 2px solid var(--focus, var(--accent, var(--primary)));
-  outline-offset: 3px;
-}
-:where(.scope) :global(.v5-native-checkline) {
+.scope :global(.v5-native-checkline) {
   position: relative;
   display: flex;
   align-items: flex-start;
-  gap: 9px;
-  padding: 8px 0;
-  min-height: 44px;
+  gap: 12px;
+  padding: 12px 0;
+  min-height: 48px;
   font-size: calc(14px * var(--text-scale, 1));
   line-height: 1.9;
   font-weight: 400;
   cursor: pointer;
 }
-:where(.scope) :global(.v5-native-checkline .checkbox) {
+.scope :global(.v5-native-checkline .checkbox) {
   flex: none;
   display: grid;
   place-items: center;
-  width: 20px;
-  height: 20px;
-  border: 1px solid var(--line, var(--border));
+  width: 22px;
+  height: 22px;
+  border: 1px solid var(--control-border);
   border-radius: 6px;
-  margin-top: 1px;
+  margin-top: 2px;
   background: var(--surface);
-  color: var(--on-action, var(--on-primary, #fff));
+  color: var(--on-action);
 }
-:where(.scope) :global(.v5-native-checkline .checkbox.checked) {
-  border-color: var(--action, var(--primary-button));
-  background: var(--action, var(--primary-button));
-  color: var(--on-action, var(--on-primary, #fff));
+.scope :global(.v5-native-checkline .checkbox.checked) {
+  border-color: var(--action);
+  background: var(--action);
 }
-:where(.scope) :global(.v5-native-checkline .v5-checkline-control) {
+.scope :global(.v5-native-checkline .v5-checkline-control) {
   appearance: none;
   position: absolute;
   inset-inline-start: 0;
@@ -289,36 +223,17 @@
   width: 44px;
   height: 44px;
   min-height: 44px;
+  max-width: 44px;
   margin: 0;
   padding: 0;
   opacity: 0;
   cursor: inherit;
 }
-:where(.scope) :global(.v5-native-checkline:has(input:disabled)) {
-  opacity: 0.6;
+.scope :global(.v5-native-checkline:has(input:focus-visible) .checkbox) {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+}
+.scope :global(.v5-native-checkline:has(input:disabled)) {
+  opacity: 0.55;
   cursor: default;
-}
-@media (min-width: 768px) {
-  :where(.scope) :global(.v5-native-form > :is(.field, [data-v4-field])) {
-    grid-column: auto;
-  }
-}
-@media (min-width: 768px) {
-  :where(.scope) :global(.v5-native-form > :is(.field, [data-v4-field]):has(textarea)) {
-    grid-column: 1 / -1;
-  }
-}
-@media (min-width: 768px) {
-  :where(.scope) :global(.v5-native-fields > :not(.field):not([data-v4-field])) {
-    grid-column: 1 / -1;
-  }
-}
-@media (min-width: 768px) {
-  :where(.scope) :global(.v5-native-fields > :is(.field, [data-v4-field]):has(textarea)) {
-    grid-column: 1 / -1;
-  }
-}
-
-.control[aria-invalid='true'] {
-  border-color: var(--danger);
 }

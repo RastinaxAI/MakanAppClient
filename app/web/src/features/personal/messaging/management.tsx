@@ -4,7 +4,17 @@ import { Input as NativeInput, Textarea as NativeTextarea } from '@/components/u
 import { uiClass } from '@/components/v5/classes';
 
 import * as uiText from '@/content/fa';
-import { useContext, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type ReactNode,
+  type SetStateAction,
+} from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { Shield, UserMinus, ChevronLeft, Search } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -22,6 +32,40 @@ import { ConversationEditorAction } from './conversation-action-slot';
 import { V4Field, V4Note } from '@/components/v4/page';
 import { useSceneContextSummary } from '@/components/v5/form-actions';
 type S = components['schemas'];
+type InteractionStore = {
+  values: Map<string, unknown>;
+  set<T>(key: string, initial: T, action: SetStateAction<T>): void;
+};
+const ConversationInteractions = createContext<InteractionStore | null>(null);
+/** The route owns temporary interactions while its mobile sheet/desktop container changes. */
+export function ConversationInteractionProvider({ children }: { children: ReactNode }) {
+  const [values, setValues] = useState(() => new Map<string, unknown>());
+  const set = useCallback(<T,>(key: string, initial: T, action: SetStateAction<T>) => {
+    setValues((previous) => {
+      const old = previous.has(key) ? (previous.get(key) as T) : initial;
+      const next = typeof action === 'function' ? (action as (old: T) => T)(old) : action;
+      if (Object.is(old, next)) return previous;
+      return new Map(previous).set(key, next);
+    });
+  }, []);
+  const store = useMemo(() => ({ values, set }), [values, set]);
+  return (
+    <ConversationInteractions.Provider value={store}>{children}</ConversationInteractions.Provider>
+  );
+}
+function useConversationInteraction<T>(
+  key: string,
+  initial: T,
+): [T, (action: SetStateAction<T>) => void] {
+  const store = useContext(ConversationInteractions);
+  const [local, setLocal] = useState(initial);
+  return store
+    ? [
+        store.values.has(key) ? (store.values.get(key) as T) : initial,
+        (action) => store.set(key, initial, action),
+      ]
+    : [local, setLocal];
+}
 export function ConversationInfoEditor({
   value,
   children,
@@ -208,12 +252,17 @@ export function ConversationInfoEditor({
 export function AddConversationMember({ value }: { value: S['ManagedConversationResult'] }) {
   const { session, call } = usePersonal(),
     cache = useQueryClient();
-  const [open, setOpen] = useState(false),
-    [page, setPage] = useState(1),
-    [draft, setDraft] = useState(''),
-    [q, setQ] = useState('');
-  const [busy, setBusy] = useState(false),
-    [error, setError] = useState<unknown>();
+  const memory = value.conversationId + ':add-member:';
+  const [open, setOpen] = useConversationInteraction(memory + 'open', false),
+    [page, setPage] = useConversationInteraction(memory + 'page', 1),
+    [draft, setDraft] = useConversationInteraction(memory + 'draft', ''),
+    [q, setQ] = useConversationInteraction(memory + 'query', '');
+  const [busy, setBusy] = useConversationInteraction(memory + 'busy', false),
+    [error, setError] = useConversationInteraction<unknown>(memory + 'error', undefined);
+  const [selected, setSelected] = useConversationInteraction<Set<string>>(
+    memory + 'selected',
+    new Set(),
+  );
   const lock = useRef(false);
   const contacts = usePersonalApi<S['UserContactPageResult']>(
     '/api/v1/contacts?page=' + page + '&pageSize=20&favoritesOnly=false&q=' + encodeURIComponent(q),
@@ -236,7 +285,7 @@ export function AddConversationMember({ value }: { value: S['ManagedConversation
         <Button data-conversation-member-add>{uiText.v5Product.invitePerson}</Button>
       </DialogTrigger>
       <DialogContent
-        className={uiClass(`${t.theme}`)}
+        className={uiClass(`${t.theme} ${t.selectionSheet}`)}
         title={uiText.v5Product.invitePerson}
         description={uiText.text_1ac1bbc54827}
         onCloseAutoFocus={(event) => {
@@ -282,42 +331,78 @@ export function AddConversationMember({ value }: { value: S['ManagedConversation
                     {(m.savedName || m.profile.displayName)[0]}
                   </span>
                   <strong>{m.savedName || m.profile.displayName}</strong>
-                  <Button
-                    size="sm"
+                  <NativeInput
+                    type="checkbox"
+                    aria-label={m.savedName || m.profile.displayName}
                     disabled={busy || existing.has(m.contactUserId)}
-                    onClick={async () => {
-                      if (lock.current) return;
-                      lock.current = true;
-                      setBusy(true);
-                      setError(undefined);
-                      try {
-                        const result = await call<S['ManagedConversationResult']>(
-                          '/api/v1/conversations/' + value.conversationId + '/members',
-                          { method: 'POST', body: JSON.stringify({ userId: m.contactUserId }) },
-                        );
-                        if (result.conversationId !== value.conversationId)
-                          throw new ApiError(502, { code: 'CONTRACT_MISMATCH' });
-                        await cache.invalidateQueries({
-                          queryKey: ['personal', session.user.id, session.revision],
-                        });
-                        setOpen(false);
-                      } catch (err) {
-                        setError(err);
-                      } finally {
-                        lock.current = false;
-                        setBusy(false);
-                      }
-                    }}
-                  >
-                    {existing.has(m.contactUserId)
-                      ? uiText.text_35167823835d
-                      : uiText.text_50c8d65df6bb}
-                  </Button>
+                    checked={selected.has(m.contactUserId) || existing.has(m.contactUserId)}
+                    onChange={(event) =>
+                      setSelected((previous) => {
+                        const next = new Set(previous);
+                        if (event.target.checked) next.add(m.contactUserId);
+                        else next.delete(m.contactUserId);
+                        return next;
+                      })
+                    }
+                  />
                 </article>
               ))}
             {!contacts.data.items.length && <EmptyState title={uiText.text_fc5b13da691b} />}
           </div>
         )}
+        <Button
+          disabled={busy || !selected.size}
+          onClick={async () => {
+            if (lock.current) return;
+            lock.current = true;
+            setBusy(true);
+            setError(undefined);
+            const remaining = new Set(selected);
+            try {
+              for (const userId of selected) {
+                if (existing.has(userId)) {
+                  remaining.delete(userId);
+                  continue;
+                }
+                const result = await call<S['ManagedConversationResult']>(
+                  '/api/v1/conversations/' + value.conversationId + '/members',
+                  {
+                    method: 'POST',
+                    scope: value.scope === 'Personal' ? 'account' : 'context',
+                    body: JSON.stringify({ userId }),
+                  },
+                );
+                if (result.conversationId !== value.conversationId)
+                  throw new ApiError(502, { code: 'CONTRACT_MISMATCH' });
+                remaining.delete(userId);
+                setSelected(new Set(remaining));
+                cache.setQueryData(
+                  [
+                    'personal',
+                    session.user.id,
+                    session.revision,
+                    '/api/v1/conversations/' + value.conversationId,
+                  ],
+                  result,
+                );
+              }
+              setOpen(false);
+            } catch (cause) {
+              setError(cause);
+            } finally {
+              await Promise.all([
+                cache.invalidateQueries({ queryKey: ['personal', session.user.id, 'account'] }),
+                cache.invalidateQueries({
+                  queryKey: ['personal', session.user.id, session.revision],
+                }),
+              ]);
+              lock.current = false;
+              setBusy(false);
+            }
+          }}
+        >
+          {busy ? uiText.text_b5ef00b1806f : uiText.messengerPdf.inviteSelected(selected.size)}
+        </Button>
         {!!error && <ErrorState error={error} />}
         <div className={uiClass(c.pager)}>
           <Button
@@ -352,10 +437,14 @@ export function MemberManagement({
 }) {
   const { session, call } = usePersonal(),
     cache = useQueryClient();
-  const [open, setOpen] = useState(false),
-    [action, setAction] = useState<'Admin' | 'Member' | 'Remove' | null>(null),
-    [busy, setBusy] = useState(false),
-    [error, setError] = useState<unknown>();
+  const memory = id + ':member:' + member.user.userId + ':';
+  const [open, setOpen] = useConversationInteraction(memory + 'open', false),
+    [action, setAction] = useConversationInteraction<'Admin' | 'Member' | 'Remove' | null>(
+      memory + 'action',
+      null,
+    ),
+    [busy, setBusy] = useConversationInteraction(memory + 'busy', false),
+    [error, setError] = useConversationInteraction<unknown>(memory + 'error', undefined);
   const lock = useRef(false);
   return (
     <Dialog

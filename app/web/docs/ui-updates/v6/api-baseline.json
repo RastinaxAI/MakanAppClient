@@ -1,0 +1,48 @@
+{
+  "date": "2026-11-12",
+  "source": "http://94.184.32.84:8090/openapi/v1.json",
+  "sha256": "765b14acf93cc5d093b310b2ea70a90928fc422b507474e4a7d97952024fb0a0",
+  "paths": 403,
+  "operations": 454,
+  "schemas": 732,
+  "removedDuplicateSchemas": [
+    "AcademicClassKind2",
+    "ConversationListFilter",
+    "ConversationListFilter2"
+  ],
+  "backendSourceSearch": "No .sln/.csproj/Program.cs in Desktop/Documents/Downloads; no backend edits attempted.",
+  "gaps": {
+    "extra.assignments": {
+      "default": false,
+      "status": "proposal-off",
+      "decision": "DEC-014"
+    },
+    "extra.exams": {
+      "default": false,
+      "status": "proposal-off",
+      "decision": "DEC-015"
+    },
+    "extra.sessions": {
+      "default": false,
+      "status": "proposal-off",
+      "decision": "DEC-016"
+    },
+    "extra.lessons": {
+      "default": false,
+      "status": "proposal-off",
+      "decision": "DEC-016"
+    },
+    "extra.resources": {
+      "default": false,
+      "status": "proposal-off",
+      "decision": "DEC-016"
+    },
+    "extra.educationalReports": {
+      "default": false,
+      "status": "proposal-off",
+      "decision": "DEC-016"
+    },
+    "note": "School assignments and exams use separate existing feature ownership and are not disabled by extra.* gates."
+  },
+  "fixtureEvidenceIsLiveValidation": false
+}

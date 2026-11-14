@@ -11,6 +11,7 @@ export default async function Page({
     <SourceCatalog
       key={initialScope + String(upload) + String(classId)}
       upload={upload === '1'}
+      chooseType={upload === 'choose'}
       initialScope={initialScope}
       initialClassId={classId ?? ''}
     />

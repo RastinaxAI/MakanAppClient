@@ -6,8 +6,9 @@ import appearance from './school.module.css';
 import { usePersonal } from '@/features/personal/provider';
 import { ProductContext, V5Scene } from '@/components/v5/scene';
 import * as uiText from '@/content/fa';
+import { label } from '@/components/ui/states';
 import Link from 'next/link';
-import { Button } from '@/components/ui/button';
+import { Search } from 'lucide-react';
 export function ReferenceSchoolFrame({
   children,
   context,
@@ -42,25 +43,21 @@ export function ReferenceSchoolFrame({
               : uiText.navigation_education
       }
       back="/personal"
-      subtitle={organization ? place.title : undefined}
+      subtitle={
+        organization ? [place.title, label(role ?? '')].filter(Boolean).join(' · ') : undefined
+      }
       deep={false}
       kind="list"
       context={context}
-      actions={
-        role === 'Manager' && organization ? (
-          <Button asChild>
-            <Link href="/personal/education/invitations">{uiText.text_016c18389868}</Link>
-          </Button>
-        ) : role === 'Teacher' && organization ? (
-          <Button asChild>
-            <Link href="/personal/education/lessons/new">
-              {uiText.serverAlignedUi.newSchoolContent}
-            </Link>
-          </Button>
-        ) : undefined
+      headerTools={
+        <Link
+          href="/personal/education/search"
+          className={uiClass('rx-icon-button')}
+          aria-label={uiText.text_8e87c1832a1e}
+        >
+          <Search size={22} />
+        </Link>
       }
-      moreLabel={uiText.text_589d5004f227}
-      onMore={() => window.dispatchEvent(new Event('makan:education-sections'))}
       onBack={() => window.dispatchEvent(new Event('makan:workspace-picker'))}
     >
       <div className={uiClass('v5-school ' + appearance.school)} data-mk-view={id}>

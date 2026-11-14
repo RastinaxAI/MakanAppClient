@@ -87,7 +87,9 @@ export function NotificationSettings({ category }: { category?: string }) {
           ? (org ? uiText.text_b05e4b9892e2 : uiText.text_d034f3bcfe7f) +
             ' · ' +
             (session.user.firstName || session.user.displayName)
-          : uiText.text_cd1da22edb13
+          : org
+            ? uiText.text_b05e4b9892e2
+            : uiText.text_d034f3bcfe7f
       }
       back={
         category

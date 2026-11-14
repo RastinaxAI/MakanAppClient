@@ -1,19 +1,316 @@
 {
-  "environment": "isolated local fixture; synthetic latency; not production latency",
-  "entry": {
-    "javascriptRequests": 11,
-    "javascriptDecodedBytes": 700437,
-    "documentTtfbMs": 19,
-    "firstContentfulPaintMs": 268
+  "date": "2026-11-14",
+  "environment": "Isolated local fixture backend; actual Next production builds. Not production/backend 8090 latency.",
+  "baselineBuild": "UC4ybb-PwWiDmWz41lCNg",
+  "finalBuild": "cS7vtQPAXq5rXlF4q5t8j",
+  "method": {
+    "browser": "Playwright Chromium",
+    "routes": [
+      "/personal/assistant?view=chat",
+      "/personal/messages?list=1",
+      "/personal/profile",
+      "/personal/education"
+    ],
+    "role": "Student; selected organization; identical reset fixtures before every run",
+    "viewports": [
+      {
+        "width": 390,
+        "height": 844
+      },
+      {
+        "width": 1440,
+        "height": 1000
+      }
+    ],
+    "runsPerRoutePerViewport": 3,
+    "samplesPerBuild": 24,
+    "cache": "Fresh browser context and disabled HTTP cache for every navigation",
+    "readyMs": "Wall clock until representative control is visible and document.fonts.ready resolves; median of three runs",
+    "resources": "ResourceTiming JavaScript resources under /_next, sampled 650 ms after readiness; median of three runs",
+    "javascriptEncodedBytes": "Sum of encodedBodySize (compressed payload), not full wire protocol overhead",
+    "javascriptDecodedBytes": "Sum of decodedBodySize",
+    "apiRequests": "All /api/client requests from navigation through the same sample window; each run retained, including session/realtime",
+    "comparison": "Before and after measured separately with no other test suite running",
+    "rawEvidence": "/home/omidreza-bagheriyan/Desktop/MakanApp-cleanup-performance-2026-11-14",
+    "limitations": [
+      "Local fixture response times are not live backend or AI response times.",
+      "Timing differences are small; the evidence supports reduced bytes and requests, not a general latency multiplier.",
+      "One mobile inbox sample made 13 API requests; other inbox samples made 12.",
+      "No Docker image build; Docker daemon unavailable."
+    ]
   },
-  "schoolReadyMs": 507,
-  "school": {
-    "javascriptRequests": 17,
-    "javascriptDecodedBytes": 976549,
-    "documentTtfbMs": 39,
-    "firstContentfulPaintMs": 144
+  "comparisons": [
+    {
+      "screen": "assistant",
+      "width": 390,
+      "before": {
+        "name": "assistant",
+        "width": 390,
+        "readyMs": 283,
+        "javascriptRequests": 18,
+        "javascriptDecodedBytes": 1224258,
+        "javascriptEncodedBytes": 327202,
+        "apiRequests": [9, 9, 9],
+        "overflow": false,
+        "errors": []
+      },
+      "after": {
+        "name": "assistant",
+        "width": 390,
+        "readyMs": 288,
+        "javascriptRequests": 18,
+        "javascriptDecodedBytes": 1214019,
+        "javascriptEncodedBytes": 324122,
+        "apiRequests": [7, 7, 7],
+        "overflow": false,
+        "errors": []
+      },
+      "javascriptEncodedReductionPercent": 0.94,
+      "javascriptDecodedReductionPercent": 0.84,
+      "apiRequestMedianBefore": 9,
+      "apiRequestMedianAfter": 7
+    },
+    {
+      "screen": "assistant",
+      "width": 1440,
+      "before": {
+        "name": "assistant",
+        "width": 1440,
+        "readyMs": 289,
+        "javascriptRequests": 18,
+        "javascriptDecodedBytes": 1224258,
+        "javascriptEncodedBytes": 327202,
+        "apiRequests": [9, 9, 9],
+        "overflow": false,
+        "errors": []
+      },
+      "after": {
+        "name": "assistant",
+        "width": 1440,
+        "readyMs": 290,
+        "javascriptRequests": 18,
+        "javascriptDecodedBytes": 1214019,
+        "javascriptEncodedBytes": 324122,
+        "apiRequests": [7, 7, 7],
+        "overflow": false,
+        "errors": []
+      },
+      "javascriptEncodedReductionPercent": 0.94,
+      "javascriptDecodedReductionPercent": 0.84,
+      "apiRequestMedianBefore": 9,
+      "apiRequestMedianAfter": 7
+    },
+    {
+      "screen": "inbox",
+      "width": 390,
+      "before": {
+        "name": "inbox",
+        "width": 390,
+        "readyMs": 340,
+        "javascriptRequests": 20,
+        "javascriptDecodedBytes": 1407594,
+        "javascriptEncodedBytes": 384162,
+        "apiRequests": [17, 17, 17],
+        "overflow": false,
+        "errors": []
+      },
+      "after": {
+        "name": "inbox",
+        "width": 390,
+        "readyMs": 323,
+        "javascriptRequests": 18,
+        "javascriptDecodedBytes": 1026325,
+        "javascriptEncodedBytes": 304331,
+        "apiRequests": [13, 12, 12],
+        "overflow": false,
+        "errors": []
+      },
+      "javascriptEncodedReductionPercent": 20.78,
+      "javascriptDecodedReductionPercent": 27.09,
+      "apiRequestMedianBefore": 17,
+      "apiRequestMedianAfter": 12
+    },
+    {
+      "screen": "inbox",
+      "width": 1440,
+      "before": {
+        "name": "inbox",
+        "width": 1440,
+        "readyMs": 331,
+        "javascriptRequests": 20,
+        "javascriptDecodedBytes": 1407594,
+        "javascriptEncodedBytes": 384162,
+        "apiRequests": [17, 17, 17],
+        "overflow": false,
+        "errors": []
+      },
+      "after": {
+        "name": "inbox",
+        "width": 1440,
+        "readyMs": 310,
+        "javascriptRequests": 18,
+        "javascriptDecodedBytes": 1026325,
+        "javascriptEncodedBytes": 304331,
+        "apiRequests": [12, 12, 12],
+        "overflow": false,
+        "errors": []
+      },
+      "javascriptEncodedReductionPercent": 20.78,
+      "javascriptDecodedReductionPercent": 27.09,
+      "apiRequestMedianBefore": 17,
+      "apiRequestMedianAfter": 12
+    },
+    {
+      "screen": "profile",
+      "width": 390,
+      "before": {
+        "name": "profile",
+        "width": 390,
+        "readyMs": 267,
+        "javascriptRequests": 16,
+        "javascriptDecodedBytes": 922862,
+        "javascriptEncodedBytes": 270718,
+        "apiRequests": [12, 12, 12],
+        "overflow": false,
+        "errors": []
+      },
+      "after": {
+        "name": "profile",
+        "width": 390,
+        "readyMs": 270,
+        "javascriptRequests": 16,
+        "javascriptDecodedBytes": 922932,
+        "javascriptEncodedBytes": 270706,
+        "apiRequests": [9, 9, 9],
+        "overflow": false,
+        "errors": []
+      },
+      "javascriptEncodedReductionPercent": 0.0,
+      "javascriptDecodedReductionPercent": -0.01,
+      "apiRequestMedianBefore": 12,
+      "apiRequestMedianAfter": 9
+    },
+    {
+      "screen": "profile",
+      "width": 1440,
+      "before": {
+        "name": "profile",
+        "width": 1440,
+        "readyMs": 260,
+        "javascriptRequests": 16,
+        "javascriptDecodedBytes": 922862,
+        "javascriptEncodedBytes": 270718,
+        "apiRequests": [12, 12, 12],
+        "overflow": false,
+        "errors": []
+      },
+      "after": {
+        "name": "profile",
+        "width": 1440,
+        "readyMs": 262,
+        "javascriptRequests": 16,
+        "javascriptDecodedBytes": 922932,
+        "javascriptEncodedBytes": 270706,
+        "apiRequests": [9, 9, 9],
+        "overflow": false,
+        "errors": []
+      },
+      "javascriptEncodedReductionPercent": 0.0,
+      "javascriptDecodedReductionPercent": -0.01,
+      "apiRequestMedianBefore": 12,
+      "apiRequestMedianAfter": 9
+    },
+    {
+      "screen": "school",
+      "width": 390,
+      "before": {
+        "name": "school",
+        "width": 390,
+        "readyMs": 315,
+        "javascriptRequests": 19,
+        "javascriptDecodedBytes": 1015423,
+        "javascriptEncodedBytes": 299733,
+        "apiRequests": [15, 15, 15],
+        "overflow": false,
+        "errors": []
+      },
+      "after": {
+        "name": "school",
+        "width": 390,
+        "readyMs": 316,
+        "javascriptRequests": 19,
+        "javascriptDecodedBytes": 1015527,
+        "javascriptEncodedBytes": 299744,
+        "apiRequests": [11, 11, 11],
+        "overflow": false,
+        "errors": []
+      },
+      "javascriptEncodedReductionPercent": -0.0,
+      "javascriptDecodedReductionPercent": -0.01,
+      "apiRequestMedianBefore": 15,
+      "apiRequestMedianAfter": 11
+    },
+    {
+      "screen": "school",
+      "width": 1440,
+      "before": {
+        "name": "school",
+        "width": 1440,
+        "readyMs": 331,
+        "javascriptRequests": 19,
+        "javascriptDecodedBytes": 1015423,
+        "javascriptEncodedBytes": 299733,
+        "apiRequests": [15, 15, 15],
+        "overflow": false,
+        "errors": []
+      },
+      "after": {
+        "name": "school",
+        "width": 1440,
+        "readyMs": 327,
+        "javascriptRequests": 19,
+        "javascriptDecodedBytes": 1015527,
+        "javascriptEncodedBytes": 299744,
+        "apiRequests": [11, 11, 11],
+        "overflow": false,
+        "errors": []
+      },
+      "javascriptEncodedReductionPercent": -0.0,
+      "javascriptDecodedReductionPercent": -0.01,
+      "apiRequestMedianBefore": 15,
+      "apiRequestMedianAfter": 11
+    }
+  ],
+  "checks": {
+    "finalBrowserTests": 105,
+    "unitTests": 546,
+    "build": "passed",
+    "lint": "passed",
+    "format": "passed",
+    "contracts": "passed",
+    "sampledHorizontalOverflow": false,
+    "sampledUncaughtPageErrors": 0
   },
-  "concurrentBatchMs": 340,
-  "identityReads": 1,
-  "contextReads": 1
+  "previousUnversionedSnapshot": {
+    "note": "Retained for historical report links; older measurement, not the current before/after baseline. Build identity was not recorded in that snapshot.",
+    "data": {
+      "environment": "isolated local fixture; synthetic latency; not production latency",
+      "entry": {
+        "javascriptRequests": 11,
+        "javascriptDecodedBytes": 718596,
+        "documentTtfbMs": 11,
+        "firstContentfulPaintMs": 120
+      },
+      "schoolReadyMs": 253,
+      "school": {
+        "javascriptRequests": 19,
+        "javascriptDecodedBytes": 1002878,
+        "documentTtfbMs": 12,
+        "firstContentfulPaintMs": 92
+      },
+      "concurrentBatchMs": 319,
+      "identityReads": 1,
+      "contextReads": 1
+    }
+  }
 }

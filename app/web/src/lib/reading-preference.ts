@@ -2,7 +2,11 @@
 export function applyReadingPreference() {
   try {
     document.documentElement.dataset.reading =
-      localStorage.getItem('makan-reading') === 'large' ? 'large' : 'standard';
+      localStorage.getItem('makan-reading') === 'large'
+        ? 'large'
+        : localStorage.getItem('makan-reading') === 'comfortable'
+          ? 'comfortable'
+          : 'standard';
     document.documentElement.dataset.motion =
       localStorage.getItem('makan-motion') === 'reduce' ? 'reduce' : 'system';
   } catch {}

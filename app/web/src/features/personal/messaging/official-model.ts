@@ -6,15 +6,20 @@ export function officialMetadataMatches(summary: S['ConversationSummaryResult'])
   const m = summary.official;
   return (
     !!m &&
-    summary.scope === 'Organization' &&
     m.organizationId === summary.organizationId &&
     m.purpose === summary.type &&
     ['Group', 'Channel'].includes(m.purpose) &&
-    ['Class', 'Organization'].includes(m.sourceKind) &&
-    (m.sourceKind !== 'Organization' || m.sourceId === m.organizationId)
+    (m.sourceKind === 'PersonalClass'
+      ? summary.scope === 'Personal' && m.organizationId === null
+      : summary.scope === 'Organization' &&
+        !!m.organizationId &&
+        ['Class', 'Organization'].includes(m.sourceKind) &&
+        (m.sourceKind !== 'Organization' || m.sourceId === m.organizationId))
   );
 }
 export function officialPairPath(metadata: OfficialMetadata) {
+  if (metadata.sourceKind === 'PersonalClass')
+    return `/api/v1/personal-classes/${metadata.sourceId}/spaces`;
   return metadata.sourceKind === 'Class'
     ? `/api/v1/organization/classes/${metadata.sourceId}/official-spaces`
     : '/api/v1/organization/official-spaces';
@@ -36,6 +41,12 @@ export function boundOfficialEndpoint(pair: OfficialPair, purpose: 'Group' | 'Ch
 export function readableOfficialEndpoint(pair: OfficialPair, purpose: 'Group' | 'Channel') {
   const endpoint = officialEndpoint(pair, purpose);
   return (
+    !(
+      pair.group.state === 'Ready' &&
+      pair.channel.state === 'Ready' &&
+      !!pair.group.conversationId &&
+      pair.group.conversationId === pair.channel.conversationId
+    ) &&
     boundOfficialEndpoint(pair, purpose) &&
     endpoint.state === 'Ready' &&
     endpoint.capabilities.canRead &&
